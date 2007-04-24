@@ -186,8 +186,15 @@ cdef extern void bsContextDestroy(BSContext * context)
 cdef extern BSPlugin * bsFindPlugin(BSContext * context, char * name)
 cdef extern BSSetting * bsFindSetting(BSPlugin * plugin, char * name, Bool isScreen, int screenNum)
 
+cdef extern char * bsColorToString(BSSettingColorValue * color)
+cdef extern char * bsEdgeToString(BSSettingActionValue * action)
+cdef extern char * bsKeyBindingToString(BSSettingActionValue * action)
+cdef extern char * bsButtonBindingToString(BSSettingActionValue * action)
+
 cdef class Context
 cdef class Plugin
+
+cdef extern void free(void * f)
 
 cdef object UnpackStringList(BSList * list):
 	ret=[]
@@ -195,6 +202,72 @@ cdef object UnpackStringList(BSList * list):
 		ret.append(<char *>list.data)
 		list=list.next
 	return ret
+
+cdef BSSettingType GetType(BSSettingValue * value):
+	if (value.isListChild):
+		return (<BSSetting *>value.parent).info.forList.listType
+	else:
+		return (<BSSetting *>value.parent).type
+
+cdef object DecodeValue(BSSettingValue * value):
+	cdef BSSettingType t
+	cdef char * s
+	cdef BSList * l
+	cdef object cs
+	cdef object ks
+	cdef object bs
+	cdef object es
+	t = GetType(value)
+	if t == TypeString:
+		return value.value.asString
+	if t == TypeMatch:
+		return value.value.asMatch
+	if t == TypeBool:
+		if value.value.asBool:
+			return True
+		return False
+	if t == TypeInt:
+		return value.value.asInt
+	if t == TypeFloat:
+		return value.value.asFloat
+	if t == TypeColor:
+		s=bsColorToString(&value.value.asColor)
+		cs=s
+		free(s)
+		return cs
+	if t == TypeAction:
+		s=bsKeyBindingToString(&value.value.asAction)
+		if s != NULL:
+			ks=s
+			free(s)
+		else:
+			ks='None'
+		s=bsButtonBindingToString(&value.value.asAction)
+		if s != NULL:
+			bs=s
+			free(s)
+		else:
+			bs='None'
+		if bs == 'Button0':
+			bs = 'None'
+		s=bsEdgeToString(&value.value.asAction)
+		if s != NULL:
+			es=s
+			free(s)
+		else:
+			es='None'
+		bb=False
+		if value.value.asAction.onBell:
+			bb=True
+		return (ks,bs,bb,es)
+	if t == TypeList:
+		lret=[]
+		l = value.value.asList
+		while l != NULL:
+			lret.append(DecodeValue(<BSSettingValue *>l.data))
+			l=l.next
+		return lret
+	return 'Unhandled'
 
 cdef class Setting:
 	cdef BSSetting * bsSetting
@@ -246,6 +319,12 @@ cdef class Setting:
 	property Info:
 		def __get__(self):
 			return self.info
+	property DefaultValue:
+		def __get__(self):
+			return DecodeValue(&self.bsSetting.defaultValue)
+	property Value:
+		def __get__(self):
+			return DecodeValue(self.bsSetting.value)
 
 cdef class Plugin:
 	cdef BSPlugin * bsPlugin
