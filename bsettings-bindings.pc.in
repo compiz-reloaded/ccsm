@@ -1,0 +1,13 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+pyexecdir=@pyexecdir@
+
+Name: beryl-settings-bindings
+Description: BSettings bindings
+Version: @VERSION@
+
+Requires: @BSETTINGS_REQUIRES@
+Libs: @BSETTINGS_LIBS@ -L@libdir@ -lbsettings
+Cflags: @BSETTINGS_CFLAGS@ -I@includedir@/bsettings
