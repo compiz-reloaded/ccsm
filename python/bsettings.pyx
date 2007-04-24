@@ -326,32 +326,75 @@ cdef class Setting:
 		def __get__(self):
 			return DecodeValue(self.bsSetting.value)
 
+cdef class SSGroup:
+	cdef object display
+	cdef object screens
+	def __new__(self,disp,scrn):
+		self.display=disp
+		self.screens=scrn
+	property Display:
+		def __get__(self):
+			return self.display
+		def __set__(self,value):
+			self.display=value
+	property Screens:
+		def __get__(self):
+			return self.screens
+		def __set__(self,value):
+			self.screens=value
+
 cdef class Plugin:
 	cdef BSPlugin * bsPlugin
 	cdef object context
 	cdef object screens
 	cdef object display
+	cdef object groups
 	
 	def __new__(self, Context context, name):
 		cdef BSList * setlist
+		cdef BSList * glist
+		cdef BSList * sglist
 		cdef BSSetting * sett
+		cdef BSGroup * gr
+		cdef BSSubGroup * sgr
 		self.bsPlugin = bsFindPlugin(context.bsContext,name)
 		self.context = context
 		self.screens = []
 		self.display = {}
+		self.groups = {}
 		for n in range(0,context.NScreens):
 			self.screens.append({})
+		glist = self.bsPlugin.groups
+		while glist != NULL:
+			gr=<BSGroup *>glist.data
+			self.groups[gr.name]={}
+			sglist=gr.subGroups
+			while sglist != NULL:
+				sgr=<BSSubGroup *>sglist.data
+				scr=[]
+				for n in range(0,context.NScreens):
+					scr.append({})
+				self.groups[gr.name][sgr.name]=SSGroup({},scr)
+				sglist=sglist.next
+			glist=glist.next
 		setlist = self.bsPlugin.settings
 		while setlist != NULL:
 			sett=<BSSetting *>setlist.data
 			if sett.isScreen:
 				self.screens[sett.screenNum][sett.name] = Setting(self,
 						sett.name, True, sett.screenNum)
+				self.groups[sett.group][sett.subGroup].Screens[sett.screenNum][
+						sett.name]= self.screens[sett.screenNum][sett.name]
 			else:
 				self.display[sett.name] = Setting(self,
 						sett.name, False)
+				self.groups[sett.group][sett.subGroup].Display[
+						sett.name]= self.display[sett.name]
 			setlist=setlist.next
 
+	property Groups:
+		def __get__(self):
+			return self.groups
 	property Display:
 		def __get__(self):
 			return self.display
