@@ -1,8 +1,6 @@
 AC_PREREQ(2.57)
 AC_INIT([bsettings-bindings],0.0.1, [livinglatexkali@gmail.com])
 
-AC_DEFINE_UNQUOTED(VERSION,0.0.1,[Version])
-
 AM_INIT_AUTOMAKE([1.9 dist-bzip2])
 AC_CONFIG_HEADER([config.h])
 AM_MAINTAINER_MODE
