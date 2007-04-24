@@ -191,6 +191,14 @@ cdef extern char * bsEdgeToString(BSSettingActionValue * action)
 cdef extern char * bsKeyBindingToString(BSSettingActionValue * action)
 cdef extern char * bsButtonBindingToString(BSSettingActionValue * action)
 
+cdef extern Bool bsSetInt(BSSetting * setting, int data)
+cdef extern Bool bsSetFloat(BSSetting * setting, float data)
+cdef extern Bool bsSetBool(BSSetting * setting, Bool data)
+cdef extern Bool bsSetString(BSSetting * setting, char * data)
+cdef extern Bool bsSetColor(BSSetting * setting, BSSettingColorValue data)
+cdef extern Bool bsSetMatch(BSSetting * setting, char * data)
+cdef extern Bool bsStringToColor(char * value, BSSettingColorValue * target)
+
 cdef class Context
 cdef class Plugin
 
@@ -325,6 +333,23 @@ cdef class Setting:
 	property Value:
 		def __get__(self):
 			return DecodeValue(self.bsSetting.value)
+		def __set__(self, value):
+			cdef BSSettingType t
+			cdef BSSettingColorValue cv
+			t = self.bsSetting.type
+			if t == TypeInt:
+				bsSetInt(self.bsSetting,value)
+			elif t == TypeFloat:
+				bsSetFloat(self.bsSetting,value)
+			elif t == TypeBool:
+				bsSetBool(self.bsSetting,value)
+			elif t == TypeString:
+				bsSetString(self.bsSetting,value)
+			elif t == TypeMatch:
+				bsSetMatch(self.bsSetting,value)
+			elif t == TypeColor:
+				if bsStringToColor(value,&cv):
+					bsSetColor(self.bsSetting,cv)
 
 cdef class SSGroup:
 	cdef object display
