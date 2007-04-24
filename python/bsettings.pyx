@@ -15,17 +15,152 @@
 # Authors: Quinn Storm (quinn@beryl-project.org)
 # Copyright (C) 2007 Quinn Storm
 
-cdef struct BSPlugin
+ctypedef unsigned int Bool
 
-cdef struct BSPluginList:
-	BSPlugin * data
+cdef enum BSSettingType:
+	TypeBool
+	TypeInt
+	TypeFloat
+	TypeString
+	TypeAction
+	TypeColor
+	TypeMatch
+	TypeList
+	TypeNum
 
-cdef extern struct BSStringList
-cdef extern struct BSSettingList
-cdef extern struct BSGroupList
+SettingTypeString=[
+		'Bool',
+		'Int',
+		'Float',
+		'String',
+		'Action',
+		'Color',
+		'Match',
+		'List',
+		'Invalid']
+
+cdef struct BSList:
+	void * data
+	BSList * next
+ctypedef BSList BSSettingList
+ctypedef BSList BSPluginList
+ctypedef BSList BSStringList
+ctypedef BSList BSGroupList
+ctypedef BSList BSSubGroupList
+ctypedef BSList BSPluginConflictList
+ctypedef BSList BSSettingValueList
+
+cdef extern struct BSBackend
+
+cdef struct BSSettingActionValue:
+	int button
+	unsigned int buttonModMask
+	int keysym
+	unsigned int keyModMask
+	Bool onBell
+	int edgeMask
+	int edgeButton
+
+cdef struct BSSettingColorValueColor:
+	unsigned short red
+	unsigned short green
+	unsigned short blue
+	unsigned short alpha
+
+cdef union BSSettingColorValue:
+	BSSettingColorValueColor color
+	unsigned short array[4]
+
+cdef union BSSettingValueUnion:
+	Bool asBool
+	int asInt
+	float asFloat
+	char * asString
+	char * asMatch
+	BSSettingActionValue asAction
+	BSSettingColorValue asColor
+	BSSettingValueList * asList
+
+cdef struct BSSettingIntInfo:
+	int min
+	int max
+
+cdef struct BSSettingFloatInfo:
+	float min
+	float max
+	float precision
+
+cdef struct BSSettingStringInfo:
+	BSStringList * allowedValues
+
+cdef struct BSSettingActionInfo:
+	Bool key
+	Bool button
+	Bool bell
+	Bool edge
+
+cdef struct BSSettingActionArrayInfo:
+	Bool array[4]
+
+cdef struct BSSettingListInfo:
+	BSSettingType listType
+	void * listInfo				#actually BSSettingInfo *, works around pyrex
+
+cdef union BSSettingInfo:
+	BSSettingIntInfo forInt
+	BSSettingFloatInfo forFloat
+	BSSettingStringInfo forString
+	BSSettingActionInfo forAction
+	BSSettingActionArrayInfo forActionAsArray
+	BSSettingListInfo forList
+
+cdef struct BSSettingValue:
+	BSSettingValueUnion value
+	void * parent
+	Bool isListChild
+
+cdef struct BSGroup:
+	char * name
+	BSSubGroupList * subGroups
+
+cdef struct BSSubGroup:
+	char * name
+	BSSettingList * settings
+
+cdef struct BSPluginCategory:
+	char * name
+	char * shortDesc
+	char * longDesc
+	BSStringList * plugins
 
 cdef struct BSContext:
 	BSPluginList * plugins
+	BSPluginCategory * categories
+	void * priv
+	BSBackend * backend
+	char * profile
+	Bool deIntegration
+	BSSettingList * changedSettings
+	Bool pluginsChanged
+
+cdef struct BSPlugin
+
+cdef struct BSSetting:
+	char * name
+	char * shortDesc
+	char * longDesc
+	BSSettingType type
+	Bool isScreen
+	unsigned int screenNum
+	BSSettingInfo info
+	char * group
+	char * subGroup
+	char * hints
+	BSSettingValue defaultValue
+	BSSettingValue * value
+	Bool isDefault
+	BSPlugin * parent
+	void * priv
 
 cdef struct BSPlugin:
 	char * name
@@ -47,18 +182,103 @@ cdef struct BSPlugin:
 
 cdef extern BSContext * bsContextNew()
 cdef extern void bsContextDestroy(BSContext * context)
-cdef extern unsigned int bsPluginListLength(BSPluginList * list)
-cdef extern BSPluginList * bsPluginListGetItem(BSPluginList * list, unsigned int idx)
+
 cdef extern BSPlugin * bsFindPlugin(BSContext * context, char * name)
+cdef extern BSSetting * bsFindSetting(BSPlugin * plugin, char * name, Bool isScreen, int screenNum)
 
 cdef class Context
+cdef class Plugin
+
+cdef object UnpackStringList(BSList * list):
+	ret=[]
+	while list != NULL:
+		ret.append(<char *>list.data)
+		list=list.next
+	return ret
+
+cdef class Setting:
+	cdef BSSetting * bsSetting
+	cdef object info
+
+	def __new__(self, Plugin plugin, name, isScreen, screenNum=0):
+		cdef BSSettingType t
+		cdef BSSettingInfo * i
+		self.bsSetting = bsFindSetting(plugin.bsPlugin, 
+				name, isScreen, screenNum)
+		info=()
+		t=self.bsSetting.type
+		i=&self.bsSetting.info
+		if t==TypeList:
+			t=self.bsSetting.info.forList.listType
+			i=<BSSettingInfo *>self.bsSetting.info.forList.listInfo
+		if t == TypeInt:
+			info=(i.forInt.min,i.forInt.max)
+		elif t == TypeFloat:
+			info=(i.forFloat.min,i.forFloat.max,
+					i.forFloat.precision)
+		elif t == TypeString:
+			info=UnpackStringList(i.forString.allowedValues)
+		elif t == TypeAction:
+			info=(i.forAction.key,i.forAction.button,
+					i.forAction.bell,i.forAction.edge)
+		if self.bsSetting.type == TypeList:
+			info=(SettingTypeString[t],info)
+		self.info=info
+	
+	property Name:
+		def __get__(self):
+			return self.bsSetting.name
+	property ShortDesc:
+		def __get__(self):
+			return self.bsSetting.shortDesc
+	property LongDesc:
+		def __get__(self):
+			return self.bsSetting.longDesc
+	property Group:
+		def __get__(self):
+			return self.bsSetting.group
+	property SubGroup:
+		def __get__(self):
+			return self.bsSetting.subGroup
+	property Type:
+		def __get__(self):
+			return SettingTypeString[self.bsSetting.type]
+	property Info:
+		def __get__(self):
+			return self.info
 
 cdef class Plugin:
 	cdef BSPlugin * bsPlugin
+	cdef object context
+	cdef object screens
+	cdef object display
 	
-	def __new__(self,Context context,name):
+	def __new__(self, Context context, name):
+		cdef BSList * setlist
+		cdef BSSetting * sett
 		self.bsPlugin = bsFindPlugin(context.bsContext,name)
-	
+		self.context = context
+		self.screens = []
+		self.display = {}
+		for n in range(0,context.NScreens):
+			self.screens.append({})
+		setlist = self.bsPlugin.settings
+		while setlist != NULL:
+			sett=<BSSetting *>setlist.data
+			if sett.isScreen:
+				self.screens[sett.screenNum][sett.name] = Setting(self,
+						sett.name, True, sett.screenNum)
+			else:
+				self.display[sett.name] = Setting(self,
+						sett.name, False)
+			setlist=setlist.next
+
+	property Display:
+		def __get__(self):
+			return self.display
+	property Screens:
+		def __get__(self):
+			return self.screens
 	property Name:
 		def __get__(self):
 			return self.bsPlugin.name
@@ -68,18 +288,26 @@ cdef class Plugin:
 	property LongDesc:
 		def __get__(self):
 			return self.bsPlugin.longDesc
+	property Category:
+		def __get__(self):
+			return self.bsPlugin.category
 
 cdef class Context:
 	cdef BSContext * bsContext
 	cdef object plugins
+	cdef int nScreens
 
-	def __new__(self):
+	def __new__(self,nScreens=1):
 		cdef BSPlugin * pl
+		cdef BSList * pll
+		self.nScreens=nScreens
 		self.plugins={}
 		self.bsContext=bsContextNew()
-		for n in range(0,bsPluginListLength(self.bsContext.plugins)):
-			pl = bsPluginListGetItem(self.bsContext.plugins,n).data
+		pll=self.bsContext.plugins
+		while pll != NULL:
+			pl = <BSPlugin *>pll.data
 			self.plugins[pl.name]=Plugin(self,pl.name)
+			pll=pll.next
 
 	def __dealloc__(self):
 		bsContextDestroy(self.bsContext)
@@ -87,3 +315,6 @@ cdef class Context:
 	property Plugins:
 		def __get__(self):
 			return self.plugins
+	property NScreens:
+		def __get__(self):
+			return self.nScreens
