@@ -1,5 +1,5 @@
 AC_PREREQ(2.57)
-AC_INIT([bsettings-bindings],esyscmd(. ./VERSION;echo -n $VERSION), [livinglatexkali@gmail.com])
+AC_INIT([bsettings-bindings],0.0.1, [livinglatexkali@gmail.com])
 
 AC_DEFINE_UNQUOTED(VERSION,0.0.1,[Version])
 
