@@ -1,7 +1,7 @@
 AC_PREREQ(2.57)
-AC_INIT([beryl-settings-bindings],esyscmd(. ./VERSION;echo -n $VERSION), [livinglatexkali@gmail.com])
+AC_INIT([bsettings-bindings],esyscmd(. ./VERSION;echo -n $VERSION), [livinglatexkali@gmail.com])
 
-AC_DEFINE_UNQUOTED(VERSION,"$VERSION",[Version])
+AC_DEFINE_UNQUOTED(VERSION,0.0.1,[Version])
 
 AM_INIT_AUTOMAKE([1.9 dist-bzip2])
 AC_CONFIG_HEADER([config.h])
@@ -13,13 +13,13 @@ AC_PROG_CPP
 AC_PROG_LIBTOOL
 AC_HEADER_STDC
 
-BERYLSETTINGS_REQUIRES="\
-berylsettings >= 0.1.2 \
+BSETTINGS_REQUIRES="\
+bsettings >= 0.1.2 \
 glib-2.0 >= 2.6 "
 
-PKG_CHECK_MODULES(BERYLSETTINGS,$BERYLSETTINGS_REQUIRES)
+PKG_CHECK_MODULES(BSETTINGS,$BSETTINGS_REQUIRES)
 
-AC_SUBST(BERYLSETTINGS_REQUIRES)
+AC_SUBST(BSETTINGS_REQUIRES)
 
 dnl PYTHON SPECIFIC
 
@@ -40,7 +40,7 @@ then
 fi
 
 AC_CONFIG_FILES([
-	beryl-settings-bindings.pc
+	bsettings-bindings.pc
 	Makefile
 	python/Makefile
 ])

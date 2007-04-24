@@ -1,7 +1,7 @@
 SUBDIRS = python
 
 EXTRA_DIST = \
-	beryl-settings-bindings.pc.in
+	bsettings-bindings.pc.in
 
 pkgconfigdir = $(libdir)/pkgconfig
-pkgconfig_DATA = beryl-settings-bindings.pc
+pkgconfig_DATA = bsettings-bindings.pc
