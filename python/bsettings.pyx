@@ -191,18 +191,30 @@ cdef extern char * bsEdgeToString(BSSettingActionValue * action)
 cdef extern char * bsKeyBindingToString(BSSettingActionValue * action)
 cdef extern char * bsButtonBindingToString(BSSettingActionValue * action)
 
-cdef extern Bool bsSetInt(BSSetting * setting, int data)
-cdef extern Bool bsSetFloat(BSSetting * setting, float data)
-cdef extern Bool bsSetBool(BSSetting * setting, Bool data)
-cdef extern Bool bsSetString(BSSetting * setting, char * data)
-cdef extern Bool bsSetColor(BSSetting * setting, BSSettingColorValue data)
-cdef extern Bool bsSetMatch(BSSetting * setting, char * data)
+#cdef extern Bool bsSetInt(BSSetting * setting, int data)
+#cdef extern Bool bsSetFloat(BSSetting * setting, float data)
+#cdef extern Bool bsSetBool(BSSetting * setting, Bool data)
+#cdef extern Bool bsSetString(BSSetting * setting, char * data)
+#cdef extern Bool bsSetColor(BSSetting * setting, BSSettingColorValue data)
+#cdef extern Bool bsSetMatch(BSSetting * setting, char * data)
+cdef extern from 'string.h':
+	cdef extern char * strdup(char * s)
+
 cdef extern Bool bsStringToColor(char * value, BSSettingColorValue * target)
+cdef extern Bool bsStringToKeyBinding(char * value, BSSettingActionValue * target)
+cdef extern Bool bsStringToButtonBinding(char * value, BSSettingActionValue * target)
+cdef extern Bool bsStringToEdge(char * value, BSSettingActionValue * target)
+cdef extern Bool bsSetValue(BSSetting * setting, BSSettingValue * value)
+cdef extern void bsFreeSettingValue(BSSettingValue * value)
+cdef extern BSSettingValueList * bsSettingValueListAppend(BSSettingValueList * l, BSSettingValue * v)
 
 cdef class Context
 cdef class Plugin
 
-cdef extern void free(void * f)
+cdef extern from 'stdlib.h':
+	ctypedef int size_t
+	cdef extern void free(void * f)
+	cdef extern void * malloc(size_t s)
 
 cdef object UnpackStringList(BSList * list):
 	ret=[]
@@ -216,6 +228,48 @@ cdef BSSettingType GetType(BSSettingValue * value):
 		return (<BSSetting *>value.parent).info.forList.listType
 	else:
 		return (<BSSetting *>value.parent).type
+
+cdef BSSettingValue * EncodeValue(object data, BSSetting * setting, Bool isListChild):
+	cdef BSSettingValue * bv
+	cdef BSSettingType t
+	cdef BSList * l
+	bv = <BSSettingValue *>malloc(sizeof(BSSettingValue))
+	bv.isListChild = isListChild
+	bv.parent = setting
+	if isListChild:
+		t = setting.info.forList.listType
+	else:
+		t = setting.type
+	if t == TypeString:
+		bv.value.asString = strdup(data)
+	elif t == TypeMatch:
+		bv.value.asMatch = strdup(data)
+	elif t == TypeInt:
+		bv.value.asInt = data
+	elif t == TypeFloat:
+		bv.value.asFloat = data
+	elif t == TypeBool:
+		if data:
+			bv.value.asBool = 1
+		else:
+			bv.value.asBool = 0
+	elif t == TypeColor:
+		bsStringToColor(value,&bv.value.asColor)
+	elif t == TypeAction:
+		bsStringToKeyBinding(value[0],&bv.value.asAction)
+		bsStringToButtonBinding(value[1],&bv.value.asAction)
+		if (value[2]):
+			bv.value.asAction.onBell = 1
+		else:
+			bv.value.asAction.onBell = 0
+		bsStringToEdge(value[3],&bv.value.asAction)
+	elif t == TypeList:
+		l = NULL
+		for item in value:
+			l=bsSettingValueListAppend(l,
+					EncodeValue(item,setting,1))
+		bv.value.asList=l
+	return bv
 
 cdef object DecodeValue(BSSettingValue * value):
 	cdef BSSettingType t
@@ -334,22 +388,10 @@ cdef class Setting:
 		def __get__(self):
 			return DecodeValue(self.bsSetting.value)
 		def __set__(self, value):
-			cdef BSSettingType t
-			cdef BSSettingColorValue cv
-			t = self.bsSetting.type
-			if t == TypeInt:
-				bsSetInt(self.bsSetting,value)
-			elif t == TypeFloat:
-				bsSetFloat(self.bsSetting,value)
-			elif t == TypeBool:
-				bsSetBool(self.bsSetting,value)
-			elif t == TypeString:
-				bsSetString(self.bsSetting,value)
-			elif t == TypeMatch:
-				bsSetMatch(self.bsSetting,value)
-			elif t == TypeColor:
-				if bsStringToColor(value,&cv):
-					bsSetColor(self.bsSetting,cv)
+			cdef BSSettingValue * sv
+			sv = EncodeValue(value,self.bsSetting,0)
+			bsSetValue(self.bsSetting,sv)
+			bsFreeSettingValue(sv)
 
 cdef class SSGroup:
 	cdef object display
