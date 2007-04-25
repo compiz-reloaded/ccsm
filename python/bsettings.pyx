@@ -213,6 +213,11 @@ cdef extern Bool bsSetValue(BSSetting * setting, BSSettingValue * value)
 cdef extern void bsFreeSettingValue(BSSettingValue * value)
 cdef extern BSSettingValueList * bsSettingValueListAppend(BSSettingValueList * l, BSSettingValue * v)
 
+cdef extern void bsReadSettings(BSContext * c)
+cdef extern void bsWriteSettings(BSContext * c)
+cdef extern void bsWriteChangedSettings(BSContext * c)
+cdef extern void bsResetToDefault(BSSetting * s)
+
 cdef class Context
 cdef class Plugin
 
@@ -361,6 +366,9 @@ cdef class Setting:
 			info=(SettingTypeString[t],info)
 		self.info=info
 	
+	def Reset(self):
+		bsResetToDefault(self.bsSetting)
+
 	property Name:
 		def __get__(self):
 			return self.bsSetting.name
@@ -382,6 +390,11 @@ cdef class Setting:
 	property Info:
 		def __get__(self):
 			return self.info
+	property IsDefault:
+		def __get__(self):
+			if self.bsSetting.isDefault:
+				return True
+			return False
 	property DefaultValue:
 		def __get__(self):
 			return DecodeValue(&self.bsSetting.defaultValue)
@@ -494,6 +507,7 @@ cdef class Context:
 		self.nScreens=nScreens
 		self.plugins={}
 		self.bsContext=bsContextNew()
+		bsReadSettings(self.bsContext)
 		pll=self.bsContext.plugins
 		self.categories={}
 		while pll != NULL:
@@ -510,6 +524,15 @@ cdef class Context:
 
 	def __dealloc__(self):
 		bsContextDestroy(self.bsContext)
+
+	def Write(self,onlyChanged=True):
+		if onlyChanged:
+			bsWriteChangedSettings(self.bsContext)
+		else:
+			bsWriteSettings(self.bsContext)
+
+	def Read(self):
+		bsReadSettings(self.bsContext)
 
 	property Plugins:
 		def __get__(self):
