@@ -198,7 +198,12 @@ cdef extern char * bsButtonBindingToString(BSSettingActionValue * action)
 #cdef extern Bool bsSetColor(BSSetting * setting, BSSettingColorValue data)
 #cdef extern Bool bsSetMatch(BSSetting * setting, char * data)
 cdef extern from 'string.h':
+	ctypedef int size_t
 	cdef extern char * strdup(char * s)
+	cdef extern void memset(void * s, int c, size_t n)
+	cdef extern void free(void * f)
+	cdef extern void * malloc(size_t s)
+
 
 cdef extern Bool bsStringToColor(char * value, BSSettingColorValue * target)
 cdef extern Bool bsStringToKeyBinding(char * value, BSSettingActionValue * target)
@@ -210,11 +215,6 @@ cdef extern BSSettingValueList * bsSettingValueListAppend(BSSettingValueList * l
 
 cdef class Context
 cdef class Plugin
-
-cdef extern from 'stdlib.h':
-	ctypedef int size_t
-	cdef extern void free(void * f)
-	cdef extern void * malloc(size_t s)
 
 cdef object UnpackStringList(BSList * list):
 	ret=[]
@@ -234,6 +234,7 @@ cdef BSSettingValue * EncodeValue(object data, BSSetting * setting, Bool isListC
 	cdef BSSettingType t
 	cdef BSList * l
 	bv = <BSSettingValue *>malloc(sizeof(BSSettingValue))
+	memset(bv,0,sizeof(BSSettingValue))
 	bv.isListChild = isListChild
 	bv.parent = setting
 	if isListChild:
@@ -254,18 +255,18 @@ cdef BSSettingValue * EncodeValue(object data, BSSetting * setting, Bool isListC
 		else:
 			bv.value.asBool = 0
 	elif t == TypeColor:
-		bsStringToColor(value,&bv.value.asColor)
+		bsStringToColor(data,&bv.value.asColor)
 	elif t == TypeAction:
-		bsStringToKeyBinding(value[0],&bv.value.asAction)
-		bsStringToButtonBinding(value[1],&bv.value.asAction)
-		if (value[2]):
+		bsStringToKeyBinding(data[0],&bv.value.asAction)
+		bsStringToButtonBinding(data[1],&bv.value.asAction)
+		if (data[2]):
 			bv.value.asAction.onBell = 1
 		else:
 			bv.value.asAction.onBell = 0
-		bsStringToEdge(value[3],&bv.value.asAction)
+		bsStringToEdge(data[3],&bv.value.asAction)
 	elif t == TypeList:
 		l = NULL
-		for item in value:
+		for item in data:
 			l=bsSettingValueListAppend(l,
 					EncodeValue(item,setting,1))
 		bv.value.asList=l
@@ -321,7 +322,7 @@ cdef object DecodeValue(BSSettingValue * value):
 		bb=False
 		if value.value.asAction.onBell:
 			bb=True
-		return (ks,bs,bb,es)
+		return [ks,bs,bb,es]
 	if t == TypeList:
 		lret=[]
 		l = value.value.asList
@@ -412,7 +413,7 @@ cdef class SSGroup:
 
 cdef class Plugin:
 	cdef BSPlugin * bsPlugin
-	cdef object context
+	cdef Context context
 	cdef object screens
 	cdef object display
 	cdef object groups
