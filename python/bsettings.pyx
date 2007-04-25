@@ -484,6 +484,7 @@ cdef class Plugin:
 cdef class Context:
 	cdef BSContext * bsContext
 	cdef object plugins
+	cdef object categories
 	cdef int nScreens
 
 	def __new__(self,nScreens=1):
@@ -493,9 +494,17 @@ cdef class Context:
 		self.plugins={}
 		self.bsContext=bsContextNew()
 		pll=self.bsContext.plugins
+		self.categories={}
 		while pll != NULL:
 			pl = <BSPlugin *>pll.data
 			self.plugins[pl.name]=Plugin(self,pl.name)
+			if pl.category == NULL:
+				cat=''
+			else:
+				cat=pl.category
+			if (not self.categories.has_key(cat)):
+				self.categories[cat]=[]
+			self.categories[cat].append(self.plugins[pl.name])
 			pll=pll.next
 
 	def __dealloc__(self):
@@ -504,6 +513,9 @@ cdef class Context:
 	property Plugins:
 		def __get__(self):
 			return self.plugins
+	property Categories:
+		def __get__(self):
+			return self.categories
 	property NScreens:
 		def __get__(self):
 			return self.nScreens
