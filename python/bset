@@ -1,0 +1,1940 @@
+#!/usr/bin/env python
+
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+#
+# Authors: Quinn Storm (quinn@beryl-project.org)
+# Copyright (C) 2007 Quinn Storm
+
+
+
+import bsettings
+import gtk
+import gtk.gdk
+import gobject
+import os
+import re
+gdk = gtk.gdk
+from xml.sax.saxutils import escape as EscapeMarkup
+
+APP = 'beryl-settings'
+DIR = 'locale'
+import locale
+import gettext
+locale.setlocale(locale.LC_ALL, "")
+gettext.bindtextdomain(APP, DIR)
+gettext.textdomain(APP)
+_ = gettext.gettext
+
+
+DATADIR  = "/usr/share"
+IMAGEDIR = "/usr/share/bsm/images"
+PREFIX   = "/usr"
+VERSION  = "0.3.0-svn"
+
+BaseDir = DATADIR+"/bsm/images"
+CatImages = {"wm":"window-management.svg",
+		"accessibility":"accessibility.svg",
+		"desktop":"desktop.svg",
+		"effects":"visual-effects.svg",
+		"misc":"extras.svg",
+		"devel":"development.svg",
+		"__general":"general-settings.svg",
+		"imageformat":"images.svg"}
+
+GenStore = gtk.TreeStore(
+		gobject.TYPE_STRING,	#Entry Name
+		gobject.TYPE_STRING,	#Key binding
+		gobject.TYPE_BOOLEAN,	#key enabled
+		gobject.TYPE_STRING,	#Button binding
+		gobject.TYPE_BOOLEAN,	#button enabled
+		gobject.TYPE_STRING,	#plugin name
+		gobject.TYPE_STRING,	#setting name
+		)
+
+GenStoreFiltered = GenStore.filter_new()
+
+EdgeStore = gtk.ListStore(gobject.TYPE_STRING,gobject.TYPE_STRING,gobject.TYPE_STRING,gobject.TYPE_BOOLEAN)
+EdgeDesc = [
+			[("Top Left Corner","TopLeft"), ("Top Edge","Top"), ("Top Right Corner","TopRight")],
+			[("Left Edge","Left"),("..",""),("Right Edge","Right")],
+			[("Bottom Left Corner","BottomLeft"), ("Bottom Edge","Bottom"), ("Bottom Right Corner","BottomRight")]
+			]
+
+class FooClass:
+	def __init__(self):
+		pass
+
+Ctx = bsettings.Context()
+Ctx.Read()
+
+hideshowall = None
+AllowUpdate = True
+CurProfLab  = None
+AllCats     = []
+AllSettings = []
+EdgeBoxes   = []
+tooltips    = gtk.Tooltips()
+
+
+def WriteSettings():
+	Ctx.Write()
+	berylsettings.send_reload()
+
+def QuitAll(v):
+	gtk.main_quit()
+
+def SetPluginsEnabled():
+	for Ca in AllCats:
+		for Pl in Ca.Plugins:
+			if (Pl.Button):
+				Pl.Button.props.active = Pl.Plugin.Enabled
+
+def SetWidgetsFromValues():
+	global CurProfLab
+	global AllowUpdate
+	AllowUpdate = False
+	if (CurProfLab):
+		prof = Ctx.Profile
+		if (prof == None):
+			prof = _('<Default>')
+		prof = EscapeMarkup(prof)
+		CurProfLab.set_markup(_("Current Profile: <b>%s</b>")%prof)
+	SetPluginsEnabled()
+	for set in AllSettings:
+		SetWidgetsForSetting(set.Setting)
+	AllowUpdate = True
+
+def MoveRow(bwid,bothinf):
+	dir = bothinf[0]
+	inf = bothinf[1]
+	sel = inf.TreeView.get_selection().get_selected()
+	if (not sel[0]):
+		return
+	Iter = sel[1]
+	Miter = None
+	if (dir == 0):
+		MIter = inf.ListStore.get_iter_first()
+		while(MIter and inf.ListStore.iter_next(MIter)):
+			if (inf.ListStore.get_string_from_iter(inf.ListStore.iter_next(MIter)) ==
+					inf.ListStore.get_string_from_iter(Iter)):
+				break
+			MIter = inf.ListStore.iter_next(MIter)
+		if (not inf.ListStore.iter_next(MIter)):
+			MIter = None
+	else:
+		MIter = inf.ListStore.iter_next(Iter)
+	if (MIter):
+		istr = inf.ListStore.get_string_from_iter(MIter)
+		inf.ListStore.swap(Iter,MIter)
+		SetSettingFromWidgets(inf.Setting)
+		Iter = inf.ListStore.get_iter_from_string(istr)
+		inf.TreeView.get_selection().select_iter(Iter)
+
+def AddRow(plb,set):
+	inspos = set.TreeView.get_selection().get_selected()[1]
+	if (inspos):
+		Iter = set.ListStore.insert_after(inspos)
+	else:
+		Iter = set.ListStore.append()
+	set.ListStore.set(Iter,0,_('<New Value>'))
+	SetSettingFromWidgets(set)
+
+def DelRow(plb,set):
+	delpos = set.TreeView.get_selection().get_selected()[1]
+	if (not delpos):
+		return
+	set.ListStore.remove(delpos)
+	SetSettingFromWidgets(set)
+
+def AddImageFilters(fil):
+	for plugin in Ctx.ActivePlugins:
+		for feature in Ctx.Plugin(plugin).Provides:
+			if (feature.split(':')[0]=='imageext'):
+				fil.add_pattern('*.'+feature.split(':')[1])
+			if (feature.split(':')[0]=='imagemime'):
+				fil.add_mime_type(feature.split(':')[1])
+
+def UpdatePrev(file_chooser, preview):
+	filename = file_chooser.get_preview_filename()
+	try:
+		pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(filename, 128, 128)
+		preview.set_from_pixbuf(pixbuf)
+		have_preview = True
+	except:
+		have_preview = False
+	file_chooser.set_preview_widget_active(have_preview)
+	return
+
+def BrowseDlg(set):
+	if (set.Setting.Hints.find("directory")):
+		action = gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER
+	else:
+		action = gtk.FILE_CHOOSER_ACTION_OPEN
+	dlg = gtk.FileChooserDialog(_("Browse for %s...")%set.Setting.ShortDesc,MainWindow,
+			action,(gtk.STOCK_OPEN,gtk.RESPONSE_OK,gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL))
+	if (not set.Setting.Hints.find("directory")):
+		fil = gtk.FileFilter()
+		fil.set_name(_("All Files"))
+		fil.add_pattern("*")
+		dlg.add_filter(fil)
+		if (set.Setting.Hints.find("image")):
+			preview = gtk.Image()
+			dlg.set_preview_widget(preview)
+			dlg.connect("update-preview",UpdatePrev,preview)
+			if (set.Setting.Hints.find("pngonly")):
+				fil = gtk.FileFilter()
+				fil.set_name(_("PNG Images"))
+				fil.add_pattern("*.png")
+				fil.add_mime_type(_("image/png"))
+				dlg.add_filter(fil)
+				dlg.set_filter(fil)
+			else:
+				fil = gtk.FileFilter()
+				fil.set_name(_("Images"))
+				AddImageFilters(fil)
+				dlg.add_filter(fil)
+				dlg.set_filter(fil)
+	ret = dlg.run()
+	val = None
+	if (ret == gtk.RESPONSE_OK):
+		if (dlg.get_filename()):
+			val = dlg.get_filename()
+	dlg.destroy()
+	del dlg
+	return val
+
+def BrowseEntry(plb,set):
+	val = BrowseDlg(set)
+	if (val):
+		set.Entry.set_text(val)
+		SetSettingFromWidgets(set)
+
+def BrowseRow(plb,set):
+	val = BrowseDlg(set)
+	if (val):
+		inspos = set.TreeView.get_selection().get_selected()[1]
+		if (inspos):
+			Iter = set.ListStore.insert_after(inspos)
+		else:
+			Iter = set.ListStore.append()
+		set.ListStore.set(Iter,0,val)
+		SetSettingFromWidgets(set)
+
+def ChainDisablePlugin(plugin):
+	for plg in Ctx.ActivePlugins:
+		pp = Ctx.Plugin(plg)
+		for pr in plugin.Provides:
+			if (pp.Requires.__contains__(pr)):
+				ChainDisablePlugin(pp)
+				break
+	plugin.Enabled = False
+
+def SatisfyDeps(feature):
+	#returns list of plugins that provide feature
+	ret = []
+	for plugin in Ctx.Plugins:
+		if (plugin.Provides.__contains__(feature)):
+			ret = ret+[plugin]
+	return ret
+
+def TryEnablePlugin(plugin):
+	#first make sure it doesn't conflict
+	for feature in plugin.Provides:
+		for p in Ctx.ActivePlugins:
+			if (Ctx.Plugin(p).Provides.__contains__(feature)):
+				msg = _("Can't enable plugin <b>%s</b> because it\nprovides feature <i>%s</i> which is also\nprovided by enabled plugin <b>%s</b>.")%(plugin.ShortDesc,feature,Ctx.Plugin(p).ShortDesc)
+				dlg = gtk.Dialog(_("Can't Enable Plugin"),MainWindow,gtk.DIALOG_MODAL,(_("Disable Conflicting Plugin"),gtk.RESPONSE_OK,gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL))
+				hb = gtk.HBox()
+				vb = gtk.VBox()
+				img = gtk.image_new_from_stock(gtk.STOCK_DIALOG_ERROR,gtk.ICON_SIZE_DIALOG)
+				lab = gtk.Label()
+				lab.set_markup(msg)
+				vb.pack_start(img,False,False)
+				hb.pack_start(vb,False,False)
+				hb.pack_start(lab,True,True)
+				dlg.vbox.pack_start(hb,True,True)
+				dlg.vbox.show_all()
+				dlg.set_title(_("Can't Enable Plugin"))
+				ret = dlg.run()
+				dlg.destroy()
+				if (ret == gtk.RESPONSE_CANCEL):
+					return False
+				else:
+					ChainDisablePlugin(Ctx.Plugin(p))
+	needs = []
+	for req in plugin.Requires:
+		noneed = False
+		for p in Ctx.ActivePlugins:
+			if Ctx.Plugin(p).Provides.__contains__(req):
+				noneed = True
+				break
+		if not noneed:
+			needs = needs+[req]
+	for need in needs:
+		dep = SatisfyDeps(need)
+		if len(dep) == 0:
+			msg = _("Couldn't find any plugins\nthat provide feature <i>%s</i>\nrequired by plugin <b>%s</b>")%(need,plugin.ShortDesc)
+			dlg = gtk.MessageDialog(MainWindow,gtk.DIALOG_MODAL,gtk.MESSAGE_ERROR,gtk.BUTTONS_OK)
+			dlg.set_markup(msg)
+			dlg.set_title(_("Can't Enable Plugin"))
+			dlg.run()
+			dlg.destroy()
+			return False
+		dlg = gtk.Dialog(_("Select Plugin to Enable"),MainWindow,gtk.DIALOG_MODAL,(gtk.STOCK_OK,gtk.RESPONSE_OK,gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL))
+		icmb = gtk.combo_box_new_text()
+		msg = _("The plugin <b>%s</b> requires the feature\n<i>%s</i> which is provided by the following\nplugins.  Please select which to enable.")%(
+				plugin.ShortDesc,need)
+		lab = gtk.Label()
+		lab.set_markup(msg)
+		dlg.vbox.pack_start(lab)
+		for p in dep:
+			icmb.append_text(p.ShortDesc)
+		dlg.vbox.pack_start(icmb,False,False)
+		dlg.vbox.show_all()
+		icmb.set_active(0)
+		ret = dlg.run()
+		val = icmb.get_active()
+		dlg.destroy()
+		if (ret == gtk.RESPONSE_CANCEL):
+			return
+		if (val == -1):
+			return
+		if not TryEnablePlugin(dep[val]):
+			return False
+	plugin.Enabled = True
+	return True
+
+def PluginButtonClicked(plb,pld):
+	global hideshowall
+	global AllowUpdate
+	if AllowUpdate:
+		if (plb.props.active):
+			if not TryEnablePlugin(pld.Plugin):
+				AllowUpdate = False
+				SetPluginsEnabled()
+				AllowUpdate = True
+				return
+		else:
+			ChainDisablePlugin(pld.Plugin)
+		AllowUpdate = False
+		SetPluginsEnabled()
+		UpdateBindingsList(hideshowall.props.active)
+		AllowUpdate = True
+		WriteSettings()
+
+def CatClicked(wid,event,CatInfo):
+	for category in AllCats:
+		category.Image.set_from_pixbuf(category.BasePixbuf)
+		category.Label.set_markup("<small>%s</small>"%(category.Category))
+	CatInfo.Image.set_from_pixbuf(CatInfo.HighPixbuf)
+	CatInfo.Label.set_markup("<small><i><b>%s</b></i></small>"%(CatInfo.Category))
+	if (PlugArea.get_child()):
+		PlugArea.remove(PlugArea.get_child())
+	PlugArea.add(CatInfo.Widget)
+	CatInfo.Widget.show_all()
+
+def PlugClicked(wid,event,plgInfo):
+	pl = AllCats[plgInfo.CatIndex]
+	for plugin in pl.Plugins:
+		plugin.Image.set_from_pixbuf(plugin.BasePixbuf)
+		plugin.Label.set_markup("<small>%s</small>"%(plugin.Plugin.ShortDesc))
+	plgInfo.Image.set_from_pixbuf(plgInfo.HighPixbuf)
+	plgInfo.Label.set_markup("<small><i><b>%s</b></i></small>"%(plgInfo.Plugin.ShortDesc))
+	if (pl.Container.get_child()):
+		pl.Container.remove(pl.Container.get_child())
+	pl.Container.add(plgInfo.Widget)
+	pl.Container.show_all()
+
+def TrySetBinding(set,typ,val):
+	v0 = set.Value[0]
+	v1 = set.Value[1]
+	v2 = set.Value[2]
+	v3 = set.Value[3]
+	if (typ == 0):
+		set.Value = [val,v1,v2,v3]
+	else:
+		set.Value = [v0,val,v2,v3]
+	cfl = set.Conflicts(typ)
+	if (len(cfl)<1):
+		return
+	for n in cfl[0][1]:
+		if (n.Plugin.Name == 'core'):
+			continue
+		if (n.Plugin.Enabled):
+			continue
+		cfl[0][1].remove(n)
+	for n in cfl[0][1]:
+		if (n.Name == set.Name and n.Plugin.Name == set.Plugin.Name):
+			cfl[0][1].remove(n)
+	if len(cfl[0][1])<1:
+		return
+	cset = cfl[0][1][0]
+	keym = ["keyboard shortcut","mouse shortcut"]
+	message = "Cannot set %s\n<b>%s</b> for <b>%s</b> to\n<u>%s</u> because it would conflict with\n%s <b>%s</b>\nfor <b>%s</b>."%(keym[typ],
+			set.ShortDesc,set.Plugin.ShortDesc,val.replace('<','&lt;'),keym[typ],cset.ShortDesc,cset.Plugin.ShortDesc)
+	dlg = gtk.Dialog(_("Shortcut Conflict"),MainWindow,gtk.DIALOG_MODAL,("Clear Conflicting Binding",gtk.RESPONSE_OK,gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL))
+	lab = gtk.Label()
+	lab.set_markup(message)
+	hbox = gtk.HBox()
+	vbox = gtk.VBox()
+	hbox.pack_start(vbox,False,False)
+	hbox.pack_start(lab,True,True)
+	vbox.pack_start(gtk.image_new_from_stock(gtk.STOCK_DIALOG_WARNING,gtk.ICON_SIZE_DIALOG),False,False)
+	dlg.vbox.pack_start(hbox,False,False)
+	dlg.vbox.show_all()
+	ret = dlg.run()
+	dlg.destroy()
+	if (ret == gtk.RESPONSE_CANCEL):
+		set.Value = [v0,v1,v2,v3]
+	else:
+		v0 = cset.Value[0]
+		v1 = cset.Value[1]
+		v2 = cset.Value[2]
+		v3 = cset.Value[3]
+		if (typ == 0):
+			v0 = 'Disabled'
+		else:
+			v1 = 'Disabled'
+		cset.Value = [v0,v1,v2,v3]
+		#look up cset in the list-store -.-
+		Iter = GenStore.get_iter_first()
+		while(Iter):
+			PIter = GenStore.iter_children(Iter)
+			while(PIter):
+				SIter = GenStore.iter_children(PIter)
+				while(SIter):
+					vals = GenStore.get(SIter,5,6)
+					if (vals[0] == cset.Plugin.Name and vals[1] == cset.Name):
+						GenStore.set(SIter,1,cset.Value[0],3,cset.Value[1])
+						return
+					SIter = GenStore.iter_next(SIter)
+				PIter = GenStore.iter_next(PIter)
+			Iter = GenStore.iter_next(Iter)
+
+def BindChanged(wid,path,tex,valplus):
+	val = valplus[0]
+	Info = valplus[1]
+	global AllowUpdate
+	if not AllowUpdate:
+		return
+	#val is key or button (0,1)
+	if Info:
+		MyStore = Info.StoreFiltered
+	else:
+		MyStore = GenStoreFiltered
+
+	Iter = MyStore.get_iter_from_string(path)
+	if not Iter:
+		return
+	AllowUpdate = False
+	if Info:
+		vals = MyStore.get(Iter,5)
+		set = Info.Plugin.Setting(vals[0])
+	else:
+		vals = MyStore.get(Iter,5,6)
+		set = Ctx.Plugin(vals[0]).Setting(vals[1])
+	TrySetBinding(set,val,tex)
+	RIter = MyStore.convert_iter_to_child_iter(Iter)
+	if Info:
+		MyStore = Info.Store
+	else:
+		MyStore = GenStore
+	if val == 0:
+		MyStore.set(RIter,1,set.Value[0])
+	else:
+		MyStore.set(RIter,3,set.Value[1])
+	WriteSettings()
+	AllowUpdate = True
+
+def SetWidgetsForSetting(setting):
+	#find setting in AllSettings
+	this = None
+	for set in AllSettings:
+		if set.Setting.Name == setting.Name and set.Setting.Plugin.Name == setting.Plugin.Name:
+			this = set
+	if (this == None):
+		return
+	set = this.Setting
+
+	if (setting.Integrated):
+	    this.Label.set_markup("<span foreground=\"blue\">%s</span>"%(set.ShortDesc))
+	else:
+	    this.Label.set_markup("%s"%(set.ShortDesc))
+
+	if (setting.ReadOnly):
+	    this.ResetButton.set_sensitive(False)
+	else:
+	    this.ResetButton.set_sensitive(True)
+
+	if (set.Type == 'Bool'):
+		this.Checkbox.props.active = set.Value
+		this.Checkbox.set_sensitive(not setting.ReadOnly)
+	elif (set.Type == 'Int' or set.Type == 'Float'):
+		this.SpinButton.set_value(set.Value)
+		this.SpinButton.set_sensitive(not setting.ReadOnly)
+	elif (set.Type == 'String' and len(set.Info) == 0):
+		this.Entry.set_text(set.Value)
+		this.Entry.set_sensitive(not setting.ReadOnly)
+	elif (set.Type == 'String'):
+		for m in range(0,len(set.Info)):
+			if (set.Info[m] == set.Value):
+				this.ComboBox.set_active(m)
+				this.ComboBox.set_sensitive(not setting.ReadOnly)
+	elif (set.Type == 'Color'):
+		this.ColorButton.set_color(gdk.color_parse(set.Value[0:7]))
+		this.ColorButton.set_alpha(eval('0x'+set.Value[7:9]))
+		this.ColorButton.set_sensitive(not setting.ReadOnly)
+	elif (set.Type == 'Binding' and set.Info[2]):
+		this.Checkbox.props.active = set.Value[2]
+		this.Checkbox.set_sensitive(not setting.ReadOnly)
+	elif (set.Type == 'List of String'):
+		if (len(set.Info)):
+			for n in this.CheckBoxes:
+				if (set.Value.__contains__(n.String)):
+					n.Checkbox.props.active = True
+				else:
+					n.Checkbox.props.active = False
+		else:
+			this.ListStore.clear()
+			for n in set.Value:
+				Iter = this.ListStore.append()
+				this.ListStore.set(Iter,0,n)
+
+def SetSettingFromWidgets(set):
+	#set is assumed to be a pair(setting,wid)
+	global AllowUpdate
+	if (not AllowUpdate):
+		return
+	setting = set.Setting
+	if (setting.Type == 'Bool'):
+		setting.Value = set.Checkbox.props.active
+	elif (setting.Type == 'Int' or setting.Type == 'Float'):
+		setting.Value = set.SpinButton.get_value()
+	elif (setting.Type == 'String' and len(setting.Info) == 0):
+		setting.Value = set.Entry.get_text()
+	elif (setting.Type == 'String'):
+		setting.Value = set.ComboBox.get_active_text()
+	elif (setting.Type == 'Color'):
+		col = set.ColorButton.get_color()
+		al = set.ColorButton.get_alpha()
+		setting.Value = (col.red,col.green,col.blue,al)
+	elif (setting.Type == 'Binding' and setting.Info[2]):
+		vv = setting.Value
+		setting.Value = [vv[0],vv[1],set.Checkbox.props.active,vv[3]]
+	elif (setting.Type == 'List of String'):
+		if (len(setting.Info)):
+			val = []
+			for n in set.CheckBoxes:
+				if (n.Checkbox.props.active):
+					val += [n.String]
+			setting.Value = val
+		else:
+			val = []
+			Iter = set.ListStore.get_iter_first()
+			while Iter:
+				val += [set.ListStore.get(Iter,0)[0]]
+				Iter = set.ListStore.iter_next(Iter)
+			setting.Value = val
+	WriteSettings()
+	AllowUpdate = False
+	SetWidgetsForSetting(setting)
+	AllowUpdate = True
+
+def SimpleChangedCB(wid,set):
+	SetSettingFromWidgets(set)
+
+def UpdateBindingsList(ShowHidden):
+	global GenStore
+	GenStore.clear()
+	global EdgeStore
+	EdgeStore.clear()
+	s = Ctx.Plugins
+	for p in range(0,len(s)):
+		if (s[p].Name == 'core'):
+			nn = s[0]
+			s[0] = s[p]
+			s[p] = nn
+	Iter = EdgeStore.append()
+	EdgeStore.set(Iter,0,"<small>None</small>",1,"",2,"",3,True)
+	if (len(EdgeBoxes) == 3):
+		for row in range(0,3):
+			for col in range(0,3):
+				if (EdgeBoxes[row][col][0]):
+					EdgeBoxes[row][col][0].set_active_iter(Iter)
+	for p in s:
+		if (not (ShowHidden or p.Enabled or p.Name == 'core')):
+			continue
+		hasany = False
+		for q in p.Settings:
+			if q.Type == 'Binding' and q.Info[3]:
+				hasany = True
+		if not hasany:
+			continue
+		Iter = EdgeStore.append()
+		EdgeStore.set(Iter,0,"<b>%s</b>"%p.ShortDesc,3,False)
+		for q in p.Settings:
+			if q.Type == 'Binding' and q.Info[3]:
+				Iter = EdgeStore.append()
+				EdgeStore.set(Iter,0,"<small>%s</small>"%q.ShortDesc,1,p.Name,2,q.Name,3,True)
+				if len(EdgeBoxes) == 3:
+					for row in range(0,3):
+						for col in range(0,3):
+							if (EdgeBoxes[row][col][1] != 0):
+								set = Ctx.EdgeOwner(EdgeBoxes[row][col][1])
+								if (set):
+									if (set.Name == q.Name and set.Plugin.Name == q.Plugin.Name):
+										EdgeBoxes[row][col][0].set_active_iter(Iter)
+
+	for p in range(1,len(s)-1):
+		for q in range(p+1,len(s)):
+			if (s[p].ShortDesc>s[q].ShortDesc):
+				nn = s[p]
+				s[p] = s[q]
+				s[q] = nn
+	for p in s:
+		if (not (ShowHidden or p.Enabled or p.Name == 'core')):
+			continue
+		hasany = False
+		for m in p.Settings:
+			if (m.Type == 'Binding' and (m.Info[0] or m.Info[1])):
+				hasany = True
+				break
+		if hasany:
+			PIter = GenStore.append(None)
+			GenStore.set(PIter,0,p.ShortDesc,1,"",2,False,3,"",4,False,5,"",6,"")
+			for g in p.Groups:
+				hasany = False
+				for s in g.SubGroups:
+					for m in s.Settings:
+						if (m.Type == 'Binding' and (m.Info[0] or m.Info[1])):
+							hasany = True
+							break
+					if hasany:
+						break
+				if hasany:
+					GIter = GenStore.append(PIter)
+					GenStore.set(GIter,0,g.Name,1,"",2,False,3,"",4,False,5,"",6,"")
+					for s in g.SubGroups:
+						for m in s.Settings:
+							if (m.Type == 'Binding' and (m.Info[0] or m.Info[1])):
+								SIter = GenStore.append(GIter)
+								if (m.Info[0]):
+									mv0 = m.Value[0]
+								else:
+									mv0 = "N/A"
+								if (m.Info[1]):
+									mv1 = m.Value[1]
+								else:
+									mv1 = "N/A"
+								if (m.Integrated):
+								    GenStore.set(SIter,0,"<span foreground=\"blue\">%s</span>"%(m.ShortDesc),1,mv0,2,m.Info[0] and not m.ReadOnly,
+										    3,mv1,4,m.Info[1] and not m.ReadOnly,5,p.Name,6,m.Name)
+								else:
+								    GenStore.set(SIter,0,m.ShortDesc,1,mv0,2,m.Info[0] and not m.ReadOnly,
+										    3,mv1,4,m.Info[1] and not m.ReadOnly,5,p.Name,6,m.Name)
+
+
+def HideShowClick(wid):
+	UpdateBindingsList(wid.props.active)
+
+try:
+	statemask = gdk.SHIFT_MASK | gdk.CONTROL_MASK | gdk.MOD1_MASK | gdk.MOD2_MASK | gdk.MOD3_MASK | \
+			gdk.MOD5_MASK | gdk.SUPER_MASK | gdk.HYPER_MASK | gdk.META_MASK
+except:
+	statemask = gdk.SHIFT_MASK | gdk.CONTROL_MASK | gdk.MOD1_MASK | gdk.MOD2_MASK | gdk.MOD3_MASK | \
+			gdk.MOD4_MASK | gdk.MOD5_MASK
+
+def kpe(win,ev,ent):
+	keygot = (ev.keyval,ev.state)
+	#check to see if its a modifier key
+	#currently this will be a hardcoded list, should perhaps be changed later
+	ModKeys = ['Alt_L','Alt_R','AltGr','Super_L','Super_R','Control_L','Control_R','Shift_L','Shift_R','Meta_L','Meta_R','Multi_key']
+	if (ModKeys.__contains__(gdk.keyval_name(ev.keyval))):
+		return
+	ev = gdk.event_get()
+	win.grab_remove()
+	gdk.keyboard_ungrab()
+	win.destroy()
+	keygot = (keygot[0],keygot[1]&statemask)
+	win.destroy()
+	if (keygot[1] == 0 and keygot[0] == gdk.keyval_from_name("Escape")):
+		return
+	if (keygot[1] == 0 and keygot[0] == gdk.keyval_from_name("BackSpace")):
+		ent.set_text("Disabled")
+	else:
+		ent.set_text(gtk.accelerator_name(keygot[0],keygot[1]))
+
+
+def GetKey(wid,ent):
+	global keygot
+	win = gtk.Window(gtk.WINDOW_POPUP)
+	win.set_position(gtk.WIN_POS_MOUSE)
+	win.set_resizable(False)
+	fram = gtk.Frame()
+	win.add(fram)
+	fram.set_shadow_type(gtk.SHADOW_OUT)
+	align = gtk.Alignment(0,0,0,0)
+	align.props.border_width = 32
+	str = "Please press the key on the keyboard\n"
+	str += "you wish to modify this keyboard-shortcut\n"
+	str += "to use from now on. Press BACKSPACE to clear,\n"
+	str += "Press ESCAPE to cancel."
+	lab = gtk.Label(str)
+	fram.add(align)
+	align.add(lab)
+	win.show_all()
+	while(gtk.events_pending()):
+		gtk.main_iteration()
+	gdk.flush()
+	while(gtk.events_pending()):
+		gtk.main_iteration()
+	win.window.set_events(gdk.KEY_PRESS_MASK)
+	gdk.keyboard_grab(win.window,True)
+	win.grab_add()
+	win.grab_focus()
+	keygot = None
+	win.connect("key-press-event",kpe,ent)
+
+def ClearIt(wid,ent):
+	ent.set_text('Disabled')
+
+def ResetIt(wid,inf):
+	ent = inf[0]
+	set = inf[1]
+	typ = inf[2]
+	vv = set.Value
+	v0 = vv[0]
+	v1 = vv[1]
+	v2 = vv[2]
+	v3 = vv[3]
+	set.ResetToDefault()
+	ent.set_text(set.Value[typ])
+	set.Value = [v0,v1,v2,v3]
+
+def BindingPopup(wid,path,col,Info):
+	global AllowUpdate
+	#why does this get a tuple? that makes no sense.
+	spath = None
+	for foo in path:
+		if (spath):
+			spath = spath+':'+str(foo)
+		else:
+			spath = str(foo)
+	if (Info):
+		MyStore = Info.StoreFiltered
+	else:
+		MyStore = GenStoreFiltered
+	Iter = MyStore.get_iter_from_string(spath)
+	if not Iter:
+		return
+	if (MyStore.iter_has_child(Iter)):
+		if (wid.row_expanded(spath)):
+			wid.collapse_row(spath)
+		else:
+			wid.expand_row(spath,False)
+		return
+	if Info:
+		vals = MyStore.get(Iter,5)
+		set = Info.Plugin.Setting(vals[0])
+	else:
+		vals = GenStoreFiltered.get(Iter,5,6)
+		set = Ctx.Plugin(vals[0]).Setting(vals[1])
+	if (set.ReadOnly):
+	    return
+	dlg = gtk.Dialog("Edit Shortcuts for %s"%set.ShortDesc,MainWindow,gtk.DIALOG_MODAL,(gtk.STOCK_OK,gtk.RESPONSE_OK,gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL))
+	vb = dlg.vbox
+	tb = gtk.Table()
+	tb.props.border_width = 5
+	tb.props.row_spacing = 5
+	tb.props.column_spacing = 5
+	vb.pack_start(tb,False,False)
+	kent = None
+	bent = None
+	if (set.Info[0]):
+		lab = gtk.Label(_("Keyboard Binding:"))
+		lab.props.xalign = 1
+		tb.attach(lab,0,1,0,1)
+		ent = gtk.Entry()
+		ent.set_text(set.Value[0])
+		tb.attach(ent,1,2,0,1)
+		grab = gtk.Button(_("Grab Key"))
+		tb.attach(grab,2,3,0,1)
+		grab.connect("clicked",GetKey,ent)
+		clear = gtk.Button("Clear")
+		clear.connect("clicked",ClearIt,ent)
+		tb.attach(clear,3,4,0,1)
+		rest = gtk.Button()
+		rest.connect("clicked",ResetIt,(ent,set,0))
+		rest.props.image = gtk.image_new_from_stock(gtk.STOCK_CLEAR,gtk.ICON_SIZE_BUTTON)
+		tb.attach(rest,4,5,0,1)
+		kent = ent
+	if (set.Info[1]):
+		lab = gtk.Label(_("Mouse Binding:"))
+		lab.props.xalign = 1
+		tb.attach(lab,0,1,1,2)
+		ent = gtk.Entry()
+		ent.set_text(set.Value[1])
+		tb.attach(ent,1,2,1,2)
+		clear = gtk.Button(_("Clear"))
+		clear.connect("clicked",ClearIt,ent)
+		tb.attach(clear,3,4,1,2)
+		rest = gtk.Button()
+		rest.connect("clicked",ResetIt,(ent,set,1))
+		rest.props.image = gtk.image_new_from_stock(gtk.STOCK_CLEAR,gtk.ICON_SIZE_BUTTON)
+		tb.attach(rest,4,5,1,2)
+		bent = ent
+	lbl_desc = gtk.Label(_(set.LongDesc))
+	vb.pack_start(gtk.HSeparator())
+	vb.pack_start(lbl_desc,False,False)
+	vb.show_all()
+	ret = dlg.run()
+	if (ret == gtk.RESPONSE_OK):
+		if kent:
+			TrySetBinding(set,0,kent.get_text())
+		if bent:
+			# We don't really want a Button1 binding
+			if bent.get_text().lower() != "button1":
+				TrySetBinding(set,1,bent.get_text())
+		AllowUpdate = False
+		RIter = MyStore.convert_iter_to_child_iter(Iter)
+		if Info:
+			Info.Store.set(RIter,1,set.Value[0],3,set.Value[1])
+		else:
+			GenStore.set(RIter,1,set.Value[0],3,set.Value[1])
+		WriteSettings()
+		AllowUpdate = True
+	dlg.destroy()
+
+def BindingIsVisibleMethod(model,iter,entry):
+	if (model.iter_children(iter)):
+		niter = model.iter_children(iter)
+		while(niter):
+			if (BindingIsVisibleMethod(model,niter,entry)):
+				return True
+			niter = model.iter_next(niter)
+		return False
+	text = entry.get_text()
+	if len(text) == 0:
+		return True
+	dat = ' '.join( model.get(iter,0,1,3) )
+	for string in text.lower().split(' '):
+		if dat.lower().find(string) < 0:
+			return False
+	return True
+
+def UpdateBindingsFilter(foo):
+	global AllowUpdate
+	if not AllowUpdate:
+		return
+	AllowUpdate = False
+	GenStoreFiltered.refilter()
+	AllowUpdate = True
+
+def ClearEntry(but,ent):
+	ent.set_text('')
+
+def MakeBindingsList():
+	vbox = gtk.VBox(False,4)
+	hbox = gtk.HBox(False,4)
+	entry = gtk.Entry()
+	clearbut = gtk.Button(gtk.STOCK_CLEAR)
+	clearbut.set_use_stock(True)
+	hbox.pack_start(gtk.Label(_("Search:")),False,False)
+	hbox.pack_start(entry,True,True)
+	hbox.pack_start(clearbut,False,False)
+	vbox.pack_start(hbox,False,False)
+	genview = gtk.TreeView(GenStoreFiltered)
+	nameren = gtk.CellRendererText()
+	genview.insert_column_with_attributes(0,_("Name"),nameren,markup = 0)
+	keyren = gtk.CellRendererText()
+	genview.insert_column_with_attributes(1,_("Keyboard"),keyren,text = 1,editable = 2,sensitive = 2)
+	butren = gtk.CellRendererText()
+	genview.insert_column_with_attributes(2,_("Mouse"),butren,text = 3,editable = 4,sensitive = 4)
+	genview.props.headers_visible = True
+	genview.props.rules_hint = True
+	cont = gtk.ScrolledWindow()
+	#cont.props.height_request = 250
+	cont.props.hscrollbar_policy = gtk.POLICY_NEVER
+	cont.add(genview)
+	vwinfr = gtk.Frame()
+	vwinfr.props.shadow_type = gtk.SHADOW_IN
+	vwinfr.add(cont)
+	genview.connect("row-activated",BindingPopup,None)
+	keyren.connect("edited",BindChanged,(0,None))
+	butren.connect("edited",BindChanged,(1,None))
+	entry.connect("changed",UpdateBindingsFilter)
+	clearbut.connect("clicked",ClearEntry,entry)
+	GenStoreFiltered.set_visible_func(BindingIsVisibleMethod,entry)
+	vbox.pack_start(vwinfr,True,True)
+	return vbox
+
+def EdgeChanged(wid,edg):
+	global AllowUpdate
+	if not AllowUpdate:
+		return
+	Iter = wid.get_active_iter()
+	if (not Iter):
+		return
+	vval = wid.get_model().get(Iter,3)
+	if not vval:
+		return
+	oset = Ctx.EdgeOwner(edg)
+	if (oset):
+		vv = oset.Value
+		ne = vv[3]
+		if (ne.__contains__(berylsettings.edgetolist(edg)[0])):
+			ne.remove(berylsettings.edgetolist(edg)[0])
+		oset.Value = [vv[0],vv[1],vv[2],ne]
+	vals = wid.get_model().get(Iter,1,2)
+	if (vals[0] == '' and vals[1] == ''):
+		WriteSettings()
+		return
+	set = Ctx.Plugin(vals[0]).Setting(vals[1])
+	vv = set.Value
+	ne = vv[3]
+	if not (ne.__contains__(berylsettings.edgetolist(edg)[0])):
+		ne = ne+berylsettings.edgetolist(edg)
+	set.Value = [vv[0],vv[1],vv[2],ne]
+	WriteSettings()
+
+def MakeEdgeWidgets():
+	global AllowUpdate
+	AllowUpdate = False
+	global EdgeStore
+	tab = gtk.Table()
+	al = gtk.VBox()
+	al.pack_start(tab,False,False)
+	global EdgeBoxes
+	EdgeBoxes = []
+	for h in range(0,3):
+		newbox = []
+		for v in range(0,3):
+			if (h != 1 or v != 1):
+				align = gtk.Frame(EdgeDesc[v][h][0])
+				box = gtk.ComboBox(EdgeStore)
+				cell = gtk.CellRendererText()
+				cell.props.wrap_width = 140
+				cell.props.wrap_mode = gtk.WRAP_WORD
+				box.pack_start(cell,True)
+				box.add_attribute(cell,'markup',0)
+				box.add_attribute(cell,'sensitive',3)
+				align.add(box)
+				newbox = newbox+[(box,berylsettings.edgelisttomask([EdgeDesc[v][h][1]]))]
+				tab.attach(align,h,h+1,v,v+1)
+				box.connect("changed",EdgeChanged,berylsettings.edgelisttomask([EdgeDesc[v][h][1]]))
+			else:
+				newbox = newbox+[(None,0)]
+		EdgeBoxes = EdgeBoxes+[newbox]
+	UpdateBindingsList(False)
+	AllowUpdate = True
+	return al
+
+def RowEdited(wid,path,tex,set):
+	global AllowUpdate
+	if not AllowUpdate:
+		return
+	n = int(path)
+	n = set.ListStore.iter_nth_child(None,n)
+	set.ListStore.set(n,0,tex)
+	SetSettingFromWidgets(set)
+	return True
+
+def ClearSet(wid,set):
+	global AllowUpdate
+	if (set.Setting.Type == 'Binding'):
+		vv = set.Setting.Value
+		v0 = vv[0]
+		v1 = vv[1]
+		v3 = vv[3]
+		set.Setting.ResetToDefault()
+		set.Setting.Value = [v0,v1,set.Setting.Value[2],v3]
+	else:
+		set.Setting.ResetToDefault()
+	WriteSettings()
+	AllowUpdate = False
+	SetWidgetsForSetting(set.Setting)
+	AllowUpdate = True
+
+def ClearPopupEntry(wid,realwid):
+	realwid.set_text("")
+
+Row = 0
+
+def GetXprop(regexp):
+	xprop = os.popen("xprop").readlines()
+	rex = re.compile(regexp)
+	val = ""
+	for line in xprop:
+		if rex.search(line):
+			m = rex.match(line)
+			val = m.group(1).lower().capitalize()
+	return val
+
+def PutXprop(set,cbox,centry):
+	if cbox.get_active_text() == "Window Type":
+		val = GetXprop("^_NET_WM_WINDOW_TYPE\(ATOM\) = _NET_WM_WINDOW_TYPE_(\w+)")
+	elif cbox.get_active_text() == "Window Class":
+		val = GetXprop("^WM_CLASS\(STRING\) = \"([^\"]+)\"")
+	elif cbox.get_active_text() == "Window Title":
+		val = GetXprop("^WM_NAME\(STRING\) = \"([^\"]+)\"")
+	elif cbox.get_active_text() == "Owning Program":
+		pid = GetXprop("^_NET_WM_PID\(CARDINAL\) = (\d+)")
+		val = os.popen("ps -p%s -ocomm="%pid).read().rstrip("\r\n")
+	elif cbox.get_active_text() == "Window Role":
+		val = GetXprop("^WM_WINDOW_ROLE\(STRING\) = \"([^\"]+)\"")
+	elif cbox.get_active_text() == "Class Name":
+		val = GetXprop("^WM_CLASS\(STRING\) = \"[^\"]+\", \"([^\"]+)\"")
+	centry.set_text(val)
+
+def StatePopup(button,set):
+	dlg = gtk.Dialog(_("Add criteria for window attribute"),MainWindow,gtk.DIALOG_MODAL,(gtk.STOCK_OK,gtk.RESPONSE_OK,gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL))
+	vbox = dlg.vbox
+	sldr = gtk.HBox(False,8)
+	hbox = gtk.HBox(False,8)
+	vrow = gtk.HBox(False,8)
+	lrow = gtk.HBox(False,8)
+	vbox.pack_start(sldr,True,True)
+	vbox.pack_start(hbox,False,False)
+	vbox.pack_start(vrow,True,True)
+	vbox.pack_start(lrow,True,True)
+	ld = gtk.Label(set.Setting.LongDesc)
+	ld.set_width_chars(50)
+	ld.set_line_wrap(True)
+	sldr.pack_start(ld,True,True)
+	pcombo = gtk.combo_box_new_text()
+	for property in ["Window Type","Window Class","Window Title",\
+			"Owning Program","Class Name","Class Role"]:
+		pcombo.append_text(property)
+	pval = gtk.Entry()
+	pcombo.connect("changed",ClearPopupEntry,pval)
+	pval.width_chars = 15
+	grab = gtk.Button("Grab")
+	grab.connect("clicked",PutXprop,pcombo,pval)
+	if set.Setting.Name in ("opacity","brightness","saturation"):
+		Adj = gtk.Adjustment(0,0,100,1)
+		bat = gtk.SpinButton(Adj,1,0)
+		valwid = gtk.HScale(Adj)
+		valwid.props.digits = 0
+		vrow.pack_end(bat,True,True)
+	elif set.Setting.Name == "viewport":
+		hsize = Ctx.Plugins['core'].Setting("size").Value
+		Adj = gtk.Adjustment(0,0,hsize,1)
+		valwid = gtk.combo_box_new_text()
+		for i in range(hsize+1):
+			valwid.append_text(str(i))
+	elif set.Setting.Name in ("border","noargb"):
+		valwid = gtk.CheckButton(set.Setting.ShortDesc)
+		valwid.set_active(True)
+	elif set.Setting.Name == "position":
+		valwid = gtk.combo_box_new_text()
+		valwid.append_text(_("Top Left"))
+		valwid.append_text(_("Top Center"))
+		valwid.append_text(_("Top Right"))
+		valwid.append_text(_("Center Left"))
+		valwid.append_text(_("Center"))
+		valwid.append_text(_("Center Right"))
+		valwid.append_text(_("Bottom Left"))
+		valwid.append_text(_("Bottom Center"))
+		valwid.append_text(_("Bottom Right"))
+	lbl = gtk.Label(_("\nSelect the window attribute. Click the Grab button to select a window, then choose a value for the setting."))
+	lbl.set_width_chars(50)
+	lbl.set_line_wrap(True)
+	lrow.pack_start(lbl,True,True)
+	lrow.show_all()
+	sldr.show_all()
+	hbox.pack_start(pcombo,False,False)
+	hbox.pack_start(pval,False,False)
+	hbox.pack_start(grab,False,False)
+	vrow.pack_start(valwid,True,True)
+	hbox.show_all()
+	vrow.show_all()
+	ret = dlg.run()
+	if (ret == gtk.RESPONSE_OK):
+		propname = pcombo.get_active_text()
+		propval  = pval.get_text()
+		if set.Setting.Name == "viewport":
+			val = valwid.get_active_text()
+		elif set.Setting.Name in ("border","noargb"):
+				if valwid.get_active():
+					val = "1"
+				else:
+					val = "0"
+		elif set.Setting.Name == "position":
+			val = str(valwid.get_active()+1)
+		else:
+			val = str(int(bat.get_value()))
+		if propname != None and propval != None and val != None:
+			AddStateProp(pcombo.get_active_text(),pval.get_text(),val,set)
+	dlg.destroy()
+
+def AddStateProp(cval,tval,val,set):
+	if cval == "Window Type":
+		let = "w"
+	elif cval == "Window Class":
+		let = "c"
+	elif cval == "Window Title":
+		let = "t"
+	elif cval == "Owning Program":
+		let = "p"
+	elif cval == "Class Name":
+		let = "n"
+	elif cval == "Class Role":
+		let = "r"
+	inspos = set.TreeView.get_selection().get_selected()[1]
+	if (inspos):
+		Iter = set.ListStore.insert_after(inspos)
+	else:
+		Iter = set.ListStore.append()
+	set.ListStore.set(Iter,0,let + ':' + tval + ':' + val)
+	SetSettingFromWidgets(set)
+
+def MakeAndConnect(wid,name,setting):
+	global AllSettings
+	global Row
+	resbut = gtk.Button()
+	resbut.props.image = gtk.image_new_from_stock(gtk.STOCK_CLEAR,gtk.ICON_SIZE_BUTTON)
+	SetInfo = FooClass()
+	SetInfo.Setting = setting
+	SetWid = []
+	lab = gtk.Label(setting.ShortDesc)
+	SetInfo.Label = lab
+	SetInfo.ResetButton = resbut
+	if (setting.Type == 'Bool'):
+		foo = gtk.HBox(False,8)
+		foo.pack_start(resbut,False,False)
+		foo.pack_start(lab,False,False)
+		ebox = gtk.EventBox()
+		ebox.add(foo)
+		wid.attach(ebox,0,1,Row,Row+1,gtk.SHRINK)
+		bar = gtk.CheckButton()
+		bar.props.xalign = 0
+		tooltips.set_tip(ebox,setting.LongDesc)
+		tooltips.set_tip(bar,setting.LongDesc)
+		wid.attach(bar,1,2,Row,Row+1)
+		SetInfo.Checkbox = bar
+		bar.connect("toggled",SimpleChangedCB,SetInfo)
+	elif (setting.Type == 'Binding' and setting.Info[2]):
+		foo = gtk.HBox(False,8)
+		foo.pack_start(resbut,False,False)
+		lab.set_text("%s on system bell"%setting.ShortDesc)
+		foo.pack_start(lab,False,False)
+		ebox = gtk.EventBox()
+		ebox.add(foo)
+		wid.attach(ebox,0,1,Row,Row+1,gtk.SHRINK)
+		bar = gtk.CheckButton()
+		bar.props.xalign = 0
+		tooltips.set_tip(bar,setting.LongDesc)
+		tooltips.set_tip(ebox,setting.LongDesc)
+		wid.attach(bar,1,2,Row,Row+1)
+		SetInfo.Checkbox = bar
+		bar.connect("toggled",SimpleChangedCB,SetInfo)
+	elif (setting.Type == 'List of String'):
+		if (len(setting.Info)):
+			foo = gtk.Frame(setting.ShortDesc)
+			bar = gtk.HBox(False,8)
+			bar.props.border_width = 4
+			ebox = gtk.EventBox()
+			ebox.add(bar)
+			tooltips.set_tip(ebox,setting.LongDesc)
+			foo.add(ebox)
+			baz = gtk.VBox(False,0)
+			bar.pack_start(baz,False,False)
+			baz.pack_start(resbut,False,False)
+			checkies = []
+			row = 0
+			col = 0
+			checkCont = gtk.Table()
+			for m in setting.Info:
+				ss = gtk.CheckButton(m)
+				CheckInfo = FooClass()
+				CheckInfo.String = m
+				CheckInfo.Checkbox = ss
+				checkies = checkies+[CheckInfo]
+				checkCont.attach(ss,col,col+1,row,row+1)
+				col = col+1
+				if (col>3):
+					col = 0
+					row = row+1
+			bar.pack_start(checkCont,True,True)
+			SetInfo.CheckBoxes = checkies
+			for bar in checkies:
+				bar.Checkbox.connect("toggled",SimpleChangedCB,SetInfo)
+		else:
+			foo = gtk.Frame(setting.ShortDesc)
+			bar = gtk.HBox(False,8)
+			ebox = gtk.EventBox()
+			ebox.add(bar)
+			bar.props.border_width = 4
+			foo.add(ebox)
+			tooltips.set_tip(ebox,setting.LongDesc)
+			bil = gtk.ListStore(gobject.TYPE_STRING)
+			foob = gtk.ScrolledWindow()
+			foob.props.hscrollbar_policy = gtk.POLICY_NEVER
+			foob.props.vscrollbar_policy = gtk.POLICY_AUTOMATIC
+			foob.props.shadow_type = gtk.SHADOW_IN
+			baz = gtk.TreeView(bil)
+			foob.add(baz)
+			ren = gtk.CellRendererText()
+			ren.props.editable = True
+			baz.insert_column_with_attributes(0,"Value",ren,text = 0)
+			baz.props.headers_visible = False
+			baz.props.height_request = 100
+			fib = gtk.VBox()
+			fib.pack_start(resbut,False,False)
+			bar.pack_start(fib,False,False)
+			bar.pack_start(foob,True,True)
+			tab = gtk.Table(homogeneous = True)
+			delete = gtk.Button()
+			delete.props.image = gtk.image_new_from_stock(gtk.STOCK_REMOVE,gtk.ICON_SIZE_BUTTON)
+			add = gtk.Button()
+			add.props.image = gtk.image_new_from_stock(gtk.STOCK_ADD,gtk.ICON_SIZE_BUTTON)
+			if setting.Plugin.Name == "state":
+				add.connect("clicked",StatePopup,SetInfo)
+			else:
+				up = gtk.Button()
+				up.props.image = gtk.image_new_from_stock(gtk.STOCK_GO_UP,gtk.ICON_SIZE_BUTTON)
+				dn = gtk.Button()
+				dn.props.image = gtk.image_new_from_stock(gtk.STOCK_GO_DOWN,gtk.ICON_SIZE_BUTTON)
+				up.connect("clicked",MoveRow,(0,SetInfo))
+				dn.connect("clicked",MoveRow,(1,SetInfo))
+				add.connect("clicked",AddRow,SetInfo)
+				tab.attach(up,0,1,0,1)
+				tab.attach(dn,0,1,2,3)
+			SetInfo.ListStore = bil
+			SetInfo.TreeView = baz
+			if (setting.Hints.find("file")):
+				brw = gtk.Button(_("Browse"))
+				brw.props.image = gtk.image_new_from_stock(gtk.STOCK_OPEN,gtk.ICON_SIZE_BUTTON)
+				brw.connect("clicked",BrowseRow,SetInfo)
+				tooltips.set_tip(brw,setting.LongDesc)
+				tab.attach(brw,0,2,1,2)
+			delete.connect("clicked",DelRow,SetInfo)
+			tab.attach(add,1,2,0,1)
+			tab.attach(delete,1,2,2,3)
+			bar.pack_start(tab,False,False)
+			ren.connect("edited",RowEdited,SetInfo)
+		wid.attach(foo,0,2,Row,Row+1)
+	elif (setting.Type == 'String'):
+		foo = gtk.HBox(False,8)
+		foo.pack_start(resbut,False,False)
+		foo.pack_start(lab,False,False)
+		ebox = gtk.EventBox()
+		ebox.add(foo)
+		wid.attach(ebox,0,1,Row,Row+1,gtk.SHRINK)
+		tooltips.set_tip(ebox,setting.LongDesc)
+		if (len(setting.Info)):
+			bar = gtk.combo_box_new_text()
+			for m in setting.Info:
+				bar.append_text(m)
+			SetInfo.ComboBox = bar
+		else:
+			bar = gtk.Entry()
+			bar.props.width_chars = 30
+			SetInfo.Entry = bar
+		foo = gtk.HBox(False,8)
+		foo.pack_start(bar,True,True)
+		ebox = gtk.EventBox()
+		ebox.add(foo)
+		tooltips.set_tip(ebox,setting.LongDesc)
+		if (setting.Hints.find("file")):
+			#bar.props.width_chars = 25
+			brw = gtk.Button("Browse")
+			brw.props.image = gtk.image_new_from_stock(gtk.STOCK_OPEN,gtk.ICON_SIZE_BUTTON)
+			brw.connect("clicked",BrowseEntry,SetInfo)
+			tooltips.set_tip(brw,setting.LongDesc)
+			foo.pack_start(brw,False,False)
+		wid.attach(ebox,1,2,Row,Row+1)
+		bar.connect("changed",SimpleChangedCB,SetInfo)
+	elif (setting.Type == 'Int' or setting.Type == 'Float'):
+		foo = gtk.HBox(False,8)
+		foo.pack_start(resbut,False,False)
+		foo.pack_start(lab,False,False)
+		ebox = gtk.EventBox()
+		ebox.add(foo)
+		tooltips.set_tip(ebox,setting.LongDesc)
+		wid.attach(ebox,0,1,Row,Row+1,gtk.SHRINK)
+		foo = gtk.HBox(False,8)
+		if (len(setting.Info)>2):
+			Adj = gtk.Adjustment(setting.Value,setting.Info[0],setting.Info[1],setting.Info[2])
+			bat = gtk.SpinButton(Adj,setting.Info[2],4)
+			ban = gtk.HScale(Adj)
+			tooltips.set_tip(ban,setting.LongDesc)
+			ban.props.digits = 4
+		else:
+			Adj = gtk.Adjustment(setting.Value,setting.Info[0],setting.Info[1],1)
+			bat = gtk.SpinButton(Adj,1,0)
+			ban = gtk.HScale(Adj)
+			tooltips.set_tip(ban,setting.LongDesc)
+			ban.props.digits = 0
+		ban.props.update_policy = gtk.UPDATE_DISCONTINUOUS
+		bat.props.update_policy = gtk.UPDATE_IF_VALID
+		ban.props.draw_value = False
+		bat.props.width_chars = 6
+		bat.set_editable(True)
+		tooltips.set_tip(bat,setting.LongDesc)
+		hb = gtk.HBox(False,8)
+		wid.attach(hb,1,2,Row,Row+1)
+		hb.pack_start(ban,True,True)
+		hb.pack_start(bat,False,False)
+		SetInfo.SpinButton = bat
+		SetInfo.HScale = ban
+		ban.connect("value-changed",SimpleChangedCB,SetInfo)
+	elif (setting.Type == 'Color'):
+		foo = gtk.HBox(False,8)
+		foo.pack_start(resbut,False,False)
+		foo.pack_start(lab,False,False)
+		ebox = gtk.EventBox()
+		ebox.add(foo)
+		tooltips.set_tip(ebox,setting.LongDesc)
+		wid.attach(ebox,0,1,Row,Row+1,gtk.SHRINK)
+		foo = gtk.HBox(False,8)
+		bar = gtk.ColorButton()
+		tooltips.set_tip(bar,setting.LongDesc)
+		foo.pack_start(bar,False,False)
+		bar.props.use_alpha = True
+		wid.attach(foo,1,2,Row,Row+1)
+		SetInfo.ColorButton = bar
+		bar.connect("color-set",SimpleChangedCB,SetInfo)
+	else:
+		return False
+	lab.props.wrap = True
+	lab.props.width_request = 250
+	lab.props.xalign = 0
+	Row = Row+1
+	resbut.connect("clicked",ClearSet,SetInfo)
+	AllSettings = AllSettings+[SetInfo]
+	return True
+
+def DoFilter(foo,Store):
+	Store.refilter()
+
+def MakeBindingsListForPlugin(Plugin):
+	BindVBox = gtk.VBox(False,4)
+	EntHBox = gtk.HBox(False,4)
+	entry = gtk.Entry()
+	clearbut = gtk.Button(gtk.STOCK_CLEAR)
+	clearbut.set_use_stock(True)
+	EntHBox.pack_start(gtk.Label(_("Search:")),False,False)
+	EntHBox.pack_start(entry,True,True)
+	EntHBox.pack_start(clearbut,False,False)
+	BindVBox.pack_start(EntHBox,False,False)
+	Store = gtk.TreeStore(
+		gobject.TYPE_STRING,	#Entry Name
+		gobject.TYPE_STRING,	#Key binding
+		gobject.TYPE_BOOLEAN,	#key enabled
+		gobject.TYPE_STRING,	#Button binding
+		gobject.TYPE_BOOLEAN,	#button enabled
+		gobject.TYPE_STRING,	#setting name
+			)
+	StoreFiltered = Store.filter_new()
+	View = gtk.TreeView(StoreFiltered)
+	Scroll = gtk.ScrolledWindow()
+	Scroll.props.hscrollbar_policy = gtk.POLICY_NEVER
+	Scroll.add(View)
+	vwinfr = gtk.Frame()
+	vwinfr.props.shadow_type = gtk.SHADOW_IN
+	vwinfr.add(Scroll)
+	BindVBox.pack_start(vwinfr,True,True)
+	nameren = gtk.CellRendererText()
+	View.insert_column_with_attributes(0,_("Name"),nameren,markup = 0)
+	keyren = gtk.CellRendererText()
+	View.insert_column_with_attributes(1,_("Keyboard"),keyren,text = 1,editable = 2,sensitive = 2)
+	butren = gtk.CellRendererText()
+	View.insert_column_with_attributes(2,_("Mouse"),butren,text = 3,editable = 4,sensitive = 4)
+	View.props.headers_visible = True
+	View.props.rules_hint = True
+	hasany = False
+
+	StoreFiltered.set_visible_func(BindingIsVisibleMethod,entry)
+
+	for G in Plugin.Groups:
+		GSettings = [S for S in Plugin.Settings if S.Group == G.Name and S.Type == 'Binding'
+				and (S.Info[0] or S.Info[1])]
+		if len(G.SubGroups) and not (G.Name == '') and len(GSettings):
+			GIter = Store.append(None)
+			Store.set(GIter,0,G.Name)
+		else:
+			GIter = None
+		for S in GSettings:
+			hasany = True
+			Iter = Store.append(GIter)
+			if (S.Info[0]):
+				mv0 = S.Value[0]
+			else:
+				mv0 = "N/A"
+			if (S.Info[1]):
+				mv1 = S.Value[1]
+			else:
+				mv1 = "N/A"
+			if (S.Integrated):
+				Store.set(Iter,0,"<span foreground=\"blue\">%s</span>"%(S.ShortDesc),1,mv0,2,S.Info[0] and not S.ReadOnly,
+						3,mv1,4,S.Info[1] and not S.ReadOnly,5,S.Name)
+			else:
+				Store.set(Iter,0,S.ShortDesc,1,mv0,2,S.Info[0] and not S.ReadOnly,
+						3,mv1,4,S.Info[1] and not S.ReadOnly,5,S.Name)
+
+	Info = FooClass()
+	Info.Plugin = Plugin
+	Info.Store = Store
+	Info.StoreFiltered = StoreFiltered
+
+	clearbut.connect("clicked",ClearEntry,entry)
+	entry.connect("changed",DoFilter,StoreFiltered)
+
+	View.connect("row-activated",BindingPopup,Info)
+	keyren.connect("edited",BindChanged,(0,Info))
+	butren.connect("edited",BindChanged,(1,Info))
+
+	if hasany:
+		return BindVBox
+	return None
+
+def ProfileSelChanged(sel,ent):
+	Inf = sel.get_selected()
+	if Inf[1] and Inf[0].get(Inf[1],0)[0]:
+		ent.set_text(Inf[0].get(Inf[1],0)[0])
+	else:
+		ent.set_text('')
+
+def MakeProfileWidgets():
+	global CurProfLab
+	global CurProfStore
+	global CurProfView
+	all = gtk.VBox(False,4)
+	CurProfLab = gtk.Label()
+	CurProfLab.props.xalign = 0
+	all.pack_start(CurProfLab,False,False)
+	row = gtk.HBox(False,4)
+	all.pack_start(row,False,False)
+	ent = gtk.Entry()
+	row.pack_start(ent,True,True)
+	addchbut = gtk.Button(_('Add/Save'))
+	row.pack_start(addchbut,False,False)
+	loadbut = gtk.Button(_('Load/Activate'))
+	row.pack_start(loadbut,False,False)
+	delbut = gtk.Button(_('Delete'))
+	row.pack_start(delbut,False,False)
+	CurProfStore = gtk.ListStore(gobject.TYPE_STRING)
+	CurProfView = gtk.TreeView(CurProfStore)
+	vwin = gtk.ScrolledWindow()
+	vwinfr = gtk.Frame()
+	vwinfr.props.shadow_type = gtk.SHADOW_IN
+	vwin.props.hscrollbar_policy = gtk.POLICY_NEVER
+	vwin.props.vscrollbar_policy = gtk.POLICY_AUTOMATIC
+	vwin.add(CurProfView)
+	texren = gtk.CellRendererText()
+	CurProfView.insert_column_with_attributes(0,"Profile",texren,text = 0)
+	vwinfr.add(vwin)
+	all.pack_start(vwinfr,True,True)
+	viewsel = CurProfView.get_selection()
+	viewsel.connect("changed",ProfileSelChanged,ent)
+	CurProfView.connect("row-activated",ProfileRowActive,ent)
+	UpdateProfileStore()
+	addchbut.connect("clicked",SaveProfile,ent)
+	loadbut.connect("clicked",LoadProfile,ent)
+	delbut.connect("clicked",DeleteProfile,ent)
+	return all
+
+def ProfileRowActive(wid,path,col,ent):
+	LoadProfile(None,ent)
+
+def SaveProfile(wid,ent):
+	val = ent.get_text()
+	if (val == ''):
+		return # silently ignore this silliness
+	if (val == _('<Default>')):
+		val = None
+	Ctx.Profile = val
+	WriteSettings()
+	UpdateProfileStore()
+
+def LoadProfile(wid,ent):
+	val = ent.get_text()
+	if (val == ''):
+		return # silently ignore this silliness
+	if (val == _('<Default>')):
+		val = None
+	Ctx.Profile = val
+	Ctx.Read()
+	SetWidgetsFromValues()
+	WriteSettings()
+	UpdateProfileStore()
+
+def DeleteProfile(wid,ent):
+	val = ent.get_text()
+	if (val == ''):
+		return # silently ignore this silliness
+	if (val == _('<Default>')):
+		val = None
+	Ctx.DeleteProfile(val)
+	if (Ctx.Profile == val):
+		Ctx.Profile = None
+		Ctx.Read()
+	SetWidgetsFromValues()
+	WriteSettings()
+	UpdateProfileStore()
+
+def UpdateProfileStore():
+	global CurProfStore
+	global CurProfView
+	CurProfStore.clear()
+	viewsel = CurProfView.get_selection()
+	Iter = CurProfStore.append()
+	CurProfStore.set(Iter,0,_('<Default>'))
+	if not Ctx.Profile:
+		viewsel.select_iter(Iter)
+	for p in Ctx.Profiles:
+		Iter = CurProfStore.append()
+		CurProfStore.set(Iter,0,p)
+		if p == Ctx.Profile:
+			viewsel.select_iter(Iter)
+
+def MakeBackendWidgets():
+	tab = gtk.Table()
+	BackendStore = gtk.ListStore(gobject.TYPE_STRING,gobject.TYPE_STRING,gobject.TYPE_BOOLEAN)
+	for backend in berylsettings.Backends():
+		Iter = BackendStore.append()
+		BackendStore.set(Iter,0,backend.Name,1,backend.ShortDesc,2,backend.IntegrationSupport)
+	BackendBox = gtk.ComboBox(BackendStore)
+	BackendRend = gtk.CellRendererText()
+	BackendBox.pack_start(BackendRend)
+	BackendBox.add_attribute(BackendRend,"text",1)
+	lab = gtk.Label(_('DE and Settings Backend'))
+	lab.props.wrap = True
+	lab.props.width_request = 250
+	lab.props.xalign = 0
+	tab.attach(lab,0,1,0,1)
+	tab.attach(BackendBox,1,2,0,1)
+	actv = Ctx.Backend
+	Iter = BackendStore.get_iter_first()
+
+	lab = gtk.Label(_("Enable DE Integration for Backend"))
+	lab.props.wrap = True
+	lab.props.width_request = 250
+	lab.props.xalign = 0
+	tab.attach(lab,0,1,1,2)
+	IntegButton = gtk.CheckButton()
+	IntegButton.set_active(Ctx.Integrated)
+	tab.attach(IntegButton,1,2,1,2)
+
+	while(True):
+		m = BackendStore.get(Iter,0,2)
+		if (m[0]==actv):
+			BackendBox.set_active_iter(Iter)
+			IntegButton.set_sensitive(m[1])
+			break
+		Iter = BackendStore.iter_next(Iter)
+		if not Iter:
+			break
+
+	BackendBox.connect("changed",SetActiveBackend,(BackendStore,IntegButton))
+	IntegButton.connect("toggled",SetIntegrated)
+
+	tabBox = gtk.VBox(False,0)
+	tabBox.pack_start(tab,False,False)
+
+	return tabBox
+
+def MakeSubGroupArea(Name,SubGroup,GroupVBox):
+	global Row
+	if (Name == '__keymouse'):
+		UpdateBindingsList(False)
+		GroupVBox.pack_start(MakeBindingsList(),True,True)
+		return True
+	if (Name == '__shortcuts_for_plugin'):
+		wid = MakeBindingsListForPlugin(SubGroup.Plugin)
+		if (wid):
+			GroupVBox.pack_start(wid,True,True)
+			return True
+		return False
+	if (Name == '__edges'):
+		GroupVBox.pack_start(MakeEdgeWidgets(),True,True)
+		return True
+	if (Name == '__profiles'):
+		GroupVBox.pack_start(MakeProfileWidgets(),True,True)
+		return True
+	if (Name == '__backends'):
+		GroupVBox.pack_start(MakeBackendWidgets(),True,True)
+		return True
+	GroupContainer = GroupVBox
+	Frame = None
+	if not Name == '':
+		Frame = gtk.Frame()
+		Expander = gtk.Expander(Name)
+		Frame.add(Expander)
+		GroupContainer = gtk.VBox()
+		Expander.add(GroupContainer)
+	hasany = False
+	Table = gtk.Table()
+	Table.props.row_spacing = 4
+	Row = 0
+	GroupContainer.pack_start(Table,False,False)
+	for Setting in SubGroup.Display:
+		if (MakeAndConnect(Table,Setting,SubGroup.Display[Setting])):
+			hasany = True
+	for Sc in SubGroup.Screens:
+		for Setting in Sc:
+			if (MakeAndConnect(Table,Setting,Sc[Setting])):
+				hasany = True
+
+	if (hasany and Frame):
+		GroupVBox.pack_start(Frame,False,False)
+	return hasany
+
+def MakeGroupArea(Name,Group,NoteBook):
+	VBox = gtk.VBox(False,4)
+	Viewport = gtk.Viewport()
+	Viewport.props.shadow_type = gtk.SHADOW_NONE
+	ScrollWin = gtk.ScrolledWindow()
+	ScrollWin.props.hscrollbar_policy = gtk.POLICY_NEVER
+	ScrollWin.props.vscrollbar_policy = gtk.POLICY_AUTOMATIC
+	Viewport.add(VBox)
+	ScrollWin.add(Viewport)
+	hasany = False
+	NoteBook.append_page(ScrollWin,gtk.Label(Name))
+	VBox.props.border_width = 4
+	for SubGroup in Group:
+		if (MakeSubGroupArea(SubGroup,Group[SubGroup],VBox)):
+			hasany = True
+	if not hasany:
+		NoteBook.remove_page(-1)
+
+def MakePluginArea(Plugin):
+	global hideshowall
+	Image = gtk.Image()
+	if (Plugin.Name == '__bindings'):
+		try:
+			BasePixbuf = gdk.pixbuf_new_from_file_at_size(IMAGEDIR+"/shortcuts.svg",IconSize,IconSize)
+		except:
+			BasePixbuf = gdk.pixbuf_new_from_file_at_size(PREFIX+"/share/beryl/icon.png",IconSize,IconSize)
+	elif (Plugin.Name == '__settings'):
+		try:
+			BasePixbuf = gdk.pixbuf_new_from_file_at_size(IMAGEDIR+"/profile-backends.svg",IconSize,IconSize)
+		except:
+			BasePixbuf = gdk.pixbuf_new_from_file_at_size(PREFIX+"/share/beryl/icon.png",IconSize,IconSize)
+	else:
+		try:
+			BasePixbuf = gdk.pixbuf_new_from_file_at_size(IMAGEDIR+"/beryl-settings-section-%s.svg"%(Plugin.Name),IconSize,IconSize)
+		except:
+			try:
+				BasePixbuf = gdk.pixbuf_new_from_file_at_size(IMAGEDIR+"/beryl-settings-section-%s.png"%(Plugin.Name),IconSize,IconSize)
+			except:
+				BasePixbuf = gdk.pixbuf_new_from_file_at_size(PREFIX+"/share/beryl/icon.png",IconSize,IconSize)
+	HighPixbuf = BasePixbuf.copy()
+	HighPixbuf.saturate_and_pixelate(HighPixbuf,6.0,True)
+	Image.set_from_pixbuf(BasePixbuf)
+	ListEventBox = gtk.EventBox()
+	ListHBox = gtk.HBox(False,8)
+	ListEventBox.add(ListHBox)
+	EnableButton = gtk.CheckButton()
+	ListHBox.pack_start(EnableButton,False,False)
+	ListHBox.pack_start(Image,False,False)
+	Label = gtk.Label()
+	Label.set_markup("<small>%s</small>"%(Plugin.ShortDesc))
+	Label.set_size_request(120,-1)
+	Label.set_line_wrap(True)
+	ListHBox.pack_start(Label,False,False)
+	Container = gtk.VBox(False,4)
+	HeaderBox = gtk.HBox(False,8)
+	HeaderImage = gtk.Image()
+	HeaderImage.set_from_pixbuf(BasePixbuf)
+	HeaderBox.pack_start(HeaderImage,False,False,0)
+	HeaderLabel = gtk.Label()
+	HeaderLabel.set_markup("<b><big>%s</big></b>\n<i>%s</i>"%(Plugin.ShortDesc,Plugin.LongDesc))
+	HeaderLabel.props.wrap = True
+	if (HeaderLabel.size_request()[0]>400):
+		HeaderLabel.props.width_request = 400
+	HeaderLabel.props.xalign = 0
+	HeaderBox.pack_start(HeaderLabel,True,True,0)
+	Container.pack_start(HeaderBox,False,False)
+	if (Plugin.Name == '__bindings'):
+		hideshowall = gtk.CheckButton(_("Show Disabled Plugins"))
+		hideshowall.props.active = False
+		hideshowall.connect("clicked",HideShowClick)
+		Container.pack_start(hideshowall,False,False)
+
+	NoteBook = gtk.Notebook()
+	NoteBook.props.scrollable = True
+	Container.pack_start(NoteBook,True,True)
+
+	for Group in Plugin.Groups:
+		MakeGroupArea(Group,Plugin.Groups[Group],NoteBook)
+
+#	if (not Category.Name == "__general" or Plugin.Name == 'core'):
+#		BindGroup = FooClass()
+#		BindSubGroup = FooClass()
+#		BindGroup.Name = _('Shortcuts')
+#		BindGroup.SubGroups = [BindSubGroup]
+#		BindSubGroup.Name = '__shortcuts_for_plugin'
+#		BindSubGroup.Plugin = Plugin
+#		MakeGroupArea(BindGroup,NoteBook)
+
+	Info = FooClass()
+
+	Info.BasePixbuf = BasePixbuf
+	Info.HighPixbuf = HighPixbuf
+	Info.Image = Image
+	Info.Label = Label
+	Info.Plugin = Plugin
+	Info.Widget = Container
+	Info.Button = EnableButton
+	Info.ListEventBox = ListEventBox
+	if EnableButton:
+		Info.HasEnableButton = True
+		Info.EnableButton = EnableButton
+	else:
+		Info.HasEnableButton = False
+	return Info
+
+def MakeCategoryArea(Name,Category):
+	global AllCats
+	global Row
+	Image = gtk.Image()
+
+	if CatImages.has_key(Name):
+		CatBasePixbuf = gdk.pixbuf_new_from_file_at_size("%s/%s"%(BaseDir,CatImages[Name]),IconSize,IconSize)
+	else:
+		CatBasePixbuf = gdk.pixbuf_new_from_file_at_size('/usr/share/pixmaps/ubuntu.svg',IconSize,IconSize)
+
+	HighPixbuf = CatBasePixbuf.copy()
+	HighPixbuf.saturate_and_pixelate(HighPixbuf,6.0,True)
+	Image.set_from_pixbuf(CatBasePixbuf)
+	Label = gtk.Label()
+	Label.set_markup("<small>%s</small>"%(Name))
+	Label.props.wrap = True
+	Label.props.width_request = MaxWidth
+	Label.props.justify = gtk.JUSTIFY_CENTER
+	ListEventBox = gtk.EventBox()
+	VBox = gtk.VBox()
+	VBox.pack_start(Image,False,False)
+	VBox.pack_end(Label,True,True)
+	ListEventBox.add(VBox)
+	CategoryBox.pack_start(ListEventBox)
+	Container = gtk.VBox()
+	HeaderBox = gtk.HBox()
+	Container.pack_start(HeaderBox,False,False)
+	HeaderImage = gtk.Image()
+	HeaderImage.set_from_pixbuf(CatBasePixbuf)
+	HeaderBox.pack_start(HeaderImage,False,False,8)
+	HeaderLabel = gtk.Label()
+	HeaderLabel.set_markup("<b><big>%s</big></b>"%(Name))
+	HeaderLabel.props.xalign = 0
+	HeaderBox.pack_start(HeaderLabel,True,True,8)
+	FormatBox = gtk.HBox(False,0)
+	Container.pack_start(FormatBox,True,True,8)
+	ContentFrame = gtk.Frame()
+	FormatBox.pack_start(ContentFrame,True,True,8)
+	ContentHBox = gtk.HBox(False,8)
+	PluginListFrame = gtk.Frame()
+	PluginListScrollWin = gtk.ScrolledWindow()
+	PluginListViewport = gtk.Viewport()
+	PluginListViewport.props.shadow_type = gtk.SHADOW_NONE
+	PluginListScrollWin.props.hscrollbar_policy = gtk.POLICY_NEVER
+	PluginListScrollWin.props.vscrollbar_policy = gtk.POLICY_AUTOMATIC
+	PluginList = gtk.VBox()
+	PluginListViewport.add(PluginList)
+	PluginListScrollWin.add(PluginListViewport)
+	PluginList.props.border_width = 4
+	PluginListFrame.add(PluginListScrollWin)
+	ContentHBox.pack_start(PluginListFrame,False,False,0)
+	ContentHBox.props.border_width = 8
+	ContentFrame.add(ContentHBox)
+	PluginContainer = gtk.Alignment()
+	PluginContainer.props.xalign = 0
+	PluginContainer.props.yalign = 0
+	PluginContainer.props.xscale = 1
+	PluginContainer.props.yscale = 1
+	ContentHBox.pack_start(PluginContainer,True,True,0)
+	Plugins = []
+	SortedPluginList = Category
+	#alpha-sort plugin list
+	for j in range(0,len(SortedPluginList)-1):
+		for k in range(j+1,len(SortedPluginList)):
+			if (SortedPluginList[j].ShortDesc>SortedPluginList[k].ShortDesc):
+				TempStorage = SortedPluginList[j]
+				SortedPluginList[j] = SortedPluginList[k]
+				SortedPluginList[k] = TempStorage
+	for Plugin in SortedPluginList:
+		PlugInfo = MakePluginArea(Plugin)
+		PlugInfo.CatIndex = len(AllCats)
+		PlugInfo.Index = len(Plugins)
+		Plugins = Plugins+[PlugInfo]
+		PlugInfo.ListEventBox.connect("button-press-event",PlugClicked,PlugInfo)
+		if (PlugInfo.HasEnableButton):
+			PlugInfo.EnableButton.connect("toggled",PluginButtonClicked,PlugInfo)
+		PluginList.pack_start(PlugInfo.ListEventBox,False,False)
+
+	CatInfo = FooClass()
+	CatInfo.BasePixbuf = CatBasePixbuf
+	CatInfo.HighPixbuf = HighPixbuf
+	CatInfo.Image = Image
+	CatInfo.Label = Label
+	CatInfo.Widget = Container
+	CatInfo.Category = Category
+	CatInfo.Index = len(AllCats)
+	CatInfo.Plugins = Plugins
+	CatInfo.Container = PluginContainer
+	AllCats = AllCats+[CatInfo]
+	ListEventBox.connect("button-press-event",CatClicked,CatInfo)
+
+def ImportSettings(wid):
+	ImportWindow = gtk.FileChooserDialog(_("Import settings file..."),MainWindow,
+			gtk.FILE_CHOOSER_ACTION_OPEN,(gtk.STOCK_OPEN,gtk.RESPONSE_OK,
+				gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL))
+	fil = gtk.FileFilter()
+	fil.set_name(_("All Files"))
+	fil.add_pattern("*")
+	ImportWindow.add_filter(fil)
+	ImportWindow.set_filter(fil)
+	ret = ImportWindow.run()
+	if (ret == gtk.RESPONSE_OK):
+		val = ImportWindow.get_filename()
+		if (val):
+			Ctx.Import(val,True)
+	ImportWindow.destroy()
+	del ImportWindow
+
+def ExportSettings(wid):
+	ExportWindow = gtk.FileChooserDialog(_("Export settings file..."),MainWindow,
+			gtk.FILE_CHOOSER_ACTION_SAVE,(gtk.STOCK_SAVE,gtk.RESPONSE_OK,
+				gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL))
+	fil = gtk.FileFilter()
+	fil.set_name(_("Settings Files"))
+	fil.add_pattern("*.settings")
+	ExportWindow.set_filter(fil)
+	ret = ExportWindow.run()
+	if (ret == gtk.RESPONSE_OK):
+		val = ExportWindow.get_filename()
+		if (val):
+			Ctx.Export(val)
+	ExportWindow.destroy()
+	del ExportWindow
+
+def SetActiveBackend(wid,info):
+	Iter = wid.get_active_iter()
+	dat = info[0].get(Iter,0,2)
+	Ctx.Backend = dat[0]
+	info[1].set_sensitive(dat[1])
+	UpdateProfileStore()
+	SetWidgetsFromValues()
+
+def SetIntegrated(wid):
+	Ctx.Integrated = wid.props.active
+	SetWidgetsFromValues()
+
+MainWindow = gtk.Window()
+MainChild = gtk.VBox()
+MainWindow.add(MainChild)
+version = VERSION
+MainWindow.set_title(_("Beryl Settings Manager"))
+try:
+	MainWindow.set_icon (gdk.pixbuf_new_from_file(DATADIR+"/icons/hicolor/scalable/apps/beryl-settings.svg"))
+except:
+	pass
+#MainWindow.set_resizable(False)
+MainWindow.set_size_request(-1,580) #MainWindow.get_size_request()[0],580)
+CategoryStrip = gtk.Alignment()
+CategoryStrip.props.xalign = 0.5
+CategoryStrip.props.yalign = 0.5
+CategoryStrip.props.xscale = 0
+CategoryStrip.props.yscale = 0
+CategoryBox = gtk.HBox(True)
+CategoryStrip.add(CategoryBox)
+PlugArea = gtk.Alignment()
+PlugArea.props.xalign = 0
+PlugArea.props.yalign = 0
+PlugArea.props.xscale = 1
+PlugArea.props.yscale = 1
+MainChild.pack_start(CategoryStrip,False,False)
+MainChild.pack_start(gtk.HSeparator(),False,False)
+MainChild.pack_start(gtk.HSeparator(),False,False)
+MainChild.pack_start(PlugArea,True,True)
+ButtonRow = gtk.HBox()
+ButtonRow.props.border_width = 0
+MainChild.pack_start(ButtonRow,False,False)
+MainChild.pack_start(gtk.Alignment(),False,False,4)
+
+ImportButton = gtk.Button(_("Import"))
+ImportButton.props.image = gtk.image_new_from_stock(gtk.STOCK_OPEN,gtk.ICON_SIZE_BUTTON)
+ButtonRow.pack_start(ImportButton,False,False,8)
+ImportButton.connect("clicked",ImportSettings)
+
+ExportButton = gtk.Button(_("Export"))
+ExportButton.props.image = gtk.image_new_from_stock(gtk.STOCK_SAVE,gtk.ICON_SIZE_BUTTON)
+ButtonRow.pack_start(ExportButton,False,False,0)
+ExportButton.connect("clicked",ExportSettings)
+
+QButton = gtk.Button(gtk.STOCK_QUIT)
+QButton.set_use_stock(True)
+ButtonRow.pack_end(QButton,False,False,8)
+QButton.connect("clicked",QuitAll)
+
+IconSize = 48
+MaxWidth = 112
+
+Bind = FooClass()
+Edge = FooClass()
+NonCat = FooClass()
+KeyMouse = FooClass()
+EdSub = FooClass()
+EdSub.Name = "__edges"
+Edge.Name = _("Screen Edges")
+Edge.SubGroups = [EdSub]
+KeyMouse.Name = _("Keyboard and Mouse")
+BindSub = FooClass()
+BindSub.Name = "__keymouse"
+KeyMouse.SubGroups = [BindSub]
+Bind.Name = "__bindings"
+Bind.ShortDesc = _("Shortcuts")
+Bind.LongDesc = _('Key, Mouse and Edge Shortcuts (Bindings)')
+Bind.Groups = [KeyMouse,Edge]
+
+SettProf = FooClass()
+SettProf.Name = _('Profiles')
+SettPSub = FooClass()
+SettPSub.Name = '__profiles'
+SettProf.SubGroups = [SettPSub]
+SettBack = FooClass()
+SettBack.Name = _('Backends and Integration')
+SettBSub = FooClass()
+SettBSub.Name = '__backends'
+SettBack.SubGroups = [SettBSub]
+Sett = FooClass()
+Sett.Groups = [SettProf,SettBack]
+Sett.Name = "__settings"
+Sett.ShortDesc = _('Settings, Profiles and Desktop Integration')
+Sett.LongDesc = _('Options for Settings storage, Settings Profiles, and Desktop Integration')
+NonCat.Name = '__general'
+NonCat.ShortDesc = _('General Options')
+NonCat.LongDesc = _('Beryl Core Options - Options which are part of the core of beryl, and are not part of the plugins.')
+NonCat.Plugins = [Ctx.Plugins['core']]
+#,Bind,Sett]
+
+for Category in Ctx.Categories.keys():
+	#if (Category.Name == "settings"):
+	#	continue
+	#if (len(Category.Plugins) == 1):
+	#	if (Category.Plugins[0].Name == "_"):
+	#		continue
+	#if (len(Category.Plugins)>0):
+		MakeCategoryArea(Category,Ctx.Categories[Category])
+
+SetWidgetsFromValues()
+CatClicked(None,None,AllCats[0])
+for Cat in AllCats:
+	PlugClicked(None,None,Cat.Plugins[0])
+MainWindow.connect("destroy",QuitAll)
+MainWindow.show_all()
+gtk.main()
