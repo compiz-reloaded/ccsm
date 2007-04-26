@@ -340,12 +340,14 @@ cdef object DecodeValue(BSSettingValue * value):
 cdef class Setting:
 	cdef BSSetting * bsSetting
 	cdef object info
+	cdef Plugin plugin
 
 	def __new__(self, Plugin plugin, name, isScreen, screenNum=0):
 		cdef BSSettingType t
 		cdef BSSettingInfo * i
 		self.bsSetting = bsFindSetting(plugin.bsPlugin, 
 				name, isScreen, screenNum)
+		self.plugin = plugin
 		info=()
 		t=self.bsSetting.type
 		i=&self.bsSetting.info
@@ -369,6 +371,9 @@ cdef class Setting:
 	def Reset(self):
 		bsResetToDefault(self.bsSetting)
 
+	property Plugin:
+		def __get__(self):
+			return self.plugin
 	property Name:
 		def __get__(self):
 			return self.bsSetting.name
@@ -390,6 +395,9 @@ cdef class Setting:
 	property Info:
 		def __get__(self):
 			return self.info
+	property Hints:
+		def __get__(self):
+			return self.bsSetting.hints
 	property IsDefault:
 		def __get__(self):
 			if self.bsSetting.isDefault:
@@ -406,6 +414,17 @@ cdef class Setting:
 			sv = EncodeValue(value,self.bsSetting,0)
 			bsSetValue(self.bsSetting,sv)
 			bsFreeSettingValue(sv)
+	property Integrated:
+		def __get__(self):
+			return False
+		def __set__(self,val):
+			pass
+	property ReadOnly:
+		def __get__(self):
+			return False
+		def __set__(self,val):
+			pass
+
 
 cdef class SSGroup:
 	cdef object display
@@ -494,6 +513,11 @@ cdef class Plugin:
 	property Category:
 		def __get__(self):
 			return self.bsPlugin.category
+	property Enabled:
+		def __get__(self):
+			return True
+		def __set__(self,val):
+			pass
 
 cdef class Context:
 	cdef BSContext * bsContext
