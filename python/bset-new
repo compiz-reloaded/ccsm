@@ -1,0 +1,133 @@
+#!/usr/bin/env python
+
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+#
+# Authors: Quinn Storm (quinn@beryl-project.org)
+# Copyright (C) 2007 Quinn Storm
+
+
+
+import bsettings
+import gtk
+import gtk.gdk
+import gobject
+import os
+import re
+gdk = gtk.gdk
+from xml.sax.saxutils import escape as EscapeMarkup
+
+class Item:
+	def __init__(self):
+		pass
+
+	def SetSelected(self,Selected):
+		if (Selected):
+			self.Label.set_markup("<b><i>%s</i></b>"%self.Name)
+		else:
+			self.Label.set_text(self.Name)
+
+class Chooser:
+	def __init__(self):
+		self.ClientArea = gtk.Alignment()
+		self.ClientArea.props.xalign=0
+		self.ClientArea.props.yalign=0
+		self.ClientArea.props.xscale=1
+		self.ClientArea.props.yscale=1
+		self.Items=[]
+
+	def AddItem(self,Item):
+		self.Items.append(Item)
+		Item.Selector.connect('button-press-event',self.SelectItem,len(self.Items)-1)
+		self.Strip.pack_start(Item.Selector)
+
+	def SelectItem(self,Ebox,Event,Indx):
+		for Item in self.Items:
+			Item.SetSelected(False)
+		Item = self.Items[Indx]
+		Item.SetSelected(True)
+		if self.ClientArea.get_child():
+			self.ClientArea.remove(self.ClientArea.get_child())
+		self.ClientArea.add(Item.Client)
+		Item.Client.show_all()
+
+
+class PlugItem(Item):
+	def __init__(self,Plugin):
+		self.Selector = gtk.EventBox()
+		self.Label = gtk.Label(Plugin.ShortDesc)
+		self.Name = Plugin.ShortDesc
+		self.VBox = gtk.VBox()
+		self.Selector.add(self.VBox)
+		self.VBox.pack_start(self.Label)
+		self.Client = gtk.VBox()
+		self.Client.pack_start(gtk.Label(Plugin.LongDesc),False,False)
+		self.Client.pack_start(gtk.HSeparator(),False,False)
+		Foo = gtk.Notebook()
+		self.Client.pack_start(Foo,True,True)
+		for n in Plugin.Groups:
+			Foo.append_page(gtk.VBox(),gtk.Label(n))
+
+class PlugChooser(Chooser):
+	def __init__(self,Plugins):
+		Chooser.__init__(self)
+		self.Widget = gtk.HBox()
+		self.Strip = gtk.VBox(True)
+		self.LeftWin = gtk.Viewport()
+		self.LeftScroll = gtk.ScrolledWindow()
+		self.LeftWin.add(self.Strip)
+		self.LeftScroll.add(self.LeftWin)
+		self.LeftScroll.props.hscrollbar_policy = gtk.POLICY_NEVER
+		self.LeftScroll.props.vscrollbar_policy = gtk.POLICY_AUTOMATIC
+		self.Widget.pack_start(self.LeftScroll,False,False)
+		self.Widget.pack_start(self.ClientArea,True,True)
+		for Plugin in Plugins:
+			self.AddItem(PlugItem(Plugin))
+
+
+class CatItem(Item):
+	def __init__(self,Name,Plugins):
+		self.Selector = gtk.EventBox()
+		self.VBox = gtk.VBox()
+		self.Selector.add(self.VBox)
+		if (Name == ''):
+			Name = 'Uncategorized'
+		self.Name = Name
+		self.Label = gtk.Label(Name)
+		self.VBox.pack_start(self.Label)
+		self.Chooser = PlugChooser(Plugins)
+		self.PlClient = self.Chooser.Widget
+		self.Client = gtk.VBox()
+		self.Client.pack_start(gtk.Label(Name),False,False)
+		self.Client.pack_start(gtk.HSeparator(),False,False)
+		self.Client.pack_start(self.PlClient,True,True)
+
+class CatChooser(Chooser):
+	def __init__(self,Categories):
+		Chooser.__init__(self)
+		self.Strip = gtk.HBox(True)
+		self.Widget = gtk.VBox()
+		self.Widget.pack_start(self.Strip,False,False)
+		self.Widget.pack_start(gtk.HSeparator(),False,False)
+		self.Widget.pack_start(self.ClientArea,True,True)
+		for Name in Categories:
+			self.AddItem(CatItem(Name,Categories[Name]))
+		self.SelectItem(None,None,0)
+
+MainWin = gtk.Window()
+Ctx = bsettings.Context()
+n = CatChooser(Ctx.Categories)
+MainWin.add(n.Widget)
+MainWin.show_all()
+gtk.main()
