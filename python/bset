@@ -41,7 +41,7 @@ _ = gettext.gettext
 DATADIR  = "/usr/share"
 IMAGEDIR = "/usr/share/bsm/images"
 PREFIX   = "/usr"
-VERSION  = "0.3.0-svn"
+VERSION  = "0.0.1"
 
 BaseDir = DATADIR+"/bsm/images"
 CatImages = {"wm":"window-management.svg",
@@ -98,8 +98,8 @@ def QuitAll(v):
 def SetPluginsEnabled():
 	for Ca in AllCats:
 		for Pl in Ca.Plugins:
-			if (Pl.Button):
-				Pl.Button.props.active = Pl.Plugin.Enabled
+			if (Pl.Plugin.Display.has_key('____plugin_enabled')):
+				Pl.Button.props.active = Pl.Plugin.Display['____plugin_enabled'].Value
 
 def SetWidgetsFromValues():
 	global CurProfLab
@@ -178,22 +178,22 @@ def UpdatePrev(file_chooser, preview):
 	return
 
 def BrowseDlg(set):
-	if (set.Setting.Hints.find("directory")):
+	if (set.Setting.Hints.find("directory")>=0):
 		action = gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER
 	else:
 		action = gtk.FILE_CHOOSER_ACTION_OPEN
 	dlg = gtk.FileChooserDialog(_("Browse for %s...")%set.Setting.ShortDesc,MainWindow,
 			action,(gtk.STOCK_OPEN,gtk.RESPONSE_OK,gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL))
-	if (not set.Setting.Hints.find("directory")):
+	if (not set.Setting.Hints.find("directory")>=0):
 		fil = gtk.FileFilter()
 		fil.set_name(_("All Files"))
 		fil.add_pattern("*")
 		dlg.add_filter(fil)
-		if (set.Setting.Hints.find("image")):
+		if (set.Setting.Hints.find("image")>=0):
 			preview = gtk.Image()
 			dlg.set_preview_widget(preview)
 			dlg.connect("update-preview",UpdatePrev,preview)
-			if (set.Setting.Hints.find("pngonly")):
+			if (set.Setting.Hints.find("pngonly")>=0):
 				fil = gtk.FileFilter()
 				fil.set_name(_("PNG Images"))
 				fil.add_pattern("*.png")
@@ -499,18 +499,19 @@ def SetWidgetsForSetting(setting):
 	elif (set.Type == 'Binding' and set.Info[2]):
 		this.Checkbox.props.active = set.Value[2]
 		this.Checkbox.set_sensitive(not setting.ReadOnly)
-	elif (set.Type == 'List of String'):
-		if (len(set.Info)):
-			for n in this.CheckBoxes:
-				if (set.Value.__contains__(n.String)):
-					n.Checkbox.props.active = True
-				else:
-					n.Checkbox.props.active = False
-		else:
-			this.ListStore.clear()
-			for n in set.Value:
-				Iter = this.ListStore.append()
-				this.ListStore.set(Iter,0,n)
+	elif (set.Type == 'List'):
+		if (set.Info[0] == 'String'):
+			if (len(set.Info[1])):
+				for n in this.CheckBoxes:
+					if (set.Value.__contains__(n.String)):
+						n.Checkbox.props.active = True
+					else:
+						n.Checkbox.props.active = False
+			else:
+				this.ListStore.clear()
+				for n in set.Value:
+					Iter = this.ListStore.append()
+					this.ListStore.set(Iter,0,n)
 
 def SetSettingFromWidgets(set):
 	#set is assumed to be a pair(setting,wid)
@@ -533,20 +534,21 @@ def SetSettingFromWidgets(set):
 	elif (setting.Type == 'Binding' and setting.Info[2]):
 		vv = setting.Value
 		setting.Value = [vv[0],vv[1],set.Checkbox.props.active,vv[3]]
-	elif (setting.Type == 'List of String'):
-		if (len(setting.Info)):
-			val = []
-			for n in set.CheckBoxes:
-				if (n.Checkbox.props.active):
-					val += [n.String]
-			setting.Value = val
-		else:
-			val = []
-			Iter = set.ListStore.get_iter_first()
-			while Iter:
-				val += [set.ListStore.get(Iter,0)[0]]
-				Iter = set.ListStore.iter_next(Iter)
-			setting.Value = val
+	elif (setting.Type == 'List'):
+		if (setting.Info[0] == 'String'):
+			if (len(setting.Info[1])):
+				val = []
+				for n in set.CheckBoxes:
+					if (n.Checkbox.props.active):
+						val += [n.String]
+				setting.Value = val
+			else:
+				val = []
+				Iter = set.ListStore.get_iter_first()
+				while Iter:
+					val += [set.ListStore.get(Iter,0)[0]]
+					Iter = set.ListStore.iter_next(Iter)
+				setting.Value = val
 	WriteSettings()
 	AllowUpdate = False
 	SetWidgetsForSetting(setting)
@@ -1140,8 +1142,8 @@ def MakeAndConnect(wid,name,setting):
 		wid.attach(bar,1,2,Row,Row+1)
 		SetInfo.Checkbox = bar
 		bar.connect("toggled",SimpleChangedCB,SetInfo)
-	elif (setting.Type == 'List of String'):
-		if (len(setting.Info)):
+	elif (setting.Type == 'List' and setting.Info[0] == 'String'):
+		if (len(setting.Info[1])):
 			foo = gtk.Frame(setting.ShortDesc)
 			bar = gtk.HBox(False,8)
 			bar.props.border_width = 4
@@ -1156,7 +1158,7 @@ def MakeAndConnect(wid,name,setting):
 			row = 0
 			col = 0
 			checkCont = gtk.Table()
-			for m in setting.Info:
+			for m in setting.Info[1]:
 				ss = gtk.CheckButton(m)
 				CheckInfo = FooClass()
 				CheckInfo.String = m
@@ -1214,7 +1216,7 @@ def MakeAndConnect(wid,name,setting):
 				tab.attach(dn,0,1,2,3)
 			SetInfo.ListStore = bil
 			SetInfo.TreeView = baz
-			if (setting.Hints.find("file")):
+			if (setting.Hints.find("file")>=0):
 				brw = gtk.Button(_("Browse"))
 				brw.props.image = gtk.image_new_from_stock(gtk.STOCK_OPEN,gtk.ICON_SIZE_BUTTON)
 				brw.connect("clicked",BrowseRow,SetInfo)
@@ -1248,7 +1250,7 @@ def MakeAndConnect(wid,name,setting):
 		ebox = gtk.EventBox()
 		ebox.add(foo)
 		tooltips.set_tip(ebox,setting.LongDesc)
-		if (setting.Hints.find("file")):
+		if (setting.Hints.find("file")>=0):
 			#bar.props.width_chars = 25
 			brw = gtk.Button("Browse")
 			brw.props.image = gtk.image_new_from_stock(gtk.STOCK_OPEN,gtk.ICON_SIZE_BUTTON)
@@ -1782,7 +1784,7 @@ def MakeCategoryArea(Name,Category):
 	CatInfo.Image = Image
 	CatInfo.Label = Label
 	CatInfo.Widget = Container
-	CatInfo.Category = Category
+	CatInfo.Category = Name
 	CatInfo.Index = len(AllCats)
 	CatInfo.Plugins = Plugins
 	CatInfo.Container = PluginContainer
@@ -1899,7 +1901,7 @@ KeyMouse.SubGroups = [BindSub]
 Bind.Name = "__bindings"
 Bind.ShortDesc = _("Shortcuts")
 Bind.LongDesc = _('Key, Mouse and Edge Shortcuts (Bindings)')
-Bind.Groups = [KeyMouse,Edge]
+Bind.Groups = {'Keyboard and Mouse':{'__keymouse':KeyMouse}}
 
 SettProf = FooClass()
 SettProf.Name = _('Profiles')
@@ -1919,17 +1921,20 @@ Sett.LongDesc = _('Options for Settings storage, Settings Profiles, and Desktop 
 NonCat.Name = '__general'
 NonCat.ShortDesc = _('General Options')
 NonCat.LongDesc = _('Beryl Core Options - Options which are part of the core of beryl, and are not part of the plugins.')
-NonCat.Plugins = [Ctx.Plugins['core']]
+NonCat.Plugins = [Ctx.Plugins['core'],Bind]
 #,Bind,Sett]
 
-for Category in Ctx.Categories.keys():
-	#if (Category.Name == "settings"):
-	#	continue
-	#if (len(Category.Plugins) == 1):
-	#	if (Category.Plugins[0].Name == "_"):
-	#		continue
-	#if (len(Category.Plugins)>0):
-		MakeCategoryArea(Category,Ctx.Categories[Category])
+MyCats=Ctx.Categories
+MyCats['__general']=[Ctx.Plugins['core'],Bind]
+
+for Category in MyCats.keys():
+	if (Category == "settings"):
+		continue
+	if (len(MyCats[Category]) == 1):
+		if (MyCats[Category][0].Name=='core'):
+			continue
+	if (len(MyCats[Category])>0):
+		MakeCategoryArea(Category,MyCats[Category])
 
 SetWidgetsFromValues()
 CatClicked(None,None,AllCats[0])
