@@ -186,7 +186,7 @@ cdef extern void bsContextDestroy(BSContext * context)
 cdef extern BSPlugin * bsFindPlugin(BSContext * context, char * name)
 cdef extern BSSetting * bsFindSetting(BSPlugin * plugin, char * name, Bool isScreen, int screenNum)
 
-cdef extern char * bsColorToString(BSSettingColorValue * color)
+#cdef extern char * bsColorToString(BSSettingColorValue * color)
 cdef extern char * bsEdgeToString(BSSettingActionValue * action)
 cdef extern char * bsKeyBindingToString(BSSettingActionValue * action)
 cdef extern char * bsButtonBindingToString(BSSettingActionValue * action)
@@ -205,7 +205,7 @@ cdef extern from 'string.h':
 	cdef extern void * malloc(size_t s)
 
 
-cdef extern Bool bsStringToColor(char * value, BSSettingColorValue * target)
+#cdef extern Bool bsStringToColor(char * value, BSSettingColorValue * target)
 cdef extern Bool bsStringToKeyBinding(char * value, BSSettingActionValue * target)
 cdef extern Bool bsStringToButtonBinding(char * value, BSSettingActionValue * target)
 cdef extern Bool bsStringToEdge(char * value, BSSettingActionValue * target)
@@ -260,7 +260,10 @@ cdef BSSettingValue * EncodeValue(object data, BSSetting * setting, Bool isListC
 		else:
 			bv.value.asBool = 0
 	elif t == TypeColor:
-		bsStringToColor(data,&bv.value.asColor)
+		bv.value.asColor.color.red = data[0]
+		bv.value.asColor.color.green = data[1]
+		bv.value.asColor.color.blue = data[2]
+		bv.value.asColor.color.alpha = data[3]
 	elif t == TypeAction:
 		bsStringToKeyBinding(data[0],&bv.value.asAction)
 		bsStringToButtonBinding(data[1],&bv.value.asAction)
@@ -299,10 +302,10 @@ cdef object DecodeValue(BSSettingValue * value):
 	if t == TypeFloat:
 		return value.value.asFloat
 	if t == TypeColor:
-		s=bsColorToString(&value.value.asColor)
-		cs=s
-		free(s)
-		return cs
+		return [value.value.asColor.color.red,
+				value.value.asColor.color.green,
+				value.value.asColor.color.blue,
+				value.value.asColor.color.alpha]
 	if t == TypeAction:
 		s=bsKeyBindingToString(&value.value.asAction)
 		if s != NULL:
@@ -492,6 +495,9 @@ cdef class Plugin:
 						sett.name]= self.display[sett.name]
 			setlist=setlist.next
 
+	property Context:
+		def __get__(self):
+			return self.context
 	property Groups:
 		def __get__(self):
 			return self.groups

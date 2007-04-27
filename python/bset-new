@@ -65,60 +65,130 @@ class Chooser:
 class SettingItem:
 	def __init__(self,Setting):
 		self.Setting = Setting
-		self.Normal = True
-		self.Label = gtk.Label(Setting.ShortDesc)
-		if Setting.Type == 'String' and len(Setting.Info):
-			self.Widget = gtk.combo_box_new_text()
-			for Text in Setting.Info:
-				self.Widget.append_text(Text)
-		elif Setting.Type == 'String' or Setting.Type == 'Match':
-			self.Widget = gtk.Entry()
-		elif Setting.Type == 'Bool':
-			self.Widget = gtk.CheckButton()
-		elif Setting.Type == 'Int' or Setting.Type == 'Float':
-			self.Widget = gtk.HBox()
-			if Setting.Type == 'Int':
-				inc = 1
-			else:
-				inc = Setting.Info[2]
-			self.Adj = gtk.Adjustment(Setting.Value,Setting.Info[0],Setting.Info[1],
-					inc,inc*10)
-			self.Spin = gtk.SpinButton(self.Adj)
-			if Setting.Type == 'Float':
-				self.Spin.set_digits(4)
-			self.Scale = gtk.HScale(self.Adj)
-			self.Scale.props.draw_value = False
-			self.Widget.pack_start(self.Scale,True,True)
-			self.Widget.pack_start(self.Spin,False,False)
-		elif Setting.Type == 'Color':
-			self.Widget = gtk.ColorButton()
-			self.Widget.set_use_alpha(True)
-		else:
-			self.Normal = False
-		self.Block = True
+		self.Block = 0
+		self.MakeLabel()
+		self.Reset = gtk.Button()
+		self.Reset.set_image(gtk.image_new_from_stock(
+			gtk.STOCK_CLEAR,gtk.ICON_SIZE_BUTTON))
+		self.Reset.connect('clicked',self.DoReset)
+		self._Init()
+
+	def _Init(self):
+		print 'Pure Virtual Init Called'
+	
+	def DoReset(self,foo):
+		self.Setting.Reset()
+		self.Setting.Plugin.Context.Write()
 		self.Read()
-		self.Block = False
+
+	def MakeLabel(self):
+		self.Label = gtk.Label(self.Setting.ShortDesc)
 
 	def Read(self):
-		if self.Setting.Type == 'String' and len(self.Setting.Info):
-			indx=0
-			for n in self.Setting.Info:
-				if self.Setting.Value == n:
-					break
-				indx=indx+1
-			self.Widget.set_active(indx)
-		elif self.Setting.Type == 'String' or self.Setting.Type == 'Match':
-			self.Widget.set_text(self.Setting.Value)
-		elif self.Setting.Type == 'Float' or self.Setting.Type == 'Int':
-			self.Adj.set_value(self.Setting.Value)
-		elif self.Setting.Type == 'Color':
-			self.Widget.set_color(gdk.color_parse(self.Setting.Value[0:7]))
-			self.Widget.set_alpha(eval("0x%s"%self.Setting.Value[7:9])*257)
-		elif self.Setting.Type == 'Bool':
-			self.Widget.set_active(self.Setting.Value)
+		self.Block = self.Block + 1
+		self._Read()
+		self.Block = self.Block - 1
+
+	def _Read(self):
+		print 'Pure Virtual Read Called'
+
+	def Changed(self, *args, **kwargs):
+		if self.Block == 0:
+			self._Changed()
+			self.Setting.Plugin.Context.Write()
+
+	def _Changed(self):
+		print 'Pure Virtual Changed Called'
+
+class StringMatchSetting(SettingItem):
+	def _Init(self):
+		self.Widget = gtk.Entry()
+		self.Widget.connect('changed',self.Changed)
+	def _Read(self):
+		self.Widget.set_text(self.Setting.Value)
+	def _Changed(self):
+		self.Setting.Value = self.Widget.get_text()
+
+class StringChoiceSetting(SettingItem):
+	def _Init(self):
+		self.Widget = gtk.combo_box_new_text()
+		for Text in self.Setting.Info:
+			self.Widget.append_text(Text)
+		self.Widget.connect('changed',self.Changed)
+	def _Read(self):
+		indx=0
+		for n in self.Setting.Info:
+			if self.Setting.Value == n:
+				break
+			indx=indx+1
+		self.Widget.set_active(indx)
+	def _Changed(self):
+		self.Setting.Value = self.Widget.get_active_text()
+
+class BoolSetting(SettingItem):
+	def _Init(self):
+		self.Widget = gtk.CheckButton()
+	def _Read(self):
+		self.Widget.set_active(self.Setting.Value)
+	def _Changed(self):
+		self.Setting.Value = self.Widget.get_active()
+
+class IntFloatSetting(SettingItem):
+	def _Init(self):
+		self.Widget = gtk.HBox()
+		if self.Setting.Type == 'Int':
+			inc = 1
+		else:
+			inc = self.Setting.Info[2]
+		self.Adj = gtk.Adjustment(self.Setting.Value,
+				self.Setting.Info[0],self.Setting.Info[1],
+				inc,inc*10)
+		self.Spin = gtk.SpinButton(self.Adj)
+		if self.Setting.Type == 'Float':
+			self.Spin.set_digits(4)
+		self.Scale = gtk.HScale(self.Adj)
+		self.Scale.props.draw_value = False
+		self.Widget.pack_start(self.Scale,True,True)
+		self.Widget.pack_start(self.Spin,False,False)
+		self.Adj.connect('value-changed',self.Changed)
+	def _Read(self):
+		self.Adj.set_value(self.Setting.Value)
+	def _Changed(self):
+		self.Setting.Value = self.Adj.get_value()
+
+class ColorSetting(SettingItem):
+	def _Init(self):
+		self.Widget = gtk.ColorButton()
+		self.Widget.set_use_alpha(True)
+		self.Widget.connect('color-set',self.Changed)
+	def _Read(self):
+		print self.Setting.Value
+		col = gdk.Color()
+		col.red=self.Setting.Value[0]
+		col.green=self.Setting.Value[1]
+		col.blue=self.Setting.Value[2]
+		self.Widget.set_color(col)
+		self.Widget.set_alpha(self.Setting.Value[3])
+	def _Changed(self):
+		col = self.Widget.get_color()
+		alpha = self.Widget.get_alpha()
+		self.Setting.Value = [col.red,col.green,col.blue,alpha]
+		print self.Setting.Value
+
+def MakeSetting(Setting):
+	if Setting.Type == 'String' and len(Setting.Info):
+		return StringChoiceSetting(Setting)
+	elif Setting.Type == 'String' or Setting.Type == 'Match':
+		return StringMatchSetting(Setting)
+	elif Setting.Type == 'Bool':
+		return BoolSetting(Setting)
+	elif Setting.Type == 'Float' or Setting.Type == 'Int':
+		return IntFloatSetting(Setting)
+	elif Setting.Type == 'Color':
+		return ColorSetting(Setting)
+	return None
 
 class SubGroupArea:
-
 	def __init__(self,Name,SubGroup):
 		if Name == '':
 			self.Widget = gtk.Table()
@@ -133,23 +203,27 @@ class SubGroupArea:
 		self.Empty = True
 		self.Child.attach(gtk.Label('Name'),0,1,0,1,0)
 		self.Child.attach(gtk.VSeparator(),1,2,0,1,0)
-		self.Child.attach(gtk.Label('Value'),2,3,0,1)
-		self.Child.attach(gtk.HSeparator(),0,3,1,2)
+		self.Child.attach(gtk.Label('Value'),2,4,0,1)
+		self.Child.attach(gtk.HSeparator(),0,4,1,2)
 		row = 2
 		for Set in SubGroup.Display:
 			if not Set == '____plugin_enabled':
-				sit = SettingItem(SubGroup.Display[Set])
-				if sit.Normal:
+				sit = MakeSetting(SubGroup.Display[Set])
+				if sit is not None:
+					sit.Read()
 					self.Child.attach(sit.Label,0,1,row,row+1,0)
 					self.Child.attach(sit.Widget,2,3,row,row+1)
+					self.Child.attach(sit.Reset,3,4,row,row+1,0)
 					row=row+1
 					self.Empty = False
 		for Scr in SubGroup.Screens:
 			for Set in Scr:
-				sit = SettingItem(Scr[Set])
-				if sit.Normal:
+				sit = MakeSetting(Scr[Set])
+				if sit is not None:
+					sit.Read()
 					self.Child.attach(sit.Label,0,1,row,row+1,0)
 					self.Child.attach(sit.Widget,2,3,row,row+1)
+					self.Child.attach(sit.Reset,3,4,row,row+1,0)
 					row=row+1
 					self.Empty = False
 		self.Child.attach(gtk.VSeparator(),1,2,2,row+1,0)
