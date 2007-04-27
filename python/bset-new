@@ -62,6 +62,104 @@ class Chooser:
 		self.ClientArea.add(Item.Client)
 		Item.Client.show_all()
 
+class SettingItem:
+	def __init__(self,Setting):
+		self.Setting = Setting
+		self.Normal = True
+		self.Label = gtk.Label(Setting.ShortDesc)
+		self.Label.props.xalign=1
+		if Setting.Type == 'String' and len(Setting.Info):
+			self.Widget = gtk.combo_box_new_text()
+			for Text in Setting.Info:
+				self.Widget.append_text(Text)
+		elif Setting.Type == 'String' or Setting.Type == 'Match':
+			self.Widget = gtk.Entry()
+		elif Setting.Type == 'Bool':
+			self.Widget = gtk.CheckButton()
+		elif Setting.Type == 'Int' or Setting.Type == 'Float':
+			self.Widget = gtk.HBox()
+			self.Spin = gtk.SpinButton()
+			self.Scale = gtk.HScale()
+			self.Scale.props.draw_value = False
+			self.Widget.pack_start(self.Scale,True,True)
+			self.Widget.pack_start(self.Spin,False,False)
+		elif Setting.Type == 'Color':
+			self.Widget = gtk.ColorButton()
+		else:
+			self.Normal = False
+		self.Read()
+
+	def Read(self):
+		if self.Setting.Type == 'String' and len(self.Setting.Info):
+			indx=0
+			for n in self.Setting.Info:
+				if self.Setting.Value == n:
+					break
+				indx=indx+1
+			self.Widget.set_active(indx)
+		elif self.Setting.Type == 'String' or self.Setting.Type == 'Match':
+			self.Widget.set_text(self.Setting.Value)
+
+class SubGroupArea:
+
+	def __init__(self,Name,SubGroup):
+		if Name == '':
+			self.Widget = gtk.Table()
+			self.Child = self.Widget
+		else:
+			self.Widget = gtk.Frame()
+			self.Expander = gtk.Expander(Name)
+			self.Widget.add(self.Expander)
+			self.Expander.set_expanded(False)
+			self.Child = gtk.Table()
+			self.Expander.add(self.Child)
+		self.Empty = True
+		self.Child.attach(gtk.Label('Name'),0,1,0,1,0)
+		self.Child.attach(gtk.VSeparator(),1,2,0,1,0)
+		self.Child.attach(gtk.Label('Value'),2,3,0,1)
+		self.Child.attach(gtk.HSeparator(),0,3,1,2)
+		row = 2
+		for Set in SubGroup.Display:
+			if not Set == '____plugin_enabled':
+				sit = SettingItem(SubGroup.Display[Set])
+				if sit.Normal:
+					self.Child.attach(sit.Label,0,1,row,row+1,0)
+					self.Child.attach(sit.Widget,2,3,row,row+1)
+					row=row+1
+					self.Empty = False
+		for Scr in SubGroup.Screens:
+			for Set in Scr:
+				sit = SettingItem(Scr[Set])
+				if sit.Normal:
+					self.Child.attach(sit.Label,0,1,row,row+1,0)
+					self.Child.attach(sit.Widget,2,3,row,row+1)
+					row=row+1
+					self.Empty = False
+		self.Child.attach(gtk.VSeparator(),1,2,2,row+1,0)
+
+class GroupPage:
+	def __init__(self,Name,Group):
+		self.Widget = gtk.VBox()
+		self.SetContainer = gtk.VBox()
+		Scroll = gtk.ScrolledWindow()
+		Scroll.props.hscrollbar_policy = gtk.POLICY_NEVER
+		Scroll.props.vscrollbar_policy = gtk.POLICY_AUTOMATIC
+		View = gtk.Viewport()
+		self.Widget.pack_start(Scroll,True,True)
+		Scroll.add(View)
+		View.add(self.SetContainer)
+		self.Empty = True
+		if (Group.has_key('')):
+			sga = SubGroupArea('',Group[''])
+			if not sga.Empty:
+				self.SetContainer.pack_start(sga.Widget,False,False)
+				self.Empty = False
+		for SubGroup in Group:
+			if not SubGroup == '':
+				sga = SubGroupArea(SubGroup,Group[SubGroup])
+				if not sga.Empty:
+					self.SetContainer.pack_start(sga.Widget,False,False)
+					self.Empty = False
 
 class PlugItem(Item):
 	def __init__(self,Plugin):
@@ -74,10 +172,15 @@ class PlugItem(Item):
 		self.Client = gtk.VBox()
 		self.Client.pack_start(gtk.Label(Plugin.LongDesc),False,False)
 		self.Client.pack_start(gtk.HSeparator(),False,False)
-		Foo = gtk.Notebook()
-		self.Client.pack_start(Foo,True,True)
+		self.Groups = gtk.Notebook()
+		self.Client.pack_start(self.Groups,True,True)
 		for n in Plugin.Groups:
-			Foo.append_page(gtk.VBox(),gtk.Label(n))
+			Name = n
+			if Name == '':
+				Name = 'General'
+			gp = GroupPage(Name,Plugin.Groups[n])
+			if not gp.Empty:
+				self.Groups.append_page(gp.Widget,gtk.Label(Name))
 
 class PlugChooser(Chooser):
 	def __init__(self,Plugins):
@@ -94,6 +197,7 @@ class PlugChooser(Chooser):
 		self.Widget.pack_start(self.ClientArea,True,True)
 		for Plugin in Plugins:
 			self.AddItem(PlugItem(Plugin))
+		self.SelectItem(None,None,0)
 
 
 class CatItem(Item):
@@ -125,7 +229,11 @@ class CatChooser(Chooser):
 			self.AddItem(CatItem(Name,Categories[Name]))
 		self.SelectItem(None,None,0)
 
+def Quit(foo):
+	gtk.main_quit()
+
 MainWin = gtk.Window()
+MainWin.connect('destroy',Quit)
 Ctx = bsettings.Context()
 n = CatChooser(Ctx.Categories)
 MainWin.add(n.Widget)
