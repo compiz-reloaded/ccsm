@@ -67,7 +67,6 @@ class SettingItem:
 		self.Setting = Setting
 		self.Normal = True
 		self.Label = gtk.Label(Setting.ShortDesc)
-		self.Label.props.xalign=1
 		if Setting.Type == 'String' and len(Setting.Info):
 			self.Widget = gtk.combo_box_new_text()
 			for Text in Setting.Info:
@@ -78,16 +77,27 @@ class SettingItem:
 			self.Widget = gtk.CheckButton()
 		elif Setting.Type == 'Int' or Setting.Type == 'Float':
 			self.Widget = gtk.HBox()
-			self.Spin = gtk.SpinButton()
-			self.Scale = gtk.HScale()
+			if Setting.Type == 'Int':
+				inc = 1
+			else:
+				inc = Setting.Info[2]
+			self.Adj = gtk.Adjustment(Setting.Value,Setting.Info[0],Setting.Info[1],
+					inc,inc*10)
+			self.Spin = gtk.SpinButton(self.Adj)
+			if Setting.Type == 'Float':
+				self.Spin.set_digits(4)
+			self.Scale = gtk.HScale(self.Adj)
 			self.Scale.props.draw_value = False
 			self.Widget.pack_start(self.Scale,True,True)
 			self.Widget.pack_start(self.Spin,False,False)
 		elif Setting.Type == 'Color':
 			self.Widget = gtk.ColorButton()
+			self.Widget.set_use_alpha(True)
 		else:
 			self.Normal = False
+		self.Block = True
 		self.Read()
+		self.Block = False
 
 	def Read(self):
 		if self.Setting.Type == 'String' and len(self.Setting.Info):
@@ -99,6 +109,13 @@ class SettingItem:
 			self.Widget.set_active(indx)
 		elif self.Setting.Type == 'String' or self.Setting.Type == 'Match':
 			self.Widget.set_text(self.Setting.Value)
+		elif self.Setting.Type == 'Float' or self.Setting.Type == 'Int':
+			self.Adj.set_value(self.Setting.Value)
+		elif self.Setting.Type == 'Color':
+			self.Widget.set_color(gdk.color_parse(self.Setting.Value[0:7]))
+			self.Widget.set_alpha(eval("0x%s"%self.Setting.Value[7:9])*257)
+		elif self.Setting.Type == 'Bool':
+			self.Widget.set_active(self.Setting.Value)
 
 class SubGroupArea:
 
