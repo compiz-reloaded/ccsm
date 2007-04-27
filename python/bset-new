@@ -162,7 +162,6 @@ class ColorSetting(SettingItem):
 		self.Widget.set_use_alpha(True)
 		self.Widget.connect('color-set',self.Changed)
 	def _Read(self):
-		print self.Setting.Value
 		col = gdk.Color()
 		col.red=self.Setting.Value[0]
 		col.green=self.Setting.Value[1]
@@ -173,7 +172,6 @@ class ColorSetting(SettingItem):
 		col = self.Widget.get_color()
 		alpha = self.Widget.get_alpha()
 		self.Setting.Value = [col.red,col.green,col.blue,alpha]
-		print self.Setting.Value
 
 def MakeSetting(Setting):
 	if Setting.Type == 'String' and len(Setting.Info):
