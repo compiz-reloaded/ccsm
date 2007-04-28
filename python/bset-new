@@ -92,7 +92,7 @@ class SettingItem:
 		self.Label = gtk.Label(self.Setting.ShortDesc)
 		self.Label.props.xalign=0
 		self.Label.props.wrap_mode = gtk.WRAP_WORD
-		self.Label.props.width_chars = 40
+		self.Label.props.width_chars = 20
 		self.Label.set_line_wrap(True)
 
 	def Block(self):
@@ -193,21 +193,27 @@ class ColorSetting(SettingItem):
 
 class ListChoiceSetting(SettingItem):
 	def _Init(self):
-		self.Widget = gtk.Frame()
+		self.Widget = gtk.Frame(self.Setting.ShortDesc)
 		self.Table = gtk.Table()
+		self.Custom = True
 		row = 0
 		col = 0
 		self.Checks=[]
 		for val in self.Setting.Info[1]:
 			cbx = gtk.CheckButton(val)
 			self.Checks.append((val,cbx))
-			self.Table.attach(cbx,row,row+1,col,col+1)
+			self.Table.attach(cbx,col,col+1,row,row+1)
 			cbx.connect('toggled',self.Changed)
 			col = col + 1
 			if (col>=3):
 				col = 0
 				row = row + 1
-		self.Widget.add(self.Table)
+		self.HBox = gtk.HBox()
+		self.VBox = gtk.VBox()
+		self.HBox.pack_start(self.VBox,False,False)
+		self.HBox.pack_start(self.Table,True,True)
+		self.VBox.pack_start(self.Reset,False,False)
+		self.Widget.add(self.HBox)
 	def _Read(self):
 		for cv,c in self.Checks:
 			c.set_active(False)
