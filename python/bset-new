@@ -62,10 +62,14 @@ class Chooser:
 		self.ClientArea.add(Item.Client)
 		Item.Client.show_all()
 
+class PureVirtualError(Exception):
+	pass
+
 class SettingItem:
 	def __init__(self,Setting):
+		self.Custom = False
 		self.Setting = Setting
-		self.Block = 0
+		self.Blocked = 0
 		self.MakeLabel()
 		self.Reset = gtk.Button()
 		self.Reset.set_image(gtk.image_new_from_stock(
@@ -73,8 +77,11 @@ class SettingItem:
 		self.Reset.connect('clicked',self.DoReset)
 		self._Init()
 
+	def PureVirtual(self,str):
+		raise PureVirtualError,str,self.Setting.Name
+
 	def _Init(self):
-		print 'Pure Virtual Init Called'
+		self.PureVirtual('_Init')
 	
 	def DoReset(self,foo):
 		self.Setting.Reset()
@@ -83,22 +90,32 @@ class SettingItem:
 
 	def MakeLabel(self):
 		self.Label = gtk.Label(self.Setting.ShortDesc)
+		self.Label.props.xalign=0
+		self.Label.props.wrap_mode = gtk.WRAP_WORD
+		self.Label.props.width_chars = 40
+		self.Label.set_line_wrap(True)
+
+	def Block(self):
+		self.Blocked = self.Blocked + 1
+	
+	def UnBlock(self):
+		self.Blocked = self.Blocked - 1
 
 	def Read(self):
-		self.Block = self.Block + 1
+		self.Block()
 		self._Read()
-		self.Block = self.Block - 1
+		self.UnBlock()
 
 	def _Read(self):
-		print 'Pure Virtual Read Called'
+		self.PureVirtual('_Read')
 
 	def Changed(self, *args, **kwargs):
-		if self.Block == 0:
+		if self.Blocked <= 0:
 			self._Changed()
 			self.Setting.Plugin.Context.Write()
 
 	def _Changed(self):
-		print 'Pure Virtual Changed Called'
+		self.PureVirtual('_Changed')
 
 class StringMatchSetting(SettingItem):
 	def _Init(self):
@@ -128,6 +145,7 @@ class StringChoiceSetting(SettingItem):
 class BoolSetting(SettingItem):
 	def _Init(self):
 		self.Widget = gtk.CheckButton()
+		self.Widget.connect('toggled',self.Changed)
 	def _Read(self):
 		self.Widget.set_active(self.Setting.Value)
 	def _Changed(self):
@@ -173,6 +191,198 @@ class ColorSetting(SettingItem):
 		alpha = self.Widget.get_alpha()
 		self.Setting.Value = [col.red,col.green,col.blue,alpha]
 
+class ListChoiceSetting(SettingItem):
+	def _Init(self):
+		self.Widget = gtk.Frame()
+		self.Table = gtk.Table()
+		row = 0
+		col = 0
+		self.Checks=[]
+		for val in self.Setting.Info[1]:
+			cbx = gtk.CheckButton(val)
+			self.Checks.append((val,cbx))
+			self.Table.attach(cbx,row,row+1,col,col+1)
+			cbx.connect('toggled',self.Changed)
+			col = col + 1
+			if (col>=3):
+				col = 0
+				row = row + 1
+		self.Widget.add(self.Table)
+	def _Read(self):
+		for cv,c in self.Checks:
+			c.set_active(False)
+		for v in self.Setting.Value:
+			for cv,c in self.Checks:
+				if cv == v:
+					c.set_active(True)
+	def _Changed(self):
+		v = []
+		for cv,c in self.Checks:
+			if c.get_active():
+				v = v + [cv]
+		self.Setting.Value = v
+
+class ListSetting(SettingItem):
+	def _Init(self):
+		self.Widget = gtk.Frame(self.Setting.ShortDesc)
+		self.Custom = True
+		Info = self._ListInfo()
+		self.Store = gtk.ListStore(*Info[0])
+		self.View = gtk.TreeView(self.Store)
+		if len(Info[0]) == 1:
+			self.View.set_headers_visible(False)
+		self.Select = self.View.get_selection()
+		self.Select.set_mode(gtk.SELECTION_MULTIPLE)
+		for I in Info[1]:
+			self.View.insert_column_with_attributes(-1,I[1],I[0],**I[2])
+		self.Store.connect('row-changed',self.Changed)
+		self.Store.connect('row-deleted',self.Changed)
+		self.Store.connect('row-inserted',self.Changed)
+		self.Store.connect('rows-reordered',self.Changed)
+		VBox = gtk.VBox()
+		self.Widget.add(VBox)
+		self.Scroll = gtk.ScrolledWindow()
+		self.Scroll.props.hscrollbar_policy = gtk.POLICY_NEVER
+		self.Scroll.props.hscrollbar_policy = gtk.POLICY_AUTOMATIC
+		self.Scroll.add(self.View)
+		VBox.pack_start(self.Scroll,True,True)
+		HBox = gtk.HBox(False)
+		VBox.pack_start(HBox,False,False)
+		for bt in (
+				(gtk.STOCK_ADD,self.Add),
+				(gtk.STOCK_DELETE,self.Delete),
+				(gtk.STOCK_EDIT,self.Edit),
+				(gtk.STOCK_GO_UP,self.MoveUp),
+				(gtk.STOCK_GO_DOWN,self.MoveDown),
+				):
+			b=gtk.Button(bt[0])
+			b.set_use_stock(True)
+			HBox.pack_start(b)
+			b.connect('clicked',bt[1])
+		HBox.pack_start(self.Reset)
+	def Add(self,b):
+		val = self._Edit()
+		if val is not None:
+			self.Block()
+			Iter = self.Store.append()
+			self.UnBlock()
+			self._ListSet(Iter,val)
+	def Delete(self,b):
+		sel = self.Select.get_selected_rows()[1]
+		for path in sel:
+			Iter = self.Store.get_iter(path)
+			self.Store.remove(Iter)
+	def Edit(self,b):
+		sel = self.Select.get_selected_rows()[1]
+		if len(sel) == 1:
+			Iter = self.Store.get_iter(sel[0])
+			val = self._Edit(self._ListGet(Iter))
+			if val is not None:
+				self._ListSet(Iter,val)
+	def MoveUp(self,b):
+		sel = self.Select.get_selected_rows()[1]
+		if len(sel) == 1:
+			Iter = self.Store.get_iter(sel[0])
+			Prev = self.Store.get_iter_first()
+			if not self.Store.get_path(Prev) == self.Store.get_path(Iter):
+				while Prev is not None and not self.Store.get_path(
+						self.Store.iter_next(Prev)) == self.Store.get_path(Iter):
+					Prev = self.Store.iter_next(Prev)
+				self.Store.swap(Iter,Prev)
+	def MoveDown(self,b):
+		sel = self.Select.get_selected_rows()[1]
+		if len(sel) == 1:
+			Iter = self.Store.get_iter(sel[0])
+			Next = self.Store.iter_next(Iter)
+			if Next is not None:
+				self.Store.swap(Iter,Next)
+	def _ListInfo(self):
+		self.PureVirtual('_ListInfo')
+	def _Read(self):
+		self.Store.clear()
+		for v in self.Setting.Value:
+			Iter=self.Store.append()
+			self._ListSet(Iter,v)
+	def _ListSet(self,Iter,v):
+		self.PureVirtual('_ListRead')
+	def _ListGet(self,Iter):
+		self.PureVirtual('_ListGet')
+	def _Edit(self,d,v=None):
+		self.PureVirtual('_Edit')
+	def _Changed(self):
+		val=[]
+		Iter=self.Store.get_iter_first()
+		while Iter:
+			val.append(self._ListGet(Iter))
+			Iter = self.Store.iter_next(Iter)
+		self.Setting.Value = val
+
+class StringMatchListSetting(ListSetting):
+	def _ListInfo(self):
+		return (gobject.TYPE_STRING,),[(gtk.CellRendererText(),
+			"Value (%s)" % self.Setting.Info[0],{'text':0})]
+	def _ListSet(self,Iter,v):
+		self.Store.set(Iter,0,v)
+	def _ListGet(self,Iter):
+		return self.Store.get(Iter,0)[0]
+	def _Edit(self,v=None):
+		d = gtk.Dialog("Edit %s"%self.Setting.ShortDesc)
+		d.add_button(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL)
+		d.add_button(gtk.STOCK_OK,gtk.RESPONSE_OK).grab_default()
+		d.set_default_response(gtk.RESPONSE_OK)
+		d.vbox.pack_start(gtk.Label("Value(%s) for %s:"%(self.Setting.Info[0],self.Setting.ShortDesc)))
+		e = gtk.Entry()
+		e.props.activates_default=True
+		if v is not None:
+			e.set_text(v)
+		d.vbox.pack_start(e)
+		d.vbox.show_all()
+		r = d.run()
+		d.destroy()
+		if r == gtk.RESPONSE_OK:
+			return e.get_text()
+		return None
+
+class IntFloatListSetting(ListSetting):
+	def _ListInfo(self):
+		return (gobject.TYPE_STRING,),[(gtk.CellRendererText(),
+			"Value (%s)" % self.Setting.Info[0],{'text':0})]
+	def _ListSet(self,Iter,v):
+		self.Store.set(Iter,0,str(v))
+	def _ListGet(self,Iter):
+		return eval(self.Store.get(Iter,0)[0])
+	def _Edit(self,v=None):
+		d = gtk.Dialog("Edit %s"%self.Setting.ShortDesc)
+		d.add_button(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL)
+		d.add_button(gtk.STOCK_OK,gtk.RESPONSE_OK).grab_default()
+		d.set_default_response(gtk.RESPONSE_OK)
+		d.vbox.pack_start(gtk.Label("Value(%s) for %s:"%(self.Setting.Info[0],self.Setting.ShortDesc)))
+		h = gtk.HBox()
+		d.vbox.pack_start(h)
+		if self.Setting.Info[0] == 'Int':
+			inc = 1
+		else:
+			inc = self.Setting.Info[1][2]
+		val = self.Setting.Info[1][0]
+		if v is not None:
+			val = v
+		adj = gtk.Adjustment(val,
+				self.Setting.Info[1][0],self.Setting.Info[1][1],
+				inc,inc*10)
+		spin = gtk.SpinButton(adj)
+		if self.Setting.Info[0] == 'Float':
+			spin.set_digits(4)
+		scale = gtk.HScale(adj)
+		scale.props.draw_value = False
+		h.pack_start(scale,True,True)
+		h.pack_start(spin,False,False)
+		d.vbox.show_all()
+		r = d.run()
+		d.destroy()
+		if r == gtk.RESPONSE_OK:
+			return e.get_text()
+		return None
+
 def MakeSetting(Setting):
 	if Setting.Type == 'String' and len(Setting.Info):
 		return StringChoiceSetting(Setting)
@@ -184,6 +394,15 @@ def MakeSetting(Setting):
 		return IntFloatSetting(Setting)
 	elif Setting.Type == 'Color':
 		return ColorSetting(Setting)
+	elif Setting.Type == 'List':
+		if Setting.Info[0] == 'String' and len(Setting.Info[1]):
+			return ListChoiceSetting(Setting)
+		elif Setting.Info[0] == 'String' or Setting.Info[0] == 'Match':
+			return StringMatchListSetting(Setting)
+		elif Setting.Info[0] == 'Int' or Setting.Info[0] == 'Float':
+			return IntFloatListSetting(Setting)
+		else:
+			raise TypeError, "Unhandled list type %s for %s"%(Setting.Info[0],Setting.Name)
 	return None
 
 class SubGroupArea:
@@ -199,32 +418,25 @@ class SubGroupArea:
 			self.Child = gtk.Table()
 			self.Expander.add(self.Child)
 		self.Empty = True
-		self.Child.attach(gtk.Label('Name'),0,1,0,1,0)
-		self.Child.attach(gtk.VSeparator(),1,2,0,1,0)
-		self.Child.attach(gtk.Label('Value'),2,4,0,1)
-		self.Child.attach(gtk.HSeparator(),0,4,1,2)
-		row = 2
-		for Set in SubGroup.Display:
-			if not Set == '____plugin_enabled':
-				sit = MakeSetting(SubGroup.Display[Set])
+		#self.Child.attach(gtk.Label('Name'),0,1,0,1,0)
+		#self.Child.attach(gtk.VSeparator(),1,2,0,1,0)
+		#self.Child.attach(gtk.Label('Value'),2,4,0,1)
+		#self.Child.attach(gtk.HSeparator(),0,4,1,2)
+		row = 0
+		for Set in sorted(sum((v.values() for v in [SubGroup.Display]+SubGroup.Screens),[])):
+			if not Set.Name == '____plugin_enabled':
+				sit = MakeSetting(Set)
 				if sit is not None:
 					sit.Read()
-					self.Child.attach(sit.Label,0,1,row,row+1,0)
-					self.Child.attach(sit.Widget,2,3,row,row+1)
-					self.Child.attach(sit.Reset,3,4,row,row+1,0)
+					if sit.Custom:
+						self.Child.attach(sit.Widget,0,4,row,row+1)
+					else:
+						self.Child.attach(sit.Label,0,1,row,row+1,gtk.FILL)
+						self.Child.attach(sit.Widget,2,3,row,row+1)
+						self.Child.attach(sit.Reset,3,4,row,row+1,0)
 					row=row+1
 					self.Empty = False
-		for Scr in SubGroup.Screens:
-			for Set in Scr:
-				sit = MakeSetting(Scr[Set])
-				if sit is not None:
-					sit.Read()
-					self.Child.attach(sit.Label,0,1,row,row+1,0)
-					self.Child.attach(sit.Widget,2,3,row,row+1)
-					self.Child.attach(sit.Reset,3,4,row,row+1,0)
-					row=row+1
-					self.Empty = False
-		self.Child.attach(gtk.VSeparator(),1,2,2,row+1,0)
+		#self.Child.attach(gtk.VSeparator(),1,2,2,row+1,0)
 
 class GroupPage:
 	def __init__(self,Name,Group):
@@ -255,9 +467,14 @@ class PlugItem(Item):
 		self.Selector = gtk.EventBox()
 		self.Label = gtk.Label(Plugin.ShortDesc)
 		self.Name = Plugin.ShortDesc
-		self.VBox = gtk.VBox()
-		self.Selector.add(self.VBox)
-		self.VBox.pack_start(self.Label)
+		self.HBox = gtk.HBox()
+		self.Selector.add(self.HBox)
+		self.Label.props.xalign=0
+		self.img = gtk.Image()
+		self.img.set_from_stock(gtk.STOCK_MISSING_IMAGE,gtk.ICON_SIZE_BUTTON)
+		self.HBox.pack_start(gtk.CheckButton(),False,False)
+		self.HBox.pack_start(self.img,False,False)
+		self.HBox.pack_start(self.Label,True,True)
 		self.Client = gtk.VBox()
 		self.Client.pack_start(gtk.Label(Plugin.LongDesc),False,False)
 		self.Client.pack_start(gtk.HSeparator(),False,False)
@@ -276,9 +493,13 @@ class PlugChooser(Chooser):
 		Chooser.__init__(self)
 		self.Widget = gtk.HBox()
 		self.Strip = gtk.VBox(True)
+		self.Alig = gtk.Alignment()
+		self.Alig.props.xscale=0
+		self.Alig.props.xalign=0
+		self.Alig.add(self.Strip)
 		self.LeftWin = gtk.Viewport()
 		self.LeftScroll = gtk.ScrolledWindow()
-		self.LeftWin.add(self.Strip)
+		self.LeftWin.add(self.Alig)
 		self.LeftScroll.add(self.LeftWin)
 		self.LeftScroll.props.hscrollbar_policy = gtk.POLICY_NEVER
 		self.LeftScroll.props.vscrollbar_policy = gtk.POLICY_AUTOMATIC
@@ -298,20 +519,36 @@ class CatItem(Item):
 			Name = 'Uncategorized'
 		self.Name = Name
 		self.Label = gtk.Label(Name)
+		img = gtk.Image()
+		img.set_from_stock(gtk.STOCK_MISSING_IMAGE,
+				gtk.ICON_SIZE_DIALOG)
+		self.VBox.pack_start(img)
 		self.VBox.pack_start(self.Label)
 		self.Chooser = PlugChooser(Plugins)
 		self.PlClient = self.Chooser.Widget
 		self.Client = gtk.VBox()
-		self.Client.pack_start(gtk.Label(Name),False,False)
+		hb = gtk.HBox()
+		img = gtk.Image()
+		img.set_from_stock(gtk.STOCK_MISSING_IMAGE,
+				gtk.ICON_SIZE_DIALOG)
+		hb.pack_start(img,False,False)
+		lb = gtk.Label(Name)
+		lb.props.xalign=0
+		hb.pack_start(lb,True,True)
+		self.Client.pack_start(hb,False,False)
 		self.Client.pack_start(gtk.HSeparator(),False,False)
 		self.Client.pack_start(self.PlClient,True,True)
 
 class CatChooser(Chooser):
 	def __init__(self,Categories):
 		Chooser.__init__(self)
+		self.Alig = gtk.Alignment()
+		self.Alig.props.xscale=0
+		self.Alig.props.xalign=0.5
 		self.Strip = gtk.HBox(True)
 		self.Widget = gtk.VBox()
-		self.Widget.pack_start(self.Strip,False,False)
+		self.Alig.add(self.Strip)
+		self.Widget.pack_start(self.Alig,False,False)
 		self.Widget.pack_start(gtk.HSeparator(),False,False)
 		self.Widget.pack_start(self.ClientArea,True,True)
 		for Name in Categories:
@@ -323,6 +560,7 @@ def Quit(foo):
 
 MainWin = gtk.Window()
 MainWin.connect('destroy',Quit)
+MainWin.set_size_request(-1,400)
 Ctx = bsettings.Context()
 n = CatChooser(Ctx.Categories)
 MainWin.add(n.Widget)

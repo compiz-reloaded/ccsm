@@ -400,7 +400,10 @@ cdef class Setting:
 			return self.info
 	property Hints:
 		def __get__(self):
-			return self.bsSetting.hints
+			if self.bsSetting.hints == '':
+				return []
+			else:
+				return str(self.bsSetting.hints).split(';')[:-1]
 	property IsDefault:
 		def __get__(self):
 			if self.bsSetting.isDefault:
