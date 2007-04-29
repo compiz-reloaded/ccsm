@@ -470,6 +470,7 @@ class GroupPage:
 
 class PlugItem(Item):
 	def __init__(self,Plugin):
+		self.Plugin = Plugin
 		self.Selector = gtk.EventBox()
 		self.Label = gtk.Label(Plugin.ShortDesc)
 		self.Name = Plugin.ShortDesc
@@ -478,7 +479,11 @@ class PlugItem(Item):
 		self.Label.props.xalign=0
 		self.img = gtk.Image()
 		self.img.set_from_stock(gtk.STOCK_MISSING_IMAGE,gtk.ICON_SIZE_BUTTON)
-		self.HBox.pack_start(gtk.CheckButton(),False,False)
+		if Plugin.Name != 'core':
+			self.Enable = gtk.CheckButton()
+			self.Enable.set_active(Plugin.Enabled)
+			self.HBox.pack_start(self.Enable,False,False)
+			self.Enable.connect('toggled',self.EnChanged)
 		self.HBox.pack_start(self.img,False,False)
 		self.HBox.pack_start(self.Label,True,True)
 		self.Client = gtk.VBox()
@@ -486,6 +491,7 @@ class PlugItem(Item):
 		self.Client.pack_start(gtk.HSeparator(),False,False)
 		self.Groups = gtk.Notebook()
 		self.Client.pack_start(self.Groups,True,True)
+		self.Block = 0
 		for n in Plugin.Groups:
 			Name = n
 			if Name == '':
@@ -493,6 +499,19 @@ class PlugItem(Item):
 			gp = GroupPage(Name,Plugin.Groups[n])
 			if not gp.Empty:
 				self.Groups.append_page(gp.Widget,gtk.Label(Name))
+	def EnChanged(self,Wid):
+		if self.Block > 0:
+			return
+		self.Block = self.Block + 1
+		if (self.Enable.get_active()):
+			print self.Plugin.EnableConflicts
+			self.Plugin.Enabled = True
+		else:
+			print self.Plugin.DisableConflicts
+			self.Plugin.Enabled = False
+		self.Enable.set_active(self.Plugin.Enabled)	
+		self.Block = self.Block - 1
+		self.Plugin.Context.Write()
 
 class PlugChooser(Chooser):
 	def __init__(self,Plugins):
