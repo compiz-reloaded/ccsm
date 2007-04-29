@@ -28,6 +28,20 @@ cdef enum BSSettingType:
 	TypeList
 	TypeNum
 
+cdef enum BSPluginConflictType:
+	#activate
+	ConflictRequiresPlugin
+	ConflictRequiresFeature
+	ConflictSameFeature
+	#deactivate
+	ConflictFeatureNeeded
+	ConflictPluginNeeded
+	#once more back to activate
+	#this last one is if the
+	#plugin requires a plugin
+	#that does not exist
+	ConflictPluginError
+
 SettingTypeString=[
 		'Bool',
 		'Int',
@@ -38,6 +52,14 @@ SettingTypeString=[
 		'Match',
 		'List',
 		'Invalid']
+
+ConflictTypeString=[
+		'RequiresPlugin', #A
+		'RequiresFeature', #A
+		'SameFeature', #A
+		'FeatureNeeded', #D
+		'PluginNeeded', #D
+		'PluginError'] #A
 
 cdef struct BSList:
 	void * data
@@ -179,6 +201,11 @@ cdef struct BSPlugin:
 	void * priv
 	BSContext * context
 
+cdef struct BSPluginConflict:
+	char * value
+	BSPluginConflictType type
+	BSPluginList * plugins
+
 
 cdef extern BSContext * bsContextNew()
 cdef extern void bsContextDestroy(BSContext * context)
@@ -217,6 +244,10 @@ cdef extern void bsReadSettings(BSContext * c)
 cdef extern void bsWriteSettings(BSContext * c)
 cdef extern void bsWriteChangedSettings(BSContext * c)
 cdef extern void bsResetToDefault(BSSetting * s)
+
+cdef extern void bsPluginConflictListFree(BSPluginConflictList * l, Bool FreOBJ)
+cdef extern BSPluginConflictList * bsCanEnablePlugin(BSContext * c, BSPlugin * p)
+cdef extern BSPluginConflictList * bsCanDisablePlugin(BSContext * c, BSPlugin * p)
 
 cdef class Context
 cdef class Plugin
@@ -524,9 +555,66 @@ cdef class Plugin:
 			return self.bsPlugin.category
 	property Enabled:
 		def __get__(self):
-			return True
+			return self.Display['____plugin_enabled'].Value
 		def __set__(self,val):
-			pass
+			if val:
+				if len(self.EnableConflicts):
+					return
+				self.Display['____plugin_enabled'].Value = True
+			else:
+				if len(self.DisableConflicts):
+					return
+				self.Display['____plugin_enabled'].Value = False
+	property EnableConflicts:
+		def __get__(self):
+			cdef BSPluginConflictList * pl, * pls
+			cdef BSPluginConflict * pc
+			cdef BSPluginList * ppl
+			cdef BSPlugin * plg
+			if self.Enabled:
+				return []
+			ret = []
+			pl = bsCanEnablePlugin(self.context.bsContext,
+					self.bsPlugin)
+			pls = pl
+			while pls != NULL:
+				pc = <BSPluginConflict *>pls.data
+				rpl = []
+				ppl = pc.plugins
+				while ppl != NULL:
+					plg = <BSPlugin *>ppl.data
+					rpl.append(self.context.Plugins[plg.name])
+					ppl = ppl.next
+				ret.append((ConflictTypeString[pc.type],pc.value,rpl))
+				pls = pls.next
+			if pl != NULL:
+				bsPluginConflictListFree(pl, True)
+			return ret
+	property DisableConflicts:
+		def __get__(self):
+			cdef BSPluginConflictList * pl, * pls
+			cdef BSPluginConflict * pc
+			cdef BSPluginList * ppl
+			cdef BSPlugin * plg
+			if not self.Enabled:
+				return []
+			ret = []
+			pl = bsCanDisablePlugin(self.context.bsContext,
+					self.bsPlugin)
+			pls = pl
+			while pls != NULL:
+				pc = <BSPluginConflict *>pls.data
+				rpl = []
+				ppl = pc.plugins
+				while ppl != NULL:
+					plg = <BSPlugin *>ppl.data
+					rpl.append(self.context.Plugins[plg.name])
+					ppl = ppl.next
+				ret.append((ConflictTypeString[pc.type],pc.value,rpl))
+				pls = pls.next
+			if pl != NULL:
+				bsPluginConflictListFree(pl, True)
+			return ret
 
 cdef class Context:
 	cdef BSContext * bsContext
