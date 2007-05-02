@@ -19,7 +19,7 @@
 
 
 
-import bsettings
+import ccs
 import gtk
 import gtk.gdk
 import gobject
@@ -586,7 +586,7 @@ def Quit(foo):
 MainWin = gtk.Window()
 MainWin.connect('destroy',Quit)
 MainWin.set_size_request(-1,400)
-Ctx = bsettings.Context()
+Ctx = ccs.Context()
 n = CatChooser(Ctx.Categories)
 MainWin.add(n.Widget)
 MainWin.show_all()
