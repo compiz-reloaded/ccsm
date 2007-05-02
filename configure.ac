@@ -1,5 +1,5 @@
 AC_PREREQ(2.57)
-AC_INIT([bsettings-bindings],0.0.1, [livinglatexkali@gmail.com])
+AC_INIT([ccs-bindings],0.0.1, [livinglatexkali@gmail.com])
 
 AM_INIT_AUTOMAKE([1.9 dist-bzip2])
 AC_CONFIG_HEADER([config.h])
@@ -11,13 +11,13 @@ AC_PROG_CPP
 AC_PROG_LIBTOOL
 AC_HEADER_STDC
 
-BSETTINGS_REQUIRES="\
-bsettings >= 0.0.1 \
+CCS_REQUIRES="\
+libccs >= 0.0.1 \
 glib-2.0 >= 2.6 "
 
-PKG_CHECK_MODULES(BSETTINGS,$BSETTINGS_REQUIRES)
+PKG_CHECK_MODULES(CCS,$CCS_REQUIRES)
 
-AC_SUBST(BSETTINGS_REQUIRES)
+AC_SUBST(CCS_REQUIRES)
 
 dnl PYTHON SPECIFIC
 
@@ -38,7 +38,7 @@ then
 fi
 
 AC_CONFIG_FILES([
-	bsettings-bindings.pc
+	ccs-bindings.pc
 	Makefile
 	python/Makefile
 ])
