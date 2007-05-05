@@ -144,12 +144,17 @@ class StringChoiceSetting(SettingItem):
 
 class BoolSetting(SettingItem):
 	def _Init(self):
-		self.Widget = gtk.CheckButton()
-		self.Widget.connect('toggled',self.Changed)
+		self.Custom = True
+		self.Widget = gtk.HBox()
+		self.CheckButton = gtk.CheckButton()
+		self.Widget.pack_start(self.CheckButton,False,False,5)
+		self.Widget.pack_start(self.Label)
+		self.Widget.pack_start(self.Reset,False,False)
+		self.CheckButton.connect('toggled',self.Changed)
 	def _Read(self):
-		self.Widget.set_active(self.Setting.Value)
+		self.CheckButton.set_active(self.Setting.Value)
 	def _Changed(self):
-		self.Setting.Value = self.Widget.get_active()
+		self.Setting.Value = self.CheckButton.get_active()
 
 class IntFloatSetting(SettingItem):
 	def _Init(self):
@@ -438,7 +443,7 @@ class SubGroupArea:
 						self.Child.attach(sit.Widget,0,4,row,row+1)
 					else:
 						self.Child.attach(sit.Label,0,1,row,row+1,gtk.FILL)
-						self.Child.attach(sit.Widget,2,3,row,row+1)
+						self.Child.attach(sit.Widget,2,3,row,row+1,)
 						self.Child.attach(sit.Reset,3,4,row,row+1,0)
 					row=row+1
 					self.Empty = False
