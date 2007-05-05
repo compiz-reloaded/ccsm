@@ -117,6 +117,47 @@ class SettingItem:
 	def _Changed(self):
 		self.PureVirtual('_Changed')
 
+class WindowMatchSetting(SettingItem):
+	def _Init(self):
+		self.Custom = True
+		self.Widget = gtk.VBox()
+		self.Head = gtk.HBox()
+		self.Table = gtk.Table()
+
+		self.Widget.pack_start(self.Head)
+		self.Widget.pack_start(self.Table)
+
+		self.Head.pack_start(self.Label)
+		self.Head.pack_start(self.Reset,False,False)
+
+		self.CheckButtons = dict()
+		self.Types = ("Dock","Desktop","Toolbar","Panel","Dialog","Tooltip","Unknown")
+		row = 0
+		col = 0
+		for type in self.Types:
+			checkbutton = gtk.CheckButton(type)
+			checkbutton.connect('toggled',self.Changed)
+			self.Table.attach(checkbutton,col,col+1,row,row+1)
+			self.CheckButtons[type] = checkbutton
+			col += 1
+			if col == 3:
+				col = 0
+				row += 1
+	def _Read(self):
+		activeTypes = self.Setting.Value.split(" | ")
+		for type in self.Types:
+			try:
+				activeTypes.index(type)
+				self.CheckButtons[type].set_active(True)
+			except:
+				self.CheckButtons[type].set_active(False)
+	def _Changed(self):
+		value = ""
+		for type in self.Types:
+			if self.CheckButtons[type].get_active():
+				value += type + " | "
+		self.Setting.Value = value[:-3] # we need to cut the last " | " off
+
 class StringMatchSetting(SettingItem):
 	def _Init(self):
 		self.Widget = gtk.Entry()
