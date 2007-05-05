@@ -631,7 +631,8 @@ def Quit(foo):
 
 MainWin = gtk.Window()
 MainWin.connect('destroy',Quit)
-MainWin.set_size_request(-1,400)
+MainWin.set_size_request(700,500)
+MainWin.set_title("CCS Manager")
 Ctx = ccs.Context()
 n = CatChooser(Ctx.Categories)
 MainWin.add(n.Widget)
