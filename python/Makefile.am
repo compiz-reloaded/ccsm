@@ -1,17 +1,17 @@
 INCLUDES=\
 		 $(PYTHON_INCLUDES)\
-		 @BSETTINGS_CFLAGS@
+		 @CCS_CFLAGS@
 
-bsettings.c: bsettings.pyx
-	-pyrexc bsettings.pyx
+ccs.c: ccs.pyx
+	-pyrexc ccs.pyx
 
-bsettings_la_LDFLAGS = -module -avoid-version -fPIC -export-symbols-regex initbsettings -lX11
-bsettings_la_LIBADD = @BSETTINGS_LIBS@
-bsettings_la_SOURCES = bsettings.c
-bsettingsdir=$(pyexecdir)
-bsettings_LTLIBRARIES=bsettings.la
+ccs_la_LDFLAGS = -module -avoid-version -fPIC -export-symbols-regex initccs -lX11
+ccs_la_LIBADD = @CCS_LIBS@
+ccs_la_SOURCES = ccs.c
+ccsdir=$(pyexecdir)
+ccs_LTLIBRARIES=ccs.la
 
-EXTRA_DIST=bsettings.pyx
+EXTRA_DIST=ccs.pyx
 
 clean-local:
-	rm -f bsettings.c
+	rm -f ccs.c
