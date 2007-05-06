@@ -131,6 +131,7 @@ class SettingItem:
 	def _Changed(self):
 		self.PureVirtual('_Changed')
 
+"""
 class WindowMatchSetting(SettingItem):
 	def _Init(self):
 		self.Custom = True
@@ -177,6 +178,7 @@ class WindowMatchSetting(SettingItem):
 			if self.CheckButtons[type].get_active():
 				value += type + " | "
 		self.Setting.Value = value[:-3] # we need to cut the last " | " off
+"""
 
 class StringMatchSetting(SettingItem):
 	def _Init(self):
@@ -458,10 +460,8 @@ class IntFloatListSetting(ListSetting):
 def MakeSetting(Setting):
 	if Setting.Type == 'String' and len(Setting.Info):
 		return StringChoiceSetting(Setting)
-	elif Setting.Type == 'String':
+	elif Setting.Type == 'String' or Setting.Type == 'Match':
 		return StringMatchSetting(Setting)
-	elif Setting.Type == 'Match':
-		return WindowMatchSetting(Setting)
 	elif Setting.Type == 'Bool':
 		return BoolSetting(Setting)
 	elif Setting.Type == 'Float' or Setting.Type == 'Int':
