@@ -28,6 +28,18 @@ import re
 gdk = gtk.gdk
 from xml.sax.saxutils import escape as EscapeMarkup
 
+AllSettings = []
+AllPlugins = []
+
+def Write(ctx):
+	global AllSettings
+	ctx.Write()
+	for set in AllSettings:
+		set.Read()
+	for plg in AllPlugins:
+		if plg.Plugin.Name != 'core':
+			plg.Enable.set_active(plg.Plugin.Enabled)
+
 class Item:
 	def __init__(self):
 		pass
@@ -76,6 +88,8 @@ class SettingItem:
 			gtk.STOCK_CLEAR,gtk.ICON_SIZE_BUTTON))
 		self.Reset.connect('clicked',self.DoReset)
 		self._Init()
+		global AllSettings
+		AllSettings.append(self)
 
 	def PureVirtual(self,str):
 		raise PureVirtualError,str,self.Setting.Name
@@ -85,7 +99,7 @@ class SettingItem:
 	
 	def DoReset(self,foo):
 		self.Setting.Reset()
-		self.Setting.Plugin.Context.Write()
+		Write(self.Setting.Plugin.Context)
 		self.Read()
 
 	def MakeLabel(self):
@@ -112,7 +126,7 @@ class SettingItem:
 	def Changed(self, *args, **kwargs):
 		if self.Blocked <= 0:
 			self._Changed()
-			self.Setting.Plugin.Context.Write()
+			Write(self.Setting.Plugin.Context)
 
 	def _Changed(self):
 		self.PureVirtual('_Changed')
@@ -528,8 +542,42 @@ class GroupPage:
 					self.SetContainer.pack_start(sga.Widget,False,False)
 					self.Empty = False
 
+def HandlePluginConflicts(conf):
+	if len(conf) == 0:
+		return True
+	for c in conf:
+		if c[0] == 'SameFeature':
+			#see if we can deactivate the plugin
+			#mentioned in c[2]
+			dcon = c[2][0].DisableConflicts
+			if HandlePluginConflicts(dcon):
+				c[2][0].Enabled = False
+		elif c[0] == 'RequiresFeature':
+			#we need to activate one of c[2]
+			for p in c[2]:
+				econ = p.EnableConflicts
+				if HandlePluginConflicts(econ):
+					p.Enabled = True
+					break
+		elif c[0] == 'RequiresPlugin':
+			econ = c[2][0].EnableConflicts
+			if HandlePluginConflicts(econ):
+				c[2][0].Enabled = True
+		elif c[0] == 'FeatureNeeded':
+			for p in c[2]:
+				dcon = p.DisableConflicts
+				if HandlePluginConflicts(dcon):
+					p.Enabled = False
+		elif c[0] == 'PluginNeeded':
+			for p in c[2]:
+				dcon = p.DisableConflicts
+				if HandlePluginConflicts(dcon):
+					p.Enabled = False
+	return True
+
 class PlugItem(Item):
 	def __init__(self,Plugin):
+		global AllPlugins
 		self.Plugin = Plugin
 		self.Selector = gtk.EventBox()
 		self.Label = gtk.Label(Plugin.ShortDesc)
@@ -559,19 +607,25 @@ class PlugItem(Item):
 			gp = GroupPage(Name,Plugin.Groups[n])
 			if not gp.Empty:
 				self.Groups.append_page(gp.Widget,gtk.Label(Name))
+		AllPlugins.append(self)
 	def EnChanged(self,Wid):
 		if self.Block > 0:
 			return
+		if (self.Enable.get_active() == self.Plugin.Enabled):
+			return
 		self.Block = self.Block + 1
 		if (self.Enable.get_active()):
-			print self.Plugin.EnableConflicts
-			self.Plugin.Enabled = True
+			conf = self.Plugin.EnableConflicts
+			if HandlePluginConflicts(conf):
+				self.Plugin.Enabled = True
 		else:
-			print self.Plugin.DisableConflicts
+			conf = self.Plugin.DisableConflicts
+			if HandlePluginConflicts(conf):
+				self.Plugin.Enabled = False
 			self.Plugin.Enabled = False
 		self.Enable.set_active(self.Plugin.Enabled)	
 		self.Block = self.Block - 1
-		self.Plugin.Context.Write()
+		Write(self.Plugin.Context)
 
 class PlugChooser(Chooser):
 	def __init__(self,Plugins):
