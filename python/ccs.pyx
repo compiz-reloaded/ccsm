@@ -17,7 +17,7 @@
 
 ctypedef unsigned int Bool
 
-cdef enum BSSettingType:
+cdef enum CCSSettingType:
 	TypeBool
 	TypeInt
 	TypeFloat
@@ -28,7 +28,7 @@ cdef enum BSSettingType:
 	TypeList
 	TypeNum
 
-cdef enum BSPluginConflictType:
+cdef enum CCSPluginConflictType:
 	#activate
 	ConflictRequiresPlugin
 	ConflictRequiresFeature
@@ -61,20 +61,20 @@ ConflictTypeString=[
 		'PluginNeeded', #D
 		'PluginError'] #A
 
-cdef struct BSList:
+cdef struct CCSList:
 	void * data
-	BSList * next
-ctypedef BSList BSSettingList
-ctypedef BSList BSPluginList
-ctypedef BSList BSStringList
-ctypedef BSList BSGroupList
-ctypedef BSList BSSubGroupList
-ctypedef BSList BSPluginConflictList
-ctypedef BSList BSSettingValueList
+	CCSList * next
+ctypedef CCSList CCSSettingList
+ctypedef CCSList CCSPluginList
+ctypedef CCSList CCSStringList
+ctypedef CCSList CCSGroupList
+ctypedef CCSList CCSSubGroupList
+ctypedef CCSList CCSPluginConflictList
+ctypedef CCSList CCSSettingValueList
 
-cdef extern struct BSBackend
+cdef extern struct CCSBackend
 
-cdef struct BSSettingActionValue:
+cdef struct CCSSettingActionValue:
 	int button
 	unsigned int buttonModMask
 	int keysym
@@ -83,147 +83,147 @@ cdef struct BSSettingActionValue:
 	int edgeMask
 	int edgeButton
 
-cdef struct BSSettingColorValueColor:
+cdef struct CCSSettingColorValueColor:
 	unsigned short red
 	unsigned short green
 	unsigned short blue
 	unsigned short alpha
 
-cdef union BSSettingColorValue:
-	BSSettingColorValueColor color
+cdef union CCSSettingColorValue:
+	CCSSettingColorValueColor color
 	unsigned short array[4]
 
-cdef union BSSettingValueUnion:
+cdef union CCSSettingValueUnion:
 	Bool asBool
 	int asInt
 	float asFloat
 	char * asString
 	char * asMatch
-	BSSettingActionValue asAction
-	BSSettingColorValue asColor
-	BSSettingValueList * asList
+	CCSSettingActionValue asAction
+	CCSSettingColorValue asColor
+	CCSSettingValueList * asList
 
-cdef struct BSSettingIntInfo:
+cdef struct CCSSettingIntInfo:
 	int min
 	int max
 
-cdef struct BSSettingFloatInfo:
+cdef struct CCSSettingFloatInfo:
 	float min
 	float max
 	float precision
 
-cdef struct BSSettingStringInfo:
-	BSStringList * allowedValues
+cdef struct CCSSettingStringInfo:
+	CCSStringList * allowedValues
 
-cdef struct BSSettingActionInfo:
+cdef struct CCSSettingActionInfo:
 	Bool key
 	Bool button
 	Bool bell
 	Bool edge
 
-cdef struct BSSettingActionArrayInfo:
+cdef struct CCSSettingActionArrayInfo:
 	Bool array[4]
 
-cdef struct BSSettingListInfo:
-	BSSettingType listType
-	void * listInfo				#actually BSSettingInfo *, works around pyrex
+cdef struct CCSSettingListInfo:
+	CCSSettingType listType
+	void * listInfo				#actually CCSSettingInfo *, works around pyrex
 
-cdef union BSSettingInfo:
-	BSSettingIntInfo forInt
-	BSSettingFloatInfo forFloat
-	BSSettingStringInfo forString
-	BSSettingActionInfo forAction
-	BSSettingActionArrayInfo forActionAsArray
-	BSSettingListInfo forList
+cdef union CCSSettingInfo:
+	CCSSettingIntInfo forInt
+	CCSSettingFloatInfo forFloat
+	CCSSettingStringInfo forString
+	CCSSettingActionInfo forAction
+	CCSSettingActionArrayInfo forActionAsArray
+	CCSSettingListInfo forList
 
-cdef struct BSSettingValue:
-	BSSettingValueUnion value
+cdef struct CCSSettingValue:
+	CCSSettingValueUnion value
 	void * parent
 	Bool isListChild
 
-cdef struct BSGroup:
+cdef struct CCSGroup:
 	char * name
-	BSSubGroupList * subGroups
+	CCSSubGroupList * subGroups
 
-cdef struct BSSubGroup:
+cdef struct CCSSubGroup:
 	char * name
-	BSSettingList * settings
+	CCSSettingList * settings
 
-cdef struct BSPluginCategory:
+cdef struct CCSPluginCategory:
 	char * name
 	char * shortDesc
 	char * longDesc
-	BSStringList * plugins
+	CCSStringList * plugins
 
-cdef struct BSContext:
-	BSPluginList * plugins
-	BSPluginCategory * categories
+cdef struct CCSContext:
+	CCSPluginList * plugins
+	CCSPluginCategory * categories
 	void * priv
-	BSBackend * backend
+	CCSBackend * backend
 	char * profile
 	Bool deIntegration
-	BSSettingList * changedSettings
+	CCSSettingList * changedSettings
 	Bool pluginsChanged
 
-cdef struct BSPlugin
+cdef struct CCSPlugin
 
-cdef struct BSSetting:
+cdef struct CCSSetting:
 	char * name
 	char * shortDesc
 	char * longDesc
-	BSSettingType type
+	CCSSettingType type
 	Bool isScreen
 	unsigned int screenNum
-	BSSettingInfo info
+	CCSSettingInfo info
 	char * group
 	char * subGroup
 	char * hints
-	BSSettingValue defaultValue
-	BSSettingValue * value
+	CCSSettingValue defaultValue
+	CCSSettingValue * value
 	Bool isDefault
-	BSPlugin * parent
+	CCSPlugin * parent
 	void * priv
 
-cdef struct BSPlugin:
+cdef struct CCSPlugin:
 	char * name
 	char * shortDesc
 	char * longDesc
 	char * hints
 	char * category
 	char * filename
-	BSStringList * loadAfter
-	BSStringList * loadBefore
-	BSStringList * requiresPlugin
-	BSStringList * providesFeature
-	BSStringList * requiresFeature
-	BSSettingList * settings
-	BSGroupList * groups
+	CCSStringList * loadAfter
+	CCSStringList * loadBefore
+	CCSStringList * requiresPlugin
+	CCSStringList * providesFeature
+	CCSStringList * requiresFeature
+	CCSSettingList * settings
+	CCSGroupList * groups
 	void * priv
-	BSContext * context
+	CCSContext * context
 
-cdef struct BSPluginConflict:
+cdef struct CCSPluginConflict:
 	char * value
-	BSPluginConflictType type
-	BSPluginList * plugins
+	CCSPluginConflictType type
+	CCSPluginList * plugins
 
 
-cdef extern BSContext * bsContextNew()
-cdef extern void bsContextDestroy(BSContext * context)
+cdef extern CCSContext * ccsContextNew()
+cdef extern void ccsContextDestroy(CCSContext * context)
 
-cdef extern BSPlugin * bsFindPlugin(BSContext * context, char * name)
-cdef extern BSSetting * bsFindSetting(BSPlugin * plugin, char * name, Bool isScreen, int screenNum)
+cdef extern CCSPlugin * ccsFindPlugin(CCSContext * context, char * name)
+cdef extern CCSSetting * ccsFindSetting(CCSPlugin * plugin, char * name, Bool isScreen, int screenNum)
 
-#cdef extern char * bsColorToString(BSSettingColorValue * color)
-cdef extern char * bsEdgeToString(BSSettingActionValue * action)
-cdef extern char * bsKeyBindingToString(BSSettingActionValue * action)
-cdef extern char * bsButtonBindingToString(BSSettingActionValue * action)
+#cdef extern char * ccsColorToString(CCSSettingColorValue * color)
+cdef extern char * ccsEdgeToString(CCSSettingActionValue * action)
+cdef extern char * ccsKeyBindingToString(CCSSettingActionValue * action)
+cdef extern char * ccsButtonBindingToString(CCSSettingActionValue * action)
 
-#cdef extern Bool bsSetInt(BSSetting * setting, int data)
-#cdef extern Bool bsSetFloat(BSSetting * setting, float data)
-#cdef extern Bool bsSetBool(BSSetting * setting, Bool data)
-#cdef extern Bool bsSetString(BSSetting * setting, char * data)
-#cdef extern Bool bsSetColor(BSSetting * setting, BSSettingColorValue data)
-#cdef extern Bool bsSetMatch(BSSetting * setting, char * data)
+#cdef extern Bool ccsSetInt(CCSSetting * setting, int data)
+#cdef extern Bool ccsSetFloat(CCSSetting * setting, float data)
+#cdef extern Bool ccsSetBool(CCSSetting * setting, Bool data)
+#cdef extern Bool ccsSetString(CCSSetting * setting, char * data)
+#cdef extern Bool ccsSetColor(CCSSetting * setting, CCSSettingColorValue data)
+#cdef extern Bool ccsSetMatch(CCSSetting * setting, char * data)
 cdef extern from 'string.h':
 	ctypedef int size_t
 	cdef extern char * strdup(char * s)
@@ -232,45 +232,45 @@ cdef extern from 'string.h':
 	cdef extern void * malloc(size_t s)
 
 
-#cdef extern Bool bsStringToColor(char * value, BSSettingColorValue * target)
-cdef extern Bool bsStringToKeyBinding(char * value, BSSettingActionValue * target)
-cdef extern Bool bsStringToButtonBinding(char * value, BSSettingActionValue * target)
-cdef extern Bool bsStringToEdge(char * value, BSSettingActionValue * target)
-cdef extern Bool bsSetValue(BSSetting * setting, BSSettingValue * value)
-cdef extern void bsFreeSettingValue(BSSettingValue * value)
-cdef extern BSSettingValueList * bsSettingValueListAppend(BSSettingValueList * l, BSSettingValue * v)
+#cdef extern Bool ccsStringToColor(char * value, CCSSettingColorValue * target)
+cdef extern Bool ccsStringToKeyBinding(char * value, CCSSettingActionValue * target)
+cdef extern Bool ccsStringToButtonBinding(char * value, CCSSettingActionValue * target)
+cdef extern Bool ccsStringToEdge(char * value, CCSSettingActionValue * target)
+cdef extern Bool ccsSetValue(CCSSetting * setting, CCSSettingValue * value)
+cdef extern void ccsFreeSettingValue(CCSSettingValue * value)
+cdef extern CCSSettingValueList * ccsSettingValueListAppend(CCSSettingValueList * l, CCSSettingValue * v)
 
-cdef extern void bsReadSettings(BSContext * c)
-cdef extern void bsWriteSettings(BSContext * c)
-cdef extern void bsWriteChangedSettings(BSContext * c)
-cdef extern void bsResetToDefault(BSSetting * s)
+cdef extern void ccsReadSettings(CCSContext * c)
+cdef extern void ccsWriteSettings(CCSContext * c)
+cdef extern void ccsWriteChangedSettings(CCSContext * c)
+cdef extern void ccsResetToDefault(CCSSetting * s)
 
-cdef extern void bsPluginConflictListFree(BSPluginConflictList * l, Bool FreOBJ)
-cdef extern BSPluginConflictList * bsCanEnablePlugin(BSContext * c, BSPlugin * p)
-cdef extern BSPluginConflictList * bsCanDisablePlugin(BSContext * c, BSPlugin * p)
+cdef extern void ccsPluginConflictListFree(CCSPluginConflictList * l, Bool FreOBJ)
+cdef extern CCSPluginConflictList * ccsCanEnablePlugin(CCSContext * c, CCSPlugin * p)
+cdef extern CCSPluginConflictList * ccsCanDisablePlugin(CCSContext * c, CCSPlugin * p)
 
 cdef class Context
 cdef class Plugin
 
-cdef object UnpackStringList(BSList * list):
+cdef object UnpackStringList(CCSList * list):
 	ret=[]
 	while list != NULL:
 		ret.append(<char *>list.data)
 		list=list.next
 	return ret
 
-cdef BSSettingType GetType(BSSettingValue * value):
+cdef CCSSettingType GetType(CCSSettingValue * value):
 	if (value.isListChild):
-		return (<BSSetting *>value.parent).info.forList.listType
+		return (<CCSSetting *>value.parent).info.forList.listType
 	else:
-		return (<BSSetting *>value.parent).type
+		return (<CCSSetting *>value.parent).type
 
-cdef BSSettingValue * EncodeValue(object data, BSSetting * setting, Bool isListChild):
-	cdef BSSettingValue * bv
-	cdef BSSettingType t
-	cdef BSList * l
-	bv = <BSSettingValue *>malloc(sizeof(BSSettingValue))
-	memset(bv,0,sizeof(BSSettingValue))
+cdef CCSSettingValue * EncodeValue(object data, CCSSetting * setting, Bool isListChild):
+	cdef CCSSettingValue * bv
+	cdef CCSSettingType t
+	cdef CCSList * l
+	bv = <CCSSettingValue *>malloc(sizeof(CCSSettingValue))
+	memset(bv,0,sizeof(CCSSettingValue))
 	bv.isListChild = isListChild
 	bv.parent = setting
 	if isListChild:
@@ -296,25 +296,25 @@ cdef BSSettingValue * EncodeValue(object data, BSSetting * setting, Bool isListC
 		bv.value.asColor.color.blue = data[2]
 		bv.value.asColor.color.alpha = data[3]
 	elif t == TypeAction:
-		bsStringToKeyBinding(data[0],&bv.value.asAction)
-		bsStringToButtonBinding(data[1],&bv.value.asAction)
+		ccsStringToKeyBinding(data[0],&bv.value.asAction)
+		ccsStringToButtonBinding(data[1],&bv.value.asAction)
 		if (data[2]):
 			bv.value.asAction.onBell = 1
 		else:
 			bv.value.asAction.onBell = 0
-		bsStringToEdge(data[3],&bv.value.asAction)
+		ccsStringToEdge(data[3],&bv.value.asAction)
 	elif t == TypeList:
 		l = NULL
 		for item in data:
-			l=bsSettingValueListAppend(l,
+			l=ccsSettingValueListAppend(l,
 					EncodeValue(item,setting,1))
 		bv.value.asList=l
 	return bv
 
-cdef object DecodeValue(BSSettingValue * value):
-	cdef BSSettingType t
+cdef object DecodeValue(CCSSettingValue * value):
+	cdef CCSSettingType t
 	cdef char * s
-	cdef BSList * l
+	cdef CCSList * l
 	cdef object cs
 	cdef object ks
 	cdef object bs
@@ -338,13 +338,13 @@ cdef object DecodeValue(BSSettingValue * value):
 				value.value.asColor.color.blue,
 				value.value.asColor.color.alpha]
 	if t == TypeAction:
-		s=bsKeyBindingToString(&value.value.asAction)
+		s=ccsKeyBindingToString(&value.value.asAction)
 		if s != NULL:
 			ks=s
 			free(s)
 		else:
 			ks='None'
-		s=bsButtonBindingToString(&value.value.asAction)
+		s=ccsButtonBindingToString(&value.value.asAction)
 		if s != NULL:
 			bs=s
 			free(s)
@@ -352,7 +352,7 @@ cdef object DecodeValue(BSSettingValue * value):
 			bs='None'
 		if bs == 'Button0':
 			bs = 'None'
-		s=bsEdgeToString(&value.value.asAction)
+		s=ccsEdgeToString(&value.value.asAction)
 		if s != NULL:
 			es=s
 			free(s)
@@ -366,28 +366,28 @@ cdef object DecodeValue(BSSettingValue * value):
 		lret=[]
 		l = value.value.asList
 		while l != NULL:
-			lret.append(DecodeValue(<BSSettingValue *>l.data))
+			lret.append(DecodeValue(<CCSSettingValue *>l.data))
 			l=l.next
 		return lret
 	return 'Unhandled'
 
 cdef class Setting:
-	cdef BSSetting * bsSetting
+	cdef CCSSetting * ccsSetting
 	cdef object info
 	cdef Plugin plugin
 
 	def __new__(self, Plugin plugin, name, isScreen, screenNum=0):
-		cdef BSSettingType t
-		cdef BSSettingInfo * i
-		self.bsSetting = bsFindSetting(plugin.bsPlugin, 
+		cdef CCSSettingType t
+		cdef CCSSettingInfo * i
+		self.ccsSetting = ccsFindSetting(plugin.ccsPlugin,
 				name, isScreen, screenNum)
 		self.plugin = plugin
 		info=()
-		t=self.bsSetting.type
-		i=&self.bsSetting.info
+		t=self.ccsSetting.type
+		i=&self.ccsSetting.info
 		if t==TypeList:
-			t=self.bsSetting.info.forList.listType
-			i=<BSSettingInfo *>self.bsSetting.info.forList.listInfo
+			t=self.ccsSetting.info.forList.listType
+			i=<CCSSettingInfo *>self.ccsSetting.info.forList.listInfo
 		if t == TypeInt:
 			info=(i.forInt.min,i.forInt.max)
 		elif t == TypeFloat:
@@ -398,59 +398,59 @@ cdef class Setting:
 		elif t == TypeAction:
 			info=(i.forAction.key,i.forAction.button,
 					i.forAction.bell,i.forAction.edge)
-		if self.bsSetting.type == TypeList:
+		if self.ccsSetting.type == TypeList:
 			info=(SettingTypeString[t],info)
 		self.info=info
 	
 	def Reset(self):
-		bsResetToDefault(self.bsSetting)
+		ccsResetToDefault(self.ccsSetting)
 
 	property Plugin:
 		def __get__(self):
 			return self.plugin
 	property Name:
 		def __get__(self):
-			return self.bsSetting.name
+			return self.ccsSetting.name
 	property ShortDesc:
 		def __get__(self):
-			return self.bsSetting.shortDesc
+			return self.ccsSetting.shortDesc
 	property LongDesc:
 		def __get__(self):
-			return self.bsSetting.longDesc
+			return self.ccsSetting.longDesc
 	property Group:
 		def __get__(self):
-			return self.bsSetting.group
+			return self.ccsSetting.group
 	property SubGroup:
 		def __get__(self):
-			return self.bsSetting.subGroup
+			return self.ccsSetting.subGroup
 	property Type:
 		def __get__(self):
-			return SettingTypeString[self.bsSetting.type]
+			return SettingTypeString[self.ccsSetting.type]
 	property Info:
 		def __get__(self):
 			return self.info
 	property Hints:
 		def __get__(self):
-			if self.bsSetting.hints == '':
+			if self.ccsSetting.hints == '':
 				return []
 			else:
-				return str(self.bsSetting.hints).split(';')[:-1]
+				return str(self.ccsSetting.hints).split(';')[:-1]
 	property IsDefault:
 		def __get__(self):
-			if self.bsSetting.isDefault:
+			if self.ccsSetting.isDefault:
 				return True
 			return False
 	property DefaultValue:
 		def __get__(self):
-			return DecodeValue(&self.bsSetting.defaultValue)
+			return DecodeValue(&self.ccsSetting.defaultValue)
 	property Value:
 		def __get__(self):
-			return DecodeValue(self.bsSetting.value)
+			return DecodeValue(self.ccsSetting.value)
 		def __set__(self, value):
-			cdef BSSettingValue * sv
-			sv = EncodeValue(value,self.bsSetting,0)
-			bsSetValue(self.bsSetting,sv)
-			bsFreeSettingValue(sv)
+			cdef CCSSettingValue * sv
+			sv = EncodeValue(value,self.ccsSetting,0)
+			ccsSetValue(self.ccsSetting,sv)
+			ccsFreeSettingValue(sv)
 	property Integrated:
 		def __get__(self):
 			return False
@@ -481,42 +481,42 @@ cdef class SSGroup:
 			self.screens=value
 
 cdef class Plugin:
-	cdef BSPlugin * bsPlugin
+	cdef CCSPlugin * ccsPlugin
 	cdef Context context
 	cdef object screens
 	cdef object display
 	cdef object groups
 	
 	def __new__(self, Context context, name):
-		cdef BSList * setlist
-		cdef BSList * glist
-		cdef BSList * sglist
-		cdef BSSetting * sett
-		cdef BSGroup * gr
-		cdef BSSubGroup * sgr
-		self.bsPlugin = bsFindPlugin(context.bsContext,name)
+		cdef CCSList * setlist
+		cdef CCSList * glist
+		cdef CCSList * sglist
+		cdef CCSSetting * sett
+		cdef CCSGroup * gr
+		cdef CCSSubGroup * sgr
+		self.ccsPlugin = ccsFindPlugin(context.ccsContext,name)
 		self.context = context
 		self.screens = []
 		self.display = {}
 		self.groups = {}
 		for n in range(0,context.NScreens):
 			self.screens.append({})
-		glist = self.bsPlugin.groups
+		glist = self.ccsPlugin.groups
 		while glist != NULL:
-			gr=<BSGroup *>glist.data
+			gr=<CCSGroup *>glist.data
 			self.groups[gr.name]={}
 			sglist=gr.subGroups
 			while sglist != NULL:
-				sgr=<BSSubGroup *>sglist.data
+				sgr=<CCSSubGroup *>sglist.data
 				scr=[]
 				for n in range(0,context.NScreens):
 					scr.append({})
 				self.groups[gr.name][sgr.name]=SSGroup({},scr)
 				sglist=sglist.next
 			glist=glist.next
-		setlist = self.bsPlugin.settings
+		setlist = self.ccsPlugin.settings
 		while setlist != NULL:
-			sett=<BSSetting *>setlist.data
+			sett=<CCSSetting *>setlist.data
 			if sett.isScreen:
 				self.screens[sett.screenNum][sett.name] = Setting(self,
 						sett.name, True, sett.screenNum)
@@ -543,16 +543,16 @@ cdef class Plugin:
 			return self.screens
 	property Name:
 		def __get__(self):
-			return self.bsPlugin.name
+			return self.ccsPlugin.name
 	property ShortDesc:
 		def __get__(self):
-			return self.bsPlugin.shortDesc
+			return self.ccsPlugin.shortDesc
 	property LongDesc:
 		def __get__(self):
-			return self.bsPlugin.longDesc
+			return self.ccsPlugin.longDesc
 	property Category:
 		def __get__(self):
-			return self.bsPlugin.category
+			return self.ccsPlugin.category
 	property Enabled:
 		def __get__(self):
 			return self.Display['____plugin_enabled'].Value
@@ -567,72 +567,72 @@ cdef class Plugin:
 				self.Display['____plugin_enabled'].Value = False
 	property EnableConflicts:
 		def __get__(self):
-			cdef BSPluginConflictList * pl, * pls
-			cdef BSPluginConflict * pc
-			cdef BSPluginList * ppl
-			cdef BSPlugin * plg
+			cdef CCSPluginConflictList * pl, * pls
+			cdef CCSPluginConflict * pc
+			cdef CCSPluginList * ppl
+			cdef CCSPlugin * plg
 			if self.Enabled:
 				return []
 			ret = []
-			pl = bsCanEnablePlugin(self.context.bsContext,
-					self.bsPlugin)
+			pl = ccsCanEnablePlugin(self.context.ccsContext,
+					self.ccsPlugin)
 			pls = pl
 			while pls != NULL:
-				pc = <BSPluginConflict *>pls.data
+				pc = <CCSPluginConflict *>pls.data
 				rpl = []
 				ppl = pc.plugins
 				while ppl != NULL:
-					plg = <BSPlugin *>ppl.data
+					plg = <CCSPlugin *>ppl.data
 					rpl.append(self.context.Plugins[plg.name])
 					ppl = ppl.next
 				ret.append((ConflictTypeString[pc.type],pc.value,rpl))
 				pls = pls.next
 			if pl != NULL:
-				bsPluginConflictListFree(pl, True)
+				ccsPluginConflictListFree(pl, True)
 			return ret
 	property DisableConflicts:
 		def __get__(self):
-			cdef BSPluginConflictList * pl, * pls
-			cdef BSPluginConflict * pc
-			cdef BSPluginList * ppl
-			cdef BSPlugin * plg
+			cdef CCSPluginConflictList * pl, * pls
+			cdef CCSPluginConflict * pc
+			cdef CCSPluginList * ppl
+			cdef CCSPlugin * plg
 			if not self.Enabled:
 				return []
 			ret = []
-			pl = bsCanDisablePlugin(self.context.bsContext,
-					self.bsPlugin)
+			pl = ccsCanDisablePlugin(self.context.ccsContext,
+					self.ccsPlugin)
 			pls = pl
 			while pls != NULL:
-				pc = <BSPluginConflict *>pls.data
+				pc = <CCSPluginConflict *>pls.data
 				rpl = []
 				ppl = pc.plugins
 				while ppl != NULL:
-					plg = <BSPlugin *>ppl.data
+					plg = <CCSPlugin *>ppl.data
 					rpl.append(self.context.Plugins[plg.name])
 					ppl = ppl.next
 				ret.append((ConflictTypeString[pc.type],pc.value,rpl))
 				pls = pls.next
 			if pl != NULL:
-				bsPluginConflictListFree(pl, True)
+				ccsPluginConflictListFree(pl, True)
 			return ret
 
 cdef class Context:
-	cdef BSContext * bsContext
+	cdef CCSContext * ccsContext
 	cdef object plugins
 	cdef object categories
 	cdef int nScreens
 
 	def __new__(self,nScreens=1):
-		cdef BSPlugin * pl
-		cdef BSList * pll
+		cdef CCSPlugin * pl
+		cdef CCSList * pll
 		self.nScreens=nScreens
 		self.plugins={}
-		self.bsContext=bsContextNew()
-		bsReadSettings(self.bsContext)
-		pll=self.bsContext.plugins
+		self.ccsContext=ccsContextNew()
+		ccsReadSettings(self.ccsContext)
+		pll=self.ccsContext.plugins
 		self.categories={}
 		while pll != NULL:
-			pl = <BSPlugin *>pll.data
+			pl = <CCSPlugin *>pll.data
 			self.plugins[pl.name]=Plugin(self,pl.name)
 			if pl.category == NULL:
 				cat=''
@@ -644,16 +644,16 @@ cdef class Context:
 			pll=pll.next
 
 	def __dealloc__(self):
-		bsContextDestroy(self.bsContext)
+		ccsContextDestroy(self.ccsContext)
 
 	def Write(self,onlyChanged=True):
 		if onlyChanged:
-			bsWriteChangedSettings(self.bsContext)
+			ccsWriteChangedSettings(self.ccsContext)
 		else:
-			bsWriteSettings(self.bsContext)
+			ccsWriteSettings(self.ccsContext)
 
 	def Read(self):
-		bsReadSettings(self.bsContext)
+		ccsReadSettings(self.ccsContext)
 
 	property Plugins:
 		def __get__(self):
