@@ -188,6 +188,138 @@ class WindowMatchSetting(SettingItem):
 		self.Setting.Value = value[:-3] # we need to cut the last " | " off
 """
 
+def StringToAction(string):
+	parts = string.split(">")
+	for i in range(len(parts)):
+		parts[i] = parts[i].replace("<", "")
+	return parts
+
+class ModifierBox(gtk.HBox):
+	def __init__(self, owner):
+		super(ModifierBox, self).__init__()
+		self.Owner = owner
+		self.Value = ""
+		self.AddButton = gtk.Button()
+		self.AddButton.set_image(gtk.image_new_from_stock(gtk.STOCK_ADD,gtk.ICON_SIZE_BUTTON))
+		self.AddButton.connect("clicked", self.AddModifierBox)
+		self.pack_start(self.AddButton, False, False, 5)
+		self.Modifier = ("Control", "Alt", "Super", "Shift", "None") # FIXME not complete
+	
+	def get_children(self):
+		rt = super(ModifierBox, self).get_children()
+		# skip first child because its a "static" child
+		if len(rt) > 0:
+			return rt[1:]
+		else:
+			return []
+	
+	def Read(self, value):
+		action = StringToAction(value)
+		num = len(action) - 1
+
+		children = self.get_children()
+		require = num - len(children)
+		if require < 0:
+			for i in range(require):
+				self.RemoveModifierBox()
+		elif require > 0:
+			for i in range(require):
+				self.AddModifierBox()
+		children = self.get_children()
+
+		counter = 0
+		for mod in action[:-1]:
+			index = -1
+			rowcounter = 0
+			for row in children[counter].get_model():
+				if mod == row[0]:
+					index = rowcounter
+					break
+				rowcounter += 1
+			if index >= 0:
+				children[counter].set_active(index)
+				counter += 1
+			else:
+				print "Error: Modifier not found: %s" % mod
+	
+	def Changed(self, data):
+		self.Value = ""
+		children = self.get_children()
+		for box in children:
+			text = box.get_active_text()
+			if text != "None":
+				self.Value += "<%s>" % text
+			else:
+				self.RemoveModifierBox(children.index(box))
+		self.Owner.Changed() # update the owner's settings
+	
+	def AddModifierBox(self, buf=0):
+		children = self.get_children()
+		modifierbox = gtk.combo_box_new_text()
+		for mod in self.Modifier:
+			modifierbox.append_text(mod)
+		modifierbox.show()
+		modifierbox.connect("changed", self.Changed)
+		self.pack_start(modifierbox, False, False, 5)
+	
+	def RemoveModifierBox(self, pos=0):
+		children = self.get_children()
+		if len(children) > pos:
+			self.remove(children[pos])
+
+class ActionSetting(SettingItem):
+	def _Init(self):
+		self.Custom = True
+		self.Widget = gtk.VBox()
+		self.KeyBinding = gtk.HBox()
+		self.ButtonBinding = gtk.HBox()
+		self.Key = gtk.Entry()
+		self.KeyModifier = ModifierBox(self)
+		self.Button = gtk.combo_box_new_text()
+		self.ButtonModifier = ModifierBox(self)
+		self.InitButtonBox()
+		self.Key.connect('changed',self.Changed)
+		self.Button.connect('changed',self.Changed)
+		self.KeyBinding.pack_start(self.KeyModifier)
+		self.KeyBinding.pack_start(self.Key, False, False)
+		self.ButtonBinding.pack_start(self.ButtonModifier)
+		self.ButtonBinding.pack_start(self.Button, False, False)
+		self.Widget.pack_start(self.KeyBinding)
+		self.Widget.pack_start(self.ButtonBinding)
+	
+	def InitButtonBox(self):
+		self.ButtonTypes = ("Button1","Button2","Button3","Button4","Button5","Button6","None")
+		for type in self.ButtonTypes:
+			self.Button.append_text(type)
+	
+	def _Read(self):
+		action = StringToAction(self.Setting.Value[0])
+		self.Key.set_text(action[-1])
+		self.KeyModifier.Read(self.Setting.Value[0])
+		action = StringToAction(self.Setting.Value[1])
+		self.ButtonModifier.Read(self.Setting.Value[1])
+		index = -1
+		rowcounter = 0
+		for row in self.Button.get_model():
+			if row[0] == action[-1]:
+				index = rowcounter
+				break
+			rowcounter += 1
+		if index >= 0:
+			self.Button.set_active(index)
+		else:
+			print "Error: Modifier not found: %s" % action[-1]
+
+	def _Changed(self):
+		keyvalue = self.KeyModifier.Value + self.Key.get_text()
+		buttonvalue = self.ButtonModifier.Value
+		active = self.Button.get_active()
+		text = self.Button.get_model()[active][0]
+		buttonvalue += text
+		print "New key value: %s New button value: %s" % (keyvalue, buttonvalue)
+		self.Setting.Value[0] = keyvalue
+		self.Setting.Value[1] = buttonvalue
+
 class StringMatchSetting(SettingItem):
 	def _Init(self):
 		self.Widget = gtk.Entry()
@@ -481,6 +613,8 @@ def MakeSetting(Setting):
 		return IntFloatSetting(Setting)
 	elif Setting.Type == 'Color':
 		return ColorSetting(Setting)
+	elif Setting.Type == 'Action':
+		return ActionSetting(Setting)
 	elif Setting.Type == 'List':
 		if Setting.Info[0] == 'String' and len(Setting.Info[1]):
 			return ListChoiceSetting(Setting)
