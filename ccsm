@@ -271,6 +271,8 @@ class ActionSetting(SettingItem):
 		self.Widget = gtk.VBox()
 		self.KeyBinding = gtk.HBox()
 		self.ButtonBinding = gtk.HBox()
+		self.Header = gtk.HBox()
+		self.Bell = gtk.CheckButton("Bell")
 		self.Key = gtk.Entry()
 		self.KeyModifier = ModifierBox(self)
 		self.Button = gtk.combo_box_new_text()
@@ -278,11 +280,15 @@ class ActionSetting(SettingItem):
 		self.InitButtonBox()
 		self.Key.connect('changed',self.Changed)
 		self.Button.connect('changed',self.Changed)
+		self.Bell.connect('toggled',self.Changed)
 		self.KeyBinding.pack_start(self.KeyModifier)
-		self.KeyBinding.pack_start(self.Key, False, False)
+		self.KeyBinding.pack_start(self.Key,False,False)
 		self.ButtonBinding.pack_start(self.ButtonModifier)
-		self.ButtonBinding.pack_start(self.Button, False, False)
-		self.Widget.pack_start(self.Label, False, False)
+		self.ButtonBinding.pack_start(self.Button,False,False)
+		self.Header.pack_start(self.Reset,False,False,5)
+		self.Header.pack_start(self.Label,False,True)
+		self.Header.pack_end(self.Bell,False, False)
+		self.Widget.pack_start(self.Header,False,False)
 		self.Widget.pack_start(self.KeyBinding)
 		self.Widget.pack_start(self.ButtonBinding)
 	
@@ -292,6 +298,7 @@ class ActionSetting(SettingItem):
 			self.Button.append_text(type)
 	
 	def _Read(self):
+		self.Bell.set_active(self.Setting.Value[2])
 		action = StringToAction(self.Setting.Value[0])
 		self.Key.set_text(action[-1])
 		self.KeyModifier.Read(self.Setting.Value[0])
@@ -308,7 +315,7 @@ class ActionSetting(SettingItem):
 			self.Button.set_active(index)
 		else:
 			print "Error: Modifier not found: %s" % action[-1]
-
+		
 	def _Changed(self):
 		keyvalue = self.KeyModifier.Value + self.Key.get_text()
 		buttonvalue = self.ButtonModifier.Value
@@ -318,6 +325,7 @@ class ActionSetting(SettingItem):
 		valueBuf = self.Setting.Value
 		valueBuf[0] = keyvalue
 		valueBuf[1] = buttonvalue
+		valueBuf[2] = self.Bell.get_active()
 		self.Setting.Value = valueBuf
 
 class StringMatchSetting(SettingItem):
