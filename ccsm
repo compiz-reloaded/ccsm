@@ -284,6 +284,7 @@ class ActionSetting(SettingItem):
 		self.KeyBinding.pack_start(self.Key, False, False)
 		self.ButtonBinding.pack_start(self.ButtonModifier)
 		self.ButtonBinding.pack_start(self.Button, False, False)
+		self.Widget.pack_start(self.Label, False, False)
 		self.Widget.pack_start(self.KeyBinding)
 		self.Widget.pack_start(self.ButtonBinding)
 	
