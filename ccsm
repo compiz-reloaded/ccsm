@@ -210,8 +210,6 @@ class ModifierBox(gtk.HBox):
 		# skip first child because its a "static" child
 		if len(rt) > 0:
 			return rt[1:]
-		else:
-			return []
 	
 	def Read(self, value):
 		action = StringToAction(value)
@@ -317,9 +315,10 @@ class ActionSetting(SettingItem):
 		active = self.Button.get_active()
 		text = self.Button.get_model()[active][0]
 		buttonvalue += text
-		print "New key value: %s New button value: %s" % (keyvalue, buttonvalue)
-		self.Setting.Value[0] = keyvalue
-		self.Setting.Value[1] = buttonvalue
+		valueBuf = self.Setting.Value
+		valueBuf[0] = keyvalue
+		valueBuf[1] = buttonvalue
+		self.Setting.Value = valueBuf
 
 class StringMatchSetting(SettingItem):
 	def _Init(self):
