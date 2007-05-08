@@ -274,11 +274,9 @@ class ActionSetting(SettingItem):
 		text = self.Button.get_model()[active][0]
 		buttonvalue += text
 		valueBuf = self.Setting.Value
-		print valueBuf
 		valueBuf[0] = keyvalue
 		valueBuf[1] = buttonvalue
 		valueBuf[2] = self.Bell.get_active()
-		print valueBuf
 		self.Setting.Value = valueBuf
 
 class StringMatchSetting(SettingItem):
