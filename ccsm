@@ -587,8 +587,8 @@ def MakeSetting(Setting):
 		return IntFloatSetting(Setting)
 	elif Setting.Type == 'Color':
 		return ColorSetting(Setting)
-	elif Setting.Type == 'Action':
-		return ActionSetting(Setting)
+	#elif Setting.Type == 'Action':
+	#	return ActionSetting(Setting)
 	elif Setting.Type == 'List':
 		if Setting.Info[0] == 'String' and len(Setting.Info[1]):
 			return ListChoiceSetting(Setting)
@@ -634,8 +634,8 @@ class SubGroupArea:
 					self.Empty = False
 		#self.Child.attach(gtk.VSeparator(),1,2,2,row+1,0)
 
-class GroupPage:
-	def __init__(self,Name,Group):
+class Page(object):
+	def __init__(self,Name):
 		self.Widget = gtk.VBox()
 		self.SetContainer = gtk.VBox()
 		Scroll = gtk.ScrolledWindow()
@@ -646,6 +646,25 @@ class GroupPage:
 		Scroll.add(View)
 		View.add(self.SetContainer)
 		self.Empty = True
+
+class KeyPage(Page):
+	def __init__(self,Name,Plugin):
+		super(KeyPage, self).__init__(Name)
+
+		for group in Plugin.Groups:
+			for subGroup in Plugin.Groups[group]:
+				sg = Plugin.Groups[group][subGroup]
+				for setting in sorted(sum((v.values() for v in [sg.Display]+sg.Screens),[]),SettingSortCompare):
+					if setting.Type == 'Action':
+						sit = ActionSetting(setting)
+						sit.Read()
+						self.SetContainer.pack_start(sit.Widget,False,False)
+						self.Empty = False
+
+class GroupPage(Page):
+	def __init__(self,Name,Group):
+		super(GroupPage, self).__init__(Name)
+
 		if (Group.has_key('')):
 			sga = SubGroupArea('',Group[''])
 			if not sga.Empty:
@@ -728,6 +747,9 @@ class PlugItem(Item):
 			gp = GroupPage(Name,Plugin.Groups[n])
 			if not gp.Empty:
 				self.Groups.append_page(gp.Widget,gtk.Label(Name))
+		kp = KeyPage('Key Bindings',Plugin)
+		if not kp.Empty:
+			self.Groups.append_page(kp.Widget,gtk.Label('Key Bindings'))
 		AllPlugins.append(self)
 	def EnChanged(self,Wid):
 		if self.Block > 0:
