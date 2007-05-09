@@ -95,7 +95,7 @@ class SettingItem:
 		if self.Custom:
 			Table.attach(self.Widget,0,100,row,row+1)
 		else:
-			Table.attach(self.Label,0,1,row,row+1,gtk.FILL)
+			Table.attach(self.Label,0,1,row,row+1,gtk.FILL,xpadding=5)
 			Table.attach(self.Widget,1,99,row,row+1,)
 			Table.attach(self.Reset,99,100,row,row+1,0)
 
@@ -320,8 +320,7 @@ class BoolSetting(SettingItem):
 		self.Custom = True
 		self.Widget = gtk.HBox()
 		self.CheckButton = gtk.CheckButton(self.Setting.ShortDesc)
-		self.Widget.pack_start(self.CheckButton,True,True)
-		#self.Widget.pack_start(self.Label)
+		self.Widget.pack_start(self.CheckButton,True,True,5)
 		self.Widget.pack_start(self.Reset,False,False)
 		self.CheckButton.connect('toggled',self.Changed)
 	def _Read(self):
@@ -348,7 +347,7 @@ class IntFloatSetting(SettingItem):
 		#self.Widget.pack_start(self.Spin,False,False)
 		self.Adj.connect('value-changed',self.Changed)
 	def Attach(self,Table,row):
-		Table.attach(self.Label,0,1,row,row+1,gtk.FILL)
+		Table.attach(self.Label,0,1,row,row+1,gtk.FILL,xpadding=5)
 		Table.attach(self.Scale,1,2,row,row+1,)
 		Table.attach(self.Spin,2,3,row,row+1,gtk.FILL)
 		Table.attach(self.Reset,99,100,row,row+1,0)
@@ -410,6 +409,9 @@ class ListChoiceSetting(SettingItem):
 			if c.get_active():
 				v = v + [cv]
 		self.Setting.Value = v
+	
+	def Attach(self,Table,row):
+		Table.attach(self.Widget,0,100,row,row+1,xpadding=5)
 
 class ListSetting(SettingItem):
 	def _Init(self):
@@ -505,6 +507,8 @@ class ListSetting(SettingItem):
 			val.append(self._ListGet(Iter))
 			Iter = self.Store.iter_next(Iter)
 		self.Setting.Value = val
+	def Attach(self,Table,row):
+		Table.attach(self.Widget,0,100,row,row+1,xpadding=5)
 
 class StringMatchListSetting(ListSetting):
 	def _ListInfo(self):
