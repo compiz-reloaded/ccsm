@@ -154,7 +154,7 @@ class ModifierBox(gtk.HBox):
 		self.AddButton.set_image(gtk.image_new_from_stock(gtk.STOCK_ADD,gtk.ICON_SIZE_BUTTON))
 		self.AddButton.connect("clicked", self.AddModifierBox)
 		self.pack_start(self.AddButton, False, False, 5)
-		self.Modifier = ("Control", "Alt", "Super", "Shift", "None") # FIXME not complete
+		self.Modifier = ["Control", "Alt", "Super", "Shift", "None"] # FIXME not complete
 	
 	def get_children(self):
 		rt = super(ModifierBox, self).get_children()
@@ -178,17 +178,11 @@ class ModifierBox(gtk.HBox):
 
 		counter = 0
 		for mod in action[:-1]:
-			index = -1
-			rowcounter = 0
-			for row in children[counter].get_model():
-				if mod == row[0]:
-					index = rowcounter
-					break
-				rowcounter += 1
-			if index >= 0:
+			try:
+				index = self.Modifier.index(mod)
 				children[counter].set_active(index)
 				counter += 1
-			else:
+			except:
 				print "Error: Modifier not found: %s" % mod
 	
 	def Changed(self, data):
@@ -224,6 +218,8 @@ class ActionSetting(SettingItem):
 		self.ButtonBinding = gtk.HBox()
 		self.Header = gtk.HBox()
 		self.Bell = gtk.CheckButton("Bell")
+		self.Expand = gtk.Button()	
+		self.Expand.set_image(gtk.image_new_from_stock(gtk.STOCK_ZOOM_IN,gtk.ICON_SIZE_BUTTON))
 		self.Key = gtk.Entry()
 		self.KeyModifier = ModifierBox(self)
 		self.Button = gtk.combo_box_new_text()
@@ -232,19 +228,40 @@ class ActionSetting(SettingItem):
 		self.Key.connect('changed',self.Changed)
 		self.Button.connect('changed',self.Changed)
 		self.Bell.connect('toggled',self.Changed)
+		self.Expand.connect('clicked',self.Expanded)
 		self.KeyBinding.pack_start(self.KeyModifier)
 		self.KeyBinding.pack_start(self.Key,False,False)
 		self.ButtonBinding.pack_start(self.ButtonModifier)
 		self.ButtonBinding.pack_start(self.Button,False,False)
-		self.Header.pack_start(self.Reset,False,False,5)
-		self.Header.pack_start(self.Label,False,True)
-		self.Header.pack_end(self.Bell,False, False)
+		self.Header.pack_start(self.Expand,False,False,5)
+		self.Header.pack_start(self.Label,True,True)
+		self.Header.pack_end(self.Reset,False,False)
+		self.Header.pack_end(self.Bell,False,False,5)
 		self.Widget.pack_start(self.Header,False,False)
 		self.Widget.pack_start(self.KeyBinding)
 		self.Widget.pack_start(self.ButtonBinding)
+		self.KeyBinding.set_no_show_all(True)
+		self.ButtonBinding.set_no_show_all(True)
+		self.Bell.set_no_show_all(True)
+		self.Full = False
 	
+	def Expanded(self, data):
+		# no idea why a simple showing doesn't work here
+		self.KeyBinding.set_no_show_all(False)
+		self.ButtonBinding.set_no_show_all(False)
+		self.Bell.set_no_show_all(False)
+		if self.Full:
+			self.KeyBinding.hide()
+			self.ButtonBinding.hide()
+			self.Bell.hide()
+			self.Expand.set_image(gtk.image_new_from_stock(gtk.STOCK_ZOOM_IN,gtk.ICON_SIZE_BUTTON))
+		else:
+			self.Widget.show_all()
+			self.Expand.set_image(gtk.image_new_from_stock(gtk.STOCK_ZOOM_OUT,gtk.ICON_SIZE_BUTTON))
+		self.Full = not self.Full
+
 	def InitButtonBox(self):
-		self.ButtonTypes = ("Button1","Button2","Button3","Button4","Button5","Button6","None")
+		self.ButtonTypes = ["Button1","Button2","Button3","Button4","Button5","Button6","None"]
 		for type in self.ButtonTypes:
 			self.Button.append_text(type)
 	
@@ -255,17 +272,11 @@ class ActionSetting(SettingItem):
 		self.KeyModifier.Read(self.Setting.Value[0])
 		action = StringToAction(self.Setting.Value[1])
 		self.ButtonModifier.Read(self.Setting.Value[1])
-		index = -1
-		rowcounter = 0
-		for row in self.Button.get_model():
-			if row[0] == action[-1]:
-				index = rowcounter
-				break
-			rowcounter += 1
-		if index >= 0:
+		try:
+			index = self.ButtonTypes.index(action[-1]) 
 			self.Button.set_active(index)
-		else:
-			print "Error: Modifier not found: %s" % action[-1]
+		except:
+			print "Error: Button not found: %s" % action[-1]
 		
 	def _Changed(self):
 		keyvalue = self.KeyModifier.Value + self.Key.get_text()
