@@ -1097,7 +1097,6 @@ class MainWinClass:
 		self.SetMainWidgets(pc.LeftWidget,pc.RightWidget)
 
 	def EnablePlugin(self,widget,plugin):
-		print "Hallo"
 		#attempt to resolve conflicts...
 		conf = plugin.Enabled and plugin.DisableConflicts or (
 				plugin.EnableConflicts)
