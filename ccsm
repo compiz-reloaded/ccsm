@@ -499,34 +499,97 @@ class GroupPage(Page):
 def HandlePluginConflicts(conf):
 	if len(conf) == 0:
 		return True
+	dlg = gtk.Dialog('Plugin Conflict',MainWin)
+	dlg.add_button(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL)
+	dlg.add_button(gtk.STOCK_OK,gtk.RESPONSE_OK).grab_default()
+	dlg.set_default_response(gtk.RESPONSE_OK)
 	for c in conf:
 		if c[0] == 'SameFeature':
 			#see if we can deactivate the plugin
 			#mentioned in c[2]
-			dcon = c[2][0].DisableConflicts
-			if HandlePluginConflicts(dcon):
-				c[2][0].Enabled = False
+			dlg.vbox.pack_start(MakeLabel(
+				"Plugin \"%s\" provides feature \"%s\" which is also provided by the plugin you are trying to enable.  Click OK to disable plugin \"%s\", or Cancel to stop trying to enable this plugin"%(c[2][0].ShortDesc,c[1],c[2][0].ShortDesc),400))
+			dlg.show_all()
+			ret = dlg.run()
+			dlg.destroy()
+			if ret == gtk.RESPONSE_OK:
+				dcon = c[2][0].DisableConflicts
+				if HandlePluginConflicts(dcon):
+					c[2][0].Enabled = False
+				else:
+					return False
+			else:
+				return False
 		elif c[0] == 'RequiresFeature':
 			#we need to activate one of c[2]
+			dlg.vbox.pack_start(MakeLabel(
+				"The plugin you are trying to enable requires feature \"%s\" which is provided by the following plugins.  Click OK to enable the selected plugin or Cancel to stop trying to enable this plugin"%c[1],400),False,False)
+			cmb = gtk.combo_box_new_text()
+			dlg.vbox.pack_start(cmb,False,False)
 			for p in c[2]:
-				econ = p.EnableConflicts
-				if HandlePluginConflicts(econ):
-					p.Enabled = True
-					break
+				cmb.append_text(p.ShortDesc)
+			cmb.set_active_text(c[2][0].ShortDesc)
+			dlg.show_all()
+			ret = dlg.run()
+			rval = cmb.get_active_text()
+			dlg.destroy()
+			if ret == gtk.RESPONSE_OK:
+				for p in c[2]:
+					if p.ShortDesc == rval:
+						econ = p.EnableConflicts
+						if HandlePluginConflicts(econ):
+							p.Enabled = True
+						else:
+							return False
+						break
+			else:
+				return False
 		elif c[0] == 'RequiresPlugin':
-			econ = c[2][0].EnableConflicts
-			if HandlePluginConflicts(econ):
-				c[2][0].Enabled = True
+			dlg.vbox.pack_start(MakeLabel(
+				"The plugin you are trying to enable requires the plugin \"%s\". Click OK to enable \"%s\" or Cancel to stop trying to enable this plugin"%(c[2][0].ShortDesc,c[2][0].ShortDesc),400))
+			dlg.show_all()
+			ret = dlg.run()
+			dlg.destroy()
+			if ret == gtk.RESPONSE_OK:			
+				econ = c[2][0].EnableConflicts
+				if HandlePluginConflicts(econ):
+					c[2][0].Enabled = True
+				else:
+					return False
+			else:
+				return False
 		elif c[0] == 'FeatureNeeded':
-			for p in c[2]:
-				dcon = p.DisableConflicts
-				if HandlePluginConflicts(dcon):
-					p.Enabled = False
+			plist = ', '.join("\"%s\""%p.ShortDesc for p in c[2])
+			dlg.vbox.pack_start(MakeLabel(
+				"The plugin you are trying to disable provides the feature \"%s\" which is required by the plugins %s. Click OK to disable these plugins or Cancel to stop trying to disable this plugin"%(c[1],plist),400))
+			dlg.show_all()
+			ret = dlg.run()
+			dlg.destroy()
+			if ret == gtk.RESPONSE_OK:
+				for p in c[2]:
+					dcon = p.DisableConflicts
+					if HandlePluginConflicts(dcon):
+						p.Enabled = False
+					else:
+						return False
+			else:
+				return False
 		elif c[0] == 'PluginNeeded':
-			for p in c[2]:
-				dcon = p.DisableConflicts
-				if HandlePluginConflicts(dcon):
-					p.Enabled = False
+			plist = ', '.join("\"%s\""%p.ShortDesc for p in c[2])
+			dlg.vbox.pack_start(MakeLabel(
+				"The plugin you are trying to disable is required by the plugins %s. Click OK to disable these plugins or Cancel to stop trying to disable this plugin"%(plist),400))
+			dlg.show_all()
+			ret = dlg.run()
+			dlg.destroy()
+			if ret == gtk.RESPONSE_OK:
+				for p in c[2]:
+					dcon = p.DisableConflicts
+					if HandlePluginConflicts(dcon):
+						p.Enabled = False
+					else:
+						return False
+			else:
+				return False
 	return True
 
 class ActionItem(SettingItem):
@@ -726,6 +789,7 @@ class PluginClass():
 			self.EnCheck.add(MakeLabel("Enable %s"%Plugin.ShortDesc,120))
 			self.EnCheck.set_active(Plugin.Enabled)
 			self.EnCheckCont.pack_start(self.EnCheck,True,True)
+			self.EnCheck.connect('toggled',self.EnChange)
 		self.BackButton = gtk.Button(gtk.STOCK_GO_BACK)
 		self.BackButton.set_use_stock(True)
 		self.LeftWidget.pack_end(self.BackButton,False,False)
@@ -739,6 +803,20 @@ class PluginClass():
 		ap = ActionPage(Plugin)
 		if not ap.Empty:
 			self.RightWidget.append_page(ap.Widget,gtk.Label('Actions'))
+		self.Block = 0
+	def EnChange(self,wid):
+		if self.Block>0:
+			return
+		self.Block = self.Block + 1
+		#attempt to resolve conflicts...
+		conf = self.Plugin.Enabled and self.Plugin.DisableConflicts or (
+				self.Plugin.EnableConflicts)
+		if HandlePluginConflicts(conf):
+			self.Plugin.Enabled = wid.get_active()
+		else:
+			wid.set_active(self.Plugin.Enabled)
+		Write(self.Plugin.Context)
+		self.Block = self.Block - 1
 
 def Quit(foo):
 	gtk.main_quit()
