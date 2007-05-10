@@ -46,6 +46,56 @@ class Item:
 		else:
 			self.Label.set_text(self.Name)
 
+def CheckConflict(s,con,typ):
+	if typ == 'Key':
+		cval = s.Value[0]
+	elif typ == 'Button':
+		cval = s.Value[1]
+	dlg = gtk.Dialog('Action Conflict',MainWin)
+	dlg.vbox.pack_start(MakeLabel("The new value for the \"%s\" binding for the action \"%s\" in plugin \"%s\" conflicts with the action \"%s\" of the \"%s\" plugin.  Do you wish to clear \"%s\" in the \"%s\" plugin?  If you click No, the action will still be set."%(
+		typ,s.ShortDesc,s.Plugin.ShortDesc,
+		con.ShortDesc,con.Plugin.ShortDesc,
+		con.ShortDesc,con.Plugin.ShortDesc,
+		),400))
+	dlg.add_button(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL)
+	dlg.add_button(gtk.STOCK_NO,gtk.RESPONSE_NO)
+	dlg.add_button(gtk.STOCK_YES,gtk.RESPONSE_OK).grab_default()
+	dlg.set_default_response(gtk.RESPONSE_OK)
+	dlg.show_all()
+	ret = dlg.run()
+	dlg.destroy()
+	return ret
+
+def CheckActionConflicts(s,ks,bs,be,es):
+	#first gather settings list
+	allsettings = sum((sum((z.values() for z in p.Screens+[p.Display]),[]) for p in s.Plugin.Context.Plugins.values()),[])
+	allsettings.remove(s)
+	KCon=[]
+	BCon=[]
+	for se in allsettings:
+		if se.Type == 'Action':
+			if se.Value[0] == ks:
+				KCon.append(se)
+			if se.Value[1] == bs:
+				BCon.append(se)
+	if len(KCon) and ks and ks.lower() != 'disabled' and ks.lower() != 'none':
+		for kc in KCon:
+			ret = CheckConflict(s,kc,'Key')
+			if ret == gtk.RESPONSE_OK:
+				v = kc.Value
+				kc.Value = ['None',v[1],v[2],v[3]]
+			if ret == gtk.RESPONSE_CANCEL:
+				return False
+	if len(BCon) and bs and bs.lower() != 'disabled' and bs.lower() != 'none':
+		for bc in BCon:
+			ret = CheckConflict(s,bc,'Button')
+			if ret == gtk.RESPONSE_OK:
+				v = bc.Value
+				bc.Value = [v[0],'None',v[2],v[3]]
+			if ret == gtk.RESPONSE_CANCEL:
+				return False
+	return True
+
 class PureVirtualError(Exception):
 	pass
 
@@ -795,8 +845,9 @@ class ActionPage:
 		g,sg,sn,pn,kv,km,bs,es,be = self.Store.get(iter,11,12,13,14,1,2,3,4,6)
 		s = self.Plugins[pn][g][sg][sn]
 		ks = gtk.accelerator_name(kv,km)
-		s.Value = [ks,bs,be,es]
-		Write(s.Plugin.Context)
+		if CheckActionConflicts(s,ks,bs,be,es):
+			s.Value = [ks,bs,be,es]
+			Write(s.Plugin.Context)
 		ks,bs,be,es = s.Value
 		kv,km = gtk.accelerator_parse(ks)
 		self.Store.set(iter,1,kv,2,km,3,bs,4,es,6,be)
