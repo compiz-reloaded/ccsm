@@ -632,18 +632,21 @@ class ActionPage:
 		self.TreeView.set_headers_visible(True)
 		self.TreeView.insert_column_with_attributes(-1,'Name',gtk.CellRendererText(),text=0)
 		AR = gtk.CellRendererAccel()
-		AR.connect('accel-edited',self.Edited)
-		AR.connect('accel-cleared',self.Cleared)
+		AR.connect('accel-edited',self.KeyEdited)
+		AR.connect('accel-cleared',self.KeyCleared)
 		self.TreeView.insert_column_with_attributes(-1,'Key',AR,accel_key=1,accel_mods=2,editable=7,visible=5,sensitive=7)
 		BR = gtk.CellRendererText()
+		BR.connect('edited',self.ButtonEdited)
 		self.TreeView.insert_column_with_attributes(-1,'Button',BR,text=3,editable=8,visible=5,sensitive=8)
 		ECOM = gtk.CellRendererCombo()
 		ECOM.props.has_entry = False
 		ECOM.props.model = self.ComboStore
 		ECOM.props.text_column = 0
+		ECOM.connect('edited',self.EdgeEdited)
 		self.TreeView.insert_column_with_attributes(-1,'Screen Edge',ECOM,text=4,editable=9,visible=5,sensitive=9)
 		BELR = gtk.CellRendererToggle()
 		BELR.props.xalign=0
+		BELR.connect('toggled',self.BellEdited)
 		self.TreeView.insert_column_with_attributes(-1,'On System Bell',BELR,activatable=10,visible=5,sensitive=10,active=6) # may replace with one setting in general
 		for c in self.TreeView.get_columns():
 			c.set_resizable(True)
@@ -696,6 +699,19 @@ class ActionPage:
 				self.Store.remove(giter)
 		return not pempty
 	def Activated(self,obj,path,col):
+		def ResetButton(obj,s,iter):
+			if s.Info[0]:
+				KE.set_text(s.DefaultValue[0])
+			if s.Info[1]:
+				BE.set_text(s.DefaultValue[1])
+			if s.Info[2]:
+				BELV.set_active(s.DefaultValue[2])
+			if s.Info[3]:
+				ev=0
+				for p in self.EdgeList:
+					if p == s.DefaultValue[3]:
+						EC.set_active(ev)
+					ev = ev + 1
 		iter = self.Store.get_iter(path)
 		g,sg,sn,pn,kv,km,bs,es,be = self.Store.get(iter,11,12,13,14,1,2,3,4,6)
 		if sg is None or g is None or sn is None:
@@ -744,15 +760,72 @@ class ActionPage:
 			BEL = gtk.CheckButton('On System Bell')
 			BEL.set_active(be)
 			TB.attach(BEL,0,2,3,4,TDef,TDef,TXp,TYp)
+		hb = gtk.HBox()
+		hb.pack_start(MakeLabel('Reset To Defaults'),True,True)
+		rb = gtk.Button()
+		ri = gtk.Image()
+		ri.set_from_stock(gtk.STOCK_CLEAR,gtk.ICON_SIZE_BUTTON)
+		rb.set_image(ri)
+		hb.pack_end(rb)
+		rb.connect('clicked',ResetButton,s,iter)
+		TB.attach(hb,0,2,4,5,TDef,TDef,TXp,TYp)
 		Dlg.show_all()
 		resp = Dlg.run()
+		if s.Info[0]:
+			KV = KE.get_text()
+		if s.Info[1]:
+			BV = BE.get_text()
+		if s.Info[2]:
+			BELV = BEL.get_active()
+		if s.Info[3]:
+			EV = EC.get_active()
 		Dlg.destroy()
-	def Edited(self,obj,path,key,mods,code):
+		if resp == gtk.RESPONSE_OK:
+			if s.Info[0]:
+				akey,amods=gtk.accelerator_parse(KV)
+				self.Store.set(iter,1,akey,2,amods)
+			if s.Info[1]:
+				self.Store.set(iter,3,BV)
+			if s.Info[2]:
+				self.Store.set(iter,6,BELV)
+			if s.Info[3]:
+				self.Store.set(iter,4,self.EdgeList[EV])
+			self.WriteSetting(iter)
+	def WriteSetting(self,iter):
+		g,sg,sn,pn,kv,km,bs,es,be = self.Store.get(iter,11,12,13,14,1,2,3,4,6)
+		s = self.Plugins[pn][g][sg][sn]
+		ks = gtk.accelerator_name(kv,km)
+		s.Value = [ks,bs,be,es]
+		Write(s.Plugin.Context)
+		ks,bs,be,es = s.Value
+		kv,km = gtk.accelerator_parse(ks)
+		self.Store.set(iter,1,kv,2,km,3,bs,4,es,6,be)
+	def KeyEdited(self,obj,path,key,mods,code):
 		iter = self.Store.get_iter_from_string(path)
 		self.Store.set(iter,1,key,2,mods)
-	def Cleared(self,obj,path):
+		self.WriteSetting(iter)
+	def KeyCleared(self,obj,path):
 		iter = self.Store.get_iter_from_string(path)
 		self.Store.set(iter,1,0,2,0)
+		self.WriteSetting(iter)
+	def ButtonEdited(self,obj,path,val):
+		iter = self.Store.get_iter_from_string(path)
+		self.Store.set(iter,3,val)
+		self.WriteSetting(iter)
+	def EdgeEdited(self,obj,path,val):
+		iter = self.Store.get_iter_from_string(path)
+		self.Store.set(iter,4,val)
+		self.WriteSetting(iter)
+	def BellEdited(self,obj,path):
+		iter = self.Store.get_iter_from_string(path)
+		val = self.Store.get(iter,6)[0]
+		if val:
+			val = False
+		else:
+			val = True
+		self.Store.set(iter,6,val)
+		self.WriteSetting(iter)
+
 
 def MakeLabel(Val=None,wrap=160):
 	if Val is not None:
