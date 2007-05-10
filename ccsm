@@ -30,6 +30,8 @@ from xml.sax.saxutils import escape as EscapeMarkup
 
 AllPlugins = []
 
+PixmapDir = "/usr/local/share/pixmaps"
+
 def Write(ctx):
 	ctx.Write()
 	for plg in AllPlugins:
@@ -626,6 +628,7 @@ def HandlePluginConflicts(conf):
 						return False
 			else:
 				return False
+
 	return True
 
 class ActionItem(SettingItem):
@@ -931,7 +934,6 @@ class PluginClass:
 def Quit(foo):
 	gtk.main_quit()
 
-
 class MainWinClass:
 	def __init__(self,Context):
 		self.Context = Context
@@ -1012,7 +1014,7 @@ class MainWinClass:
 			CatBox.pack_start(CatLabel,False,False)
 			CatTab = gtk.Table()
 			CatTab.set_border_width(10)
-			self.TableCats[c]=(CatTab,[])
+			self.TableCats[c]=(CatTab,[],[])
 			CatBox.pack_start(CatTab,False,False)
 			for po in pl:
 				CB = gtk.Button()
@@ -1033,10 +1035,12 @@ class MainWinClass:
 					CE.connect("toggled",self.EnablePlugin,po)
 					CH.pack_start(CE,False,False)
 				CH.pack_start(CB,True,True)
+				CH.set_size_request(223,-1)
 				self.TableCats[c][1].append(CH)
+				self.TableCats[c][2].append(po)
 
 	def RebuildTable(self,wid,req):
-		cols = (req.width-60)/200
+		cols = (req.width-60)/223
 		if cols == self.LastCols:
 			return
 		self.LastCols = cols
@@ -1081,7 +1085,8 @@ class MainWinClass:
 		Img = gtk.Image()
 		try:
 			#XXX - fix images!
-			Pbf = gtk.gdk.pixbuf_new_from_file_at_size("/usr/share/pixmaps/beryl-settings-section-%s.svg"%(
+			Pbf = gtk.gdk.pixbuf_new_from_file_at_size("%s/ccs-plugin-%s.svg"%(
+				PixmapDir,
 				Plugin.Name == 'core' and '_' or Plugin.Name),32,32)
 			Img.set_from_pixbuf(Pbf)
 		except:
@@ -1098,13 +1103,17 @@ class MainWinClass:
 
 	def EnablePlugin(self,widget,plugin):
 		#attempt to resolve conflicts...
-		conf = plugin.Enabled and plugin.DisableConflicts or (
-				plugin.EnableConflicts)
+		conf = plugin.Enabled and plugin.DisableConflicts or plugin.EnableConflicts
 		if HandlePluginConflicts(conf):
 			plugin.Enabled = widget.get_active()
+			for cat,container,plugins in self.TableCats.values():
+				for i in range(len(plugins)):
+					if plugins[i].Name != 'core':
+						container[i].get_children()[0].set_active(plugins[i].Enabled)
 		else:
 			widget.set_active(plugin.Enabled)
 		Write(plugin.Context)
+		
 
 	def BackToMain(self,obj):
 		self.ResetMainWidgets()
