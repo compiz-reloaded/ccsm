@@ -28,14 +28,10 @@ import re
 gdk = gtk.gdk
 from xml.sax.saxutils import escape as EscapeMarkup
 
-AllSettings = []
 AllPlugins = []
 
 def Write(ctx):
-	global AllSettings
 	ctx.Write()
-	for set in AllSettings:
-		set.Read()
 	for plg in AllPlugins:
 		if plg.Plugin.Name != 'core':
 			plg.Enable.set_active(plg.Plugin.Enabled)
@@ -68,8 +64,6 @@ class SettingItem:
 			gtk.STOCK_CLEAR,gtk.ICON_SIZE_BUTTON))
 		self.Reset.connect('clicked',self.DoReset)
 		self._Init()
-		global AllSettings
-		AllSettings.append(self)
 
 	def Attach(self,Table,row):
 		if self.Custom:
@@ -762,7 +756,7 @@ class MainWinClass:
 			self.Categories[c]=[]
 			for pn,po in self.Context.Plugins.items():
 				if po.Category == c:
-					self.Categories[c].append((PluginClass(po,self),po))
+					self.Categories[c].append(po)
 		self.ResetMainWidgets()
 
 	def ResetMainWidgets(self):
@@ -779,12 +773,12 @@ class MainWinClass:
 		LeftChild.pack_start(ILab,False,False)
 		PluginsVPort.modify_bg(gtk.STATE_NORMAL,gtk.gdk.color_parse('#ffffff'))
 		RightChild = gtk.ScrolledWindow()
-		RightChild.props.hscrollbar_policy = gtk.POLICY_NEVER
+		RightChild.props.hscrollbar_policy = gtk.POLICY_AUTOMATIC
 		RightChild.props.vscrollbar_policy = gtk.POLICY_AUTOMATIC
 		RightChild.add(PluginsVPort)
 		self.BuildTable(PluginsVPort)
 		RightChild.connect('size-allocate',self.RebuildTable)
-		self.SetMainWidgets(LeftChild,RightChild,False)
+		self.SetMainWidgets(LeftChild,RightChild)
 
 	def BuildTable(self,vp):
 		PW = gtk.VBox()
@@ -793,7 +787,8 @@ class MainWinClass:
 		self.TableCats={}
 		self.TableAttached=False
 		self.LastCols=-1
-		for c,pl in self.Categories.items():
+		for c in sorted(self.Categories,self.CatSortCompare):
+			pl = self.Categories[c]
 			CatBox = gtk.VBox()
 			PW.pack_start(CatBox,False,False)
 			CatLabel = MakeLabel('',-1)
@@ -803,9 +798,9 @@ class MainWinClass:
 			CatTab.set_border_width(10)
 			self.TableCats[c]=(CatTab,[])
 			CatBox.pack_start(CatTab,False,False)
-			for pw,po in pl:
+			for po in pl:
 				CB = gtk.Button()
-				CB.connect('clicked',self.SelectPlugin,pw)
+				CB.connect('clicked',self.SelectPlugin,po)
 				CB.set_size_request(200,-1)
 				CB.set_relief(gtk.RELIEF_NONE)
 				CX = gtk.HBox(False,10)
@@ -818,7 +813,7 @@ class MainWinClass:
 				self.TableCats[c][1].append(CB)
 
 	def RebuildTable(self,wid,req):
-		cols = (req.width-40)/200
+		cols = (req.width-60)/200
 		if cols == self.LastCols:
 			return
 		self.LastCols = cols
@@ -839,20 +834,14 @@ class MainWinClass:
 		self.TableAttached=True
 		self.MainWin.show_all()
 
-	def SetMainWidgets(self,lw,rw,destroy=False):
+	def SetMainWidgets(self,lw,rw):
 		p = self.LeftPane.get_child()
 		if p:
-			self.LeftPane.remove(p)
-			p.hide_all()
-			if destroy:
-				p.destroy()
+			p.destroy()
 		self.LeftPane.add(lw)
 		p = self.RightPane.get_child()
 		if (p):
-			self.RightPane.remove(p)
-			p.hide_all()
-			if destroy:
-				p.destroy()
+			p.destroy()
 		self.RightPane.add(rw)
 		self.MainWin.show_all()
 
@@ -877,7 +866,8 @@ class MainWinClass:
 		return Img
 
 	def SelectPlugin(self,obj,select):
-		self.SetMainWidgets(select.LeftWidget,select.RightWidget,True)
+		pc = PluginClass(select,self)
+		self.SetMainWidgets(pc.LeftWidget,pc.RightWidget)
 
 	def BackToMain(self,obj):
 		self.ResetMainWidgets()
