@@ -775,6 +775,9 @@ class MainWinClass:
 		self.MainBox.pack_start(self.LeftPane,False,False)
 		self.MainBox.pack_start(self.RightPane,True,True)
 		self.Categories={}
+		self.PluginImages={}
+		for pn,po in self.Context.Plugins.items():
+			self.PluginImages[pn]=self.MakeImage(po)
 		for c in sorted(self.Context.Categories,self.CatSortCompare):
 			self.Categories[c]=[]
 			for pn,po in self.Context.Plugins.items():
@@ -828,7 +831,7 @@ class MainWinClass:
 				CB.set_relief(gtk.RELIEF_NONE)
 				CX = gtk.HBox(False,10)
 				CX.set_border_width(10)
-				CI = self.MakeImage(po)
+				CI = self.PluginImages[po.Name]
 				CX.pack_start(CI,False,False)
 				CL = MakeLabel(po.ShortDesc,120)
 				CX.pack_start(CL,True,True)
@@ -889,6 +892,10 @@ class MainWinClass:
 		return Img
 
 	def SelectPlugin(self,obj,select):
+		for nam,val in self.PluginImages.items():
+			w = val.get_parent()
+			if w:
+				w.remove(val)
 		pc = PluginClass(select,self)
 		self.SetMainWidgets(pc.LeftWidget,pc.RightWidget)
 
