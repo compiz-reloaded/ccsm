@@ -142,8 +142,7 @@ class BoolSetting(SettingItem):
 		self.Custom = True
 		self.Widget = gtk.HBox()
 		self.CheckButton = gtk.CheckButton(self.Setting.ShortDesc)
-		self.Widget.pack_start(self.CheckButton,True,True)
-		#self.Widget.pack_start(self.Label)
+		self.Widget.pack_start(self.CheckButton,True,True,5)
 		self.Widget.pack_start(self.Reset,False,False)
 		self.CheckButton.connect('toggled',self.Changed)
 	def _Read(self):
@@ -232,6 +231,9 @@ class ListChoiceSetting(SettingItem):
 			if c.get_active():
 				v = v + [cv]
 		self.Setting.Value = v
+	
+	def Attach(self,Table,row):
+		Table.attach(self.Widget,0,100,row,row+1,xpadding=5)
 
 class ListSetting(SettingItem):
 	def _Init(self):
@@ -327,6 +329,8 @@ class ListSetting(SettingItem):
 			val.append(self._ListGet(Iter))
 			Iter = self.Store.iter_next(Iter)
 		self.Setting.Value = val
+	def Attach(self,Table,row):
+		Table.attach(self.Widget,0,100,row,row+1,xpadding=5)
 
 class StringMatchListSetting(ListSetting):
 	def _ListInfo(self):
@@ -447,8 +451,8 @@ class SubGroupArea:
 		if Name != '' and row < 4: # ahi hay magic numbers!
 			self.Expander.set_expanded(True)
 
-class GroupPage:
-	def __init__(self,Name,Group):
+class Page(object):
+	def __init__(self,Name):
 		self.Widget = gtk.VBox()
 		self.SetContainer = gtk.VBox()
 		Scroll = gtk.ScrolledWindow()
@@ -461,6 +465,25 @@ class GroupPage:
 		Scroll.add(View)
 		View.add(self.SetContainer)
 		self.Empty = True
+
+class KeyPage(Page):
+	def __init__(self,Name,Plugin):
+		super(KeyPage, self).__init__(Name)
+
+		for group in Plugin.Groups:
+			for subGroup in Plugin.Groups[group]:
+				sg = Plugin.Groups[group][subGroup]
+				for setting in sorted(sum((v.values() for v in [sg.Display]+sg.Screens),[]),SettingSortCompare):
+					if setting.Type == 'Action':
+						sit = ActionSetting(setting)
+						sit.Read()
+						self.SetContainer.pack_start(sit.Widget,False,False)
+						self.Empty = False
+
+class GroupPage(Page):
+	def __init__(self,Name,Group):
+		super(GroupPage, self).__init__(Name)
+
 		if (Group.has_key('')):
 			sga = SubGroupArea('',Group[''])
 			if not sga.Empty:
