@@ -1029,8 +1029,8 @@ class MainWinClass:
 				CH = gtk.HBox()
 				if po.Name != 'core':
 					CE = gtk.CheckButton()
-					CE.connect("toggled",self.EnablePlugin,po)
 					CE.set_active(po.Enabled)
+					CE.connect("toggled",self.EnablePlugin,po)
 					CH.pack_start(CE,False,False)
 				CH.pack_start(CB,True,True)
 				self.TableCats[c][1].append(CH)
@@ -1097,6 +1097,7 @@ class MainWinClass:
 		self.SetMainWidgets(pc.LeftWidget,pc.RightWidget)
 
 	def EnablePlugin(self,widget,plugin):
+		print "Hallo"
 		#attempt to resolve conflicts...
 		conf = plugin.Enabled and plugin.DisableConflicts or (
 				plugin.EnableConflicts)
