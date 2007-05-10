@@ -515,10 +515,9 @@ def HandlePluginConflicts(conf):
 class ActionItem(SettingItem):
 	pass
 
-EdgeList = ['None','TopLeft','Top','TopRight','Left','Right','BottomLeft','Bottom','BottomRight']
-
 class ActionPage:
 	def __init__(self,Plugin,Context=None):
+		self.EdgeList = ['None','TopLeft','Top','TopRight','Left','Right','BottomLeft','Bottom','BottomRight']
 		self.Widget = gtk.VBox()
 		self.Plugin = Plugin
 		self.Context = Context
@@ -546,7 +545,7 @@ class ActionPage:
 				gobject.TYPE_STRING,	#15 - disp/scn str XXX
 				)
 		self.ComboStore = gtk.ListStore(gobject.TYPE_STRING)
-		for edge in EdgeList:
+		for edge in self.EdgeList:
 			iter = self.ComboStore.append()
 			self.ComboStore.set(iter,0,edge)
 		self.TreeView = gtk.TreeView(self.Store)
@@ -649,7 +648,7 @@ class ActionPage:
 		if s.Info[3]:
 			EC = gtk.ComboBox(self.ComboStore)
 			edv = 0
-			for edg in EdgeList:
+			for edg in self.EdgeList:
 				if edg == es:
 					break
 				edv = edv + 1
