@@ -889,7 +889,7 @@ def MakeLabel(Val=None,wrap=160):
 	L.set_size_request(wrap,-1)
 	return L
 
-class PluginClass():
+class PluginClass:
 	def __init__(self,Plugin,Main):
 		self.Plugin = Plugin
 		self.LeftWidget = gtk.VBox(False,10)
