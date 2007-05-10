@@ -192,7 +192,7 @@ class BoolSetting(SettingItem):
 		self.Custom = True
 		self.Widget = gtk.HBox()
 		self.CheckButton = gtk.CheckButton(self.Setting.ShortDesc)
-		self.Widget.pack_start(self.CheckButton,True,True,5)
+		self.Widget.pack_start(self.CheckButton,True,True)
 		self.Widget.pack_start(self.Reset,False,False)
 		self.CheckButton.connect('toggled',self.Changed)
 	def _Read(self):
@@ -515,20 +515,6 @@ class Page(object):
 		Scroll.add(View)
 		View.add(self.SetContainer)
 		self.Empty = True
-
-class KeyPage(Page):
-	def __init__(self,Name,Plugin):
-		super(KeyPage, self).__init__(Name)
-
-		for group in Plugin.Groups:
-			for subGroup in Plugin.Groups[group]:
-				sg = Plugin.Groups[group][subGroup]
-				for setting in sorted(sum((v.values() for v in [sg.Display]+sg.Screens),[]),SettingSortCompare):
-					if setting.Type == 'Action':
-						sit = ActionSetting(setting)
-						sit.Read()
-						self.SetContainer.pack_start(sit.Widget,False,False)
-						self.Empty = False
 
 class GroupPage(Page):
 	def __init__(self,Name,Group):
@@ -950,7 +936,9 @@ class MainWinClass:
 	def __init__(self,Context):
 		self.Context = Context
 		self.MainWin = gtk.Window()
-		self.MainWin.set_default_size(620,440)
+		self.MainWin.connect("destroy",Quit)
+		self.MainWin.set_default_size(940,520)
+		self.MainWin.set_title("CCS Manager")
 		#set up the Entry to get the BrightColor
 		StyleWidget = gtk.Entry()
 		self.MainWin.add(StyleWidget)
@@ -1038,7 +1026,14 @@ class MainWinClass:
 				CL = MakeLabel(po.ShortDesc,120)
 				CX.pack_start(CL,True,True)
 				CB.add(CX)
-				self.TableCats[c][1].append(CB)
+				CH = gtk.HBox()
+				if po.Name != 'core':
+					CE = gtk.CheckButton()
+					CE.connect("toggled",self.EnablePlugin,po)
+					CE.set_active(po.Enabled)
+					CH.pack_start(CE,False,False)
+				CH.pack_start(CB,True,True)
+				self.TableCats[c][1].append(CH)
 
 	def RebuildTable(self,wid,req):
 		cols = (req.width-60)/200
@@ -1100,6 +1095,16 @@ class MainWinClass:
 				w.remove(val)
 		pc = PluginClass(select,self)
 		self.SetMainWidgets(pc.LeftWidget,pc.RightWidget)
+
+	def EnablePlugin(self,widget,plugin):
+		#attempt to resolve conflicts...
+		conf = plugin.Enabled and plugin.DisableConflicts or (
+				plugin.EnableConflicts)
+		if HandlePluginConflicts(conf):
+			plugin.Enabled = widget.get_active()
+		else:
+			widget.set_active(plugin.Enabled)
+		Write(plugin.Context)
 
 	def BackToMain(self,obj):
 		self.ResetMainWidgets()
