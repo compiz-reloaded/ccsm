@@ -94,7 +94,7 @@ class SettingItem:
 		self.Label = gtk.Label(self.Setting.ShortDesc)
 		self.Label.props.xalign=0
 		self.Label.props.wrap_mode = gtk.WRAP_WORD
-		self.Label.props.width_chars = 20
+		self.Label.set_size_request(160,-1)
 		self.Label.set_line_wrap(True)
 
 	def Block(self):
@@ -428,16 +428,6 @@ def SettingSortCompare(v1,v2):
 	else:
 		return cmp(v1.ShortDesc,v2.ShortDesc)
 
-def CatSortCompare(v1,v2):
-	if v1 == v2:
-		return cmp(v1,v2)
-	if v1 == 'General':
-		return cmp('',v2 or 'zzzzzzzz')
-	if v2 == 'General':
-		return cmp(v1 or 'zzzzzzz','')
-	return cmp(v1 or 'zzzzzzzz',v2 or 'zzzzzzzz')
-
-
 class SubGroupArea:
 	def __init__(self,Name,SubGroup):
 		if Name == '':
@@ -685,19 +675,6 @@ class ActionPage:
 		iter = self.Store.get_iter_from_string(path)
 		self.Store.set(iter,1,0,2,0)
 
-def SetMainWidgets(lw,rw):
-	p = LeftPane.get_child()
-	if p:
-		LeftPane.remove(p)
-		p.hide_all()
-	LeftPane.add(lw)
-	p = RightPane.get_child()
-	if (p):
-		RightPane.remove(p)
-		p.hide_all()
-	RightPane.add(rw)
-	MainWin.show_all()
-
 def MakeLabel(Val=None,wrap=160):
 	if Val is not None:
 		L = gtk.Label(Val)
@@ -709,19 +686,13 @@ def MakeLabel(Val=None,wrap=160):
 	L.set_size_request(wrap,-1)
 	return L
 
-def SelectPlugin(obj,select):
-	SetMainWidgets(select.LeftWidget,select.RightWidget)
-
-def BackToMain(obj):
-	SetMainWidgets(LeftChild,RightChild)
-
 class PluginClass():
-	def __init__(self,Plugin):
+	def __init__(self,Plugin,Main):
 		self.Plugin = Plugin
 		self.LeftWidget = gtk.VBox(False,10)
 		self.LeftWidget.set_border_width(15)
 		self.PlugLabel = MakeLabel()
-		self.PlugLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>"%(BrightColor,Plugin.ShortDesc))
+		self.PlugLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>"%(Main.BrightColor,Plugin.ShortDesc))
 		self.LeftWidget.pack_start(self.PlugLabel,False,False)
 		self.InfoLabelCont = gtk.HBox()
 		self.InfoLabelCont.set_border_width(10)
@@ -730,7 +701,7 @@ class PluginClass():
 		self.InfoLabelCont.pack_start(self.InfoLabel,True,True)
 		if Plugin.Name != 'core':
 			self.EnLabel = MakeLabel()
-			self.EnLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>"%(BrightColor,'Use This Plugin'))
+			self.EnLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>"%(Main.BrightColor,'Use This Plugin'))
 			self.LeftWidget.pack_start(self.EnLabel,False,False)
 			self.EnCheckCont = gtk.HBox()
 			self.EnCheckCont.set_border_width(10)
@@ -742,7 +713,7 @@ class PluginClass():
 		self.BackButton = gtk.Button(gtk.STOCK_GO_BACK)
 		self.BackButton.set_use_stock(True)
 		self.LeftWidget.pack_end(self.BackButton,False,False)
-		self.BackButton.connect('clicked',BackToMain)
+		self.BackButton.connect('clicked',Main.BackToMain)
 		self.RightWidget = gtk.Notebook()
 		for name,group in Plugin.Groups.items():
 			name = name or 'General'
@@ -756,91 +727,162 @@ class PluginClass():
 def Quit(foo):
 	gtk.main_quit()
 
-def MakeImage(Plugin):
-	Img = gtk.Image()
-	try:
-		#XXX - fix images!
-		Pbf = gtk.gdk.pixbuf_new_from_file_at_size("/usr/share/pixmaps/beryl-settings-section-%s.svg"%(Plugin.Name == 'core' and '_' or Plugin.Name),32,32)
-		Img.set_from_pixbuf(Pbf)
-	except:
-		Img.set_from_stock(gtk.STOCK_MISSING_IMAGE,gtk.ICON_SIZE_BUTTON)
-	return Img
 
-#XXX XXX XXX
-#CLEAN UP THIS MESS!
+class MainWinClass:
+	def __init__(self,Context):
+		self.Context = Context
+		self.MainWin = gtk.Window()
+		self.MainWin.set_default_size(620,440)
+		#set up the Entry to get the BrightColor
+		StyleWidget = gtk.Entry()
+		self.MainWin.add(StyleWidget)
+		StyleWidget.realize()
+		bc = StyleWidget.style.bg[gtk.STATE_SELECTED]
+		self.BrightColor = "#%.4x%.4x%.4x"%(bc.red,bc.green,bc.blue)
+		self.MainWin.remove(StyleWidget)
+		StyleWidget.destroy()
+		#build the panes
+		self.MainBox = gtk.HBox()
+		self.MainWin.add(self.MainBox)
+		self.LeftPane = gtk.Alignment()
+		self.LeftPane.set_size_request(200,400)
+		self.RightPane = gtk.Alignment()
+		self.RightPane.set_border_width(5)
+		self.RightPane.props.yscale=1
+		self.RightPane.props.xscale=1
+		self.RightPane.props.xalign=0
+		self.RightPane.props.yalign=0
+		self.LeftPane.props.yscale=1
+		self.LeftPane.props.xscale=1
+		self.LeftPane.props.xalign=0
+		self.LeftPane.props.yalign=0
+		self.MainBox.pack_start(self.LeftPane,False,False)
+		self.MainBox.pack_start(self.RightPane,True,True)
+		self.Categories={}
+		for c in sorted(self.Context.Categories,self.CatSortCompare):
+			self.Categories[c]=[]
+			for pn,po in self.Context.Plugins.items():
+				if po.Category == c:
+					self.Categories[c].append((PluginClass(po,self),po))
+		self.ResetMainWidgets()
 
-MainWin = gtk.Window()
-MainBox = gtk.HBox()
-MainWin.add(MainBox)
-LeftPane = gtk.Alignment()
-LeftPane.set_size_request(200,400)
-RightPane = gtk.Alignment()
-RightPane.props.yscale=1
-RightPane.props.xscale=1
-RightPane.props.xalign=0
-RightPane.props.yalign=0
-LeftPane.props.yscale=1
-LeftPane.props.xscale=1
-LeftPane.props.xalign=0
-LeftPane.props.yalign=0
-MainBox.pack_start(LeftPane,False,False)
-MainBox.pack_start(RightPane,True,True)
-PluginsVPort = gtk.Viewport()
-RightPane.set_border_width(5)
-LeftChild = gtk.VBox(False,10)
-LeftChild.set_border_width(15)
-FLab = MakeLabel()
-LeftChild.pack_start(FLab,False,False)
-FLen = gtk.Entry()
-LeftChild.pack_start(FLen,False,False)
-ILab = MakeLabel()
-LeftChild.pack_start(ILab,False,False)
-LeftPane.add(LeftChild)
-Ctx = ccs.Context()
-PluginsWidget = gtk.VBox()
-PluginsVPort.add(PluginsWidget)
-PluginsVPort.modify_bg(gtk.STATE_NORMAL,gtk.gdk.color_parse('#ffffff'))
-RightChild = gtk.ScrolledWindow()
-RightChild.props.hscrollbar_policy = gtk.POLICY_NEVER
-RightChild.props.vscrollbar_policy = gtk.POLICY_AUTOMATIC
-RightChild.add(PluginsVPort)
-RightPane.add(RightChild)
-PluginsWidget.set_border_width(10)
-FLen.realize()
-cv = FLen.style.bg[gtk.STATE_SELECTED]
-BrightColor = "#%.4x%.4x%.4x"%(cv.red,cv.green,cv.blue)
-FLab.set_markup("<span color='%s' size='large' weight='800'>Filter</span>"%BrightColor)
-ILab.set_markup("<span color='%s' size='large' weight='800'>Information</span>"%BrightColor)
-for c in sorted(Ctx.Categories,CatSortCompare):
-	CatBox = gtk.VBox()
-	PluginsWidget.pack_start(CatBox)
-	CatLabel = MakeLabel()
-	CatLabel.set_markup("<span color='#aaa' size='x-large' weight='800'>%s</span>"%(c or 'Uncategorized'))
-	CatBox.pack_start(CatLabel)
-	CatTab = gtk.Table()
-	CatBox.pack_start(CatTab,False,False)
-	col = 0
-	row = 0
-	CatTab.attach(gtk.Label(),8,9,0,1,gtk.EXPAND)
-	CatTab.set_border_width(10)
-	for pn,po in Ctx.Plugins.items():
-		if po.Category == c:
-			CB = gtk.Button()
-			CB.connect('clicked',SelectPlugin,PluginClass(po))
-			CB.set_size_request(200,-1)
-			CB.set_relief(gtk.RELIEF_NONE)
-			CX = gtk.HBox(False,10)
-			CX.set_border_width(10)
-			CI = MakeImage(po)
-			CX.pack_start(CI,False,False)
-			CL = MakeLabel(po.ShortDesc,140)
-			CX.pack_start(CL,True,True)
-			CB.add(CX)
-			CatTab.attach(CB,col,col+1,row,row+1,0)
-			col = col + 1
-			if col > 1:
-				col = 0
-				row = row + 1
-	CatTab.attach(gtk.Label(),8,9,row+20,row+21,gtk.EXPAND)
+	def ResetMainWidgets(self):
+		PluginsVPort = gtk.Viewport()
+		LeftChild = gtk.VBox(False,10)
+		LeftChild.set_border_width(15)
+		FLab = MakeLabel()
+		FLab.set_markup("<span color='%s' size='large' weight='800'>Filter</span>"%self.BrightColor)
+		LeftChild.pack_start(FLab,False,False)
+		FLen = gtk.Entry()
+		LeftChild.pack_start(FLen,False,False)
+		ILab = MakeLabel()
+		ILab.set_markup("<span color='%s' size='large' weight='800'>Information</span>"%self.BrightColor)
+		LeftChild.pack_start(ILab,False,False)
+		PluginsVPort.modify_bg(gtk.STATE_NORMAL,gtk.gdk.color_parse('#ffffff'))
+		RightChild = gtk.ScrolledWindow()
+		RightChild.props.hscrollbar_policy = gtk.POLICY_NEVER
+		RightChild.props.vscrollbar_policy = gtk.POLICY_AUTOMATIC
+		RightChild.add(PluginsVPort)
+		self.BuildTable(PluginsVPort)
+		RightChild.connect('size-allocate',self.RebuildTable)
+		self.SetMainWidgets(LeftChild,RightChild,False)
+
+	def BuildTable(self,vp):
+		PW = gtk.VBox()
+		PW.set_border_width(10)
+		vp.add(PW)
+		self.TableCats={}
+		self.TableAttached=False
+		self.LastCols=-1
+		for c,pl in self.Categories.items():
+			CatBox = gtk.VBox()
+			PW.pack_start(CatBox,False,False)
+			CatLabel = MakeLabel('',-1)
+			CatLabel.set_markup("<span color='#aaa' size='x-large' weight='800'>%s</span>"%(c or 'Uncategorized'))
+			CatBox.pack_start(CatLabel,False,False)
+			CatTab = gtk.Table()
+			CatTab.set_border_width(10)
+			self.TableCats[c]=(CatTab,[])
+			CatBox.pack_start(CatTab,False,False)
+			for pw,po in pl:
+				CB = gtk.Button()
+				CB.connect('clicked',self.SelectPlugin,pw)
+				CB.set_size_request(200,-1)
+				CB.set_relief(gtk.RELIEF_NONE)
+				CX = gtk.HBox(False,10)
+				CX.set_border_width(10)
+				CI = self.MakeImage(po)
+				CX.pack_start(CI,False,False)
+				CL = MakeLabel(po.ShortDesc,120)
+				CX.pack_start(CL,True,True)
+				CB.add(CX)
+				self.TableCats[c][1].append(CB)
+
+	def RebuildTable(self,wid,req):
+		cols = (req.width-40)/200
+		if cols == self.LastCols:
+			return
+		self.LastCols = cols
+		if self.TableAttached:
+			for CN,CW in self.TableCats.items():
+				for CB in CW[1]:
+					CW[0].remove(CB)
+		for CN,CW in self.TableCats.items():
+			col = 0
+			row = 0
+			for CB in CW[1]:
+				CW[0].attach(CB,col,col+1,row,row+1,0)
+				col = col + 1
+				if col >= cols:
+					col = 0
+					row = row + 1
+			CW[0].attach(gtk.Label(),cols+5,cols+6,0,1,gtk.EXPAND)
+		self.TableAttached=True
+		self.MainWin.show_all()
+
+	def SetMainWidgets(self,lw,rw,destroy=False):
+		p = self.LeftPane.get_child()
+		if p:
+			self.LeftPane.remove(p)
+			p.hide_all()
+			if destroy:
+				p.destroy()
+		self.LeftPane.add(lw)
+		p = self.RightPane.get_child()
+		if (p):
+			self.RightPane.remove(p)
+			p.hide_all()
+			if destroy:
+				p.destroy()
+		self.RightPane.add(rw)
+		self.MainWin.show_all()
+
+	def CatSortCompare(self,v1,v2):
+		if v1 == v2:
+			return cmp(v1,v2)
+		if v1 == 'General':
+			return cmp('',v2 or 'zzzzzzzz')
+		if v2 == 'General':
+			return cmp(v1 or 'zzzzzzz','')
+		return cmp(v1 or 'zzzzzzzz',v2 or 'zzzzzzzz')
+
+	def MakeImage(self,Plugin):
+		Img = gtk.Image()
+		try:
+			#XXX - fix images!
+			Pbf = gtk.gdk.pixbuf_new_from_file_at_size("/usr/share/pixmaps/beryl-settings-section-%s.svg"%(
+				Plugin.Name == 'core' and '_' or Plugin.Name),32,32)
+			Img.set_from_pixbuf(Pbf)
+		except:
+			Img.set_from_stock(gtk.STOCK_MISSING_IMAGE,gtk.ICON_SIZE_BUTTON)
+		return Img
+
+	def SelectPlugin(self,obj,select):
+		self.SetMainWidgets(select.LeftWidget,select.RightWidget,True)
+
+	def BackToMain(self,obj):
+		self.ResetMainWidgets()
+
+MainWin = MainWinClass(ccs.Context()).MainWin
 MainWin.show_all()
 gtk.main()
