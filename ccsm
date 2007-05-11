@@ -30,7 +30,8 @@ from xml.sax.saxutils import escape as EscapeMarkup
 
 AllPlugins = []
 
-PixmapDir = "/usr/local/share/pixmaps"
+#PixmapDir = "/usr/local/share/pixmaps"
+PixmapDir = "./images"
 
 def Write(ctx):
 	ctx.Write()
@@ -1009,9 +1010,14 @@ class MainWinClass:
 			pl = self.Categories[c]
 			CatBox = gtk.VBox()
 			PW.pack_start(CatBox,False,False)
+			CatHeader = gtk.HBox()
 			CatLabel = MakeLabel('',-1)
 			CatLabel.set_markup("<span color='#aaa' size='x-large' weight='800'>%s</span>"%(c or 'Uncategorized'))
-			CatBox.pack_start(CatLabel,False,False)
+			CatImg = self.MakeImage(category=c.lower().replace(" ", "_"))
+			if CatImg:
+				CatHeader.pack_start(CatImg,False,False)
+			CatHeader.pack_start(CatLabel,False,False)
+			CatBox.pack_start(CatHeader,False,False)
 			CatTab = gtk.Table()
 			CatTab.set_border_width(10)
 			self.TableCats[c]=(CatTab,[],[])
@@ -1081,14 +1087,17 @@ class MainWinClass:
 			return cmp(v1 or 'zzzzzzz','')
 		return cmp(v1 or 'zzzzzzzz',v2 or 'zzzzzzzz')
 
-	def MakeImage(self,Plugin):
+	def MakeImage(self,plugin=0,category=0):
 		Img = gtk.Image()
 		try:
-			#XXX - fix images!
-			Pbf = gtk.gdk.pixbuf_new_from_file_at_size("%s/ccs-plugin-%s.svg"%(
-				PixmapDir,
-				Plugin.Name == 'core' and '_' or Plugin.Name),32,32)
-			Img.set_from_pixbuf(Pbf)
+			if plugin != 0:
+				Pbf = gtk.gdk.pixbuf_new_from_file_at_size("%s/plugin-%s.svg"%(
+					PixmapDir,plugin.Name),32,32)
+				Img.set_from_pixbuf(Pbf)
+			elif category != 0:
+				Pbf = gtk.gdk.pixbuf_new_from_file_at_size("%s/category-%s.svg"%(
+					PixmapDir,category),32,32)
+				Img.set_from_pixbuf(Pbf)
 		except:
 			Img.set_from_stock(gtk.STOCK_MISSING_IMAGE,gtk.ICON_SIZE_BUTTON)
 		return Img
