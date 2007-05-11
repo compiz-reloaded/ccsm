@@ -886,6 +886,8 @@ class PluginClass:
 		self.LeftWidget.set_border_width(15)
 		self.PlugLabel = MakeLabel()
 		self.PlugLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>"%(Main.BrightColor,Plugin.ShortDesc))
+		self.PlugImg = Main.MakeImage(Plugin,size=64)
+		self.LeftWidget.pack_start(self.PlugImg,False,False)
 		self.LeftWidget.pack_start(self.PlugLabel,False,False)
 		self.InfoLabelCont = gtk.HBox()
 		self.InfoLabelCont.set_border_width(10)
@@ -1087,16 +1089,16 @@ class MainWinClass:
 			return cmp(v1 or 'zzzzzzz','')
 		return cmp(v1 or 'zzzzzzzz',v2 or 'zzzzzzzz')
 
-	def MakeImage(self,plugin=0,category=0):
+	def MakeImage(self,plugin=0,category=0,size=32):
 		Img = gtk.Image()
 		try:
 			if plugin != 0:
 				Pbf = gtk.gdk.pixbuf_new_from_file_at_size("%s/plugin-%s.svg"%(
-					PixmapDir,plugin.Name),32,32)
+					PixmapDir,plugin.Name),size,size)
 				Img.set_from_pixbuf(Pbf)
 			elif category != 0:
 				Pbf = gtk.gdk.pixbuf_new_from_file_at_size("%s/category-%s.svg"%(
-					PixmapDir,category),32,32)
+					PixmapDir,category),size,size)
 				Img.set_from_pixbuf(Pbf)
 		except:
 			Img.set_from_stock(gtk.STOCK_MISSING_IMAGE,gtk.ICON_SIZE_BUTTON)
