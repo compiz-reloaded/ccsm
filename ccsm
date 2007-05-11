@@ -992,6 +992,21 @@ class MainWinClass:
 		ILab = MakeLabel()
 		ILab.set_markup("<span color='%s' size='large' weight='800'>Information</span>"%self.BrightColor)
 		LeftChild.pack_start(ILab,False,False)
+		ProfileBox = gtk.combo_box_new_text()
+		ProfileBox.append_text("Default")
+		for profile in self.Context.Profiles.values():
+			ProfileBox.append_text(profile.Name)
+		if self.Context.CurrentProfile.Name == '':
+			ProfileBox.set_active(0)
+		else:
+			name = self.Context.CurrentProfile.Name
+			index = self.Context.Profiles.values().index(self.Context.Profiles[name])
+			ProfileBox.set_active(index+1)
+		ProfileBox.connect("changed",self.ProfileChanged)
+		LeftChild.pack_end(ProfileBox,False,False)
+		ProfileLabel = MakeLabel()
+		ProfileLabel.set_markup("<span color='%s' size='large' weight='800'>Profile</span>"%self.BrightColor)
+		LeftChild.pack_end(ProfileLabel,False,False)
 		PluginsVPort.modify_bg(gtk.STATE_NORMAL,gtk.gdk.color_parse('#ffffff'))
 		RightChild = gtk.ScrolledWindow()
 		RightChild.props.hscrollbar_policy = gtk.POLICY_AUTOMATIC
@@ -1124,7 +1139,14 @@ class MainWinClass:
 		else:
 			widget.set_active(plugin.Enabled)
 		Write(plugin.Context)
-		
+
+	def ProfileChanged(self,widget):
+		active = widget.get_active()
+		if active == 0:
+			self.Context.ResetProfile()
+		else:
+			name = widget.get_model()[active][0]
+			self.Context.CurrentProfile = self.Context.Profiles[name]
 
 	def BackToMain(self,obj):
 		self.ResetMainWidgets()
