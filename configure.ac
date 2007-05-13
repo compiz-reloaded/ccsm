@@ -10,8 +10,7 @@ AM_MAINTAINER_MODE
 AC_ISC_POSIX
 
 CCSM_REQUIRES="\
-ccs-bindings >= 0.0.1 \
-pygtk-2.0 >= 2.6 "
+ccs-bindings >= 0.0.1"
 
 PKG_CHECK_MODULES(CCS,$CCSM_REQUIRES)
 
