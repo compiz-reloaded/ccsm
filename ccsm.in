@@ -1002,6 +1002,7 @@ class MainWinClass:
 		ILab = MakeLabel()
 		ILab.set_markup("<span color='%s' size='large' weight='800'>Information</span>"%self.BrightColor)
 		LeftChild.pack_start(ILab,False,False)
+		
 		ProfileBox = gtk.combo_box_new_text()
 		ProfileBox.append_text("Default")
 		for profile in self.Context.Profiles.values():
@@ -1017,6 +1018,19 @@ class MainWinClass:
 		ProfileLabel = MakeLabel()
 		ProfileLabel.set_markup("<span color='%s' size='large' weight='800'>Profile</span>"%self.BrightColor)
 		LeftChild.pack_end(ProfileLabel,False,False)
+
+		BackendBox = gtk.combo_box_new_text()
+		for backend in self.Context.Backends.values():
+			BackendBox.append_text(backend.Name)
+		name = self.Context.CurrentBackend.Name
+		index = self.Context.Backends.values().index(self.Context.Backends[name])
+		BackendBox.set_active(index)
+		BackendBox.connect("changed",self.BackendChanged)
+		LeftChild.pack_end(BackendBox,False,False)
+		BackendLabel = MakeLabel()
+		BackendLabel.set_markup("<span color='%s' size='large' weight='800'>Backend</span>"%self.BrightColor)
+		LeftChild.pack_end(BackendLabel,False,False)
+
 		PluginsVPort.modify_bg(gtk.STATE_NORMAL,gtk.gdk.color_parse('#ffffff'))
 		RightChild = gtk.ScrolledWindow()
 		RightChild.props.hscrollbar_policy = gtk.POLICY_AUTOMATIC
@@ -1157,6 +1171,11 @@ class MainWinClass:
 		else:
 			name = widget.get_model()[active][0]
 			self.Context.CurrentProfile = self.Context.Profiles[name]
+	
+	def BackendChanged(self,widget):
+		active = widget.get_active()
+		name = widget.get_model()[active][0]
+		self.Context.CurrentBackend = self.Context.Backends[name]
 
 	def BackToMain(self,obj):
 		self.ResetMainWidgets()
