@@ -1,9 +1,9 @@
 [Desktop Entry]
 Encoding=UTF-8
-Name=Beryl Settings Manager
+Name=CompComm Settings Manager
 Comment=Configure beryl
-Icon=/usr/share/pixmaps/beryl-settings.svg
-Exec=beryl-settings
+Icon=ccsm.svg
+Exec=ccsm
 Terminal=false
 Type=Application
 Categories=Settings;
