@@ -54,16 +54,15 @@ def CheckConflict(s,con,typ):
 		cval = s.Value[0]
 	elif typ == 'Button':
 		cval = s.Value[1]
-	dlg = gtk.Dialog('Action Conflict',MainWin)
-	dlg.vbox.pack_start(MakeLabel("The new value for the \"%s\" binding for the action \"%s\" in plugin \"%s\" conflicts with the action \"%s\" of the \"%s\" plugin.  Do you wish to clear \"%s\" in the \"%s\" plugin?  If you click No, the action will still be set."%(
-		typ,s.ShortDesc,s.Plugin.ShortDesc,
-		con.ShortDesc,con.Plugin.ShortDesc,
-		con.ShortDesc,con.Plugin.ShortDesc,
-		),400))
-	dlg.add_button(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL)
-	dlg.add_button(gtk.STOCK_NO,gtk.RESPONSE_NO)
-	dlg.add_button(gtk.STOCK_YES,gtk.RESPONSE_OK).grab_default()
-	dlg.set_default_response(gtk.RESPONSE_OK)
+
+	msg = "The new value for the %s binding for the action <b>%s</b> " +\
+		  "in plugin <b>%s</b> conflicts with the action <b>%s</b> of the <b>%s</b> plugin.\n" +\
+		  "Do you wish to clear <b>%s</b> in the <b>%s</b> plugin?\n" +\
+		  "If you click No, the action will still be set."
+	 
+	msg = msg % (typ, s.ShortDesc, s.Plugin.ShortDesc, con.ShortDesc, con.Plugin.ShortDesc, con.ShortDesc, con.Plugin.ShortDesc)
+	dlg = gtk.MessageDialog(parent=MainWin,flags=gtk.DIALOG_MODAL,type=gtk.MESSAGE_WARNING,buttons=gtk.BUTTONS_YES_NO)
+	dlg.set_markup(msg)
 	dlg.show_all()
 	ret = dlg.run()
 	dlg.destroy()
@@ -84,18 +83,18 @@ def CheckActionConflicts(s,ks,bs,be,es):
 	if len(KCon) and ks and ks.lower() != 'disabled' and ks.lower() != 'none':
 		for kc in KCon:
 			ret = CheckConflict(s,kc,'Key')
-			if ret == gtk.RESPONSE_OK:
+			if ret == gtk.RESPONSE_YES:
 				v = kc.Value
 				kc.Value = ['None',v[1],v[2],v[3]]
-			if ret == gtk.RESPONSE_CANCEL:
+			if ret == gtk.RESPONSE_NO:
 				return False
 	if len(BCon) and bs and bs.lower() != 'disabled' and bs.lower() != 'none':
 		for bc in BCon:
 			ret = CheckConflict(s,bc,'Button')
-			if ret == gtk.RESPONSE_OK:
+			if ret == gtk.RESPONSE_YES:
 				v = bc.Value
 				bc.Value = [v[0],'None',v[2],v[3]]
-			if ret == gtk.RESPONSE_CANCEL:
+			if ret == gtk.RESPONSE_NO:
 				return False
 	return True
 
@@ -174,6 +173,7 @@ class StringMatchSetting(SettingItem):
 		self.Widget.set_text(self.Setting.Value)
 	def _Changed(self):
 		self.Setting.Value = self.Widget.get_text()
+
 class StringChoiceSetting(SettingItem):
 	def _Init(self):
 		self.Widget = gtk.combo_box_new_text()
@@ -538,16 +538,17 @@ class GroupPage(Page):
 def HandlePluginConflicts(conf):
 	if len(conf) == 0:
 		return True
-	dlg = gtk.Dialog('Plugin Conflict',MainWin)
-	dlg.add_button(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL)
-	dlg.add_button(gtk.STOCK_OK,gtk.RESPONSE_OK).grab_default()
-	dlg.set_default_response(gtk.RESPONSE_OK)
+
+	dlg = gtk.MessageDialog(parent=MainWin,flags=gtk.DIALOG_MODAL,type=gtk.MESSAGE_WARNING,buttons=gtk.BUTTONS_OK_CANCEL)
 	for c in conf:
 		if c[0] == 'SameFeature':
 			#see if we can deactivate the plugin
 			#mentioned in c[2]
-			dlg.vbox.pack_start(MakeLabel(
-				"Plugin \"%s\" provides feature \"%s\" which is also provided by the plugin you are trying to enable.  Click OK to disable plugin \"%s\", or Cancel to stop trying to enable this plugin"%(c[2][0].ShortDesc,c[1],c[2][0].ShortDesc),400))
+			msg = "Plugin <b>%s</b> provides feature <b>%s</b> which is also provided " +\
+				  "by the plugin you are trying to enable.\n" +\
+				  "Click OK to disable plugin <b>%s</b>, or Cancel to stop trying to enable this plugin"
+			msg = msg % (c[2][0].ShortDesc, c[1], c[2][0].ShortDesc)
+			dlg.set_markup(msg)
 			dlg.show_all()
 			ret = dlg.run()
 			dlg.destroy()
@@ -561,8 +562,11 @@ def HandlePluginConflicts(conf):
 				return False
 		elif c[0] == 'RequiresFeature':
 			#we need to activate one of c[2]
-			dlg.vbox.pack_start(MakeLabel(
-				"The plugin you are trying to enable requires feature \"%s\" which is provided by the following plugins.  Click OK to enable the selected plugin or Cancel to stop trying to enable this plugin"%c[1],400),False,False)
+			msg = "The plugin you are trying to enable requires feature <b>%s</b> which " +\
+				  "is provided by the following plugins.\n" +\
+				  "Click OK to enable the selected plugin or Cancel to stop trying to enable this plugin"
+			msg = msg % c[1]
+			dlg.set_markup(msg)
 			cmb = gtk.combo_box_new_text()
 			dlg.vbox.pack_start(cmb,False,False)
 			for p in c[2]:
@@ -584,8 +588,10 @@ def HandlePluginConflicts(conf):
 			else:
 				return False
 		elif c[0] == 'RequiresPlugin':
-			dlg.vbox.pack_start(MakeLabel(
-				"The plugin you are trying to enable requires the plugin \"%s\". Click OK to enable \"%s\" or Cancel to stop trying to enable this plugin"%(c[2][0].ShortDesc,c[2][0].ShortDesc),400))
+			msg = "The plugin you are trying to enable requires the plugin <b>%s</b>.\n" +\
+				  "Click OK to enable <b>%s</b> or Cancel to stop trying to enable this plugin"
+			msg = msg % (c[2][0].ShortDesc, c[2][0].ShortDesc)
+			dlg.set_markup(msg)
 			dlg.show_all()
 			ret = dlg.run()
 			dlg.destroy()
@@ -599,8 +605,11 @@ def HandlePluginConflicts(conf):
 				return False
 		elif c[0] == 'FeatureNeeded':
 			plist = ', '.join("\"%s\""%p.ShortDesc for p in c[2])
-			dlg.vbox.pack_start(MakeLabel(
-				"The plugin you are trying to disable provides the feature \"%s\" which is required by the plugins %s. Click OK to disable these plugins or Cancel to stop trying to disable this plugin"%(c[1],plist),400))
+			msg = "The plugin you are trying to disable provides the feature <b>%s</b> " +\
+				  "which is required by the plugins <b>%s</b>.\n" +\
+				  "Click OK to disable these plugins or Cancel to stop trying to disable this plugin"
+			msg = msg % (c[1],plist) 
+			dlg.set_markup(msg)
 			dlg.show_all()
 			ret = dlg.run()
 			dlg.destroy()
@@ -615,8 +624,10 @@ def HandlePluginConflicts(conf):
 				return False
 		elif c[0] == 'PluginNeeded':
 			plist = ', '.join("\"%s\""%p.ShortDesc for p in c[2])
-			dlg.vbox.pack_start(MakeLabel(
-				"The plugin you are trying to disable is required by the plugins %s. Click OK to disable these plugins or Cancel to stop trying to disable this plugin"%(plist),400))
+			msg = "The plugin you are trying to disable is required by the plugins <b>%s</b>.\n" +\
+				  "Click OK to disable these plugins or Cancel to stop trying to disable this plugin"
+			msg = msg % plist
+			dlg.set_markup(msg)
 			dlg.show_all()
 			ret = dlg.run()
 			dlg.destroy()
@@ -806,7 +817,7 @@ class ActionPage:
 		ri = gtk.Image()
 		ri.set_from_stock(gtk.STOCK_CLEAR,gtk.ICON_SIZE_BUTTON)
 		rb.set_image(ri)
-		hb.pack_end(rb)
+		hb.pack_end(rb,False,False)
 		rb.connect('clicked',ResetButton,s,iter)
 		TB.attach(hb,0,2,4,5,TDef,TDef,TXp,TYp)
 		Dlg.show_all()
