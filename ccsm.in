@@ -30,8 +30,7 @@ from xml.sax.saxutils import escape as EscapeMarkup
 
 AllPlugins = []
 
-#PixmapDir = "/usr/local/share/pixmaps"
-PixmapDir = "./images"
+PixmapDir = "@prefix@/share/pixmaps"
 
 def Write(ctx):
 	ctx.Write()
@@ -1041,8 +1040,7 @@ class MainWinClass:
 			CatHeader = gtk.HBox()
 			CatLabel = MakeLabel('',-1)
 			CatLabel.set_markup("<span color='#aaa' size='x-large' weight='800'>%s</span>"%(c or 'Uncategorized'))
-			name = c or 'Uncategorized'
-			CatImg = self.MakeImage(category=name.lower().replace(" ", "_"))
+			CatImg = self.MakeImage(category=c.lower().replace(" ", "_"))
 			if CatImg:
 				CatHeader.pack_start(CatImg,False,False)
 			CatHeader.pack_start(CatLabel,False,False)
