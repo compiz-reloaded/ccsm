@@ -14,6 +14,7 @@ images_DATA = \
 	category-image_loading.svg      \
 	category-key_bindings.svg       \
 	category-profiles.svg   \
+	category-uncategorized.svg   \
 	category-window_management.svg  \
 	plugin-3d.svg   \
 	plugin-addhelper.svg    \
@@ -35,6 +36,7 @@ images_DATA = \
 	plugin-fake.svg \
 	plugin-group.svg        \
 	plugin-imgjpeg.svg      \
+	plugin-mblur.svg   \
 	plugin-minimize.svg     \
 	plugin-miniview.svg     \
 	plugin-move.svg \
@@ -49,6 +51,8 @@ images_DATA = \
 	plugin-ring.svg \
 	plugin-rotate.svg       \
 	plugin-scale.svg        \
+	plugin-schemep.svg      \
+	plugin-screencasting.svg \
 	plugin-screenshot.svg   \
 	plugin-showdesktop.svg  \
 	plugin-snap.svg \
