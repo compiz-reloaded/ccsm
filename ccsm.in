@@ -30,7 +30,7 @@ from xml.sax.saxutils import escape as EscapeMarkup
 
 AllPlugins = []
 
-PixmapDir = "@prefix@/share/pixmaps"
+PixmapDir = "@prefix@/share/ccsm/images"
 
 def Write(ctx):
 	ctx.Write()
