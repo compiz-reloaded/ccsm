@@ -447,7 +447,7 @@ class IntFloatListSetting(ListSetting):
 		r = d.run()
 		d.destroy()
 		if r == gtk.RESPONSE_OK:
-			return e.get_text()
+			return adj.get_value()
 		return None
 
 def MakeSetting(Setting):
