@@ -902,7 +902,7 @@ class PluginClass:
 		self.InfoLabelCont = gtk.HBox()
 		self.InfoLabelCont.set_border_width(10)
 		self.LeftWidget.pack_start(self.InfoLabelCont,False,False)
-		self.InfoLabel = MakeLabel(Plugin.LongDesc)
+		self.InfoLabel = MakeLabel(Plugin.LongDesc,150)
 		self.InfoLabelCont.pack_start(self.InfoLabel,True,True)
 		if Plugin.Name != 'core':
 			self.EnLabel = MakeLabel()
@@ -930,6 +930,7 @@ class PluginClass:
 		if not ap.Empty:
 			self.RightWidget.append_page(ap.Widget,gtk.Label('Actions'))
 		self.Block = 0
+
 	def EnChange(self,wid):
 		if self.Block>0:
 			return
@@ -1002,9 +1003,12 @@ class MainWinClass:
 		ILab = MakeLabel()
 		ILab.set_markup("<span color='%s' size='large' weight='800'>Information</span>"%self.BrightColor)
 		LeftChild.pack_start(ILab,False,False)
-		self.InfoBox = MakeLabel()
-		self.InfoBox.set_markup("")
-		LeftChild.pack_start(self.InfoBox,False,False)
+		InfoBox = gtk.VBox()
+		InfoBox.set_border_width(10)
+		self.PluginDescription = MakeLabel(wrap=150)
+		self.PluginDescription.set_markup("")
+		InfoBox.pack_start(self.PluginDescription,False,False)
+		LeftChild.pack_start(InfoBox,False,False)
 		
 		ProfileBox = gtk.combo_box_new_text()
 		ProfileBox.append_text("Default")
@@ -1069,8 +1073,8 @@ class MainWinClass:
 			for po in pl:
 				CB = gtk.Button()
 				CB.connect('clicked',self.SelectPlugin,po)
-				CB.connect('enter',self.SetInfo,self.InfoBox,po.LongDesc)
-				CB.connect('leave',self.ResetInfo,self.InfoBox)
+				CB.connect('enter',self.SetInfo,self.PluginDescription,po.LongDesc)
+				CB.connect('leave',self.ResetInfo,self.PluginDescription)
 				CB.set_size_request(200,-1)
 				CB.set_relief(gtk.RELIEF_NONE)
 				CX = gtk.HBox(False,10)
