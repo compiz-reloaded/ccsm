@@ -33,7 +33,7 @@ images_DATA = \
 	plugin-decoration.svg   \
 	plugin-fade.svg \
 	plugin-fadedesktop.svg  \
-	plugin-fake.svg \
+	plugin-fakeargb.svg \
 	plugin-group.svg        \
 	plugin-imgjpeg.svg      \
 	plugin-mblur.svg   \
