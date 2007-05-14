@@ -1002,6 +1002,9 @@ class MainWinClass:
 		ILab = MakeLabel()
 		ILab.set_markup("<span color='%s' size='large' weight='800'>Information</span>"%self.BrightColor)
 		LeftChild.pack_start(ILab,False,False)
+		self.InfoBox = MakeLabel()
+		self.InfoBox.set_markup("")
+		LeftChild.pack_start(self.InfoBox,False,False)
 		
 		ProfileBox = gtk.combo_box_new_text()
 		ProfileBox.append_text("Default")
@@ -1066,6 +1069,8 @@ class MainWinClass:
 			for po in pl:
 				CB = gtk.Button()
 				CB.connect('clicked',self.SelectPlugin,po)
+				CB.connect('enter',self.SetInfo,self.InfoBox,po.LongDesc)
+				CB.connect('leave',self.ResetInfo,self.InfoBox)
 				CB.set_size_request(200,-1)
 				CB.set_relief(gtk.RELIEF_NONE)
 				CX = gtk.HBox(False,10)
@@ -1151,15 +1156,25 @@ class MainWinClass:
 		pc = PluginClass(select,self)
 		self.SetMainWidgets(pc.LeftWidget,pc.RightWidget)
 
+	def SetInfo(self,wid,label,text):
+		label.set_markup(text)
+	
+	def ResetInfo(self,wid,label):
+		label.set_markup("")
+
+	def UpdatePlugins(self):
+		for cat,container,plugins in self.TableCats.values():
+				for i in range(len(plugins)):
+					if plugins[i].Name != 'core':
+						container[i].get_children()[0].set_active(plugins[i].Enabled)
+
 	def EnablePlugin(self,widget,plugin):
 		#attempt to resolve conflicts...
 		conf = plugin.Enabled and plugin.DisableConflicts or plugin.EnableConflicts
 		if HandlePluginConflicts(conf):
 			plugin.Enabled = widget.get_active()
-			for cat,container,plugins in self.TableCats.values():
-				for i in range(len(plugins)):
-					if plugins[i].Name != 'core':
-						container[i].get_children()[0].set_active(plugins[i].Enabled)
+			self.UpdatePlugins()
+			
 		else:
 			widget.set_active(plugin.Enabled)
 		Write(plugin.Context)
