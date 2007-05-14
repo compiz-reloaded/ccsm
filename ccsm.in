@@ -1021,7 +1021,7 @@ class MainWinClass:
 
 		BackendBox = gtk.combo_box_new_text()
 		for backend in self.Context.Backends.values():
-			BackendBox.append_text(backend.Name)
+			BackendBox.append_text(backend.ShortDesc)
 		name = self.Context.CurrentBackend.Name
 		index = self.Context.Backends.values().index(self.Context.Backends[name])
 		BackendBox.set_active(index)
@@ -1174,8 +1174,17 @@ class MainWinClass:
 	
 	def BackendChanged(self,widget):
 		active = widget.get_active()
-		name = widget.get_model()[active][0]
-		self.Context.CurrentBackend = self.Context.Backends[name]
+		shortDesc = widget.get_model()[active][0]
+		name = ""
+		for backend in self.Context.Backends.values():
+			if backend.ShortDesc == shortDesc:
+				name = backend.Name
+				break
+		
+		if name != "":
+			self.Context.CurrentBackend = self.Context.Backends[name]
+		else:
+			raise Exception,"Backend not found."
 
 	def BackToMain(self,obj):
 		self.ResetMainWidgets()
