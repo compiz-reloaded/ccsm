@@ -20,8 +20,16 @@
 
 
 import ccs
+import pygtk
+pygtk.require('2.0')
 import gtk
 import gtk.gdk
+import cairo
+
+if gtk.pygtk_version < (2,10,0):
+    print "PyGtk 2.10.0 or later required"
+    raise SystemExit
+
 import gobject
 import os
 import re
@@ -1010,17 +1018,27 @@ class MainWinClass:
 		InfoBox.pack_start(self.PluginDescription,False,False)
 		LeftChild.pack_start(InfoBox,False,False)
 		
-		ProfileBox = gtk.combo_box_new_text()
-		ProfileBox.append_text("Default")
+		ProfileBox = gtk.HBox()
+		ProfileAdd = gtk.Button()
+		ProfileAdd.set_image(gtk.image_new_from_stock(gtk.STOCK_ADD,gtk.ICON_SIZE_BUTTON))
+		ProfileRemove = gtk.Button()
+		ProfileRemove.set_image(gtk.image_new_from_stock(gtk.STOCK_REMOVE,gtk.ICON_SIZE_BUTTON))
+		ProfileComboBox = gtk.combo_box_new_text()
+		ProfileComboBox.append_text("Default")
 		for profile in self.Context.Profiles.values():
-			ProfileBox.append_text(profile.Name)
+			ProfileComboBox.append_text(profile.Name)
 		if self.Context.CurrentProfile.Name == '':
-			ProfileBox.set_active(0)
+			ProfileComboBox.set_active(0)
 		else:
 			name = self.Context.CurrentProfile.Name
 			index = self.Context.Profiles.values().index(self.Context.Profiles[name])
-			ProfileBox.set_active(index+1)
-		ProfileBox.connect("changed",self.ProfileChanged)
+			ProfileComboBox.set_active(index+1)
+		ProfileComboBox.connect("changed",self.ProfileChanged)
+		ProfileAdd.connect("clicked",self.AddProfile,ProfileComboBox)
+		ProfileRemove.connect("clicked",self.RemoveProfile,ProfileComboBox)
+		ProfileBox.pack_start(ProfileComboBox,True,True)
+		ProfileBox.pack_start(ProfileAdd,False,False)
+		ProfileBox.pack_start(ProfileRemove,False,False)
 		LeftChild.pack_end(ProfileBox,False,False)
 		ProfileLabel = MakeLabel()
 		ProfileLabel.set_markup("<span color='%s' size='large' weight='800'>Profile</span>"%self.BrightColor)
@@ -1183,6 +1201,22 @@ class MainWinClass:
 			widget.set_active(plugin.Enabled)
 		Write(plugin.Context)
 
+	def UpdateProfiles(self,widget,default="Default"):
+		self.Context.Read()
+		self.Context.UpdateProfiles()
+		widget.get_model().clear()
+		widget.append_text("Default")
+		for profile in self.Context.Profiles.values():
+			widget.append_text(profile.Name)
+		index = -1
+		counter = 0
+		for m in widget.get_model():
+			if m[0] == default:
+				index = counter
+			counter += 1
+		if index >= 0:
+			widget.set_active(index)
+
 	def ProfileChanged(self,widget):
 		active = widget.get_active()
 		if active == 0:
@@ -1190,6 +1224,31 @@ class MainWinClass:
 		else:
 			name = widget.get_model()[active][0]
 			self.Context.CurrentProfile = self.Context.Profiles[name]
+
+	def AddProfile(self,widget,box):
+		dlg = gtk.Dialog("Enter a profile name", self.MainWin, gtk.DIALOG_MODAL)
+		dlg.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
+		dlg.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
+		entry = gtk.Entry()
+		label = gtk.Label("Please enter a name for the new profile:")
+		dlg.vbox.pack_start(label,False,False,5)
+		dlg.vbox.pack_start(entry,False,False,5)
+		dlg.set_size_request(340,120)
+		dlg.show_all()
+		ret = dlg.run()
+		if ret == gtk.RESPONSE_OK:
+			self.Context.CurrentProfile = ccs.Profile(self.Context, entry.get_text())
+		dlg.destroy()
+		self.UpdateProfiles(box, entry.get_text())
+	
+	def RemoveProfile(self,widget,box):
+		active = box.get_active()
+		if active != 0:
+			name = box.get_model()[active][0]
+			self.Context.ResetProfile()
+			box.set_active(0)
+			self.Context.Profiles[name].Delete()
+			self.UpdateProfiles(box)
 	
 	def BackendChanged(self,widget):
 		active = widget.get_active()
