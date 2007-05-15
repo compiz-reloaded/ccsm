@@ -1050,7 +1050,7 @@ class MainWinClass:
 		name = self.Context.CurrentBackend.Name
 		index = self.Context.Backends.values().index(self.Context.Backends[name])
 		BackendBox.set_active(index)
-		BackendBox.connect("changed",self.BackendChanged)
+		BackendBox.connect("changed",self.BackendChanged,ProfileComboBox)
 		LeftChild.pack_end(BackendBox,False,False)
 		BackendLabel = MakeLabel()
 		BackendLabel.set_markup("<span color='%s' size='large' weight='800'>Backend</span>"%self.BrightColor)
@@ -1218,11 +1218,10 @@ class MainWinClass:
 			widget.set_active(index)
 
 	def ProfileChanged(self,widget):
-		active = widget.get_active()
-		if active == 0:
+		name = widget.get_active_text()
+		if name == 'Default':
 			self.Context.ResetProfile()
 		else:
-			name = widget.get_model()[active][0]
 			self.Context.CurrentProfile = self.Context.Profiles[name]
 
 	def AddProfile(self,widget,box):
@@ -1248,7 +1247,7 @@ class MainWinClass:
 			self.Context.Profiles[name].Delete()
 			self.UpdateProfiles(box)
 	
-	def BackendChanged(self,widget):
+	def BackendChanged(self,widget,box):
 		shortDesc = widget.get_active_text()
 		name = ""
 		for backend in self.Context.Backends.values():
@@ -1258,6 +1257,8 @@ class MainWinClass:
 		
 		if name != "":
 			self.Context.CurrentBackend = self.Context.Backends[name]
+			# Causes some problems...
+			#self.UpdateProfiles(box)		
 		else:
 			raise Exception,"Backend not found."
 
