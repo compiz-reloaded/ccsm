@@ -36,15 +36,11 @@ import re
 gdk = gtk.gdk
 from xml.sax.saxutils import escape as EscapeMarkup
 
-AllPlugins = []
 
 PixmapDir = "@prefix@/share/ccsm/images"
 
 def Write(ctx):
 	ctx.Write()
-	for plg in AllPlugins:
-		if plg.Plugin.Name != 'core':
-			plg.Enable.set_active(plg.Plugin.Enabled)
 
 class Item:
 	def __init__(self):
@@ -998,6 +994,7 @@ class MainWinClass:
 				if po.Category == c:
 					self.Categories[c].append(po)
 		self.ResetMainWidgets()
+		self.BlockEnablePlugin = 0
 
 	def ResetMainWidgets(self):
 		PluginsVPort = gtk.Viewport()
@@ -1189,15 +1186,20 @@ class MainWinClass:
 		for cat,container,plugins in self.TableCats.values():
 				for i in range(len(plugins)):
 					if plugins[i].Name != 'core':
-						container[i].get_children()[0].set_active(plugins[i].Enabled)
+						check = container[i].get_children()[0]
+						self.BlockEnablePlugin += 1
+						check.set_active(plugins[i].Enabled)
+						self.BlockEnablePlugin -= 1
 
 	def EnablePlugin(self,widget,plugin):
+		if self.BlockEnablePlugin > 0:
+			return 
+
 		#attempt to resolve conflicts...
 		conf = plugin.Enabled and plugin.DisableConflicts or plugin.EnableConflicts
 		if HandlePluginConflicts(conf):
 			plugin.Enabled = widget.get_active()
 			self.UpdatePlugins()
-			
 		else:
 			widget.set_active(plugin.Enabled)
 		Write(plugin.Context)
@@ -1224,6 +1226,9 @@ class MainWinClass:
 			self.Context.ResetProfile()
 		else:
 			self.Context.CurrentProfile = self.Context.Profiles[name]
+		self.Context.Read()
+		Write(self.Context)
+		self.UpdatePlugins()
 
 	def AddProfile(self,widget,box):
 		dlg = gtk.Dialog("Enter a profile name", self.MainWin, gtk.DIALOG_MODAL)
