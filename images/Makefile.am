@@ -31,9 +31,11 @@ images_DATA = \
 	plugin-dbus.svg \
 	plugin-debug.svg        \
 	plugin-decoration.svg   \
+	plugin-extrawm.svg \
 	plugin-fade.svg \
 	plugin-fadedesktop.svg  \
 	plugin-fakeargb.svg \
+	plugin-fs.svg \
 	plugin-group.svg        \
 	plugin-imgjpeg.svg      \
 	plugin-mblur.svg   \
