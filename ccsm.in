@@ -1078,8 +1078,9 @@ class MainWinClass:
 			PW.pack_start(CatBox,False,False)
 			CatHeader = gtk.HBox()
 			CatLabel = MakeLabel('',-1)
-			CatLabel.set_markup("<span color='#aaa' size='x-large' weight='800'>%s</span>"%(c or 'Uncategorized'))
-			CatImg = self.MakeImage(category=c.lower().replace(" ", "_"))
+			name = c or 'Uncategorized'
+			CatLabel.set_markup("<span color='#aaa' size='x-large' weight='800'>%s</span>"%(name))
+			CatImg = self.MakeImage(category=name.lower().replace(" ", "_"))
 			if CatImg:
 				CatHeader.pack_start(CatImg,False,False)
 			CatHeader.pack_start(CatLabel,False,False)
