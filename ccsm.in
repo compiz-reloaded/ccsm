@@ -1039,10 +1039,20 @@ class MainWinClass:
 		ProfileBox.pack_start(ProfileComboBox,True,True)
 		ProfileBox.pack_start(ProfileAdd,False,False)
 		ProfileBox.pack_start(ProfileRemove,False,False)
+		ProfileBox.set_no_show_all(True)
 		LeftChild.pack_end(ProfileBox,False,False)
 		ProfileLabel = MakeLabel()
 		ProfileLabel.set_markup("<span color='%s' size='large' weight='800'>Profile</span>"%self.BrightColor)
-		LeftChild.pack_end(ProfileLabel,False,False)
+		ProfileImage = gtk.Image()
+		ProfileImage.set_from_stock(gtk.STOCK_GO_DOWN,gtk.ICON_SIZE_BUTTON)
+		ProfileButton = gtk.Button()
+		ProfileButton.connect("clicked",self.Expand,ProfileBox)
+		ProfileButton.set_relief(gtk.RELIEF_NONE)
+		ProfileFrame = gtk.HBox()
+		ProfileFrame.pack_start(ProfileLabel,False,False)
+		ProfileFrame.pack_end(ProfileImage,False,False)
+		ProfileButton.add(ProfileFrame)
+		LeftChild.pack_end(ProfileButton,False,False)
 
 		BackendBox = gtk.combo_box_new_text()
 		for backend in self.Context.Backends.values():
@@ -1051,10 +1061,20 @@ class MainWinClass:
 		index = self.Context.Backends.values().index(self.Context.Backends[name])
 		BackendBox.set_active(index)
 		BackendBox.connect("changed",self.BackendChanged,ProfileComboBox)
+		BackendBox.set_no_show_all(True)
 		LeftChild.pack_end(BackendBox,False,False)
 		BackendLabel = MakeLabel()
 		BackendLabel.set_markup("<span color='%s' size='large' weight='800'>Backend</span>"%self.BrightColor)
-		LeftChild.pack_end(BackendLabel,False,False)
+		BackendImage = gtk.Image()
+		BackendImage.set_from_stock(gtk.STOCK_GO_DOWN,gtk.ICON_SIZE_BUTTON)
+		BackendButton = gtk.Button()
+		BackendButton.connect("clicked",self.Expand,BackendBox)
+		BackendButton.set_relief(gtk.RELIEF_NONE)
+		BackendFrame = gtk.HBox()
+		BackendFrame.pack_start(BackendLabel,False,False)
+		BackendFrame.pack_end(BackendImage,False,False)
+		BackendButton.add(BackendFrame)
+		LeftChild.pack_end(BackendButton,False,False)
 
 		PluginsVPort.modify_bg(gtk.STATE_NORMAL,gtk.gdk.color_parse('#ffffff'))
 		RightChild = gtk.ScrolledWindow()
@@ -1184,6 +1204,19 @@ class MainWinClass:
 	
 	def ResetInfo(self,wid,label):
 		label.set_markup("")
+
+	def Expand(self,wid,box):
+		if box.get_no_show_all():
+			box.set_no_show_all(False)
+			self.LeftPane.show_all()
+			buttonImg = wid.get_child().get_children()[1]
+			buttonImg.set_from_stock(gtk.STOCK_GO_UP,gtk.ICON_SIZE_BUTTON)
+		else:
+			box.set_no_show_all(True)
+			box.hide()
+			self.LeftPane.show_all()
+			buttonImg = wid.get_child().get_children()[1]
+			buttonImg.set_from_stock(gtk.STOCK_GO_DOWN,gtk.ICON_SIZE_BUTTON)
 
 	def UpdatePlugins(self):
 		for cat,container,plugins in self.TableCats.values():
