@@ -875,7 +875,11 @@ class ActionPage:
 			Write(s.Plugin.Context)
 		ks,bs,be,es = s.Value
 		kv,km = gtk.accelerator_parse(ks)
-		self.Store.set(iter,1,kv,2,km,3,bs,4,es[0],6,be)
+		if es:
+			es = es[0]
+		else:
+			es = 'None'
+		self.Store.set(iter,1,kv,2,km,3,bs,4,es,6,be)
 	def KeyEdited(self,obj,path,key,mods,code):
 		iter = self.Store.get_iter_from_string(path)
 		self.Store.set(iter,1,key,2,mods)
