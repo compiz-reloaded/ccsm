@@ -544,13 +544,31 @@ def HandlePluginConflicts(conf):
 
 	dlg = gtk.MessageDialog(parent=MainWin,flags=gtk.DIALOG_MODAL,type=gtk.MESSAGE_WARNING,buttons=gtk.BUTTONS_OK_CANCEL)
 	for c in conf:
-		if c[0] == 'SameFeature':
+		if c[0] == 'ConflictFeature':
 			#see if we can deactivate the plugin
 			#mentioned in c[2]
 			msg = "Plugin <b>%s</b> provides feature <b>%s</b> which is also provided " +\
 				  "by the plugin you are trying to enable.\n" +\
-				  "Click OK to disable plugin <b>%s</b>, or Cancel to stop trying to enable this plugin"
+				  "Click OK to disable plugin <b>%s</b>, or Cancel to stop trying to enable this plugin."
 			msg = msg % (c[2][0].ShortDesc, c[1], c[2][0].ShortDesc)
+			dlg.set_markup(msg)
+			dlg.show_all()
+			ret = dlg.run()
+			dlg.destroy()
+			if ret == gtk.RESPONSE_OK:
+				dcon = c[2][0].DisableConflicts
+				if HandlePluginConflicts(dcon):
+					c[2][0].Enabled = False
+				else:
+					return False
+			else:
+				return False
+		if c[0] == 'ConflictPlugin':
+			#see if we can deactivate the plugin
+			#mentioned in c[2]
+			msg = "Plugin <b>%s</b> conflicts with the plugin you are trying to enable.\n" +\
+				  "Click OK to disable plugin <b>%s</b>, or Cancel to stop trying to enable this plugin."
+			msg = msg % (c[2][0].ShortDesc, c[2][0].ShortDesc)
 			dlg.set_markup(msg)
 			dlg.show_all()
 			ret = dlg.run()
@@ -567,7 +585,7 @@ def HandlePluginConflicts(conf):
 			#we need to activate one of c[2]
 			msg = "The plugin you are trying to enable requires feature <b>%s</b> which " +\
 				  "is provided by the following plugins.\n" +\
-				  "Click OK to enable the selected plugin or Cancel to stop trying to enable this plugin"
+				  "Click OK to enable the selected plugin or Cancel to stop trying to enable this plugin."
 			msg = msg % c[1]
 			dlg.set_markup(msg)
 			cmb = gtk.combo_box_new_text()
@@ -592,7 +610,7 @@ def HandlePluginConflicts(conf):
 				return False
 		elif c[0] == 'RequiresPlugin':
 			msg = "The plugin you are trying to enable requires the plugin <b>%s</b>.\n" +\
-				  "Click OK to enable <b>%s</b> or Cancel to stop trying to enable this plugin"
+				  "Click OK to enable <b>%s</b> or Cancel to stop trying to enable this plugin."
 			msg = msg % (c[2][0].ShortDesc, c[2][0].ShortDesc)
 			dlg.set_markup(msg)
 			dlg.show_all()
@@ -610,7 +628,7 @@ def HandlePluginConflicts(conf):
 			plist = ', '.join("\"%s\""%p.ShortDesc for p in c[2])
 			msg = "The plugin you are trying to disable provides the feature <b>%s</b> " +\
 				  "which is required by the plugins <b>%s</b>.\n" +\
-				  "Click OK to disable these plugins or Cancel to stop trying to disable this plugin"
+				  "Click OK to disable these plugins or Cancel to stop trying to disable this plugin."
 			msg = msg % (c[1],plist) 
 			dlg.set_markup(msg)
 			dlg.show_all()
@@ -628,7 +646,7 @@ def HandlePluginConflicts(conf):
 		elif c[0] == 'PluginNeeded':
 			plist = ', '.join("\"%s\""%p.ShortDesc for p in c[2])
 			msg = "The plugin you are trying to disable is required by the plugins <b>%s</b>.\n" +\
-				  "Click OK to disable these plugins or Cancel to stop trying to disable this plugin"
+				  "Click OK to disable these plugins or Cancel to stop trying to disable this plugin."
 			msg = msg % plist
 			dlg.set_markup(msg)
 			dlg.show_all()
