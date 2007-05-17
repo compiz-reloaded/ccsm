@@ -1157,9 +1157,10 @@ class MainWinClass:
 				self.TableCats[c][1].append(CH)
 				self.TableCats[c][2].append(po)
 
-	def FilterTable(self,wid):
+	def FilterTable(self,wid,extended=False):
 		text = wid.get_text().lower()
 		cols = self.LastCols
+		foundPlugin = False
 		if self.TableAttached:
 			for CN,CW in self.TableCats.items():
 				for CB in CW[1]:
@@ -1171,9 +1172,20 @@ class MainWinClass:
 			empty = True
 			for CB in CW[1]:
 				index = CW[1].index(CB)
-				name = CW[2][index].ShortDesc.lower()
-				if name.find(text) != -1:
+				shortDesc = CW[2][index].ShortDesc.lower()
+				longDesc = CW[2][index].LongDesc.lower()
+				name = CW[2][index].Name.lower()
+				show = False
+				if extended:
+					show = name.find(text) != -1 \
+					or shortDesc.find(text) != -1 \
+					or longDesc.find(text) != -1
+				else:
+					show = name.find(text) != -1 \
+					or shortDesc.find(text) != -1
+				if show:
 					empty = False
+					foundPlugin = True
 					CW[0].attach(CB,col,col+1,row,row+1,0)
 					col = col + 1
 					if col >= cols:
@@ -1185,6 +1197,11 @@ class MainWinClass:
 			else:
 				CW[0].get_parent().set_no_show_all(False)
 				CW[0].attach(gtk.Label(),cols+5,cols+6,0,1,gtk.EXPAND)
+	
+		if not foundPlugin and not extended:
+			self.FilterTable(wid,True)
+			return
+
 		self.TableAttached=True
 		self.MainWin.show_all()
 
