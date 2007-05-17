@@ -1029,6 +1029,7 @@ class MainWinClass:
 		FLab.set_markup("<span color='%s' size='large' weight='800'>Filter</span>"%self.BrightColor)
 		LeftChild.pack_start(FLab,False,False)
 		FLen = gtk.Entry()
+		FLen.connect("changed", self.FilterTable)
 		LeftChild.pack_start(FLen,False,False)
 		ILab = MakeLabel()
 		ILab.set_markup("<span color='%s' size='large' weight='800'>Information</span>"%self.BrightColor)
@@ -1155,6 +1156,36 @@ class MainWinClass:
 				CH.set_size_request(220,-1)
 				self.TableCats[c][1].append(CH)
 				self.TableCats[c][2].append(po)
+
+	def FilterTable(self,wid):
+		text = wid.get_text().lower()
+		cols = self.LastCols
+		if self.TableAttached:
+			for CN,CW in self.TableCats.items():
+				for CB in CW[1]:
+					CW[0].remove(CB)
+		for CN,CW in self.TableCats.items():
+			col = 0
+			row = 0
+			empty = True
+			for CB in CW[1]:
+				index = CW[1].index(CB)
+				name = CW[2][index].ShortDesc.lower()
+				if name.find(text) != -1:
+					empty = False
+					CW[0].attach(CB,col,col+1,row,row+1,0)
+					col = col + 1
+					if col >= cols:
+						col = 0
+						row = row + 1
+			if empty:
+				CW[0].get_parent().set_no_show_all(True)
+				CW[0].get_parent().hide()
+			else:
+				CW[0].get_parent().set_no_show_all(False)
+				CW[0].attach(gtk.Label(),cols+5,cols+6,0,1,gtk.EXPAND)
+		self.TableAttached=True
+		self.MainWin.show_all()
 
 	def RebuildTable(self,wid,req):
 		cols = (req.width-60)/220
