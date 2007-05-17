@@ -1101,7 +1101,7 @@ class MainWinClass:
 
 		PluginsVPort.modify_bg(gtk.STATE_NORMAL,gtk.gdk.color_parse('#ffffff'))
 		RightChild = gtk.ScrolledWindow()
-		RightChild.props.hscrollbar_policy = gtk.POLICY_AUTOMATIC
+		RightChild.props.hscrollbar_policy = gtk.POLICY_NEVER
 		RightChild.props.vscrollbar_policy = gtk.POLICY_AUTOMATIC
 		RightChild.add(PluginsVPort)
 		self.BuildTable(PluginsVPort)
