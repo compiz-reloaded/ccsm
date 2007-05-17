@@ -982,7 +982,7 @@ class MainWinClass:
 		self.Context = Context
 		self.MainWin = gtk.Window()
 		self.MainWin.connect("destroy",Quit)
-		self.MainWin.set_default_size(940,520)
+		self.MainWin.set_default_size(930,520)
 		self.MainWin.set_title("CCS Manager")
 		#set up the Entry to get the BrightColor
 		StyleWidget = gtk.Entry()
@@ -996,7 +996,7 @@ class MainWinClass:
 		self.MainBox = gtk.HBox()
 		self.MainWin.add(self.MainBox)
 		self.LeftPane = gtk.Alignment()
-		self.LeftPane.set_size_request(200,400)
+		self.LeftPane.set_size_request(200,520)
 		self.RightPane = gtk.Alignment()
 		self.RightPane.set_border_width(5)
 		self.RightPane.props.yscale=1
@@ -1152,12 +1152,12 @@ class MainWinClass:
 					CE.connect("toggled",self.EnablePlugin,po)
 					CH.pack_start(CE,False,False)
 				CH.pack_start(CB,True,True)
-				CH.set_size_request(223,-1)
+				CH.set_size_request(220,-1)
 				self.TableCats[c][1].append(CH)
 				self.TableCats[c][2].append(po)
 
 	def RebuildTable(self,wid,req):
-		cols = (req.width-60)/223
+		cols = (req.width-60)/220
 		if cols == self.LastCols:
 			return
 		self.LastCols = cols
