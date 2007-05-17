@@ -1163,7 +1163,8 @@ class MainWinClass:
 		if self.TableAttached:
 			for CN,CW in self.TableCats.items():
 				for CB in CW[1]:
-					CW[0].remove(CB)
+					if CB.get_parent():
+						CW[0].remove(CB)
 		for CN,CW in self.TableCats.items():
 			col = 0
 			row = 0
