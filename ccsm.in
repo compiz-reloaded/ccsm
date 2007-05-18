@@ -1146,6 +1146,7 @@ class MainWinClass:
 		pluginsVPort = gtk.Viewport()
 		leftChild = gtk.VBox(False, 10)
 		leftChild.set_border_width(15)
+		
 		# Filter
 		filterLabel = MakeLabel()
 		filterLabel.set_markup("<span color='%s' size='large' weight='800'>Filter</span>"%self.BrightColor)
@@ -1153,6 +1154,7 @@ class MainWinClass:
 		filterEntry = gtk.Entry()
 		filterEntry.connect("changed", self.FilterTable)
 		leftChild.pack_start(filterEntry, False, False)
+		
 		# Information
 		infoLabel = MakeLabel()
 		infoLabel.set_markup("<span color='%s' size='large' weight='800'>Information</span>"%self.BrightColor)

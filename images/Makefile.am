@@ -32,6 +32,7 @@ images_DATA = \
 	plugin-debug.svg        \
 	plugin-decoration.svg   \
 	plugin-extrawm.svg \
+	plugin-expo.svg \
 	plugin-fade.svg \
 	plugin-fadedesktop.svg  \
 	plugin-fakeargb.svg \
