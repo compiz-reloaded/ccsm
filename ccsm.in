@@ -5,7 +5,7 @@
 # as published by the Free Software Foundation; either version 2
 # of the License, or (at your option) any later version.
 #
-# This program is distributed in the hope that it will be useful,
+# This program is distributed in the hope that it will be useful, 
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
@@ -46,57 +46,62 @@ class Item:
 	def __init__(self):
 		pass
 
-	def SetSelected(self,Selected):
+	def SetSelected(self, Selected):
 		if (Selected):
 			self.Label.set_markup("<b><i>%s</i></b>"%self.Name)
 		else:
 			self.Label.set_text(self.Name)
 
-def CheckConflict(s,con,typ):
+def CheckConflict(setting, con, typ):
 	if typ == 'Key':
-		cval = s.Value[0]
+		cval = setting.Value[0]
 	elif typ == 'Button':
-		cval = s.Value[1]
+		cval = setting.Value[1]
 
 	msg = "The new value for the %s binding for the action <b>%s</b> " +\
 		  "in plugin <b>%s</b> conflicts with the action <b>%s</b> of the <b>%s</b> plugin.\n" +\
 		  "Do you wish to clear <b>%s</b> in the <b>%s</b> plugin?\n" +\
 		  "If you click No, the action will still be set."
 	 
-	msg = msg % (typ, s.ShortDesc, s.Plugin.ShortDesc, con.ShortDesc, con.Plugin.ShortDesc, con.ShortDesc, con.Plugin.ShortDesc)
-	dlg = gtk.MessageDialog(parent=MainWin,flags=gtk.DIALOG_MODAL,type=gtk.MESSAGE_WARNING,buttons=gtk.BUTTONS_YES_NO)
+	msg = msg % (typ, setting.ShortDesc, setting.Plugin.ShortDesc, con.ShortDesc, con.Plugin.ShortDesc, con.ShortDesc, con.Plugin.ShortDesc)
+	
+	dlg = gtk.MessageDialog(parent=MainWin, flags=gtk.DIALOG_MODAL, type=gtk.MESSAGE_WARNING, buttons=gtk.BUTTONS_YES_NO)
 	dlg.set_markup(msg)
 	dlg.show_all()
 	ret = dlg.run()
 	dlg.destroy()
+
 	return ret
 
-def CheckActionConflicts(s,ks,bs,be,es):
-	#first gather settings list
-	allsettings = sum((sum((z.values() for z in p.Screens+[p.Display]),[]) for p in s.Plugin.Context.Plugins.values()),[])
-	allsettings.remove(s)
-	KCon=[]
-	BCon=[]
-	for se in allsettings:
-		if se.Type == 'Action':
-			if se.Value[0] == ks:
-				KCon.append(se)
-			if se.Value[1] == bs:
-				BCon.append(se)
-	if len(KCon) and ks and ks.lower() != 'disabled' and ks.lower() != 'none':
-		for kc in KCon:
-			ret = CheckConflict(s,kc,'Key')
+def CheckActionConflicts(setting, key, button, bell, edges):
+	# first gather settings list
+	allSettings = sum((sum((z.values() for z in p.Screens+[p.Display]), []) for p in setting.Plugin.Context.Plugins.values()), [])
+	allSettings.remove(setting)
+	keyCon = []
+	buttonCon = []
+	
+	for s in allSettings:
+		if s.Type == 'Action':
+			if s.Value[0] == key:
+				keyCon.append(s)
+			if s.Value[1] == button:
+				buttonCon.append(s)
+
+	if len(keyCon) and key and key.lower() != 'disabled' and key.lower() != 'none':
+		for k in keyCon:
+			ret = CheckConflict(setting, k, 'Key')
 			if ret == gtk.RESPONSE_YES:
-				v = kc.Value
-				kc.Value = ['None',v[1],v[2],v[3]]
+				value = k.Value
+				k.Value = ['None', value[1], value[2], value[3]]
 			if ret == gtk.RESPONSE_NO:
 				return False
-	if len(BCon) and bs and bs.lower() != 'disabled' and bs.lower() != 'none':
-		for bc in BCon:
-			ret = CheckConflict(s,bc,'Button')
+	
+	if len(buttonCon) and button and button.lower() != 'disabled' and button.lower() != 'none':
+		for b in buttonCon:
+			ret = CheckConflict(settings, b, 'Button')
 			if ret == gtk.RESPONSE_YES:
-				v = bc.Value
-				bc.Value = [v[0],'None',v[2],v[3]]
+				value = b.Value
+				b.Value = [value[0], 'None', value[2], value[3]]
 			if ret == gtk.RESPONSE_NO:
 				return False
 	return True
@@ -109,48 +114,48 @@ TXp = 4
 TYp = 2
 
 class SettingItem:
-	def __init__(self,Setting):
+	def __init__(self, Setting):
 		self.Custom = False
 		self.Setting = Setting
 		self.Blocked = 0
 		self.MakeLabel()
 		self.Reset = gtk.Button()
 		self.Reset.set_image(gtk.image_new_from_stock(
-			gtk.STOCK_CLEAR,gtk.ICON_SIZE_BUTTON))
-		self.Reset.connect('clicked',self.DoReset)
+			gtk.STOCK_CLEAR, gtk.ICON_SIZE_BUTTON))
+		self.Reset.connect('clicked', self.DoReset)
 		self._Init()
 
-	def Attach(self,Table,row):
+	def Attach(self, table, row):
 		if self.Custom:
-			Table.attach(self.Widget,0,100,row,row+1,TDef,TDef,TXp,TYp)
+			table.attach(self.Widget, 0, 100, row, row+1, TDef, TDef, TXp, TYp)
 		else:
-			Table.attach(self.Label,0,1,row,row+1,gtk.FILL,TDef,TXp,TYp)
-			Table.attach(self.Widget,1,99,row,row+1,TDef,TDef,TXp,TYp)
-			Table.attach(self.Reset,99,100,row,row+1,0,TDef,TXp,TYp)
+			table.attach(self.Label, 0, 1, row, row+1, gtk.FILL, TDef, TXp, TYp)
+			table.attach(self.Widget, 1, 99, row, row+1, TDef, TDef, TXp, TYp)
+			table.attach(self.Reset, 99, 100, row, row+1, 0, TDef, TXp, TYp)
 
-	def PureVirtual(self,str):
-		raise PureVirtualError,str,self.Setting.Name
+	def PureVirtual(self, str):
+		raise PureVirtualError, str, self.Setting.Name
 
 	def _Init(self):
 		self.PureVirtual('_Init')
 	
-	def DoReset(self,foo):
+	def DoReset(self, foo):
 		self.Setting.Reset()
 		Write(self.Setting.Plugin.Context)
 		self.Read()
 
 	def MakeLabel(self):
 		self.Label = gtk.Label(self.Setting.ShortDesc)
-		self.Label.props.xalign=0
+		self.Label.props.xalign = 0
 		self.Label.props.wrap_mode = gtk.WRAP_WORD
-		self.Label.set_size_request(160,-1)
+		self.Label.set_size_request(160, -1)
 		self.Label.set_line_wrap(True)
 
 	def Block(self):
-		self.Blocked = self.Blocked + 1
+		self.Blocked = self.Blocked+1
 	
 	def UnBlock(self):
-		self.Blocked = self.Blocked - 1
+		self.Blocked = self.Blocked-1
 
 	def Read(self):
 		self.Block()
@@ -171,25 +176,29 @@ class SettingItem:
 class StringMatchSetting(SettingItem):
 	def _Init(self):
 		self.Widget = gtk.Entry()
-		self.Widget.connect('changed',self.Changed)
+		self.Widget.connect('changed', self.Changed)
+
 	def _Read(self):
 		self.Widget.set_text(self.Setting.Value)
+
 	def _Changed(self):
 		self.Setting.Value = self.Widget.get_text()
 
 class StringChoiceSetting(SettingItem):
 	def _Init(self):
 		self.Widget = gtk.combo_box_new_text()
-		for Text in self.Setting.Info:
-			self.Widget.append_text(Text)
-		self.Widget.connect('changed',self.Changed)
+		for text in self.Setting.Info:
+			self.Widget.append_text(text)
+		self.Widget.connect('changed', self.Changed)
+
 	def _Read(self):
-		indx=0
+		index = 0
 		for n in self.Setting.Info:
 			if self.Setting.Value == n:
 				break
-			indx=indx+1
-		self.Widget.set_active(indx)
+			index = index + 1
+		self.Widget.set_active(index)
+
 	def _Changed(self):
 		self.Setting.Value = self.Widget.get_active_text()
 
@@ -198,39 +207,43 @@ class BoolSetting(SettingItem):
 		self.Custom = True
 		self.Widget = gtk.HBox()
 		self.CheckButton = gtk.CheckButton(self.Setting.ShortDesc)
-		self.Widget.pack_start(self.CheckButton,True,True)
-		self.Widget.pack_start(self.Reset,False,False)
-		self.CheckButton.connect('toggled',self.Changed)
+		self.Widget.pack_start(self.CheckButton, True, True)
+		self.Widget.pack_start(self.Reset, False, False)
+		self.CheckButton.connect('toggled', self.Changed)
+
 	def _Read(self):
 		self.CheckButton.set_active(self.Setting.Value)
+
 	def _Changed(self):
 		self.Setting.Value = self.CheckButton.get_active()
 
 class IntFloatSetting(SettingItem):
 	def _Init(self):
-		self.Widget = gtk.HBox()
+		inc = 1
 		if self.Setting.Type == 'Int':
 			inc = 1
 		else:
 			inc = self.Setting.Info[2]
-		self.Adj = gtk.Adjustment(self.Setting.Value,
-				self.Setting.Info[0],self.Setting.Info[1],
-				inc,inc*10)
+
+		self.Adj = gtk.Adjustment(self.Setting.Value, self.Setting.Info[0], self.Setting.Info[1], inc, inc*10)
 		self.Spin = gtk.SpinButton(self.Adj)
+		
 		if self.Setting.Type == 'Float':
 			self.Spin.set_digits(4)
+		
 		self.Scale = gtk.HScale(self.Adj)
 		self.Scale.props.draw_value = False
-		#self.Widget.pack_start(self.Scale,True,True)
-		#self.Widget.pack_start(self.Spin,False,False)
-		self.Adj.connect('value-changed',self.Changed)
-	def Attach(self,Table,row):
-		Table.attach(self.Label,0,1,row,row+1,gtk.FILL,TDef,TXp,TYp)
-		Table.attach(self.Scale,1,2,row,row+1,TDef,TDef,TXp,TYp)
-		Table.attach(self.Spin,2,3,row,row+1,gtk.FILL,TDef,TXp,TYp)
-		Table.attach(self.Reset,99,100,row,row+1,0,TDef,TXp,TYp)
+		self.Adj.connect('value-changed', self.Changed)
+
+	def Attach(self, Table, row):
+		Table.attach(self.Label, 0, 1, row, row+1, gtk.FILL, TDef, TXp, TYp)
+		Table.attach(self.Scale, 1, 2, row, row+1, TDef, TDef, TXp, TYp)
+		Table.attach(self.Spin, 2, 3, row, row+1, gtk.FILL, TDef, TXp, TYp)
+		Table.attach(self.Reset, 99, 100, row, row+1, 0, TDef, TXp, TYp)
+
 	def _Read(self):
 		self.Adj.set_value(self.Setting.Value)
+
 	def _Changed(self):
 		self.Setting.Value = self.Adj.get_value()
 
@@ -238,425 +251,479 @@ class ColorSetting(SettingItem):
 	def _Init(self):
 		self.Widget = gtk.ColorButton()
 		self.Widget.set_use_alpha(True)
-		self.Widget.connect('color-set',self.Changed)
+		self.Widget.connect('color-set', self.Changed)
+
 	def _Read(self):
 		col = gdk.Color()
-		col.red=self.Setting.Value[0]
-		col.green=self.Setting.Value[1]
-		col.blue=self.Setting.Value[2]
+		col.red = self.Setting.Value[0]
+		col.green = self.Setting.Value[1]
+		col.blue = self.Setting.Value[2]
 		self.Widget.set_color(col)
 		self.Widget.set_alpha(self.Setting.Value[3])
+
 	def _Changed(self):
 		col = self.Widget.get_color()
 		alpha = self.Widget.get_alpha()
-		self.Setting.Value = [col.red,col.green,col.blue,alpha]
+		self.Setting.Value = [col.red, col.green, col.blue, alpha]
 
 class ListChoiceSetting(SettingItem):
 	def _Init(self):
 		self.Widget = gtk.Frame(self.Setting.ShortDesc)
 		self.Table = gtk.Table()
 		self.Custom = True
+		
 		row = 0
 		col = 0
-		self.Checks=[]
-		for val in self.Setting.Info[1]:
-			cbx = gtk.CheckButton(val)
-			self.Checks.append((val,cbx))
-			self.Table.attach(cbx,col,col+1,row,row+1,TDef,TDef,TXp,TYp)
-			cbx.connect('toggled',self.Changed)
-			col = col + 1
-			if (col>=3):
+		self.Checks = []
+		for value in self.Setting.Info[1]:
+			box = gtk.CheckButton(val)
+			self.Checks.append((value, box))
+			self.Table.attach(box, col, col+1, row, row+1, TDef, TDef, TXp, TYp)
+			box.connect('toggled', self.Changed)
+			col = col+1
+			if (col >=  3):
 				col = 0
-				row = row + 1
+				row = row+1
+		
 		self.HBox = gtk.HBox()
 		self.VBox = gtk.VBox()
-		self.HBox.pack_start(self.VBox,False,False)
-		self.HBox.pack_start(self.Table,True,True)
-		self.VBox.pack_start(self.Reset,False,False)
+		self.HBox.pack_start(self.VBox, False, False)
+		self.HBox.pack_start(self.Table, True, True)
+		self.VBox.pack_start(self.Reset, False, False)
 		self.Widget.add(self.HBox)
+
 	def _Read(self):
-		for cv,c in self.Checks:
-			c.set_active(False)
-		for v in self.Setting.Value:
-			for cv,c in self.Checks:
-				if cv == v:
-					c.set_active(True)
+		for value, box in self.Checks:
+			box.set_active(False)
+		for setVal in self.Setting.Value:
+			for value, box in self.Checks:
+				if setVal == value:
+					box.set_active(True)
+
 	def _Changed(self):
-		v = []
-		for cv,c in self.Checks:
-			if c.get_active():
-				v = v + [cv]
+		values = []
+		for value, box in self.Checks:
+			if box.get_active():
+				values.append(value)
 		self.Setting.Value = v
 	
-	def Attach(self,Table,row):
-		Table.attach(self.Widget,0,100,row,row+1,xpadding=5)
+	def Attach(self, table, row):
+		table.attach(self.Widget, 0, 100, row, row+1, xpadding = 5)
 
 class ListSetting(SettingItem):
 	def _Init(self):
 		self.Widget = gtk.Frame(self.Setting.ShortDesc)
 		self.Custom = True
-		Info = self._ListInfo()
-		self.Store = gtk.ListStore(*Info[0])
+		
+		info = self._ListInfo()
+		self.Store = gtk.ListStore(*info[0])
 		self.View = gtk.TreeView(self.Store)
-		if len(Info[0]) == 1:
+		if len(info[0]) == 1:
 			self.View.set_headers_visible(False)
+		for i in info[1]:
+			self.View.insert_column_with_attributes(-1, i[1], i[0], **i[2])
+		self.Store.connect('row-changed', self.Changed)
+		self.Store.connect('row-deleted', self.Changed)
+		self.Store.connect('row-inserted', self.Changed)
+		self.Store.connect('rows-reordered', self.Changed)
 		self.Select = self.View.get_selection()
 		self.Select.set_mode(gtk.SELECTION_MULTIPLE)
-		for I in Info[1]:
-			self.View.insert_column_with_attributes(-1,I[1],I[0],**I[2])
-		self.Store.connect('row-changed',self.Changed)
-		self.Store.connect('row-deleted',self.Changed)
-		self.Store.connect('row-inserted',self.Changed)
-		self.Store.connect('rows-reordered',self.Changed)
-		VBox = gtk.VBox()
-		self.Widget.add(VBox)
+		
+		box = gtk.VBox()
+		self.Widget.add(box)
 		self.Scroll = gtk.ScrolledWindow()
 		self.Scroll.props.hscrollbar_policy = gtk.POLICY_NEVER
 		self.Scroll.props.hscrollbar_policy = gtk.POLICY_AUTOMATIC
 		self.Scroll.add(self.View)
-		VBox.pack_start(self.Scroll,True,True)
-		HBox = gtk.HBox(False)
-		VBox.pack_start(HBox,False,False)
-		for bt in (
-				(gtk.STOCK_ADD,self.Add),
-				(gtk.STOCK_DELETE,self.Delete),
-				(gtk.STOCK_EDIT,self.Edit),
-				(gtk.STOCK_GO_UP,self.MoveUp),
-				(gtk.STOCK_GO_DOWN,self.MoveDown),
-				):
-			b=gtk.Button(bt[0])
+		box.pack_start(self.Scroll, True, True)
+		
+		buttonBox = gtk.HBox(False)
+		box.pack_start(buttonBox, False, False)
+		buttonTypes = ((gtk.STOCK_ADD, self.Add),
+				 (gtk.STOCK_DELETE, self.Delete), 
+				 (gtk.STOCK_EDIT, self.Edit),
+				 (gtk.STOCK_GO_UP, self.MoveUp), 
+				 (gtk.STOCK_GO_DOWN, self.MoveDown),)
+		for type in buttonTypes:
+			b = gtk.Button(type[0])
 			b.set_use_stock(True)
-			HBox.pack_start(b)
-			b.connect('clicked',bt[1])
-		HBox.pack_start(self.Reset)
-	def Add(self,b):
-		val = self._Edit()
-		if val is not None:
+			buttonBox.pack_start(b)
+			b.connect('clicked', type[1])
+		buttonBox.pack_start(self.Reset)
+
+	def Add(self, b):
+		value = self._Edit()
+		if value is not None:
 			self.Block()
 			Iter = self.Store.append()
 			self.UnBlock()
-			self._ListSet(Iter,val)
-	def Delete(self,b):
-		sel = self.Select.get_selected_rows()[1]
-		for path in sel:
-			Iter = self.Store.get_iter(path)
-			self.Store.remove(Iter)
-	def Edit(self,b):
-		sel = self.Select.get_selected_rows()[1]
-		if len(sel) == 1:
-			Iter = self.Store.get_iter(sel[0])
-			val = self._Edit(self._ListGet(Iter))
-			if val is not None:
-				self._ListSet(Iter,val)
-	def MoveUp(self,b):
-		sel = self.Select.get_selected_rows()[1]
-		if len(sel) == 1:
-			Iter = self.Store.get_iter(sel[0])
-			Prev = self.Store.get_iter_first()
-			if not self.Store.get_path(Prev) == self.Store.get_path(Iter):
-				while Prev is not None and not self.Store.get_path(
-						self.Store.iter_next(Prev)) == self.Store.get_path(Iter):
-					Prev = self.Store.iter_next(Prev)
-				self.Store.swap(Iter,Prev)
-	def MoveDown(self,b):
-		sel = self.Select.get_selected_rows()[1]
-		if len(sel) == 1:
-			Iter = self.Store.get_iter(sel[0])
-			Next = self.Store.iter_next(Iter)
-			if Next is not None:
-				self.Store.swap(Iter,Next)
+			self._ListSet(Iter, value)
+
+	def Delete(self, b):
+		selectedRows = self.Select.get_selected_rows()[1]
+		for path in selectedRows:
+			iter = self.Store.get_iter(path)
+			self.Store.remove(iter)
+
+	def Edit(self, b):
+		selectedRows = self.Select.get_selected_rows()[1]
+		if len(selectedRows) == 1:
+			iter = self.Store.get_iter(selectedRows[0])
+			value = self._Edit(self._ListGet(iter))
+			if value is not None:
+				self._ListSet(iter, value)
+
+	def MoveUp(self, b):
+		selectedRows = self.Select.get_selected_rows()[1]
+		if len(selectedRows) == 1:
+			iter = self.Store.get_iter(selectedRows[0])
+			prev = self.Store.get_iter_first()
+			if not self.Store.get_path(prev) == self.Store.get_path(iter):
+				while prev is not None and not self.Store.get_path(self.Store.iter_next(prev)) == self.Store.get_path(iter):
+					prev = self.Store.iter_next(prev)
+				self.Store.swap(iter, prev)
+
+	def MoveDown(self, b):
+		selectedRows = self.Select.get_selected_rows()[1]
+		if len(selectedRows) == 1:
+			iter = self.Store.get_iter(selectedRows[0])
+			next = self.Store.iter_next(iter)
+			if next is not None:
+				self.Store.swap(iter, next)
+
 	def _ListInfo(self):
 		self.PureVirtual('_ListInfo')
+
 	def _Read(self):
 		self.Store.clear()
-		for v in self.Setting.Value:
-			Iter=self.Store.append()
-			self._ListSet(Iter,v)
-	def _ListSet(self,Iter,v):
+		for value in self.Setting.Value:
+			iter = self.Store.append()
+			self._ListSet(iter, value)
+
+	def _ListSet(self, iter, value):
 		self.PureVirtual('_ListRead')
-	def _ListGet(self,Iter):
+
+	def _ListGet(self, iter):
 		self.PureVirtual('_ListGet')
-	def _Edit(self,d,v=None):
+
+	def _Edit(self, d, value = None):
 		self.PureVirtual('_Edit')
+
 	def _Changed(self):
-		val=[]
-		Iter=self.Store.get_iter_first()
-		while Iter:
-			val.append(self._ListGet(Iter))
-			Iter = self.Store.iter_next(Iter)
-		self.Setting.Value = val
-	def Attach(self,Table,row):
-		Table.attach(self.Widget,0,100,row,row+1,xpadding=5)
+		values = []
+		iter = self.Store.get_iter_first()
+		while iter:
+			values.append(self._ListGet(iter))
+			iter = self.Store.iter_next(iter)
+		self.Setting.Value = values
+
+	def Attach(self, table, row):
+		table.attach(self.Widget, 0, 100, row, row+1, xpadding=5)
 
 class StringMatchListSetting(ListSetting):
 	def _ListInfo(self):
-		return (gobject.TYPE_STRING,),[(gtk.CellRendererText(),
-			"Value (%s)" % self.Setting.Info[0],{'text':0})]
-	def _ListSet(self,Iter,v):
-		self.Store.set(Iter,0,v)
-	def _ListGet(self,Iter):
-		return self.Store.get(Iter,0)[0]
-	def _Edit(self,v=None):
-		d = gtk.Dialog("Edit %s"%self.Setting.ShortDesc,MainWin)
-		d.add_button(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL)
-		d.add_button(gtk.STOCK_OK,gtk.RESPONSE_OK).grab_default()
-		d.set_default_response(gtk.RESPONSE_OK)
-		d.vbox.pack_start(gtk.Label("Value(%s) for %s:"%(self.Setting.Info[0],self.Setting.ShortDesc)))
-		e = gtk.Entry()
-		e.props.activates_default=True
-		if v is not None:
-			e.set_text(v)
-		d.vbox.pack_start(e)
-		d.vbox.show_all()
-		r = d.run()
-		d.destroy()
-		if r == gtk.RESPONSE_OK:
-			return e.get_text()
+		return (gobject.TYPE_STRING, ), [(gtk.CellRendererText(), "Value (%s)" % self.Setting.Info[0], {'text':0})]
+
+	def _ListSet(self, iter, value):
+		self.Store.set(iter, 0, value)
+
+	def _ListGet(self, iter):
+		return self.Store.get(iter, 0)[0]
+
+	def _Edit(self, value=None):
+		dlg = gtk.Dialog("Edit %s" % self.Setting.ShortDesc, MainWin)
+		dlg.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
+		dlg.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK).grab_default()
+		dlg.set_default_response(gtk.RESPONSE_OK)
+		dlg.vbox.pack_start(gtk.Label("Value(%s) for %s:" % (self.Setting.Info[0], self.Setting.ShortDesc)))
+		entry = gtk.Entry()
+		entry.props.activates_default = True
+		if value is not None:
+			entry.set_text(value)
+		dlg.vbox.pack_start(entry)
+		dlg.vbox.show_all()
+		ret = dlg.run()
+		dlg.destroy()
+
+		if ret == gtk.RESPONSE_OK:
+			return entry.get_text()
 		return None
 
 class IntFloatListSetting(ListSetting):
 	def _ListInfo(self):
-		return (gobject.TYPE_STRING,),[(gtk.CellRendererText(),
-			"Value (%s)" % self.Setting.Info[0],{'text':0})]
-	def _ListSet(self,Iter,v):
-		self.Store.set(Iter,0,str(v))
-	def _ListGet(self,Iter):
-		return eval(self.Store.get(Iter,0)[0])
-	def _Edit(self,v=None):
-		d = gtk.Dialog("Edit %s"%self.Setting.ShortDesc,MainWin)
-		d.add_button(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL)
-		d.add_button(gtk.STOCK_OK,gtk.RESPONSE_OK).grab_default()
-		d.set_default_response(gtk.RESPONSE_OK)
-		d.vbox.pack_start(gtk.Label("Value(%s) for %s:"%(self.Setting.Info[0],self.Setting.ShortDesc)))
-		h = gtk.HBox()
-		d.vbox.pack_start(h)
+		return (gobject.TYPE_STRING, ), [(gtk.CellRendererText(), 
+			"Value (%s)" % self.Setting.Info[0], {'text':0})]
+
+	def _ListSet(self, Iter, v):
+		self.Store.set(Iter, 0, str(v))
+
+	def _ListGet(self, Iter):
+		return eval(self.Store.get(Iter, 0)[0])
+
+	def _Edit(self, value = None):
+		dlg = gtk.Dialog("Edit %s" % self.Setting.ShortDesc, MainWin)
+		dlg.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
+		dlg.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK).grab_default()
+		dlg.set_default_response(gtk.RESPONSE_OK)
+		dlg.vbox.pack_start(gtk.Label("Value(%s) for %s:" % (self.Setting.Info[0], self.Setting.ShortDesc)))
+		box = gtk.HBox()
+		dlg.vbox.pack_start(box)
+		
+		val = self.Setting.Info[1][0]
+		if value is not None:
+			val = value
+		
 		if self.Setting.Info[0] == 'Int':
 			inc = 1
 		else:
 			inc = self.Setting.Info[1][2]
-		val = self.Setting.Info[1][0]
-		if v is not None:
-			val = v
-		adj = gtk.Adjustment(val,
-				self.Setting.Info[1][0],self.Setting.Info[1][1],
-				inc,inc*10)
+		
+		adj = gtk.Adjustment(val, 
+				self.Setting.Info[1][0], self.Setting.Info[1][1], 
+				inc, inc*10)
 		spin = gtk.SpinButton(adj)
 		if self.Setting.Info[0] == 'Float':
 			spin.set_digits(4)
 		scale = gtk.HScale(adj)
 		scale.props.draw_value = False
-		h.pack_start(scale,True,True)
-		h.pack_start(spin,False,False)
-		d.vbox.show_all()
-		r = d.run()
-		d.destroy()
-		if r == gtk.RESPONSE_OK:
+		
+		box.pack_start(scale, True, True)
+		box.pack_start(spin, False, False)
+		
+		dlg.vbox.show_all()
+		ret = dlg.run()
+		dlg.destroy()
+
+		if ret == gtk.RESPONSE_OK:
 			return adj.get_value()
 		return None
 
-def MakeSetting(Setting):
-	if Setting.Type == 'String' and len(Setting.Info):
-		return StringChoiceSetting(Setting)
-	elif Setting.Type == 'String' or Setting.Type == 'Match':
-		return StringMatchSetting(Setting)
-	elif Setting.Type == 'Bool':
-		return BoolSetting(Setting)
-	elif Setting.Type == 'Float' or Setting.Type == 'Int':
-		return IntFloatSetting(Setting)
-	elif Setting.Type == 'Color':
-		return ColorSetting(Setting)
-	elif Setting.Type == 'List':
-		if Setting.Info[0] == 'String' and len(Setting.Info[1]):
-			return ListChoiceSetting(Setting)
-		elif Setting.Info[0] == 'String' or Setting.Info[0] == 'Match':
-			return StringMatchListSetting(Setting)
+def MakeSetting(setting):
+	if setting.Type == 'String' and len(setting.Info):
+		return StringChoiceSetting(setting)
+	elif setting.Type == 'String' or setting.Type == 'Match':
+		return StringMatchSetting(setting)
+	elif setting.Type == 'Bool':
+		return BoolSetting(setting)
+	elif setting.Type == 'Float' or setting.Type == 'Int':
+		return IntFloatSetting(setting)
+	elif setting.Type == 'Color':
+		return ColorSetting(setting)
+	elif setting.Type == 'List':
+		if setting.Info[0] == 'String' and len(setting.Info[1]):
+			return ListChoiceSetting(setting)
+		elif setting.Info[0] == 'String' or setting.Info[0] == 'Match':
+			return StringMatchListSetting(setting)
 		elif Setting.Info[0] == 'Int' or Setting.Info[0] == 'Float':
-			return IntFloatListSetting(Setting)
+			return IntFloatListSetting(setting)
 		else:
-			raise TypeError, "Unhandled list type %s for %s"%(Setting.Info[0],Setting.Name)
+			raise TypeError, "Unhandled list type %s for %s"%(setting.Info[0], setting.Name)
 	return None
 
-def SettingSortCompare(v1,v2):
+def SettingSortCompare(v1, v2):
 	if v1.Type != v2.Type:
-		return cmp(v1.Type,v2.Type)
+		return cmp(v1.Type, v2.Type)
 	else:
-		return cmp(v1.ShortDesc,v2.ShortDesc)
+		return cmp(v1.ShortDesc, v2.ShortDesc)
 
 class SubGroupArea:
-	def __init__(self,Name,SubGroup):
-		if Name == '':
+	def __init__(self, name, subGroup):
+		if name == '':
 			self.Widget = gtk.Table()
 			self.Child = self.Widget
 		else:
 			self.Widget = gtk.Frame()
-			self.Expander = gtk.Expander(Name)
+			self.Expander = gtk.Expander(name)
 			self.Widget.add(self.Expander)
 			self.Expander.set_expanded(False)
 			self.Child = gtk.Table()
 			self.Expander.add(self.Child)
+		
 		self.Empty = True
 		row = 0
-		for Set in sorted(sum((v.values() for v in [SubGroup.Display]+SubGroup.Screens),[]),SettingSortCompare):
-			if not Set.Name == '____plugin_enabled':
-				sit = MakeSetting(Set)
-				if sit is not None:
-					sit.Read()
-					sit.Attach(self.Child,row)
-					row=row+1
+		for setting in sorted(sum((v.values() for v in [subGroup.Display]+subGroup.Screens), []), SettingSortCompare):
+			if not setting.Name == '____plugin_enabled':
+				set = MakeSetting(setting)
+				if set is not None:
+					set.Read()
+					set.Attach(self.Child, row)
+					row = row+1
 					self.Empty = False
-		if Name != '' and row < 4: # ahi hay magic numbers!
+
+		if name != '' and row < 4: # ahi hay magic numbers!
 			self.Expander.set_expanded(True)
 
 class Page(object):
-	def __init__(self,Name):
+	def __init__(self, name):
 		self.Widget = gtk.VBox()
 		self.SetContainer = gtk.VBox()
-		Scroll = gtk.ScrolledWindow()
-		Scroll.props.hscrollbar_policy = gtk.POLICY_NEVER
-		Scroll.props.vscrollbar_policy = gtk.POLICY_AUTOMATIC
-		View = gtk.Viewport()
-		View.set_border_width(5)
-		View.set_shadow_type(gtk.SHADOW_NONE)
-		self.Widget.pack_start(Scroll,True,True)
-		Scroll.add(View)
-		View.add(self.SetContainer)
+		
+		scroll = gtk.ScrolledWindow()
+		scroll.props.hscrollbar_policy = gtk.POLICY_NEVER
+		scroll.props.vscrollbar_policy = gtk.POLICY_AUTOMATIC
+		
+		view = gtk.Viewport()
+		view.set_border_width(5)
+		view.set_shadow_type(gtk.SHADOW_NONE)
+		
+		scroll.add(view)
+		view.add(self.SetContainer)
+		self.Widget.pack_start(scroll, True, True)
+		
 		self.Empty = True
 
 class GroupPage(Page):
-	def __init__(self,Name,Group):
-		super(GroupPage, self).__init__(Name)
+	def __init__(self, name, group):
+		super(GroupPage, self).__init__(name)
 
-		if (Group.has_key('')):
-			sga = SubGroupArea('',Group[''])
+		if (group.has_key('')):
+			sga = SubGroupArea('', group[''])
 			if not sga.Empty:
-				self.SetContainer.pack_start(sga.Widget,False,False)
+				self.SetContainer.pack_start(sga.Widget, False, False)
 				self.Empty = False
-		for SubGroup in Group:
-			if not SubGroup == '':
-				sga = SubGroupArea(SubGroup,Group[SubGroup])
+
+		for subGroup in group:
+			if not subGroup == '':
+				sga = SubGroupArea(subGroup, group[subGroup])
 				if not sga.Empty:
-					self.SetContainer.pack_start(sga.Widget,False,False)
+					self.SetContainer.pack_start(sga.Widget, False, False)
 					self.Empty = False
 
-def HandlePluginConflicts(conf):
-	if len(conf) == 0:
+def HandlePluginConflicts(conflicts):
+	if len(conflicts) == 0:
 		return True
 
-	dlg = gtk.MessageDialog(parent=MainWin,flags=gtk.DIALOG_MODAL,type=gtk.MESSAGE_WARNING,buttons=gtk.BUTTONS_OK_CANCEL)
-	for c in conf:
-		if c[0] == 'ConflictFeature':
-			#see if we can deactivate the plugin
-			#mentioned in c[2]
+	dlg = gtk.MessageDialog(parent = MainWin, flags = gtk.DIALOG_MODAL, type = gtk.MESSAGE_WARNING, buttons = gtk.BUTTONS_OK_CANCEL)
+	for conflict in conflicts:
+		if conflict[0] == 'ConflictFeature':
+			# see if we can deactivate the plugin
+			# mentioned in c[2]
 			msg = "Plugin <b>%s</b> provides feature <b>%s</b> which is also provided " +\
 				  "by the plugin you are trying to enable.\n" +\
 				  "Click OK to disable plugin <b>%s</b>, or Cancel to stop trying to enable this plugin."
-			msg = msg % (c[2][0].ShortDesc, c[1], c[2][0].ShortDesc)
+			msg = msg % (conflict[2][0].ShortDesc, conflict[1], conflict[2][0].ShortDesc)
+			
 			dlg.set_markup(msg)
 			dlg.show_all()
 			ret = dlg.run()
 			dlg.destroy()
+
 			if ret == gtk.RESPONSE_OK:
-				dcon = c[2][0].DisableConflicts
-				if HandlePluginConflicts(dcon):
-					c[2][0].Enabled = False
+				disableConflicts = conflict[2][0].DisableConflicts
+				if HandlePluginConflicts(disableConflicts):
+					conflict[2][0].Enabled = False
 				else:
 					return False
 			else:
 				return False
-		if c[0] == 'ConflictPlugin':
-			#see if we can deactivate the plugin
-			#mentioned in c[2]
+
+		elif conflict[0] == 'ConflictPlugin':
+			# see if we can deactivate the plugin
+			# mentioned in c[2]
 			msg = "Plugin <b>%s</b> conflicts with the plugin you are trying to enable.\n" +\
 				  "Click OK to disable plugin <b>%s</b>, or Cancel to stop trying to enable this plugin."
-			msg = msg % (c[2][0].ShortDesc, c[2][0].ShortDesc)
+			msg = msg % (conflict[2][0].ShortDesc, conflict[2][0].ShortDesc)
+			
 			dlg.set_markup(msg)
 			dlg.show_all()
 			ret = dlg.run()
 			dlg.destroy()
 			if ret == gtk.RESPONSE_OK:
-				dcon = c[2][0].DisableConflicts
-				if HandlePluginConflicts(dcon):
-					c[2][0].Enabled = False
+				disableConflicts = conflict[2][0].DisableConflicts
+				if HandlePluginConflicts(disableConflicts):
+					conflict[2][0].Enabled = False
 				else:
 					return False
 			else:
 				return False
-		elif c[0] == 'RequiresFeature':
-			#we need to activate one of c[2]
+		
+		elif conflict[0] == 'RequiresFeature':
+			# we need to activate one of c[2]
 			msg = "The plugin you are trying to enable requires feature <b>%s</b> which " +\
 				  "is provided by the following plugins.\n" +\
 				  "Click OK to enable the selected plugin or Cancel to stop trying to enable this plugin."
-			msg = msg % c[1]
+			msg = msg % conflict[1]
+			
 			dlg.set_markup(msg)
 			cmb = gtk.combo_box_new_text()
-			dlg.vbox.pack_start(cmb,False,False)
-			for p in c[2]:
-				cmb.append_text(p.ShortDesc)
-			cmb.set_active_text(c[2][0].ShortDesc)
+			dlg.vbox.pack_start(cmb, False, False)
+			for plugin in conflict[2]:
+				cmb.append_text(plugin.ShortDesc)
+			cmb.set_active_text(conflict[2][0].ShortDesc)
 			dlg.show_all()
 			ret = dlg.run()
-			rval = cmb.get_active_text()
+			retVal = cmb.get_active_text()
 			dlg.destroy()
+			
 			if ret == gtk.RESPONSE_OK:
-				for p in c[2]:
-					if p.ShortDesc == rval:
-						econ = p.EnableConflicts
-						if HandlePluginConflicts(econ):
-							p.Enabled = True
+				for plugin in conflict[2]:
+					if plugin.ShortDesc == retVal:
+						enableConflicts = plugin.EnableConflicts
+						if HandlePluginConflicts(enableConflicts):
+							plugin.Enabled = True
 						else:
 							return False
 						break
 			else:
 				return False
-		elif c[0] == 'RequiresPlugin':
+
+		elif conflict[0] == 'RequiresPlugin':
 			msg = "The plugin you are trying to enable requires the plugin <b>%s</b>.\n" +\
 				  "Click OK to enable <b>%s</b> or Cancel to stop trying to enable this plugin."
-			msg = msg % (c[2][0].ShortDesc, c[2][0].ShortDesc)
+			msg = msg % (conflict[2][0].ShortDesc, conflict[2][0].ShortDesc)
+			
 			dlg.set_markup(msg)
 			dlg.show_all()
 			ret = dlg.run()
 			dlg.destroy()
-			if ret == gtk.RESPONSE_OK:			
-				econ = c[2][0].EnableConflicts
-				if HandlePluginConflicts(econ):
-					c[2][0].Enabled = True
+			
+			if ret ==  gtk.RESPONSE_OK:			
+				enableConflicts = conflict[2][0].EnableConflicts
+				if HandlePluginConflicts(enableConflicts):
+					conflict[2][0].Enabled = True
 				else:
 					return False
 			else:
 				return False
-		elif c[0] == 'FeatureNeeded':
-			plist = ', '.join("\"%s\""%p.ShortDesc for p in c[2])
+
+		elif conflict[0] == 'FeatureNeeded':
+			pluginList = ', '.join("\"%s\"" % plugin.ShortDesc for plugin in conflict[2])
 			msg = "The plugin you are trying to disable provides the feature <b>%s</b> " +\
 				  "which is required by the plugins <b>%s</b>.\n" +\
 				  "Click OK to disable these plugins or Cancel to stop trying to disable this plugin."
-			msg = msg % (c[1],plist) 
+			msg = msg % (conflict[1], pluginList) 
+			
 			dlg.set_markup(msg)
 			dlg.show_all()
 			ret = dlg.run()
 			dlg.destroy()
+			
 			if ret == gtk.RESPONSE_OK:
-				for p in c[2]:
-					dcon = p.DisableConflicts
-					if HandlePluginConflicts(dcon):
-						p.Enabled = False
+				for plugin in conflict[2]:
+					disableConflicts = plugin.DisableConflicts
+					if HandlePluginConflicts(disableConflicts):
+						plugin.Enabled = False
 					else:
 						return False
 			else:
 				return False
-		elif c[0] == 'PluginNeeded':
-			plist = ', '.join("\"%s\""%p.ShortDesc for p in c[2])
+
+		elif conflict[0] == 'PluginNeeded':
+			pluginList = ', '.join("\"%s\"" % plugin.ShortDesc for plugin in conflict[2])
 			msg = "The plugin you are trying to disable is required by the plugins <b>%s</b>.\n" +\
 				  "Click OK to disable these plugins or Cancel to stop trying to disable this plugin."
 			msg = msg % plist
+			
 			dlg.set_markup(msg)
 			dlg.show_all()
 			ret = dlg.run()
 			dlg.destroy()
+
 			if ret == gtk.RESPONSE_OK:
-				for p in c[2]:
-					dcon = p.DisableConflicts
-					if HandlePluginConflicts(dcon):
-						p.Enabled = False
+				for plugin in conflict[2]:
+					disableConflicts = p.DisableConflicts
+					if HandlePluginConflicts(disableConflicts):
+						plugin.Enabled = False
 					else:
 						return False
 			else:
@@ -668,514 +735,581 @@ class ActionItem(SettingItem):
 	pass
 
 class ActionPage:
-	def __init__(self,Plugin,Context=None):
-		self.EdgeList = ['None','TopLeft','Top','TopRight','Left','Right','BottomLeft','Bottom','BottomRight']
+	def __init__(self, plugin, context = None):
+		self.EdgeList = ['None', 'TopLeft', 'Top', 'TopRight', 'Left', 'Right', 'BottomLeft', 'Bottom', 'BottomRight']
 		self.Widget = gtk.VBox()
-		self.Plugin = Plugin
-		self.Context = Context
+		self.Plugin = plugin
+		self.Context = context
 		self.Search = gtk.Entry()
-		self.Widget.pack_start(self.Search,False,False)
+		self.Widget.pack_start(self.Search, False, False)
 		self.Scroll = gtk.ScrolledWindow()
 		self.Scroll.props.hscrollbar_policy = gtk.POLICY_AUTOMATIC
 		self.Scroll.props.vscrollbar_policy = gtk.POLICY_AUTOMATIC
 		self.Store = gtk.TreeStore(
-				gobject.TYPE_STRING,	#0 - Name
-				gobject.TYPE_UINT,		#1 - Key
-				gobject.TYPE_UINT,		#2 - KeyMods
-				gobject.TYPE_STRING,	#3 - Button
-				gobject.TYPE_STRING,	#4 - Edges
-				gobject.TYPE_BOOLEAN,	#5 - Visible/Editable
-				gobject.TYPE_BOOLEAN,	#6 - Bell
-				gobject.TYPE_BOOLEAN,   #7 - KeyPossible
-				gobject.TYPE_BOOLEAN,   #8 - ButPossible
-				gobject.TYPE_BOOLEAN,   #9 - EdgePossible
-				gobject.TYPE_BOOLEAN,   #10 - BellPossible
-				gobject.TYPE_STRING,	#11 - group
-				gobject.TYPE_STRING,	#12 - subgroup
-				gobject.TYPE_STRING,	#13 - setting
-				gobject.TYPE_STRING,	#14 - plugin
-				gobject.TYPE_STRING,	#15 - disp/scn str XXX
+				gobject.TYPE_STRING, 	#0-Name
+				gobject.TYPE_UINT, 		#1-Key
+				gobject.TYPE_UINT, 		#2-KeyMods
+				gobject.TYPE_STRING, 	#3-Button
+				gobject.TYPE_STRING, 	#4-Edges
+				gobject.TYPE_BOOLEAN, 	#5-Visible/Editable
+				gobject.TYPE_BOOLEAN, 	#6-Bell
+				gobject.TYPE_BOOLEAN,   #7-KeyPossible
+				gobject.TYPE_BOOLEAN,   #8-ButPossible
+				gobject.TYPE_BOOLEAN,   #9-EdgePossible
+				gobject.TYPE_BOOLEAN,   #10-BellPossible
+				gobject.TYPE_STRING, 	#11-group
+				gobject.TYPE_STRING, 	#12-subgroup
+				gobject.TYPE_STRING, 	#13-setting
+				gobject.TYPE_STRING, 	#14-plugin
+				gobject.TYPE_STRING, 	#15-disp/scn str XXX
 				)
+		
 		self.ComboStore = gtk.ListStore(gobject.TYPE_STRING)
 		for edge in self.EdgeList:
 			iter = self.ComboStore.append()
-			self.ComboStore.set(iter,0,edge)
+			self.ComboStore.set(iter, 0, edge)
+		
 		self.TreeView = gtk.TreeView(self.Store)
 		self.TreeView.set_headers_visible(True)
-		self.TreeView.insert_column_with_attributes(-1,'Name',gtk.CellRendererText(),text=0)
-		AR = gtk.CellRendererAccel()
-		AR.connect('accel-edited',self.KeyEdited)
-		AR.connect('accel-cleared',self.KeyCleared)
-		self.TreeView.insert_column_with_attributes(-1,'Key',AR,accel_key=1,accel_mods=2,editable=7,visible=5,sensitive=7)
-		BR = gtk.CellRendererText()
-		BR.connect('edited',self.ButtonEdited)
-		self.TreeView.insert_column_with_attributes(-1,'Button',BR,text=3,editable=8,visible=5,sensitive=8)
-		ECOM = gtk.CellRendererCombo()
-		ECOM.props.has_entry = False
-		ECOM.props.model = self.ComboStore
-		ECOM.props.text_column = 0
-		ECOM.connect('edited',self.EdgeEdited)
-		self.TreeView.insert_column_with_attributes(-1,'Screen Edge',ECOM,text=4,editable=9,visible=5,sensitive=9)
-		BELR = gtk.CellRendererToggle()
-		BELR.props.xalign=0
-		BELR.connect('toggled',self.BellEdited)
-		self.TreeView.insert_column_with_attributes(-1,'On System Bell',BELR,activatable=10,visible=5,sensitive=10,active=6) # may replace with one setting in general
-		for c in self.TreeView.get_columns():
-			c.set_resizable(True)
+		# Name
+		self.TreeView.insert_column_with_attributes(-1, 'Name', gtk.CellRendererText(), text=0)
+		# Key
+		keyRenderer = gtk.CellRendererAccel()
+		keyRenderer.connect('accel-edited', self.KeyEdited)
+		keyRenderer.connect('accel-cleared', self.KeyCleared)
+		self.TreeView.insert_column_with_attributes(-1, 'Key', keyRenderer, accel_key=1, accel_mods=2, editable=7, visible=5, sensitive=7)
+		# Button
+		buttonRenderer = gtk.CellRendererText()
+		buttonRenderer.connect('edited', self.ButtonEdited)
+		self.TreeView.insert_column_with_attributes(-1, 'Button', buttonRenderer, text=3, editable=8, visible=5, sensitive=8)
+		# Edges
+		edgeRenderer = gtk.CellRendererCombo()
+		edgeRenderer.props.has_entry = False
+		edgeRenderer.props.model = self.ComboStore
+		edgeRenderer.props.text_column = 0
+		edgeRenderer.connect('edited', self.EdgeEdited)
+		self.TreeView.insert_column_with_attributes(-1, 'Screen Edge', edgeRenderer, text=4, editable=9, visible=5, sensitive=9)
+		# Bell -- may replace with one setting in general
+		bellRenderer = gtk.CellRendererToggle()
+		bellRenderer.props.xalign = 0
+		bellRenderer.connect('toggled', self.BellEdited)
+		self.TreeView.insert_column_with_attributes(-1, 'On System Bell', bellRenderer, activatable=10, visible=5, sensitive=10, active=6) 
+		
+		for col in self.TreeView.get_columns():
+			col.set_resizable(True)
+		
 		self.Scroll.add(self.TreeView)
-		self.Widget.pack_start(self.Scroll,True,True)
+		self.Widget.pack_start(self.Scroll, True, True)
 		self.Empty = True
-		self.TreeView.connect('row-activated',self.Activated)
-		self.Plugins={}
-		if Plugin:
-			self.DoGroups(Plugin.Groups,None,Plugin.Name)
+		self.TreeView.connect('row-activated', self.Activated)
+		
+		self.Plugins = {}
+		if plugin:
+			self.DoGroups(plugin.Groups, None, plugin.Name)
 		else:
-			for p in Context.Plugins.values():
-				pgiter=self.Store.append(None)
-				self.Store.set(pgiter,0,p.ShortDesc,5,False,7,False,8,False,9,False,10,False)
-				if not self.DoGroups(p.Groups,pgiter,p.Name):
-					self.Store.remove(pgiter)
-	def DoGroups(self,GroupList,Iter,PlugName):
-		self.Plugins[PlugName]={}
-		pempty = True
-		for g,gi in GroupList.items():
-			gempty = True
-			giter = self.Store.append(Iter)
-			self.Store.set(giter,0,g == '' and 'General' or g,5,False,7,False,8,False,9,False,10,False)
-			self.Plugins[PlugName][g] = {}
-			for sg,sgi in gi.items():
-				if sg != '':
-					sgiter = self.Store.append(giter)
-					self.Store.set(sgiter,0,sg,5,False,7,False,8,False,9,False,10,False)
-				self.Plugins[PlugName][g][sg]={}
-				sgempty=True
-				for s in sum((v.values() for v in [sgi.Display]+sgi.Screens),[]):
-					if s.Type == 'Action':
-						if sg != '':
-							i = self.Store.append(sgiter)
+			for plugin in Context.Plugins.values():
+				pluginIter = self.Store.append(None)
+				self.Store.set(pluginIter, 0, plugin.ShortDesc, 5, False, 7, False, 8, False, 9, False, 10, False)
+				if not self.DoGroups(plugin.Groups, pluginIter, plugin.Name):
+					self.Store.remove(pluginIter)
+	
+	def DoGroups(self, groupList, iter, pluginName):
+		self.Plugins[pluginName] = {}
+		pluginEmpty = True
+		
+		for groupName, group in groupList.items():
+			groupEmpty = True
+			groupIter = self.Store.append(iter)
+			self.Store.set(groupIter, 0, groupName == '' and 'General' or groupName, 5, False, 7, False, 8, False, 9, False, 10, False)
+			self.Plugins[pluginName][groupName] = {}
+			
+			for subGroupName, subGroup in group.items():
+				if subGroupName != '':
+					subGroupIter = self.Store.append(groupIter)
+					self.Store.set(subGroupIter, 0, subGroupName, 5, False, 7, False, 8, False, 9, False, 10, False)
+				self.Plugins[pluginName][groupName][subGroupName] = {}
+				subGroupEmpty = True
+				
+				for setting in sum((v.values() for v in [subGroup.Display]+subGroup.Screens), []):
+					if setting.Type == 'Action':
+						if subGroupName != '':
+							i = self.Store.append(subGroupIter)
 						else:
-							i = self.Store.append(giter)
-						key,mods = gtk.accelerator_parse(s.Value[0])
-						edge = 'None'
-						if len(s.Value[3]) > 0:
-							edge = s.Value[3][0]
-						self.Store.set(i,0,s.ShortDesc,1,key,2,mods,3,s.Value[1],4,edge,5,True,6,s.Value[2],
-								7,s.Info[0],8,s.Info[1],9,s.Info[3],10,s.Info[2],11,g,12,sg,13,s.Name,14,PlugName)
-						self.Plugins[PlugName][g][sg][s.Name]=s
-						gempty = False
-						sgempty = False
-						pempty = False
-						self.Empty = False
-				if sgempty:
+							i = self.Store.append(groupIter)
 
-					if sg != '':
-						self.Store.remove(sgiter)
-			if gempty:
-				self.Store.remove(giter)
-		return not pempty
-	def Activated(self,obj,path,col):
-		def ResetButton(obj,s,iter):
-			if s.Info[0]:
-				KE.set_text(s.DefaultValue[0])
-			if s.Info[1]:
-				BE.set_text(s.DefaultValue[1])
-			if s.Info[2]:
-				BELV.set_active(s.DefaultValue[2])
-			if s.Info[3]:
-				ev=0
-				for p in self.EdgeList:
-					if p == s.DefaultValue[3]:
-						EC.set_active(ev)
-					ev = ev + 1
+						key, mods = gtk.accelerator_parse(setting.Value[0])
+						edge = 'None'
+						if len(setting.Value[3]) > 0:
+							edge = s.Value[3][0]
+						
+						self.Store.set(i, 0, setting.ShortDesc, 1, key, 2, mods, 3, setting.Value[1], 4,
+									   edge, 5, True, 6, setting.Value[2], 7, setting.Info[0], 8, setting.Info[1], 9,
+									   setting.Info[3], 10, setting.Info[2], 11, groupName, 12, subGroupName, 13,
+									   setting.Name, 14, pluginName)
+						self.Plugins[pluginName][groupName][subGroupName][setting.Name] = setting
+						
+						groupEmpty = False
+						subGroupEmpty = False
+						pluginEmpty = False
+						self.Empty = False
+				
+				if subGroupEmpty:
+					if subGroupName != '':
+						self.Store.remove(subGroupIter)
+			if groupEmpty:
+				self.Store.remove(groupIter)
+		
+		return not pluginEmpty
+	
+	def Activated(self, object, path, col):
+		def ResetButton(object, setting, iter):
+			if setting.Info[0]:
+				keyEntry.set_text(setting.DefaultValue[0])
+			if setting.Info[1]:
+				buttonEntry.set_text(setting.DefaultValue[1])
+			if setting.Info[2]:
+				bellButton.set_active(setting.DefaultValue[2])
+			if setting.Info[3]:
+				counter = 0
+				for edge in self.EdgeList:
+					if edge == setting.DefaultValue[3]:
+						edgeCmb.set_active(counter)
+					counter = counter + 1
+
 		iter = self.Store.get_iter(path)
-		g,sg,sn,pn,kv,km,bs,es,be = self.Store.get(iter,11,12,13,14,1,2,3,4,6)
-		if sg is None or g is None or sn is None:
+		store = self.Store.get(iter, 11, 12, 13, 14, 1, 2, 3, 4, 6)
+		groupName, subGroupName, settingName, pluginName, key, keyModifier, button, edges, bell = store
+
+		if subGroupName is None or groupName is None or settingName is None:
 			if self.TreeView.row_expanded(path):
 				self.TreeView.collapse_row(path)
 			else:
-				self.TreeView.expand_row(path,False)
+				self.TreeView.expand_row(path, False)
 			return
-		s = self.Plugins[pn][g][sg][sn]
-		Dlg = gtk.Dialog("Edit Action: %s"%s.ShortDesc,MainWin)
-		Dlg.add_button(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL)
-		Dlg.add_button(gtk.STOCK_OK,gtk.RESPONSE_OK).grab_default()
-		Dlg.set_default_response(gtk.RESPONSE_OK)
-		TB = gtk.Table()
-		Dlg.vbox.pack_start(TB,False,False)
-		if s.Info[0]:
-			KE = gtk.Entry()
-			KE.set_text(gtk.accelerator_name(kv,km) or 'None')
-			KL = gtk.Label('Key')
-			KL.props.xalign=0
-			TB.attach(KL,0,1,0,1,TDef,TDef,TXp,TYp)
-			TB.attach(KE,1,2,0,1,TDef,TDef,TXp,TYp)
-		if s.Info[1]:
-			BE = gtk.Entry()
-			BE.set_text(bs)
-			BL = gtk.Label('Button')
-			BL.props.xalign=0
-			TB.attach(BL,0,1,1,2,TDef,TDef,TXp,TYp)
-			TB.attach(BE,1,2,1,2,TDef,TDef,TXp,TYp)
-		if s.Info[3]:
-			EC = gtk.ComboBox(self.ComboStore)
-			edv = 0
-			for edg in self.EdgeList:
-				if edg == es:
+
+		setting = self.Plugins[pluginName][groupName][subGroupName][settingName]
+
+		dlg = gtk.Dialog("Edit Action: %s" % setting.ShortDesc, MainWin)
+		dlg.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
+		dlg.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK).grab_default()
+		dlg.set_default_response(gtk.RESPONSE_OK)
+		table = gtk.Table()
+		dlg.vbox.pack_start(table, False, False)
+		
+		# Key
+		if setting.Info[0]:
+			keyEntry = gtk.Entry()
+			keyEntry.set_text(gtk.accelerator_name(key, keyModifier) or 'None')
+			keyLabel = gtk.Label('Key')
+			keyLabel.props.xalign = 0
+			table.attach(keyLabel, 0, 1, 0, 1, TDef, TDef, TXp, TYp)
+			table.attach(keyEntry, 1, 2, 0, 1, TDef, TDef, TXp, TYp)
+		
+		# Button
+		if setting.Info[1]:
+			buttonEntry = gtk.Entry()
+			buttonEntry.set_text(button)
+			buttonLabel = gtk.Label('Button')
+			buttonLabel.props.xalign = 0
+			table.attach(buttonLabel, 0, 1, 1, 2, TDef, TDef, TXp, TYp)
+			table.attach(buttonEntry, 1, 2, 1, 2, TDef, TDef, TXp, TYp)
+		
+		# Edge
+		if setting.Info[3]:
+			edgeCmb = gtk.ComboBox(self.ComboStore)
+			counter = 0
+			for e in self.EdgeList:
+				if e == edge:
 					break
-				edv = edv + 1
-			EC.set_active(edv)
-			ER = gtk.CellRendererText()
-			EC.pack_start(ER)
-			EC.add_attribute(ER,'text',0)
-			EL = gtk.Label('Screen Edge')
-			EL.props.xalign=0
-			TB.attach(EL,0,1,2,3,TDef,TDef,TXp,TYp)
-			TB.attach(EC,1,2,2,3,TDef,TDef,TXp,TYp)
-		if s.Info[2]:
-			BEL = gtk.CheckButton('On System Bell')
-			BEL.set_active(be)
-			TB.attach(BEL,0,2,3,4,TDef,TDef,TXp,TYp)
-		hb = gtk.HBox()
-		hb.pack_start(MakeLabel('Reset To Defaults'),True,True)
-		rb = gtk.Button()
-		ri = gtk.Image()
-		ri.set_from_stock(gtk.STOCK_CLEAR,gtk.ICON_SIZE_BUTTON)
-		rb.set_image(ri)
-		hb.pack_end(rb,False,False)
-		rb.connect('clicked',ResetButton,s,iter)
-		TB.attach(hb,0,2,4,5,TDef,TDef,TXp,TYp)
-		Dlg.show_all()
-		resp = Dlg.run()
-		if s.Info[0]:
-			KV = KE.get_text()
-		if s.Info[1]:
-			BV = BE.get_text()
-		if s.Info[2]:
-			BELV = BEL.get_active()
-		if s.Info[3]:
-			EV = EC.get_active()
-		Dlg.destroy()
+				counter = counter + 1
+			edgeCmb.set_active(counter)
+			edgeRenderer = gtk.CellRendererText()
+			edgeCmb.pack_start(edgeRenderer)
+			edgeCmb.add_attribute(edgeRenderer, 'text', 0)
+			edgeLabel = gtk.Label('Screen Edge')
+			edgeLabel.props.xalign = 0
+			table.attach(edgeLabel, 0, 1, 2, 3, TDef, TDef, TXp, TYp)
+			table.attach(edgeCmb, 1, 2, 2, 3, TDef, TDef, TXp, TYp)
+		
+		# Bell
+		if setting.Info[2]:
+			bellButton = gtk.CheckButton('On System Bell')
+			bellButton.set_active(be)
+			tabel.attach(bellButton, 0, 2, 3, 4, TDef, TDef, TXp, TYp)
+		box = gtk.HBox()
+		box.pack_start(MakeLabel('Reset To Defaults'), True, True)
+		resetButton = gtk.Button()
+		resetImage = gtk.Image()
+		resetImage.set_from_stock(gtk.STOCK_CLEAR, gtk.ICON_SIZE_BUTTON)
+		resetButton.set_image(resetImage)
+		box.pack_end(resetButton, False, False)
+		resetButton.connect('clicked', ResetButton, setting, iter)
+		table.attach(box, 0, 2, 4, 5, TDef, TDef, TXp, TYp)
+		
+		dlg.show_all()
+		resp = dlg.run()
+		if setting.Info[0]:
+			key = keyEntry.get_text()
+		if setting.Info[1]:
+			button = buttonEntry.get_text()
+		if setting.Info[2]:
+			bell = bellButton.get_active()
+		if setting.Info[3]:
+			edge = edgeCmb.get_active()
+		
+		dlg.destroy()
 		if resp == gtk.RESPONSE_OK:
-			if s.Info[0]:
-				akey,amods=gtk.accelerator_parse(KV)
-				self.Store.set(iter,1,akey,2,amods)
-			if s.Info[1]:
-				self.Store.set(iter,3,BV)
-			if s.Info[2]:
-				self.Store.set(iter,6,BELV)
-			if s.Info[3]:
-				self.Store.set(iter,4,self.EdgeList[EV])
+			if setting.Info[0]:
+				akey, amods = gtk.accelerator_parse(key)
+				self.Store.set(iter, 1, akey, 2, amods)
+			if setting.Info[1]:
+				self.Store.set(iter, 3, button)
+			if setting.Info[2]:
+				self.Store.set(iter, 6, bell)
+			if setting.Info[3]:
+				self.Store.set(iter, 4, self.EdgeList[edge])
 			self.WriteSetting(iter)
-	def WriteSetting(self,iter):
-		g,sg,sn,pn,kv,km,bs,es,be = self.Store.get(iter,11,12,13,14,1,2,3,4,6)
-		s = self.Plugins[pn][g][sg][sn]
-		ks = gtk.accelerator_name(kv,km)
-		if CheckActionConflicts(s,ks,bs,be,es):
-			s.Value = [ks,bs,be,[es]]
-			Write(s.Plugin.Context)
-		ks,bs,be,es = s.Value
-		kv,km = gtk.accelerator_parse(ks)
-		if es:
-			es = es[0]
+	
+	def WriteSetting(self, iter):
+		store = self.Store.get(iter, 11, 12, 13, 14, 1, 2, 3, 4, 6)
+		groupName, subGroupName, settingName, pluginName, key, keyModifier, button, edge, bell = store
+		
+		setting = self.Plugins[pluginName][groupName][subGroupName][settingName]
+		realKey = gtk.accelerator_name(key, keyModifier)
+		
+		if CheckActionConflicts(setting, realKey, button, bell, edge):
+			setting.Value = [realKey, button, bell, [edge]]
+			Write(setting.Plugin.Context)
+			
+		realKey, button, bell, edge = setting.Value
+		key, keyModifier = gtk.accelerator_parse(realKey)
+		if edge:
+			edge = edge[0]
 		else:
-			es = 'None'
-		self.Store.set(iter,1,kv,2,km,3,bs,4,es,6,be)
-	def KeyEdited(self,obj,path,key,mods,code):
+			edge = 'None'
+		self.Store.set(iter, 1, key, 2, keyModifier, 3, button, 4, edge, 6, bell)
+	
+	def KeyEdited(self, obj, path, key, mods, code):
 		iter = self.Store.get_iter_from_string(path)
-		self.Store.set(iter,1,key,2,mods)
+		self.Store.set(iter, 1, key, 2, mods)
 		self.WriteSetting(iter)
-	def KeyCleared(self,obj,path):
+	
+	def KeyCleared(self, obj, path):
 		iter = self.Store.get_iter_from_string(path)
-		self.Store.set(iter,1,0,2,0)
+		self.Store.set(iter, 1, 0, 2, 0)
 		self.WriteSetting(iter)
-	def ButtonEdited(self,obj,path,val):
+	
+	def ButtonEdited(self, obj, path, val):
 		iter = self.Store.get_iter_from_string(path)
-		self.Store.set(iter,3,val)
+		self.Store.set(iter, 3, val)
 		self.WriteSetting(iter)
-	def EdgeEdited(self,obj,path,val):
+	
+	def EdgeEdited(self, obj, path, val):
 		iter = self.Store.get_iter_from_string(path)
-		self.Store.set(iter,4,val)
+		self.Store.set(iter, 4, val)
 		self.WriteSetting(iter)
-	def BellEdited(self,obj,path):
+	
+	def BellEdited(self, obj, path):
 		iter = self.Store.get_iter_from_string(path)
-		val = self.Store.get(iter,6)[0]
-		if val:
-			val = False
+		value = self.Store.get(iter, 6)[0]
+		if value:
+			value = False
 		else:
-			val = True
-		self.Store.set(iter,6,val)
+			value = True
+		self.Store.set(iter, 6, value)
 		self.WriteSetting(iter)
 
 
-def MakeLabel(Val=None,wrap=160):
-	if Val is not None:
-		L = gtk.Label(Val)
+def MakeLabel(value = None, wrap = 160):
+	if value is not None:
+		label = gtk.Label(value)
 	else:
-		L = gtk.Label()
-	L.props.xalign=0
-	L.props.wrap_mode = gtk.WRAP_WORD
-	L.set_line_wrap(True)
-	L.set_size_request(wrap,-1)
-	return L
+		label = gtk.Label()
+	label.props.xalign = 0
+	label.props.wrap_mode = gtk.WRAP_WORD
+	label.set_line_wrap(True)
+	label.set_size_request(wrap, -1)
+	return label
 
 class PluginClass:
-	def __init__(self,Plugin,Main):
-		self.Plugin = Plugin
-		self.LeftWidget = gtk.VBox(False,10)
+	def __init__(self, plugin, main):
+		self.Plugin = plugin
+		self.LeftWidget = gtk.VBox(False, 10)
 		self.LeftWidget.set_border_width(15)
-		self.PlugLabel = MakeLabel()
-		self.PlugLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>"%(Main.BrightColor,Plugin.ShortDesc))
-		self.PlugImg = Main.MakeImage(Plugin,size=64)
-		self.LeftWidget.pack_start(self.PlugImg,False,False)
-		self.LeftWidget.pack_start(self.PlugLabel,False,False)
+		self.PluginLabel = MakeLabel()
+		self.PluginLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>" % (main.BrightColor, plugin.ShortDesc))
+		self.PluginImg = main.MakeImage(plugin, size = 64)
+		self.LeftWidget.pack_start(self.PluginImg, False, False)
+		self.LeftWidget.pack_start(self.PluginLabel, False, False)
 		self.InfoLabelCont = gtk.HBox()
 		self.InfoLabelCont.set_border_width(10)
-		self.LeftWidget.pack_start(self.InfoLabelCont,False,False)
-		self.InfoLabel = MakeLabel(Plugin.LongDesc,150)
-		self.InfoLabelCont.pack_start(self.InfoLabel,True,True)
-		if Plugin.Name != 'core':
-			self.EnLabel = MakeLabel()
-			self.EnLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>"%(Main.BrightColor,'Use This Plugin'))
-			self.LeftWidget.pack_start(self.EnLabel,False,False)
-			self.EnCheckCont = gtk.HBox()
-			self.EnCheckCont.set_border_width(10)
-			self.LeftWidget.pack_start(self.EnCheckCont,False,False)
-			self.EnCheck = gtk.CheckButton()
-			self.EnCheck.add(MakeLabel("Enable %s"%Plugin.ShortDesc,120))
-			self.EnCheck.set_active(Plugin.Enabled)
-			self.EnCheckCont.pack_start(self.EnCheck,True,True)
-			self.EnCheck.connect('toggled',self.EnChange)
+		self.LeftWidget.pack_start(self.InfoLabelCont, False, False)
+		self.InfoLabel = MakeLabel(plugin.LongDesc, 150)
+		self.InfoLabelCont.pack_start(self.InfoLabel, True, True)
+		
+		if plugin.Name != 'core':
+			self.EnableLabel = MakeLabel()
+			self.EnableLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>" % (main.BrightColor, 'Use This Plugin'))
+			self.LeftWidget.pack_start(self.EnableLabel, False, False)
+			self.EnableCheckCont = gtk.HBox()
+			self.EnableCheckCont.set_border_width(10)
+			self.LeftWidget.pack_start(self.EnableCheckCont, False, False)
+			self.EnableCheck = gtk.CheckButton()
+			self.EnableCheck.add(MakeLabel("Enable %s" % plugin.ShortDesc, 120))
+			self.EnableCheck.set_active(plugin.Enabled)
+			self.EnableCheckCont.pack_start(self.EnableCheck, True, True)
+			self.EnableCheck.connect('toggled', self.EnablePlugin)
+		
 		self.BackButton = gtk.Button(gtk.STOCK_GO_BACK)
 		self.BackButton.set_use_stock(True)
-		self.LeftWidget.pack_end(self.BackButton,False,False)
-		self.BackButton.connect('clicked',Main.BackToMain)
+		self.LeftWidget.pack_end(self.BackButton, False, False)
+		self.BackButton.connect('clicked', main.BackToMain)
 		self.RightWidget = gtk.Notebook()
-		for name,group in Plugin.Groups.items():
+		
+		for name, group in plugin.Groups.items():
 			name = name or 'General'
-			gp = GroupPage(name,group)
-			if not gp.Empty:
-				self.RightWidget.append_page(gp.Widget,gtk.Label(name))
-		ap = ActionPage(Plugin)
-		if not ap.Empty:
-			self.RightWidget.append_page(ap.Widget,gtk.Label('Actions'))
+			groupPage = GroupPage(name, group)
+			if not groupPage.Empty:
+				self.RightWidget.append_page(groupPage.Widget, gtk.Label(name))
+		
+		actionPage = ActionPage(plugin)
+		if not actionPage.Empty:
+			self.RightWidget.append_page(actionPage.Widget, gtk.Label('Actions'))
 		self.Block = 0
 
-	def EnChange(self,wid):
-		if self.Block>0:
+	def EnablePlugin(self, wid):
+		if self.Block > 0:
 			return
-		self.Block = self.Block + 1
-		#attempt to resolve conflicts...
-		conf = self.Plugin.Enabled and self.Plugin.DisableConflicts or (
-				self.Plugin.EnableConflicts)
-		if HandlePluginConflicts(conf):
+		self.Block += 1
+		# attempt to resolve conflicts...
+		conflicts = self.Plugin.Enabled and self.Plugin.DisableConflicts or self.Plugin.EnableConflicts
+		if HandlePluginConflicts(conflicts):
 			self.Plugin.Enabled = wid.get_active()
 		else:
 			wid.set_active(self.Plugin.Enabled)
 		Write(self.Plugin.Context)
-		self.Block = self.Block - 1
+		self.Block = self.Block-1
 
 def Quit(foo):
 	gtk.main_quit()
 
 class MainWinClass:
-	def __init__(self,Context):
+	def __init__(self, Context):
 		self.Context = Context
 		self.MainWin = gtk.Window()
-		self.MainWin.connect("destroy",Quit)
-		self.MainWin.set_default_size(930,520)
+		self.MainWin.connect("destroy", Quit)
+		self.MainWin.set_default_size(930, 520)
 		self.MainWin.set_title("CCS Manager")
-		#set up the Entry to get the BrightColor
-		StyleWidget = gtk.Entry()
-		self.MainWin.add(StyleWidget)
-		StyleWidget.realize()
-		bc = StyleWidget.style.bg[gtk.STATE_SELECTED]
-		self.BrightColor = "#%.4x%.4x%.4x"%(bc.red,bc.green,bc.blue)
-		self.MainWin.remove(StyleWidget)
-		StyleWidget.destroy()
-		#build the panes
+		
+		# set up the Entry to get the BrightColor
+		styleWidget = gtk.Entry()
+		self.MainWin.add(styleWidget)
+		styleWidget.realize()
+		bc = styleWidget.style.bg[gtk.STATE_SELECTED]
+		self.BrightColor = "#%.4x%.4x%.4x" % (bc.red, bc.green, bc.blue)
+		self.MainWin.remove(styleWidget)
+		styleWidget.destroy()
+		
+		# build the panes
 		self.MainBox = gtk.HBox()
 		self.MainWin.add(self.MainBox)
 		self.LeftPane = gtk.Alignment()
-		self.LeftPane.set_size_request(200,520)
+		self.LeftPane.set_size_request(200, 520)
 		self.RightPane = gtk.Alignment()
 		self.RightPane.set_border_width(5)
-		self.RightPane.props.yscale=1
-		self.RightPane.props.xscale=1
-		self.RightPane.props.xalign=0
-		self.RightPane.props.yalign=0
-		self.LeftPane.props.yscale=1
-		self.LeftPane.props.xscale=1
-		self.LeftPane.props.xalign=0
-		self.LeftPane.props.yalign=0
-		self.MainBox.pack_start(self.LeftPane,False,False)
-		self.MainBox.pack_start(self.RightPane,True,True)
-		self.Categories={}
-		self.PluginImages={}
-		for pn,po in self.Context.Plugins.items():
-			self.PluginImages[pn]=self.MakeImage(po)
-		for c in sorted(self.Context.Categories,self.CatSortCompare):
-			self.Categories[c]=[]
-			for pn,po in self.Context.Plugins.items():
-				if po.Category == c:
-					self.Categories[c].append(po)
+		self.RightPane.props.yscale = 1
+		self.RightPane.props.xscale = 1
+		self.RightPane.props.xalign = 0
+		self.RightPane.props.yalign = 0
+		self.LeftPane.props.yscale = 1
+		self.LeftPane.props.xscale = 1
+		self.LeftPane.props.xalign = 0
+		self.LeftPane.props.yalign = 0
+		self.MainBox.pack_start(self.LeftPane, False, False)
+		self.MainBox.pack_start(self.RightPane, True, True)
+		self.Categories = {}
+		self.PluginImages = {}
+		
+		for pluginName, plugin in self.Context.Plugins.items():
+			self.PluginImages[pluginName] = self.MakeImage(plugin)
+		
+		for category in sorted(self.Context.Categories, self.CatSortCompare):
+			self.Categories[category] = []
+			for pluginName, plugin in self.Context.Plugins.items():
+				if plugin.Category == category:
+					self.Categories[category].append(plugin)
+		
 		self.BlockEnablePlugin = 0
 		self.ResetMainWidgets()
 
 	def ResetMainWidgets(self):
-		PluginsVPort = gtk.Viewport()
-		LeftChild = gtk.VBox(False,10)
-		LeftChild.set_border_width(15)
-		FLab = MakeLabel()
-		FLab.set_markup("<span color='%s' size='large' weight='800'>Filter</span>"%self.BrightColor)
-		LeftChild.pack_start(FLab,False,False)
-		FLen = gtk.Entry()
-		FLen.connect("changed", self.FilterTable)
-		LeftChild.pack_start(FLen,False,False)
-		ILab = MakeLabel()
-		ILab.set_markup("<span color='%s' size='large' weight='800'>Information</span>"%self.BrightColor)
-		LeftChild.pack_start(ILab,False,False)
-		InfoBox = gtk.VBox()
-		InfoBox.set_border_width(10)
-		self.PluginDescription = MakeLabel(wrap=150)
+		pluginsVPort = gtk.Viewport()
+		leftChild = gtk.VBox(False, 10)
+		leftChild.set_border_width(15)
+		# Filter
+		filterLabel = MakeLabel()
+		filterLabel.set_markup("<span color='%s' size='large' weight='800'>Filter</span>"%self.BrightColor)
+		leftChild.pack_start(filterLabel, False, False)
+		filterEntry = gtk.Entry()
+		filterEntry.connect("changed", self.FilterTable)
+		leftChild.pack_start(filterEntry, False, False)
+		# Information
+		infoLabel = MakeLabel()
+		infoLabel.set_markup("<span color='%s' size='large' weight='800'>Information</span>"%self.BrightColor)
+		leftChild.pack_start(infoLabel, False, False)
+		infoBox = gtk.VBox()
+		infoBox.set_border_width(10)
+		self.PluginDescription = MakeLabel(wrap = 150)
 		self.PluginDescription.set_markup("")
-		InfoBox.pack_start(self.PluginDescription,False,False)
-		LeftChild.pack_start(InfoBox,False,False)
+		infoBox.pack_start(self.PluginDescription, False, False)
+		leftChild.pack_start(infoBox, False, False)
 		
-		ProfileBox = gtk.HBox()
-		ProfileAdd = gtk.Button()
-		ProfileAdd.set_image(gtk.image_new_from_stock(gtk.STOCK_ADD,gtk.ICON_SIZE_BUTTON))
-		ProfileRemove = gtk.Button()
-		ProfileRemove.set_image(gtk.image_new_from_stock(gtk.STOCK_REMOVE,gtk.ICON_SIZE_BUTTON))
-		ProfileComboBox = gtk.combo_box_new_text()
-		ProfileComboBox.append_text("Default")
+		# Profiles
+		profileBox = gtk.HBox()
+		profileAdd = gtk.Button()
+		profileAdd.set_image(gtk.image_new_from_stock(gtk.STOCK_ADD, gtk.ICON_SIZE_BUTTON))
+		profileRemove = gtk.Button()
+		profileRemove.set_image(gtk.image_new_from_stock(gtk.STOCK_REMOVE, gtk.ICON_SIZE_BUTTON))
+		profileComboBox = gtk.combo_box_new_text()
+		profileComboBox.append_text("Default")
 		for profile in self.Context.Profiles.values():
-			ProfileComboBox.append_text(profile.Name)
+			profileComboBox.append_text(profile.Name)
 		if self.Context.CurrentProfile.Name == '':
-			ProfileComboBox.set_active(0)
+			profileComboBox.set_active(0)
 		else:
 			name = self.Context.CurrentProfile.Name
 			index = self.Context.Profiles.values().index(self.Context.Profiles[name])
-			ProfileComboBox.set_active(index+1)
-		ProfileComboBox.connect("changed",self.ProfileChanged)
-		ProfileAdd.connect("clicked",self.AddProfile,ProfileComboBox)
-		ProfileRemove.connect("clicked",self.RemoveProfile,ProfileComboBox)
-		ProfileBox.pack_start(ProfileComboBox,True,True)
-		ProfileBox.pack_start(ProfileAdd,False,False)
-		ProfileBox.pack_start(ProfileRemove,False,False)
-		ProfileBox.set_no_show_all(True)
-		LeftChild.pack_end(ProfileBox,False,False)
-		ProfileLabel = MakeLabel()
-		ProfileLabel.set_markup("<span color='%s' size='large' weight='800'>Profile</span>"%self.BrightColor)
-		ProfileImage = gtk.Image()
-		ProfileImage.set_from_stock(gtk.STOCK_GO_DOWN,gtk.ICON_SIZE_BUTTON)
-		ProfileButton = gtk.Button()
-		ProfileButton.connect("clicked",self.Expand,ProfileBox)
-		ProfileButton.set_relief(gtk.RELIEF_NONE)
-		ProfileFrame = gtk.HBox()
-		ProfileFrame.pack_start(ProfileLabel,False,False)
-		ProfileFrame.pack_end(ProfileImage,False,False)
-		ProfileButton.add(ProfileFrame)
-		LeftChild.pack_end(ProfileButton,False,False)
+			profileComboBox.set_active(index+1)
+		profileComboBox.connect("changed", self.ProfileChanged)
+		profileAdd.connect("clicked", self.AddProfile, profileComboBox)
+		profileRemove.connect("clicked", self.RemoveProfile, profileComboBox)
+		profileBox.pack_start(profileComboBox, True, True)
+		profileBox.pack_start(profileAdd, False, False)
+		profileBox.pack_start(profileRemove, False, False)
+		profileBox.set_no_show_all(True)
+		leftChild.pack_end(profileBox, False, False)
+		profileLabel = MakeLabel()
+		profileLabel.set_markup("<span color='%s' size='large' weight='800'>Profile</span>" % self.BrightColor)
+		profileImage = gtk.Image()
+		profileImage.set_from_stock(gtk.STOCK_GO_DOWN, gtk.ICON_SIZE_BUTTON)
+		profileButton = gtk.Button()
+		profileButton.connect("clicked", self.Expand, profileBox)
+		profileButton.set_relief(gtk.RELIEF_NONE)
+		profileFrame = gtk.HBox()
+		profileFrame.pack_start(profileLabel, False, False)
+		profileFrame.pack_end(profileImage, False, False)
+		profileButton.add(profileFrame)
+		leftChild.pack_end(profileButton, False, False)
 
-		BackendBox = gtk.combo_box_new_text()
+		# Backends
+		backendBox = gtk.combo_box_new_text()
 		for backend in self.Context.Backends.values():
-			BackendBox.append_text(backend.ShortDesc)
+			backendBox.append_text(backend.ShortDesc)
 		name = self.Context.CurrentBackend.Name
 		index = self.Context.Backends.values().index(self.Context.Backends[name])
-		BackendBox.set_active(index)
-		BackendBox.connect("changed",self.BackendChanged,ProfileComboBox)
-		BackendBox.set_no_show_all(True)
-		LeftChild.pack_end(BackendBox,False,False)
-		BackendLabel = MakeLabel()
-		BackendLabel.set_markup("<span color='%s' size='large' weight='800'>Backend</span>"%self.BrightColor)
-		BackendImage = gtk.Image()
-		BackendImage.set_from_stock(gtk.STOCK_GO_DOWN,gtk.ICON_SIZE_BUTTON)
-		BackendButton = gtk.Button()
-		BackendButton.connect("clicked",self.Expand,BackendBox)
-		BackendButton.set_relief(gtk.RELIEF_NONE)
-		BackendFrame = gtk.HBox()
-		BackendFrame.pack_start(BackendLabel,False,False)
-		BackendFrame.pack_end(BackendImage,False,False)
-		BackendButton.add(BackendFrame)
-		LeftChild.pack_end(BackendButton,False,False)
+		backendBox.set_active(index)
+		backendBox.connect("changed", self.BackendChanged, profileComboBox)
+		backendBox.set_no_show_all(True)
+		leftChild.pack_end(backendBox, False, False)
+		backendLabel = MakeLabel()
+		backendLabel.set_markup("<span color='%s' size='large' weight='800'>Backend</span>" % self.BrightColor)
+		backendImage = gtk.Image()
+		backendImage.set_from_stock(gtk.STOCK_GO_DOWN, gtk.ICON_SIZE_BUTTON)
+		backendButton = gtk.Button()
+		backendButton.connect("clicked", self.Expand, backendBox)
+		backendButton.set_relief(gtk.RELIEF_NONE)
+		backendFrame = gtk.HBox()
+		backendFrame.pack_start(backendLabel, False, False)
+		backendFrame.pack_end(backendImage, False, False)
+		backendButton.add(backendFrame)
+		leftChild.pack_end(backendButton, False, False)
 
-		PluginsVPort.modify_bg(gtk.STATE_NORMAL,gtk.gdk.color_parse('#ffffff'))
-		RightChild = gtk.ScrolledWindow()
-		RightChild.props.hscrollbar_policy = gtk.POLICY_NEVER
-		RightChild.props.vscrollbar_policy = gtk.POLICY_AUTOMATIC
-		RightChild.add(PluginsVPort)
-		self.BuildTable(PluginsVPort)
-		RightChild.connect('size-allocate',self.RebuildTable)
-		self.SetMainWidgets(LeftChild,RightChild)
+		pluginsVPort.modify_bg(gtk.STATE_NORMAL, gtk.gdk.color_parse('#ffffff'))
+		rightChild = gtk.ScrolledWindow()
+		rightChild.props.hscrollbar_policy = gtk.POLICY_NEVER
+		rightChild.props.vscrollbar_policy = gtk.POLICY_AUTOMATIC
+		rightChild.add(pluginsVPort)
+		self.BuildTable(pluginsVPort)
+		rightChild.connect('size-allocate', self.RebuildTable)
+		self.SetMainWidgets(leftChild, rightChild)
 
-	def BuildTable(self,vp):
-		PW = gtk.VBox()
-		PW.set_border_width(10)
-		vp.add(PW)
-		self.TableCats={}
-		self.TableAttached=False
-		self.LastCols=-1
-		for c in sorted(self.Categories,self.CatSortCompare):
-			pl = self.Categories[c]
-			CatBox = gtk.VBox()
-			PW.pack_start(CatBox,False,False)
-			CatHeader = gtk.HBox()
-			CatLabel = MakeLabel('',-1)
-			name = c or 'Uncategorized'
-			CatLabel.set_markup("<span color='#aaa' size='x-large' weight='800'>%s</span>"%(name))
-			CatImg = self.MakeImage(category=name.lower().replace(" ", "_"))
-			if CatImg:
-				CatHeader.pack_start(CatImg,False,False)
-			CatHeader.pack_start(CatLabel,False,False)
-			CatBox.pack_start(CatHeader,False,False)
-			CatTab = gtk.Table()
-			CatTab.set_border_width(10)
-			self.TableCats[c]=(CatTab,[],[])
-			CatBox.pack_start(CatTab,False,False)
-			for po in pl:
-				CB = gtk.Button()
-				CB.connect('clicked',self.SelectPlugin,po)
-				CB.connect('enter',self.SetInfo,self.PluginDescription,po.LongDesc)
-				CB.connect('leave',self.ResetInfo,self.PluginDescription)
-				CB.set_size_request(200,-1)
-				CB.set_relief(gtk.RELIEF_NONE)
-				CX = gtk.HBox(False,10)
-				CX.set_border_width(10)
-				CI = self.PluginImages[po.Name]
-				CX.pack_start(CI,False,False)
-				CL = MakeLabel(po.ShortDesc,120)
-				CX.pack_start(CL,True,True)
-				CB.add(CX)
-				CH = gtk.HBox()
-				if po.Name != 'core':
-					CE = gtk.CheckButton()
-					CE.set_active(po.Enabled)
-					CE.connect("toggled",self.EnablePlugin,po)
-					CH.pack_start(CE,False,False)
-				CH.pack_start(CB,True,True)
-				CH.set_size_request(220,-1)
-				self.TableCats[c][1].append(CH)
-				self.TableCats[c][2].append(po)
+	def BuildTable(self, viewPort):
+		pluginWindow = gtk.VBox()
+		pluginWindow.set_border_width(10)
+		viewPort.add(pluginWindow)
 
-	def FilterTable(self,wid,extended=False):
+		self.TableCats = {}
+		self.TableAttached = False
+		self.LastCols = -1
+		for category in sorted(self.Categories, self.CatSortCompare):
+			pluginList = self.Categories[category]
+			categoryBox = gtk.VBox()
+			categoryHeader = gtk.HBox()
+			categoryLabel = MakeLabel('', -1)
+			pluginWindow.pack_start(categoryBox, False, False)
+
+			name = category or 'Uncategorized'
+			categoryLabel.set_markup("<span color='#aaa' size='x-large' weight='800'>%s</span>" % name)
+			categoryImg = self.MakeImage(category = name.lower().replace(" ", "_"))
+			if categoryImg:
+				categoryHeader.pack_start(categoryImg, False, False)
+			categoryHeader.pack_start(categoryLabel, False, False)
+			categoryBox.pack_start(categoryHeader, False, False)
+			
+			categoryTab = gtk.Table()
+			categoryTab.set_border_width(10)
+			self.TableCats[category] = (categoryTab, [], [])
+			categoryBox.pack_start(categoryTab, False, False)
+			
+			for plugin in pluginList:
+				pluginButton = gtk.Button()
+				pluginButton.connect('clicked', self.SelectPlugin, plugin)
+				pluginButton.connect('enter', self.SetInfo, self.PluginDescription, plugin.LongDesc)
+				pluginButton.connect('leave', self.ResetInfo, self.PluginDescription)
+				pluginButton.set_size_request(200, -1)
+				pluginButton.set_relief(gtk.RELIEF_NONE)
+				pluginButtonBox = gtk.HBox(False, 10)
+				pluginButtonBox.set_border_width(10)
+				pluginImage = self.PluginImages[plugin.Name]
+				pluginLabel = MakeLabel(plugin.ShortDesc, 120)
+				pluginButtonBox.pack_start(pluginImage, False, False)
+				pluginButtonBox.pack_start(pluginLabel, True, True)
+				pluginButton.add(pluginButtonBox)
+				pluginBox = gtk.HBox()
+
+				if plugin.Name !=  'core':
+					pluginEnable = gtk.CheckButton()
+					pluginEnable.set_active(plugin.Enabled)
+					pluginEnable.connect("toggled", self.EnablePlugin, plugin)
+					pluginBox.pack_start(pluginEnable, False, False)
+
+				pluginBox.pack_start(pluginButton, True, True)
+				pluginBox.set_size_request(220, -1)
+				self.TableCats[category][1].append(pluginBox)
+				self.TableCats[category][2].append(plugin)
+
+	def FilterTable(self, wid, extended = False):
 		text = wid.get_text().lower()
 		cols = self.LastCols
 		foundPlugin = False
+
 		if self.TableAttached:
-			for CN,CW in self.TableCats.items():
-				for CB in CW[1]:
-					if CB.get_parent():
-						CW[0].remove(CB)
-		for CN,CW in self.TableCats.items():
+			for categoryName, categoryContainer in self.TableCats.items():
+				for pluginButton in categoryContainer[1]:
+					if pluginButton.get_parent():
+						categoryContainer[0].remove(pluginButton)
+
+		for categoryName, categoryContainer in self.TableCats.items():
 			col = 0
 			row = 0
 			empty = True
-			for CB in CW[1]:
-				index = CW[1].index(CB)
-				shortDesc = CW[2][index].ShortDesc.lower()
-				longDesc = CW[2][index].LongDesc.lower()
-				name = CW[2][index].Name.lower()
+			for pluginButton in categoryContainer[1]:
+				index = categoryContainer[1].index(pluginButton)
+				shortDesc = categoryContainer[2][index].ShortDesc.lower()
+				longDesc = categoryContainer[2][index].LongDesc.lower()
+				name = categoryContainer[2][index].Name.lower()
 				show = False
+
 				if extended:
 					show = name.find(text) != -1 \
 					or shortDesc.find(text) != -1 \
@@ -1183,114 +1317,117 @@ class MainWinClass:
 				else:
 					show = name.find(text) != -1 \
 					or shortDesc.find(text) != -1
+
 				if show:
 					empty = False
 					foundPlugin = True
-					CW[0].attach(CB,col,col+1,row,row+1,0)
-					col = col + 1
-					if col >= cols:
+					categoryContainer[0].attach(pluginButton, col, col+1, row, row+1, 0)
+					col = col+1
+					if col >=  cols:
 						col = 0
-						row = row + 1
+						row = row+1
 			if empty:
-				CW[0].get_parent().set_no_show_all(True)
-				CW[0].get_parent().hide()
+				categoryContainer[0].get_parent().set_no_show_all(True)
+				categoryContainer[0].get_parent().hide()
 			else:
-				CW[0].get_parent().set_no_show_all(False)
-				CW[0].attach(gtk.Label(),cols+5,cols+6,0,1,gtk.EXPAND)
+				categoryContainer[0].get_parent().set_no_show_all(False)
+				categoryContainer[0].attach(gtk.Label(), cols+5, cols+6, 0, 1, gtk.EXPAND)
 	
 		if not foundPlugin and not extended:
-			self.FilterTable(wid,True)
+			self.FilterTable(wid, True)
 			return
 
-		self.TableAttached=True
+		self.TableAttached = True
 		self.MainWin.show_all()
 
-	def RebuildTable(self,wid,req):
-		cols = (req.width-60)/220
+	def RebuildTable(self, widget, request):
+		cols = (request.width - 60) / 220
 		if cols == self.LastCols:
 			return
+		
 		self.LastCols = cols
 		if self.TableAttached:
-			for CN,CW in self.TableCats.items():
-				for CB in CW[1]:
-					CW[0].remove(CB)
-		for CN,CW in self.TableCats.items():
+			for categoryName, categoryContainer in self.TableCats.items():
+				for pluginButton in categoryContainer[1]:
+					categoryContainer[0].remove(pluginButton)
+		
+		for categoryName, categoryContainer in self.TableCats.items():
 			col = 0
 			row = 0
-			for CB in CW[1]:
-				CW[0].attach(CB,col,col+1,row,row+1,0)
-				col = col + 1
+			for pluginButton in categoryContainer[1]:
+				categoryContainer[0].attach(pluginButton, col, col+1, row, row+1, 0)
+				col = col+1
 				if col >= cols:
 					col = 0
-					row = row + 1
-			CW[0].attach(gtk.Label(),cols+5,cols+6,0,1,gtk.EXPAND)
-		self.TableAttached=True
+					row = row+1
+			categoryContainer[0].attach(gtk.Label(), cols+5, cols+6, 0, 1, gtk.EXPAND)
+		self.TableAttached = True
 		self.MainWin.show_all()
 
-	def SetMainWidgets(self,lw,rw):
-		p = self.LeftPane.get_child()
-		if p:
-			p.destroy()
-		self.LeftPane.add(lw)
-		p = self.RightPane.get_child()
-		if (p):
-			p.destroy()
-		self.RightPane.add(rw)
+	def SetMainWidgets(self, leftWidget, rightWidget):
+		pane = self.LeftPane.get_child()
+		if pane:
+			pane.destroy()
+		pane = self.RightPane.get_child()
+		if (pane):
+			pane.destroy()
+		self.LeftPane.add(leftWidget)
+		self.RightPane.add(rightWidget)
 		self.MainWin.show_all()
 
-	def CatSortCompare(self,v1,v2):
+	def CatSortCompare(self, v1, v2):
 		if v1 == v2:
-			return cmp(v1,v2)
+			return cmp(v1, v2)
 		if v1 == 'General':
-			return cmp('',v2 or 'zzzzzzzz')
+			return cmp('', v2 or 'zzzzzzzz')
 		if v2 == 'General':
-			return cmp(v1 or 'zzzzzzz','')
-		return cmp(v1 or 'zzzzzzzz',v2 or 'zzzzzzzz')
+			return cmp(v1 or 'zzzzzzz', '')
+		return cmp(v1 or 'zzzzzzzz', v2 or 'zzzzzzzz')
 
-	def MakeImage(self,plugin=0,category=0,size=32):
-		Img = gtk.Image()
+	def MakeImage(self, plugin = 0, category = 0, size = 32):
+		img = gtk.Image()
 		try:
 			if plugin != 0:
-				Pbf = gtk.gdk.pixbuf_new_from_file_at_size("%s/plugin-%s.svg"%(
-					PixmapDir,plugin.Name),size,size)
-				Img.set_from_pixbuf(Pbf)
+				pixbuf = gtk.gdk.pixbuf_new_from_file_at_size("%s/plugin-%s.svg"%(
+					PixmapDir, plugin.Name), size, size)
+				img.set_from_pixbuf(pixbuf)
 			elif category != 0:
-				Pbf = gtk.gdk.pixbuf_new_from_file_at_size("%s/category-%s.svg"%(
-					PixmapDir,category),size,size)
-				Img.set_from_pixbuf(Pbf)
+				pixbuf = gtk.gdk.pixbuf_new_from_file_at_size("%s/category-%s.svg"%(
+					PixmapDir, category), size, size)
+				img.set_from_pixbuf(pixbuf)
 		except:
-			Img.set_from_stock(gtk.STOCK_MISSING_IMAGE,gtk.ICON_SIZE_BUTTON)
-		return Img
+			img.set_from_stock(gtk.STOCK_MISSING_IMAGE, gtk.ICON_SIZE_BUTTON)
+		return img
 
-	def SelectPlugin(self,obj,select):
-		for nam,val in self.PluginImages.items():
-			w = val.get_parent()
-			if w:
-				w.remove(val)
-		pc = PluginClass(select,self)
-		self.SetMainWidgets(pc.LeftWidget,pc.RightWidget)
+	def SelectPlugin(self, obj, select):
+		for name, value in self.PluginImages.items():
+			widget = value.get_parent()
+			if widget:
+				widget.remove(value)
+		pluginClass = PluginClass(select, self)
+		self.SetMainWidgets(pluginClass.LeftWidget, pluginClass.RightWidget)
 
-	def SetInfo(self,wid,label,text):
+	def SetInfo(self, widget, label, text):
 		label.set_markup(text)
 	
-	def ResetInfo(self,wid,label):
+	def ResetInfo(self, widget, label):
 		label.set_markup("")
 
-	def Expand(self,wid,box):
+	def Expand(self, widget, box):
 		if box.get_no_show_all():
 			box.set_no_show_all(False)
 			self.LeftPane.show_all()
 			buttonImg = wid.get_child().get_children()[1]
-			buttonImg.set_from_stock(gtk.STOCK_GO_UP,gtk.ICON_SIZE_BUTTON)
+			buttonImg.set_from_stock(gtk.STOCK_GO_UP, gtk.ICON_SIZE_BUTTON)
 		else:
 			box.set_no_show_all(True)
 			box.hide()
 			self.LeftPane.show_all()
 			buttonImg = wid.get_child().get_children()[1]
-			buttonImg.set_from_stock(gtk.STOCK_GO_DOWN,gtk.ICON_SIZE_BUTTON)
+			buttonImg.set_from_stock(gtk.STOCK_GO_DOWN, gtk.ICON_SIZE_BUTTON)
 
 	def UpdatePlugins(self):
-		for cat,container,plugins in self.TableCats.values():
+		for category, container, plugins in self.TableCats.values():
 				for i in range(len(plugins)):
 					if plugins[i].Name != 'core':
 						check = container[i].get_children()[0]
@@ -1298,69 +1435,74 @@ class MainWinClass:
 						check.set_active(plugins[i].Enabled)
 						self.BlockEnablePlugin -= 1
 
-	def EnablePlugin(self,widget,plugin):
+	def EnablePlugin(self, widget, plugin):
 		if self.BlockEnablePlugin > 0:
 			return 
 
-		#attempt to resolve conflicts...
-		conf = plugin.Enabled and plugin.DisableConflicts or plugin.EnableConflicts
-		if HandlePluginConflicts(conf):
+		# attempt to resolve conflicts...
+		conflicts = plugin.Enabled and plugin.DisableConflicts or plugin.EnableConflicts
+		if HandlePluginConflicts(conflicts):
 			plugin.Enabled = widget.get_active()
 			self.UpdatePlugins()
 		else:
 			widget.set_active(plugin.Enabled)
 		Write(plugin.Context)
 
-	def UpdateProfiles(self,widget,default="Default"):
+	def UpdateProfiles(self, widget, default = "Default"):
 		self.Context.Read()
 		self.Context.UpdateProfiles()
+
 		widget.get_model().clear()
 		widget.append_text("Default")
 		for profile in self.Context.Profiles.values():
 			widget.append_text(profile.Name)
+
 		index = -1
 		counter = 0
 		for m in widget.get_model():
 			if m[0] == default:
-				index = counter
+				index=counter
 			counter += 1
 		if index >= 0:
 			widget.set_active(index)
 
-	def ProfileChanged(self,widget):
+	def ProfileChanged(self, widget):
 		name = widget.get_active_text()
 		if name == 'Default':
 			self.Context.ResetProfile()
 		else:
 			self.Context.CurrentProfile = self.Context.Profiles[name]
+		
 		self.Context.Read()
 		Write(self.Context)
 		self.UpdatePlugins()
 
-	def AddProfile(self,widget,box):
+	def AddProfile(self, widget, box):
 		dlg = gtk.Dialog("Enter a profile name", self.MainWin, gtk.DIALOG_MODAL)
 		dlg.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
 		dlg.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
+		
 		entry = gtk.Entry()
 		label = gtk.Label("Please enter a name for the new profile:")
-		dlg.vbox.pack_start(label,False,False,5)
-		dlg.vbox.pack_start(entry,False,False,5)
-		dlg.set_size_request(340,120)
+		dlg.vbox.pack_start(label, False, False, 5)
+		dlg.vbox.pack_start(entry, False, False, 5)
+
+		dlg.set_size_request(340, 120)
 		dlg.show_all()
 		ret = dlg.run()
 		if ret == gtk.RESPONSE_OK:
 			self.Context.CurrentProfile = ccs.Profile(self.Context, entry.get_text())
+			self.UpdateProfiles(box, entry.get_text())
 		dlg.destroy()
-		self.UpdateProfiles(box, entry.get_text())
 	
-	def RemoveProfile(self,widget,box):
+	def RemoveProfile(self, widget, box):
 		name = box.get_active_text()
 		if name != 'Default':
 			self.Context.ResetProfile()
 			self.Context.Profiles[name].Delete()
 			self.UpdateProfiles(box)
 	
-	def BackendChanged(self,widget,box):
+	def BackendChanged(self, widget, box):
 		shortDesc = widget.get_active_text()
 		name = ""
 		for backend in self.Context.Backends.values():
@@ -1373,9 +1515,9 @@ class MainWinClass:
 			# Causes some problems...
 			#self.UpdateProfiles(box)		
 		else:
-			raise Exception,"Backend not found."
+			raise Exception, "Backend not found."
 
-	def BackToMain(self,obj):
+	def BackToMain(self, obj):
 		self.ResetMainWidgets()
 
 MainWin = MainWinClass(ccs.Context()).MainWin
