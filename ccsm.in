@@ -1312,8 +1312,12 @@ class MainWinClass:
 				self.TableCats[category][1].append(pluginBox)
 				self.TableCats[category][2].append(plugin)
 
-	def FilterTable(self, wid, extended = False):
-		text = wid.get_text().lower()
+	# targets:
+	# 0 = plugin name and short description
+	# 1 = plugin long description
+	# 2 = category
+	def FilterTable(self, widget, target=0):
+		text = widget.get_text().lower()
 		cols = self.LastCols
 		foundPlugin = False
 
@@ -1332,15 +1336,18 @@ class MainWinClass:
 				shortDesc = categoryContainer[2][index].ShortDesc.lower()
 				longDesc = categoryContainer[2][index].LongDesc.lower()
 				name = categoryContainer[2][index].Name.lower()
+				category = categoryName.lower()
 				show = False
 
-				if extended:
+				if target == 0:
+					show = name.find(text) != -1 \
+					or shortDesc.find(text) != -1
+				elif target == 1:
 					show = name.find(text) != -1 \
 					or shortDesc.find(text) != -1 \
 					or longDesc.find(text) != -1
-				else:
-					show = name.find(text) != -1 \
-					or shortDesc.find(text) != -1
+				elif target == 2:
+					show = category.find(text) != -1
 
 				if show:
 					empty = False
@@ -1357,8 +1364,13 @@ class MainWinClass:
 				categoryContainer[0].get_parent().set_no_show_all(False)
 				categoryContainer[0].attach(gtk.Label(), cols+5, cols+6, 0, 1, gtk.EXPAND)
 	
-		if not foundPlugin and not extended:
-			self.FilterTable(wid, True)
+		# Search in long description
+		if not foundPlugin and target == 0:
+			self.FilterTable(widget, 1)
+			return
+		# Search in category
+		elif not foundPlugin and target == 1:
+			self.FilterTable(widget, 2)
 			return
 
 		self.TableAttached = True
