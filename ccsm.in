@@ -38,19 +38,18 @@ from xml.sax.saxutils import escape as EscapeMarkup
 
 
 PixmapDir = "@prefix@/share/ccsm/images"
+CurrentScreenNum = 0
 
 def Write(ctx):
 	ctx.Write()
 
-class Item:
-	def __init__(self):
-		pass
-
-	def SetSelected(self, Selected):
-		if (Selected):
-			self.Label.set_markup("<b><i>%s</i></b>"%self.Name)
-		else:
-			self.Label.set_text(self.Name)
+def getScreens():
+	screens = []
+	display = gtk.gdk.display_get_default()
+	nScreens = display.get_n_screens()
+	for i in range(nScreens):
+		screens.append(i)
+	return screens
 
 def CheckConflict(setting, con, typ):
 	if typ == 'Key':
@@ -541,7 +540,7 @@ class SubGroupArea:
 		
 		self.Empty = True
 		row = 0
-		for setting in sorted(sum((v.values() for v in [subGroup.Display]+subGroup.Screens), []), SettingSortCompare):
+		for setting in sorted(sum((v.values() for v in [subGroup.Display]+[subGroup.Screens[CurrentScreenNum]]), []), SettingSortCompare):
 			if not setting.Name == '____plugin_enabled':
 				set = MakeSetting(setting)
 				if set is not None:
@@ -830,7 +829,7 @@ class ActionPage:
 				self.Plugins[pluginName][groupName][subGroupName] = {}
 				subGroupEmpty = True
 				
-				for setting in sum((v.values() for v in [subGroup.Display]+subGroup.Screens), []):
+				for setting in sum((v.values() for v in [subGroup.Display]+[subGroup.Screens[CurrentScreenNum]]), []):
 					if setting.Type == 'Action':
 						if subGroupName != '':
 							i = self.Store.append(subGroupIter)
@@ -1226,6 +1225,28 @@ class MainWinClass:
 		backendButton.add(backendFrame)
 		leftChild.pack_end(backendButton, False, False)
 
+		# Screens
+		screenBox = gtk.combo_box_new_text()
+		for screen in getScreens():
+			screenBox.append_text("Screen %i" % screen)
+		name = self.Context.CurrentBackend.Name
+		screenBox.set_active(CurrentScreenNum)
+		screenBox.connect("changed", self.ScreenChanged)
+		screenBox.set_no_show_all(True)
+		leftChild.pack_end(screenBox, False, False)
+		screenLabel = MakeLabel()
+		screenLabel.set_markup("<span color='%s' size='large' weight='800'>Screen</span>" % self.BrightColor)
+		screenImage = gtk.Image()
+		screenImage.set_from_stock(gtk.STOCK_GO_DOWN, gtk.ICON_SIZE_BUTTON)
+		screenButton = gtk.Button()
+		screenButton.connect("clicked", self.Expand, screenBox)
+		screenButton.set_relief(gtk.RELIEF_NONE)
+		screenFrame = gtk.HBox()
+		screenFrame.pack_start(screenLabel, False, False)
+		screenFrame.pack_end(screenImage, False, False)
+		screenButton.add(screenFrame)
+		leftChild.pack_end(screenButton, False, False)
+
 		pluginsVPort.modify_bg(gtk.STATE_NORMAL, gtk.gdk.color_parse('#ffffff'))
 		rightChild = gtk.ScrolledWindow()
 		rightChild.props.hscrollbar_policy = gtk.POLICY_NEVER
@@ -1420,13 +1441,13 @@ class MainWinClass:
 		if box.get_no_show_all():
 			box.set_no_show_all(False)
 			self.LeftPane.show_all()
-			buttonImg = wid.get_child().get_children()[1]
+			buttonImg = widget.get_child().get_children()[1]
 			buttonImg.set_from_stock(gtk.STOCK_GO_UP, gtk.ICON_SIZE_BUTTON)
 		else:
 			box.set_no_show_all(True)
 			box.hide()
 			self.LeftPane.show_all()
-			buttonImg = wid.get_child().get_children()[1]
+			buttonImg = widget.get_child().get_children()[1]
 			buttonImg.set_from_stock(gtk.STOCK_GO_DOWN, gtk.ICON_SIZE_BUTTON)
 
 	def UpdatePlugins(self):
@@ -1519,10 +1540,18 @@ class MainWinClass:
 			#self.UpdateProfiles(box)		
 		else:
 			raise Exception, "Backend not found."
+	
+	def ScreenChanged(self, widget):
+		self.Context.Write()
+		CurrentScreenNum = widget.get_active()
+		self.Context.Read()
 
 	def BackToMain(self, obj):
 		self.ResetMainWidgets()
-
-MainWin = MainWinClass(ccs.Context()).MainWin
-MainWin.show_all()
+		
+screens = getScreens()
+CurrentScreenNum = gtk.gdk.display_get_default().get_default_screen().get_number()
+context = ccs.Context(screens, len(screens))
+mainWin = MainWinClass(context).MainWin
+mainWin.show_all()
 gtk.main()
