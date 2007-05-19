@@ -275,7 +275,7 @@ class ListChoiceSetting(SettingItem):
 		col = 0
 		self.Checks = []
 		for value in self.Setting.Info[1]:
-			box = gtk.CheckButton(val)
+			box = gtk.CheckButton(value)
 			self.Checks.append((value, box))
 			self.Table.attach(box, col, col+1, row, row+1, TDef, TDef, TXp, TYp)
 			box.connect('toggled', self.Changed)
@@ -1154,7 +1154,30 @@ class MainWinClass:
 		filterEntry = gtk.Entry()
 		filterEntry.connect("changed", self.FilterTable)
 		leftChild.pack_start(filterEntry, False, False)
-		
+
+		# Categories
+		"""categoryBox = gtk.VBox()
+		categoryBox.set_no_show_all(True)
+		for category in self.Categories.keys():
+			name = category or 'Uncategorized'
+			categoryToggleLabel = MakeLabel(name)
+			categoryToggle = gtk.Button()
+			categoryToggle.add(categoryToggleLabel)
+			categoryBox.pack_start(categoryToggle, False, False)
+		categoryLabel = MakeLabel()
+		categoryLabel.set_markup("<span color='%s' size='large' weight='800'>Category</span>" % self.BrightColor)
+		categoryImage = gtk.Image()
+		categoryImage.set_from_stock(gtk.STOCK_GO_DOWN, gtk.ICON_SIZE_BUTTON)
+		categoryButton = gtk.Button()
+		categoryButton.connect("clicked", self.Expand, categoryBox)
+		categoryButton.set_relief(gtk.RELIEF_NONE)
+		categoryFrame = gtk.HBox()
+		categoryFrame.pack_start(categoryLabel, False, False)
+		categoryFrame.pack_end(categoryImage, False, False)
+		categoryButton.add(categoryFrame)
+		leftChild.pack_start(categoryButton, False, False)
+		leftChild.pack_start(categoryBox, False, False)"""
+
 		# Information
 		infoLabel = MakeLabel()
 		infoLabel.set_markup("<span color='%s' size='large' weight='800'>Information</span>"%self.BrightColor)
