@@ -1332,7 +1332,7 @@ class MainWinClass:
 		# Categories
 		categoryBox = gtk.VBox()
 		categoryBox.set_no_show_all(True)
-		for category in self.Categories.keys():
+		for category in sorted(self.Categories, self.CatSortCompare):
 			name = category or 'Uncategorized'
 			categoryToggleLabel = MakeLabel(name)
 			categoryToggle = gtk.Button()
