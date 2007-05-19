@@ -513,7 +513,7 @@ def MakeSetting(setting):
 			return ListChoiceSetting(setting)
 		elif setting.Info[0] == 'String' or setting.Info[0] == 'Match':
 			return StringMatchListSetting(setting)
-		elif Setting.Info[0] == 'Int' or Setting.Info[0] == 'Float':
+		elif setting.Info[0] == 'Int' or setting.Info[0] == 'Float':
 			return IntFloatListSetting(setting)
 		else:
 			raise TypeError, "Unhandled list type %s for %s"%(setting.Info[0], setting.Name)
