@@ -1043,7 +1043,7 @@ class PluginClass:
 		self.InfoLabelCont = gtk.HBox()
 		self.InfoLabelCont.set_border_width(10)
 		self.LeftWidget.pack_start(self.InfoLabelCont, False, False)
-		self.InfoLabel = MakeLabel(plugin.LongDesc, 150)
+		self.InfoLabel = MakeLabel(plugin.LongDesc, 180)
 		self.InfoLabelCont.pack_start(self.InfoLabel, True, True)
 		
 		if plugin.Name != 'core':
@@ -1089,6 +1089,143 @@ class PluginClass:
 		Write(self.Plugin.Context)
 		self.Block = self.Block-1
 
+class ProfileBackendPage:
+	def __init__(self, main, context):
+		self.Context = context
+		self.Main = main
+		self.MainWin = main.MainWin
+		self.LeftWidget = gtk.VBox(False, 10)
+		self.LeftWidget.set_border_width(15)
+		self.RightWidget = gtk.Notebook()
+		rightChild = gtk.VBox()
+		rightChild.set_border_width(10)
+		self.RightWidget.append_page(rightChild, gtk.Label('Profile & Backend'))
+
+		# Left Pane
+		self.DescLabel = MakeLabel()
+		self.DescLabel.set_markup("<span color='%s' size='large' weight='800'>Backend &amp; Profile</span>" % main.BrightColor)
+		self.DescImg = main.MakeImage(category="profiles", size = 64)
+		self.LeftWidget.pack_start(self.DescImg, False, False)
+		self.LeftWidget.pack_start(self.DescLabel, False, False)
+		self.InfoLabelCont = gtk.HBox()
+		self.InfoLabelCont.set_border_width(10)
+		self.LeftWidget.pack_start(self.InfoLabelCont, False, False)
+		self.InfoLabel = MakeLabel("Configure the backend and profile used by the Compiz Configuration System.", 180)
+		self.InfoLabelCont.pack_start(self.InfoLabel, True, True)
+
+		# Profiles
+		profileBox = gtk.HBox()
+		profileAdd = gtk.Button()
+		profileAdd.set_image(gtk.image_new_from_stock(gtk.STOCK_ADD, gtk.ICON_SIZE_BUTTON))
+		profileRemove = gtk.Button()
+		profileRemove.set_image(gtk.image_new_from_stock(gtk.STOCK_REMOVE, gtk.ICON_SIZE_BUTTON))
+		profileComboBox = gtk.combo_box_new_text()
+		profileComboBox.append_text("Default")
+		for profile in self.Context.Profiles.values():
+			profileComboBox.append_text(profile.Name)
+		if self.Context.CurrentProfile.Name == '':
+			profileComboBox.set_active(0)
+		else:
+			name = self.Context.CurrentProfile.Name
+			index = self.Context.Profiles.values().index(self.Context.Profiles[name])
+			profileComboBox.set_active(index+1)
+		profileComboBox.connect("changed", self.ProfileChanged)
+		profileAdd.connect("clicked", self.AddProfile, profileComboBox)
+		profileRemove.connect("clicked", self.RemoveProfile, profileComboBox)
+		profileBox.pack_start(profileComboBox, True, True)
+		profileBox.pack_start(profileAdd, False, False)
+		profileBox.pack_start(profileRemove, False, False)
+		profileLabel = MakeLabel()
+		profileLabel.set_markup("<span color='%s' size='large' weight='800'>Profile</span>" % self.Main.BrightColor)
+		rightChild.pack_start(profileLabel, False, False, 5)
+		rightChild.pack_start(profileBox, False, False, 5)
+
+		# Backends
+		backendBox = gtk.combo_box_new_text()
+		for backend in self.Context.Backends.values():
+			backendBox.append_text(backend.ShortDesc)
+		name = self.Context.CurrentBackend.Name
+		index = self.Context.Backends.values().index(self.Context.Backends[name])
+		backendBox.set_active(index)
+		backendBox.connect("changed", self.BackendChanged, profileComboBox)
+		backendLabel = MakeLabel()
+		backendLabel.set_markup("<span color='%s' size='large' weight='800'>Backend</span>" % self.Main.BrightColor)
+		rightChild.pack_start(backendLabel, False, False, 5)
+		rightChild.pack_start(backendBox, False, False, 5)
+
+		# Back Button
+		self.BackButton = gtk.Button(gtk.STOCK_GO_BACK)
+		self.BackButton.set_use_stock(True)
+		self.BackButton.connect('clicked', self.Main.BackToMain)
+		self.LeftWidget.pack_end(self.BackButton, False, False)
+	
+	def UpdateProfiles(self, widget, default = "Default"):
+		self.Context.Read()
+
+		widget.get_model().clear()
+		widget.append_text("Default")
+		for profile in self.Context.Profiles.values():
+			widget.append_text(profile.Name)
+
+		index = -1
+		counter = 0
+		for m in widget.get_model():
+			if m[0] == default:
+				index=counter
+			counter += 1
+		if index >= 0:
+			widget.set_active(index)
+
+	def ProfileChanged(self, widget):
+		name = widget.get_active_text()
+		if name == 'Default':
+			self.Context.ResetProfile()
+		else:
+			self.Context.CurrentProfile = self.Context.Profiles[name]
+		
+		self.Context.Read()
+		Write(self.Context)
+
+	def AddProfile(self, widget, box):
+		dlg = gtk.Dialog("Enter a profile name", self.MainWin, gtk.DIALOG_MODAL)
+		dlg.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
+		dlg.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
+		
+		entry = gtk.Entry()
+		label = gtk.Label("Please enter a name for the new profile:")
+		dlg.vbox.pack_start(label, False, False, 5)
+		dlg.vbox.pack_start(entry, False, False, 5)
+
+		dlg.set_size_request(340, 120)
+		dlg.show_all()
+		ret = dlg.run()
+		if ret == gtk.RESPONSE_OK:
+			self.Context.CurrentProfile = ccs.Profile(self.Context, entry.get_text())
+			self.UpdateProfiles(box, entry.get_text())
+		dlg.destroy()
+	
+	def RemoveProfile(self, widget, box):
+		name = box.get_active_text()
+		if name != 'Default':
+			self.Context.ResetProfile()
+			self.Context.Profiles[name].Delete()
+			self.UpdateProfiles(box)
+	
+	def BackendChanged(self, widget, box):
+		shortDesc = widget.get_active_text()
+		name = ""
+		for backend in self.Context.Backends.values():
+			if backend.ShortDesc == shortDesc:
+				name = backend.Name
+				break
+		
+		if name != "":
+			self.Context.CurrentBackend = self.Context.Backends[name]
+			# Causes some problems...
+			#self.UpdateProfiles(box)
+		else:
+			raise Exception, "Backend not found."
+
 def Quit(foo):
 	gtk.main_quit()
 
@@ -1097,7 +1234,7 @@ class MainWinClass:
 		self.Context = Context
 		self.MainWin = gtk.Window()
 		self.MainWin.connect("destroy", Quit)
-		self.MainWin.set_default_size(930, 520)
+		self.MainWin.set_default_size(960, 580)
 		self.MainWin.set_title("CCS Manager")
 		
 		# set up the Entry to get the BrightColor
@@ -1113,7 +1250,7 @@ class MainWinClass:
 		self.MainBox = gtk.HBox()
 		self.MainWin.add(self.MainBox)
 		self.LeftPane = gtk.Alignment()
-		self.LeftPane.set_size_request(200, 520)
+		self.LeftPane.set_size_request(230, 520)
 		self.RightPane = gtk.Alignment()
 		self.RightPane.set_border_width(5)
 		self.RightPane.props.yscale = 1
@@ -1149,14 +1286,51 @@ class MainWinClass:
 		
 		# Filter
 		filterLabel = MakeLabel()
-		filterLabel.set_markup("<span color='%s' size='large' weight='800'>Filter</span>"%self.BrightColor)
+		filterLabel.set_markup("<span color='%s' size='large' weight='800'>Filter</span>" % self.BrightColor)
 		leftChild.pack_start(filterLabel, False, False)
 		filterEntry = gtk.Entry()
 		filterEntry.connect("changed", self.FilterTable)
 		leftChild.pack_start(filterEntry, False, False)
 
+		# Screens
+		screenBox = gtk.combo_box_new_text()
+		for screen in getScreens():
+			screenBox.append_text("Screen %i" % screen)
+		name = self.Context.CurrentBackend.Name
+		screenBox.set_active(CurrentScreenNum)
+		screenBox.connect("changed", self.ScreenChanged)
+		screenLabel = MakeLabel()
+		screenLabel.set_markup("<span color='%s' size='large' weight='800'>Screen</span>" % self.BrightColor)
+		leftChild.pack_start(screenLabel, False, False)
+		leftChild.pack_start(screenBox, False, False)
+
+		# Information
+		infoLabel = MakeLabel()
+		infoLabel.set_markup("<span color='%s' size='large' weight='800'>Information</span>" % self.BrightColor)
+		leftChild.pack_start(infoLabel, False, False)
+		infoBox = gtk.VBox()
+		infoBox.set_border_width(10)
+		self.PluginDescription = MakeLabel(wrap = 180)
+		self.PluginDescription.set_markup("")
+		infoBox.pack_start(self.PluginDescription, False, False)
+		leftChild.pack_start(infoBox, False, False)
+		
+		# Profiles and Backend
+		profBackLabel = MakeLabel()
+		profBackLabel.set_markup("<span color='%s' size='large' weight='800'>Backend &amp; Profile</span>" % self.BrightColor)
+		profBackImage = gtk.Image()
+		profBackImage.set_from_stock(gtk.STOCK_GO_FORWARD, gtk.ICON_SIZE_BUTTON)
+		profBackButton = gtk.Button()
+		profBackButton.connect("clicked", self.ShowProfileBackend)
+		profBackButton.set_relief(gtk.RELIEF_NONE)
+		profBackFrame = gtk.HBox()
+		profBackFrame.pack_start(profBackLabel, False, False)
+		profBackFrame.pack_end(profBackImage, False, False)
+		profBackButton.add(profBackFrame)
+		leftChild.pack_end(profBackButton, False, False)
+
 		# Categories
-		"""categoryBox = gtk.VBox()
+		categoryBox = gtk.VBox()
 		categoryBox.set_no_show_all(True)
 		for category in self.Categories.keys():
 			name = category or 'Uncategorized'
@@ -1167,7 +1341,7 @@ class MainWinClass:
 		categoryLabel = MakeLabel()
 		categoryLabel.set_markup("<span color='%s' size='large' weight='800'>Category</span>" % self.BrightColor)
 		categoryImage = gtk.Image()
-		categoryImage.set_from_stock(gtk.STOCK_GO_DOWN, gtk.ICON_SIZE_BUTTON)
+		categoryImage.set_from_stock(gtk.STOCK_GO_UP, gtk.ICON_SIZE_BUTTON)
 		categoryButton = gtk.Button()
 		categoryButton.connect("clicked", self.Expand, categoryBox)
 		categoryButton.set_relief(gtk.RELIEF_NONE)
@@ -1175,101 +1349,8 @@ class MainWinClass:
 		categoryFrame.pack_start(categoryLabel, False, False)
 		categoryFrame.pack_end(categoryImage, False, False)
 		categoryButton.add(categoryFrame)
-		leftChild.pack_start(categoryButton, False, False)
-		leftChild.pack_start(categoryBox, False, False)"""
-
-		# Information
-		infoLabel = MakeLabel()
-		infoLabel.set_markup("<span color='%s' size='large' weight='800'>Information</span>"%self.BrightColor)
-		leftChild.pack_start(infoLabel, False, False)
-		infoBox = gtk.VBox()
-		infoBox.set_border_width(10)
-		self.PluginDescription = MakeLabel(wrap = 150)
-		self.PluginDescription.set_markup("")
-		infoBox.pack_start(self.PluginDescription, False, False)
-		leftChild.pack_start(infoBox, False, False)
-		
-		# Profiles
-		profileBox = gtk.HBox()
-		profileAdd = gtk.Button()
-		profileAdd.set_image(gtk.image_new_from_stock(gtk.STOCK_ADD, gtk.ICON_SIZE_BUTTON))
-		profileRemove = gtk.Button()
-		profileRemove.set_image(gtk.image_new_from_stock(gtk.STOCK_REMOVE, gtk.ICON_SIZE_BUTTON))
-		profileComboBox = gtk.combo_box_new_text()
-		profileComboBox.append_text("Default")
-		for profile in self.Context.Profiles.values():
-			profileComboBox.append_text(profile.Name)
-		if self.Context.CurrentProfile.Name == '':
-			profileComboBox.set_active(0)
-		else:
-			name = self.Context.CurrentProfile.Name
-			index = self.Context.Profiles.values().index(self.Context.Profiles[name])
-			profileComboBox.set_active(index+1)
-		profileComboBox.connect("changed", self.ProfileChanged)
-		profileAdd.connect("clicked", self.AddProfile, profileComboBox)
-		profileRemove.connect("clicked", self.RemoveProfile, profileComboBox)
-		profileBox.pack_start(profileComboBox, True, True)
-		profileBox.pack_start(profileAdd, False, False)
-		profileBox.pack_start(profileRemove, False, False)
-		profileBox.set_no_show_all(True)
-		leftChild.pack_end(profileBox, False, False)
-		profileLabel = MakeLabel()
-		profileLabel.set_markup("<span color='%s' size='large' weight='800'>Profile</span>" % self.BrightColor)
-		profileImage = gtk.Image()
-		profileImage.set_from_stock(gtk.STOCK_GO_DOWN, gtk.ICON_SIZE_BUTTON)
-		profileButton = gtk.Button()
-		profileButton.connect("clicked", self.Expand, profileBox)
-		profileButton.set_relief(gtk.RELIEF_NONE)
-		profileFrame = gtk.HBox()
-		profileFrame.pack_start(profileLabel, False, False)
-		profileFrame.pack_end(profileImage, False, False)
-		profileButton.add(profileFrame)
-		leftChild.pack_end(profileButton, False, False)
-
-		# Backends
-		backendBox = gtk.combo_box_new_text()
-		for backend in self.Context.Backends.values():
-			backendBox.append_text(backend.ShortDesc)
-		name = self.Context.CurrentBackend.Name
-		index = self.Context.Backends.values().index(self.Context.Backends[name])
-		backendBox.set_active(index)
-		backendBox.connect("changed", self.BackendChanged, profileComboBox)
-		backendBox.set_no_show_all(True)
-		leftChild.pack_end(backendBox, False, False)
-		backendLabel = MakeLabel()
-		backendLabel.set_markup("<span color='%s' size='large' weight='800'>Backend</span>" % self.BrightColor)
-		backendImage = gtk.Image()
-		backendImage.set_from_stock(gtk.STOCK_GO_DOWN, gtk.ICON_SIZE_BUTTON)
-		backendButton = gtk.Button()
-		backendButton.connect("clicked", self.Expand, backendBox)
-		backendButton.set_relief(gtk.RELIEF_NONE)
-		backendFrame = gtk.HBox()
-		backendFrame.pack_start(backendLabel, False, False)
-		backendFrame.pack_end(backendImage, False, False)
-		backendButton.add(backendFrame)
-		leftChild.pack_end(backendButton, False, False)
-
-		# Screens
-		screenBox = gtk.combo_box_new_text()
-		for screen in getScreens():
-			screenBox.append_text("Screen %i" % screen)
-		name = self.Context.CurrentBackend.Name
-		screenBox.set_active(CurrentScreenNum)
-		screenBox.connect("changed", self.ScreenChanged)
-		screenBox.set_no_show_all(True)
-		leftChild.pack_end(screenBox, False, False)
-		screenLabel = MakeLabel()
-		screenLabel.set_markup("<span color='%s' size='large' weight='800'>Screen</span>" % self.BrightColor)
-		screenImage = gtk.Image()
-		screenImage.set_from_stock(gtk.STOCK_GO_DOWN, gtk.ICON_SIZE_BUTTON)
-		screenButton = gtk.Button()
-		screenButton.connect("clicked", self.Expand, screenBox)
-		screenButton.set_relief(gtk.RELIEF_NONE)
-		screenFrame = gtk.HBox()
-		screenFrame.pack_start(screenLabel, False, False)
-		screenFrame.pack_end(screenImage, False, False)
-		screenButton.add(screenFrame)
-		leftChild.pack_end(screenButton, False, False)
+		leftChild.pack_end(categoryButton, False, False)
+		leftChild.pack_end(categoryBox, False, False)
 
 		pluginsVPort.modify_bg(gtk.STATE_NORMAL, gtk.gdk.color_parse('#ffffff'))
 		rightChild = gtk.ScrolledWindow()
@@ -1468,6 +1549,15 @@ class MainWinClass:
 				widget.remove(value)
 		pluginClass = PluginClass(select, self)
 		self.SetMainWidgets(pluginClass.LeftWidget, pluginClass.RightWidget)
+	
+	def ShowProfileBackend(self, obj):
+		self.RightVadj = self.RightPane.get_child().get_vadjustment().get_value()
+		for name, value in self.PluginImages.items():
+			widget = value.get_parent()
+			if widget:
+				widget.remove(value)
+		profBackPage = ProfileBackendPage(self, self.Context)
+		self.SetMainWidgets(profBackPage.LeftWidget, profBackPage.RightWidget)
 
 	def SetInfo(self, widget, label, text):
 		label.set_markup(text)
@@ -1480,22 +1570,13 @@ class MainWinClass:
 			box.set_no_show_all(False)
 			self.LeftPane.show_all()
 			buttonImg = widget.get_child().get_children()[1]
-			buttonImg.set_from_stock(gtk.STOCK_GO_UP, gtk.ICON_SIZE_BUTTON)
+			buttonImg.set_from_stock(gtk.STOCK_GO_DOWN, gtk.ICON_SIZE_BUTTON)
 		else:
 			box.set_no_show_all(True)
 			box.hide()
 			self.LeftPane.show_all()
 			buttonImg = widget.get_child().get_children()[1]
-			buttonImg.set_from_stock(gtk.STOCK_GO_DOWN, gtk.ICON_SIZE_BUTTON)
-
-	def UpdatePlugins(self):
-		for category, container, plugins in self.TableCats.values():
-				for i in range(len(plugins)):
-					if plugins[i].Name != 'core':
-						check = container[i].get_children()[0]
-						self.BlockEnablePlugin += 1
-						check.set_active(plugins[i].Enabled)
-						self.BlockEnablePlugin -= 1
+			buttonImg.set_from_stock(gtk.STOCK_GO_UP, gtk.ICON_SIZE_BUTTON)
 
 	def EnablePlugin(self, widget, plugin):
 		if self.BlockEnablePlugin > 0:
@@ -1510,74 +1591,7 @@ class MainWinClass:
 			widget.set_active(plugin.Enabled)
 		Write(plugin.Context)
 
-	def UpdateProfiles(self, widget, default = "Default"):
-		self.Context.Read()
-		self.Context.UpdateProfiles()
 
-		widget.get_model().clear()
-		widget.append_text("Default")
-		for profile in self.Context.Profiles.values():
-			widget.append_text(profile.Name)
-
-		index = -1
-		counter = 0
-		for m in widget.get_model():
-			if m[0] == default:
-				index=counter
-			counter += 1
-		if index >= 0:
-			widget.set_active(index)
-
-	def ProfileChanged(self, widget):
-		name = widget.get_active_text()
-		if name == 'Default':
-			self.Context.ResetProfile()
-		else:
-			self.Context.CurrentProfile = self.Context.Profiles[name]
-		
-		self.Context.Read()
-		Write(self.Context)
-		self.UpdatePlugins()
-
-	def AddProfile(self, widget, box):
-		dlg = gtk.Dialog("Enter a profile name", self.MainWin, gtk.DIALOG_MODAL)
-		dlg.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
-		dlg.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
-		
-		entry = gtk.Entry()
-		label = gtk.Label("Please enter a name for the new profile:")
-		dlg.vbox.pack_start(label, False, False, 5)
-		dlg.vbox.pack_start(entry, False, False, 5)
-
-		dlg.set_size_request(340, 120)
-		dlg.show_all()
-		ret = dlg.run()
-		if ret == gtk.RESPONSE_OK:
-			self.Context.CurrentProfile = ccs.Profile(self.Context, entry.get_text())
-			self.UpdateProfiles(box, entry.get_text())
-		dlg.destroy()
-	
-	def RemoveProfile(self, widget, box):
-		name = box.get_active_text()
-		if name != 'Default':
-			self.Context.ResetProfile()
-			self.Context.Profiles[name].Delete()
-			self.UpdateProfiles(box)
-	
-	def BackendChanged(self, widget, box):
-		shortDesc = widget.get_active_text()
-		name = ""
-		for backend in self.Context.Backends.values():
-			if backend.ShortDesc == shortDesc:
-				name = backend.Name
-				break
-		
-		if name != "":
-			self.Context.CurrentBackend = self.Context.Backends[name]
-			# Causes some problems...
-			#self.UpdateProfiles(box)		
-		else:
-			raise Exception, "Backend not found."
 	
 	def ScreenChanged(self, widget):
 		self.Context.Write()
