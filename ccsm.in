@@ -1128,6 +1128,7 @@ class MainWinClass:
 		self.MainBox.pack_start(self.RightPane, True, True)
 		self.Categories = {}
 		self.PluginImages = {}
+		self.RightVadj = 0.0
 		
 		for pluginName, plugin in self.Context.Plugins.items():
 			self.PluginImages[pluginName] = self.MakeImage(plugin)
@@ -1399,6 +1400,7 @@ class MainWinClass:
 			categoryContainer[0].attach(gtk.Label(), cols+5, cols+6, 0, 1, gtk.EXPAND)
 		self.TableAttached = True
 		self.MainWin.show_all()
+		self.RightPane.get_child().props.vadjustment.value = self.RightVadj
 
 	def SetMainWidgets(self, leftWidget, rightWidget):
 		pane = self.LeftPane.get_child()
@@ -1436,6 +1438,7 @@ class MainWinClass:
 		return img
 
 	def SelectPlugin(self, obj, select):
+		self.RightVadj = self.RightPane.get_child().get_vadjustment().get_value()
 		for name, value in self.PluginImages.items():
 			widget = value.get_parent()
 			if widget:
