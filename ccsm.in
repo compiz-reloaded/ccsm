@@ -275,7 +275,7 @@ class ListChoiceSetting(SettingItem):
 		col = 0
 		self.Checks = []
 		for value in self.Setting.Info[1]:
-			box = gtk.CheckButton(val)
+			box = gtk.CheckButton(value)
 			self.Checks.append((value, box))
 			self.Table.attach(box, col, col+1, row, row+1, TDef, TDef, TXp, TYp)
 			box.connect('toggled', self.Changed)
