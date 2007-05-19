@@ -1337,6 +1337,7 @@ class MainWinClass:
 			categoryToggleLabel = MakeLabel(name)
 			categoryToggle = gtk.Button()
 			categoryToggle.add(categoryToggleLabel)
+			categoryToggle.connect("clicked", self.ToggleCategory, name)
 			categoryBox.pack_start(categoryToggle, False, False)
 		categoryLabel = MakeLabel()
 		categoryLabel.set_markup("<span color='%s' size='large' weight='800'>Category</span>" % self.BrightColor)
@@ -1591,7 +1592,18 @@ class MainWinClass:
 			widget.set_active(plugin.Enabled)
 		Write(plugin.Context)
 
-
+	def ToggleCategory(self, widget, category):
+		categoryContainer = self.TableCats[category]
+		categoryY = categoryContainer[0].get_parent().get_allocation().y
+		parentY = self.RightPane.get_child().get_allocation().y
+		parentHeight = self.RightPane.get_child().get_allocation().height
+		categoryBox = self.RightPane.get_child().get_child().get_child()
+		boxHeight = categoryBox.get_allocation().height
+		posY = categoryY - parentY
+		neededHeight = posY + parentHeight
+		if neededHeight > boxHeight:
+			posY =  boxHeight - parentHeight
+		self.RightPane.get_child().props.vadjustment.value = posY
 	
 	def ScreenChanged(self, widget):
 		self.Context.Write()
