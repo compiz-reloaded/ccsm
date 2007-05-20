@@ -36,6 +36,7 @@ images_DATA = \
 	plugin-fade.svg \
 	plugin-fadedesktop.svg  \
 	plugin-fakeargb.svg \
+	plugin-firepaint.svg \
 	plugin-fs.svg \
 	plugin-group.svg        \
 	plugin-imgjpeg.svg      \
