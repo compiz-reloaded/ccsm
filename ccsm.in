@@ -888,7 +888,7 @@ class ActionPage:
 
 		setting = self.Plugins[pluginName][groupName][subGroupName][settingName]
 
-		dlg = gtk.Dialog("Edit Action: %s" % setting.ShortDesc, MainWin)
+		dlg = gtk.Dialog("Edit Action: %s" % setting.ShortDesc)
 		dlg.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
 		dlg.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK).grab_default()
 		dlg.set_default_response(gtk.RESPONSE_OK)
@@ -1220,6 +1220,7 @@ class ProfileBackendPage:
 				break
 		
 		if name != "":
+			self.Context.ResetProfile()
 			self.Context.CurrentBackend = self.Context.Backends[name]
 			# Causes some problems...
 			#self.UpdateProfiles(box)
