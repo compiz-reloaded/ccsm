@@ -1579,6 +1579,15 @@ class MainWinClass:
 			buttonImg = widget.get_child().get_children()[1]
 			buttonImg.set_from_stock(gtk.STOCK_GO_UP, gtk.ICON_SIZE_BUTTON)
 
+	def UpdatePlugins(self):
+		for category, container, plugins in self.TableCats.values():
+				for i in range(len(plugins)):
+					if plugins[i].Name != 'core':
+						check = container[i].get_children()[0]
+						self.BlockEnablePlugin += 1
+						check.set_active(plugins[i].Enabled)
+						self.BlockEnablePlugin -= 1
+	
 	def EnablePlugin(self, widget, plugin):
 		if self.BlockEnablePlugin > 0:
 			return 
