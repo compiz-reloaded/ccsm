@@ -1338,7 +1338,7 @@ class MainWinClass:
 			categoryToggleLabel = MakeLabel(name)
 			categoryToggle = gtk.Button()
 			categoryToggle.add(categoryToggleLabel)
-			categoryToggle.connect("clicked", self.ToggleCategory, name)
+			categoryToggle.connect("clicked", self.ToggleCategory, category)
 			categoryBox.pack_start(categoryToggle, False, False)
 		categoryLabel = MakeLabel()
 		categoryLabel.set_markup("<span color='%s' size='large' weight='800'>Category</span>" % self.BrightColor)
