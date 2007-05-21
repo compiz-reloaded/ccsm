@@ -183,6 +183,25 @@ class StringMatchSetting(SettingItem):
 	def _Changed(self):
 		self.Setting.Value = self.Widget.get_text()
 
+class EnumSetting(SettingItem):
+	def _Init(self):
+		self.Widget = gtk.combo_box_new_text()
+		for name in self.Setting.Info[2].keys():
+			self.Widget.append_text(name)
+		self.Widget.connect('changed', self.Changed)
+
+	def _Read(self):
+		index = 0
+		for name, value in self.Setting.Info[2].items():
+			if self.Setting.Value == value:
+				break
+			index = index + 1
+		self.Widget.set_active(index)
+
+	def _Changed(self):
+		active = self.Widget.get_active_text()
+		self.Setting.Value = self.Setting.Info[2][active]
+
 class StringChoiceSetting(SettingItem):
 	def _Init(self):
 		self.Widget = gtk.combo_box_new_text()
@@ -504,6 +523,8 @@ def MakeSetting(setting):
 		return StringMatchSetting(setting)
 	elif setting.Type == 'Bool':
 		return BoolSetting(setting)
+	elif setting.Type == 'Int' and len(setting.Info[2].keys()) > 0:
+		return EnumSetting(setting)
 	elif setting.Type == 'Float' or setting.Type == 'Int':
 		return IntFloatSetting(setting)
 	elif setting.Type == 'Color':
