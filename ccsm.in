@@ -449,7 +449,7 @@ class StringMatchListSetting(ListSetting):
 		return self.Store.get(iter, 0)[0]
 
 	def _Edit(self, value=None):
-		dlg = gtk.Dialog("Edit %s" % self.Setting.ShortDesc, MainWin)
+		dlg = gtk.Dialog("Edit %s" % self.Setting.ShortDesc, mainWin)
 		dlg.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
 		dlg.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK).grab_default()
 		dlg.set_default_response(gtk.RESPONSE_OK)
@@ -479,7 +479,7 @@ class IntFloatListSetting(ListSetting):
 		return eval(self.Store.get(Iter, 0)[0])
 
 	def _Edit(self, value = None):
-		dlg = gtk.Dialog("Edit %s" % self.Setting.ShortDesc, MainWin)
+		dlg = gtk.Dialog("Edit %s" % self.Setting.ShortDesc, mainWin)
 		dlg.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
 		dlg.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK).grab_default()
 		dlg.set_default_response(gtk.RESPONSE_OK)
@@ -613,7 +613,7 @@ def HandlePluginConflicts(conflicts):
 	if len(conflicts) == 0:
 		return True
 
-	dlg = gtk.MessageDialog(parent = MainWin, flags = gtk.DIALOG_MODAL, type = gtk.MESSAGE_WARNING, buttons = gtk.BUTTONS_OK_CANCEL)
+	dlg = gtk.MessageDialog(parent = mainWin, flags = gtk.DIALOG_MODAL, type = gtk.MESSAGE_WARNING, buttons = gtk.BUTTONS_OK_CANCEL)
 	for conflict in conflicts:
 		if conflict[0] == 'ConflictFeature':
 			# see if we can deactivate the plugin
