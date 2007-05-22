@@ -784,11 +784,6 @@ class ActionPage:
 				gobject.TYPE_STRING, 	#15-disp/scn str XXX
 				)
 		
-		self.ComboStore = gtk.ListStore(gobject.TYPE_STRING)
-		for edge in self.EdgeList:
-			iter = self.ComboStore.append()
-			self.ComboStore.set(iter, 0, edge)
-		
 		self.TreeView = gtk.TreeView(self.Store)
 		self.TreeView.set_headers_visible(True)
 		# Name
@@ -803,12 +798,8 @@ class ActionPage:
 		buttonRenderer.connect('edited', self.ButtonEdited)
 		self.TreeView.insert_column_with_attributes(-1, 'Button', buttonRenderer, text=3, editable=8, visible=5, sensitive=8)
 		# Edges
-		edgeRenderer = gtk.CellRendererCombo()
-		edgeRenderer.props.has_entry = False
-		edgeRenderer.props.model = self.ComboStore
-		edgeRenderer.props.text_column = 0
-		edgeRenderer.connect('edited', self.EdgeEdited)
-		self.TreeView.insert_column_with_attributes(-1, 'Screen Edge', edgeRenderer, text=4, editable=9, visible=5, sensitive=9)
+		edgeRenderer = gtk.CellRendererText()
+		self.TreeView.insert_column_with_attributes(-1, 'Screen Edge', edgeRenderer, text=4, visible=5, sensitive=9)
 		# Bell -- may replace with one setting in general
 		bellRenderer = gtk.CellRendererToggle()
 		bellRenderer.props.xalign = 0
@@ -858,12 +849,12 @@ class ActionPage:
 							i = self.Store.append(groupIter)
 
 						key, mods = gtk.accelerator_parse(setting.Value[0])
-						edge = 'None'
+						edges = 'None'
 						if len(setting.Value[3]) > 0:
-							edge = setting.Value[3][0]
+							edges = " | ".join(setting.Value[3])
 						
 						self.Store.set(i, 0, setting.ShortDesc, 1, key, 2, mods, 3, setting.Value[1], 4,
-									   edge, 5, True, 6, setting.Value[2], 7, setting.Info[0], 8, setting.Info[1], 9,
+									   edges, 5, True, 6, setting.Value[2], 7, setting.Info[0], 8, setting.Info[1], 9,
 									   setting.Info[3], 10, setting.Info[2], 11, groupName, 12, subGroupName, 13,
 									   setting.Name, 14, pluginName)
 						self.Plugins[pluginName][groupName][subGroupName][setting.Name] = setting
@@ -890,11 +881,15 @@ class ActionPage:
 			if setting.Info[2]:
 				bellButton.set_active(setting.DefaultValue[2])
 			if setting.Info[3]:
-				counter = 0
-				for edge in self.EdgeList:
-					if edge == setting.DefaultValue[3]:
-						edgeCmb.set_active(counter)
-					counter = counter + 1
+				children = edgeTable.get_children()
+				edges = setting.DefaultValue[3]
+				for checkBox in children:
+					checkBox.set_active(False)
+					for edge in edges:
+						if checkBox.get_label() == edge:
+							checkBox.set_active(True)
+							break
+							
 
 		iter = self.Store.get_iter(path)
 		store = self.Store.get(iter, 11, 12, 13, 14, 1, 2, 3, 4, 6)
@@ -936,26 +931,38 @@ class ActionPage:
 		
 		# Edge
 		if setting.Info[3]:
-			edgeCmb = gtk.ComboBox(self.ComboStore)
-			counter = 0
+			edgeTable = gtk.Table()
+			row = 0
+			col = 0
 			for e in self.EdgeList:
-				if e == edge:
-					break
-				counter = counter + 1
-			edgeCmb.set_active(counter)
-			edgeRenderer = gtk.CellRendererText()
-			edgeCmb.pack_start(edgeRenderer)
-			edgeCmb.add_attribute(edgeRenderer, 'text', 0)
-			edgeLabel = gtk.Label('Screen Edge')
+				if e == 'None':
+					continue
+				
+				edgeCheck = gtk.CheckButton(e)
+				if edges.count(e) > 0:
+					edgeCheck.set_active(True)
+				edgeTable.attach(edgeCheck, col, col+1, row, row+1, TDef, TDef, TXp, TYp)
+
+				col += 1
+				if col > 2:
+					row += 1
+					col = 0
+
+				if (row == 1 and col > 0):
+					col += 1
+					
+			edgeLabel = gtk.Label('Screen Edges')
 			edgeLabel.props.xalign = 0
 			table.attach(edgeLabel, 0, 1, 2, 3, TDef, TDef, TXp, TYp)
-			table.attach(edgeCmb, 1, 2, 2, 3, TDef, TDef, TXp, TYp)
+			table.attach(edgeTable, 1, 2, 2, 3, TDef, TDef, TXp, TYp)
 		
 		# Bell
 		if setting.Info[2]:
 			bellButton = gtk.CheckButton('On System Bell')
 			bellButton.set_active(be)
 			tabel.attach(bellButton, 0, 2, 3, 4, TDef, TDef, TXp, TYp)
+		
+		# Reset
 		box = gtk.HBox()
 		box.pack_start(MakeLabel('Reset To Defaults'), True, True)
 		resetButton = gtk.Button()
@@ -975,7 +982,12 @@ class ActionPage:
 		if setting.Info[2]:
 			bell = bellButton.get_active()
 		if setting.Info[3]:
-			edge = edgeCmb.get_active()
+			children = edgeTable.get_children()
+			edges = []
+			for checkBox in children:
+				if checkBox.get_active():
+					edges.append(checkBox.get_label())
+			edges = " | ".join(edges)
 		
 		dlg.destroy()
 		if resp == gtk.RESPONSE_OK:
@@ -987,27 +999,28 @@ class ActionPage:
 			if setting.Info[2]:
 				self.Store.set(iter, 6, bell)
 			if setting.Info[3]:
-				self.Store.set(iter, 4, self.EdgeList[edge])
+				self.Store.set(iter, 4, edges)
 			self.WriteSetting(iter)
 	
 	def WriteSetting(self, iter):
 		store = self.Store.get(iter, 11, 12, 13, 14, 1, 2, 3, 4, 6)
-		groupName, subGroupName, settingName, pluginName, key, keyModifier, button, edge, bell = store
+		groupName, subGroupName, settingName, pluginName, key, keyModifier, button, edges, bell = store
 		
 		setting = self.Plugins[pluginName][groupName][subGroupName][settingName]
 		realKey = gtk.accelerator_name(key, keyModifier)
+		edges = edges.split(" | ")
 		
-		if CheckActionConflicts(setting, realKey, button, bell, edge):
-			setting.Value = [realKey, button, bell, [edge]]
+		if CheckActionConflicts(setting, realKey, button, bell, edges):
+			setting.Value = [realKey, button, bell, edges]
 			Write(setting.Plugin.Context)
 			
-		realKey, button, bell, edge = setting.Value
+		realKey, button, bell, edges = setting.Value
 		key, keyModifier = gtk.accelerator_parse(realKey)
-		if edge:
-			edge = edge[0]
+		if len(edges) > 0:
+			edges = " | ".join(setting.Value[3])
 		else:
-			edge = 'None'
-		self.Store.set(iter, 1, key, 2, keyModifier, 3, button, 4, edge, 6, bell)
+			edges = 'None'
+		self.Store.set(iter, 1, key, 2, keyModifier, 3, button, 4, edges, 6, bell)
 	
 	def KeyEdited(self, obj, path, key, mods, code):
 		iter = self.Store.get_iter_from_string(path)
