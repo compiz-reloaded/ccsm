@@ -894,6 +894,7 @@ class ActionPage:
 		iter = self.Store.get_iter(path)
 		store = self.Store.get(iter, 11, 12, 13, 14, 1, 2, 3, 4, 6)
 		groupName, subGroupName, settingName, pluginName, key, keyModifier, button, edges, bell = store
+		edges = edges.split(" | ")
 
 		if subGroupName is None or groupName is None or settingName is None:
 			if self.TreeView.row_expanded(path):
