@@ -38,6 +38,7 @@ images_DATA = \
 	plugin-fakeargb.svg \
 	plugin-firepaint.svg \
 	plugin-fs.svg \
+	plugin-glib.svg \
 	plugin-group.svg        \
 	plugin-imgjpeg.svg      \
 	plugin-mblur.svg   \
@@ -52,6 +53,7 @@ images_DATA = \
 	plugin-put.svg  \
 	plugin-reflex.svg       \
 	plugin-resize.svg       \
+	plugin-resizeinfo.svg \
 	plugin-ring.svg \
 	plugin-rotate.svg       \
 	plugin-scale.svg        \
