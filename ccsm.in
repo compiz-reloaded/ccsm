@@ -64,7 +64,7 @@ def CheckConflict(setting, con, typ):
 	 
 	msg = msg % (typ, setting.ShortDesc, setting.Plugin.ShortDesc, con.ShortDesc, con.Plugin.ShortDesc, con.ShortDesc, con.Plugin.ShortDesc)
 	
-	dlg = gtk.MessageDialog(parent=MainWin, flags=gtk.DIALOG_MODAL, type=gtk.MESSAGE_WARNING, buttons=gtk.BUTTONS_YES_NO)
+	dlg = gtk.MessageDialog(parent=mainWin, flags=gtk.DIALOG_MODAL, type=gtk.MESSAGE_WARNING, buttons=gtk.BUTTONS_YES_NO)
 	dlg.set_markup(msg)
 	dlg.show_all()
 	ret = dlg.run()
@@ -97,7 +97,7 @@ def CheckActionConflicts(setting, key, button, bell, edges):
 	
 	if len(buttonCon) and button and button.lower() != 'disabled' and button.lower() != 'none':
 		for b in buttonCon:
-			ret = CheckConflict(settings, b, 'Button')
+			ret = CheckConflict(setting, b, 'Button')
 			if ret == gtk.RESPONSE_YES:
 				value = b.Value
 				b.Value = [value[0], 'None', value[2], value[3]]
