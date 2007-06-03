@@ -494,11 +494,11 @@ class IntDescListSetting(SettingItem):
 		self.Widget.add(self.HBox)
 
 	def _Read(self):
-		for value, box in self.Checks:
+		for key, box in self.Checks:
 			box.set_active(False)
 		for setVal in self.Setting.Value:
-			for value, box in self.Checks:
-				if setVal == value:
+			for key, box in self.Checks:
+				if setVal == self.Setting.Info[1][2][key]:
 					box.set_active(True)
 
 	def _Changed(self):
