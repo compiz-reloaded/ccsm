@@ -546,15 +546,6 @@ def SettingSortCompare(v1, v2):
 	else:
 		return cmp(v1.ShortDesc, v2.ShortDesc)
 
-def HasOnlyType(subGroup, type):
-	empty = True
-	for setting in sum((v.values() for v in [subGroup.Display]+[subGroup.Screens[CurrentScreenNum]]), []):
-			if not setting.Name == '____plugin_enabled':
-				empty = False
-				if setting.Type != type:
-					return False
-	return not empty
-
 class SubGroupArea:
 	def __init__(self, name, subGroup):
 		if name == '':
@@ -567,14 +558,6 @@ class SubGroupArea:
 			self.Expander.set_expanded(False)
 			self.Child = gtk.Table()
 			self.Expander.add(self.Child)
-
-			# create a special widget for list subGroups
-			if HasOnlyType(subGroup, 'List'):
-				multiList = MultiListSetting(subGroup)
-				multiList.attach(self.Child)
-				self.Empty = False
-
-				return # exit earlier to avoid unneeded logic's
 		
 		self.Empty = True
 		row = 0
