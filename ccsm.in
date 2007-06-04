@@ -579,7 +579,7 @@ def MakeSetting(setting):
 		elif setting.Info[0] == 'String' or setting.Info[0] == 'Match':
 			return StringMatchListSetting(setting)
 		elif setting.Info[0] == 'Int':
-			if len(setting.Info[1]) > 2:
+			if len(setting.Info[1][2]) > 0:
 				return IntDescListSetting(setting)
 			else:
 				return IntFloatListSetting(setting)
