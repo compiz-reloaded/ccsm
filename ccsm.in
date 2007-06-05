@@ -589,11 +589,19 @@ def MakeSetting(setting):
 			raise TypeError, "Unhandled list type %s for %s"%(setting.Info[0], setting.Name)
 	return None
 
-def SettingSortCompare(v1, v2):
-	if v1.Type != v2.Type:
-		return cmp(v1.Type, v2.Type)
-	else:
-		return cmp(v1.ShortDesc, v2.ShortDesc)
+
+#def SettingSortCompare(v1, v2):
+#	if v1.Type != v2.Type:
+#		# XXX Work-a-round for range widgets
+#		t1 = v1.Type
+#		t2 = v2.Type
+#		if t1 == 'Float' or t1 == 'Int':
+#			t1 = 'CRange'
+#		if t2 == 'Float' or t2 == 'Int':
+#			t2 = 'CRange'
+#		return cmp(t1, t2)
+#	else:
+#		return cmp(v1.ShortDesc, v2.ShortDesc)
 
 def HasOnlyType(subGroup, type):
 	empty = True
@@ -627,7 +635,8 @@ class SubGroupArea:
 		
 		self.Empty = True
 		row = 0
-		for setting in sorted(sum((v.values() for v in [subGroup.Display]+[subGroup.Screens[CurrentScreenNum]]), []), SettingSortCompare):
+		#for setting in sorted(sum((v.values() for v in [subGroup.Display]+[subGroup.Screens[CurrentScreenNum]]), []), SettingSortCompare):
+		for setting in sum((v.values() for v in [subGroup.Display]+[subGroup.Screens[CurrentScreenNum]]), []):
 			if not setting.Name == '____plugin_enabled':
 				set = MakeSetting(setting)
 				if set is not None:
@@ -658,6 +667,7 @@ class Page(object):
 		
 		self.Empty = True
 
+
 class GroupPage(Page):
 	def __init__(self, name, group):
 		super(GroupPage, self).__init__(name)
@@ -668,7 +678,7 @@ class GroupPage(Page):
 				self.SetContainer.pack_start(sga.Widget, False, False)
 				self.Empty = False
 
-		for subGroup in group:
+		for subGroup in group.keys():
 			if not subGroup == '':
 				sga = SubGroupArea(subGroup, group[subGroup])
 				if not sga.Empty:
