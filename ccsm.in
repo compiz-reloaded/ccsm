@@ -202,24 +202,6 @@ class EnumSetting(SettingItem):
 		active = self.Widget.get_active_text()
 		self.Setting.Value = self.Setting.Info[2][active]
 
-class StringChoiceSetting(SettingItem):
-	def _Init(self):
-		self.Widget = gtk.combo_box_new_text()
-		for text in self.Setting.Info:
-			self.Widget.append_text(text)
-		self.Widget.connect('changed', self.Changed)
-
-	def _Read(self):
-		index = 0
-		for n in self.Setting.Info:
-			if self.Setting.Value == n:
-				break
-			index = index + 1
-		self.Widget.set_active(index)
-
-	def _Changed(self):
-		self.Setting.Value = self.Widget.get_active_text()
-
 class BoolSetting(SettingItem):
 	def _Init(self):
 		self.Custom = True
@@ -283,50 +265,6 @@ class ColorSetting(SettingItem):
 		col = self.Widget.get_color()
 		alpha = self.Widget.get_alpha()
 		self.Setting.Value = [col.red, col.green, col.blue, alpha]
-
-class ListChoiceSetting(SettingItem):
-	def _Init(self):
-		self.Widget = gtk.Frame(self.Setting.ShortDesc)
-		self.Table = gtk.Table()
-		self.Custom = True
-		
-		row = 0
-		col = 0
-		self.Checks = []
-		for value in self.Setting.Info[1]:
-			box = gtk.CheckButton(value)
-			self.Checks.append((value, box))
-			self.Table.attach(box, col, col+1, row, row+1, TDef, TDef, TXp, TYp)
-			box.connect('toggled', self.Changed)
-			col = col+1
-			if (col >=  3):
-				col = 0
-				row = row+1
-		
-		self.HBox = gtk.HBox()
-		self.VBox = gtk.VBox()
-		self.HBox.pack_start(self.VBox, False, False)
-		self.HBox.pack_start(self.Table, True, True)
-		self.VBox.pack_start(self.Reset, False, False)
-		self.Widget.add(self.HBox)
-
-	def _Read(self):
-		for value, box in self.Checks:
-			box.set_active(False)
-		for setVal in self.Setting.Value:
-			for value, box in self.Checks:
-				if setVal == value:
-					box.set_active(True)
-
-	def _Changed(self):
-		values = []
-		for value, box in self.Checks:
-			if box.get_active():
-				values.append(value)
-		self.Setting.Value = values
-	
-	def Attach(self, table, row):
-		table.attach(self.Widget, 0, 100, row, row+1, xpadding = 5)
 
 class ListSetting(SettingItem):
 	def _Init(self):
@@ -561,9 +499,7 @@ class IntFloatListSetting(ListSetting):
 		return None
 
 def MakeSetting(setting):
-	if setting.Type == 'String' and len(setting.Info):
-		return StringChoiceSetting(setting)
-	elif setting.Type == 'String' or setting.Type == 'Match':
+	if setting.Type == 'String' or setting.Type == 'Match':
 		return StringMatchSetting(setting)
 	elif setting.Type == 'Bool':
 		return BoolSetting(setting)
@@ -574,9 +510,7 @@ def MakeSetting(setting):
 	elif setting.Type == 'Color':
 		return ColorSetting(setting)
 	elif setting.Type == 'List':
-		if setting.Info[0] == 'String' and len(setting.Info[1]):
-			return ListChoiceSetting(setting)
-		elif setting.Info[0] == 'String' or setting.Info[0] == 'Match':
+		if setting.Info[0] == 'String' or setting.Info[0] == 'Match':
 			return StringMatchListSetting(setting)
 		elif setting.Info[0] == 'Int':
 			if len(setting.Info[1][2]) > 0:
