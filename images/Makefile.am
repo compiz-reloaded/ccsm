@@ -73,6 +73,7 @@ images_DATA = \
 	plugin-trailfocus.svg   \
 	plugin-video.svg        \
 	plugin-wall.svg \
+	plugin-wallpaper.svg \
 	plugin-water.svg        \
 	plugin-wobbly.svg       \
 	plugin-zoom.svg 
