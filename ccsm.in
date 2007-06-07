@@ -763,18 +763,8 @@ def MakeSetting(setting):
 	return None
 
 
-#def SettingSortCompare(v1, v2):
-#	if v1.Type != v2.Type:
-#		# XXX Work-a-round for range widgets
-#		t1 = v1.Type
-#		t2 = v2.Type
-#		if t1 == 'Float' or t1 == 'Int':
-#			t1 = 'CRange'
-#		if t2 == 'Float' or t2 == 'Int':
-#			t2 = 'CRange'
-#		return cmp(t1, t2)
-#	else:
-#		return cmp(v1.ShortDesc, v2.ShortDesc)
+def SettingSortCompare(v1, v2):
+	return cmp(v1.Plugin.Ranking[v1.Name], v2.Plugin.Ranking[v2.Name])
 
 def HasOnlyType(settings, type):
 	empty = True
@@ -787,8 +777,8 @@ def HasOnlyType(settings, type):
 
 class SubGroupArea:
 	def __init__(self, name, subGroup):
-		settings = sum((v.values() for v in [subGroup.Display]+[subGroup.Screens[CurrentScreenNum]]), [])
-		
+		#settings = sum((v.values() for v in [subGroup.Display]+[subGroup.Screens[CurrentScreenNum]]), [])
+		settings = sorted(sum((v.values() for v in [subGroup.Display]+[subGroup.Screens[CurrentScreenNum]]), []), SettingSortCompare)
 		if name == '':
 			self.Widget = gtk.Table()
 			self.Child = self.Widget
@@ -811,7 +801,6 @@ class SubGroupArea:
 		
 		self.Empty = True
 		row = 0
-		#for setting in sorted(sum((v.values() for v in [subGroup.Display]+[subGroup.Screens[CurrentScreenNum]]), []), SettingSortCompare):
 		for setting in settings:
 			if not setting.Name == '____plugin_enabled':
 				set = MakeSetting(setting)
