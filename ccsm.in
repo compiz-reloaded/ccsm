@@ -286,6 +286,7 @@ class MultiListSetting(SettingItem):
 
 		self.Widget.set_border_width(5)
 		self.Widget.set_spacing(5)
+		self.Widget.set_size_request(-1, 150)
 		self.Scroll = gtk.ScrolledWindow()
 		self.Scroll.props.hscrollbar_policy = gtk.POLICY_NEVER
 		self.Scroll.props.hscrollbar_policy = gtk.POLICY_AUTOMATIC
@@ -766,6 +767,19 @@ def MakeSetting(setting):
 def SettingSortCompare(v1, v2):
 	return cmp(v1.Plugin.Ranking[v1.Name], v2.Plugin.Ranking[v2.Name])
 
+def FilterSettings(settings, filter):
+	if filter == None:
+		return settings
+
+	filteredSettings = []
+
+	for setting in settings:
+		name = setting.ShortDesc.lower()
+		if name.find(filter) != -1:
+			filteredSettings.append(setting)
+
+	return filteredSettings
+
 def HasOnlyType(settings, type):
 	empty = True
 	for setting in settings:
@@ -776,9 +790,9 @@ def HasOnlyType(settings, type):
 	return not empty
 
 class SubGroupArea:
-	def __init__(self, name, subGroup):
+	def __init__(self, name, subGroup, filter=None):
 		#settings = sum((v.values() for v in [subGroup.Display]+[subGroup.Screens[CurrentScreenNum]]), [])
-		settings = sorted(sum((v.values() for v in [subGroup.Display]+[subGroup.Screens[CurrentScreenNum]]), []), SettingSortCompare)
+		settings = FilterSettings(sorted(sum((v.values() for v in [subGroup.Display]+[subGroup.Screens[CurrentScreenNum]]), []), SettingSortCompare), filter)
 		if name == '':
 			self.Widget = gtk.Table()
 			self.Child = self.Widget
@@ -789,6 +803,7 @@ class SubGroupArea:
 			self.Expander.set_expanded(False)
 			self.Child = gtk.Table()
 			self.Expander.add(self.Child)
+			self.Expander.set_expanded(True)
 
 			# create a special widget for list subGroups
 			if HasOnlyType(settings, 'List'):
@@ -834,18 +849,18 @@ class Page(object):
 
 
 class GroupPage(Page):
-	def __init__(self, name, group):
+	def __init__(self, name, group, filter=None):
 		super(GroupPage, self).__init__(name)
 
 		if (group.has_key('')):
-			sga = SubGroupArea('', group[''])
+			sga = SubGroupArea('', group[''], filter)
 			if not sga.Empty:
 				self.SetContainer.pack_start(sga.Widget, False, False)
 				self.Empty = False
 
 		for subGroup in group.keys():
 			if not subGroup == '':
-				sga = SubGroupArea(subGroup, group[subGroup])
+				sga = SubGroupArea(subGroup, group[subGroup], filter)
 				if not sga.Empty:
 					self.SetContainer.pack_start(sga.Widget, False, False)
 					self.Empty = False
@@ -996,13 +1011,12 @@ class ActionItem(SettingItem):
 	pass
 
 class ActionPage:
-	def __init__(self, plugin, context = None):
+	def __init__(self, plugin, filter = None):
 		self.EdgeList = ['None', 'TopLeft', 'Top', 'TopRight', 'Left', 'Right', 'BottomLeft', 'Bottom', 'BottomRight']
 		self.Widget = gtk.VBox()
 		self.Plugin = plugin
+		self.Filter = filter
 		self.Context = context
-		self.Search = gtk.Entry()
-		self.Widget.pack_start(self.Search, False, False)
 		self.Scroll = gtk.ScrolledWindow()
 		self.Scroll.props.hscrollbar_policy = gtk.POLICY_AUTOMATIC
 		self.Scroll.props.vscrollbar_policy = gtk.POLICY_AUTOMATIC
@@ -1082,7 +1096,8 @@ class ActionPage:
 				self.Plugins[pluginName][groupName][subGroupName] = {}
 				subGroupEmpty = True
 				
-				for setting in sum((v.values() for v in [subGroup.Display]+[subGroup.Screens[CurrentScreenNum]]), []):
+				settings = FilterSettings(sum((v.values() for v in [subGroup.Display]+[subGroup.Screens[CurrentScreenNum]]), []), self.Filter)
+				for setting in settings:
 					if setting.Type == 'Action':
 						if subGroupName != '':
 							i = self.Store.append(subGroupIter)
@@ -1311,34 +1326,40 @@ class PluginClass:
 		self.Plugin = plugin
 		self.LeftWidget = gtk.VBox(False, 10)
 		self.LeftWidget.set_border_width(15)
-		self.PluginLabel = MakeLabel()
-		self.PluginLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>" % (main.BrightColor, plugin.ShortDesc))
-		self.PluginImg = main.MakeImage(plugin, size = 64)
-		self.LeftWidget.pack_start(self.PluginImg, False, False)
-		self.LeftWidget.pack_start(self.PluginLabel, False, False)
-		self.InfoLabelCont = gtk.HBox()
-		self.InfoLabelCont.set_border_width(10)
-		self.LeftWidget.pack_start(self.InfoLabelCont, False, False)
-		self.InfoLabel = MakeLabel(plugin.LongDesc, 180)
-		self.InfoLabelCont.pack_start(self.InfoLabel, True, True)
+		pluginLabel = MakeLabel()
+		pluginLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>" % (main.BrightColor, plugin.ShortDesc))
+		pluginImg = main.MakeImage(plugin, size = 64)
+		filterLabel = MakeLabel()
+		filterLabel.set_markup("<span color='%s' size='large' weight='800'>Filter</span>" % (main.BrightColor))
+		filterEntry = gtk.Entry()
+		filterEntry.connect("changed", self.FilterChanged)
+		self.LeftWidget.pack_start(pluginImg, False, False)
+		self.LeftWidget.pack_start(filterLabel, False, False)
+		self.LeftWidget.pack_start(filterEntry, False, False)
+		self.LeftWidget.pack_start(pluginLabel, False, False)
+		infoLabelCont = gtk.HBox()
+		infoLabelCont.set_border_width(10)
+		self.LeftWidget.pack_start(infoLabelCont, False, False)
+		infoLabel = MakeLabel(plugin.LongDesc, 180)
+		infoLabelCont.pack_start(infoLabel, True, True)
 		
 		if plugin.Name != 'core':
-			self.EnableLabel = MakeLabel()
-			self.EnableLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>" % (main.BrightColor, 'Use This Plugin'))
-			self.LeftWidget.pack_start(self.EnableLabel, False, False)
-			self.EnableCheckCont = gtk.HBox()
-			self.EnableCheckCont.set_border_width(10)
-			self.LeftWidget.pack_start(self.EnableCheckCont, False, False)
-			self.EnableCheck = gtk.CheckButton()
-			self.EnableCheck.add(MakeLabel("Enable %s" % plugin.ShortDesc, 120))
-			self.EnableCheck.set_active(plugin.Enabled)
-			self.EnableCheckCont.pack_start(self.EnableCheck, True, True)
-			self.EnableCheck.connect('toggled', self.EnablePlugin)
+			enableLabel = MakeLabel()
+			enableLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>" % (main.BrightColor, 'Use This Plugin'))
+			self.LeftWidget.pack_start(enableLabel, False, False)
+			enableCheckCont = gtk.HBox()
+			enableCheckCont.set_border_width(10)
+			self.LeftWidget.pack_start(enableCheckCont, False, False)
+			enableCheck = gtk.CheckButton()
+			enableCheck.add(MakeLabel("Enable %s" % plugin.ShortDesc, 120))
+			enableCheck.set_active(plugin.Enabled)
+			enableCheckCont.pack_start(enableCheck, True, True)
+			enableCheck.connect('toggled', self.EnablePlugin)
 		
-		self.BackButton = gtk.Button(gtk.STOCK_GO_BACK)
-		self.BackButton.set_use_stock(True)
-		self.LeftWidget.pack_end(self.BackButton, False, False)
-		self.BackButton.connect('clicked', main.BackToMain)
+		backButton = gtk.Button(gtk.STOCK_GO_BACK)
+		backButton.set_use_stock(True)
+		self.LeftWidget.pack_end(backButton, False, False)
+		backButton.connect('clicked', main.BackToMain)
 		self.RightWidget = gtk.Notebook()
 		
 		for name, group in plugin.Groups.items():
@@ -1352,16 +1373,42 @@ class PluginClass:
 			self.RightWidget.append_page(actionPage.Widget, gtk.Label('Actions'))
 		self.Block = 0
 
-	def EnablePlugin(self, wid):
+	def FilterChanged(self, widget):
+		filter = widget.get_text().lower()
+		if filter == "":
+			filter = None
+
+		groups = []
+
+		for name, group in self.Plugin.Groups.items():
+			name = name or 'General'
+			groupPage = GroupPage(name, group, filter)
+			if not groupPage.Empty:
+				groups.append(groupPage)
+
+		for page in self.RightWidget.get_children():
+			self.RightWidget.remove_page(self.RightWidget.page_num(page))
+			page.destroy()
+
+		for groupPage in groups:
+			self.RightWidget.append_page(groupPage.Widget, gtk.Label(name))
+		
+		actionPage = ActionPage(self.Plugin, filter)
+		if not actionPage.Empty:
+			self.RightWidget.append_page(actionPage.Widget, gtk.Label('Actions'))
+
+		self.RightWidget.show_all()
+
+	def EnablePlugin(self, widget):
 		if self.Block > 0:
 			return
 		self.Block += 1
 		# attempt to resolve conflicts...
 		conflicts = self.Plugin.Enabled and self.Plugin.DisableConflicts or self.Plugin.EnableConflicts
 		if HandlePluginConflicts(conflicts):
-			self.Plugin.Enabled = wid.get_active()
+			self.Plugin.Enabled = widget.get_active()
 		else:
-			wid.set_active(self.Plugin.Enabled)
+			widget.set_active(self.Plugin.Enabled)
 		Write(self.Plugin.Context)
 		self.Block = self.Block-1
 
