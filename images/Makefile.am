@@ -57,6 +57,7 @@ images_DATA = \
 	plugin-ring.svg \
 	plugin-rotate.svg       \
 	plugin-scale.svg        \
+	plugin-scaleaddon.svg \
 	plugin-schemep.svg      \
 	plugin-screencasting.svg \
 	plugin-screenshot.svg   \
@@ -75,6 +76,7 @@ images_DATA = \
 	plugin-wall.svg \
 	plugin-wallpaper.svg \
 	plugin-water.svg        \
+	plugin-winrules.svg \
 	plugin-wobbly.svg       \
 	plugin-zoom.svg 
 
