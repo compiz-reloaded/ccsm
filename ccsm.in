@@ -1384,13 +1384,13 @@ class PluginClass:
 			name = name or 'General'
 			groupPage = GroupPage(name, group, filter)
 			if not groupPage.Empty:
-				groups.append(groupPage)
+				groups.append((name, groupPage))
 
 		for page in self.RightWidget.get_children():
 			self.RightWidget.remove_page(self.RightWidget.page_num(page))
 			page.destroy()
 
-		for groupPage in groups:
+		for name, groupPage in groups:
 			self.RightWidget.append_page(groupPage.Widget, gtk.Label(name))
 		
 		actionPage = ActionPage(self.Plugin, filter)
