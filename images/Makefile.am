@@ -73,6 +73,7 @@ images_DATA = \
 	plugin-tile.svg \
 	plugin-trailfocus.svg   \
 	plugin-video.svg        \
+	plugin-unknown.svg \
 	plugin-wall.svg \
 	plugin-wallpaper.svg \
 	plugin-water.svg        \

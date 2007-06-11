@@ -18,7 +18,7 @@
 # Copyright (C) 2007 Quinn Storm
 
 
-
+import os
 import ccs
 import pygtk
 pygtk.require('2.0')
@@ -1853,17 +1853,22 @@ class MainWinClass:
 
 	def MakeImage(self, plugin = 0, category = 0, size = 32):
 		img = gtk.Image()
-		try:
-			if plugin != 0:
-				pixbuf = gtk.gdk.pixbuf_new_from_file_at_size("%s/plugin-%s.svg"%(
-					PixmapDir, plugin.Name), size, size)
+		if plugin != 0:
+			iconpath = "%s/plugin-%s.svg"%(PixmapDir, plugin.Name)
+			if not os.path.exists(iconpath):
+				iconpath = "%s/plugin-unknown.svg"%PixmapDir
+			try:
+				pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(iconpath, size, size)
 				img.set_from_pixbuf(pixbuf)
-			elif category != 0:
+			except:
+				img.set_from_stock(gtk.STOCK_MISSING_IMAGE, gtk.ICON_SIZE_BUTTON)
+		elif category != 0:
+			try:
 				pixbuf = gtk.gdk.pixbuf_new_from_file_at_size("%s/category-%s.svg"%(
 					PixmapDir, category), size, size)
 				img.set_from_pixbuf(pixbuf)
-		except:
-			img.set_from_stock(gtk.STOCK_MISSING_IMAGE, gtk.ICON_SIZE_BUTTON)
+			except:
+				img.set_from_stock(gtk.STOCK_MISSING_IMAGE, gtk.ICON_SIZE_BUTTON)
 		return img
 
 	def SelectPlugin(self, obj, select):
