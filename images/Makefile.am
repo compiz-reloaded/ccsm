@@ -6,7 +6,6 @@ imagesdir = $(datadir)/ccsm/images
 images_DATA = \
 	category-accessibility.svg      \
 	category-desktop.svg    \
-	category-development.svg        \
 	category-effects-boxed.svg      \
 	category-effects.svg    \
 	category-extras.svg     \
@@ -15,6 +14,7 @@ images_DATA = \
 	category-key_bindings.svg       \
 	category-profiles.svg   \
 	category-uncategorized.svg   \
+	category-utility.svg \
 	category-window_management.svg  \
 	plugin-3d.svg   \
 	plugin-addhelper.svg    \
