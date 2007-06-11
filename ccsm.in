@@ -1097,7 +1097,8 @@ class ActionPage:
 				self.Plugins[pluginName][groupName][subGroupName] = {}
 				subGroupEmpty = True
 				
-				settings = FilterSettings(sum((v.values() for v in [subGroup.Display]+[subGroup.Screens[CurrentScreenNum]]), []), self.Filter)
+				settings = sum((v.values() for v in [subGroup.Display]+[subGroup.Screens[CurrentScreenNum]]), [])
+				setting = sorted(FilterSettings(settings, self.Filter), SettingSortCompare)
 				for setting in settings:
 					if setting.Type == 'Action':
 						if subGroupName != '':
