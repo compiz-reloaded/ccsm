@@ -174,6 +174,8 @@ class SettingItem:
 	def _Changed(self):
 		self.PureVirtual('_Changed')
 
+
+
 class StringMatchSetting(SettingItem):
 	def _Init(self):
 		self.Widget = gtk.Entry()
@@ -184,6 +186,55 @@ class StringMatchSetting(SettingItem):
 
 	def _Changed(self):
 		self.Setting.Value = self.Widget.get_text()
+
+class FileSetting(SettingItem):
+	def _Init(self):
+		self.Widget = gtk.HBox()
+		self.Entry = gtk.Entry()
+		self.Open = gtk.Button()
+		self.Open.set_image(gtk.image_new_from_stock(
+			gtk.STOCK_OPEN, gtk.ICON_SIZE_BUTTON))
+		self.Open.connect('clicked', self.OpenFileChooser)
+		self.Entry.connect('changed', self.Changed)
+		self.Widget.pack_start(self.Entry)
+		self.Widget.pack_end(self.Open, False, False)
+	
+	def CreateFilter(self):
+		filter = gtk.FileFilter()
+		if len(self.Setting.Hints) > 1:
+			if self.Setting.Hints[1] == 'image':
+				filter.set_name('Images')
+			if self.Setting.Hints[2] == 'pngonly':
+				filter.add_pattern("*.png")
+			if self.Setting.Hints[2] == 'jpgonly':
+				filter.add_pattern("*.jpg")
+			if self.Setting.Hints[2] == 'svgonly':
+				filter.add_pattern("*.svg")
+		else:
+			filter.set_name('File')
+
+		return filter
+	
+	def OpenFileChooser(self, widget):
+		b = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_OPEN, gtk.RESPONSE_OK)
+		chooser = gtk.FileChooserDialog(title='Open file..', parent=mainWin, buttons=b)
+		
+		if os.path.exists(self.Setting.Value):
+			chooser.set_filename(self.Setting.Value)
+		else:
+			chooser.set_current_folder(os.environ.get("HOME"))
+		chooser.set_filter(self.CreateFilter())
+		ret = chooser.run()
+		
+		if ret == gtk.RESPONSE_OK:
+			self.Entry.set_text(chooser.get_filename())
+		chooser.destroy()
+
+	def _Read(self):
+		self.Entry.set_text(self.Setting.Value)
+
+	def _Changed(self):
+		self.Setting.Value = self.Entry.get_text()
 
 class EnumSetting(SettingItem):
 	def _Init(self):
@@ -742,7 +793,10 @@ class IntFloatListSetting(ListSetting):
 
 def MakeSetting(setting):
 	if setting.Type == 'String' or setting.Type == 'Match':
-		return StringMatchSetting(setting)
+		if len(setting.Hints) > 0 and setting.Hints[0] == 'file':
+			return FileSetting(setting)
+		else:
+			return StringMatchSetting(setting)
 	elif setting.Type == 'Bool':
 		return BoolSetting(setting)
 	elif setting.Type == 'Int' and len(setting.Info[2].keys()) > 0:
