@@ -60,8 +60,8 @@ def CheckConflict(setting, con, typ):
 
 	msg = "The new value for the %s binding for the action <b>%s</b> " +\
 		  "in plugin <b>%s</b> conflicts with the action <b>%s</b> of the <b>%s</b> plugin.\n" +\
-		  "Do you wish to clear <b>%s</b> in the <b>%s</b> plugin?\n" +\
-		  "If you click No, the action will still be set."
+		  "Do you wish to disable <b>%s</b> in the <b>%s</b> plugin?\n" +\
+		  "If you click No, this option will not be set."
 	 
 	msg = msg % (typ, setting.ShortDesc, setting.Plugin.ShortDesc, con.ShortDesc, con.Plugin.ShortDesc, con.ShortDesc, con.Plugin.ShortDesc)
 	
@@ -74,18 +74,19 @@ def CheckConflict(setting, con, typ):
 	return ret
 
 def CheckActionConflicts(setting, key, button, bell, edges):
-	# first gather settings list
-	allSettings = sum((sum((z.values() for z in p.Screens+[p.Display]), []) for p in setting.Plugin.Context.Plugins.values()), [])
-	allSettings.remove(setting)
 	keyCon = []
 	buttonCon = []
 	
-	for s in allSettings:
-		if s.Type == 'Action':
-			if s.Value[0] == key:
-				keyCon.append(s)
-			if s.Value[1] == button:
-				buttonCon.append(s)
+	# this might be a bit slow but anyway...
+	for plugin in setting.Plugin.Context.Plugins.values():
+		if plugin.Enabled:
+			settings = sum((z.values() for z in [plugin.Screens[CurrentScreenNum]]+[plugin.Display]), [])
+			for s in settings:
+				if s.Type == 'Action' and s != setting:
+					if s.Value[0] == key:
+						keyCon.append(s)
+					if s.Value[1] == button:
+						buttonCon.append(s)
 
 	if len(keyCon) and key and key.lower() != 'disabled' and key.lower() != 'none':
 		for k in keyCon:
