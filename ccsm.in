@@ -1153,7 +1153,7 @@ class ActionPage:
 				subGroupEmpty = True
 				
 				settings = sum((v.values() for v in [subGroup.Display]+[subGroup.Screens[CurrentScreenNum]]), [])
-				setting = sorted(FilterSettings(settings, self.Filter), SettingSortCompare)
+				settings = sorted(FilterSettings(settings, self.Filter), SettingSortCompare)
 				for setting in settings:
 					if setting.Type == 'Action':
 						if subGroupName != '':
