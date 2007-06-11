@@ -41,6 +41,7 @@ images_DATA = \
 	plugin-glib.svg \
 	plugin-group.svg        \
 	plugin-imgjpeg.svg      \
+	plugin-inotify.svg \
 	plugin-mblur.svg   \
 	plugin-minimize.svg     \
 	plugin-miniview.svg     \
