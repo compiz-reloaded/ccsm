@@ -19,7 +19,7 @@
 
 
 import os
-import ccs
+import compizconfig
 import pygtk
 pygtk.require('2.0')
 import gtk
@@ -34,6 +34,7 @@ import gobject
 import os
 import re
 gdk = gtk.gdk
+ccs = compizconfig
 from xml.sax.saxutils import escape as EscapeMarkup
 
 
