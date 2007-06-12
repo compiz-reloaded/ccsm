@@ -204,12 +204,15 @@ class FileSetting(SettingItem):
 		if len(self.Setting.Hints) > 1:
 			if self.Setting.Hints[1] == 'image':
 				filter.set_name('Images')
-			if self.Setting.Hints[2] == 'pngonly':
-				filter.add_pattern("*.png")
-			if self.Setting.Hints[2] == 'jpgonly':
-				filter.add_pattern("*.jpg")
-			if self.Setting.Hints[2] == 'svgonly':
-				filter.add_pattern("*.svg")
+			if len(self.Setting.Hints) > 2:
+				if self.Setting.Hints[2] == 'pngonly':
+					filter.add_pattern("*.png")
+				if self.Setting.Hints[2] == 'jpgonly':
+					filter.add_pattern("*.jpg")
+				if self.Setting.Hints[2] == 'svgonly':
+					filter.add_pattern("*.svg")
+			else:
+				filter.add_pattern("*.*")
 		else:
 			filter.set_name('File')
 
