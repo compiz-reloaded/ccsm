@@ -28,6 +28,7 @@ images_DATA = \
 	plugin-core.svg \
 	plugin-crashhandler.svg \
 	plugin-cube.svg \
+	plugin-cubereflex.svg \
 	plugin-dbus.svg \
 	plugin-debug.svg        \
 	plugin-decoration.svg   \
@@ -53,6 +54,7 @@ images_DATA = \
 	plugin-png.svg  \
 	plugin-put.svg  \
 	plugin-reflex.svg       \
+	plugin-regex.svg \
 	plugin-resize.svg       \
 	plugin-resizeinfo.svg \
 	plugin-ring.svg \
