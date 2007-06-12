@@ -859,7 +859,6 @@ class SubGroupArea:
 			self.Expander.set_expanded(False)
 			self.Child = gtk.Table()
 			self.Expander.add(self.Child)
-			self.Expander.set_expanded(True)
 
 			# create a special widget for list subGroups
 			if HasOnlyType(settings, 'List'):
@@ -867,6 +866,7 @@ class SubGroupArea:
 				multiList.Read()
 				multiList.Attach(self.Child, 0)
 				self.Empty = False
+				self.Expander.set_expanded(True)
 
 				return # exit earlier to avoid unneeded logic's
 		
