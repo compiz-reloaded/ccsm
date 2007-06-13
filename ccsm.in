@@ -1799,6 +1799,7 @@ class MainWinClass:
 			pluginList = self.Categories[category]
 			categoryBox = gtk.VBox()
 			categoryHeader = gtk.HBox()
+			categoryHeader.set_spacing(10)
 			categoryLabel = MakeLabel('', -1)
 			pluginWindow.pack_start(categoryBox, False, False)
 
