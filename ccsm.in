@@ -37,8 +37,9 @@ gdk = gtk.gdk
 ccs = compizconfig
 from xml.sax.saxutils import escape as EscapeMarkup
 
-
-PixmapDir = "@prefix@/share/ccsm/images"
+DataDir = "@prefix@/share"
+IconDir = DataDir+"icons/hicolor/scalable"
+PixmapDir = DataDir+"/ccsm/images"
 CurrentScreenNum = 0
 
 def Write(ctx):
@@ -1621,7 +1622,7 @@ class MainWinClass:
 		self.MainWin.set_default_size(960, 580)
 		self.MainWin.set_title("CompizConfig Settings Manager")
 		try:
-			MainWindow.set_icon (gdk.pixbuf_new_from_file(DATADIR+"/icons/hicolor/scalable/apps/ccsm.svg"))
+			MainWindow.set_icon (gdk.pixbuf_new_from_file(IconDir+"/apps/ccsm.svg"))
 		except:
 			pass
 		# set up the Entry to get the BrightColor
