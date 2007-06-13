@@ -1573,6 +1573,15 @@ class ProfileBackendPage:
 		rightChild.pack_start(backendLabel, False, False, 5)
 		rightChild.pack_start(backendBox, False, False, 5)
 
+		# Integration
+		integrationLabel = MakeLabel()
+		integrationLabel.set_markup("<span color='%s' size='large' weight='800'>Integration</span>" % self.Main.BrightColor)
+		integrationButton = gtk.CheckButton("Enable integration into the desktop environment")
+		integrationButton.set_active(self.Context.Integration)
+		integrationButton.connect("toggled", self.IntegrationChanged)
+		rightChild.pack_start(integrationLabel, False, False, 5)
+		rightChild.pack_start(integrationButton, False, False, 5)		
+
 		# Back Button
 		self.BackButton = gtk.Button(gtk.STOCK_GO_BACK)
 		self.BackButton.set_use_stock(True)
@@ -1595,6 +1604,10 @@ class ProfileBackendPage:
 			counter += 1
 		if index >= 0:
 			widget.set_active(index)
+
+	def IntegrationChanged(self, widget):
+		value = widget.get_active()
+		self.Context.Integration = value
 
 	def ProfileChanged(self, widget):
 		name = widget.get_active_text()
