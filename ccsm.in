@@ -1620,7 +1620,10 @@ class MainWinClass:
 		self.MainWin.connect("destroy", Quit)
 		self.MainWin.set_default_size(960, 580)
 		self.MainWin.set_title("CompizConfig Settings Manager")
-		
+		try:
+			MainWindow.set_icon (gdk.pixbuf_new_from_file(DATADIR+"/icons/hicolor/scalable/apps/ccsm.svg"))
+		except:
+			pass
 		# set up the Entry to get the BrightColor
 		styleWidget = gtk.Entry()
 		self.MainWin.add(styleWidget)
