@@ -984,7 +984,7 @@ def HandlePluginConflicts(conflicts):
 			dlg.vbox.pack_start(cmb, False, False)
 			for plugin in conflict[2]:
 				cmb.append_text(plugin.ShortDesc)
-			cmb.set_active_text(conflict[2][0].ShortDesc)
+			cmb.set_active(0)
 			dlg.show_all()
 			ret = dlg.run()
 			retVal = cmb.get_active_text()
