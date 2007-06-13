@@ -1,6 +1,9 @@
 ## Process this file with automake to produce Makefile.in
-iconsdir = $(datadir)/icons/hicolor/scalable/apps
-icons_DATA = ccsm.svg
+svgiconsdir = $(datadir)/icons/hicolor/scalable/apps
+svgicons_DATA = ccsm.svg
+
+pngiconsdir = $(datadir)/pixmaps
+pngicons_DATA = ccsm.png
 
 imagesdir = $(datadir)/ccsm/images
 images_DATA = \
@@ -84,4 +87,4 @@ images_DATA = \
 	plugin-wobbly.svg       \
 	plugin-zoom.svg 
 
-EXTRA_DIST = $(images_DATA) $(icons_DATA)
+EXTRA_DIST = $(images_DATA) $(svgicons_DATA) $(pngicons_DATA)
