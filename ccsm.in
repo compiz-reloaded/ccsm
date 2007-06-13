@@ -248,7 +248,7 @@ class FileSetting(SettingItem):
 		ext = filename.split(".")[-1]
 		if len(self.Setting.Hints) > 1:
 			if self.Setting.Hints[1] == 'image':
-				return CheckFeature(self.Setting.Plugin.Context, 'img' + ext)
+				return CheckFeature(self.Setting.Plugin.Context, 'imageext:' + ext)
 		
 		return True
 			
