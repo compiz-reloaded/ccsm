@@ -1539,21 +1539,21 @@ class ProfileBackendPage:
 		profileAdd.set_image(gtk.image_new_from_stock(gtk.STOCK_ADD, gtk.ICON_SIZE_BUTTON))
 		profileRemove = gtk.Button()
 		profileRemove.set_image(gtk.image_new_from_stock(gtk.STOCK_REMOVE, gtk.ICON_SIZE_BUTTON))
-		profileComboBox = gtk.combo_box_new_text()
-		profileComboBox.set_sensitive(self.Context.CurrentBackend.ProfileSupport)
-		profileComboBox.append_text("Default")
+		self.ProfileComboBox = gtk.combo_box_new_text()
+		self.ProfileComboBox.set_sensitive(self.Context.CurrentBackend.ProfileSupport)
+		self.ProfileComboBox.append_text("Default")
 		for profile in self.Context.Profiles.values():
-			profileComboBox.append_text(profile.Name)
+			self.ProfileComboBox.append_text(profile.Name)
 		if self.Context.CurrentProfile.Name == '':
-			profileComboBox.set_active(0)
+			self.ProfileComboBox.set_active(0)
 		else:
 			name = self.Context.CurrentProfile.Name
 			index = self.Context.Profiles.values().index(self.Context.Profiles[name])
-			profileComboBox.set_active(index+1)
-		profileComboBox.connect("changed", self.ProfileChanged)
-		profileAdd.connect("clicked", self.AddProfile, profileComboBox)
-		profileRemove.connect("clicked", self.RemoveProfile, profileComboBox)
-		profileBox.pack_start(profileComboBox, True, True)
+			self.ProfileComboBox.set_active(index+1)
+		self.ProfileComboBox.connect("changed", self.ProfileChanged)
+		profileAdd.connect("clicked", self.AddProfile)
+		profileRemove.connect("clicked", self.RemoveProfile)
+		profileBox.pack_start(self.ProfileComboBox, True, True)
 		profileBox.pack_start(profileAdd, False, False)
 		profileBox.pack_start(profileRemove, False, False)
 		profileLabel = MakeLabel()
@@ -1568,7 +1568,7 @@ class ProfileBackendPage:
 		name = self.Context.CurrentBackend.Name
 		index = self.Context.Backends.values().index(self.Context.Backends[name])
 		backendBox.set_active(index)
-		backendBox.connect("changed", self.BackendChanged, profileComboBox)
+		backendBox.connect("changed", self.BackendChanged)
 		backendLabel = MakeLabel()
 		backendLabel.set_markup("<span color='%s' size='large' weight='800'>Backend</span>" % self.Main.BrightColor)
 		rightChild.pack_start(backendLabel, False, False, 5)
@@ -1577,12 +1577,12 @@ class ProfileBackendPage:
 		# Integration
 		integrationLabel = MakeLabel()
 		integrationLabel.set_markup("<span color='%s' size='large' weight='800'>Integration</span>" % self.Main.BrightColor)
-		integrationButton = gtk.CheckButton("Enable integration into the desktop environment")
-		integrationButton.set_active(self.Context.Integration)
-		integrationButton.set_sensitive(self.Context.CurrentBackend.IntegrationSupport)
-		integrationButton.connect("toggled", self.IntegrationChanged)
+		self.IntegrationButton = gtk.CheckButton("Enable integration into the desktop environment")
+		self.IntegrationButton.set_active(self.Context.Integration)
+		self.IntegrationButton.set_sensitive(self.Context.CurrentBackend.IntegrationSupport)
+		self.IntegrationButton.connect("toggled", self.IntegrationChanged)
 		rightChild.pack_start(integrationLabel, False, False, 5)
-		rightChild.pack_start(integrationButton, False, False, 5)		
+		rightChild.pack_start(self.IntegrationButton, False, False, 5)		
 
 		# Back Button
 		self.BackButton = gtk.Button(gtk.STOCK_GO_BACK)
@@ -1590,22 +1590,22 @@ class ProfileBackendPage:
 		self.BackButton.connect('clicked', self.Main.BackToMain)
 		self.LeftWidget.pack_end(self.BackButton, False, False)
 	
-	def UpdateProfiles(self, widget, default = "Default"):
+	def UpdateProfiles(self, default = "Default"):
 		self.Context.Read()
 
-		widget.get_model().clear()
-		widget.append_text("Default")
+		self.ProfileComboBox.get_model().clear()
+		self.ProfileComboBox.append_text("Default")
 		for profile in self.Context.Profiles.values():
-			widget.append_text(profile.Name)
+			self.ProfileComboBox.append_text(profile.Name)
 
 		index = -1
 		counter = 0
-		for m in widget.get_model():
+		for m in self.ProfileComboBox.get_model():
 			if m[0] == default:
 				index=counter
 			counter += 1
 		if index >= 0:
-			widget.set_active(index)
+			self.ProfileComboBox.set_active(index)
 
 	def IntegrationChanged(self, widget):
 		value = widget.get_active()
@@ -1621,7 +1621,7 @@ class ProfileBackendPage:
 		self.Context.Read()
 		Write(self.Context)
 
-	def AddProfile(self, widget, box):
+	def AddProfile(self, widget):
 		dlg = gtk.Dialog("Enter a profile name", self.MainWin, gtk.DIALOG_MODAL)
 		dlg.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
 		dlg.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
@@ -1636,17 +1636,17 @@ class ProfileBackendPage:
 		ret = dlg.run()
 		if ret == gtk.RESPONSE_OK:
 			self.Context.CurrentProfile = ccs.Profile(self.Context, entry.get_text())
-			self.UpdateProfiles(box, entry.get_text())
+			self.UpdateProfiles(entry.get_text())
 		dlg.destroy()
 	
-	def RemoveProfile(self, widget, box):
-		name = box.get_active_text()
+	def RemoveProfile(self, widget):
+		name = self.ProfileComboBox.get_active_text()
 		if name != 'Default':
 			self.Context.ResetProfile()
 			self.Context.Profiles[name].Delete()
-			self.UpdateProfiles(box)
+			self.UpdateProfiles()
 	
-	def BackendChanged(self, widget, box):
+	def BackendChanged(self, widget):
 		shortDesc = widget.get_active_text()
 		name = ""
 		for backend in self.Context.Backends.values():
@@ -1658,9 +1658,12 @@ class ProfileBackendPage:
 			self.Context.ResetProfile()
 			self.Context.CurrentBackend = self.Context.Backends[name]
 			# Causes some problems...
-			#self.UpdateProfiles(box)
+			#self.UpdateProfiles()
 		else:
 			raise Exception, "Backend not found."
+
+		self.ProfileComboBox.set_sensitive(self.Context.CurrentBackend.ProfileSupport)
+		self.IntegrationButton.set_sensitive(self.Context.CurrentBackend.IntegrationSupport)
 
 def Quit(foo):
 	gtk.main_quit()
