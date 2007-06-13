@@ -156,6 +156,8 @@ class SettingItem:
 		self._Init()
 
 	def Attach(self, table, row):
+		self.Reset.set_sensitive(not self.Setting.ReadOnly)
+		self.Widget.set_sensitive(not self.Setting.ReadOnly)
 		if self.Custom:
 			table.attach(self.Widget, 0, 100, row, row+1, TDef, TDef, TXp, TYp)
 		else:
@@ -202,7 +204,6 @@ class SettingItem:
 
 	def _Changed(self):
 		self.PureVirtual('_Changed')
-
 
 
 class StringMatchSetting(SettingItem):
@@ -329,6 +330,9 @@ class IntFloatSetting(SettingItem):
 		self.Adj.connect('value-changed', self.Changed)
 
 	def Attach(self, Table, row):
+		self.Reset.set_sensitive(not self.Setting.ReadOnly)
+		self.Scale.set_sensitive(not self.Setting.ReadOnly)
+		self.Spin.set_sensitive(not self.Setting.ReadOnly)
 		Table.attach(self.Label, 0, 1, row, row+1, gtk.FILL, TDef, TXp, TYp)
 		Table.attach(self.Scale, 1, 2, row, row+1, TDef, TDef, TXp, TYp)
 		Table.attach(self.Spin, 2, 3, row, row+1, gtk.FILL, TDef, TXp, TYp)
@@ -707,6 +711,8 @@ class ListSetting(SettingItem):
 		self.Setting.Value = values
 
 	def Attach(self, table, row):
+		self.Widget.set_sensitive(not self.Setting.ReadOnly)
+		self.Reset.set_sensitive(not self.Setting.ReadOnly)
 		table.attach(self.Widget, 0, 100, row, row+1, xpadding=5)
 
 class StringMatchListSetting(ListSetting):
@@ -780,6 +786,8 @@ class IntDescListSetting(SettingItem):
 		self.Setting.Value = values
 	
 	def Attach(self, table, row):
+		self.Widget.set_sensitive(not self.Setting.ReadOnly)
+		self.Reset.set_sensitive(not self.Setting.ReadOnly)
 		table.attach(self.Widget, 0, 100, row, row+1, xpadding = 5)
 
 class IntFloatListSetting(ListSetting):
