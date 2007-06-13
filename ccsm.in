@@ -1540,6 +1540,7 @@ class ProfileBackendPage:
 		profileRemove = gtk.Button()
 		profileRemove.set_image(gtk.image_new_from_stock(gtk.STOCK_REMOVE, gtk.ICON_SIZE_BUTTON))
 		profileComboBox = gtk.combo_box_new_text()
+		profileComboBox.set_sensitive(self.Context.CurrentBackend.ProfileSupport)
 		profileComboBox.append_text("Default")
 		for profile in self.Context.Profiles.values():
 			profileComboBox.append_text(profile.Name)
@@ -1578,6 +1579,7 @@ class ProfileBackendPage:
 		integrationLabel.set_markup("<span color='%s' size='large' weight='800'>Integration</span>" % self.Main.BrightColor)
 		integrationButton = gtk.CheckButton("Enable integration into the desktop environment")
 		integrationButton.set_active(self.Context.Integration)
+		integrationButton.set_sensitive(self.Context.CurrentBackend.IntegrationSupport)
 		integrationButton.connect("toggled", self.IntegrationChanged)
 		rightChild.pack_start(integrationLabel, False, False, 5)
 		rightChild.pack_start(integrationButton, False, False, 5)		
