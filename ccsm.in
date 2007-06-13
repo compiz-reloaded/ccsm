@@ -1619,7 +1619,7 @@ class MainWinClass:
 		self.MainWin = gtk.Window()
 		self.MainWin.connect("destroy", Quit)
 		self.MainWin.set_default_size(960, 580)
-		self.MainWin.set_title("CCS Manager")
+		self.MainWin.set_title("CompizConfig Settings Manager")
 		
 		# set up the Entry to get the BrightColor
 		styleWidget = gtk.Entry()
