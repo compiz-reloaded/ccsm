@@ -108,6 +108,34 @@ def CheckActionConflicts(setting, key, button, bell, edges):
 				return False
 	return True
 
+# Not used for plugin dependencies (which are handled by ccs) but own feature checking e.g. image support
+def CheckFeature(context, feature):
+	for plugin in context.Plugins.values():
+		if plugin.Features.__contains__(feature):
+			if plugin.Enabled:
+				return True
+			else:
+				msg = "You are trying to use the feature <b>%s</b> which is provided by <b>%s</b>.\n" +\
+					  "This plugin is currently disabled.\n" +\
+					  "Do you wish to enable <b>%s</b> so the feature is available?"
+				 
+				msg = msg % (feature, plugin.ShortDesc, plugin.ShortDesc)
+				
+				dlg = gtk.MessageDialog(parent=mainWin, flags=gtk.DIALOG_MODAL, type=gtk.MESSAGE_WARNING, buttons=gtk.BUTTONS_YES_NO)
+				dlg.set_markup(msg)
+				dlg.show_all()
+				ret = dlg.run()
+				dlg.destroy()
+
+				if ret == gtk.RESPONSE_YES:
+					plugin.Enabled = True
+					context.Write()
+					return True
+				if ret == gtk.RESPONSE_NO:
+					return False
+	
+	return False
+
 class PureVirtualError(Exception):
 	pass
 
@@ -205,19 +233,25 @@ class FileSetting(SettingItem):
 		if len(self.Setting.Hints) > 1:
 			if self.Setting.Hints[1] == 'image':
 				filter.set_name('Images')
-			if len(self.Setting.Hints) > 2:
-				if self.Setting.Hints[2] == 'pngonly':
-					filter.add_pattern("*.png")
-				if self.Setting.Hints[2] == 'jpgonly':
-					filter.add_pattern("*.jpg")
-				if self.Setting.Hints[2] == 'svgonly':
-					filter.add_pattern("*.svg")
+				filter.add_pattern("*.png")
+				filter.add_pattern("*.jpg")
+				filter.add_pattern("*.jpeg")
+				filter.add_pattern("*.svg")
 			else:
 				filter.add_pattern("*.*")
 		else:
 			filter.set_name('File')
 
 		return filter
+
+	def CheckFileType(self, filename):
+		ext = filename.split(".")[-1]
+		if len(self.Setting.Hints) > 1:
+			if self.Setting.Hints[1] == 'image':
+				return CheckFeature(self.Setting.Plugin.Context, 'img' + ext)
+		
+		return True
+			
 	
 	def OpenFileChooser(self, widget):
 		b = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_OPEN, gtk.RESPONSE_OK)
@@ -230,9 +264,11 @@ class FileSetting(SettingItem):
 		chooser.set_filter(self.CreateFilter())
 		ret = chooser.run()
 		
-		if ret == gtk.RESPONSE_OK:
-			self.Entry.set_text(chooser.get_filename())
+		filename = chooser.get_filename()
 		chooser.destroy()
+		if ret == gtk.RESPONSE_OK:
+			if self.CheckFileType(filename):
+				self.Entry.set_text(filename)
 
 	def _Read(self):
 		self.Entry.set_text(self.Setting.Value)
