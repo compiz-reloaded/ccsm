@@ -1092,7 +1092,7 @@ def HandlePluginConflicts(conflicts):
 			pluginList = ', '.join("\"%s\"" % plugin.ShortDesc for plugin in conflict[2])
 			msg = "The plugin you are trying to disable is required by the plugins <b>%s</b>.\n" +\
 				  "Click OK to disable these plugins or Cancel to stop trying to disable this plugin."
-			msg = msg % plist
+			msg = msg % pluginList
 			
 			dlg.set_markup(msg)
 			dlg.show_all()
@@ -1101,7 +1101,7 @@ def HandlePluginConflicts(conflicts):
 
 			if ret == gtk.RESPONSE_OK:
 				for plugin in conflict[2]:
-					disableConflicts = p.DisableConflicts
+					disableConflicts = plugin.DisableConflicts
 					if HandlePluginConflicts(disableConflicts):
 						plugin.Enabled = False
 					else:
