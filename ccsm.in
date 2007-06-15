@@ -1600,6 +1600,7 @@ class ProfileBackendPage:
 	
 	def UpdateProfiles(self, default = "Default"):
 		self.Context.Read()
+		self.Context.UpdateProfiles()
 
 		self.ProfileComboBox.get_model().clear()
 		self.ProfileComboBox.append_text("Default")
@@ -1665,8 +1666,7 @@ class ProfileBackendPage:
 		if name != "":
 			self.Context.ResetProfile()
 			self.Context.CurrentBackend = self.Context.Backends[name]
-			# Causes some problems...
-			#self.UpdateProfiles()
+			self.UpdateProfiles()
 		else:
 			raise Exception, "Backend not found."
 
