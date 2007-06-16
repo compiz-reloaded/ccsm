@@ -27,7 +27,9 @@ import gtk.gdk
 import cairo
 
 if gtk.pygtk_version < (2,10,0):
-    print "PyGtk 2.10.0 or later required"
+    print "You are not using PyGtk 2.10.0 or later, this means you have no full feature support!"
+if gtk.pygtk_version < (2,8,0):
+    print "PyGtk 2.8.0 or later required"
     raise SystemExit
 
 import gobject
@@ -1124,10 +1126,17 @@ class ActionPage:
 		self.Scroll = gtk.ScrolledWindow()
 		self.Scroll.props.hscrollbar_policy = gtk.POLICY_AUTOMATIC
 		self.Scroll.props.vscrollbar_policy = gtk.POLICY_AUTOMATIC
+
+		keyStoreType = gobject.TYPE_UINT
+		keymodsStoreType = gobject.TYPE_UINT
+		if gtk.pygtk_version < (2,10,0):
+			keyStoreType = gobject.TYPE_STRING
+			keymodsStoreType = gobject.TYPE_STRING
+		
 		self.Store = gtk.TreeStore(
 				gobject.TYPE_STRING, 	#0-Name
-				gobject.TYPE_UINT, 		#1-Key
-				gobject.TYPE_UINT, 		#2-KeyMods
+				keyStoreType,           #1-Key
+				keymodsStoreType,       #2-KeyMods
 				gobject.TYPE_STRING, 	#3-Button
 				gobject.TYPE_STRING, 	#4-Edges
 				gobject.TYPE_BOOLEAN, 	#5-Visible/Editable
@@ -1147,18 +1156,31 @@ class ActionPage:
 		self.TreeView.set_headers_visible(True)
 		# Name
 		self.TreeView.insert_column_with_attributes(-1, 'Name', gtk.CellRendererText(), text=0)
+		
 		# Key
-		keyRenderer = gtk.CellRendererAccel()
-		keyRenderer.connect('accel-edited', self.KeyEdited)
-		keyRenderer.connect('accel-cleared', self.KeyCleared)
-		self.TreeView.insert_column_with_attributes(-1, 'Key', keyRenderer, accel_key=1, accel_mods=2, editable=7, visible=5, sensitive=7)
+		keyRenderer = None
+		if gtk.pygtk_version < (2,10,0):
+			keyRenderer = gtk.CellRendererText()
+			keyRenderer.connect('edited', self.KeyEdited)
+			modsRenderer = gtk.CellRendererText()
+			modsRenderer.connect('edited', self.ModsEdited)
+			self.TreeView.insert_column_with_attributes(-1, 'Key Modifier', modsRenderer, text=2, editable=7, visible=5, sensitive=7)
+			self.TreeView.insert_column_with_attributes(-1, 'Key', keyRenderer, text=1, editable=7, visible=5, sensitive=7)
+		else:
+			keyRenderer = gtk.CellRendererAccel()
+			keyRenderer.connect('accel-edited', self.KeyEdited)
+			keyRenderer.connect('accel-cleared', self.KeyCleared)
+			self.TreeView.insert_column_with_attributes(-1, 'Key', keyRenderer, accel_key=1, accel_mods=2, editable=7, visible=5, sensitive=7)
+		
 		# Button
 		buttonRenderer = gtk.CellRendererText()
 		buttonRenderer.connect('edited', self.ButtonEdited)
 		self.TreeView.insert_column_with_attributes(-1, 'Button', buttonRenderer, text=3, editable=8, visible=5, sensitive=8)
+		
 		# Edges
 		edgeRenderer = gtk.CellRendererText()
 		self.TreeView.insert_column_with_attributes(-1, 'Screen Edge', edgeRenderer, text=4, visible=5, sensitive=9)
+		
 		# Bell -- may replace with one setting in general
 		bellRenderer = gtk.CellRendererToggle()
 		bellRenderer.props.xalign = 0
@@ -1182,6 +1204,17 @@ class ActionPage:
 				self.Store.set(pluginIter, 0, plugin.ShortDesc, 5, False, 7, False, 8, False, 9, False, 10, False)
 				if not self.DoGroups(plugin.Groups, pluginIter, plugin.Name):
 					self.Store.remove(pluginIter)
+
+	# only used if you are using an old pyGtk version
+	def SplitActionString(self, action):
+		if action == 'None':
+			return 'None', 'None'
+
+		pos = action.rindex('>') +1
+		key = action[pos:]
+		mods = action[:pos]
+
+		return key, mods
 	
 	def DoGroups(self, groupList, iter, pluginName):
 		self.Plugins[pluginName] = {}
@@ -1210,6 +1243,9 @@ class ActionPage:
 							i = self.Store.append(groupIter)
 
 						key, mods = gtk.accelerator_parse(setting.Value[0])
+						if gtk.pygtk_version < (2,10,0):
+							key, mods = self.SplitActionString(setting.Value[0])
+
 						edges = 'None'
 						if len(setting.Value[3]) > 0:
 							edges = " | ".join(setting.Value[3])
@@ -1272,11 +1308,16 @@ class ActionPage:
 		dlg.set_default_response(gtk.RESPONSE_OK)
 		table = gtk.Table()
 		dlg.vbox.pack_start(table, False, False)
-		
+
 		# Key
 		if setting.Info[0]:
 			keyEntry = gtk.Entry()
-			keyEntry.set_text(gtk.accelerator_name(key, keyModifier) or 'None')
+			keyValue = None
+			if gtk.pygtk_version < (2,10,0):
+				keyValue = keyModifier + key
+			else:
+				keyValue = gtk.accelerator_name(key, keyModifier)
+			keyEntry.set_text(keyValue or 'None')
 			keyLabel = gtk.Label('Key')
 			keyLabel.props.xalign = 0
 			table.attach(keyLabel, 0, 1, 0, 1, TDef, TDef, TXp, TYp)
@@ -1355,6 +1396,8 @@ class ActionPage:
 		if resp == gtk.RESPONSE_OK:
 			if setting.Info[0]:
 				akey, amods = gtk.accelerator_parse(key)
+				if gtk.pygtk_version < (2,10,0):
+					akey, amods = self.SplitActionString(key)
 				self.Store.set(iter, 1, akey, 2, amods)
 			if setting.Info[1]:
 				self.Store.set(iter, 3, button)
@@ -1369,7 +1412,11 @@ class ActionPage:
 		groupName, subGroupName, settingName, pluginName, key, keyModifier, button, edges, bell = store
 		
 		setting = self.Plugins[pluginName][groupName][subGroupName][settingName]
-		realKey = gtk.accelerator_name(key, keyModifier)
+		realKey = ''
+		if gtk.pygtk_version < (2,10,0):
+			realKey = keyModifier + key
+		else:
+			realKey = gtk.accelerator_name(key, keyModifier)
 		edges = edges.split(" | ")
 		
 		if CheckActionConflicts(setting, realKey, button, bell, edges):
@@ -1377,17 +1424,31 @@ class ActionPage:
 			Write(setting.Plugin.Context)
 			
 		realKey, button, bell, edges = setting.Value
-		key, keyModifier = gtk.accelerator_parse(realKey)
+		if gtk.pygtk_version < (2,10,0):
+			key, keyModifier = self.SplitActionString(realKey)
+		else:
+			key, keyModifier = gtk.accelerator_parse(realKey)
 		if len(edges) > 0:
 			edges = " | ".join(setting.Value[3])
 		else:
 			edges = 'None'
 		self.Store.set(iter, 1, key, 2, keyModifier, 3, button, 4, edges, 6, bell)
-	
-	def KeyEdited(self, obj, path, key, mods, code):
-		iter = self.Store.get_iter_from_string(path)
-		self.Store.set(iter, 1, key, 2, mods)
-		self.WriteSetting(iter)
+
+	if gtk.pygtk_version < (2,10,0):
+		def KeyEdited(self, obj, path, key):
+			iter = self.Store.get_iter_from_string(path)
+			self.Store.set(iter, 1, key)
+			self.WriteSetting(iter)
+		
+		def ModsEdited(self, obj, path, mods):
+			iter = self.Store.get_iter_from_string(path)
+			self.Store.set(iter, 2, mods)
+			self.WriteSetting(iter)
+	else:
+		def KeyEdited(self, obj, path, key, mods, code):
+			iter = self.Store.get_iter_from_string(path)
+			self.Store.set(iter, 1, key, 2, mods)
+			self.WriteSetting(iter)
 	
 	def KeyCleared(self, obj, path):
 		iter = self.Store.get_iter_from_string(path)
