@@ -1543,6 +1543,7 @@ class ProfileBackendPage:
 
 		# Profiles
 		profileBox = gtk.HBox()
+		profileBox.set_spacing(5)
 		profileAdd = gtk.Button()
 		profileAdd.set_image(gtk.image_new_from_stock(gtk.STOCK_ADD, gtk.ICON_SIZE_BUTTON))
 		profileRemove = gtk.Button()
@@ -1566,8 +1567,19 @@ class ProfileBackendPage:
 		profileBox.pack_start(profileRemove, False, False)
 		profileLabel = MakeLabel()
 		profileLabel.set_markup("<span color='%s' size='large' weight='800'>Profile</span>" % self.Main.BrightColor)
+		self.ProfileImportExportBox = gtk.HBox()
+		self.ProfileImportExportBox.set_spacing(5)
+		profileImportButton = gtk.Button("Import")
+		profileExportButton = gtk.Button("Export")
+		profileImportButton.set_image(gtk.image_new_from_stock(gtk.STOCK_OPEN, gtk.ICON_SIZE_BUTTON))
+		profileExportButton.set_image(gtk.image_new_from_stock(gtk.STOCK_SAVE, gtk.ICON_SIZE_BUTTON))
+		profileImportButton.connect("clicked", self.ImportProfile)
+		profileExportButton.connect("clicked", self.ExportProfile)
+		self.ProfileImportExportBox.pack_start(profileImportButton, False, False)
+		self.ProfileImportExportBox.pack_start(profileExportButton, False, False)
 		rightChild.pack_start(profileLabel, False, False, 5)
 		rightChild.pack_start(profileBox, False, False, 5)
+		rightChild.pack_start(self.ProfileImportExportBox, False, False, 5)
 
 		# Backends
 		backendBox = gtk.combo_box_new_text()
@@ -1629,6 +1641,41 @@ class ProfileBackendPage:
 		
 		self.Context.Read()
 		Write(self.Context)
+
+	def CreateFilter(self, chooser):
+		filter = gtk.FileFilter()
+		filter.add_pattern("*.profile")
+		filter.set_name('Profiles (*.profile)')
+		chooser.add_filter(filter)
+
+		filter = gtk.FileFilter()
+		filter.add_pattern("*")
+		filter.set_name('All files')
+		chooser.add_filter(filter)
+	
+	def ExportProfile(self, widget):
+		b = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_SAVE, gtk.RESPONSE_OK)
+		chooser = gtk.FileChooserDialog(title='Save file..', parent=mainWin, buttons=b, action=gtk.FILE_CHOOSER_ACTION_SAVE)
+		chooser.set_current_folder(os.environ.get("HOME"))
+		self.CreateFilter(chooser)
+		ret = chooser.run()
+
+		path = chooser.get_filename()
+		chooser.destroy()
+		if ret == gtk.RESPONSE_OK:
+			self.Context.Export(path)
+
+	def ImportProfile(self, widget):
+		b = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_OPEN, gtk.RESPONSE_OK)
+		chooser = gtk.FileChooserDialog(title='Open file..', parent=mainWin, buttons=b)
+		chooser.set_current_folder(os.environ.get("HOME"))
+		self.CreateFilter(chooser)
+		ret = chooser.run()
+
+		path = chooser.get_filename()
+		chooser.destroy()
+		if ret == gtk.RESPONSE_OK:
+			self.Context.Import(path)
 
 	def AddProfile(self, widget):
 		dlg = gtk.Dialog("Enter a profile name", self.MainWin, gtk.DIALOG_MODAL)
