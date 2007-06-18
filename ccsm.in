@@ -1741,6 +1741,8 @@ class MainWinClass:
 		styleWidget.realize()
 		bc = styleWidget.style.bg[gtk.STATE_SELECTED]
 		self.BrightColor = "#%.4x%.4x%.4x" % (bc.red, bc.green, bc.blue)
+		bc = styleWidget.style.light[gtk.STATE_NORMAL]
+		self.BackgroundColor = "#%.4x%.4x%.4x" % (bc.red, bc.green, bc.blue)
 		self.MainWin.remove(styleWidget)
 		styleWidget.destroy()
 		
@@ -1851,7 +1853,7 @@ class MainWinClass:
 		leftChild.pack_end(categoryButton, False, False)
 		leftChild.pack_end(categoryBox, False, False)
 
-		pluginsVPort.modify_bg(gtk.STATE_NORMAL, gtk.gdk.color_parse('#ffffff'))
+		pluginsVPort.modify_bg(gtk.STATE_NORMAL, gtk.gdk.color_parse(self.BackgroundColor))
 		rightChild = gtk.ScrolledWindow()
 		rightChild.props.hscrollbar_policy = gtk.POLICY_NEVER
 		rightChild.props.vscrollbar_policy = gtk.POLICY_AUTOMATIC
