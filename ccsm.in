@@ -754,6 +754,7 @@ class IntDescListSetting(SettingItem):
 		col = 0
 		self.Checks = []
 		sortedItems = sorted(self.Setting.Info[1][2].items(), EnumSettingSortCompare)
+		self.minVal = sortedItems[0][1]
 		for key, value in sortedItems:
 			box = gtk.CheckButton(key)
 			self.Checks.append((key, box))
@@ -775,9 +776,7 @@ class IntDescListSetting(SettingItem):
 		for key, box in self.Checks:
 			box.set_active(False)
 		for setVal in self.Setting.Value:
-			for key, box in self.Checks:
-				if setVal == self.Setting.Info[1][2][key]:
-					box.set_active(True)
+			self.Checks[setVal-self.minVal][1].set_active(True)
 
 	def _Changed(self):
 		values = []
