@@ -278,20 +278,19 @@ class FileSetting(SettingItem):
 	def _Changed(self):
 		self.Setting.Value = self.Entry.get_text()
 
+def EnumSettingSortCompare(v1, v2):
+	return cmp(v1[1], v2[1])
+
 class EnumSetting(SettingItem):
 	def _Init(self):
 		self.Widget = gtk.combo_box_new_text()
-		for name in self.Setting.Info[2].keys():
+		sortedItems = sorted(self.Setting.Info[2].items(), EnumSettingSortCompare)
+		for name, value in sortedItems:
 			self.Widget.append_text(name)
 		self.Widget.connect('changed', self.Changed)
 
 	def _Read(self):
-		index = 0
-		for name, value in self.Setting.Info[2].items():
-			if self.Setting.Value == value:
-				break
-			index = index + 1
-		self.Widget.set_active(index)
+		self.Widget.set_active(self.Setting.Value)
 
 	def _Changed(self):
 		active = self.Widget.get_active_text()
@@ -754,7 +753,8 @@ class IntDescListSetting(SettingItem):
 		row = 0
 		col = 0
 		self.Checks = []
-		for key in self.Setting.Info[1][2].keys():
+		sortedItems = sorted(self.Setting.Info[1][2].items(), EnumSettingSortCompare)
+		for key, value in sortedItems:
 			box = gtk.CheckButton(key)
 			self.Checks.append((key, box))
 			self.Table.attach(box, col, col+1, row, row+1, TDef, TDef, TXp, TYp)
@@ -775,9 +775,7 @@ class IntDescListSetting(SettingItem):
 		for key, box in self.Checks:
 			box.set_active(False)
 		for setVal in self.Setting.Value:
-			for key, box in self.Checks:
-				if setVal == self.Setting.Info[1][2][key]:
-					box.set_active(True)
+			self.Checks[setVal][1].set_active(True)
 
 	def _Changed(self):
 		values = []
