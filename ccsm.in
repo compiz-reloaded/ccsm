@@ -775,7 +775,9 @@ class IntDescListSetting(SettingItem):
 		for key, box in self.Checks:
 			box.set_active(False)
 		for setVal in self.Setting.Value:
-			self.Checks[setVal][1].set_active(True)
+			for key, box in self.Checks:
+				if setVal == self.Setting.Info[1][2][key]:
+					box.set_active(True)
 
 	def _Changed(self):
 		values = []
