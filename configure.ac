@@ -1,5 +1,5 @@
 AC_PREREQ(2.57)
-AC_INIT([ccsm],esyscmd(. ./VERSION;echo -n $VERSION), [quinn@opencompositing.org])
+AC_INIT([compizconfig-manager],esyscmd(. ./VERSION;echo -n $VERSION), [quinn@opencompositing.org])
 
 AC_DEFINE_UNQUOTED(VERSION,"$VERSION",[Version])
 
