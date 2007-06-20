@@ -10,7 +10,7 @@ AM_MAINTAINER_MODE
 AC_ISC_POSIX
 
 CCSM_REQUIRES="\
-compizconfig-bindings >= 0.0.1"
+compizconfig-python >= 0.0.1"
 
 PKG_CHECK_MODULES(CCS,$CCSM_REQUIRES)
 
