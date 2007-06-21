@@ -706,8 +706,10 @@ class ListSetting(SettingItem):
 		values = []
 		iter = self.Store.get_iter_first()
 		while iter:
-			values.append(self._ListGet(iter))
-			iter = self.Store.iter_next(iter)
+			value = self._ListGet(iter)
+			if value != "":
+				values.append(value)
+				iter = self.Store.iter_next(iter)
 		self.Setting.Value = values
 
 	def Attach(self, table, row):
