@@ -592,8 +592,9 @@ class MultiListSetting(SettingItem):
 			values = []
 			while iter:
 				value = self.Store.get(iter, col)[0]
-				values.append(value)
-				iter = self.Store.iter_next(iter)
+				if value != "":
+					values.append(value)
+					iter = self.Store.iter_next(iter)
 			setting.Value = values
 			col += 1
 
