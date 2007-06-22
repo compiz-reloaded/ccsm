@@ -898,6 +898,7 @@ def HasOnlyType(settings, type):
 
 class SubGroupArea:
 	def __init__(self, name, subGroup, filter=None):
+		self.MySettings = []
 		#settings = sum((v.values() for v in [subGroup.Display]+[subGroup.Screens[CurrentScreenNum]]), [])
 		settings = FilterSettings(sorted(sum((v.values() for v in [subGroup.Display]+[subGroup.Screens[CurrentScreenNum]]), []), SettingSortCompare), filter)
 		if name == '':
@@ -929,6 +930,7 @@ class SubGroupArea:
 				if set is not None:
 					set.Read()
 					set.Attach(self.Child, row)
+					self.MySettings = self.MySettings + [set]
 					row = row+1
 					self.Empty = False
 
@@ -959,11 +961,14 @@ class GroupPage(Page):
 	def __init__(self, name, group, filter=None):
 		super(GroupPage, self).__init__(name)
 
+		self.subGroupAreas = []
+
 		if (group.has_key('')):
 			sga = SubGroupArea('', group[''], filter)
 			if not sga.Empty:
 				self.SetContainer.pack_start(sga.Widget, False, False)
 				self.Empty = False
+				self.subGroupAreas = self.subGroupAreas + [sga]
 
 		for subGroup in group.keys():
 			if not subGroup == '':
@@ -971,6 +976,7 @@ class GroupPage(Page):
 				if not sga.Empty:
 					self.SetContainer.pack_start(sga.Widget, False, False)
 					self.Empty = False
+					self.subGroupAreas = self.subGroupAreas + [sga]
 
 def HandlePluginConflicts(conflicts):
 	if len(conflicts) == 0:
@@ -1469,16 +1475,20 @@ class PluginClass:
 		self.LeftWidget.pack_end(backButton, False, False)
 		backButton.connect('clicked', main.BackToMain)
 		self.RightWidget = gtk.Notebook()
+		self.Pages = []
 		
 		for name, group in plugin.Groups.items():
 			name = name or 'General'
 			groupPage = GroupPage(name, group)
 			if not groupPage.Empty:
 				self.RightWidget.append_page(groupPage.Widget, gtk.Label(name))
+				self.Pages = self.Pages + [groupPage]
 		
 		actionPage = ActionPage(plugin)
 		if not actionPage.Empty:
 			self.RightWidget.append_page(actionPage.Widget, gtk.Label('Actions'))
+			self.Pages = self.Pages + [actionPage]
+
 		self.Block = 0
 
 	def FilterChanged(self, widget):
@@ -1728,6 +1738,7 @@ def Quit(foo):
 
 class MainWinClass:
 	def __init__(self, Context):
+		self.PluginCache = {}
 		self.Context = Context
 		self.MainWin = gtk.Window()
 		self.MainWin.connect("destroy", Quit)
@@ -2056,7 +2067,11 @@ class MainWinClass:
 			widget = value.get_parent()
 			if widget:
 				widget.remove(value)
-		pluginClass = PluginClass(select, self)
+		if self.PluginCache.has_key(select.Name):
+			pluginClass = self.PluginCache[select.Name]
+		else:
+			pluginClass = PluginClass(select, self)
+			self.PluginCache[select.Name] = pluginClass
 		self.SetMainWidgets(pluginClass.LeftWidget, pluginClass.RightWidget)
 	
 	def ShowProfileBackend(self, obj):
