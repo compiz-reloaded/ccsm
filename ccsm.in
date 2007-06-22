@@ -1738,7 +1738,7 @@ def Quit(foo):
 
 class MainWinClass:
 	def __init__(self, Context):
-		self.PluginCache = {}
+		self.ShowingPlugin = None
 		self.Context = Context
 		self.MainWin = gtk.Window()
 		self.MainWin.connect("destroy", Quit)
@@ -2067,11 +2067,8 @@ class MainWinClass:
 			widget = value.get_parent()
 			if widget:
 				widget.remove(value)
-		if self.PluginCache.has_key(select.Name):
-			pluginClass = self.PluginCache[select.Name]
-		else:
-			pluginClass = PluginClass(select, self)
-			self.PluginCache[select.Name] = pluginClass
+		pluginClass = PluginClass(select, self)
+		self.ShowingPlugin = pluginClass
 		self.SetMainWidgets(pluginClass.LeftWidget, pluginClass.RightWidget)
 	
 	def ShowProfileBackend(self, obj):
@@ -2144,6 +2141,9 @@ class MainWinClass:
 
 	def BackToMain(self, obj):
 		self.ResetMainWidgets()
+		del self.ShowingPlugin
+		# make sure its cleaned up here, since this is a nice safe place to do so
+		self.ShowingPlugin = None
 		
 screens = getScreens()
 CurrentScreenNum = gtk.gdk.display_get_default().get_default_screen().get_number()
