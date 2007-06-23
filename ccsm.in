@@ -881,8 +881,11 @@ def FilterSettings(settings, filter):
 	filteredSettings = []
 
 	for setting in settings:
-		name = setting.ShortDesc.lower()
-		if name.find(filter) != -1:
+		shortDesc = setting.ShortDesc.lower()
+		name = setting.Name.lower()
+		if shortDesc.find(filter) != -1:
+			filteredSettings.append(setting)
+		elif name.find(filter) != -1:
 			filteredSettings.append(setting)
 
 	return filteredSettings
