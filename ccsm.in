@@ -874,19 +874,48 @@ def MakeSetting(setting):
 def SettingSortCompare(v1, v2):
 	return cmp(v1.Plugin.Ranking[v1.Name], v2.Plugin.Ranking[v2.Name])
 
-def FilterSettings(settings, filter):
+def FilterSettings(settings, filter, run=0):
 	if filter == None:
 		return settings
 
 	filteredSettings = []
 
 	for setting in settings:
-		shortDesc = setting.ShortDesc.lower()
-		name = setting.Name.lower()
-		if shortDesc.find(filter) != -1:
-			filteredSettings.append(setting)
-		elif name.find(filter) != -1:
-			filteredSettings.append(setting)
+		# First run, only search in shortDesc and name
+		if run == 0:
+			shortDesc = setting.ShortDesc.lower()
+			name = setting.Name.lower()
+			if shortDesc.find(filter) != -1:
+				filteredSettings.append(setting)
+			elif name.find(filter) != -1:
+				filteredSettings.append(setting)
+		# Then in longDesc
+		elif run == 1:
+			longDesc = setting.LongDesc.lower()
+			if longDesc.find(filter) != -1:
+				filteredSettings.append(setting)
+		# Finally search in the option value
+		elif run == 2:
+			value = ""
+			# make sure enum settings work too
+			if setting.Type == 'Int' and len(setting.Info[2].keys()) > 0:
+					value = sorted(setting.Info[2].items(), EnumSettingSortCompare)[setting.Value][0]
+					value = value.lower()
+			# also make sure intDesc settings work right
+			elif setting.Type == 'List' and setting.Info[0] == 'Int' and len(setting.Info[1][2]) > 0:
+				for int in setting.Value:
+					for item in setting.Info[1][2].items():
+						if item[1] == int:
+							value += item[0]
+				value = value.lower()
+			else:
+				value = str(setting.Value).lower()
+			if value.find(filter) != -1:
+				filteredSettings.append(setting)
+
+	# Nothing was found, search also in the longDesc/value
+	if len(filteredSettings) == 0 and run < 2:
+		return FilterSettings(settings, filter, run+1)
 
 	return filteredSettings
 
