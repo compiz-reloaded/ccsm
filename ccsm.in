@@ -1477,11 +1477,11 @@ class PluginClass:
 		pluginImg = main.MakeImage(plugin, size = 64)
 		filterLabel = MakeLabel()
 		filterLabel.set_markup("<span color='%s' size='large' weight='800'>Filter</span>" % (main.BrightColor))
-		filterEntry = gtk.Entry()
-		filterEntry.connect("changed", self.FilterChanged)
+		self.FilterEntry = gtk.Entry()
+		self.FilterEntry.connect("changed", self.FilterChanged)
 		self.LeftWidget.pack_start(pluginImg, False, False)
 		self.LeftWidget.pack_start(filterLabel, False, False)
-		self.LeftWidget.pack_start(filterEntry, False, False)
+		self.LeftWidget.pack_start(self.FilterEntry, False, False)
 		self.LeftWidget.pack_start(pluginLabel, False, False)
 		infoLabelCont = gtk.HBox()
 		infoLabelCont.set_border_width(10)
@@ -1507,6 +1507,7 @@ class PluginClass:
 		self.LeftWidget.pack_end(backButton, False, False)
 		backButton.connect('clicked', main.BackToMain)
 		self.RightWidget = gtk.Notebook()
+		self.RightWidget.connect('size-allocate', self.ResetFocus)
 		self.Pages = []
 		
 		for name, group in plugin.Groups.items():
@@ -1522,6 +1523,11 @@ class PluginClass:
 			self.Pages = self.Pages + [actionPage]
 
 		self.Block = 0
+
+	def ResetFocus(self, widget, data):
+		pos = self.FilterEntry.get_position() 
+		self.FilterEntry.grab_focus()
+		self.FilterEntry.set_position(pos)
 
 	def FilterChanged(self, widget):
 		filter = widget.get_text().lower()
