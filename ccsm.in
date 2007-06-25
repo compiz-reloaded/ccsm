@@ -41,6 +41,7 @@ DataDir = "@prefix@/share"
 IconDir = DataDir+"/icons/hicolor/scalable"
 PixmapDir = DataDir+"/ccsm/images"
 CurrentScreenNum = 0
+Tooltips = gtk.Tooltips()
 
 def Write(ctx):
 	ctx.Write()
@@ -150,6 +151,7 @@ class SettingItem:
 		self.Blocked = 0
 		self.MakeLabel()
 		self.Reset = gtk.Button()
+		Tooltips.set_tip(self.Reset,"Reset setting to the default value")
 		self.Reset.set_image(gtk.image_new_from_stock(
 			gtk.STOCK_CLEAR, gtk.ICON_SIZE_BUTTON))
 		self.Reset.connect('clicked', self.DoReset)
@@ -177,11 +179,14 @@ class SettingItem:
 		self.Read()
 
 	def MakeLabel(self):
-		self.Label = gtk.Label(self.Setting.ShortDesc)
-		self.Label.props.xalign = 0
-		self.Label.props.wrap_mode = gtk.WRAP_WORD
-		self.Label.set_size_request(160, -1)
-		self.Label.set_line_wrap(True)
+		self.Label = gtk.EventBox()
+		label = gtk.Label(self.Setting.ShortDesc)
+		self.Label.add(label)
+		Tooltips.set_tip(self.Label, self.Setting.LongDesc)
+		label.props.xalign = 0
+		label.props.wrap_mode = gtk.WRAP_WORD
+		label.set_size_request(160, -1)
+		label.set_line_wrap(True)
 
 	def Block(self):
 		self.Blocked = self.Blocked+1
@@ -209,6 +214,7 @@ class SettingItem:
 class StringMatchSetting(SettingItem):
 	def _Init(self):
 		self.Widget = gtk.Entry()
+		Tooltips.set_tip(self.Widget, self.Setting.LongDesc)
 		self.Widget.connect('changed', self.Changed)
 
 	def _Read(self):
@@ -221,7 +227,9 @@ class FileSetting(SettingItem):
 	def _Init(self):
 		self.Widget = gtk.HBox()
 		self.Entry = gtk.Entry()
+		Tooltips.set_tip(self.Entry, self.Setting.LongDesc)
 		self.Open = gtk.Button()
+		Tooltips.set_tip(self.Open, "Browse for " + self.Setting.LongDesc)
 		self.Open.set_image(gtk.image_new_from_stock(
 			gtk.STOCK_OPEN, gtk.ICON_SIZE_BUTTON))
 		self.Open.connect('clicked', self.OpenFileChooser)
@@ -283,17 +291,20 @@ def EnumSettingSortCompare(v1, v2):
 
 class EnumSetting(SettingItem):
 	def _Init(self):
-		self.Widget = gtk.combo_box_new_text()
+		self.Widget = gtk.EventBox()
+		Tooltips.set_tip(self.Widget, self.Setting.LongDesc)
+		self.Combo = gtk.combo_box_new_text()
+		self.Widget.add(self.Combo)
 		sortedItems = sorted(self.Setting.Info[2].items(), EnumSettingSortCompare)
 		for name, value in sortedItems:
-			self.Widget.append_text(name)
-		self.Widget.connect('changed', self.Changed)
+			self.Combo.append_text(name)
+		self.Combo.connect('changed', self.Changed)
 
 	def _Read(self):
-		self.Widget.set_active(self.Setting.Value)
+		self.Combo.set_active(self.Setting.Value)
 
 	def _Changed(self):
-		active = self.Widget.get_active_text()
+		active = self.Combo.get_active_text()
 		self.Setting.Value = self.Setting.Info[2][active]
 
 class BoolSetting(SettingItem):
@@ -301,6 +312,7 @@ class BoolSetting(SettingItem):
 		self.Custom = True
 		self.Widget = gtk.HBox()
 		self.CheckButton = gtk.CheckButton(self.Setting.ShortDesc)
+		Tooltips.set_tip(self.CheckButton, self.Setting.LongDesc)
 		self.Widget.pack_start(self.CheckButton, True, True)
 		self.Widget.pack_start(self.Reset, False, False)
 		self.CheckButton.connect('toggled', self.Changed)
@@ -321,11 +333,13 @@ class IntFloatSetting(SettingItem):
 
 		self.Adj = gtk.Adjustment(self.Setting.Value, self.Setting.Info[0], self.Setting.Info[1], inc, inc*10)
 		self.Spin = gtk.SpinButton(self.Adj)
+		Tooltips.set_tip(self.Spin, self.Setting.LongDesc)
 		
 		if self.Setting.Type == 'Float':
 			self.Spin.set_digits(4)
 		
 		self.Scale = gtk.HScale(self.Adj)
+		Tooltips.set_tip(self.Scale, self.Setting.LongDesc)
 		self.Scale.props.draw_value = False
 		self.Adj.connect('value-changed', self.Changed)
 
@@ -347,6 +361,7 @@ class IntFloatSetting(SettingItem):
 class ColorSetting(SettingItem):
 	def _Init(self):
 		self.Widget = gtk.ColorButton()
+		Tooltips.set_tip(self.Widget, self.Setting.LongDesc)
 		self.Widget.set_use_alpha(True)
 		self.Widget.connect('color-set', self.Changed)
 
@@ -373,6 +388,7 @@ class MultiListSetting(SettingItem):
 		self.Types = types
 		self.Store = gtk.ListStore(*types)
 		self.View = gtk.TreeView(self.Store)
+		Tooltips.set_tip(self.View, "Multi-list settings")
 		self.View.set_headers_visible(True)
 		for col in cols:
 			self.View.insert_column_with_attributes(-1, col[0], col[1], **col[2])
@@ -521,15 +537,22 @@ class MultiListSetting(SettingItem):
 		widgets = []
 		for setting in self.Settings:
 			if self.Types[row] == gobject.TYPE_STRING:
+				ebox = gtk.EventBox()
 				label = gtk.Label(setting.ShortDesc)
+				ebox.add(label)
+				Tooltips.set_tip(ebox, setting.LongDesc)
 				entry = gtk.Entry()
+				Tooltips.set_tip(entry, setting.LongDesc)
 				if values != None:
 					entry.set_text(values[row])
-				table.attach(label, 0, 1, row, row+1, xpadding=5)
+				table.attach(ebox, 0, 1, row, row+1, xpadding=5, xoptions=gtk.FILL)
 				table.attach(entry, 2, 3, row, row+1, xpadding=5)
 				widgets.append(entry)
 			elif self.Types[row] == gobject.TYPE_INT or self.Types[row] == gobject.TYPE_FLOAT:
+				ebox = gtk.EventBox()
 				label = gtk.Label(setting.ShortDesc)
+				ebox.add(label)
+				Tooltips.set_tip(ebox, setting.LongDesc)
 				inc = 0
 				if setting.Info[0] == 'Int':
 					inc = 1
@@ -540,13 +563,15 @@ class MultiListSetting(SettingItem):
 					value = values[row]
 				adjustment = gtk.Adjustment(value, setting.Info[1][0], setting.Info[1][1], inc, inc*10)
 				spin = gtk.SpinButton(adjustment)
+				Tooltips.set_tip(spin, setting.LongDesc)
 				if setting.Info[0] == 'Float':
 					spin.set_digits(4)
 				scale = gtk.HScale(adjustment)
+				Tooltips.set_tip(scale, setting.LongDesc)
 				scale.props.draw_value = False
-				table.attach(label, 0, 1, row, row+1, xpadding=5)
+				table.attach(ebox, 0, 1, row, row+1, xpadding=5, xoptions=gtk.FILL)
 				table.attach(scale, 2, 3, row, row+1, xpadding=5)
-				table.attach(spin, 3, 4, row, row+1, xpadding=5)
+				table.attach(spin, 3, 4, row, row+1, xpadding=5, xoptions=gtk.FILL)
 				widgets.append(adjustment)
 			row += 1
 
@@ -609,6 +634,7 @@ class ListSetting(SettingItem):
 		info = self._ListInfo()
 		self.Store = gtk.ListStore(*info[0])
 		self.View = gtk.TreeView(self.Store)
+		Tooltips.set_tip(self.View, self.Setting.LongDesc)
 		if len(info[0]) == 1:
 			self.View.set_headers_visible(False)
 		for i in info[1]:
@@ -733,8 +759,13 @@ class StringMatchListSetting(ListSetting):
 		dlg.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
 		dlg.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK).grab_default()
 		dlg.set_default_response(gtk.RESPONSE_OK)
-		dlg.vbox.pack_start(gtk.Label("Value(%s) for %s:" % (self.Setting.Info[0], self.Setting.ShortDesc)))
+		ebox = gtk.EventBox()
+		label = gtk.Label("Value (%s) for %s:" % (self.Setting.Info[0], self.Setting.ShortDesc))
+		ebox.add(label)
+		Tooltips.set_tip(ebox, self.Setting.LongDesc)
+		dlg.vbox.pack_start(ebox)
 		entry = gtk.Entry()
+		Tooltips.set_tip(entry, self.Setting.LongDesc)
 		entry.props.activates_default = True
 		if value is not None:
 			entry.set_text(value)
@@ -760,6 +791,7 @@ class IntDescListSetting(SettingItem):
 		self.minVal = sortedItems[0][1]
 		for key, value in sortedItems:
 			box = gtk.CheckButton(key)
+			Tooltips.set_tip(box, self.Setting.LongDesc)
 			self.Checks.append((key, box))
 			self.Table.attach(box, col, col+1, row, row+1, TDef, TDef, TXp, TYp)
 			box.connect('toggled', self.Changed)
@@ -809,7 +841,11 @@ class IntFloatListSetting(ListSetting):
 		dlg.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
 		dlg.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK).grab_default()
 		dlg.set_default_response(gtk.RESPONSE_OK)
-		dlg.vbox.pack_start(gtk.Label("Value(%s) for %s:" % (self.Setting.Info[0], self.Setting.ShortDesc)))
+		label = gtk.Label("Value (%s) for %s:" % (self.Setting.Info[0], self.Setting.ShortDesc))
+		ebox = gtk.EventBox()
+		ebox.add(label)
+		Tooltips.set_tip(ebox, self.Setting.LongDesc)
+		dlg.vbox.pack_start(ebox)
 		box = gtk.HBox()
 		dlg.vbox.pack_start(box)
 		
@@ -826,9 +862,11 @@ class IntFloatListSetting(ListSetting):
 				self.Setting.Info[1][0], self.Setting.Info[1][1], 
 				inc, inc*10)
 		spin = gtk.SpinButton(adj)
+		Tooltips.set_tip(spin, setting.LongDesc)
 		if self.Setting.Info[0] == 'Float':
 			spin.set_digits(4)
 		scale = gtk.HScale(adj)
+		Tooltips.set_tip(scale, setting.LongDesc)
 		scale.props.draw_value = False
 		
 		box.pack_start(scale, True, True)
@@ -1490,6 +1528,7 @@ class PluginClass:
 		infoLabelCont.pack_start(infoLabel, True, True)
 		
 		if plugin.Name != 'core':
+			Tooltips.set_tip(self.FilterEntry, "Search %s Plugin Options" % plugin.ShortDesc)
 			enableLabel = MakeLabel()
 			enableLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>" % (main.BrightColor, 'Use This Plugin'))
 			self.LeftWidget.pack_start(enableLabel, False, False)
@@ -1498,9 +1537,12 @@ class PluginClass:
 			self.LeftWidget.pack_start(enableCheckCont, False, False)
 			enableCheck = gtk.CheckButton()
 			enableCheck.add(MakeLabel("Enable %s" % plugin.ShortDesc, 120))
+			Tooltips.set_tip(enableCheck, plugin.LongDesc)
 			enableCheck.set_active(plugin.Enabled)
 			enableCheckCont.pack_start(enableCheck, True, True)
 			enableCheck.connect('toggled', self.EnablePlugin)
+		else:
+			Tooltips.set_tip(self.FilterEntry, "Search Compiz Core Options")
 		
 		backButton = gtk.Button(gtk.STOCK_GO_BACK)
 		backButton.set_use_stock(True)
@@ -1596,8 +1638,10 @@ class ProfileBackendPage:
 		profileBox = gtk.HBox()
 		profileBox.set_spacing(5)
 		profileAdd = gtk.Button()
+		Tooltips.set_tip(profileAdd, "Add a New Profile")
 		profileAdd.set_image(gtk.image_new_from_stock(gtk.STOCK_ADD, gtk.ICON_SIZE_BUTTON))
 		profileRemove = gtk.Button()
+		Tooltips.set_tip(profileRemove, "Remove This Profile")
 		profileRemove.set_image(gtk.image_new_from_stock(gtk.STOCK_REMOVE, gtk.ICON_SIZE_BUTTON))
 		self.ProfileComboBox = gtk.combo_box_new_text()
 		self.ProfileComboBox.set_sensitive(self.Context.CurrentBackend.ProfileSupport)
@@ -1621,7 +1665,9 @@ class ProfileBackendPage:
 		self.ProfileImportExportBox = gtk.HBox()
 		self.ProfileImportExportBox.set_spacing(5)
 		profileImportButton = gtk.Button("Import")
+		Tooltips.set_tip(profileImportButton, "Import a CompizConfig Profile")
 		profileExportButton = gtk.Button("Export")
+		Tooltips.set_tip(profileExportButton, "Export your CompizConfig Profile")
 		profileImportButton.set_image(gtk.image_new_from_stock(gtk.STOCK_OPEN, gtk.ICON_SIZE_BUTTON))
 		profileExportButton.set_image(gtk.image_new_from_stock(gtk.STOCK_SAVE, gtk.ICON_SIZE_BUTTON))
 		profileImportButton.connect("clicked", self.ImportProfile)
@@ -1840,6 +1886,7 @@ class MainWinClass:
 		filterLabel.set_markup("<span color='%s' size='large' weight='800'>Filter</span>" % self.BrightColor)
 		leftChild.pack_start(filterLabel, False, False)
 		filterEntry = gtk.Entry()
+		Tooltips.set_tip(filterEntry, "Filter your Plugin list")
 		filterEntry.connect("changed", self.FilterTable)
 		leftChild.pack_start(filterEntry, False, False)
 
@@ -1961,6 +2008,7 @@ class MainWinClass:
 
 				if plugin.Name !=  'core':
 					pluginEnable = gtk.CheckButton()
+					Tooltips.set_tip(pluginEnable, "Enable %s" % plugin.ShortDesc)
 					pluginEnable.set_active(plugin.Enabled)
 					pluginEnable.connect("toggled", self.EnablePlugin, plugin)
 					pluginBox.pack_start(pluginEnable, False, False)
