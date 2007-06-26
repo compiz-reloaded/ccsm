@@ -912,28 +912,37 @@ def MakeSetting(setting):
 def SettingSortCompare(v1, v2):
 	return cmp(v1.Plugin.Ranking[v1.Name], v2.Plugin.Ranking[v2.Name])
 
-def FilterSettings(settings, filter, run=0):
+# singleRun is used to combine the run stages, in this case run is a list
+# containing the run levels which should be used to filter the settings
+def FilterSettings(settings, filter, run=0, noActions=False, singleRun=False):
 	if filter == None:
 		return settings
 
 	filteredSettings = []
 
 	for setting in settings:
+		if noActions and setting.Type == 'Action':
+			continue
+		if setting.Name == '____plugin_enabled':
+			continue
 		# First run, only search in shortDesc and name
-		if run == 0:
+		if run == 0 or (singleRun and run.count(0) != 0):
 			shortDesc = setting.ShortDesc.lower()
 			name = setting.Name.lower()
 			if shortDesc.find(filter) != -1:
 				filteredSettings.append(setting)
+				continue
 			elif name.find(filter) != -1:
 				filteredSettings.append(setting)
+				continue
 		# Then in longDesc
-		elif run == 1:
+		if run == 1 or (singleRun and run.count(1) != 0):
 			longDesc = setting.LongDesc.lower()
 			if longDesc.find(filter) != -1:
 				filteredSettings.append(setting)
+				continue
 		# Finally search in the option value
-		elif run == 2:
+		if run == 2 or (singleRun and run.count(2) != 0):
 			value = ""
 			# make sure enum settings work too
 			if setting.Type == 'Int' and len(setting.Info[2].keys()) > 0:
@@ -952,8 +961,8 @@ def FilterSettings(settings, filter, run=0):
 				filteredSettings.append(setting)
 
 	# Nothing was found, search also in the longDesc/value
-	if len(filteredSettings) == 0 and run < 2:
-		return FilterSettings(settings, filter, run+1)
+	if len(filteredSettings) == 0 and run < 2 and not singleRun:
+		return FilterSettings(settings, filter, run+1, noActions, False)
 
 	return filteredSettings
 
@@ -970,7 +979,7 @@ class SubGroupArea:
 	def __init__(self, name, subGroup, filter=None):
 		self.MySettings = []
 		#settings = sum((v.values() for v in [subGroup.Display]+[subGroup.Screens[CurrentScreenNum]]), [])
-		settings = FilterSettings(sorted(sum((v.values() for v in [subGroup.Display]+[subGroup.Screens[CurrentScreenNum]]), []), SettingSortCompare), filter)
+		settings = FilterSettings(sorted(sum((v.values() for v in [subGroup.Display]+[subGroup.Screens[CurrentScreenNum]]), []), SettingSortCompare), filter, noActions=True)
 		if name == '':
 			self.Widget = gtk.Table()
 			self.Child = self.Widget
@@ -1610,6 +1619,276 @@ class PluginClass:
 		Write(self.Plugin.Context)
 		self.Block = self.Block-1
 
+class SelectorButtons(gtk.HBox):
+	def __init__(self):
+		gtk.HBox.__init__(self)
+		self.set_border_width(10)
+		self.set_spacing(5)
+		self.Buttons = []
+		self.Arrows = []
+
+	def add_button(self, label, callback):
+		arrow = gtk.Arrow(gtk.ARROW_RIGHT, gtk.SHADOW_NONE)
+		button = gtk.Button(label)
+		button.set_relief(gtk.RELIEF_NONE)
+		button.connect('clicked', callback, label)
+		if len(self.get_children()) > 0:
+			self.pack_start(arrow, False, False)
+			self.Arrows.append(arrow)
+		self.pack_start(button, False, False)
+		self.Buttons.append(button)
+		self.show_all()
+
+	def remove_button(self, pos):
+		if pos > len(self.Buttons)-1:
+			return
+		self.Buttons[pos].destroy()
+		self.Buttons.remove(self.Buttons[pos])
+		if pos > 0:
+			self.Arrows[pos-1].destroy()
+			self.Arrows.remove(self.Arrows[pos-1])
+
+class SelectorBox(gtk.ScrolledWindow):
+	def __init__(self, main):
+		gtk.ScrolledWindow.__init__(self)
+		self.SelectedItem = None
+		self.Viewport = gtk.Viewport()
+		self.Viewport.modify_bg(gtk.STATE_NORMAL, gtk.gdk.color_parse(main.BackgroundColor))
+		self.props.hscrollbar_policy = gtk.POLICY_NEVER
+		self.props.vscrollbar_policy = gtk.POLICY_AUTOMATIC
+		self.set_size_request(210, 150)
+		self.Box = gtk.VBox()
+		self.Box.set_spacing(5)
+		self.Viewport.add(self.Box)
+		self.add(self.Viewport)
+
+	def close(self):
+		self.destroy()
+		self.Viewport.destroy()
+		for button in self.Box.get_children():
+			button.destroy()
+		self.Box.destroy()
+
+	def add_item(self, item, callback):
+		button = gtk.Button()
+		label = MakeLabel(item or 'General')
+		button.add(label)
+		button.connect("clicked", callback, item)
+		button.set_relief(gtk.RELIEF_NONE)
+		self.Box.pack_start(button, False, False)
+
+	def clear_list(self):
+		for button in self.Box.get_children():
+			button.destroy()
+	
+	def set_item_list(self, list, callback):
+		self.clear_list()
+		for item in list:
+			self.add_item(item)
+			
+		self.Box.show_all()
+
+class FilterPage:
+	def __init__(self, main, context):
+		self.Context = context
+		self.Main = main
+		self.MainWin = main.MainWin
+		self.LeftWidget = gtk.VBox(False, 10)
+		self.LeftWidget.set_border_width(15)
+		self.RightWidget = gtk.Notebook()
+		self.RightChild = gtk.VBox()
+
+		# Image + Label
+		filterLabel = MakeLabel()
+		filterLabel.set_markup("<span color='%s' size='large' weight='800'>Filter</span>" % main.BrightColor)
+		filterImg = main.MakeImage(category="search", size = 64)
+		self.LeftWidget.pack_start(filterImg, False, False)
+		self.LeftWidget.pack_start(filterLabel, False, False)
+		
+		# Entry
+		filterEntry = gtk.Entry()
+		filterEntry.connect("changed", self.FilterChanged)
+		self.LeftWidget.pack_start(filterEntry, False, False)
+
+		# Search in...
+		filterSearchLabel = MakeLabel()
+		filterSearchLabel.set_markup("<span color='%s' size='large' weight='800'>Search in...</span>" % main.BrightColor)
+		self.LeftWidget.pack_start(filterSearchLabel, False, False)
+
+		# Options
+		self.FilterName = gtk.CheckButton()
+		filterLabel = MakeLabel("Short description and name")
+		self.FilterName.add(filterLabel)
+		self.FilterName.set_active(True)
+		
+		self.FilterLongDesc = gtk.CheckButton()
+		filterLabel = MakeLabel("Long description")
+		self.FilterLongDesc.add(filterLabel)
+		self.FilterLongDesc.set_active(True)
+		
+		self.FilterValue = gtk.CheckButton()
+		filterLabel = MakeLabel("Settings value")
+		self.FilterValue.add(filterLabel)
+		self.FilterValue.set_active(False)
+
+		self.LeftWidget.pack_start(self.FilterName, False, False)
+		self.LeftWidget.pack_start(self.FilterLongDesc, False, False)
+		self.LeftWidget.pack_start(self.FilterValue, False, False)
+
+		# Back Button
+		self.BackButton = gtk.Button(gtk.STOCK_GO_BACK)
+		self.BackButton.set_use_stock(True)
+		self.BackButton.connect('clicked', self.Main.BackToMain)
+		self.LeftWidget.pack_end(self.BackButton, False, False)
+
+		self.FilteredPlugins = []
+		self.Filter = None
+
+		# Selector
+		self.CurrentPlugin = None
+		self.CurrentGroup = None
+		self.CurrentSubGroup = None
+		self.SelectorButtons = SelectorButtons()
+		self.PluginBox = SelectorBox(main)
+		self.GroupBox = SelectorBox(main)
+		self.SubGroupBox = SelectorBox(main)
+		self.SelectorBoxes = gtk.HBox()
+		self.SelectorBoxes.set_border_width(5)
+		self.SelectorBoxes.set_spacing(5)
+		self.PluginBox.set_no_show_all(True)
+		self.GroupBox.set_no_show_all(True)
+		self.SubGroupBox.set_no_show_all(True)
+		self.SelectorBoxes.pack_start(self.PluginBox, False, False)
+		self.SelectorBoxes.pack_start(self.GroupBox, False, False)
+		self.SelectorBoxes.pack_start(self.SubGroupBox, False, False)
+		self.RightChild.pack_start(self.SelectorButtons, False, False)
+		self.RightChild.pack_start(self.SelectorBoxes, False, False)
+		self.SettingsArea = gtk.ScrolledWindow()
+		viewport = gtk.Viewport()
+		self.SettingsBox = gtk.VBox()
+		self.SettingsBox.set_border_width(5)
+		self.SettingsBox.set_spacing(5)
+		viewport.add(self.SettingsBox)
+		self.SettingsArea.props.hscrollbar_policy = gtk.POLICY_NEVER
+		self.SettingsArea.props.vscrollbar_policy = gtk.POLICY_AUTOMATIC
+		self.SettingsArea.set_border_width(5)
+		self.SettingsArea.add(viewport)
+		self.SettingsArea.set_no_show_all(True)
+		self.RightChild.pack_start(self.SettingsArea, True, True)
+
+		self.FilterChanged(filterEntry)
+
+		# Notebool
+		self.RightWidget.append_page(self.RightChild, gtk.Label('Settings'))
+
+	
+	def UpdateBoxes(self):
+		self.PluginBox.clear_list()
+		self.GroupBox.clear_list()
+		self.SubGroupBox.clear_list()
+		for child in self.SettingsBox.get_children():
+			child.destroy()
+		
+		# Plugins
+		for plugin, groups in self.FilteredPlugins:
+			self.PluginBox.add_item(plugin.ShortDesc, self.PluginChanged)
+			# Groups
+			if self.CurrentPlugin == plugin.ShortDesc:
+				for group, subGroups in groups:
+					self.GroupBox.add_item(group, self.GroupChanged)
+					# SubGroups
+					if self.CurrentGroup == group:
+						for name, subGroup, settings in subGroups:
+							self.SubGroupBox.add_item(name, self.SubGroupChanged)
+							# Settings
+							if self.CurrentSubGroup == name:
+								sga = SubGroupArea('', subGroup, self.Filter)
+								self.SettingsBox.pack_start(sga.Widget, False, False)
+							elif self.CurrentSubGroup == None:
+								sga = SubGroupArea(name, subGroup, self.Filter)
+								self.SettingsBox.pack_start(sga.Widget, False, False)
+
+		if len(self.FilteredPlugins) == 0:
+			self.CurrentPlugin = None
+			self.CurrentGroup = None
+			self.CurrentSubGroup = None
+
+		self.PluginBox.hide()
+		self.PluginBox.set_no_show_all(len(self.FilteredPlugins) == 0)
+		self.GroupBox.hide()
+		self.GroupBox.set_no_show_all(self.CurrentPlugin == None)
+		self.SubGroupBox.hide()
+		self.SubGroupBox.set_no_show_all(self.CurrentGroup == None)
+		self.SettingsArea.hide()
+		self.SettingsArea.set_no_show_all(len(self.SettingsBox.get_children()) == 0)
+
+		self.RightChild.show_all()
+
+	def PluginChanged(self, widget, plugin):
+		if self.CurrentSubGroup != None:
+			self.SelectorButtons.remove_button(2)
+		if self.CurrentGroup != None:
+			self.SelectorButtons.remove_button(1)
+		if self.CurrentPlugin != None:
+			self.SelectorButtons.remove_button(0)
+
+		self.CurrentPlugin = plugin
+		self.CurrentGroup = None
+		self.CurrentSubGroup = None
+
+		self.SelectorButtons.add_button(plugin, self.PluginChanged)
+		self.UpdateBoxes()
+
+	def GroupChanged(self, widget, group):
+		if self.CurrentSubGroup != None:
+			self.SelectorButtons.remove_button(2)
+		if self.CurrentGroup != None:
+			self.SelectorButtons.remove_button(1)
+
+		self.CurrentGroup = group
+		self.CurrentSubGroup = None
+
+		self.SelectorButtons.add_button(group or 'General', self.GroupChanged)
+		self.UpdateBoxes()
+
+	def SubGroupChanged(self, widget, subGroup):
+		if self.CurrentGroup != None:
+			self.SelectorButtons.remove_button(2)
+
+		self.CurrentSubGroup = subGroup
+
+		self.SelectorButtons.add_button(subGroup or 'General', self.SubGroupChanged)
+		self.UpdateBoxes()
+
+	def FilterChanged(self, widget):
+		self.Filter = widget.get_text()
+		runLevels = []
+		if self.FilterName.get_active():
+			runLevels.append(0)
+		if self.FilterLongDesc.get_active():
+			runLevels.append(1)
+		if self.FilterValue.get_active():
+			runLevels.append(2)
+		plugins = []
+		for plugin in self.Context.Plugins:
+			groups = []
+			for group in self.Context.Plugins[plugin].Groups:
+				subGroups = []
+				for name, subGroup in self.Context.Plugins[plugin].Groups[group].items():
+					settings = sum((v.values() for v in [subGroup.Display]+[subGroup.Screens[CurrentScreenNum]]), [])
+					settings = sorted(settings, SettingSortCompare)
+					settings = FilterSettings(settings, self.Filter, run=runLevels, noActions=True, singleRun=True)
+					if len(settings) > 0:
+						subGroups.append((name, subGroup, settings))
+				if len(subGroups) > 0:
+					groups.append((group, subGroups))
+			if len(groups) > 0:
+				plugins.append((self.Context.Plugins[plugin], groups))
+
+		self.FilteredPlugins = plugins
+		self.UpdateBoxes()
+		
+		
 class ProfileBackendPage:
 	def __init__(self, main, context):
 		self.Context = context
@@ -1884,7 +2163,16 @@ class MainWinClass:
 		# Filter
 		filterLabel = MakeLabel()
 		filterLabel.set_markup("<span color='%s' size='large' weight='800'>Filter</span>" % self.BrightColor)
-		leftChild.pack_start(filterLabel, False, False)
+		filterImage = gtk.Image()
+		filterImage.set_from_stock(gtk.STOCK_GO_FORWARD, gtk.ICON_SIZE_BUTTON)
+		filterButton = gtk.Button()
+		filterButton.connect("clicked", self.ShowAdvancedFilter)
+		filterButton.set_relief(gtk.RELIEF_NONE)
+		filterFrame = gtk.HBox()
+		filterFrame.pack_start(filterLabel, False, False)
+		filterFrame.pack_end(filterImage, False, False)
+		filterButton.add(filterFrame)
+		leftChild.pack_start(filterButton, False, False)
 		filterEntry = gtk.Entry()
 		Tooltips.set_tip(filterEntry, "Filter your Plugin list")
 		filterEntry.connect("changed", self.FilterTable)
@@ -1992,7 +2280,7 @@ class MainWinClass:
 			
 			for plugin in pluginList:
 				pluginButton = gtk.Button()
-				pluginButton.connect('clicked', self.SelectPlugin, plugin)
+				pluginButton.connect('clicked', self.ShowPlugin, plugin)
 				pluginButton.connect('enter', self.SetInfo, self.PluginDescription, plugin.LongDesc)
 				pluginButton.connect('leave', self.ResetInfo, self.PluginDescription)
 				pluginButton.set_size_request(200, -1)
@@ -2147,7 +2435,7 @@ class MainWinClass:
 				img.set_from_stock(gtk.STOCK_MISSING_IMAGE, gtk.ICON_SIZE_BUTTON)
 		return img
 
-	def SelectPlugin(self, obj, select):
+	def ShowPlugin(self, obj, select):
 		self.RightVadj = self.RightPane.get_child().get_vadjustment().get_value()
 		for name, value in self.PluginImages.items():
 			widget = value.get_parent()
@@ -2157,7 +2445,16 @@ class MainWinClass:
 		self.ShowingPlugin = pluginClass
 		self.SetMainWidgets(pluginClass.LeftWidget, pluginClass.RightWidget)
 	
-	def ShowProfileBackend(self, obj):
+	def ShowAdvancedFilter(self, widget):
+		self.RightVadj = self.RightPane.get_child().get_vadjustment().get_value()
+		for name, value in self.PluginImages.items():
+			widget = value.get_parent()
+			if widget:
+				widget.remove(value)
+		filterPage = FilterPage(self, self.Context)
+		self.SetMainWidgets(filterPage.LeftWidget, filterPage.RightWidget)
+	
+	def ShowProfileBackend(self, widget):
 		self.RightVadj = self.RightPane.get_child().get_vadjustment().get_value()
 		for name, value in self.PluginImages.items():
 			widget = value.get_parent()
