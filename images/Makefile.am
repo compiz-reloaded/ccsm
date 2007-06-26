@@ -16,6 +16,7 @@ images_DATA = \
 	category-image_loading.svg      \
 	category-key_bindings.svg       \
 	category-profiles.svg   \
+	category-search.svg \
 	category-uncategorized.svg   \
 	category-utility.svg \
 	category-window_management.svg  \
