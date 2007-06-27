@@ -1791,16 +1791,23 @@ class FilterPage:
 		self.SubGroupBox.clear_list()
 		for child in self.SettingsBox.get_children():
 			child.destroy()
+
+		singleGroup = None
+		singleSubGroup = None
 		
 		# Plugins
 		for plugin, groups in self.FilteredPlugins:
 			self.PluginBox.add_item(plugin.ShortDesc, self.PluginChanged)
 			# Groups
 			if self.CurrentPlugin == plugin.ShortDesc:
+				if len(groups) == 1:
+					singleGroup = groups[0][0]
 				for group, subGroups in groups:
 					self.GroupBox.add_item(group, self.GroupChanged)
 					# SubGroups
-					if self.CurrentGroup == group:
+					if self.CurrentGroup == group or singleGroup == group:
+						if len(subGroups) == 1:
+							singleSubGroup = subGroups[0][0]
 						for name, subGroup, settings in subGroups:
 							self.SubGroupBox.add_item(name, self.SubGroupChanged)
 							# Settings
@@ -1819,13 +1826,19 @@ class FilterPage:
 		self.PluginBox.hide()
 		self.PluginBox.set_no_show_all(len(self.FilteredPlugins) == 0)
 		self.GroupBox.hide()
-		self.GroupBox.set_no_show_all(self.CurrentPlugin == None)
+		self.GroupBox.set_no_show_all(self.CurrentPlugin == None or singleGroup != None)
 		self.SubGroupBox.hide()
-		self.SubGroupBox.set_no_show_all(self.CurrentGroup == None)
+		self.SubGroupBox.set_no_show_all(self.CurrentGroup == None or singleSubGroup != None)
 		self.SettingsArea.hide()
 		self.SettingsArea.set_no_show_all(len(self.SettingsBox.get_children()) == 0)
 
 		self.RightChild.show_all()
+
+		if self.CurrentPlugin != None and singleGroup != None:
+			self.CurrentGroup = singleGroup
+
+		if self.CurrentGroup != None and singleSubGroup != None:
+			self.CurrentSubGroup = singleSubGroup
 
 	def PluginChanged(self, widget, plugin):
 		if self.CurrentSubGroup != None:
