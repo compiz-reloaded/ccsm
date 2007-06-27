@@ -1688,6 +1688,9 @@ class SelectorBox(gtk.ScrolledWindow):
 			
 		self.Box.show_all()
 
+def PluginSortCompare(p1, p2):
+	return cmp(p1.ShortDesc, p2.ShortDesc)
+
 class FilterPage:
 	def __init__(self, main, context):
 		self.Context = context
@@ -1870,11 +1873,11 @@ class FilterPage:
 		if self.FilterValue.get_active():
 			runLevels.append(2)
 		plugins = []
-		for plugin in self.Context.Plugins:
+		for plugin in sorted(self.Context.Plugins.values(), PluginSortCompare):
 			groups = []
-			for group in self.Context.Plugins[plugin].Groups:
+			for group in plugin.Groups:
 				subGroups = []
-				for name, subGroup in self.Context.Plugins[plugin].Groups[group].items():
+				for name, subGroup in plugin.Groups[group].items():
 					settings = sum((v.values() for v in [subGroup.Display]+[subGroup.Screens[CurrentScreenNum]]), [])
 					settings = sorted(settings, SettingSortCompare)
 					settings = FilterSettings(settings, self.Filter, run=runLevels, noActions=True, singleRun=True)
@@ -1883,7 +1886,7 @@ class FilterPage:
 				if len(subGroups) > 0:
 					groups.append((group, subGroups))
 			if len(groups) > 0:
-				plugins.append((self.Context.Plugins[plugin], groups))
+				plugins.append((plugin, groups))
 
 		self.FilteredPlugins = plugins
 		self.UpdateBoxes()
