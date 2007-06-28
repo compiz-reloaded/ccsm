@@ -2179,19 +2179,11 @@ class MainWinClass:
 		# Filter
 		filterLabel = MakeLabel()
 		filterLabel.set_markup("<span color='%s' size='large' weight='800'>Filter</span>" % self.BrightColor)
-		filterImage = gtk.Image()
-		filterImage.set_from_stock(gtk.STOCK_GO_FORWARD, gtk.ICON_SIZE_BUTTON)
-		filterButton = gtk.Button()
-		filterButton.connect("clicked", self.ShowAdvancedFilter)
-		filterButton.set_relief(gtk.RELIEF_NONE)
-		filterFrame = gtk.HBox()
-		filterFrame.pack_start(filterLabel, False, False)
-		filterFrame.pack_end(filterImage, False, False)
-		filterButton.add(filterFrame)
-		leftChild.pack_start(filterButton, False, False)
+		filterLabel.props.xalign = 0.1
 		filterEntry = gtk.Entry()
 		Tooltips.set_tip(filterEntry, "Filter your Plugin list")
 		filterEntry.connect("changed", self.FilterTable)
+		leftChild.pack_start(filterLabel, False, False)
 		leftChild.pack_start(filterEntry, False, False)
 
 		# Screens
@@ -2206,20 +2198,6 @@ class MainWinClass:
 			screenLabel.set_markup("<span color='%s' size='large' weight='800'>Screen</span>" % self.BrightColor)
 			leftChild.pack_start(screenLabel, False, False)
 			leftChild.pack_start(screenBox, False, False)
-		
-		# Profiles and Backend
-		profBackLabel = MakeLabel()
-		profBackLabel.set_markup("<span color='%s' size='large' weight='800'>Backend &amp; Profile</span>" % self.BrightColor)
-		profBackImage = gtk.Image()
-		profBackImage.set_from_stock(gtk.STOCK_GO_FORWARD, gtk.ICON_SIZE_BUTTON)
-		profBackButton = gtk.Button()
-		profBackButton.connect("clicked", self.ShowProfileBackend)
-		profBackButton.set_relief(gtk.RELIEF_NONE)
-		profBackFrame = gtk.HBox()
-		profBackFrame.pack_start(profBackLabel, False, False)
-		profBackFrame.pack_end(profBackImage, False, False)
-		profBackButton.add(profBackFrame)
-		leftChild.pack_start(profBackButton, False, False)
 
 		# Categories
 		categoryBox = gtk.VBox()
@@ -2243,6 +2221,34 @@ class MainWinClass:
 		self.ExitButton.set_use_stock(True)
 		self.ExitButton.connect('clicked', Quit)
 		leftChild.pack_end(self.ExitButton, False, False)
+
+		# Profiles and Backend
+		profBackLabel = MakeLabel()
+		profBackLabel.set_markup("<span color='%s' size='large' weight='800'>Backend &amp; Profile</span>" % self.BrightColor)
+		profBackImage = gtk.Image()
+		profBackImage.set_from_stock(gtk.STOCK_GO_FORWARD, gtk.ICON_SIZE_BUTTON)
+		profBackButton = gtk.Button()
+		profBackButton.connect("clicked", self.ShowProfileBackend)
+		profBackButton.set_relief(gtk.RELIEF_NONE)
+		profBackFrame = gtk.HBox()
+		profBackFrame.pack_start(profBackLabel, False, False)
+		profBackFrame.pack_end(profBackImage, False, False)
+		profBackButton.add(profBackFrame)
+		leftChild.pack_end(profBackButton, False, False)
+
+		# Advanced Search
+		searchLabel = MakeLabel()
+		searchLabel.set_markup("<span color='%s' size='large' weight='800'>Advanced Search</span>" % self.BrightColor)
+		searchImage = gtk.Image()
+		searchImage.set_from_stock(gtk.STOCK_GO_FORWARD, gtk.ICON_SIZE_BUTTON)
+		searchButton = gtk.Button()
+		searchButton.connect("clicked", self.ShowAdvancedFilter)
+		searchButton.set_relief(gtk.RELIEF_NONE)
+		searchFrame = gtk.HBox()
+		searchFrame.pack_start(searchLabel, False, False)
+		searchFrame.pack_end(searchImage, False, False)
+		searchButton.add(searchFrame)
+		leftChild.pack_end(searchButton, False, False)
 
 		pluginsVPort.modify_bg(gtk.STATE_NORMAL, gtk.gdk.color_parse(self.BackgroundColor))
 		rightChild = gtk.ScrolledWindow()
