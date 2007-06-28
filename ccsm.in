@@ -2206,17 +2206,6 @@ class MainWinClass:
 			screenLabel.set_markup("<span color='%s' size='large' weight='800'>Screen</span>" % self.BrightColor)
 			leftChild.pack_start(screenLabel, False, False)
 			leftChild.pack_start(screenBox, False, False)
-
-		# Information
-		infoLabel = MakeLabel()
-		infoLabel.set_markup("<span color='%s' size='large' weight='800'>Information</span>" % self.BrightColor)
-		leftChild.pack_start(infoLabel, False, False)
-		infoBox = gtk.VBox()
-		infoBox.set_border_width(10)
-		self.PluginDescription = MakeLabel(wrap = 180)
-		self.PluginDescription.set_markup("")
-		infoBox.pack_start(self.PluginDescription, False, False)
-		leftChild.pack_start(infoBox, False, False)
 		
 		# Profiles and Backend
 		profBackLabel = MakeLabel()
@@ -2298,8 +2287,6 @@ class MainWinClass:
 			for plugin in pluginList:
 				pluginButton = gtk.Button()
 				pluginButton.connect('clicked', self.ShowPlugin, plugin)
-				pluginButton.connect('enter', self.SetInfo, self.PluginDescription, plugin.LongDesc)
-				pluginButton.connect('leave', self.ResetInfo, self.PluginDescription)
 				pluginButton.set_size_request(200, -1)
 				pluginButton.set_relief(gtk.RELIEF_NONE)
 				pluginButtonBox = gtk.HBox(False, 10)
@@ -2318,6 +2305,7 @@ class MainWinClass:
 					pluginEnable.connect("toggled", self.EnablePlugin, plugin)
 					pluginBox.pack_start(pluginEnable, False, False)
 
+				Tooltips.set_tip(pluginButton, plugin.LongDesc)
 				pluginBox.pack_start(pluginButton, True, True)
 				pluginBox.set_size_request(220, -1)
 				self.TableCats[category][1].append(pluginBox)
@@ -2479,12 +2467,6 @@ class MainWinClass:
 				widget.remove(value)
 		profBackPage = ProfileBackendPage(self, self.Context)
 		self.SetMainWidgets(profBackPage.LeftWidget, profBackPage.RightWidget)
-
-	def SetInfo(self, widget, label, text):
-		label.set_markup(text)
-	
-	def ResetInfo(self, widget, label):
-		label.set_markup("")
 
 	def Expand(self, widget, box):
 		if box.get_no_show_all():
