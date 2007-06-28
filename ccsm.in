@@ -26,6 +26,16 @@ import gtk
 import gtk.gdk
 import cairo
 
+#l10n stuff
+APP = 'ccsm'
+DIR = 'locale'
+import locale
+import gettext
+locale.setlocale(locale.LC_ALL, "")
+gettext.bindtextdomain(APP, DIR)
+gettext.textdomain(APP)
+_ = gettext.gettext
+
 if gtk.pygtk_version < (2,10,0):
     print "PyGtk 2.10.0 or later required"
     raise SystemExit
@@ -60,10 +70,10 @@ def CheckConflict(setting, con, typ):
 	elif typ == 'Button':
 		cval = setting.Value[1]
 
-	msg = "The new value for the %s binding for the action <b>%s</b> " +\
+	msg = _("The new value for the %s binding for the action <b>%s</b> " +\
 		  "in plugin <b>%s</b> conflicts with the action <b>%s</b> of the <b>%s</b> plugin.\n" +\
 		  "Do you wish to disable <b>%s</b> in the <b>%s</b> plugin?\n" +\
-		  "If you click No, this option will not be set."
+		  "If you click No, this option will not be set.")
 	 
 	msg = msg % (typ, setting.ShortDesc, setting.Plugin.ShortDesc, con.ShortDesc, con.Plugin.ShortDesc, con.ShortDesc, con.Plugin.ShortDesc)
 	
@@ -116,9 +126,9 @@ def CheckFeature(context, feature):
 			if plugin.Enabled:
 				return True
 			else:
-				msg = "You are trying to use the feature <b>%s</b> which is provided by <b>%s</b>.\n" +\
+				msg = _("You are trying to use the feature <b>%s</b> which is provided by <b>%s</b>.\n" +\
 					  "This plugin is currently disabled.\n" +\
-					  "Do you wish to enable <b>%s</b> so the feature is available?"
+					  "Do you wish to enable <b>%s</b> so the feature is available?")
 				 
 				msg = msg % (feature, plugin.ShortDesc, plugin.ShortDesc)
 				
@@ -151,7 +161,7 @@ class SettingItem:
 		self.Blocked = 0
 		self.MakeLabel()
 		self.Reset = gtk.Button()
-		Tooltips.set_tip(self.Reset,"Reset setting to the default value")
+		Tooltips.set_tip(self.Reset,_("Reset setting to the default value"))
 		self.Reset.set_image(gtk.image_new_from_stock(
 			gtk.STOCK_CLEAR, gtk.ICON_SIZE_BUTTON))
 		self.Reset.connect('clicked', self.DoReset)
@@ -229,7 +239,7 @@ class FileSetting(SettingItem):
 		self.Entry = gtk.Entry()
 		Tooltips.set_tip(self.Entry, self.Setting.LongDesc)
 		self.Open = gtk.Button()
-		Tooltips.set_tip(self.Open, "Browse for " + self.Setting.LongDesc)
+		Tooltips.set_tip(self.Open, _("Browse for ") + self.Setting.LongDesc)
 		self.Open.set_image(gtk.image_new_from_stock(
 			gtk.STOCK_OPEN, gtk.ICON_SIZE_BUTTON))
 		self.Open.connect('clicked', self.OpenFileChooser)
@@ -265,7 +275,7 @@ class FileSetting(SettingItem):
 	
 	def OpenFileChooser(self, widget):
 		b = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_OPEN, gtk.RESPONSE_OK)
-		chooser = gtk.FileChooserDialog(title='Open file..', parent=mainWin, buttons=b)
+		chooser = gtk.FileChooserDialog(title=_('Open file..'), parent=mainWin, buttons=b)
 		
 		if os.path.exists(self.Setting.Value):
 			chooser.set_filename(self.Setting.Value)
@@ -1066,9 +1076,9 @@ def HandlePluginConflicts(conflicts):
 		if conflict[0] == 'ConflictFeature':
 			# see if we can deactivate the plugin
 			# mentioned in c[2]
-			msg = "Plugin <b>%s</b> provides feature <b>%s</b> which is also provided " +\
+			msg = _("Plugin <b>%s</b> provides feature <b>%s</b> which is also provided " +\
 				  "by the plugin you are trying to enable.\n" +\
-				  "Click OK to disable plugin <b>%s</b>, or Cancel to stop trying to enable this plugin."
+				  "Click OK to disable plugin <b>%s</b>, or Cancel to stop trying to enable this plugin.")
 			msg = msg % (conflict[2][0].ShortDesc, conflict[1], conflict[2][0].ShortDesc)
 			
 			dlg.set_markup(msg)
@@ -1088,8 +1098,8 @@ def HandlePluginConflicts(conflicts):
 		elif conflict[0] == 'ConflictPlugin':
 			# see if we can deactivate the plugin
 			# mentioned in c[2]
-			msg = "Plugin <b>%s</b> conflicts with the plugin you are trying to enable.\n" +\
-				  "Click OK to disable plugin <b>%s</b>, or Cancel to stop trying to enable this plugin."
+			msg = _("Plugin <b>%s</b> conflicts with the plugin you are trying to enable.\n" +\
+				  "Click OK to disable plugin <b>%s</b>, or Cancel to stop trying to enable this plugin.")
 			msg = msg % (conflict[2][0].ShortDesc, conflict[2][0].ShortDesc)
 			
 			dlg.set_markup(msg)
@@ -1107,9 +1117,9 @@ def HandlePluginConflicts(conflicts):
 		
 		elif conflict[0] == 'RequiresFeature':
 			# we need to activate one of c[2]
-			msg = "The plugin you are trying to enable requires feature <b>%s</b> which " +\
+			msg = _("The plugin you are trying to enable requires feature <b>%s</b> which " +\
 				  "is provided by the following plugins.\n" +\
-				  "Click OK to enable the selected plugin or Cancel to stop trying to enable this plugin."
+				  "Click OK to enable the selected plugin or Cancel to stop trying to enable this plugin.")
 			msg = msg % conflict[1]
 			
 			dlg.set_markup(msg)
@@ -1136,8 +1146,8 @@ def HandlePluginConflicts(conflicts):
 				return False
 
 		elif conflict[0] == 'RequiresPlugin':
-			msg = "The plugin you are trying to enable requires the plugin <b>%s</b>.\n" +\
-				  "Click OK to enable <b>%s</b> or Cancel to stop trying to enable this plugin."
+			msg = _("The plugin you are trying to enable requires the plugin <b>%s</b>.\n" +\
+				  "Click OK to enable <b>%s</b> or Cancel to stop trying to enable this plugin.")
 			msg = msg % (conflict[2][0].ShortDesc, conflict[2][0].ShortDesc)
 			
 			dlg.set_markup(msg)
@@ -1156,9 +1166,9 @@ def HandlePluginConflicts(conflicts):
 
 		elif conflict[0] == 'FeatureNeeded':
 			pluginList = ', '.join("\"%s\"" % plugin.ShortDesc for plugin in conflict[2])
-			msg = "The plugin you are trying to disable provides the feature <b>%s</b> " +\
+			msg = _("The plugin you are trying to disable provides the feature <b>%s</b> " +\
 				  "which is required by the plugins <b>%s</b>.\n" +\
-				  "Click OK to disable these plugins or Cancel to stop trying to disable this plugin."
+				  "Click OK to disable these plugins or Cancel to stop trying to disable this plugin.")
 			msg = msg % (conflict[1], pluginList) 
 			
 			dlg.set_markup(msg)
@@ -1178,8 +1188,8 @@ def HandlePluginConflicts(conflicts):
 
 		elif conflict[0] == 'PluginNeeded':
 			pluginList = ', '.join("\"%s\"" % plugin.ShortDesc for plugin in conflict[2])
-			msg = "The plugin you are trying to disable is required by the plugins <b>%s</b>.\n" +\
-				  "Click OK to disable these plugins or Cancel to stop trying to disable this plugin."
+			msg = _("The plugin you are trying to disable is required by the plugins <b>%s</b>.\n" +\
+				  "Click OK to disable these plugins or Cancel to stop trying to disable this plugin.")
 			msg = msg % pluginList
 			
 			dlg.set_markup(msg)
@@ -1374,7 +1384,7 @@ class ActionPage:
 		if setting.Info[1]:
 			buttonEntry = gtk.Entry()
 			buttonEntry.set_text(button)
-			buttonLabel = gtk.Label('Button')
+			buttonLabel = gtk.Label(_('Button'))
 			buttonLabel.props.xalign = 0
 			table.attach(buttonLabel, 0, 1, 1, 2, TDef, TDef, TXp, TYp)
 			table.attach(buttonEntry, 1, 2, 1, 2, TDef, TDef, TXp, TYp)
@@ -1401,20 +1411,20 @@ class ActionPage:
 				if (row == 1 and col > 0):
 					col += 1
 					
-			edgeLabel = gtk.Label('Screen Edges')
+			edgeLabel = gtk.Label(_('Screen Edges'))
 			edgeLabel.props.xalign = 0
 			table.attach(edgeLabel, 0, 1, 2, 3, TDef, TDef, TXp, TYp)
 			table.attach(edgeTable, 1, 2, 2, 3, TDef, TDef, TXp, TYp)
 		
 		# Bell
 		if setting.Info[2]:
-			bellButton = gtk.CheckButton('On System Bell')
+			bellButton = gtk.CheckButton(_('On System Bell'))
 			bellButton.set_active(be)
 			tabel.attach(bellButton, 0, 2, 3, 4, TDef, TDef, TXp, TYp)
 		
 		# Reset
 		box = gtk.HBox()
-		box.pack_start(MakeLabel('Reset To Defaults'), True, True)
+		box.pack_start(MakeLabel(_('Reset To Defaults')), True, True)
 		resetButton = gtk.Button()
 		resetImage = gtk.Image()
 		resetImage.set_from_stock(gtk.STOCK_CLEAR, gtk.ICON_SIZE_BUTTON)
@@ -1926,17 +1936,17 @@ class ProfileBackendPage:
 		self.InfoLabelCont = gtk.HBox()
 		self.InfoLabelCont.set_border_width(10)
 		self.LeftWidget.pack_start(self.InfoLabelCont, False, False)
-		self.InfoLabel = MakeLabel("Configure the backend and profile used by the Compiz Configuration System.", 180)
+		self.InfoLabel = MakeLabel(_("Configure the backend and profile used by the Compiz Configuration System."), 180)
 		self.InfoLabelCont.pack_start(self.InfoLabel, True, True)
 
 		# Profiles
 		profileBox = gtk.HBox()
 		profileBox.set_spacing(5)
 		profileAdd = gtk.Button()
-		Tooltips.set_tip(profileAdd, "Add a New Profile")
+		Tooltips.set_tip(profileAdd, _("Add a New Profile"))
 		profileAdd.set_image(gtk.image_new_from_stock(gtk.STOCK_ADD, gtk.ICON_SIZE_BUTTON))
 		profileRemove = gtk.Button()
-		Tooltips.set_tip(profileRemove, "Remove This Profile")
+		Tooltips.set_tip(profileRemove, _("Remove This Profile"))
 		profileRemove.set_image(gtk.image_new_from_stock(gtk.STOCK_REMOVE, gtk.ICON_SIZE_BUTTON))
 		self.ProfileComboBox = gtk.combo_box_new_text()
 		self.ProfileComboBox.set_sensitive(self.Context.CurrentBackend.ProfileSupport)
@@ -1960,9 +1970,9 @@ class ProfileBackendPage:
 		self.ProfileImportExportBox = gtk.HBox()
 		self.ProfileImportExportBox.set_spacing(5)
 		profileImportButton = gtk.Button("Import")
-		Tooltips.set_tip(profileImportButton, "Import a CompizConfig Profile")
+		Tooltips.set_tip(profileImportButton, _("Import a CompizConfig Profile"))
 		profileExportButton = gtk.Button("Export")
-		Tooltips.set_tip(profileExportButton, "Export your CompizConfig Profile")
+		Tooltips.set_tip(profileExportButton, _("Export your CompizConfig Profile"))
 		profileImportButton.set_image(gtk.image_new_from_stock(gtk.STOCK_OPEN, gtk.ICON_SIZE_BUTTON))
 		profileExportButton.set_image(gtk.image_new_from_stock(gtk.STOCK_SAVE, gtk.ICON_SIZE_BUTTON))
 		profileImportButton.connect("clicked", self.ImportProfile)
@@ -2047,7 +2057,7 @@ class ProfileBackendPage:
 	
 	def ExportProfile(self, widget):
 		b = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_SAVE, gtk.RESPONSE_OK)
-		chooser = gtk.FileChooserDialog(title='Save file..', parent=mainWin, buttons=b, action=gtk.FILE_CHOOSER_ACTION_SAVE)
+		chooser = gtk.FileChooserDialog(title=_('Save file..'), parent=mainWin, buttons=b, action=gtk.FILE_CHOOSER_ACTION_SAVE)
 		chooser.set_current_folder(os.environ.get("HOME"))
 		self.CreateFilter(chooser)
 		ret = chooser.run()
@@ -2059,7 +2069,7 @@ class ProfileBackendPage:
 
 	def ImportProfile(self, widget):
 		b = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_OPEN, gtk.RESPONSE_OK)
-		chooser = gtk.FileChooserDialog(title='Open file..', parent=mainWin, buttons=b)
+		chooser = gtk.FileChooserDialog(title=_('Open file..'), parent=mainWin, buttons=b)
 		chooser.set_current_folder(os.environ.get("HOME"))
 		self.CreateFilter(chooser)
 		ret = chooser.run()
@@ -2075,7 +2085,7 @@ class ProfileBackendPage:
 		dlg.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
 		
 		entry = gtk.Entry()
-		label = gtk.Label("Please enter a name for the new profile:")
+		label = gtk.Label(_("Please enter a name for the new profile:"))
 		dlg.vbox.pack_start(label, False, False, 5)
 		dlg.vbox.pack_start(entry, False, False, 5)
 
@@ -2122,7 +2132,7 @@ class MainWinClass:
 		self.MainWin = gtk.Window()
 		self.MainWin.connect("destroy", Quit)
 		self.MainWin.set_default_size(960, 580)
-		self.MainWin.set_title("CompizConfig Settings Manager")
+		self.MainWin.set_title(_("CompizConfig Settings Manager"))
 		try:
 			self.MainWin.set_icon (gdk.pixbuf_new_from_file(IconDir+"/apps/ccsm.svg"))
 		except:
