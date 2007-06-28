@@ -27,7 +27,7 @@ import gtk.gdk
 import cairo
 
 if gtk.pygtk_version < (2,10,0):
-    print "PyGtk 2.10.0 or later required"
+    print _("PyGtk 2.10.0 or later required")
     raise SystemExit
 
 #l10n stuff
@@ -250,7 +250,7 @@ class FileSetting(SettingItem):
 		filter = gtk.FileFilter()
 		if len(self.Setting.Hints) > 1:
 			if self.Setting.Hints[1] == 'image':
-				filter.set_name('Images')
+				filter.set_name(_("Images"))
 				filter.add_pattern("*.png")
 				filter.add_pattern("*.jpg")
 				filter.add_pattern("*.jpeg")
@@ -258,7 +258,7 @@ class FileSetting(SettingItem):
 			else:
 				filter.add_pattern("*.*")
 		else:
-			filter.set_name('File')
+			filter.set_name(_("File"))
 
 		return filter
 
@@ -274,7 +274,7 @@ class FileSetting(SettingItem):
 	
 	def OpenFileChooser(self, widget):
 		b = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_OPEN, gtk.RESPONSE_OK)
-		chooser = gtk.FileChooserDialog(title=_('Open file..'), parent=mainWin, buttons=b)
+		chooser = gtk.FileChooserDialog(title=_("Open file.."), parent=mainWin, buttons=b)
 		
 		if os.path.exists(self.Setting.Value):
 			chooser.set_filename(self.Setting.Value)
@@ -397,7 +397,7 @@ class MultiListSetting(SettingItem):
 		self.Types = types
 		self.Store = gtk.ListStore(*types)
 		self.View = gtk.TreeView(self.Store)
-		Tooltips.set_tip(self.View, "Multi-list settings")
+		Tooltips.set_tip(self.View, _("Multi-list settings"))
 		self.View.set_headers_visible(True)
 		for col in cols:
 			self.View.insert_column_with_attributes(-1, col[0], col[1], **col[2])
@@ -535,7 +535,7 @@ class MultiListSetting(SettingItem):
 			row += 1
 
 	def _Edit(self, values=None):
-		dlg = gtk.Dialog("Edit", mainWin)
+		dlg = gtk.Dialog(_("Edit"), mainWin)
 		dlg.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
 		dlg.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK).grab_default()
 		dlg.set_default_response(gtk.RESPONSE_OK)
@@ -755,7 +755,7 @@ class ListSetting(SettingItem):
 
 class StringMatchListSetting(ListSetting):
 	def _ListInfo(self):
-		return (gobject.TYPE_STRING, ), [(gtk.CellRendererText(), "Value (%s)" % self.Setting.Info[0], {'text':0})]
+		return (gobject.TYPE_STRING, ), [(gtk.CellRendererText(), _("Value (%s)") % self.Setting.Info[0], {'text':0})]
 
 	def _ListSet(self, iter, value):
 		self.Store.set(iter, 0, value)
@@ -764,12 +764,12 @@ class StringMatchListSetting(ListSetting):
 		return self.Store.get(iter, 0)[0]
 
 	def _Edit(self, value=None):
-		dlg = gtk.Dialog("Edit %s" % self.Setting.ShortDesc, mainWin)
+		dlg = gtk.Dialog(_("Edit %s") % self.Setting.ShortDesc, mainWin)
 		dlg.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
 		dlg.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK).grab_default()
 		dlg.set_default_response(gtk.RESPONSE_OK)
 		ebox = gtk.EventBox()
-		label = gtk.Label("Value (%s) for %s:" % (self.Setting.Info[0], self.Setting.ShortDesc))
+		label = gtk.Label(_("Value (%s) for %s:") % (self.Setting.Info[0], self.Setting.ShortDesc))
 		ebox.add(label)
 		Tooltips.set_tip(ebox, self.Setting.LongDesc)
 		dlg.vbox.pack_start(ebox)
@@ -837,7 +837,7 @@ class IntDescListSetting(SettingItem):
 class IntFloatListSetting(ListSetting):
 	def _ListInfo(self):
 		return (gobject.TYPE_STRING, ), [(gtk.CellRendererText(), 
-			"Value (%s)" % self.Setting.Info[0], {'text':0})]
+			_("Value (%s)") % self.Setting.Info[0], {'text':0})]
 
 	def _ListSet(self, Iter, v):
 		self.Store.set(Iter, 0, str(v))
@@ -846,11 +846,11 @@ class IntFloatListSetting(ListSetting):
 		return eval(self.Store.get(Iter, 0)[0])
 
 	def _Edit(self, value = None):
-		dlg = gtk.Dialog("Edit %s" % self.Setting.ShortDesc, mainWin)
+		dlg = gtk.Dialog(_("Edit %s") % self.Setting.ShortDesc, mainWin)
 		dlg.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
 		dlg.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK).grab_default()
 		dlg.set_default_response(gtk.RESPONSE_OK)
-		label = gtk.Label("Value (%s) for %s:" % (self.Setting.Info[0], self.Setting.ShortDesc))
+		label = gtk.Label(_("Value (%s) for %s:") % (self.Setting.Info[0], self.Setting.ShortDesc))
 		ebox = gtk.EventBox()
 		ebox.add(label)
 		Tooltips.set_tip(ebox, self.Setting.LongDesc)
@@ -914,7 +914,7 @@ def MakeSetting(setting):
 		elif setting.Info[0] == 'Float':
 			return IntFloatListSetting(setting)
 		else:
-			raise TypeError, "Unhandled list type %s for %s"%(setting.Info[0], setting.Name)
+			raise TypeError, _("Unhandled list type %s for %s")%(setting.Info[0], setting.Name)
 	return None
 
 
@@ -1243,24 +1243,24 @@ class ActionPage:
 		self.TreeView = gtk.TreeView(self.Store)
 		self.TreeView.set_headers_visible(True)
 		# Name
-		self.TreeView.insert_column_with_attributes(-1, 'Name', gtk.CellRendererText(), text=0)
+		self.TreeView.insert_column_with_attributes(-1, _("Name"), gtk.CellRendererText(), text=0)
 		# Key
 		keyRenderer = gtk.CellRendererAccel()
 		keyRenderer.connect('accel-edited', self.KeyEdited)
 		keyRenderer.connect('accel-cleared', self.KeyCleared)
-		self.TreeView.insert_column_with_attributes(-1, 'Key', keyRenderer, accel_key=1, accel_mods=2, editable=7, visible=5, sensitive=7)
+		self.TreeView.insert_column_with_attributes(-1, _("Key"), keyRenderer, accel_key=1, accel_mods=2, editable=7, visible=5, sensitive=7)
 		# Button
 		buttonRenderer = gtk.CellRendererText()
 		buttonRenderer.connect('edited', self.ButtonEdited)
-		self.TreeView.insert_column_with_attributes(-1, 'Button', buttonRenderer, text=3, editable=8, visible=5, sensitive=8)
+		self.TreeView.insert_column_with_attributes(-1, _("Button"), buttonRenderer, text=3, editable=8, visible=5, sensitive=8)
 		# Edges
 		edgeRenderer = gtk.CellRendererText()
-		self.TreeView.insert_column_with_attributes(-1, 'Screen Edge', edgeRenderer, text=4, visible=5, sensitive=9)
+		self.TreeView.insert_column_with_attributes(-1, _("Screen Edge"), edgeRenderer, text=4, visible=5, sensitive=9)
 		# Bell -- may replace with one setting in general
 		bellRenderer = gtk.CellRendererToggle()
 		bellRenderer.props.xalign = 0
 		bellRenderer.connect('toggled', self.BellEdited)
-		self.TreeView.insert_column_with_attributes(-1, 'On System Bell', bellRenderer, activatable=10, visible=5, sensitive=10, active=6) 
+		self.TreeView.insert_column_with_attributes(-1, _("On System Bell"), bellRenderer, activatable=10, visible=5, sensitive=10, active=6) 
 		
 		for col in self.TreeView.get_columns():
 			col.set_resizable(True)
@@ -1287,7 +1287,7 @@ class ActionPage:
 		for groupName, group in groupList.items():
 			groupEmpty = True
 			groupIter = self.Store.append(iter)
-			self.Store.set(groupIter, 0, groupName == '' and 'General' or groupName, 5, False, 7, False, 8, False, 9, False, 10, False)
+			self.Store.set(groupIter, 0, groupName == '' and _("General") or groupName, 5, False, 7, False, 8, False, 9, False, 10, False)
 			self.Plugins[pluginName][groupName] = {}
 			
 			for subGroupName, subGroup in group.items():
@@ -1363,7 +1363,7 @@ class ActionPage:
 
 		setting = self.Plugins[pluginName][groupName][subGroupName][settingName]
 
-		dlg = gtk.Dialog("Edit Action: %s" % setting.ShortDesc)
+		dlg = gtk.Dialog(_("Edit Action: %s") % setting.ShortDesc)
 		dlg.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
 		dlg.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK).grab_default()
 		dlg.set_default_response(gtk.RESPONSE_OK)
@@ -1374,7 +1374,7 @@ class ActionPage:
 		if setting.Info[0]:
 			keyEntry = gtk.Entry()
 			keyEntry.set_text(gtk.accelerator_name(key, keyModifier) or 'None')
-			keyLabel = gtk.Label('Key')
+			keyLabel = gtk.Label(_("Key"))
 			keyLabel.props.xalign = 0
 			table.attach(keyLabel, 0, 1, 0, 1, TDef, TDef, TXp, TYp)
 			table.attach(keyEntry, 1, 2, 0, 1, TDef, TDef, TXp, TYp)
@@ -1383,7 +1383,7 @@ class ActionPage:
 		if setting.Info[1]:
 			buttonEntry = gtk.Entry()
 			buttonEntry.set_text(button)
-			buttonLabel = gtk.Label(_('Button'))
+			buttonLabel = gtk.Label(_("Button"))
 			buttonLabel.props.xalign = 0
 			table.attach(buttonLabel, 0, 1, 1, 2, TDef, TDef, TXp, TYp)
 			table.attach(buttonEntry, 1, 2, 1, 2, TDef, TDef, TXp, TYp)
@@ -1410,20 +1410,20 @@ class ActionPage:
 				if (row == 1 and col > 0):
 					col += 1
 					
-			edgeLabel = gtk.Label(_('Screen Edges'))
+			edgeLabel = gtk.Label(_("Screen Edges"))
 			edgeLabel.props.xalign = 0
 			table.attach(edgeLabel, 0, 1, 2, 3, TDef, TDef, TXp, TYp)
 			table.attach(edgeTable, 1, 2, 2, 3, TDef, TDef, TXp, TYp)
 		
 		# Bell
 		if setting.Info[2]:
-			bellButton = gtk.CheckButton(_('On System Bell'))
+			bellButton = gtk.CheckButton(_("On System Bell"))
 			bellButton.set_active(be)
 			tabel.attach(bellButton, 0, 2, 3, 4, TDef, TDef, TXp, TYp)
 		
 		# Reset
 		box = gtk.HBox()
-		box.pack_start(MakeLabel(_('Reset To Defaults')), True, True)
+		box.pack_start(MakeLabel(_("Reset To Defaults")), True, True)
 		resetButton = gtk.Button()
 		resetImage = gtk.Image()
 		resetImage.set_from_stock(gtk.STOCK_CLEAR, gtk.ICON_SIZE_BUTTON)
@@ -1532,7 +1532,7 @@ class PluginClass:
 		pluginLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>" % (main.BrightColor, plugin.ShortDesc))
 		pluginImg = main.MakeImage(plugin, size = 64)
 		filterLabel = MakeLabel()
-		filterLabel.set_markup("<span color='%s' size='large' weight='800'>Filter</span>" % (main.BrightColor))
+		filterLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>" % (main.BrightColor, _("Filter")))
 		self.FilterEntry = gtk.Entry()
 		self.FilterEntry.connect("changed", self.FilterChanged)
 		self.LeftWidget.pack_start(pluginImg, False, False)
@@ -1546,21 +1546,21 @@ class PluginClass:
 		infoLabelCont.pack_start(infoLabel, True, True)
 		
 		if plugin.Name != 'core':
-			Tooltips.set_tip(self.FilterEntry, "Search %s Plugin Options" % plugin.ShortDesc)
+			Tooltips.set_tip(self.FilterEntry, _("Search %s Plugin Options") % plugin.ShortDesc)
 			enableLabel = MakeLabel()
-			enableLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>" % (main.BrightColor, 'Use This Plugin'))
+			enableLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>" % (main.BrightColor, _("Use This Plugin")))
 			self.LeftWidget.pack_start(enableLabel, False, False)
 			enableCheckCont = gtk.HBox()
 			enableCheckCont.set_border_width(10)
 			self.LeftWidget.pack_start(enableCheckCont, False, False)
 			enableCheck = gtk.CheckButton()
-			enableCheck.add(MakeLabel("Enable %s" % plugin.ShortDesc, 120))
+			enableCheck.add(MakeLabel(_("Enable %s") % plugin.ShortDesc, 120))
 			Tooltips.set_tip(enableCheck, plugin.LongDesc)
 			enableCheck.set_active(plugin.Enabled)
 			enableCheckCont.pack_start(enableCheck, True, True)
 			enableCheck.connect('toggled', self.EnablePlugin)
 		else:
-			Tooltips.set_tip(self.FilterEntry, "Search Compiz Core Options")
+			Tooltips.set_tip(self.FilterEntry, _("Search Compiz Core Options"))
 		
 		backButton = gtk.Button(gtk.STOCK_GO_BACK)
 		backButton.set_use_stock(True)
@@ -1571,7 +1571,7 @@ class PluginClass:
 		self.Pages = []
 		
 		for name, group in plugin.Groups.items():
-			name = name or 'General'
+			name = name or _("General")
 			groupPage = GroupPage(name, group)
 			if not groupPage.Empty:
 				self.RightWidget.append_page(groupPage.Widget, gtk.Label(name))
@@ -1579,7 +1579,7 @@ class PluginClass:
 		
 		actionPage = ActionPage(plugin)
 		if not actionPage.Empty:
-			self.RightWidget.append_page(actionPage.Widget, gtk.Label('Actions'))
+			self.RightWidget.append_page(actionPage.Widget, gtk.Label(_("Actions")))
 			self.Pages = self.Pages + [actionPage]
 
 		self.Block = 0
@@ -1597,7 +1597,7 @@ class PluginClass:
 		groups = []
 
 		for name, group in self.Plugin.Groups.items():
-			name = name or 'General'
+			name = name or _("General")
 			groupPage = GroupPage(name, group, filter)
 			if not groupPage.Empty:
 				groups.append((name, groupPage))
@@ -1611,7 +1611,7 @@ class PluginClass:
 		
 		actionPage = ActionPage(self.Plugin, filter)
 		if not actionPage.Empty:
-			self.RightWidget.append_page(actionPage.Widget, gtk.Label('Actions'))
+			self.RightWidget.append_page(actionPage.Widget, gtk.Label(_("Actions")))
 
 		self.RightWidget.show_all()
 
@@ -1680,7 +1680,7 @@ class SelectorBox(gtk.ScrolledWindow):
 
 	def add_item(self, item, callback):
 		button = gtk.Button()
-		label = MakeLabel(item or 'General')
+		label = MakeLabel(item or _("General"))
 		button.add(label)
 		button.connect("clicked", callback, item)
 		button.set_relief(gtk.RELIEF_NONE)
@@ -1712,7 +1712,7 @@ class FilterPage:
 
 		# Image + Label
 		filterLabel = MakeLabel()
-		filterLabel.set_markup("<span color='%s' size='large' weight='800'>Filter</span>" % main.BrightColor)
+		filterLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>" % (main.BrightColor, _("Filter")))
 		filterImg = main.MakeImage(category="search", size = 64)
 		self.LeftWidget.pack_start(filterImg, False, False)
 		self.LeftWidget.pack_start(filterLabel, False, False)
@@ -1724,22 +1724,22 @@ class FilterPage:
 
 		# Search in...
 		filterSearchLabel = MakeLabel()
-		filterSearchLabel.set_markup("<span color='%s' size='large' weight='800'>Search in...</span>" % main.BrightColor)
+		filterSearchLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>" % (main.BrightColor, _("Search in...")))
 		self.LeftWidget.pack_start(filterSearchLabel, False, False)
 
 		# Options
 		self.FilterName = gtk.CheckButton()
-		filterLabel = MakeLabel("Short description and name")
+		filterLabel = MakeLabel(_("Short description and name"))
 		self.FilterName.add(filterLabel)
 		self.FilterName.set_active(True)
 		
 		self.FilterLongDesc = gtk.CheckButton()
-		filterLabel = MakeLabel("Long description")
+		filterLabel = MakeLabel(_("Long description"))
 		self.FilterLongDesc.add(filterLabel)
 		self.FilterLongDesc.set_active(True)
 		
 		self.FilterValue = gtk.CheckButton()
-		filterLabel = MakeLabel("Settings value")
+		filterLabel = MakeLabel(_("Settings value"))
 		self.FilterValue.add(filterLabel)
 		self.FilterValue.set_active(False)
 
@@ -1791,7 +1791,7 @@ class FilterPage:
 		self.FilterChanged(filterEntry)
 
 		# Notebool
-		self.RightWidget.append_page(self.RightChild, gtk.Label('Settings'))
+		self.RightWidget.append_page(self.RightChild, gtk.Label(_("Settings")))
 
 	
 	def UpdateBoxes(self):
@@ -1873,7 +1873,7 @@ class FilterPage:
 		self.CurrentGroup = group
 		self.CurrentSubGroup = None
 
-		self.SelectorButtons.add_button(group or 'General', self.GroupChanged)
+		self.SelectorButtons.add_button(group or _("General"), self.GroupChanged)
 		self.UpdateBoxes()
 
 	def SubGroupChanged(self, widget, subGroup):
@@ -1882,7 +1882,7 @@ class FilterPage:
 
 		self.CurrentSubGroup = subGroup
 
-		self.SelectorButtons.add_button(subGroup or 'General', self.SubGroupChanged)
+		self.SelectorButtons.add_button(subGroup or _("General"), self.SubGroupChanged)
 		self.UpdateBoxes()
 
 	def FilterChanged(self, widget):
@@ -1924,11 +1924,11 @@ class ProfileBackendPage:
 		self.RightWidget = gtk.Notebook()
 		rightChild = gtk.VBox()
 		rightChild.set_border_width(10)
-		self.RightWidget.append_page(rightChild, gtk.Label('Profile & Backend'))
+		self.RightWidget.append_page(rightChild, gtk.Label(_("Profile & Backend")))
 
 		# Left Pane
 		self.DescLabel = MakeLabel()
-		self.DescLabel.set_markup("<span color='%s' size='large' weight='800'>Backend &amp; Profile</span>" % main.BrightColor)
+		self.DescLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>" % (main.BrightColor, _("Backend &amp; Profile")))
 		self.DescImg = main.MakeImage(category="profiles", size = 64)
 		self.LeftWidget.pack_start(self.DescImg, False, False)
 		self.LeftWidget.pack_start(self.DescLabel, False, False)
@@ -1949,7 +1949,7 @@ class ProfileBackendPage:
 		profileRemove.set_image(gtk.image_new_from_stock(gtk.STOCK_REMOVE, gtk.ICON_SIZE_BUTTON))
 		self.ProfileComboBox = gtk.combo_box_new_text()
 		self.ProfileComboBox.set_sensitive(self.Context.CurrentBackend.ProfileSupport)
-		self.ProfileComboBox.append_text("Default")
+		self.ProfileComboBox.append_text(_("Default"))
 		for profile in self.Context.Profiles.values():
 			self.ProfileComboBox.append_text(profile.Name)
 		if self.Context.CurrentProfile.Name == '':
@@ -1965,12 +1965,12 @@ class ProfileBackendPage:
 		profileBox.pack_start(profileAdd, False, False)
 		profileBox.pack_start(profileRemove, False, False)
 		profileLabel = MakeLabel()
-		profileLabel.set_markup("<span color='%s' size='large' weight='800'>Profile</span>" % self.Main.BrightColor)
+		profileLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>" % (self.Main.BrightColor, _("Profile")))
 		self.ProfileImportExportBox = gtk.HBox()
 		self.ProfileImportExportBox.set_spacing(5)
-		profileImportButton = gtk.Button("Import")
+		profileImportButton = gtk.Button(_("Import"))
 		Tooltips.set_tip(profileImportButton, _("Import a CompizConfig Profile"))
-		profileExportButton = gtk.Button("Export")
+		profileExportButton = gtk.Button(_("Export"))
 		Tooltips.set_tip(profileExportButton, _("Export your CompizConfig Profile"))
 		profileImportButton.set_image(gtk.image_new_from_stock(gtk.STOCK_OPEN, gtk.ICON_SIZE_BUTTON))
 		profileExportButton.set_image(gtk.image_new_from_stock(gtk.STOCK_SAVE, gtk.ICON_SIZE_BUTTON))
@@ -1991,14 +1991,14 @@ class ProfileBackendPage:
 		backendBox.set_active(index)
 		backendBox.connect("changed", self.BackendChanged)
 		backendLabel = MakeLabel()
-		backendLabel.set_markup("<span color='%s' size='large' weight='800'>Backend</span>" % self.Main.BrightColor)
+		backendLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>" % (self.Main.BrightColor, _("Backend")))
 		rightChild.pack_start(backendLabel, False, False, 5)
 		rightChild.pack_start(backendBox, False, False, 5)
 
 		# Integration
 		integrationLabel = MakeLabel()
-		integrationLabel.set_markup("<span color='%s' size='large' weight='800'>Integration</span>" % self.Main.BrightColor)
-		self.IntegrationButton = gtk.CheckButton("Enable integration into the desktop environment")
+		integrationLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>" % (self.Main.BrightColor, _("Integration")))
+		self.IntegrationButton = gtk.CheckButton(_("Enable integration into the desktop environment"))
 		self.IntegrationButton.set_active(self.Context.Integration)
 		self.IntegrationButton.set_sensitive(self.Context.CurrentBackend.IntegrationSupport)
 		self.IntegrationButton.connect("toggled", self.IntegrationChanged)
@@ -2011,12 +2011,12 @@ class ProfileBackendPage:
 		self.BackButton.connect('clicked', self.Main.BackToMain)
 		self.LeftWidget.pack_end(self.BackButton, False, False)
 	
-	def UpdateProfiles(self, default = "Default"):
+	def UpdateProfiles(self, default = _("Default")):
 		self.Context.Read()
 		self.Context.UpdateProfiles()
 
 		self.ProfileComboBox.get_model().clear()
-		self.ProfileComboBox.append_text("Default")
+		self.ProfileComboBox.append_text(_("Default"))
 		for profile in self.Context.Profiles.values():
 			self.ProfileComboBox.append_text(profile.Name)
 
@@ -2035,7 +2035,7 @@ class ProfileBackendPage:
 
 	def ProfileChanged(self, widget):
 		name = widget.get_active_text()
-		if name == 'Default':
+		if name == _("Default"):
 			self.Context.ResetProfile()
 		else:
 			self.Context.CurrentProfile = self.Context.Profiles[name]
@@ -2046,17 +2046,17 @@ class ProfileBackendPage:
 	def CreateFilter(self, chooser):
 		filter = gtk.FileFilter()
 		filter.add_pattern("*.profile")
-		filter.set_name('Profiles (*.profile)')
+		filter.set_name(_("Profiles (*.profile)"))
 		chooser.add_filter(filter)
 
 		filter = gtk.FileFilter()
 		filter.add_pattern("*")
-		filter.set_name('All files')
+		filter.set_name(_("All files"))
 		chooser.add_filter(filter)
 	
 	def ExportProfile(self, widget):
 		b = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_SAVE, gtk.RESPONSE_OK)
-		chooser = gtk.FileChooserDialog(title=_('Save file..'), parent=mainWin, buttons=b, action=gtk.FILE_CHOOSER_ACTION_SAVE)
+		chooser = gtk.FileChooserDialog(title=_("Save file.."), parent=mainWin, buttons=b, action=gtk.FILE_CHOOSER_ACTION_SAVE)
 		chooser.set_current_folder(os.environ.get("HOME"))
 		self.CreateFilter(chooser)
 		ret = chooser.run()
@@ -2068,7 +2068,7 @@ class ProfileBackendPage:
 
 	def ImportProfile(self, widget):
 		b = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_OPEN, gtk.RESPONSE_OK)
-		chooser = gtk.FileChooserDialog(title=_('Open file..'), parent=mainWin, buttons=b)
+		chooser = gtk.FileChooserDialog(title=_("Open file.."), parent=mainWin, buttons=b)
 		chooser.set_current_folder(os.environ.get("HOME"))
 		self.CreateFilter(chooser)
 		ret = chooser.run()
@@ -2079,7 +2079,7 @@ class ProfileBackendPage:
 			self.Context.Import(path)
 
 	def AddProfile(self, widget):
-		dlg = gtk.Dialog("Enter a profile name", self.MainWin, gtk.DIALOG_MODAL)
+		dlg = gtk.Dialog(_("Enter a profile name"), self.MainWin, gtk.DIALOG_MODAL)
 		dlg.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
 		dlg.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
 		
@@ -2098,7 +2098,7 @@ class ProfileBackendPage:
 	
 	def RemoveProfile(self, widget):
 		name = self.ProfileComboBox.get_active_text()
-		if name != 'Default':
+		if name != _("Default"):
 			self.Context.ResetProfile()
 			self.Context.Profiles[name].Delete()
 			self.UpdateProfiles()
@@ -2116,7 +2116,7 @@ class ProfileBackendPage:
 			self.Context.CurrentBackend = self.Context.Backends[name]
 			self.UpdateProfiles()
 		else:
-			raise Exception, "Backend not found."
+			raise Exception, _("Backend not found.")
 
 		self.ProfileComboBox.set_sensitive(self.Context.CurrentBackend.ProfileSupport)
 		self.IntegrationButton.set_sensitive(self.Context.CurrentBackend.IntegrationSupport)
@@ -2187,10 +2187,10 @@ class MainWinClass:
 		
 		# Filter
 		filterLabel = MakeLabel()
-		filterLabel.set_markup("<span color='%s' size='large' weight='800'>Filter</span>" % self.BrightColor)
+		filterLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>" % (self.BrightColor, _("Filter")))
 		filterLabel.props.xalign = 0.1
 		filterEntry = gtk.Entry()
-		Tooltips.set_tip(filterEntry, "Filter your Plugin list")
+		Tooltips.set_tip(filterEntry, _("Filter your Plugin list"))
 		filterEntry.connect("changed", self.FilterTable)
 		leftChild.pack_start(filterLabel, False, False)
 		leftChild.pack_start(filterEntry, False, False)
@@ -2199,12 +2199,12 @@ class MainWinClass:
 		if len(getScreens()) > 1:
 			screenBox = gtk.combo_box_new_text()
 			for screen in getScreens():
-				screenBox.append_text("Screen %i" % screen)
+				screenBox.append_text(_("Screen %i") % screen)
 			name = self.Context.CurrentBackend.Name
 			screenBox.set_active(CurrentScreenNum)
 			screenBox.connect("changed", self.ScreenChanged)
 			screenLabel = MakeLabel()
-			screenLabel.set_markup("<span color='%s' size='large' weight='800'>Screen</span>" % self.BrightColor)
+			screenLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>" % (self.BrightColor, _("Screen")))
 			leftChild.pack_start(screenLabel, False, False)
 			leftChild.pack_start(screenBox, False, False)
 
@@ -2212,7 +2212,7 @@ class MainWinClass:
 		categoryBox = gtk.VBox()
 		categoryBox.set_border_width(10)
 		for category in sorted(self.Categories, self.CatSortCompare):
-			name = category or 'Uncategorized'
+			name = category or _("Uncategorized")
 			categoryToggleLabel = MakeLabel(name)
 			categoryToggle = gtk.Button()
 			categoryToggle.set_relief(gtk.RELIEF_NONE)
@@ -2221,7 +2221,7 @@ class MainWinClass:
 			categoryBox.pack_start(categoryToggle, False, False)
 		categoryLabel = MakeLabel()
 		categoryLabel.props.xalign = 0.1
-		categoryLabel.set_markup("<span color='%s' size='large' weight='800'>Category</span>" % self.BrightColor)
+		categoryLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>" % (self.BrightColor, _("Category")))
 		leftChild.pack_start(categoryLabel, False, False)
 		leftChild.pack_start(categoryBox, False, False)
 
@@ -2233,7 +2233,7 @@ class MainWinClass:
 
 		# Profiles and Backend
 		profBackLabel = MakeLabel()
-		profBackLabel.set_markup("<span color='%s' size='large' weight='800'>Backend &amp; Profile</span>" % self.BrightColor)
+		profBackLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>" % (self.BrightColor, _("Backend &amp; Profile")))
 		profBackImage = gtk.Image()
 		profBackImage.set_from_stock(gtk.STOCK_GO_FORWARD, gtk.ICON_SIZE_BUTTON)
 		profBackButton = gtk.Button()
@@ -2247,7 +2247,7 @@ class MainWinClass:
 
 		# Advanced Search
 		searchLabel = MakeLabel()
-		searchLabel.set_markup("<span color='%s' size='large' weight='800'>Advanced Search</span>" % self.BrightColor)
+		searchLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>" % (self.BrightColor, _("Advanced Search")))
 		searchImage = gtk.Image()
 		searchImage.set_from_stock(gtk.STOCK_GO_FORWARD, gtk.ICON_SIZE_BUTTON)
 		searchButton = gtk.Button()
@@ -2285,7 +2285,7 @@ class MainWinClass:
 			categoryLabel = MakeLabel('', -1)
 			pluginWindow.pack_start(categoryBox, False, False)
 
-			name = category or 'Uncategorized'
+			name = category or _("Uncategorized")
 			categoryLabel.set_markup("<span color='#aaa' size='x-large' weight='800'>%s</span>" % name)
 			categoryImg = self.MakeImage(category = name.lower().replace(" ", "_"))
 			if categoryImg:
@@ -2314,7 +2314,7 @@ class MainWinClass:
 
 				if plugin.Name !=  'core':
 					pluginEnable = gtk.CheckButton()
-					Tooltips.set_tip(pluginEnable, "Enable %s" % plugin.ShortDesc)
+					Tooltips.set_tip(pluginEnable, _("Enable %s") % plugin.ShortDesc)
 					pluginEnable.set_active(plugin.Enabled)
 					pluginEnable.connect("toggled", self.EnablePlugin, plugin)
 					pluginBox.pack_start(pluginEnable, False, False)
@@ -2428,9 +2428,9 @@ class MainWinClass:
 	def CatSortCompare(self, v1, v2):
 		if v1 == v2:
 			return cmp(v1, v2)
-		if v1 == 'General':
+		if v1 == _("General"):
 			return cmp('', v2 or 'zzzzzzzz')
-		if v2 == 'General':
+		if v2 == _("General"):
 			return cmp(v1 or 'zzzzzzz', '')
 		return cmp(v1 or 'zzzzzzzz', v2 or 'zzzzzzzz')
 
