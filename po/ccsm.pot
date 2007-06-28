@@ -1,28 +1,34 @@
-# ccsm l10n template.
-# Copyright (C) 2007 opencompositing.org
-# This file is distributed under the same license as ccsm package.
-# cyberorg <cyberorg@cyberorg.info>, 2007.
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: 0.1\n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-06-28 21:31+0530\n"
+"POT-Creation-Date: 2007-06-28 18:37+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #, c-format
-msgid "The new value for the %s binding for the action <b>%s</b> "
+msgid ""
+"The new value for the %s binding for the action <b>%s</b> in plugin <b>%s</"
+"b> conflicts with the action <b>%s</b> of the <b>%s</b> plugin.\n"
+"Do you wish to disable <b>%s</b> in the <b>%s</b> plugin?\n"
+"If you click No, this option will not be set."
 msgstr ""
 
 #, c-format
 msgid ""
 "You are trying to use the feature <b>%s</b> which is provided by <b>%s</b>.\n"
+"This plugin is currently disabled.\n"
+"Do you wish to enable <b>%s</b> so the feature is available?"
 msgstr ""
 
 msgid "Reset setting to the default value"
@@ -32,28 +38,47 @@ msgid "Browse for "
 msgstr ""
 
 #, c-format
-msgid "Plugin <b>%s</b> provides feature <b>%s</b> which is also provided "
+msgid ""
+"Plugin <b>%s</b> provides feature <b>%s</b> which is also provided by the "
+"plugin you are trying to enable.\n"
+"Click OK to disable plugin <b>%s</b>, or Cancel to stop trying to enable "
+"this plugin."
 msgstr ""
 
 #, c-format
-msgid "Plugin <b>%s</b> conflicts with the plugin you are trying to enable.\n"
+msgid ""
+"Plugin <b>%s</b> conflicts with the plugin you are trying to enable.\n"
+"Click OK to disable plugin <b>%s</b>, or Cancel to stop trying to enable "
+"this plugin."
 msgstr ""
 
 #, c-format
-msgid "The plugin you are trying to enable requires feature <b>%s</b> which "
+msgid ""
+"The plugin you are trying to enable requires feature <b>%s</b> which is "
+"provided by the following plugins.\n"
+"Click OK to enable the selected plugin or Cancel to stop trying to enable "
+"this plugin."
 msgstr ""
 
 #, c-format
-msgid "The plugin you are trying to enable requires the plugin <b>%s</b>.\n"
+msgid ""
+"The plugin you are trying to enable requires the plugin <b>%s</b>.\n"
+"Click OK to enable <b>%s</b> or Cancel to stop trying to enable this plugin."
 msgstr ""
 
 #, c-format
-msgid "The plugin you are trying to disable provides the feature <b>%s</b> "
+msgid ""
+"The plugin you are trying to disable provides the feature <b>%s</b> which is "
+"required by the plugins <b>%s</b>.\n"
+"Click OK to disable these plugins or Cancel to stop trying to disable this "
+"plugin."
 msgstr ""
 
 #, c-format
 msgid ""
 "The plugin you are trying to disable is required by the plugins <b>%s</b>.\n"
+"Click OK to disable these plugins or Cancel to stop trying to disable this "
+"plugin."
 msgstr ""
 
 msgid ""
