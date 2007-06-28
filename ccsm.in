@@ -26,19 +26,13 @@ import gtk
 import gtk.gdk
 import cairo
 
-#l10n stuff
-APP = 'ccsm'
-DIR = 'locale'
-import locale
-import gettext
-locale.setlocale(locale.LC_ALL, "")
-gettext.bindtextdomain(APP, DIR)
-gettext.textdomain(APP)
-_ = gettext.gettext
-
 if gtk.pygtk_version < (2,10,0):
     print "PyGtk 2.10.0 or later required"
     raise SystemExit
+
+#l10n stuff
+import locale
+import gettext
 
 import gobject
 import os
@@ -52,6 +46,11 @@ IconDir = DataDir+"/icons/hicolor/scalable"
 PixmapDir = DataDir+"/ccsm/images"
 CurrentScreenNum = 0
 Tooltips = gtk.Tooltips()
+
+locale.setlocale(locale.LC_ALL, "")
+gettext.bindtextdomain("ccsm", DataDir + "/locale")
+gettext.textdomain("ccsm")
+_ = gettext.gettext
 
 def Write(ctx):
 	ctx.Write()
