@@ -2195,16 +2195,17 @@ class MainWinClass:
 		leftChild.pack_start(filterEntry, False, False)
 
 		# Screens
-		screenBox = gtk.combo_box_new_text()
-		for screen in getScreens():
-			screenBox.append_text("Screen %i" % screen)
-		name = self.Context.CurrentBackend.Name
-		screenBox.set_active(CurrentScreenNum)
-		screenBox.connect("changed", self.ScreenChanged)
-		screenLabel = MakeLabel()
-		screenLabel.set_markup("<span color='%s' size='large' weight='800'>Screen</span>" % self.BrightColor)
-		leftChild.pack_start(screenLabel, False, False)
-		leftChild.pack_start(screenBox, False, False)
+		if len(getScreens()) > 1:
+			screenBox = gtk.combo_box_new_text()
+			for screen in getScreens():
+				screenBox.append_text("Screen %i" % screen)
+			name = self.Context.CurrentBackend.Name
+			screenBox.set_active(CurrentScreenNum)
+			screenBox.connect("changed", self.ScreenChanged)
+			screenLabel = MakeLabel()
+			screenLabel.set_markup("<span color='%s' size='large' weight='800'>Screen</span>" % self.BrightColor)
+			leftChild.pack_start(screenLabel, False, False)
+			leftChild.pack_start(screenBox, False, False)
 
 		# Information
 		infoLabel = MakeLabel()
