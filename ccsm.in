@@ -2274,7 +2274,7 @@ class MainWinClass:
 		self.TableAttached = False
 		self.LastCols = -1
 		for category in sorted(self.Categories, self.CatSortCompare):
-			pluginList = self.Categories[category]
+			pluginList = sorted(self.Categories[category], PluginSortCompare)
 			categoryBox = gtk.VBox()
 			categoryHeader = gtk.HBox()
 			categoryHeader.set_spacing(10)
