@@ -39,12 +39,6 @@ msgstr ""
 "Möchten Sie <b>%s</b> aktivieren, so dass dieses Feature zur Verfügung "
 "steht?"
 
-msgid "Reset setting to the default value"
-msgstr "Einstellung auf Standard zurücksetzen"
-
-msgid "Browse for "
-msgstr "Suchen nach "
-
 #, c-format
 msgid ""
 "Plugin <b>%s</b> provides feature <b>%s</b> which is also provided by the "
@@ -127,3 +121,164 @@ msgstr "Bitte geben Sie einen Namen für das neue Profil an:"
 
 msgid "CompizConfig Settings Manager"
 msgstr "CompizConfig Einstellungs-Manager"
+
+msgid "Reset setting to the default value"
+msgstr "Einstellung auf den Standartwert zurücksetzen"
+
+msgid "Browse for "
+msgstr "Suche nach "
+
+msgid "Images"
+msgstr "Bilder"
+
+msgid "File"
+msgstr "Datei"
+
+msgid "Open file.."
+msgstr "Öffne datei.."
+
+msgid "Multi-list settings"
+msgstr "Zusammengesetzte Liste"
+
+msgid "Edit"
+msgstr "Bearbeiten"
+
+#, c-format
+msgid "Value (%s)"
+msgstr "Wert (%s)"
+
+#, c-format
+msgid "Edit %s"
+msgstr "Bearbeite %s"
+
+#, c-format
+msgid "Value (%s) for %s:"
+msgstr "Wert (%s) für %s"
+
+#, c-format
+msgid "Unhandled list type %s for %s"
+msgstr "Nicht unterstützter Listen Typ %s für %s"
+
+msgid "Name"
+msgstr "Name"
+
+msgid "Key"
+msgstr "Taste"
+
+msgid "Button"
+msgstr "Maustaste"
+
+msgid "Screen Edge"
+msgstr "Bildschrim Ecke"
+
+msgid "On System Bell"
+msgstr ""
+
+msgid "General"
+msgstr "Allgemein"
+
+#, c-format
+msgid "Edit Action: %s"
+msgstr "Bearbeite aktion: %s"
+
+msgid "Screen Edges"
+msgstr "Bildschrim Ecken"
+
+msgid "Reset To Defaults"
+msgstr "Auf Standartwert zurücksetzen"
+
+msgid "Filter"
+msgstr "Filter"
+
+#, c-format
+msgid "Search %s Plugin Options"
+msgstr "Suche in den Einstellungen von %s"
+
+msgid "Use This Plugin"
+msgstr "Aktiviere dieses Plugin"
+
+#, c-format
+msgid "Enable %s"
+msgstr "Aktiviere %s"
+
+msgid "Search Compiz Core Options"
+msgstr "Suche in den Compiz Core Einstellungen"
+
+msgid "Actions"
+msgstr "Aktionen"
+
+msgid "Search in..."
+msgstr "Suche in..."
+
+msgid "Short description and name"
+msgstr "Kruzbeschreibung und Name"
+
+msgid "Long description"
+msgstr "Ausführlicher Beschreibung"
+
+msgid "Settings value"
+msgstr "Einstellungswert"
+
+msgid "Settings"
+msgstr "Einstellungen"
+
+msgid "Profile & Backend"
+msgstr "Profil & Backend"
+
+msgid "Backend &amp; Profile"
+msgstr "Backend &amp; Profile"
+
+msgid "Default"
+msgstr "Standart"
+
+msgid "Profile"
+msgstr "Profil"
+
+msgid "Import"
+msgstr "Importiere"
+
+msgid "Export"
+msgstr "Exportiere"
+
+msgid "Backend"
+msgstr "Backend"
+
+msgid "Integration"
+msgstr "Integration"
+
+msgid "Enable integration into the desktop environment"
+msgstr "Aktiviere Integration in die Desktop Umgebung"
+
+msgid "Profiles (*.profile)"
+msgstr "Profile (*.profile)"
+
+msgid "All files"
+msgstr "Alle Dateien"
+
+msgid "Save file.."
+msgstr "Speichere Datei.."
+
+msgid "Enter a profile name"
+msgstr "Geben Sie einen Namen für das Profil ein"
+
+msgid "Backend not found."
+msgstr "Backend nicht gefunden."
+
+msgid "Filter your Plugin list"
+msgstr "Filtern Sie die Plugin Liste"
+
+#, c-format
+msgid "Screen %i"
+msgstr "Bildschrim %i"
+
+msgid "Screen"
+msgstr "Bildschrim"
+
+msgid "Uncategorized"
+msgstr "Unkategorisierte"
+
+msgid "Category"
+msgstr "Kategorie"
+
+msgid "Advanced Search"
+msgstr "Erweiterte Suche"
