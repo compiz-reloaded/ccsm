@@ -1,0 +1,79 @@
+# ccsm l10n template.
+# Copyright (C) 2007 opencompositing.org
+# This file is distributed under the same license as ccsm package.
+# cyberorg <cyberorg@cyberorg.info>, 2007.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: 0.1\n"
+"Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
+"POT-Creation-Date: 2007-06-28 21:31+0530\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#, c-format
+msgid "The new value for the %s binding for the action <b>%s</b> "
+msgstr ""
+
+#, c-format
+msgid ""
+"You are trying to use the feature <b>%s</b> which is provided by <b>%s</b>.\n"
+msgstr ""
+
+msgid "Reset setting to the default value"
+msgstr ""
+
+msgid "Browse for "
+msgstr ""
+
+#, c-format
+msgid "Plugin <b>%s</b> provides feature <b>%s</b> which is also provided "
+msgstr ""
+
+#, c-format
+msgid "Plugin <b>%s</b> conflicts with the plugin you are trying to enable.\n"
+msgstr ""
+
+#, c-format
+msgid "The plugin you are trying to enable requires feature <b>%s</b> which "
+msgstr ""
+
+#, c-format
+msgid "The plugin you are trying to enable requires the plugin <b>%s</b>.\n"
+msgstr ""
+
+#, c-format
+msgid "The plugin you are trying to disable provides the feature <b>%s</b> "
+msgstr ""
+
+#, c-format
+msgid ""
+"The plugin you are trying to disable is required by the plugins <b>%s</b>.\n"
+msgstr ""
+
+msgid ""
+"Configure the backend and profile used by the Compiz Configuration System."
+msgstr ""
+
+msgid "Add a New Profile"
+msgstr ""
+
+msgid "Remove This Profile"
+msgstr ""
+
+msgid "Import a CompizConfig Profile"
+msgstr ""
+
+msgid "Export your CompizConfig Profile"
+msgstr ""
+
+msgid "Please enter a name for the new profile:"
+msgstr ""
+
+msgid "CompizConfig Settings Manager"
+msgstr ""
