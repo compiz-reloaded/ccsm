@@ -2219,31 +2219,24 @@ class MainWinClass:
 		profBackFrame.pack_start(profBackLabel, False, False)
 		profBackFrame.pack_end(profBackImage, False, False)
 		profBackButton.add(profBackFrame)
-		leftChild.pack_end(profBackButton, False, False)
+		leftChild.pack_start(profBackButton, False, False)
 
 		# Categories
 		categoryBox = gtk.VBox()
-		categoryBox.set_no_show_all(True)
+		categoryBox.set_border_width(10)
 		for category in sorted(self.Categories, self.CatSortCompare):
 			name = category or 'Uncategorized'
 			categoryToggleLabel = MakeLabel(name)
 			categoryToggle = gtk.Button()
+			categoryToggle.set_relief(gtk.RELIEF_NONE)
 			categoryToggle.add(categoryToggleLabel)
 			categoryToggle.connect("clicked", self.ToggleCategory, category)
 			categoryBox.pack_start(categoryToggle, False, False)
 		categoryLabel = MakeLabel()
+		categoryLabel.props.xalign = 0.1
 		categoryLabel.set_markup("<span color='%s' size='large' weight='800'>Category</span>" % self.BrightColor)
-		categoryImage = gtk.Image()
-		categoryImage.set_from_stock(gtk.STOCK_GO_UP, gtk.ICON_SIZE_BUTTON)
-		categoryButton = gtk.Button()
-		categoryButton.connect("clicked", self.Expand, categoryBox)
-		categoryButton.set_relief(gtk.RELIEF_NONE)
-		categoryFrame = gtk.HBox()
-		categoryFrame.pack_start(categoryLabel, False, False)
-		categoryFrame.pack_end(categoryImage, False, False)
-		categoryButton.add(categoryFrame)
-		leftChild.pack_end(categoryButton, False, False)
-		leftChild.pack_end(categoryBox, False, False)
+		leftChild.pack_start(categoryLabel, False, False)
+		leftChild.pack_start(categoryBox, False, False)
 
 		pluginsVPort.modify_bg(gtk.STATE_NORMAL, gtk.gdk.color_parse(self.BackgroundColor))
 		rightChild = gtk.ScrolledWindow()
@@ -2467,19 +2460,6 @@ class MainWinClass:
 				widget.remove(value)
 		profBackPage = ProfileBackendPage(self, self.Context)
 		self.SetMainWidgets(profBackPage.LeftWidget, profBackPage.RightWidget)
-
-	def Expand(self, widget, box):
-		if box.get_no_show_all():
-			box.set_no_show_all(False)
-			self.LeftPane.show_all()
-			buttonImg = widget.get_child().get_children()[1]
-			buttonImg.set_from_stock(gtk.STOCK_GO_DOWN, gtk.ICON_SIZE_BUTTON)
-		else:
-			box.set_no_show_all(True)
-			box.hide()
-			self.LeftPane.show_all()
-			buttonImg = widget.get_child().get_children()[1]
-			buttonImg.set_from_stock(gtk.STOCK_GO_UP, gtk.ICON_SIZE_BUTTON)
 
 	def UpdatePlugins(self):
 		for category, container, plugins in self.TableCats.values():
