@@ -2238,6 +2238,12 @@ class MainWinClass:
 		leftChild.pack_start(categoryLabel, False, False)
 		leftChild.pack_start(categoryBox, False, False)
 
+		# Exit Button
+		self.ExitButton = gtk.Button(gtk.STOCK_CLOSE)
+		self.ExitButton.set_use_stock(True)
+		self.ExitButton.connect('clicked', Quit)
+		leftChild.pack_end(self.ExitButton, False, False)
+
 		pluginsVPort.modify_bg(gtk.STATE_NORMAL, gtk.gdk.color_parse(self.BackgroundColor))
 		rightChild = gtk.ScrolledWindow()
 		rightChild.props.hscrollbar_policy = gtk.POLICY_NEVER
