@@ -39,4 +39,5 @@ AC_OUTPUT([
 Makefile
 images/Makefile
 misc/Makefile
+po/Makefile.in
 ])
