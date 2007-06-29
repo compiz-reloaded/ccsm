@@ -59,9 +59,10 @@ def Write(ctx):
 def UpdateVisibleSettings(context):
 	changed = context.ProcessEvents()
 	if changed:
-		print VisibleSettings
 		for settingWidget in VisibleSettings:
 			settingWidget.Read()
+		# FIXME -- workaround to avoid a loop, since context->changedSettings is not cleared
+		context.Write() 
 	return True
 
 def getScreens():
