@@ -62,7 +62,7 @@ def UpdateVisibleSettings(context):
 		for settingWidget in VisibleSettings:
 			settingWidget.Read()
 		# FIXME -- workaround to avoid a loop, since context->changedSettings is not cleared
-		context.Write() 
+		context.Write()
 	return True
 
 def getScreens():
@@ -2537,16 +2537,17 @@ class MainWinClass:
 		self.Context.Read()
 
 	def BackToMain(self, obj):
+		global VisibleSettings
+		VisibleSettings = []
 		self.ResetMainWidgets()
 		del self.ShowingPlugin
 		# make sure its cleaned up here, since this is a nice safe place to do so
 		self.ShowingPlugin = None
-		VisibleSettings = []
 		
 screens = getScreens()
 CurrentScreenNum = gtk.gdk.display_get_default().get_default_screen().get_number()
 context = ccs.Context(screens, len(screens))
 mainWin = MainWinClass(context).MainWin
 mainWin.show_all()
-gobject.timeout_add(1000, UpdateVisibleSettings, context)
+gobject.timeout_add(2000, UpdateVisibleSettings, context)
 gtk.main()
