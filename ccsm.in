@@ -1578,7 +1578,6 @@ class PluginClass:
 		self.LeftWidget.pack_end(backButton, False, False)
 		backButton.connect('clicked', main.BackToMain)
 		self.RightWidget = gtk.Notebook()
-		self.RightWidget.connect('size-allocate', self.ResetFocus)
 		self.Pages = []
 		
 		for name, group in plugin.Groups.items():
@@ -1592,6 +1591,8 @@ class PluginClass:
 		if not actionPage.Empty:
 			self.RightWidget.append_page(actionPage.Widget, gtk.Label(_("Actions")))
 			self.Pages = self.Pages + [actionPage]
+		else:
+			self.RightWidget.connect('size-allocate', self.ResetFocus)
 
 		self.Block = 0
 
