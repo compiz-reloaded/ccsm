@@ -59,6 +59,7 @@ def Write(ctx):
 def UpdateVisibleSettings(context):
 	changed = context.ProcessEvents()
 	if changed:
+		print VisibleSettings
 		for settingWidget in VisibleSettings:
 			settingWidget.Read()
 	return True
