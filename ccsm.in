@@ -2446,9 +2446,11 @@ class MainWinClass:
 			except:
 				img.set_from_stock(gtk.STOCK_MISSING_IMAGE, gtk.ICON_SIZE_BUTTON)
 		elif category != 0:
+			iconpath = "%s/category-%s.svg" % (PixmapDir, category)
+			if not os.path.exists(iconpath):
+				iconpath = "%s/category-uncategorized.svg" % PixmapDir
 			try:
-				pixbuf = gtk.gdk.pixbuf_new_from_file_at_size("%s/category-%s.svg"%(
-					PixmapDir, category), size, size)
+				pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(iconpath, size, size)
 				img.set_from_pixbuf(pixbuf)
 			except:
 				img.set_from_stock(gtk.STOCK_MISSING_IMAGE, gtk.ICON_SIZE_BUTTON)
