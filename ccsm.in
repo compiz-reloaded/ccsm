@@ -46,6 +46,7 @@ IconDir = DataDir+"/icons/hicolor/scalable"
 PixmapDir = DataDir+"/ccsm/images"
 CurrentScreenNum = 0
 Tooltips = gtk.Tooltips()
+VisibleSettings = []
 
 locale.setlocale(locale.LC_ALL, "")
 gettext.bindtextdomain("ccsm", DataDir + "/locale")
@@ -54,6 +55,13 @@ _ = gettext.gettext
 
 def Write(ctx):
 	ctx.Write()
+
+def UpdateVisibleSettings(context):
+	changed = context.ProcessEvents()
+	if changed:
+		for settingWidget in VisibleSettings:
+			settingWidget.Read()
+	return True
 
 def getScreens():
 	screens = []
@@ -165,6 +173,7 @@ class SettingItem:
 			gtk.STOCK_CLEAR, gtk.ICON_SIZE_BUTTON))
 		self.Reset.connect('clicked', self.DoReset)
 		self._Init()
+		VisibleSettings.append(self)
 
 	def Attach(self, table, row):
 		self.Reset.set_sensitive(not self.Setting.ReadOnly)
@@ -2530,10 +2539,12 @@ class MainWinClass:
 		del self.ShowingPlugin
 		# make sure its cleaned up here, since this is a nice safe place to do so
 		self.ShowingPlugin = None
+		VisibleSettings = []
 		
 screens = getScreens()
 CurrentScreenNum = gtk.gdk.display_get_default().get_default_screen().get_number()
 context = ccs.Context(screens, len(screens))
 mainWin = MainWinClass(context).MainWin
 mainWin.show_all()
+gobject.timeout_add(1000, UpdateVisibleSettings, context)
 gtk.main()
