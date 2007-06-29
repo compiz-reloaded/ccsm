@@ -1,0 +1,284 @@
+# CompizConfig French translation
+# Copyright (C) 2007 Sylvain Debray
+# This file is distributed under the same license as the ccsm package.
+# Sylvain Debray <sylvain.debray@wanadoo.fr, 2007
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: ccsm 0.0.1\n"
+"Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
+"POT-Creation-Date: 2007-06-29 18:37+0200\n"
+"PO-Revision-Date: 2007-06-29 15:27+0200\n"
+"Last-Translator: Sylvain Debray <sylvain.debray@wanadoo.fr>\n"
+"Language-Team: Compiz Fusion translators <i18n@lists.compiz-fusion.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#, c-format
+msgid ""
+"The new value for the %s binding for the action <b>%s</b> in plugin <b>%s</"
+"b> conflicts with the action <b>%s</b> of the <b>%s</b> plugin.\n"
+"Do you wish to disable <b>%s</b> in the <b>%s</b> plugin?\n"
+"If you click No, this option will not be set."
+msgstr ""
+"La nouvelle valeur assigné à %s pour l'action <b>%s</b> dans le plugin <b>%s</b> est "
+"en conflit avec l'action <b>%s</b> du plugin <b>%s</b>.\n"
+"Voulez vous désactiver <b>%s</b> du plugin <b>%s</b> ?\n"
+"Si vous cliquez Non, cette option ne sera pas activée"
+
+#, c-format
+msgid ""
+"You are trying to use the feature <b>%s</b> which is provided by <b>%s</b>.\n"
+"This plugin is currently disabled.\n"
+"Do you wish to enable <b>%s</b> so the feature is available?"
+msgstr ""
+"Vous essayez d'activer le <b>%s</b> qui est fourni par <b>%s</b> "
+"Ce plugin est actuellement désactivé.\n "
+"Voulez vous activer <b>%s</b> pour que celui ci soit actif "
+
+#, c-format
+msgid ""
+"Plugin <b>%s</b> provides feature <b>%s</b> which is also provided by the "
+"plugin you are trying to enable.\n"
+"Click OK to disable plugin <b>%s</b>, or Cancel to stop trying to enable "
+"this plugin."
+msgstr ""
+"Le plugin <b>%s</b> fournit déjà <b>%s</b> qui est également fournit par "
+"le plugin que vous essayez d'activer.\n"
+"Cliquez Valider, pour activer <b>%s</b> ou Annuler pour ne pas activer "
+"ce plugin. "
+
+#, c-format
+msgid ""
+"Plugin <b>%s</b> conflicts with the plugin you are trying to enable.\n"
+"Click OK to disable plugin <b>%s</b>, or Cancel to stop trying to enable "
+"this plugin."
+msgstr ""
+"Le plugin <b>%s</b> est en conflit avec le plugin que vous essayez d'activer. "
+"Cliquez Valider, pour activer <b>%s</b> ou Annuler pour ne pas activer "
+"ce plugin."
+
+#, c-format
+msgid ""
+"The plugin you are trying to enable requires feature <b>%s</b> which is "
+"provided by the following plugins.\n"
+"Click OK to enable the selected plugin or Cancel to stop trying to enable "
+"this plugin."
+msgstr "Le plugin que vous essayez d'utiliser nécessite <b>%s</b>.\n"
+"Cliquez Valider, pour activer <b>%s</b> ou Annuler pour ne pas activer "
+"ce plugin."
+
+#, c-format
+msgid ""
+"The plugin you are trying to enable requires the plugin <b>%s</b>.\n"
+"Click OK to enable <b>%s</b> or Cancel to stop trying to enable this plugin."
+msgstr ""
+"Le plugin que vous essayez d'utiliser nécessite le plugin <b>%s</b>.\n"
+"Cliquez Valider, pour activer <b>%s</b> ou Annuler pour ne pas activer "
+"ce plugin. "
+
+#, c-format
+msgid ""
+"The plugin you are trying to disable provides the feature <b>%s</b> which is "
+"required by the plugins <b>%s</b>.\n"
+"Click OK to disable these plugins or Cancel to stop trying to disable this "
+"plugin."
+msgstr ""
+"Le plugin que vous essayez de désactiver fournit la fonction <b>%s</b> qui est, "
+"requis par le plugin <b>%s</b>.\n"
+"Cliquez Valider, pour activer <b>%s</b> ou Annuler pour ne pas activer "
+"ce plugin."
+
+#, c-format
+msgid ""
+"The plugin you are trying to disable is required by the plugins <b>%s</b>.\n"
+"Click OK to disable these plugins or Cancel to stop trying to disable this "
+"plugin."
+msgstr ""
+"Le plugin que vous essayez de désactiver est nécessaire au plugin <b>%s</b>.\n"
+"Cliquez Valider, pour activer <b>%s</b> ou Annuler pour ne pas activer "
+"ce plugin."
+msgid ""
+"Configure the backend and profile used by the Compiz Configuration System."
+msgstr "Configurer la méthode et le profile utilisé par le Système de Configuration de Compiz."
+
+msgid "Add a New Profile"
+msgstr "Ajouter un nouveau profile"
+
+msgid "Remove This Profile"
+msgstr "Effacer ce profile"
+
+msgid "Import a CompizConfig Profile"
+msgstr "Importer un CompizConfig-Profil"
+
+msgid "Export your CompizConfig Profile"
+msgstr "Exporter un CompizConfig-Profil"
+
+msgid "Please enter a name for the new profile:"
+msgstr "Merci d'entrer un nom pour le nouveau profil:"
+
+msgid "CompizConfig Settings Manager"
+msgstr "CompizConfig Configuration-Manager"
+
+msgid "Reset setting to the default value"
+msgstr "Revenir à la configuration par défaut"
+
+msgid "Browse for "
+msgstr "Naviguer pour "
+
+msgid "Images"
+msgstr "Images"
+
+msgid "File"
+msgstr "Fichier"
+
+msgid "Open file.."
+msgstr "Ouvrir un fichier.."
+
+msgid "Multi-list settings"
+msgstr "Multi-liste configuration"
+
+msgid "Edit"
+msgstr "Editer"
+
+#, c-format
+msgid "Value (%s)"
+msgstr "Valeur (%s)"
+
+#, c-format
+msgid "Edit %s"
+msgstr "Editer %s"
+
+#, c-format
+msgid "Value (%s) for %s:"
+msgstr "Valeur (%s) pour %s"
+
+#, c-format
+msgid "Unhandled list type %s for %s"
+msgstr "Non manipulable liste type %s pour %s"
+
+msgid "Name"
+msgstr "Nom"
+
+msgid "Key"
+msgstr "Clavier"
+
+msgid "Button"
+msgstr "Souris"
+
+msgid "Screen Edge"
+msgstr "Bord d'écran"
+
+msgid "On System Bell"
+msgstr "Au bip système"
+
+msgid "General"
+msgstr "Général"
+
+#, c-format
+msgid "Edit Action: %s"
+msgstr "Edition de l'action %"
+
+msgid "Screen Edges"
+msgstr "Bords d'écran"
+
+msgid "Reset To Defaults"
+msgstr "Revient au défaut"
+
+msgid "Filter"
+msgstr "Filtre"
+
+#, c-format
+msgid "Search %s Plugin Options"
+msgstr "Chercher %s "
+
+msgid "Use This Plugin"
+msgstr "Utiliser ce plugin"
+
+#, c-format
+msgid "Enable %s"
+msgstr "Activer %s"
+
+msgid "Search Compiz Core Options"
+msgstr "Chercher Compiz Core Options"
+
+msgid "Actions"
+msgstr "Actions"
+
+msgid "Search in..."
+msgstr "Chercher dans..."
+
+msgid "Short description and name"
+msgstr "Description courte et nom"
+
+msgid "Long description"
+msgstr "Description longue"
+
+msgid "Settings value"
+msgstr "Valeurs de réglage"
+
+msgid "Settings"
+msgstr "Réglage"
+
+msgid "Profile & Backend"
+msgstr "Profil & Backend"
+
+msgid "Backend &amp; Profile"
+msgstr "Backend &amp; Profil"
+
+msgid "Default"
+msgstr "Standard"
+
+msgid "Profile"
+msgstr "Profil"
+
+msgid "Import"
+msgstr "Importer"
+
+msgid "Export"
+msgstr "Exporter"
+
+msgid "Backend"
+msgstr "Backend"
+
+msgid "Integration"
+msgstr "Integration"
+
+msgid "Enable integration into the desktop environment"
+msgstr "Activer l'integration dans l'environnement du bureau"
+
+msgid "Profiles (*.profile)"
+msgstr "Profile (*.profile)"
+
+msgid "All files"
+msgstr "Tous les fichiers"
+
+msgid "Save file.."
+msgstr "Sauvegarder..."
+
+msgid "Enter a profile name"
+msgstr "Entrer un nom pour le profil"
+
+msgid "Backend not found."
+msgstr "Backend non trouvé."
+
+msgid "Filter your Plugin list"
+msgstr "Filtre votre liste de plugin"
+
+#, c-format
+msgid "Screen %i"
+msgstr "Ecran %i"
+
+msgid "Screen"
+msgstr "Ecran"
+
+msgid "Uncategorized"
+msgstr "Sans catégorie"
+
+msgid "Category"
+msgstr "Catégorie"
+
+msgid "Advanced Search"
+msgstr "Recherche avancée"
