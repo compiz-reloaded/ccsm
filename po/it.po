@@ -136,13 +136,13 @@ msgstr ""
 "Fai click su OK per disabilitare questi plugin o su Annulla per interrompere questa richiesta."
 
 msgid "Name"
-msgstr "Nome"
+msgstr "Azione"
 
 msgid "Key"
-msgstr "Chiave"
+msgstr "Comando da Tastiera"
 
 msgid "Button"
-msgstr "Pulsante"
+msgstr "Tasto del Mouse"
 
 msgid "Screen Edge"
 msgstr "Angolo dello Schermo"
@@ -171,7 +171,7 @@ msgid "Search %s Plugin Options"
 msgstr "Cerca tra le Opzioni del Plugin %s"
 
 msgid "Use This Plugin"
-msgstr "Abilita questo Plugin"
+msgstr "Usa Questo Plugin"
 
 #, c-format
 msgid "Enable %s"
@@ -187,10 +187,10 @@ msgid "Search in..."
 msgstr "Cerca in..."
 
 msgid "Short description and name"
-msgstr "Breve descrzione e nome"
+msgstr "Descrzione sintetica e nome"
 
 msgid "Long description"
-msgstr "Descrizione lunga"
+msgstr "Descrizione completa"
 
 msgid "Settings value"
 msgstr "Valore dell'impostazione"
