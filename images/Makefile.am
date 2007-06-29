@@ -43,6 +43,7 @@ images_DATA = \
 	plugin-fakeargb.svg \
 	plugin-firepaint.svg \
 	plugin-fs.svg \
+	plugin-gears.svg \
 	plugin-glib.svg \
 	plugin-group.svg        \
 	plugin-imgjpeg.svg      \
@@ -65,6 +66,7 @@ images_DATA = \
 	plugin-rotate.svg       \
 	plugin-scale.svg        \
 	plugin-scaleaddon.svg \
+	plugin-scalefilter.svg \
 	plugin-schemep.svg      \
 	plugin-screencasting.svg \
 	plugin-screenshot.svg   \
