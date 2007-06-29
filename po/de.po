@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ccsm 0.0.1\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
 "POT-Creation-Date: 2007-06-28 18:37+0200\n"
-"PO-Revision-Date: 2007-06-28 19:02+0200\n"
+"PO-Revision-Date: 2007-06-29 07:14+0200\n"
 "Last-Translator: Danny Baumann <dannybaumann@web.de>\n"
 "Language-Team: Compiz Fusion translators <i18n@lists.compiz-fusion.org>\n"
 "MIME-Version: 1.0\n"
@@ -123,7 +123,7 @@ msgid "CompizConfig Settings Manager"
 msgstr "CompizConfig Einstellungs-Manager"
 
 msgid "Reset setting to the default value"
-msgstr "Einstellung auf den Standartwert zurücksetzen"
+msgstr "Einstellung auf den Standardwert zurücksetzen"
 
 msgid "Browse for "
 msgstr "Suche nach "
@@ -135,7 +135,7 @@ msgid "File"
 msgstr "Datei"
 
 msgid "Open file.."
-msgstr "Öffne datei.."
+msgstr "Öffne Datei.."
 
 msgid "Multi-list settings"
 msgstr "Zusammengesetzte Liste"
@@ -149,7 +149,7 @@ msgstr "Wert (%s)"
 
 #, c-format
 msgid "Edit %s"
-msgstr "Bearbeite %s"
+msgstr "%s bearbeiten"
 
 #, c-format
 msgid "Value (%s) for %s:"
@@ -157,7 +157,7 @@ msgstr "Wert (%s) für %s"
 
 #, c-format
 msgid "Unhandled list type %s for %s"
-msgstr "Nicht unterstützter Listen Typ %s für %s"
+msgstr "Nicht unterstützter Listentyp %s für %s"
 
 msgid "Name"
 msgstr "Name"
@@ -169,33 +169,33 @@ msgid "Button"
 msgstr "Maustaste"
 
 msgid "Screen Edge"
-msgstr "Bildschrim Ecke"
+msgstr "Bildschirmecke"
 
 msgid "On System Bell"
-msgstr ""
+msgstr "Bei Systemglocke"
 
 msgid "General"
 msgstr "Allgemein"
 
 #, c-format
 msgid "Edit Action: %s"
-msgstr "Bearbeite aktion: %s"
+msgstr "Aktion %s bearbeiten"
 
 msgid "Screen Edges"
-msgstr "Bildschrim Ecken"
+msgstr "Bildschirmecken"
 
 msgid "Reset To Defaults"
-msgstr "Auf Standartwert zurücksetzen"
+msgstr "Auf Standardwert zurücksetzen"
 
 msgid "Filter"
 msgstr "Filter"
 
 #, c-format
 msgid "Search %s Plugin Options"
-msgstr "Suche in den Einstellungen von %s"
+msgstr "Suche in den Einstellungen des Plugins %s"
 
 msgid "Use This Plugin"
-msgstr "Aktiviere dieses Plugin"
+msgstr "Dieses Plugin aktivieren"
 
 #, c-format
 msgid "Enable %s"
@@ -211,7 +211,7 @@ msgid "Search in..."
 msgstr "Suche in..."
 
 msgid "Short description and name"
-msgstr "Kruzbeschreibung und Name"
+msgstr "Kurzbeschreibung und Name"
 
 msgid "Long description"
 msgstr "Ausführlicher Beschreibung"
@@ -226,19 +226,19 @@ msgid "Profile & Backend"
 msgstr "Profil & Backend"
 
 msgid "Backend &amp; Profile"
-msgstr "Backend &amp; Profile"
+msgstr "Backend &amp; Profil"
 
 msgid "Default"
-msgstr "Standart"
+msgstr "Standard"
 
 msgid "Profile"
 msgstr "Profil"
 
 msgid "Import"
-msgstr "Importiere"
+msgstr "Importieren"
 
 msgid "Export"
-msgstr "Exportiere"
+msgstr "Exportieren"
 
 msgid "Backend"
 msgstr "Backend"
@@ -247,7 +247,7 @@ msgid "Integration"
 msgstr "Integration"
 
 msgid "Enable integration into the desktop environment"
-msgstr "Aktiviere Integration in die Desktop Umgebung"
+msgstr "Aktiviere Integration in die Desktopumgebung"
 
 msgid "Profiles (*.profile)"
 msgstr "Profile (*.profile)"
@@ -259,23 +259,23 @@ msgid "Save file.."
 msgstr "Speichere Datei.."
 
 msgid "Enter a profile name"
-msgstr "Geben Sie einen Namen für das Profil ein"
+msgstr "Geben Sie einen Profilnamen ein"
 
 msgid "Backend not found."
 msgstr "Backend nicht gefunden."
 
 msgid "Filter your Plugin list"
-msgstr "Filtern Sie die Plugin Liste"
+msgstr "Filtern Sie die Pluginliste"
 
 #, c-format
 msgid "Screen %i"
-msgstr "Bildschrim %i"
+msgstr "Bildschirm %i"
 
 msgid "Screen"
-msgstr "Bildschrim"
+msgstr "Bildschirm"
 
 msgid "Uncategorized"
-msgstr "Unkategorisierte"
+msgstr "Ohne Kategorie"
 
 msgid "Category"
 msgstr "Kategorie"
