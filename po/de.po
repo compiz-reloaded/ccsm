@@ -21,12 +21,10 @@ msgid ""
 "The new value for the %s binding for the action <b>%s</b> in plugin <b>%s</"
 "b> conflicts with the action <b>%s</b> of the <b>%s</b> plugin.\n"
 "Do you wish to disable <b>%s</b> in the <b>%s</b> plugin?\n"
-"If you click No, this option will not be set."
 msgstr ""
 "Der neue Wert für %s für die Aktion <b>%s</b> im Plugin <b>%s</b> steht in "
 "Konflikt mit der Aktion <b>%s</b> des Plugins <b>%s</b>.\n"
 "Möchten Sie <b>%s</b> im Plugin <b>%s</b> deaktivieren?\n"
-"Wenn Sie auf Nein klicken, wird diese Option nicht gesetzt werden."
 
 #, c-format
 msgid ""
@@ -41,64 +39,38 @@ msgstr ""
 
 #, c-format
 msgid ""
-"Plugin <b>%s</b> provides feature <b>%s</b> which is also provided by the "
-"plugin you are trying to enable.\n"
-"Click OK to disable plugin <b>%s</b>, or Cancel to stop trying to enable "
-"this plugin."
+"Plugin <b>%s</b> provides feature <b>%s</b> which is also provided by <b>%s</b>"
 msgstr ""
-"Plugin <b>%s</b> stellt das Feature <b>%s</b> bereit, das auch von dem Plugin "
-"bereitgestellt wird, das Sie gerade aktivieren möchten.\n"
-"Klicken Sie OK, um das Plugin <b>%s</b> zu deaktivieren oder Abbrechen, um "
-"das gewählte Plugin nicht zu aktivieren."
+"Plugin <b>%s</b> stellt das Feature <b>%s</b> bereit, das auch von <b>%s</b> "
+"bereitgestellt wird."
 
 #, c-format
 msgid ""
-"Plugin <b>%s</b> conflicts with the plugin you are trying to enable.\n"
-"Click OK to disable plugin <b>%s</b>, or Cancel to stop trying to enable "
-"this plugin."
+"Plugin <b>%s</b> conflicts with <b>%s</b>."
 msgstr ""
-"Plugin <b>%s</b> steht in Konflikt mit dem Plugin, das Sie gerade aktivieren "
-"möchten.\nKlicken Sie OK, um das Plugin <b>%s</b> zu deaktivieren oder Abbrechen, "
-"um das gewählte Plugin nicht zu aktivieren."
+"Plugin <b>%s</b> steht in Konflikt mit dem Plugin <b>%s</b>."
 
 #, c-format
 msgid ""
-"The plugin you are trying to enable requires feature <b>%s</b> which is "
-"provided by the following plugins.\n"
-"Click OK to enable the selected plugin or Cancel to stop trying to enable "
-"this plugin."
+"<b>%s</b> requires feature <b>%s</b> which is provided by the following plugins:\n%s"
+msgstr "<b>%s</b> benötigt ein Feature, das von den folgenden Plugins bereit gestellt wird:\n%s"
+
+#, c-format
+msgid "<b>%s</b> requires the plugin <b>%s</b>."
 msgstr ""
+"<b>%s</b> benötigt das Plugin <b>%s</b>."
 
 #, c-format
 msgid ""
-"The plugin you are trying to enable requires the plugin <b>%s</b>.\n"
-"Click OK to enable <b>%s</b> or Cancel to stop trying to enable this plugin."
+"<b>%s</b> provides the feature <b>%s</b> which is required by the plugins <b>%s</b>."
 msgstr ""
-"Das Plugin, das Sie aktivieren möchten, benötigt das Plugin <b>%s</b>.\n"
-"Klicken Sie OK, um <b>%s</b> zu aktivieren oder Abbrechen, um dieses Plugin"
-"nicht zu aktivieren."
+"<b>%s</b> stellt das Feature <b>%s</b> bereit, das von den Plugins <b>%s</b> benötigt wird."
 
 #, c-format
 msgid ""
-"The plugin you are trying to disable provides the feature <b>%s</b> which is "
-"required by the plugins <b>%s</b>.\n"
-"Click OK to disable these plugins or Cancel to stop trying to disable this "
-"plugin."
+"<b>%s</b> is required by the plugins <b>%s</b>"
 msgstr ""
-"Das Plugin, das Sie deaktivieren möchten, stellt das Feature <b>%s</b> bereit, "
-"das von den Plugins <b>%s</b> benötigt wird.\n"
-"Klicken Sie auf OK um diese Plugins zu deaktivieren oder Abbrechen, um dieses "
-"Plugin nicht zu deaktivieren."
-
-#, c-format
-msgid ""
-"The plugin you are trying to disable is required by the plugins <b>%s</b>.\n"
-"Click OK to disable these plugins or Cancel to stop trying to disable this "
-"plugin."
-msgstr ""
-"Das Plugin, das Sie deaktivieren möchten, wird von den Plugins <b>%s</b>"
-"benötigt.\nKlicken Sie OK um diese Plugins zu deaktivieren oder Abbrechen, "
-"um dieses Plugin nicht zu deaktivieren."
+"<b>%s</b> wird von den Plugins <b>%s</b> benötigt."
 
 msgid ""
 "Configure the backend and profile used by the Compiz Configuration System."
@@ -294,3 +266,9 @@ msgstr "%s trotzdem setzen"
 
 msgid "Don't enable %s"
 msgstr "%s nicht aktivieren"
+
+msgid "Don't disable %s"
+msgstr "%s nicht deaktivieren"
+
+msgid "Enable this plugins"
+msgstr "Aktiviere diese Plugins"
