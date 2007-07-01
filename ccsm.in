@@ -155,7 +155,16 @@ def CheckFeature(context, feature):
 				 
 				msg = msg % (feature, plugin.ShortDesc, plugin.ShortDesc)
 				
-				dlg = gtk.MessageDialog(parent=mainWin, flags=gtk.DIALOG_MODAL, type=gtk.MESSAGE_WARNING, buttons=gtk.BUTTONS_YES_NO)
+				dlg = gtk.MessageDialog(parent=mainWin, flags=gtk.DIALOG_MODAL, type=gtk.MESSAGE_WARNING)
+
+				yesButton = gtk.Button(_("Enable %s") % plugin.ShortDesc)
+				yesButton.set_image(gtk.image_new_from_stock(gtk.STOCK_YES, gtk.ICON_SIZE_BUTTON))
+				dlg.add_action_widget(yesButton, gtk.RESPONSE_YES)
+
+				noButton = gtk.Button(_("Don't enable %s") % plugin.ShortDesc)
+				noButton.set_image(gtk.image_new_from_stock(gtk.STOCK_NO, gtk.ICON_SIZE_BUTTON))
+				dlg.add_action_widget(noButton, gtk.RESPONSE_NO)
+
 				dlg.set_markup(msg)
 				dlg.show_all()
 				ret = dlg.run()
