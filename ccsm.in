@@ -1100,19 +1100,29 @@ class GroupPage(Page):
 					self.Empty = False
 					self.subGroupAreas = self.subGroupAreas + [sga]
 
-def HandlePluginConflicts(conflicts):
+def HandlePluginConflicts(plugin, conflicts):
 	if len(conflicts) == 0:
 		return True
 
-	dlg = gtk.MessageDialog(parent = mainWin, flags = gtk.DIALOG_MODAL, type = gtk.MESSAGE_WARNING, buttons = gtk.BUTTONS_OK_CANCEL)
+	dlg = gtk.MessageDialog(parent = mainWin, flags = gtk.DIALOG_MODAL, type = gtk.MESSAGE_WARNING)
+	okButton = gtk.Button()
+	okButton.set_image(gtk.image_new_from_stock(gtk.STOCK_OK, gtk.ICON_SIZE_BUTTON))
+	dlg.add_action_widget(okButton, gtk.RESPONSE_OK)
+
+	cancelButton = gtk.Button()
+	cancelButton.set_image(gtk.image_new_from_stock(gtk.STOCK_CANCEL, gtk.ICON_SIZE_BUTTON))
+	dlg.add_action_widget(cancelButton, gtk.RESPONSE_CANCEL)
+
 	for conflict in conflicts:
 		if conflict[0] == 'ConflictFeature':
 			# see if we can deactivate the plugin
 			# mentioned in c[2]
 			msg = _("Plugin <b>%s</b> provides feature <b>%s</b> which is also "\
-				"provided by the plugin you are trying to enable.\nClick OK to "\
-				"disable plugin <b>%s</b>, or Cancel to stop trying to enable this plugin.")
-			msg = msg % (conflict[2][0].ShortDesc, conflict[1], conflict[2][0].ShortDesc)
+				"provided by <b>%s</b>")
+			msg = msg % (conflict[2][0].ShortDesc, conflict[1], plugin.ShortDesc)
+
+			okButton.set_label(_("Disable %s") % conflict[2][0].ShortDesc)
+			cancelButton.set_label(_("Don't enable %s") % plugin.ShortDesc)
 			
 			dlg.set_markup(msg)
 			dlg.show_all()
@@ -1121,7 +1131,7 @@ def HandlePluginConflicts(conflicts):
 
 			if ret == gtk.RESPONSE_OK:
 				disableConflicts = conflict[2][0].DisableConflicts
-				if HandlePluginConflicts(disableConflicts):
+				if HandlePluginConflicts(plugin, disableConflicts):
 					conflict[2][0].Enabled = False
 				else:
 					return False
@@ -1131,9 +1141,11 @@ def HandlePluginConflicts(conflicts):
 		elif conflict[0] == 'ConflictPlugin':
 			# see if we can deactivate the plugin
 			# mentioned in c[2]
-			msg = _("Plugin <b>%s</b> conflicts with the plugin you are trying to enable.\n"\
-				  "Click OK to disable plugin <b>%s</b>, or Cancel to stop trying to enable this plugin.")
-			msg = msg % (conflict[2][0].ShortDesc, conflict[2][0].ShortDesc)
+			msg = _("Plugin <b>%s</b> conflicts with <b>%s</b>.")
+			msg = msg % (conflict[2][0].ShortDesc, plugin.ShortDesc)
+
+			okButton.set_label(_("Disable %s") % conflict[2][0].ShortDesc)
+			cancelButton.set_label(_("Don't enable %s") % plugin.ShortDesc)
 			
 			dlg.set_markup(msg)
 			dlg.show_all()
@@ -1141,7 +1153,7 @@ def HandlePluginConflicts(conflicts):
 			dlg.destroy()
 			if ret == gtk.RESPONSE_OK:
 				disableConflicts = conflict[2][0].DisableConflicts
-				if HandlePluginConflicts(disableConflicts):
+				if HandlePluginConflicts(plugin, disableConflicts):
 					conflict[2][0].Enabled = False
 				else:
 					return False
@@ -1150,10 +1162,12 @@ def HandlePluginConflicts(conflicts):
 		
 		elif conflict[0] == 'RequiresFeature':
 			# we need to activate one of c[2]
-			msg = _("The plugin you are trying to enable requires feature <b>%s</b> which "\
-				  "is provided by the following plugins.\n"\
-				  "Click OK to enable the selected plugin or Cancel to stop trying to enable this plugin.")
-			msg = msg % conflict[1]
+			pluginList = ', '.join("\"%s\"" % plugin.ShortDesc for plugin in conflict[2])
+			msg = _("<b>%s</b> requires feature <b>%s</b> which is provided by the following plugins:\n%s")
+			msg = msg % (plugin.ShortDesc, conflict[1], pluginList)
+
+			okButton.set_label(_("Enable this plugins"))
+			cancelButton.set_label(_("Don't enable %s") % plugin.ShortDesc)
 			
 			dlg.set_markup(msg)
 			cmb = gtk.combo_box_new_text()
@@ -1167,11 +1181,11 @@ def HandlePluginConflicts(conflicts):
 			dlg.destroy()
 			
 			if ret == gtk.RESPONSE_OK:
-				for plugin in conflict[2]:
-					if plugin.ShortDesc == retVal:
-						enableConflicts = plugin.EnableConflicts
-						if HandlePluginConflicts(enableConflicts):
-							plugin.Enabled = True
+				for plg in conflict[2]:
+					if plg.ShortDesc == retVal:
+						enableConflicts = plg.EnableConflicts
+						if HandlePluginConflicts(plugin, enableConflicts):
+							plg.Enabled = True
 						else:
 							return False
 						break
@@ -1179,9 +1193,11 @@ def HandlePluginConflicts(conflicts):
 				return False
 
 		elif conflict[0] == 'RequiresPlugin':
-			msg = _("The plugin you are trying to enable requires the plugin <b>%s</b>.\n"\
-				  "Click OK to enable <b>%s</b> or Cancel to stop trying to enable this plugin.")
-			msg = msg % (conflict[2][0].ShortDesc, conflict[2][0].ShortDesc)
+			msg = _("<b>%s</b> requires the plugin <b>%s</b>.")
+			msg = msg % (plugin.ShortDesc, conflict[2][0].ShortDesc)
+
+			okButton.set_label(_("Enable %s") % conflict[2][0].ShortDesc)
+			cancelButton.set_label(_("Don't enable %s") % plugin.ShortDesc)
 			
 			dlg.set_markup(msg)
 			dlg.show_all()
@@ -1190,7 +1206,7 @@ def HandlePluginConflicts(conflicts):
 			
 			if ret ==  gtk.RESPONSE_OK:			
 				enableConflicts = conflict[2][0].EnableConflicts
-				if HandlePluginConflicts(enableConflicts):
+				if HandlePluginConflicts(plugin, enableConflicts):
 					conflict[2][0].Enabled = True
 				else:
 					return False
@@ -1199,10 +1215,11 @@ def HandlePluginConflicts(conflicts):
 
 		elif conflict[0] == 'FeatureNeeded':
 			pluginList = ', '.join("\"%s\"" % plugin.ShortDesc for plugin in conflict[2])
-			msg = _("The plugin you are trying to disable provides the feature <b>%s</b> "\
-				  "which is required by the plugins <b>%s</b>.\n"\
-				  "Click OK to disable these plugins or Cancel to stop trying to disable this plugin.")
-			msg = msg % (conflict[1], pluginList) 
+			msg = _("<b>%s</b> provides the feature <b>%s</b> which is required by the plugins <b>%s</b>.")
+			msg = msg % (plugin.ShortDesc, conflict[1], pluginList) 
+
+			okButton.set_label(_("Disable %s") % pluginList)
+			cancelButton.set_label(_("Don't disable %s") % plugin.ShortDesc)
 			
 			dlg.set_markup(msg)
 			dlg.show_all()
@@ -1210,10 +1227,10 @@ def HandlePluginConflicts(conflicts):
 			dlg.destroy()
 			
 			if ret == gtk.RESPONSE_OK:
-				for plugin in conflict[2]:
-					disableConflicts = plugin.DisableConflicts
-					if HandlePluginConflicts(disableConflicts):
-						plugin.Enabled = False
+				for plg in conflict[2]:
+					disableConflicts = plg.DisableConflicts
+					if HandlePluginConflicts(plugin, disableConflicts):
+						plg.Enabled = False
 					else:
 						return False
 			else:
@@ -1221,9 +1238,11 @@ def HandlePluginConflicts(conflicts):
 
 		elif conflict[0] == 'PluginNeeded':
 			pluginList = ', '.join("\"%s\"" % plugin.ShortDesc for plugin in conflict[2])
-			msg = _("The plugin you are trying to disable is required by the plugins <b>%s</b>.\n"\
-				  "Click OK to disable these plugins or Cancel to stop trying to disable this plugin.")
-			msg = msg % pluginList
+			msg = _("<b>%s</b> is required by the plugins <b>%s</b>.")
+			msg = msg % (plugin.ShortDesc, pluginList)
+
+			okButton.set_label(_("Disable %s") % pluginList)
+			cancelButton.set_label(_("Don't disable %s") % plugin.ShortDesc)
 			
 			dlg.set_markup(msg)
 			dlg.show_all()
@@ -1231,10 +1250,10 @@ def HandlePluginConflicts(conflicts):
 			dlg.destroy()
 
 			if ret == gtk.RESPONSE_OK:
-				for plugin in conflict[2]:
-					disableConflicts = plugin.DisableConflicts
-					if HandlePluginConflicts(disableConflicts):
-						plugin.Enabled = False
+				for plg in conflict[2]:
+					disableConflicts = plg.DisableConflicts
+					if HandlePluginConflicts(plugin, disableConflicts):
+						plg.Enabled = False
 					else:
 						return False
 			else:
@@ -1656,7 +1675,7 @@ class PluginClass:
 		self.Block += 1
 		# attempt to resolve conflicts...
 		conflicts = self.Plugin.Enabled and self.Plugin.DisableConflicts or self.Plugin.EnableConflicts
-		if HandlePluginConflicts(conflicts):
+		if HandlePluginConflicts(self.Plugin, conflicts):
 			self.Plugin.Enabled = widget.get_active()
 		else:
 			widget.set_active(self.Plugin.Enabled)
@@ -2534,7 +2553,7 @@ class MainWinClass:
 
 		# attempt to resolve conflicts...
 		conflicts = plugin.Enabled and plugin.DisableConflicts or plugin.EnableConflicts
-		if HandlePluginConflicts(conflicts):
+		if HandlePluginConflicts(plugin, conflicts):
 			plugin.Enabled = widget.get_active()
 			self.UpdatePlugins()
 		else:
