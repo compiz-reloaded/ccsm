@@ -81,12 +81,24 @@ def CheckConflict(setting, con, typ):
 
 	msg = _("The new value for the %s binding for the action <b>%s</b> "\
 		  "in plugin <b>%s</b> conflicts with the action <b>%s</b> of the <b>%s</b> plugin.\n"\
-		  "Do you wish to disable <b>%s</b> in the <b>%s</b> plugin?\n"\
-		  "If you click No, this option will not be set.")
+		  "Do you wish to disable <b>%s</b> in the <b>%s</b> plugin?")
 	 
 	msg = msg % (typ, setting.ShortDesc, setting.Plugin.ShortDesc, con.ShortDesc, con.Plugin.ShortDesc, con.ShortDesc, con.Plugin.ShortDesc)
 	
-	dlg = gtk.MessageDialog(parent=mainWin, flags=gtk.DIALOG_MODAL, type=gtk.MESSAGE_WARNING, buttons=gtk.BUTTONS_YES_NO)
+	dlg = gtk.MessageDialog(parent=mainWin, flags=gtk.DIALOG_MODAL, type=gtk.MESSAGE_WARNING)
+
+	yesButton = gtk.Button(_("Disable %s") % con.ShortDesc)
+	yesButton.set_image(gtk.image_new_from_stock(gtk.STOCK_YES, gtk.ICON_SIZE_BUTTON))
+	dlg.add_action_widget(yesButton, gtk.RESPONSE_YES)
+
+	noButton = gtk.Button(_("Don't set %s") % setting.ShortDesc)
+	noButton.set_image(gtk.image_new_from_stock(gtk.STOCK_NO, gtk.ICON_SIZE_BUTTON))
+	dlg.add_action_widget(noButton, gtk.RESPONSE_NO)
+
+	ignoreButton = gtk.Button(_("Set %s anyway") % setting.ShortDesc)
+	ignoreButton.set_image(gtk.image_new_from_stock(gtk.STOCK_STOP, gtk.ICON_SIZE_BUTTON))
+	dlg.add_action_widget(ignoreButton, gtk.RESPONSE_REJECT)
+
 	dlg.set_markup(msg)
 	dlg.show_all()
 	ret = dlg.run()
@@ -121,6 +133,8 @@ def CheckActionConflicts(setting, key, button, bell, edges):
 	if len(buttonCon) and button and button.lower() != 'disabled' and button.lower() != 'none':
 		for b in buttonCon:
 			ret = CheckConflict(setting, b, 'Button')
+			if ret == gtk.RESPONE_STOP:
+				continue
 			if ret == gtk.RESPONSE_YES:
 				value = b.Value
 				b.Value = [value[0], 'None', value[2], value[3]]
