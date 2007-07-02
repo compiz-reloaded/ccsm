@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-06-28 20:50+0200\n"
+"POT-Creation-Date: 2007-07-02 09:55+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,7 +23,19 @@ msgstr ""
 msgid ""
 "The new value for the %s binding for the action <b>%s</b> in plugin <b>%s</"
 "b> conflicts with the action <b>%s</b> of the <b>%s</b> plugin.\n"
-"Do you wish to disable <b>%s</b> in the <b>%s</b> plugin?\n"
+"Do you wish to disable <b>%s</b> in the <b>%s</b> plugin?"
+msgstr ""
+
+#, c-format
+msgid "Disable %s"
+msgstr ""
+
+#, c-format
+msgid "Don't set %s"
+msgstr ""
+
+#, c-format
+msgid "Set %s anyway"
 msgstr ""
 
 #, c-format
@@ -31,6 +43,14 @@ msgid ""
 "You are trying to use the feature <b>%s</b> which is provided by <b>%s</b>.\n"
 "This plugin is currently disabled.\n"
 "Do you wish to enable <b>%s</b> so the feature is available?"
+msgstr ""
+
+#, c-format
+msgid "Enable %s"
+msgstr ""
+
+#, c-format
+msgid "Don't enable %s"
 msgstr ""
 
 msgid "Reset setting to the default value"
@@ -72,15 +92,22 @@ msgstr ""
 
 #, c-format
 msgid ""
-"Plugin <b>%s</b> provides feature <b>%s</b> which is also provided by <b>%s</b>"
+"Plugin <b>%s</b> provides feature <b>%s</b> which is also provided by <b>%s</"
+"b>"
 msgstr ""
 
-
+#, c-format
 msgid "Plugin <b>%s</b> conflicts with <b>%s</b>."
 msgstr ""
 
 #, c-format
-msgid "<b>%s</b> requires feature <b>%s</b> which is provided by the following plugins:\n%s"
+msgid ""
+"<b>%s</b> requires feature <b>%s</b> which is provided by the following "
+"plugins:\n"
+"%s"
+msgstr ""
+
+msgid "Enable these plugins"
 msgstr ""
 
 #, c-format
@@ -88,11 +115,17 @@ msgid "<b>%s</b> requires the plugin <b>%s</b>."
 msgstr ""
 
 #, c-format
-msgid "<b>%s</b> provides the feature <b>%s</b> which is required by the plugins <b>%s</b>."
+msgid ""
+"<b>%s</b> provides the feature <b>%s</b> which is required by the plugins <b>"
+"%s</b>."
 msgstr ""
 
 #, c-format
-msgid "<b>%s</b> is required by the plugins <b>%s</b>"
+msgid "Don't disable %s"
+msgstr ""
+
+#, c-format
+msgid "<b>%s</b> is required by the plugins <b>%s</b>."
 msgstr ""
 
 msgid "Name"
@@ -131,10 +164,6 @@ msgid "Search %s Plugin Options"
 msgstr ""
 
 msgid "Use This Plugin"
-msgstr ""
-
-#, c-format
-msgid "Enable %s"
 msgstr ""
 
 msgid "Search Compiz Core Options"
@@ -239,22 +268,4 @@ msgid "Category"
 msgstr ""
 
 msgid "Advanced Search"
-msgstr ""
-
-msgid "Disable %s"
-msgstr ""
-
-msgid "Don't set %s"
-msgstr ""
-
-msgid "Set %s anyway"
-msgstr ""
-
-msgid "Don't enable %s"
-msgstr ""
-
-msgid "Don't disable %s"
-msgstr ""
-
-msgid "Enable this plugins"
 msgstr ""
