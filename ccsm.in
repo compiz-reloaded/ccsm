@@ -1166,7 +1166,7 @@ def HandlePluginConflicts(plugin, conflicts):
 			msg = _("<b>%s</b> requires feature <b>%s</b> which is provided by the following plugins:\n%s")
 			msg = msg % (plugin.ShortDesc, conflict[1], pluginList)
 
-			okButton.set_label(_("Enable this plugins"))
+			okButton.set_label(_("Enable these plugins"))
 			cancelButton.set_label(_("Don't enable %s") % plugin.ShortDesc)
 			
 			dlg.set_markup(msg)
