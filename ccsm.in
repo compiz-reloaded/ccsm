@@ -1218,7 +1218,7 @@ def HandlePluginConflicts(plugin, conflicts):
 			msg = _("<b>%s</b> provides the feature <b>%s</b> which is required by the plugins <b>%s</b>.")
 			msg = msg % (plugin.ShortDesc, conflict[1], pluginList) 
 
-			okButton.set_label(_("Disable %s") % pluginList)
+			okButton.set_label(_("Disable these plugins"))
 			cancelButton.set_label(_("Don't disable %s") % plugin.ShortDesc)
 			
 			dlg.set_markup(msg)
@@ -1241,7 +1241,7 @@ def HandlePluginConflicts(plugin, conflicts):
 			msg = _("<b>%s</b> is required by the plugins <b>%s</b>.")
 			msg = msg % (plugin.ShortDesc, pluginList)
 
-			okButton.set_label(_("Disable %s") % pluginList)
+			okButton.set_label(_("Disable these plugins"))
 			cancelButton.set_label(_("Don't disable %s") % plugin.ShortDesc)
 			
 			dlg.set_markup(msg)
