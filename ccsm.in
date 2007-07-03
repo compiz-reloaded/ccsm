@@ -61,8 +61,7 @@ def UpdateVisibleSettings(context):
 	if changed:
 		for settingWidget in VisibleSettings:
 			settingWidget.Read()
-		# FIXME -- workaround to avoid a loop, since context->changedSettings is not cleared
-		context.Write()
+		context.ClearChangedSettings()
 	return True
 
 def getScreens():
