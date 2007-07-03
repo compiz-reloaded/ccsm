@@ -662,7 +662,7 @@ class MultiListSetting(SettingItem):
 				value = self.Store.get(iter, col)[0]
 				if value != "":
 					values.append(value)
-					iter = self.Store.iter_next(iter)
+				iter = self.Store.iter_next(iter)
 			setting.Value = values
 			col += 1
 
@@ -779,7 +779,7 @@ class ListSetting(SettingItem):
 			value = self._ListGet(iter)
 			if value != "":
 				values.append(value)
-				iter = self.Store.iter_next(iter)
+			iter = self.Store.iter_next(iter)
 		self.Setting.Value = values
 
 	def Attach(self, table, row):
