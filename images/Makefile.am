@@ -50,7 +50,6 @@ images_DATA = \
 	plugin-inotify.svg \
 	plugin-mblur.svg   \
 	plugin-minimize.svg     \
-	plugin-miniview.svg     \
 	plugin-move.svg \
 	plugin-neg.svg  \
 	plugin-opacify.svg      \
