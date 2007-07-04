@@ -1382,7 +1382,7 @@ class ActionPage:
 						if len(setting.Value[3]) > 0:
 							edges = " | ".join(setting.Value[3])
 
-						edgeButton = setting.Value[5]
+						edgeButton = setting.Value[4]
 						if edgeButton != 0:
 							edgeButton = _("Button %i") % edgeButton
 						else:
