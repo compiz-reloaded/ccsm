@@ -1429,7 +1429,6 @@ class ActionPage:
 		iter = self.Store.get_iter(path)
 		store = self.Store.get(iter, 12, 13, 14, 15, 1, 2, 3, 4, 5, 7)
 		groupName, subGroupName, settingName, pluginName, key, keyModifier, button, edges, edgeButton, bell = store
-		edges = edges.split(" | ")
 
 		if subGroupName is None or groupName is None or settingName is None:
 			if self.TreeView.row_expanded(path):
@@ -1438,6 +1437,7 @@ class ActionPage:
 				self.TreeView.expand_row(path, False)
 			return
 
+		edges = edges.split(" | ")
 		setting = self.Plugins[pluginName][groupName][subGroupName][settingName]
 
 		dlg = gtk.Dialog(_("Edit Action: %s") % setting.ShortDesc)
