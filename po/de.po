@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm 0.0.1\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-07-02 10:00+0200\n"
+"POT-Creation-Date: 2007-07-05 04:39+0200\n"
 "PO-Revision-Date: 2007-07-02 10:11+0200\n"
 "Last-Translator: Danny Baumann <dannybaumann@web.de>\n"
 "Language-Team: Compiz Fusion translators <i18n@lists.compiz-fusion.org>\n"
@@ -19,6 +19,7 @@ msgstr ""
 msgid "PyGtk 2.10.0 or later required"
 msgstr "PyGtk 2.10.0 oder später wird benötigt."
 
+#, c-format
 msgid ""
 "The new value for the %s binding for the action <b>%s</b> in plugin <b>%s</"
 "b> conflicts with the action <b>%s</b> of the <b>%s</b> plugin.\n"
@@ -156,6 +157,16 @@ msgstr "Maustaste"
 msgid "Screen Edge"
 msgstr "Bildschirmecke"
 
+#, c-format
+msgid "Button %i"
+msgstr "Maustaste %i"
+
+msgid "None"
+msgstr "Nichts"
+
+msgid "Edge Button"
+msgstr "Bildschirmecken Maustaste"
+
 msgid "On System Bell"
 msgstr "Bei Systemglocke"
 
@@ -286,12 +297,3 @@ msgstr "Kategorie"
 
 msgid "Advanced Search"
 msgstr "Erweiterte Suche"
-
-msgid "Edge Button"
-msgstr "Bildschirmecken Maustaste"
-
-msgid "None"
-msgstr "Nichts"
-
-msgid "Button %i"
-msgstr "Maustaste %i"
