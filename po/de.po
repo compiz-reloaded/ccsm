@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm 0.0.1\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-07-05 04:39+0200\n"
-"PO-Revision-Date: 2007-07-02 10:11+0200\n"
+"POT-Creation-Date: 2007-07-05 14:23+0200\n"
+"PO-Revision-Date: 2007-07-05 14:26+0200\n"
 "Last-Translator: Danny Baumann <dannybaumann@web.de>\n"
 "Language-Team: Compiz Fusion translators <i18n@lists.compiz-fusion.org>\n"
 "MIME-Version: 1.0\n"
@@ -165,7 +165,7 @@ msgid "None"
 msgstr "Nichts"
 
 msgid "Edge Button"
-msgstr "Bildschirmecken Maustaste"
+msgstr "Maustaste für Bildschirmecke"
 
 msgid "On System Bell"
 msgstr "Bei Systemglocke"
@@ -194,7 +194,7 @@ msgid "Use This Plugin"
 msgstr "Dieses Plugin aktivieren"
 
 msgid "Search Compiz Core Options"
-msgstr "Suche in den Compiz Core Einstellungen"
+msgstr "Suche in den Einstellungen des Compiz-Kerns"
 
 msgid "Actions"
 msgstr "Aktionen"
@@ -280,7 +280,7 @@ msgid "CompizConfig Settings Manager"
 msgstr "CompizConfig Einstellungs-Manager"
 
 msgid "Filter your Plugin list"
-msgstr "Filtern Sie die Pluginliste"
+msgstr "Pluginliste filtern"
 
 #, c-format
 msgid "Screen %i"
