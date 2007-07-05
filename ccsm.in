@@ -27,10 +27,6 @@ import gtk
 import gtk.gdk
 import cairo
 
-if gtk.pygtk_version < (2,10,0):
-    print _("PyGtk 2.10.0 or later required")
-    raise SystemExit
-
 #l10n stuff
 import locale
 import gettext
@@ -53,6 +49,10 @@ locale.setlocale(locale.LC_ALL, "")
 gettext.bindtextdomain("ccsm", DataDir + "/locale")
 gettext.textdomain("ccsm")
 _ = gettext.gettext
+
+if gtk.pygtk_version < (2,10,0):
+    print _("PyGtk 2.10.0 or later required")
+    raise SystemExit
 
 def Write(ctx):
 	ctx.Write()

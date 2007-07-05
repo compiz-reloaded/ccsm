@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-07-02 10:00+0200\n"
+"POT-Creation-Date: 2007-07-05 04:39+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -143,6 +143,16 @@ msgstr ""
 msgid "Screen Edge"
 msgstr ""
 
+#, c-format
+msgid "Button %i"
+msgstr ""
+
+msgid "None"
+msgstr ""
+
+msgid "Edge Button"
+msgstr ""
+
 msgid "On System Bell"
 msgstr ""
 
@@ -271,13 +281,4 @@ msgid "Category"
 msgstr ""
 
 msgid "Advanced Search"
-msgstr ""
-
-msgid "Edge Button"
-msgstr ""
-
-msgid "None"
-msgstr ""
-
-msgid "Button %i"
 msgstr ""
