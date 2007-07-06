@@ -223,7 +223,11 @@ class SettingItem:
 
 	def MakeLabel(self):
 		self.Label = gtk.EventBox()
-		label = gtk.Label(self.Setting.ShortDesc)
+		label = gtk.Label()
+		if self.Setting.Integrated:
+			label.set_markup("<span foreground=\"blue\">%s</span>" % self.Setting.ShortDesc)
+		else:
+			label.set_markup("<span>%s</span>" % self.Setting.ShortDesc)
 		self.Label.add(label)
 		Tooltips.set_tip(self.Label, self.Setting.LongDesc)
 		label.props.xalign = 0
@@ -355,6 +359,9 @@ class BoolSetting(SettingItem):
 		self.Custom = True
 		self.Widget = gtk.HBox()
 		self.CheckButton = gtk.CheckButton(self.Setting.ShortDesc)
+		label = self.CheckButton.get_child()
+		if self.Setting.Integrated:
+			label.set_markup("<span foreground=\"blue\">%s</span>" % self.Setting.ShortDesc)
 		Tooltips.set_tip(self.CheckButton, self.Setting.LongDesc)
 		self.Widget.pack_start(self.CheckButton, True, True)
 		self.Widget.pack_start(self.Reset, False, False)
@@ -672,6 +679,9 @@ class MultiListSetting(SettingItem):
 class ListSetting(SettingItem):
 	def _Init(self):
 		self.Widget = gtk.Frame(self.Setting.ShortDesc)
+		label = self.Widget.get_label_widget()
+		if self.Setting.Integrated:
+			label.set_markup("<span foreground=\"blue\">%s</span>" % self.Setting.ShortDesc)
 		self.Custom = True
 		
 		info = self._ListInfo()
