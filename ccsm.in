@@ -1900,7 +1900,6 @@ class FilterPage:
 		# Notebool
 		self.RightWidget.append_page(self.RightChild, gtk.Label(_("Settings")))
 
-	
 	def UpdateBoxes(self):
 		self.PluginBox.clear_list()
 		self.GroupBox.clear_list()
@@ -2573,7 +2572,13 @@ class MainWinClass:
 		self.ShowingPlugin = pluginClass
 		self.SetMainWidgets(pluginClass.LeftWidget, pluginClass.RightWidget)
 	
-	def ShowAdvancedFilter(self, widget):
+	def ShowAdvancedFilter(self, widget, run=0):
+		if run == 0: # Well thats rather a hack but it works...
+			self.TitleBuffer = self.MainWin.get_title()
+			self.MainWin.set_title(self.TitleBuffer + " - Loading...")
+			gobject.timeout_add(100, self.ShowAdvancedFilter, widget, 1)
+			return
+
 		self.RightVadj = self.RightPane.get_child().get_vadjustment().get_value()
 		for name, value in self.PluginImages.items():
 			widget = value.get_parent()
@@ -2581,6 +2586,11 @@ class MainWinClass:
 				widget.remove(value)
 		filterPage = FilterPage(self, self.Context)
 		self.SetMainWidgets(filterPage.LeftWidget, filterPage.RightWidget)
+	
+		self.MainWin.set_title(self.TitleBuffer)
+		self.TitleBuffer = False
+
+		return False
 	
 	def ShowProfileBackend(self, widget):
 		self.RightVadj = self.RightPane.get_child().get_vadjustment().get_value()
