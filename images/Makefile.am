@@ -24,6 +24,7 @@ images_DATA = \
 	plugin-addhelper.svg    \
 	plugin-animation.svg    \
 	plugin-annotate.svg     \
+	plugin-atlantis.svg \
 	plugin-bench.svg        \
 	plugin-blur.svg \
 	plugin-bs.svg   \
