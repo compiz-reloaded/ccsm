@@ -51,6 +51,7 @@ images_DATA = \
 	plugin-mblur.svg   \
 	plugin-minimize.svg     \
 	plugin-move.svg \
+	plugin-mswitch.svg \
 	plugin-neg.svg  \
 	plugin-opacify.svg      \
 	plugin-place.svg        \
