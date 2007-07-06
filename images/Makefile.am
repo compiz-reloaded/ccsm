@@ -30,6 +30,7 @@ images_DATA = \
 	plugin-capture.svg      \
 	plugin-clone.svg        \
 	plugin-core.svg \
+	plugin-colorfilter.svg \
 	plugin-crashhandler.svg \
 	plugin-cube.svg \
 	plugin-cubereflex.svg \
