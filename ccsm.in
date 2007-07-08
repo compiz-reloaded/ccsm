@@ -25,6 +25,7 @@ try:
 	import sexy
 	has_sexy = True
 except ImportError:
+	print "Warning: No sexy-python package found."
 	has_sexy = False
 import pygtk
 pygtk.require('2.0')
