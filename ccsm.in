@@ -21,7 +21,11 @@
 
 import os
 import compizconfig
-import sexy
+try:
+	import sexy2
+	has_sexy = True
+except ImportError:
+	has_sexy = False
 import pygtk
 pygtk.require('2.0')
 import gtk
@@ -1650,8 +1654,11 @@ class PluginClass:
 		pluginImg = main.MakeImage(plugin, size = 64)
 		filterLabel = MakeLabel()
 		filterLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>" % (main.BrightColor, _("Filter")))
-		self.FilterEntry = sexy.IconEntry()
-		self.FilterEntry.add_clear_button()
+		if has_sexy:
+			self.FilterEntry = sexy.IconEntry()
+			self.FilterEntry.add_clear_button()
+		else:
+			self.FilterEntry = gtk.Entry()
 		self.FilterEntry.connect("changed", self.FilterChanged)
 		self.LeftWidget.pack_start(pluginImg, False, False)
 		self.LeftWidget.pack_start(filterLabel, False, False)
@@ -1837,8 +1844,11 @@ class FilterPage:
 		self.LeftWidget.pack_start(filterLabel, False, False)
 		
 		# Entry
-		filterEntry = sexy.IconEntry()
-		filterEntry.add_clear_button()
+		if has_sexy:
+			filterEntry = sexy.IconEntry()
+			filterEntry.add_clear_button()
+		else:
+			filterEntry = gtk.Entry()
 		filterEntry.connect("changed", self.FilterChanged)
 		self.LeftWidget.pack_start(filterEntry, False, False)
 
@@ -2308,8 +2318,11 @@ class MainWinClass:
 		filterLabel = MakeLabel()
 		filterLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>" % (self.BrightColor, _("Filter")))
 		filterLabel.props.xalign = 0.1
-		filterEntry = sexy.IconEntry()
-		filterEntry.add_clear_button()
+		if has_sexy:
+			filterEntry = sexy.IconEntry()
+			filterEntry.add_clear_button()
+		else:
+			filterEntry = gtk.Entry()
 		Tooltips.set_tip(filterEntry, _("Filter your Plugin list"))
 		filterEntry.connect("changed", self.FilterTable)
 		leftChild.pack_start(filterLabel, False, False)
