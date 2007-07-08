@@ -1,0 +1,288 @@
+# CompizConfig Portuguese translation.
+# Copyright (C) 2007 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Nicolau Gonçalves <excentriko@gmail.com>, 2007.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: pt_PT-ccsm\n"
+"Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
+"POT-Creation-Date: 2007-07-02 10:00+0200\n"
+"PO-Revision-Date: 2007-07-07 16:35+0300\n"
+"Last-Translator: Nicolau Gonçalves\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+
+msgid "PyGtk 2.10.0 or later required"
+msgstr "Necessita uma versão igual ou superior do pacote PyGtk 2.10.0"
+
+#, c-format
+msgid ""
+"The new value for the %s binding for the action <b>%s</b> in plugin <b>%s</"
+"b> conflicts with the action <b>%s</b> of the <b>%s</b> plugin.\n"
+"Do you wish to disable <b>%s</b> in the <b>%s</b> plugin?"
+msgstr ""
+"O novo valor para o atalho %s da acção <b>%s</b> do plugin <b>%s</b> "
+"entra em conflito com a acção <b>%s</b> do plugin <b>%s</b>.\n"
+"Deseja desactivar <b>%s</b> do plugin <b>%s</b>?"
+
+#, c-format
+msgid "Disable %s"
+msgstr "Desactivar %s"
+
+#, c-format
+msgid "Don't set %s"
+msgstr "Não definir %s"
+
+#, c-format
+msgid "Set %s anyway"
+msgstr "Definir %s de qualquer maneira"
+
+#, c-format
+msgid ""
+"You are trying to use the feature <b>%s</b> which is provided by <b>%s</b>.\n"
+"This plugin is currently disabled.\n"
+"Do you wish to enable <b>%s</b> so the feature is available?"
+msgstr ""
+"Está a tentar utilizar a acção <b>%s</b> que é proporcionada por "
+"<b>%s</b>.\n"
+"Este plugin está actualmente desactivado.\n"
+"Deseja activar <b>%s</b> de modo a permitir realizar esta acção?"
+
+#, c-format
+msgid "Enable %s"
+msgstr "Definir %s"
+
+#, c-format
+msgid "Don't enable %s"
+msgstr "Não activar %s"
+
+msgid "Reset setting to the default value"
+msgstr "Colocar a definição no valor por omissão"
+
+msgid "Browse for "
+msgstr "Pesquisar por "
+
+msgid "Images"
+msgstr "Imagens"
+
+msgid "File"
+msgstr "Ficheiro"
+
+msgid "Open file.."
+msgstr "Abrir ficheiro."
+
+msgid "Multi-list settings"
+msgstr "Definições multi-lista"
+
+msgid "Edit"
+msgstr "Editar"
+
+#, c-format
+msgid "Value (%s)"
+msgstr "Valor (%s)"
+
+#, c-format
+msgid "Edit %s"
+msgstr "Editar %s"
+
+#, c-format
+msgid "Value (%s) for %s:"
+msgstr "Valor (%s) para %s:"
+
+#, c-format
+msgid "Unhandled list type %s for %s"
+msgstr "Tipo de lista não gerido %s para %s"
+
+#, c-format
+msgid ""
+"Plugin <b>%s</b> provides feature <b>%s</b> which is also provided by <b>%s</"
+"b>"
+msgstr ""
+"O plugin <b>%s</b> permite realizar a acção <b>%s</b> que também é "
+"activada por <b>%s</b>"
+
+#, c-format
+msgid "Plugin <b>%s</b> conflicts with <b>%s</b>."
+msgstr "O plugin <b>%s</b> entra em conflito com <b>%s</b>."
+
+#, c-format
+msgid ""
+"<b>%s</b> requires feature <b>%s</b> which is provided by the following "
+"plugins:\n"
+"%s"
+msgstr ""
+"<b>%s</b> necessita da acção <b>%s</b> que é proporcionada pelos "
+"seguintes plugins:\n"
+"%s"
+
+msgid "Enable these plugins"
+msgstr "Activar estes plugins"
+
+#, c-format
+msgid "<b>%s</b> requires the plugin <b>%s</b>."
+msgstr "<b>%s</b> requer o plugin <b>%s</b>."
+
+#, c-format
+msgid ""
+"<b>%s</b> provides the feature <b>%s</b> which is required by the plugins <b>"
+"%s</b>."
+msgstr ""
+"<b>%s</b> proporciona a acção <b>%s</b> que é requerida pelos "
+"plugins <b>%s</b>"
+
+msgid "Disable these plugins"
+msgstr "Desactivar estes plugins"
+
+#, c-format
+msgid "Don't disable %s"
+msgstr "Não desactivar %s"
+
+#, c-format
+msgid "<b>%s</b> is required by the plugins <b>%s</b>."
+msgstr "<b>%s</b> é necessária para os plugins <b>%s</b>."
+
+msgid "Name"
+msgstr "Nome"
+
+msgid "Key"
+msgstr "Tecla"
+
+msgid "Button"
+msgstr "Botão"
+
+msgid "Screen Edge"
+msgstr "Borda do ecrã"
+
+msgid "On System Bell"
+msgstr "Quando campainha do sistema é activada"
+
+msgid "General"
+msgstr "Geral"
+
+#, c-format
+msgid "Edit Action: %s"
+msgstr "Editar acção: %s"
+
+msgid "Screen Edges"
+msgstr "Bordas do ecrã"
+
+msgid "Reset To Defaults"
+msgstr "Voltar aos valores por omissão"
+
+msgid "Filter"
+msgstr "Filtro"
+
+#, c-format
+msgid "Search %s Plugin Options"
+msgstr "Pesquisar opções do plugin %s"
+
+msgid "Use This Plugin"
+msgstr "Usar este plugin"
+
+msgid "Search Compiz Core Options"
+msgstr "Pesquisar opções do Compiz Core"
+
+msgid "Actions"
+msgstr "Acções"
+
+msgid "Search in..."
+msgstr "Pesquisar em..."
+
+msgid "Short description and name"
+msgstr "Descrição resumida e nome"
+
+msgid "Long description"
+msgstr "Descrição completa"
+
+msgid "Settings value"
+msgstr "Valor da definição"
+
+msgid "Settings"
+msgstr "Definições"
+
+msgid "Profile & Backend"
+msgstr "Perfil e Backend"
+
+msgid "Backend &amp; Profile"
+msgstr "Backend &amp; Perfil"
+
+msgid "Configure the backend and profile used by the Compiz Configuration System."
+msgstr "Configurar o backend e o perfil usado pelo Sistema de Configuração do Compiz."
+
+msgid "Add a New Profile"
+msgstr "Adicionar um novo perfil"
+
+msgid "Remove This Profile"
+msgstr "Remover este perfil"
+
+msgid "Default"
+msgstr "Por omissão"
+
+msgid "Profile"
+msgstr "Perfil"
+
+msgid "Import"
+msgstr "Importar"
+
+msgid "Import a CompizConfig Profile"
+msgstr "Importar um perfil do Sistema de Configuração do Compiz"
+
+msgid "Export"
+msgstr "Exportar"
+
+msgid "Export your CompizConfig Profile"
+msgstr "Exportar um perfil do Sistema de Configuração do Compiz"
+
+msgid "Backend"
+msgstr "Backend"
+
+msgid "Integration"
+msgstr "Integração"
+
+msgid "Enable integration into the desktop environment"
+msgstr "Activar integração no ambiente gráfico"
+
+msgid "Profiles (*.profile)"
+msgstr "Perfis (*.profile)"
+
+msgid "All files"
+msgstr "Todos os ficheiros"
+
+msgid "Save file.."
+msgstr "Guardar ficheiro..."
+
+msgid "Enter a profile name"
+msgstr "Introduza um nome de perfil"
+
+msgid "Please enter a name for the new profile:"
+msgstr "Introduza um nome para o novo perfil:"
+
+msgid "Backend not found."
+msgstr "Backend não foi encontrado"
+
+msgid "CompizConfig Settings Manager"
+msgstr "Sistema de Configuração do Compiz"
+
+msgid "Filter your Plugin list"
+msgstr "Filtrar a lista de plugins"
+
+#, c-format
+msgid "Screen %i"
+msgstr "Ecrã %i"
+
+msgid "Screen"
+msgstr "Ecrã"
+
+msgid "Uncategorized"
+msgstr "Sem categoria"
+
+msgid "Category"
+msgstr "Categoria"
+
+msgid "Advanced Search"
+msgstr "Pesquisa avançada"
+
