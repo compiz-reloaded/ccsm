@@ -1649,11 +1649,19 @@ class PluginClass:
 		pluginImg = main.MakeImage(plugin, size = 64)
 		filterLabel = MakeLabel()
 		filterLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>" % (main.BrightColor, _("Filter")))
+		filterBox = gtk.HBox(homogeneous=False, spacing=1)
 		self.FilterEntry = gtk.Entry()
+		filterBox.add(self.FilterEntry)
 		self.FilterEntry.connect("changed", self.FilterChanged)
+		filterReset = gtk.Button()
+		filterBox.add(filterReset)
+		filterReset.set_image(gtk.image_new_from_stock(
+			gtk.STOCK_CLEAR, gtk.ICON_SIZE_BUTTON))
+		filterReset.connect('clicked', self.ResetFilter)
+		Tooltips.set_tip(filterReset,_("Reset the filter field"))
 		self.LeftWidget.pack_start(pluginImg, False, False)
 		self.LeftWidget.pack_start(filterLabel, False, False)
-		self.LeftWidget.pack_start(self.FilterEntry, False, False)
+		self.LeftWidget.pack_start(filterBox, False, False)
 		self.LeftWidget.pack_start(pluginLabel, False, False)
 		infoLabelCont = gtk.HBox()
 		infoLabelCont.set_border_width(10)
@@ -1697,9 +1705,12 @@ class PluginClass:
 			self.RightWidget.append_page(actionPage.Widget, gtk.Label(_("Actions")))
 			self.Pages = self.Pages + [actionPage]
 		else:
-			self.RightWidget.connect('size-allocate', self.ResetFocus)
+			self.RightWidget.connect('size-allocate', self.ResetFocus) # FIXME!
 
 		self.Block = 0
+
+	def ResetFilter(self, foo):
+			self.FilterEntry.set_text("")
 
 	def ResetFocus(self, widget, data):
 		pos = self.FilterEntry.get_position() 
@@ -2305,11 +2316,19 @@ class MainWinClass:
 		filterLabel = MakeLabel()
 		filterLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>" % (self.BrightColor, _("Filter")))
 		filterLabel.props.xalign = 0.1
-		filterEntry = gtk.Entry()
-		Tooltips.set_tip(filterEntry, _("Filter your Plugin list"))
-		filterEntry.connect("changed", self.FilterTable)
+		filterBox = gtk.HBox(homogeneous=False, spacing=1)
+		self.filterEntry = gtk.Entry()
+		filterBox.add(self.filterEntry)
+		Tooltips.set_tip(self.filterEntry, _("Filter your Plugin list"))
+		self.filterEntry.connect("changed", self.FilterTable)
+		filterReset = gtk.Button()
+		filterBox.add(filterReset)
+		Tooltips.set_tip(filterReset,_("Reset the filter field"))
+		filterReset.set_image(gtk.image_new_from_stock(
+			gtk.STOCK_CLEAR, gtk.ICON_SIZE_BUTTON))
+		filterReset.connect('clicked', self.ResetFilter)
 		leftChild.pack_start(filterLabel, False, False)
-		leftChild.pack_start(filterEntry, False, False)
+		leftChild.pack_start(filterBox, False, False)
 
 		# Screens
 		if len(getScreens()) > 1:
@@ -2384,6 +2403,9 @@ class MainWinClass:
 		self.BuildTable(pluginsVPort)
 		rightChild.connect('size-allocate', self.RebuildTable)
 		self.SetMainWidgets(leftChild, rightChild)
+
+	def ResetFilter(self, foo):
+		self.filterEntry.set_text("")
 
 	def BuildTable(self, viewPort):
 		pluginWindow = gtk.VBox()
