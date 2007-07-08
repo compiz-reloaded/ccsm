@@ -126,7 +126,7 @@ def CheckActionConflicts(setting, key, button, bell, edges):
 			ret = CheckConflict(setting, k, 'Key')
 			if ret == gtk.RESPONSE_YES:
 				value = k.Value
-				k.Value = ['None', value[1], value[2], value[3]]
+				k.Value = ['None', value[1], value[2], value[3], value[4]]
 			if ret == gtk.RESPONSE_NO:
 				return False
 	
@@ -137,7 +137,7 @@ def CheckActionConflicts(setting, key, button, bell, edges):
 				continue
 			if ret == gtk.RESPONSE_YES:
 				value = b.Value
-				b.Value = [value[0], 'None', value[2], value[3]]
+				b.Value = [value[0], 'None', value[2], value[3], value[4]]
 			if ret == gtk.RESPONSE_NO:
 				return False
 	return True
