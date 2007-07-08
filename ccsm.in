@@ -2661,7 +2661,7 @@ class MainWinClass:
 		
 screens = getScreens()
 CurrentScreenNum = gtk.gdk.display_get_default().get_default_screen().get_number()
-context = ccs.Context(screens, len(screens))
+context = ccs.Context(screens)
 mainWin = MainWinClass(context).MainWin
 mainWin.show_all()
 gobject.timeout_add(2000, UpdateVisibleSettings, context)
