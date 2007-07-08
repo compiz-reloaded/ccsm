@@ -22,7 +22,7 @@
 import os
 import compizconfig
 try:
-	import sexy2
+	import sexy
 	has_sexy = True
 except ImportError:
 	has_sexy = False
