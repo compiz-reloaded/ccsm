@@ -113,7 +113,7 @@ def CheckConflict(setting, con, typ):
 
 	return ret
 
-def CheckActionConflicts(setting, key, button, bell, edges):
+def CheckActionConflicts(setting, key, button, bell, edges, edgeButton):
 	keyCon = []
 	buttonCon = []
 	
@@ -123,9 +123,9 @@ def CheckActionConflicts(setting, key, button, bell, edges):
 			settings = sum((z.values() for z in [plugin.Screens[CurrentScreenNum]]+[plugin.Display]), [])
 			for s in settings:
 				if s.Type == 'Action' and s != setting:
-					if s.Value[0] == key:
+					if s.Value[0] == key and key != '':
 						keyCon.append(s)
-					if s.Value[1] == button:
+					if s.Value[1] == button and button != 'None':
 						buttonCon.append(s)
 
 	if len(keyCon) and key and key.lower() != 'disabled' and key.lower() != 'none':
@@ -1586,8 +1586,8 @@ class ActionPage:
 			edgeButton = int(edgeButton[-1])
 		else:
 			edgeButton = 0
-		
-		if CheckActionConflicts(setting, realKey, button, bell, edges):
+
+		if CheckActionConflicts(setting, realKey, button, bell, edges, edgeButton):
 			setting.Value = [realKey, button, bell, edges, edgeButton]
 			Write(setting.Plugin.Context)
 			
@@ -1601,7 +1601,7 @@ class ActionPage:
 			edgeButton = _("Button %i") % edgeButton
 		else:
 			edgeButton = _("None")
-		
+
 		self.Store.set(iter, 1, key, 2, keyModifier, 3, button, 4, edges, 5, edgeButton, 7, bell)
 	
 	def KeyEdited(self, obj, path, key, mods, code):
