@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: UTF-8 -*-
 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -2370,10 +2371,25 @@ class MainWinClass:
 		leftChild.pack_start(categoryBox, False, False)
 
 		# Exit Button
-		self.ExitButton = gtk.Button(gtk.STOCK_CLOSE)
-		self.ExitButton.set_use_stock(True)
-		self.ExitButton.connect('clicked', Quit)
-		leftChild.pack_end(self.ExitButton, False, False)
+		exitButton = gtk.Button(gtk.STOCK_CLOSE)
+		exitButton.set_use_stock(True)
+		exitButton.connect('clicked', Quit)
+
+		# About Button
+		aboutButton = gtk.Button()
+		Tooltips.set_tip(aboutButton, _("About"))
+		aboutButton.connect('clicked', self.ShowAboutDialog)
+		aboutImage = gtk.Image()
+		aboutImage.set_size_request(24, -1)
+		aboutImage.set_from_stock(gtk.STOCK_ABOUT, gtk.ICON_SIZE_BUTTON)
+		aboutButton.add(aboutImage)
+
+		# Exit/About Frame
+		aboutExitFrame = gtk.HBox()
+		aboutExitFrame.set_spacing(5)
+		aboutExitFrame.pack_start(exitButton, True, True)
+		aboutExitFrame.pack_start(aboutButton, False, False)
+		leftChild.pack_end(aboutExitFrame, False, False)
 
 		# Profiles and Backend
 		profBackLabel = MakeLabel()
@@ -2599,6 +2615,22 @@ class MainWinClass:
 			except:
 				img.set_from_stock(gtk.STOCK_MISSING_IMAGE, gtk.ICON_SIZE_BUTTON)
 		return img
+
+	def ShowAboutDialog(self, widget):
+		about = gtk.AboutDialog()
+		about.set_name(_("CompizConfig Settings Manager"))
+		about.set_version("0.1.0")
+		about.set_comments(_("This is a settings manager for the CompizConfig configuration system."))
+		about.set_copyright("Copyright \xC2\xA9 2007 Patrick Niklaus/Quinn Storm")
+		about.set_translator_credits(_("translator-credits"))
+		about.set_authors(["Patrick Niklaus <marex@opencompositing.org>", "Quinn Storm <quinn@beryl-project.org>"])
+		about.set_artists(["Andrew Wedderburn <andrew.wedderburn@gmail.com>", "Patrick Niklaus <marex@opencompositing.org>", "Gnome Icon Theme Team"])
+		about.set_icon(gdk.pixbuf_new_from_file(IconDir+"/apps/ccsm.svg"))
+		about.set_logo(gdk.pixbuf_new_from_file(IconDir+"/apps/ccsm.svg"))
+		about.set_website("http://www.opencompositing.org")
+		about.show_all()
+		about.run()
+		about.destroy()
 
 	def ShowPlugin(self, obj, select):
 		self.RightVadj = self.RightPane.get_child().get_vadjustment().get_value()
