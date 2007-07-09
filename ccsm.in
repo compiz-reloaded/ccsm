@@ -1569,7 +1569,7 @@ class ActionPage:
 			if setting.Info[1]:
 				self.Store.set(iter, 3, button)
 			if setting.Info[2]:
-				self.Store.set(iter, 6, bell)
+				self.Store.set(iter, 7, bell)
 			if setting.Info[3]:
 				self.Store.set(iter, 4, edges)
 				self.Store.set(iter, 5, edgeButton)
