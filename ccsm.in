@@ -1530,8 +1530,8 @@ class ActionPage:
 		# Bell
 		if setting.Info[2]:
 			bellButton = gtk.CheckButton(_("On System Bell"))
-			bellButton.set_active(be)
-			tabel.attach(bellButton, 0, 2, 4, 5, TDef, TDef, TXp, TYp)
+			bellButton.set_active(bell)
+			table.attach(bellButton, 0, 2, 4, 5, TDef, TDef, TXp, TYp)
 		
 		# Reset
 		box = gtk.HBox()
@@ -1542,7 +1542,7 @@ class ActionPage:
 		resetButton.set_image(resetImage)
 		box.pack_end(resetButton, False, False)
 		resetButton.connect('clicked', ResetButton, setting, iter)
-		table.attach(box, 0, 2, 4, 5, TDef, TDef, TXp, TYp)
+		table.attach(box, 0, 2, 5, 6, TDef, TDef, TXp, TYp)
 		
 		dlg.show_all()
 		resp = dlg.run()
