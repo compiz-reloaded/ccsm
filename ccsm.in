@@ -1108,7 +1108,8 @@ class GroupPage(Page):
 				self.Empty = False
 				self.subGroupAreas = self.subGroupAreas + [sga]
 
-		for subGroup in group.keys():
+		subGroupsSorted = sorted(group.keys(), cmp)
+		for subGroup in subGroupsSorted:
 			if not subGroup == '':
 				sga = SubGroupArea(subGroup, group[subGroup], filter)
 				if not sga.Empty:
@@ -1280,6 +1281,9 @@ def HandlePluginConflicts(plugin, conflicts):
 class ActionItem(SettingItem):
 	pass
 
+def FirstItemSortCompare(sg1, sg2):
+	return cmp(sg1[0], sg2[0])
+
 class ActionPage:
 	def __init__(self, plugin, filter = None):
 		self.EdgeList = ['None', 'TopLeft', 'Top', 'TopRight', 'Left', 'Right', 'BottomLeft', 'Bottom', 'BottomRight']
@@ -1376,8 +1380,9 @@ class ActionPage:
 			name = (groupName == '' and _("General") or groupName)
 			self.Store.set(groupIter, 0, name, 6, False, 8, False, 9, False, 10, False, 11, False)
 			self.Plugins[pluginName][groupName] = {}
-			
-			for subGroupName, subGroup in group.items():
+
+			subGroupsSorted = sorted(group.items(), FirstItemSortCompare)
+			for subGroupName, subGroup in subGroupsSorted:
 				if subGroupName != '':
 					subGroupIter = self.Store.append(groupIter)
 					self.Store.set(subGroupIter, 0, subGroupName, 6, False, 8, False, 9, False, 10, False, 11, False)
@@ -1694,8 +1699,9 @@ class PluginClass:
 		backButton.connect('clicked', main.BackToMain)
 		self.RightWidget = gtk.Notebook()
 		self.Pages = []
-		
-		for name, group in plugin.Groups.items():
+
+		groupsSorted = sorted(plugin.Groups.items(), FirstItemSortCompare)
+		for name, group in groupsSorted:
 			name = name or _("General")
 			groupPage = GroupPage(name, group)
 			if not groupPage.Empty:
@@ -1941,13 +1947,17 @@ class FilterPage:
 			if self.CurrentPlugin == plugin.ShortDesc:
 				if len(groups) == 1:
 					singleGroup = groups[0][0]
-				for group, subGroups in groups:
+
+				groupsSorted = sorted(groups, FirstItemSortCompare)
+				for group, subGroups in groupsSorted:
 					self.GroupBox.add_item(group, self.GroupChanged)
 					# SubGroups
 					if self.CurrentGroup == group or singleGroup == group:
 						if len(subGroups) == 1:
 							singleSubGroup = subGroups[0][0]
-						for name, subGroup, settings in subGroups:
+
+						subGroupsSorted = sorted(subGroups, FirstItemSortCompare)
+						for name, subGroup, settings in subGroupsSorted:
 							self.SubGroupBox.add_item(name, self.SubGroupChanged)
 							# Settings
 							if self.CurrentSubGroup == name:
