@@ -1631,12 +1631,12 @@ class ActionPage:
 	
 	def BellEdited(self, obj, path):
 		iter = self.Store.get_iter_from_string(path)
-		value = self.Store.get(iter, 6)[0]
+		value = self.Store.get(iter, 7)[0]
 		if value:
 			value = False
 		else:
 			value = True
-		self.Store.set(iter, 6, value)
+		self.Store.set(iter, 7, value)
 		self.WriteSetting(iter)
 
 
