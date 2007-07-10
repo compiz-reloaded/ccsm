@@ -305,6 +305,7 @@ class FileSetting:
 			else:
 				filter.add_pattern("*.*")
 		else:
+			filter.add_pattern("*")
 			filter.set_name(_("File"))
 
 		return filter
