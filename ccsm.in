@@ -318,13 +318,15 @@ class FileSetting:
 		
 		return True
 			
-	
-	def OpenFileChooser(self, widget):
+	def OpenFileChooser(self, widget, custom_value=None):
+		value = self.Setting.Value
+		if custom_value != None:
+			value = custom_value
 		b = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_OPEN, gtk.RESPONSE_OK)
 		chooser = gtk.FileChooserDialog(title=_("Open file.."), parent=mainWin, buttons=b)
 		
-		if os.path.exists(self.Setting.Value):
-			chooser.set_filename(self.Setting.Value)
+		if os.path.exists(value):
+			chooser.set_filename(value)
 		else:
 			chooser.set_current_folder(os.environ.get("HOME"))
 		chooser.set_filter(self.CreateFilter())
@@ -825,22 +827,25 @@ class StringMatchListSetting(ListSetting):
 	def _ListGet(self, iter):
 		return self.Store.get(iter, 0)[0]
 
-	def _Edit(self, value=None):
+	def _Edit(self, value=""):
 		dlg = gtk.Dialog(_("Edit %s") % self.Setting.ShortDesc, mainWin)
 		dlg.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
 		dlg.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK).grab_default()
 		dlg.set_default_response(gtk.RESPONSE_OK)
+		
 		ebox = gtk.EventBox()
 		label = gtk.Label(_("Value (%s) for %s:") % (self.Setting.Info[0], self.Setting.ShortDesc))
 		ebox.add(label)
+		
 		Tooltips.set_tip(ebox, self.Setting.LongDesc)
 		dlg.vbox.pack_start(ebox)
+		
 		entry = gtk.Entry()
 		Tooltips.set_tip(entry, self.Setting.LongDesc)
 		entry.props.activates_default = True
-		if value is not None:
-			entry.set_text(value)
+		entry.set_text(value)
 		dlg.vbox.pack_start(entry)
+		
 		dlg.vbox.show_all()
 		ret = dlg.run()
 		dlg.destroy()
@@ -848,6 +853,56 @@ class StringMatchListSetting(ListSetting):
 		if ret == gtk.RESPONSE_OK:
 			return entry.get_text()
 		return None
+
+class FileListSetting(StringMatchListSetting, FileSetting):
+	def __init__(self, Setting):
+		StringMatchListSetting.__init__(self, Setting)
+		FileSetting.__init__(self, Setting)
+	
+	def _Edit(self, value=""):
+		dlg = gtk.Dialog(_("Edit %s") % self.Setting.ShortDesc, mainWin)
+		dlg.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
+		dlg.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK).grab_default()
+		dlg.set_default_response(gtk.RESPONSE_OK)
+		
+		ebox = gtk.EventBox()
+		label = gtk.Label(_("Value (%s) for %s:") % (self.Setting.Info[0], self.Setting.ShortDesc))
+		ebox.add(label)
+		
+		Tooltips.set_tip(ebox, self.Setting.LongDesc)
+		dlg.vbox.pack_start(ebox)
+
+		hbox = gtk.HBox()
+		hbox.set_spacing(5)
+		
+		entry = gtk.Entry()
+		Tooltips.set_tip(entry, self.Setting.LongDesc)
+		entry.props.activates_default = True
+		entry.set_text(value)
+		hbox.pack_start(entry)
+
+		self.Entry = entry
+
+		open = gtk.Button()
+		open.set_image(gtk.image_new_from_stock(gtk.STOCK_OPEN, gtk.ICON_SIZE_BUTTON))
+		open.connect('clicked', self.OpenFileChooser, value)
+		hbox.pack_start(open, False, False)
+
+		dlg.vbox.pack_start(hbox)
+		
+		dlg.vbox.show_all()
+		ret = dlg.run()
+		dlg.destroy()
+
+		self.Entry = None
+
+		if ret == gtk.RESPONSE_OK:
+			return entry.get_text()
+		return None
+
+	def SetFileName(self, filename):
+		if self.Entry != None:
+			self.Entry.set_text(filename)
 
 class IntDescListSetting(SettingItem):
 	def _Init(self):
@@ -953,7 +1008,7 @@ class IntFloatListSetting(ListSetting):
 
 def MakeSetting(setting):
 	if setting.Type == 'String' or setting.Type == 'Match':
-		if len(setting.Hints) > 0 and setting.Hints[0] == 'file':
+		if len(setting.Hints) > 0 and setting.Hints.__contains__('file'):
 			return FileStringSetting(setting)
 		else:
 			return StringMatchSetting(setting)
@@ -967,7 +1022,10 @@ def MakeSetting(setting):
 		return ColorSetting(setting)
 	elif setting.Type == 'List':
 		if setting.Info[0] == 'String' or setting.Info[0] == 'Match':
-			return StringMatchListSetting(setting)
+			if len(setting.Hints) > 0 and setting.Hints.__contains__('file'):
+				return FileListSetting(setting)
+			else:
+				return StringMatchListSetting(setting)
 		elif setting.Info[0] == 'Int':
 			if len(setting.Info[1][2]) > 0:
 				return IntDescListSetting(setting)
