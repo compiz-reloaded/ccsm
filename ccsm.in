@@ -271,32 +271,27 @@ class SettingItem:
 	def _Changed(self):
 		self.PureVirtual('_Changed')
 
-
 class StringMatchSetting(SettingItem):
 	def _Init(self):
-		self.Widget = gtk.Entry()
-		Tooltips.set_tip(self.Widget, self.Setting.LongDesc)
-		self.Widget.connect('changed', self.Changed)
-
-	def _Read(self):
-		self.Widget.set_text(self.Setting.Value)
-
-	def _Changed(self):
-		self.Setting.Value = self.Widget.get_text()
-
-class FileSetting(SettingItem):
-	def _Init(self):
-		self.Widget = gtk.HBox()
 		self.Entry = gtk.Entry()
 		Tooltips.set_tip(self.Entry, self.Setting.LongDesc)
+		self.Entry.connect('changed', self.Changed)
+		self.Widget = self.Entry
+
+	def _Read(self):
+		self.Entry.set_text(self.Setting.Value)
+
+	def _Changed(self):
+		self.Setting.Value = self.Entry.get_text()
+
+class FileSetting:
+	def __init__(self, Setting):
+		self.Setting = Setting
 		self.Open = gtk.Button()
 		Tooltips.set_tip(self.Open, _("Browse for ") + self.Setting.LongDesc)
 		self.Open.set_image(gtk.image_new_from_stock(
 			gtk.STOCK_OPEN, gtk.ICON_SIZE_BUTTON))
 		self.Open.connect('clicked', self.OpenFileChooser)
-		self.Entry.connect('changed', self.Changed)
-		self.Widget.pack_start(self.Entry)
-		self.Widget.pack_end(self.Open, False, False)
 	
 	def CreateFilter(self):
 		filter = gtk.FileFilter()
@@ -339,13 +334,22 @@ class FileSetting(SettingItem):
 		chooser.destroy()
 		if ret == gtk.RESPONSE_OK:
 			if self.CheckFileType(filename):
-				self.Entry.set_text(filename)
+				self.SetFileName(filename)
+	
+	def SetFileName(self, text):
+		self.PureVirtual('SetFileName')
 
-	def _Read(self):
-		self.Entry.set_text(self.Setting.Value)
+class FileStringSetting(StringMatchSetting, FileSetting):
+	def __init__(self, Setting):
+		StringMatchSetting.__init__(self, Setting)
+		FileSetting.__init__(self, Setting)
+		self.Widget = gtk.HBox()
+		self.Widget.set_spacing(5)
+		self.Widget.pack_start(self.Entry, True, True)
+		self.Widget.pack_start(self.Open, False, False)
 
-	def _Changed(self):
-		self.Setting.Value = self.Entry.get_text()
+	def SetFileName(self, filename):
+		self.Entry.set_text(filename)
 
 def EnumSettingSortCompare(v1, v2):
 	return cmp(v1[1], v2[1])
@@ -950,7 +954,7 @@ class IntFloatListSetting(ListSetting):
 def MakeSetting(setting):
 	if setting.Type == 'String' or setting.Type == 'Match':
 		if len(setting.Hints) > 0 and setting.Hints[0] == 'file':
-			return FileSetting(setting)
+			return FileStringSetting(setting)
 		else:
 			return StringMatchSetting(setting)
 	elif setting.Type == 'Bool':
