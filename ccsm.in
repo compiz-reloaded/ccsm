@@ -1318,7 +1318,7 @@ class ActionPage:
 		self.TreeView = gtk.TreeView(self.Store)
 		self.TreeView.set_headers_visible(True)
 		# Name
-		self.TreeView.insert_column_with_attributes(-1, _("Name"), gtk.CellRendererText(), text=0)
+		self.TreeView.insert_column_with_attributes(-1, _("Name"), gtk.CellRendererText(), markup=0)
 		# Key
 		keyRenderer = gtk.CellRendererAccel()
 		keyRenderer.connect('accel-edited', self.KeyEdited)
@@ -1409,8 +1409,12 @@ class ActionPage:
 							edgeButton = _("Button %i") % edgeButton
 						else:
 							edgeButton = _("None")
+
+						markup = "%s"
+						if setting.Integrated:
+							markup = "<span color='blue'>%s</span>"
 						
-						self.Store.set(i, 0, setting.ShortDesc, 1, key, 2, mods, 3, setting.Value[1], 4,
+						self.Store.set(i, 0, markup % setting.ShortDesc, 1, key, 2, mods, 3, setting.Value[1], 4,
 									   edges, 5, edgeButton, 6, True, 7, setting.Value[2], 8, setting.Info[0], 9, setting.Info[1], 10,
 									   setting.Info[3], 11, setting.Info[2], 12, groupName, 13, subGroupName, 14,
 									   setting.Name, 15, pluginName)
