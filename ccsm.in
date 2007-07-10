@@ -81,10 +81,6 @@ def getScreens():
 	return screens
 
 def CheckConflict(setting, con, typ):
-	if typ == 'Key':
-		cval = setting.Value[0]
-	elif typ == 'Button':
-		cval = setting.Value[1]
 
 	msg = _("The new value for the %s binding for the action <b>%s</b> "\
 		  "in plugin <b>%s</b> conflicts with the action <b>%s</b> of the <b>%s</b> plugin.\n"\
@@ -116,6 +112,7 @@ def CheckConflict(setting, con, typ):
 def CheckActionConflicts(setting, key, button, bell, edges, edgeButton):
 	keyCon = []
 	buttonCon = []
+	edgeCon = []
 	
 	# this might be a bit slow but anyway...
 	for plugin in setting.Plugin.Context.Plugins.values():
@@ -127,6 +124,8 @@ def CheckActionConflicts(setting, key, button, bell, edges, edgeButton):
 						keyCon.append(s)
 					if s.Value[1] == button and button != 'None':
 						buttonCon.append(s)
+					if s.Value[3] == edges and edges != None and edges != []:
+						edgeCon.append(s)
 
 	if len(keyCon) and key and key.lower() != 'disabled' and key.lower() != 'none':
 		for k in keyCon:
@@ -140,13 +139,21 @@ def CheckActionConflicts(setting, key, button, bell, edges, edgeButton):
 	if len(buttonCon) and button and button.lower() != 'disabled' and button.lower() != 'none':
 		for b in buttonCon:
 			ret = CheckConflict(setting, b, 'Button')
-			if ret == gtk.RESPONE_STOP:
-				continue
 			if ret == gtk.RESPONSE_YES:
 				value = b.Value
 				b.Value = [value[0], 'None', value[2], value[3], value[4]]
 			if ret == gtk.RESPONSE_NO:
 				return False
+
+	if len(edgeCon) and edges:
+		for e in edgeCon:
+			ret = CheckConflict(setting, e, 'Edge')
+			if ret == gtk.RESPONSE_YES:
+				value = e.Value
+				e.Value = [value[0], value[1], value[2], [], value[4]]
+			if ret == gtk.RESPONSE_NO:
+				return False
+
 	return True
 
 # Not used for plugin dependencies (which are handled by ccs) but own feature checking e.g. image support
