@@ -1441,7 +1441,7 @@ class ActionPage:
 		if self.Plugin:
 			self.DoGroups(self.Plugin.Groups, None, self.Plugin.Name)
 		else:
-			for plugin in self.Context.Plugins.values():
+			for plugin in sorted(self.Context.Plugins.values(), PluginSortCompare):
 				pluginIter = self.Store.append(None)
 				self.Store.set(pluginIter, 0, plugin.ShortDesc, 6, False, 8, False, 9, False, 10, False, 11, False)
 				if not self.DoGroups(plugin.Groups, pluginIter, plugin.Name):
