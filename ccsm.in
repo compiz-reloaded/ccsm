@@ -1443,7 +1443,10 @@ class ActionPage:
 		else:
 			for plugin in sorted(self.Context.Plugins.values(), PluginSortCompare):
 				pluginIter = self.Store.append(None)
-				self.Store.set(pluginIter, 0, plugin.ShortDesc, 6, False, 8, False, 9, False, 10, False, 11, False)
+				markup = "%s"
+				if plugin.Enabled:
+					markup = "<b>%s</b>"
+				self.Store.set(pluginIter, 0, markup % plugin.ShortDesc, 6, False, 8, False, 9, False, 10, False, 11, False)
 				if not self.DoGroups(plugin.Groups, pluginIter, plugin.Name):
 					self.Store.remove(pluginIter)
 	
@@ -1894,9 +1897,10 @@ class SelectorBox(gtk.ScrolledWindow):
 			button.destroy()
 		self.Box.destroy()
 
-	def add_item(self, item, callback):
+	def add_item(self, item, callback, markup="%s"):
 		button = gtk.Button()
-		label = MakeLabel(item or _("General"))
+		label = MakeLabel()
+		label.set_markup(markup % item or _("General"))
 		button.add(label)
 		button.connect("clicked", callback, item)
 		button.set_relief(gtk.RELIEF_NONE)
@@ -2028,7 +2032,10 @@ class FilterPage:
 		
 		# Plugins
 		for plugin, groups in self.FilteredPlugins:
-			self.PluginBox.add_item(plugin.ShortDesc, self.PluginChanged)
+			if plugin.Enabled:
+				self.PluginBox.add_item(plugin.ShortDesc, self.PluginChanged, "<b>%s</b>")
+			else:
+				self.PluginBox.add_item(plugin.ShortDesc, self.PluginChanged)
 			# Groups
 			if self.CurrentPlugin == plugin.ShortDesc:
 				if len(groups) == 1:
