@@ -54,6 +54,7 @@ images_DATA = \
 	plugin-minimize.svg     \
 	plugin-move.svg \
 	plugin-mswitch.svg \
+	plugin-notification.svg \
 	plugin-neg.svg  \
 	plugin-opacify.svg      \
 	plugin-place.svg        \
