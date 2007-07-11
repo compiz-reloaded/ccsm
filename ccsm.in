@@ -1356,7 +1356,7 @@ def FirstItemSortCompare(sg1, sg2):
 	return cmp(sg1[0], sg2[0])
 
 class ActionPage:
-	def __init__(self, plugin, filter = None):
+	def __init__(self, plugin = None, filter = None):
 		self.EdgeList = ['None', 'TopLeft', 'Top', 'TopRight', 'Left', 'Right', 'BottomLeft', 'Bottom', 'BottomRight']
 		self.Widget = gtk.VBox()
 		self.Plugin = plugin
@@ -1430,12 +1430,18 @@ class ActionPage:
 		self.Widget.pack_start(self.Scroll, True, True)
 		self.Empty = True
 		self.TreeView.connect('row-activated', self.Activated)
+
+		self.UpdateTreeView()
 		
+	
+	def UpdateTreeView(self):
+		self.Store.clear()
+
 		self.Plugins = {}
-		if plugin:
-			self.DoGroups(plugin.Groups, None, plugin.Name)
+		if self.Plugin:
+			self.DoGroups(self.Plugin.Groups, None, self.Plugin.Name)
 		else:
-			for plugin in Context.Plugins.values():
+			for plugin in self.Context.Plugins.values():
 				pluginIter = self.Store.append(None)
 				self.Store.set(pluginIter, 0, plugin.ShortDesc, 6, False, 8, False, 9, False, 10, False, 11, False)
 				if not self.DoGroups(plugin.Groups, pluginIter, plugin.Name):
@@ -1725,7 +1731,7 @@ def MakeLabel(value = None, wrap = 160):
 	label.set_size_request(wrap, -1)
 	return label
 
-class PluginClass:
+class PluginPage:
 	def __init__(self, plugin, main):
 		self.Plugin = plugin
 		self.LeftWidget = gtk.VBox(False, 10)
@@ -1783,11 +1789,12 @@ class PluginClass:
 				self.RightWidget.append_page(groupPage.Widget, gtk.Label(name))
 				self.Pages = self.Pages + [groupPage]
 		
-		actionPage = ActionPage(plugin)
-		if not actionPage.Empty:
-			self.RightWidget.append_page(actionPage.Widget, gtk.Label(_("Actions")))
-			self.Pages = self.Pages + [actionPage]
+		self.ActionPage = ActionPage(plugin)
+		if not self.ActionPage.Empty:
+			self.RightWidget.append_page(self.ActionPage.Widget, gtk.Label(_("Actions")))
+			self.Pages = self.Pages + [self.ActionPage]
 		else:
+			self.ActionPage = None
 			self.RightWidget.connect('size-allocate', self.ResetFocus)
 
 		self.Block = 0
@@ -1811,15 +1818,16 @@ class PluginClass:
 				groups.append((name, groupPage))
 
 		for page in self.RightWidget.get_children():
-			self.RightWidget.remove_page(self.RightWidget.page_num(page))
-			page.destroy()
+			if self.RightWidget.get_tab_label(page).get_label() != _("Actions"):
+				self.RightWidget.remove_page(self.RightWidget.page_num(page))
+				page.destroy()
 
 		for name, groupPage in groups:
 			self.RightWidget.append_page(groupPage.Widget, gtk.Label(name))
-		
-		actionPage = ActionPage(self.Plugin, filter)
-		if not actionPage.Empty:
-			self.RightWidget.append_page(actionPage.Widget, gtk.Label(_("Actions")))
+
+		if self.ActionPage:
+			self.ActionPage.Filter = filter
+			self.ActionPage.UpdateTreeView()
 
 		self.RightWidget.show_all()
 
@@ -2000,10 +2008,13 @@ class FilterPage:
 		self.SettingsArea.set_no_show_all(True)
 		self.RightChild.pack_start(self.SettingsArea, True, True)
 
+		self.ActionPage = ActionPage()
+
 		self.FilterChanged(filterEntry)
 
-		# Notebool
+		# Notebook
 		self.RightWidget.append_page(self.RightChild, gtk.Label(_("Settings")))
+		self.RightWidget.append_page(self.ActionPage.Widget, gtk.Label(_("Actions")))
 
 	def UpdateBoxes(self):
 		self.PluginBox.clear_list()
@@ -2127,6 +2138,9 @@ class FilterPage:
 
 		self.FilteredPlugins = plugins
 		self.UpdateBoxes()
+
+		self.ActionPage.Filter = self.Filter
+		self.ActionPage.UpdateTreeView()
 		
 		
 class ProfileBackendPage:
@@ -2712,9 +2726,9 @@ class MainWinClass:
 			widget = value.get_parent()
 			if widget:
 				widget.remove(value)
-		pluginClass = PluginClass(select, self)
-		self.ShowingPlugin = pluginClass
-		self.SetMainWidgets(pluginClass.LeftWidget, pluginClass.RightWidget)
+		pluginPage = PluginPage(select, self)
+		self.ShowingPlugin = pluginPage
+		self.SetMainWidgets(pluginPage.LeftWidget, pluginPage.RightWidget)
 	
 	def ShowAdvancedFilter(self, widget, run=0):
 		if run == 0: # Well thats rather a hack but it works...
