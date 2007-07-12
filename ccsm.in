@@ -415,7 +415,8 @@ class IntFloatSetting(SettingItem):
 		self.Scale = gtk.HScale(self.Adj)
 		Tooltips.set_tip(self.Scale, self.Setting.LongDesc)
 		self.Scale.props.draw_value = False
-		self.Adj.connect('value-changed', self.Changed)
+		self.Scale.connect('button-release-event', self.Changed)
+		self.Spin.connect('changed', self.Changed)
 
 	def Attach(self, Table, row):
 		self.Reset.set_sensitive(not self.Setting.ReadOnly)
