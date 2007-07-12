@@ -33,6 +33,8 @@ pygtk.require('2.0')
 import gtk
 import gtk.gdk
 import cairo
+import mimetypes
+mimetypes.init()
 
 #l10n stuff
 import locale
@@ -311,11 +313,11 @@ class FileSetting:
 		return filter
 
 	def CheckFileType(self, filename):
-		# we need the feature support in the compiz-repo
-		#ext = filename.split(".")[-1]
-		#if len(self.Setting.Hints) > 1:
-		#	if self.Setting.Hints[1] == 'image':
-		#		return CheckFeature(self.Setting.Plugin.Context, 'imageext:' + ext)
+		ext = filename.split(".")[-1]
+		mime = mimetypes.types_map["." + ext]
+		if len(self.Setting.Hints) > 1:
+			if self.Setting.Hints[1] == 'image':
+				return CheckFeature(self.Setting.Plugin.Context, 'imagemime:' + mime)
 		
 		return True
 			
@@ -1085,6 +1087,9 @@ def FilterSettings(settings, filter, run=0, noActions=False, singleRun=False):
 						if item[1] == int:
 							value += item[0]
 				value = value.lower()
+			# we also need actions support
+			elif setting.Type == 'Action':
+				value = str(setting.Value).lower()
 			else:
 				value = str(setting.Value).lower()
 			if value.find(filter) != -1:
