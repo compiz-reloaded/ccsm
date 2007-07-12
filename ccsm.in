@@ -572,6 +572,8 @@ class MultiListSetting(SettingItem):
 		for setting in self.Settings:
 			if setting.Info[0] == "String" or setting.Info[0] == "Match":
 				types.append(gobject.TYPE_STRING)
+			elif setting.Info[0] == "Int" and len(setting.Info[1][2]) > 0:
+				types.append(gobject.TYPE_STRING)
 			elif setting.Info[0] == "Int":
 				types.append(gobject.TYPE_INT)
 			elif setting.Info[0] == "Float":
@@ -579,7 +581,7 @@ class MultiListSetting(SettingItem):
 			
 			renderer = gtk.CellRendererText()
 			renderer.connect("edited", self.ColChanged, col)
-			cols.append((setting.ShortDesc, renderer, {'text':col, 'editable':True}))
+			cols.append((setting.ShortDesc, renderer, {'text':col}))
 			col += 1
 
 		return types, cols
@@ -594,7 +596,13 @@ class MultiListSetting(SettingItem):
 		for iter in iters:
 			for j in range(len(self.Settings)):
 				setting = self.Settings[j]
-				value = setting.Value[row]
+				value = None
+				if len(setting.Info) > 0 and setting.Info[0] == 'Int' and len(setting.Info[1][2]) > 0:
+					pos = setting.Value[row]
+					sortedItems = sorted(setting.Info[1][2].items(), EnumSettingSortCompare)
+					value = sortedItems[pos][0]
+				else:
+					value = setting.Value[row]
 				self.Store.set(iter, j, value)
 			row += 1
 
@@ -609,10 +617,23 @@ class MultiListSetting(SettingItem):
 		row = 0
 		widgets = []
 		for setting in self.Settings:
-			if self.Types[row] == gobject.TYPE_STRING:
-				ebox = gtk.EventBox()
-				label = gtk.Label(setting.ShortDesc)
-				ebox.add(label)
+			ebox = gtk.EventBox()
+			label = gtk.Label(setting.ShortDesc)
+			ebox.add(label)
+			Tooltips.set_tip(ebox, setting.LongDesc)
+			if self.Types[row] == gobject.TYPE_STRING and setting.Info[0] == 'Int' and len(setting.Info[1][2]) > 0:
+				comboBox = gtk.combo_box_new_text()
+				sortedItems = sorted(setting.Info[1][2].items(), EnumSettingSortCompare)
+				for item in sortedItems:
+					comboBox.append_text(item[0])
+				if values != None:
+					pos = values[row]
+					value = setting.Info[1][2][pos]
+					comboBox.set_active(value)
+				table.attach(ebox, 0, 1, row, row+1, xpadding=5, xoptions=gtk.FILL)
+				table.attach(comboBox, 2, 3, row, row+1, xpadding=5)
+				widgets.append(comboBox)
+			elif self.Types[row] == gobject.TYPE_STRING:
 				Tooltips.set_tip(ebox, setting.LongDesc)
 				entry = gtk.Entry()
 				Tooltips.set_tip(entry, setting.LongDesc)
@@ -622,10 +643,6 @@ class MultiListSetting(SettingItem):
 				table.attach(entry, 2, 3, row, row+1, xpadding=5)
 				widgets.append(entry)
 			elif self.Types[row] == gobject.TYPE_INT or self.Types[row] == gobject.TYPE_FLOAT:
-				ebox = gtk.EventBox()
-				label = gtk.Label(setting.ShortDesc)
-				ebox.add(label)
-				Tooltips.set_tip(ebox, setting.LongDesc)
 				inc = 0
 				if setting.Info[0] == 'Int':
 					inc = 1
@@ -657,7 +674,11 @@ class MultiListSetting(SettingItem):
 			row = 0
 			for type in self.Types:
 				if type == gobject.TYPE_STRING:
-					value = widgets[row].get_text()
+					value = None
+					if widgets[row].__class__ == gtk.Entry:
+						value = widgets[row].get_text()
+					elif widgets[row].__class__ == gtk.ComboBox:
+						value = widgets[row].get_active_text()
 					values.append(value)
 				elif type == gobject.TYPE_INT:
 					value = int(widgets[row].get_value())
@@ -689,7 +710,12 @@ class MultiListSetting(SettingItem):
 			iter = self.Store.get_iter_first()
 			values = []
 			while iter:
-				value = self.Store.get(iter, col)[0]
+				value = None
+				if setting.Info[0] == 'Int' and len(setting.Info[1][2]) > 0:
+					pos = self.Store.get(iter, col)[0]
+					value = setting.Info[1][2][pos]
+				else:
+					value = self.Store.get(iter, col)[0]
 				if value != "":
 					values.append(value)
 				iter = self.Store.iter_next(iter)
