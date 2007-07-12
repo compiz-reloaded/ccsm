@@ -416,7 +416,9 @@ class IntFloatSetting(SettingItem):
 		Tooltips.set_tip(self.Scale, self.Setting.LongDesc)
 		self.Scale.props.draw_value = False
 		self.Scale.connect('button-release-event', self.Changed)
-		self.Spin.connect('changed', self.Changed)
+		self.Spin.connect('activate', self.Changed)
+		self.Spin.connect('button-release-event', self.Changed)
+		self.Spin.connect('focus-out-event', self.Changed)
 
 	def Attach(self, Table, row):
 		self.Reset.set_sensitive(not self.Setting.ReadOnly)
