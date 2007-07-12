@@ -277,7 +277,8 @@ class StringMatchSetting(SettingItem):
 	def _Init(self):
 		self.Entry = gtk.Entry()
 		Tooltips.set_tip(self.Entry, self.Setting.LongDesc)
-		self.Entry.connect('changed', self.Changed)
+		self.Entry.connect('activate', self.Changed)
+		self.Entry.connect('focus-out-event', self.Changed)
 		self.Widget = self.Entry
 
 	def _Read(self):
