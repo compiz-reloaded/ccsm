@@ -356,6 +356,7 @@ class FileStringSetting(StringMatchSetting, FileSetting):
 
 	def SetFileName(self, filename):
 		self.Entry.set_text(filename)
+		self.Changed()
 
 def EnumSettingSortCompare(v1, v2):
 	return cmp(v1[1], v2[1])
