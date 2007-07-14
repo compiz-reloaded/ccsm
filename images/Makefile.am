@@ -90,6 +90,7 @@ images_DATA = \
 	plugin-wall.svg \
 	plugin-wallpaper.svg \
 	plugin-water.svg        \
+	plugin-widget.svg \
 	plugin-winrules.svg \
 	plugin-wobbly.svg       \
 	plugin-zoom.svg 
