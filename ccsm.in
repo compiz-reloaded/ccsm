@@ -1164,7 +1164,7 @@ class SubGroupArea:
 			self.Expander.add(self.Child)
 
 			# create a special widget for list subGroups
-			if HasOnlyType(settings, 'List'):
+			if len(settings) > 1 and HasOnlyType(settings, 'List'):
 				multiList = MultiListSetting(settings)
 				multiList.Read()
 				multiList.Attach(self.Child, 0)
