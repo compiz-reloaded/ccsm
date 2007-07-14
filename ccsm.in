@@ -476,7 +476,7 @@ class MultiListSetting(SettingItem):
 
 		self.Widget.set_border_width(5)
 		self.Widget.set_spacing(5)
-		self.Widget.set_size_request(-1, 150)
+		self.Widget.set_size_request(-1, 170)
 		self.Scroll = gtk.ScrolledWindow()
 		self.Scroll.props.hscrollbar_policy = gtk.POLICY_NEVER
 		self.Scroll.props.hscrollbar_policy = gtk.POLICY_AUTOMATIC
