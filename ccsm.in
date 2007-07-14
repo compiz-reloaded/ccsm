@@ -471,11 +471,9 @@ class MultiListSetting(SettingItem):
 			self.View.insert_column_with_attributes(-1, col[0], col[1], **col[2])
 		self.Store.connect('row-deleted', self.Changed)
 		self.Store.connect('rows-reordered', self.Changed)
+		self.View.connect('row-activated', self.Activated)
 		self.Select = self.View.get_selection()
 		self.Select.set_mode(gtk.SELECTION_MULTIPLE)
-
-		self.View.add_events(gtk.gdk.BUTTON_PRESS_MASK)
-		self.View.connect('button_press_event', self.HandleButton)
 
 		self.Widget.set_border_width(5)
 		self.Widget.set_spacing(5)
@@ -605,9 +603,8 @@ class MultiListSetting(SettingItem):
 
 		return types, cols
 
-	def HandleButton(self, widget, event):
-		if event.button == 1 and event.type == gtk.gdk._2BUTTON_PRESS:
-			self.Edit(None)
+	def Activated(self, object, path, col):
+		self.Edit(None)
 
 	def _Read(self):
 		self.Store.clear()
