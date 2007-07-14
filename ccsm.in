@@ -465,7 +465,7 @@ class MultiListSetting(SettingItem):
 		self.Types = types
 		self.Store = gtk.ListStore(*types)
 		self.View = gtk.TreeView(self.Store)
-		Tooltips.set_tip(self.View, _("Multi-list settings"))
+		Tooltips.set_tip(self.View, _("Multi-list settings. You can double-click a row to edit the values."))
 		self.View.set_headers_visible(True)
 		for col in cols:
 			self.View.insert_column_with_attributes(-1, col[0], col[1], **col[2])
