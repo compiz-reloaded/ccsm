@@ -474,6 +474,9 @@ class MultiListSetting(SettingItem):
 		self.Select = self.View.get_selection()
 		self.Select.set_mode(gtk.SELECTION_MULTIPLE)
 
+		self.View.add_events(gtk.gdk.BUTTON_PRESS_MASK)
+		self.View.connect('button_press_event', self.HandleButton)
+
 		self.Widget.set_border_width(5)
 		self.Widget.set_spacing(5)
 		self.Widget.set_size_request(-1, 170)
@@ -589,6 +592,10 @@ class MultiListSetting(SettingItem):
 			col += 1
 
 		return types, cols
+
+	def HandleButton(self, widget, event):
+		if event.button == 1 and event.type == gtk.gdk._2BUTTON_PRESS:
+			self.Edit(None)
 
 	def _Read(self):
 		self.Store.clear()
