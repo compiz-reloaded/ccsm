@@ -521,7 +521,19 @@ class MultiListSetting(SettingItem):
 		pass
 	
 	def Add(self, b):
-		values = self._Edit()
+		values = []
+		for setting in self.Settings:
+			if len(setting.Info) > 0 and setting.Info[0] == 'Int' and len(setting.Info[1][2]) > 0:
+				sortedItems = sorted(setting.Info[1][2].items(), EnumSettingSortCompare)
+				# select first item by default
+				pos = 0
+				value = sortedItems[pos][0]
+			elif setting.Info[0] == "Int" or setting.Info[0] == "Float":
+				value = 0
+			else:
+				value = ""
+			values.append(value)
+		values = self._Edit(values)
 		if values is not None:
 			self.Block()
 			iter = self.Store.append()
@@ -727,8 +739,7 @@ class MultiListSetting(SettingItem):
 					value = setting.Info[1][2][pos]
 				else:
 					value = self.Store.get(iter, col)[0]
-				if value != "":
-					values.append(value)
+				values.append(value)
 				iter = self.Store.iter_next(iter)
 			setting.Value = values
 			col += 1
