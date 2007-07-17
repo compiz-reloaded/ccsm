@@ -1,0 +1,290 @@
+# CompizConfig Greek Translation.
+# Copyright (C) 2007 Jim Dusis
+# This file is distributed under the same license as the ccsm package.
+# Jim Dusis (djdoo) <jimdusis@yahoo.gr>, 2007.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: ccsm 0.0.1\n"
+"Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
+"POT-Creation-Date: 2007-07-02 10:00+0200\n"
+"PO-Revision-Date: 2007-07-016 01:00+0200\n"
+"Last-Translator:  Teddy <thodo_mitch@hotmail.com>\n"
+"Language-Team: Compiz Fusion translators <i18n@lists.compiz-fusion.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "PyGtk 2.10.0 or later required"
+msgstr "PyGtk 2.10.0 ή νεότερο απαιτείται"
+
+#, c-format
+msgid ""
+"The new value for the %s binding for the action <b>%s</b> in plugin <b>%s</"
+"b> conflicts with the action <b>%s</b> of the <b>%s</b> plugin.\n"
+"Do you wish to disable <b>%s</b> in the <b>%s</b> plugin?"
+msgstr ""
+"Η νέα τιμή του %s συνδυασμού της ενέργειας <b>%s</b> στο πρόσθετο "
+"<b>%s</b> συγκρούεται με την ενέργεια <b>%s</b> του <b>%s</b> πρόσθετου.\n"
+"Θέλετε να απενεργοποιήσετε το <b>%s</b> στο <b>%s</b> πρόσθετο?"
+
+#, c-format
+msgid "Disable %s"
+msgstr "Απενεργοποίηση %s"
+
+#, c-format
+msgid "Don't set %s"
+msgstr "Μην Θέσεις %s"
+
+#, c-format
+msgid "Set %s anyway"
+msgstr "Θέσε %s οπωσδήποτε"
+
+#, c-format
+msgid ""
+"You are trying to use the feature <b>%s</b> which is provided by <b>%s</b>.\n"
+"This plugin is currently disabled.\n"
+"Do you wish to enable <b>%s</b> so the feature is available?"
+msgstr ""
+"Προσπαθείτε να χρησιμοποιήσετε το χαρακτηριστικό <b>%s</b> που παρέχεται απ το"
+"<b>%s</b>.\n Το πρόσθετο αυτό είναι τώρα απενεργοποιημένο.\n"
+"Θέλετε να ενεργοποιήσετε το <b>%s</b> ωστε το χαρακτηριστικό να είναι "
+"διαθέσιμο?"
+
+#, c-format
+msgid "Enable %s"
+msgstr "Ενεργοποίηση %s"
+
+#, c-format
+msgid "Don't enable %s"
+msgstr "Μην ενεργοποιήσεις %s"
+
+msgid "Reset setting to the default value"
+msgstr "Επαναφορά της ρύθμισης στη προεπιλεγμένη τιμή"
+
+msgid "Browse for "
+msgstr "Περιήγηση για "
+
+msgid "Images"
+msgstr "Εικόνες"
+
+msgid "File"
+msgstr "Αρχείο"
+
+msgid "Open file.."
+msgstr "Άνοιγμα Αρχείου.."
+
+msgid "Multi-list settings"
+msgstr "Ρυθμίσεις πολλαπλών λιστών"
+
+msgid "Edit"
+msgstr "Επεξεργασία"
+
+#, c-format
+msgid "Value (%s)"
+msgstr "Τιμή (%s)"
+
+#, c-format
+msgid "Edit %s"
+msgstr "Επεξεργασία %s"
+
+#, c-format
+msgid "Value (%s) for %s:"
+msgstr "Τιμή (%s) για %s:"
+
+#, c-format
+msgid "Unhandled list type %s for %s"
+msgstr "Μη έγκυρος τύπος λίστας %s για %s"
+
+#, c-format
+msgid ""
+"Plugin <b>%s</b> provides feature <b>%s</b> which is also provided by <b>%s</"
+"b>"
+msgstr ""
+"Το πρόσθετο <b>%s</b> παρέχει το χαρακτηριστικό <b>%s</b> το οποίο επίσης "
+"παρέχεται απο το <b>%s</b>"
+
+#, c-format
+msgid "Plugin <b>%s</b> conflicts with <b>%s</b>."
+msgstr "Το πρόσθετο <b>%s</b> έρχεται σε σύγκρουση με το <b>%s</b>"
+
+#, c-format
+msgid ""
+"<b>%s</b> requires feature <b>%s</b> which is provided by the following "
+"plugins:\n"
+"%s"
+msgstr ""
+"<b>%s</b> απαιτεί το χαρακτηριστικό <b>%s</b> το οποίο παρέχεται απο τα "
+"ακόλουθα πρόσθετα:\n"
+"%s"
+
+msgid "Enable these plugins"
+msgstr "Ενεργοποίηση προσθέτων"
+
+#, c-format
+msgid "<b>%s</b> requires the plugin <b>%s</b>."
+msgstr "<b>%s</b> απαιτεί το πρόσθετο <b>%s</b>."
+
+#, c-format
+msgid ""
+"<b>%s</b> provides the feature <b>%s</b> which is required by the plugins <b>"
+"%s</b>."
+msgstr ""
+"<b>%s</b> παρέχει το στοιχείο <b>%s</b> το οποίο απαιτείται απο τα πρόσθετα <b"
+">%s</b>."
+
+msgid "Disable these plugins"
+msgstr "Απενεργοποίηση πρόσθετων"
+
+#, c-format
+msgid "Don't disable %s"
+msgstr "Μην απενεργοποιήσεις %s"
+
+#, c-format
+msgid "<b>%s</b> is required by the plugins <b>%s</b>."
+msgstr "<b>%s</b> απαιτείται απο τα πρόσθετα <b>%s</b>."
+
+msgid "Name"
+msgstr "Όνομα"
+
+msgid "Key"
+msgstr "Πλήκτρο"
+
+msgid "Button"
+msgstr "Κουμπί"
+
+msgid "Screen Edge"
+msgstr "Άκρη Οθόνης"
+
+msgid "On System Bell"
+msgstr "Στο Καμπανάκι Συστήματος"
+
+msgid "General"
+msgstr "Γενικά"
+
+#, c-format
+msgid "Edit Action: %s"
+msgstr "Επεξεργασία Ενέργειας: %s"
+
+msgid "Screen Edges"
+msgstr "Άκρες Οθόνης"
+
+msgid "Reset To Defaults"
+msgstr "Επαναφορά στις Προεπιλεγμένες Ρυθμίσεις"
+
+msgid "Filter"
+msgstr "Φίλτρο"
+
+#, c-format
+msgid "Search %s Plugin Options"
+msgstr "Αναζήτηση %s Επιλογών Πρόσθετου"
+
+msgid "Use This Plugin"
+msgstr "Χρησιμοποίηση αυτου του πρόσθετου"
+
+msgid "Search Compiz Core Options"
+msgstr "Αναζήτηση των επιλογών του πυρήνα του Compiz"
+
+msgid "Actions"
+msgstr "Ενέργειες"
+
+msgid "Search in..."
+msgstr "Αναζήτηση στο..."
+
+msgid "Short description and name"
+msgstr "Σύντομη περιγραφή και όνομα"
+
+msgid "Long description"
+msgstr "Ακριβής περιγραφή"
+
+msgid "Settings value"
+msgstr "Τιμή ρυθμίσεων"
+
+msgid "Settings"
+msgstr "Ρυθμίσεις"
+
+msgid "Profile & Backend"
+msgstr "Προφίλ & Κύρια Εφαρμογή"
+
+msgid "Backend &amp; Profile"
+msgstr "Κύρια Εφαρμογή &amp; Προφίλ"
+
+msgid ""
+"Configure the backend and profile used by the Compiz Configuration System."
+msgstr ""
+"Ρύθμιση κύριας εφαρμογής και προφίλ που χρησιμοποιείται απο το Σύστημα "
+"Ρύθμισης του Compiz."
+
+msgid "Add a New Profile"
+msgstr "Πρόσθεσε νέο προφίλ"
+
+msgid "Remove This Profile"
+msgstr "Αφαίρεση προφίλ"
+
+msgid "Default"
+msgstr "Προεπιλεγμένο"
+
+msgid "Profile"
+msgstr "Προφίλ"
+
+msgid "Import"
+msgstr "Εισαγωγή"
+
+msgid "Import a CompizConfig Profile"
+msgstr "Εισαγωγή ενός Προφίλ του CompizConfig"
+
+msgid "Export"
+msgstr "Εξαγωγή"
+
+msgid "Export your CompizConfig Profile"
+msgstr "Εξαγωγή του Προσωπικού σας Προφίλ του CompizConfig"
+
+msgid "Backend"
+msgstr "Κύρια Εφαρμογή"
+
+msgid "Integration"
+msgstr "Eνσωμάτωση"
+
+msgid "Enable integration into the desktop environment"
+msgstr "Ενεργοποίηση ενσωμάτωσης στο περιβάλλον επιφάνειας εργασίας"
+
+msgid "Profiles (*.profile)"
+msgstr "Προφίλ (*.profile)"
+
+msgid "All files"
+msgstr "Όλα τα αρχεία"
+
+msgid "Save file.."
+msgstr "Αποθήκευση Αρχείου.."
+
+msgid "Enter a profile name"
+msgstr "Εισάγετε όνομα προφίλ"
+
+msgid "Please enter a name for the new profile:"
+msgstr "Εισάγετε όνομα για το καινούργιο προφίλ:"
+
+msgid "Backend not found."
+msgstr "Κύρια Εφαρμογή δεν βρέθηκε."
+
+msgid "CompizConfig Settings Manager"
+msgstr "Διαχειριστής Ρυθμίσεων CompizConfig"
+
+msgid "Filter your Plugin list"
+msgstr "Φιλτράρισμα λίστας πρόσθετων"
+
+#, c-format
+msgid "Screen %i"
+msgstr "Οθόνη %i"
+
+msgid "Screen"
+msgstr "Οθόνη"
+
+msgid "Uncategorized"
+msgstr "Χωρίς Κατηγορία"
+
+msgid "Category"
+msgstr "Κατηγορία"
+
+msgid "Advanced Search"
+msgstr "Προχωρημένη Αναζήτηση"
