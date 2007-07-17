@@ -37,6 +37,7 @@ m4_define(required_python_abi,2.4)
 
 AC_OUTPUT([
 Makefile
+src/Makefile
 images/Makefile
 misc/Makefile
 po/Makefile.in
