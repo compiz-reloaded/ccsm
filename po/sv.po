@@ -1,0 +1,275 @@
+# Swedish translation for ccsm.
+# Copyright (C) 2007 Free Software Foundation, Inc.
+# This file is distributed under the same license as the compiz-fusion package.
+# Daniel Nylander <po@danielnylander.se>, 2007.
+# Erik Eloff <erik@eloff.se>, 2007.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
+"POT-Creation-Date: 2007-07-14 19:00+0200\n"
+"PO-Revision-Date: 2007-07-20 18:17+0100\n"
+"Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "PyGtk 2.10.0 or later required"
+msgstr "PyGtk 2.10.0 eller senare krävs"
+
+#, c-format
+msgid ""
+"The new value for the %s binding for the action <b>%s</b> in plugin <b>%s</b> conflicts with the action <b>%s</b> of the <b>%s</b> plugin.\n"
+"Do you wish to disable <b>%s</b> in the <b>%s</b> plugin?"
+msgstr ""
+"Det nya värdet för tangentbindningen %s för åtgärden <b>%s</b> i insticksmodulen <b>%s</b> står i konflikt med åtgärden <b>%s</b> för insticksmodulen <b>%s</b>.\n"
+"Vill du inaktivera <b>%s</b> i insticksmodulen <b>%s</b>?"
+
+#, c-format
+msgid "Disable %s"
+msgstr "Inaktivera %s"
+
+#, c-format
+msgid "Don't set %s"
+msgstr "Ställ in inte %s"
+
+#, c-format
+msgid "Set %s anyway"
+msgstr "Ställ in %s ändå"
+
+#, c-format
+msgid ""
+"You are trying to use the feature <b>%s</b> which is provided by <b>%s</b>.\n"
+"This plugin is currently disabled.\n"
+"Do you wish to enable <b>%s</b> so the feature is available?"
+msgstr ""
+"Du försöker använda funktionen <b>%s</b> som tillhandahålls av <b>%s</b>.\n"
+"Den här insticksmodulen är för närvarande inaktiverad.\n"
+"Vill du aktivera <b>%s</b> så att funktionen blir tillgänglig?"
+
+#, c-format
+msgid "Enable %s"
+msgstr "Aktivera %s"
+
+#, c-format
+msgid "Don't enable %s"
+msgstr "Aktivera inte %s"
+
+msgid "Reset setting to the default value"
+msgstr "Återställ inställning till standardvärdet"
+
+msgid "Browse for "
+msgstr "Bläddra efter "
+
+msgid "Images"
+msgstr "Bilder"
+
+msgid "File"
+msgstr "Fil"
+
+msgid "Open file.."
+msgstr "Öppna fil.."
+
+msgid "Multi-list settings"
+msgstr "Multilistningsinställningar"
+
+msgid "Edit"
+msgstr "Redigera"
+
+#, c-format
+msgid "Value (%s)"
+msgstr "Värde (%s)"
+
+#, c-format
+msgid "Edit %s"
+msgstr "Redigera %s"
+
+#, c-format
+msgid "Value (%s) for %s:"
+msgstr "Värde (%s) för  %s:"
+
+#, c-format
+msgid "Unhandled list type %s for %s"
+msgstr "Ohanterad listtyp %s för %s"
+
+#, c-format
+msgid "Plugin <b>%s</b> provides feature <b>%s</b> which is also provided by <b>%s</b>"
+msgstr "Insticksmodulen <b>%s</b> tillhandahåller funktionen <b>%s</b>, som även finns i <b>%s</b>"
+
+#, c-format
+msgid "Plugin <b>%s</b> conflicts with <b>%s</b>."
+msgstr "Insticksmodulen <b>%s</b> står i konflikt med <b>%s</b>"
+
+#, c-format
+msgid ""
+"<b>%s</b> requires feature <b>%s</b> which is provided by the following plugins:\n"
+"%s"
+msgstr ""
+"<b>%s</b> kräver funktionen <b>%s</b> som tillhandahålls av följande insticksmoduler:\n"
+"%s"
+
+msgid "Enable these plugins"
+msgstr "Aktivera dessa insticksmoduler"
+
+#, c-format
+msgid "<b>%s</b> requires the plugin <b>%s</b>."
+msgstr "<b>%s</b> kräver insticksmodulen <b>%s</b>."
+
+#, c-format
+msgid "<b>%s</b> provides the feature <b>%s</b> which is required by the plugins <b>%s</b>."
+msgstr "<b>%s</b> tillhandahåller funktionen <b>%s</b> som krävs av insticksmodulerna <b>%s</b>."
+
+msgid "Disable these plugins"
+msgstr "Inaktivera dessa insticksmoduler"
+
+#, c-format
+msgid "Don't disable %s"
+msgstr "Inaktivera inte %s"
+
+#, c-format
+msgid "<b>%s</b> is required by the plugins <b>%s</b>."
+msgstr "<b>%s</b> krävs av insticksmodulerna <b>%s</b>"
+
+msgid "Name"
+msgstr "Namn"
+
+msgid "Key"
+msgstr "Tangent"
+
+msgid "Button"
+msgstr "Knapp"
+
+msgid "Screen Edge"
+msgstr "Skärmkant"
+
+msgid "On System Bell"
+msgstr "Vid systempip"
+
+msgid "General"
+msgstr "Allmänt"
+
+#, c-format
+msgid "Edit Action: %s"
+msgstr "Redigera åtgärd: %s"
+
+msgid "Screen Edges"
+msgstr "Skärmkanter"
+
+msgid "Reset To Defaults"
+msgstr "Återställ till standardvärden"
+
+msgid "Filter"
+msgstr "Filtrera"
+
+#, c-format
+msgid "Search %s Plugin Options"
+msgstr "Sök alternativ för insticksmodulen %s"
+
+msgid "Use This Plugin"
+msgstr "Använd denna insticksmodul"
+
+msgid "Search Compiz Core Options"
+msgstr "Sök Compiz Core-alternativ"
+
+msgid "Actions"
+msgstr "Åtgärder"
+
+msgid "Search in..."
+msgstr "Sök i..."
+
+msgid "Short description and name"
+msgstr "Kort beskrivning och namn"
+
+msgid "Long description"
+msgstr "Lång beskrivning"
+
+msgid "Settings value"
+msgstr "Inställningsvärde"
+
+msgid "Settings"
+msgstr "Inställningar"
+
+msgid "Profile & Backend"
+msgstr "Profil och bakände"
+
+msgid "Backend &amp; Profile"
+msgstr "Bakände och profil"
+
+msgid "Configure the backend and profile used by the Compiz Configuration System."
+msgstr "Konfigurera bakänden och profilen som används av Compiz konfigurationssystem."
+
+msgid "Add a New Profile"
+msgstr "Lägg till en ny profil"
+
+msgid "Remove This Profile"
+msgstr "Ta bort den här profilen"
+
+msgid "Default"
+msgstr "Standard"
+
+msgid "Profile"
+msgstr "Profil"
+
+msgid "Import"
+msgstr "Importera"
+
+msgid "Import a CompizConfig Profile"
+msgstr "Importera en CompizConfig-profil"
+
+msgid "Export"
+msgstr "Exportera"
+
+msgid "Export your CompizConfig Profile"
+msgstr "Exportera en CompizConfig-profil"
+
+msgid "Backend"
+msgstr "Bakände"
+
+msgid "Integration"
+msgstr "Integration"
+
+msgid "Enable integration into the desktop environment"
+msgstr "Aktivera integration med skrivbordsmiljön"
+
+msgid "Profiles (*.profile)"
+msgstr "Profiler (*.profile)"
+
+msgid "All files"
+msgstr "Alla filer"
+
+msgid "Save file.."
+msgstr "Spara fil.."
+
+msgid "Enter a profile name"
+msgstr "Ange ett profilnamn"
+
+msgid "Please enter a name for the new profile:"
+msgstr "Ange ett namn för den nya profilen:"
+
+msgid "Backend not found."
+msgstr "Bakänden hittades inte."
+
+msgid "CompizConfig Settings Manager"
+msgstr "Inställningshanterare för CompizConfig"
+
+msgid "Filter your Plugin list"
+msgstr "Filtrera din insticksmodullista"
+
+#, c-format
+msgid "Screen %i"
+msgstr "Skärm %i"
+
+msgid "Screen"
+msgstr "Skärm"
+
+msgid "Uncategorized"
+msgstr "Okategoriserat"
+
+msgid "Category"
+msgstr "Kategori"
+
+msgid "Advanced Search"
+msgstr "Avancerad sökning"
+
