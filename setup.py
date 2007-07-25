@@ -10,12 +10,19 @@ if len (sys.argv) > 2:
     opts, args = getopt (sys.argv[2:], "", ['prefix='])
     for o, a in opts:
         if o == "--prefix":
-            prefix = a
-            break
+            if len (a):
+                prefix = a
+                break
+            else:
+                for o in sys.argv:
+                    if o.startswith ("--prefix"):
+                        sys.argv.remove (o)
+                        break
 if not prefix and "PREFIX" in os.environ:
     prefix = os.environ["PREFIX"]
-    sys.argv += ["--prefix", prefix]
-else:
+    if len (prefix):
+        sys.argv += ["--prefix", prefix]
+if not prefix or not len (prefix):
     prefix = PREFIX
 
 f = open (os.path.join ("ccm/Constants.py.in"), "rt")
