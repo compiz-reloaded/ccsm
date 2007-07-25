@@ -12,7 +12,10 @@ if len (sys.argv) > 2:
         if o == "--prefix":
             prefix = a
             break
-if not prefix:
+if not prefix and "PREFIX" in os.environ:
+    prefix = os.environ["PREFIX"]
+    sys.argv += ["--prefix", prefix]
+else:
     prefix = PREFIX
 
 f = open (os.path.join ("ccm/Constants.py.in"), "rt")
