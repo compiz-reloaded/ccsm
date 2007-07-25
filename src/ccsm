@@ -23,11 +23,18 @@ import pygtk
 pygtk.require('2.0')
 import gtk
 
+import locale
+import gettext
+locale.setlocale(locale.LC_ALL, "")
+gettext.bindtextdomain("ccsm", DataDir + "/locale")
+gettext.textdomain("ccsm")
+_ = gettext.gettext
+
 try:
 	import sexy
 	has_sexy = True
 except ImportError:
-	print "Warning: No sexy-python package found."
+	print _("Warning: No sexy-python package found.")
 	has_sexy = False
 
 if gtk.pygtk_version < (2,10,0):
