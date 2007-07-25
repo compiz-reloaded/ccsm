@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-07-09 17:41+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-07-25 22:16+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,278 +16,360 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-msgid "PyGtk 2.10.0 or later required"
-msgstr ""
-
-#, c-format
+#: ../ccm/Conflicts.py:113
+#, python-format
 msgid ""
 "The new value for the %s binding for the action <b>%s</b> in plugin <b>%s</"
 "b> conflicts with the action <b>%s</b> of the <b>%s</b> plugin.\n"
 "Do you wish to disable <b>%s</b> in the <b>%s</b> plugin?"
 msgstr ""
 
-#, c-format
+#: ../ccm/Conflicts.py:119 ../ccm/Conflicts.py:258 ../ccm/Conflicts.py:265
+#, python-format
 msgid "Disable %s"
 msgstr ""
 
-#, c-format
+#: ../ccm/Conflicts.py:120
+#, python-format
 msgid "Don't set %s"
 msgstr ""
 
-#, c-format
+#: ../ccm/Conflicts.py:121
+#, python-format
 msgid "Set %s anyway"
 msgstr ""
 
-#, c-format
+#: ../ccm/Conflicts.py:149
+#, python-format
 msgid ""
 "You are trying to use the feature <b>%s</b> which is provided by <b>%s</b>.\n"
 "This plugin is currently disabled.\n"
 "Do you wish to enable <b>%s</b> so the feature is available?"
 msgstr ""
 
-#, c-format
+#: ../ccm/Conflicts.py:155 ../ccm/Conflicts.py:286 ../ccm/Pages.py:446
+#: ../ccm/Window.py:260
+#, python-format
 msgid "Enable %s"
 msgstr ""
 
-#, c-format
+#: ../ccm/Conflicts.py:156 ../ccm/Conflicts.py:259 ../ccm/Conflicts.py:266
+#: ../ccm/Conflicts.py:287
+#, python-format
 msgid "Don't enable %s"
 msgstr ""
 
-msgid "Reset setting to the default value"
-msgstr ""
-
-msgid "Browse for "
-msgstr ""
-
-msgid "Images"
-msgstr ""
-
-msgid "File"
-msgstr ""
-
-msgid "Open file.."
-msgstr ""
-
-msgid "Multi-list settings"
-msgstr ""
-
-msgid "Edit"
-msgstr ""
-
-#, c-format
-msgid "Value (%s)"
-msgstr ""
-
-#, c-format
-msgid "Edit %s"
-msgstr ""
-
-#, c-format
-msgid "Value (%s) for %s:"
-msgstr ""
-
-#, c-format
-msgid "Unhandled list type %s for %s"
-msgstr ""
-
-#, c-format
+#: ../ccm/Conflicts.py:254
+#, python-format
 msgid ""
 "Plugin <b>%s</b> provides feature <b>%s</b> which is also provided by <b>%s</"
 "b>"
 msgstr ""
 
-#, c-format
+#: ../ccm/Conflicts.py:262
+#, python-format
 msgid "Plugin <b>%s</b> conflicts with <b>%s</b>."
 msgstr ""
 
-#, c-format
+#: ../ccm/Conflicts.py:270
+#, python-format
 msgid ""
 "<b>%s</b> requires feature <b>%s</b> which is provided by the following "
 "plugins:\n"
 "%s"
 msgstr ""
 
+#: ../ccm/Conflicts.py:279
 msgid "Enable these plugins"
 msgstr ""
 
-#, c-format
+#: ../ccm/Conflicts.py:283
+#, python-format
 msgid "<b>%s</b> requires the plugin <b>%s</b>."
 msgstr ""
 
-#, c-format
+#: ../ccm/Conflicts.py:291
+#, python-format
 msgid ""
 "<b>%s</b> provides the feature <b>%s</b> which is required by the plugins <b>"
 "%s</b>."
 msgstr ""
 
+#: ../ccm/Conflicts.py:294 ../ccm/Conflicts.py:302
 msgid "Disable these plugins"
 msgstr ""
 
-#, c-format
+#: ../ccm/Conflicts.py:295 ../ccm/Conflicts.py:303
+#, python-format
 msgid "Don't disable %s"
 msgstr ""
 
-#, c-format
+#: ../ccm/Conflicts.py:299
+#, python-format
 msgid "<b>%s</b> is required by the plugins <b>%s</b>."
 msgstr ""
 
+#: ../ccm/Pages.py:73
 msgid "Name"
 msgstr ""
 
+#: ../ccm/Pages.py:78 ../ccm/Pages.py:241
 msgid "Key"
 msgstr ""
 
+#: ../ccm/Pages.py:82 ../ccm/Pages.py:250
 msgid "Button"
 msgstr ""
 
+#: ../ccm/Pages.py:85
 msgid "Screen Edge"
 msgstr ""
 
-#, c-format
+#: ../ccm/Pages.py:92 ../ccm/Pages.py:170 ../ccm/Pages.py:367
+#, python-format
 msgid "Button %i"
 msgstr ""
 
+#: ../ccm/Pages.py:94 ../ccm/Pages.py:172 ../ccm/Pages.py:283
+#: ../ccm/Pages.py:350 ../ccm/Pages.py:369
 msgid "None"
 msgstr ""
 
+#: ../ccm/Pages.py:101 ../ccm/Pages.py:290
 msgid "Edge Button"
 msgstr ""
 
+#: ../ccm/Pages.py:106 ../ccm/Pages.py:297
 msgid "On System Bell"
 msgstr ""
 
+#: ../ccm/Pages.py:142 ../ccm/Pages.py:463 ../ccm/Pages.py:492
+#: ../ccm/Pages.py:581 ../ccm/Pages.py:786 ../ccm/Pages.py:795
+#: ../ccm/Window.py:374 ../ccm/Window.py:376
 msgid "General"
 msgstr ""
 
-#, c-format
+#: ../ccm/Pages.py:230
+#, python-format
 msgid "Edit Action: %s"
 msgstr ""
 
+#: ../ccm/Pages.py:277
 msgid "Screen Edges"
 msgstr ""
 
+#: ../ccm/Pages.py:303
 msgid "Reset To Defaults"
 msgstr ""
 
+#: ../ccm/Pages.py:420 ../ccm/Pages.py:612 ../ccm/Window.py:114
 msgid "Filter"
 msgstr ""
 
-#, c-format
+#: ../ccm/Pages.py:438
+#, python-format
 msgid "Search %s Plugin Options"
 msgstr ""
 
+#: ../ccm/Pages.py:440
 msgid "Use This Plugin"
 msgstr ""
 
+#: ../ccm/Pages.py:452
 msgid "Search Compiz Core Options"
 msgstr ""
 
+#: ../ccm/Pages.py:471 ../ccm/Pages.py:498 ../ccm/Pages.py:698
 msgid "Actions"
 msgstr ""
 
+#: ../ccm/Pages.py:628
 msgid "Search in..."
 msgstr ""
 
+#: ../ccm/Pages.py:633
 msgid "Short description and name"
 msgstr ""
 
+#: ../ccm/Pages.py:638
 msgid "Long description"
 msgstr ""
 
+#: ../ccm/Pages.py:643
 msgid "Settings value"
 msgstr ""
 
+#: ../ccm/Pages.py:697
 msgid "Settings"
 msgstr ""
 
+#: ../ccm/Pages.py:840
 msgid "Profile & Backend"
 msgstr ""
 
+#: ../ccm/Pages.py:844 ../ccm/Window.py:179
 msgid "Backend &amp; Profile"
 msgstr ""
 
+#: ../ccm/Pages.py:851
 msgid ""
 "Configure the backend and profile used by the Compiz Configuration System."
 msgstr ""
 
+#: ../ccm/Pages.py:858
 msgid "Add a New Profile"
 msgstr ""
 
+#: ../ccm/Pages.py:861
 msgid "Remove This Profile"
 msgstr ""
 
+#: ../ccm/Pages.py:865 ../ccm/Pages.py:927 ../ccm/Pages.py:932
+#: ../ccm/Pages.py:951 ../ccm/Pages.py:1014
 msgid "Default"
 msgstr ""
 
+#: ../ccm/Pages.py:881
 msgid "Profile"
 msgstr ""
 
+#: ../ccm/Pages.py:884
 msgid "Import"
 msgstr ""
 
+#: ../ccm/Pages.py:885
 msgid "Import a CompizConfig Profile"
 msgstr ""
 
+#: ../ccm/Pages.py:886
 msgid "Export"
 msgstr ""
 
+#: ../ccm/Pages.py:887
 msgid "Export your CompizConfig Profile"
 msgstr ""
 
+#: ../ccm/Pages.py:907
 msgid "Backend"
 msgstr ""
 
+#: ../ccm/Pages.py:913
 msgid "Integration"
 msgstr ""
 
+#: ../ccm/Pages.py:914
 msgid "Enable integration into the desktop environment"
 msgstr ""
 
+#: ../ccm/Pages.py:962
 msgid "Profiles (*.profile)"
 msgstr ""
 
+#: ../ccm/Pages.py:967
 msgid "All files"
 msgstr ""
 
+#: ../ccm/Pages.py:972
 msgid "Save file.."
 msgstr ""
 
+#: ../ccm/Pages.py:984 ../ccm/Settings.py:171
+msgid "Open file.."
+msgstr ""
+
+#: ../ccm/Pages.py:995
 msgid "Enter a profile name"
 msgstr ""
 
+#: ../ccm/Pages.py:1000
 msgid "Please enter a name for the new profile:"
 msgstr ""
 
+#: ../ccm/Pages.py:1032
 msgid "Backend not found."
 msgstr ""
 
+#: ../ccm/Settings.py:49
+msgid "Reset setting to the default value"
+msgstr ""
+
+#: ../ccm/Settings.py:135
+msgid "Browse for "
+msgstr ""
+
+#: ../ccm/Settings.py:144
+msgid "Images"
+msgstr ""
+
+#: ../ccm/Settings.py:153
+msgid "File"
+msgstr ""
+
+#: ../ccm/Settings.py:308
+msgid "Multi-list settings. You can double-click a row to edit the values."
+msgstr ""
+
+#: ../ccm/Settings.py:470
+msgid "Edit"
+msgstr ""
+
+#: ../ccm/Settings.py:710 ../ccm/Settings.py:845
+#, python-format
+msgid "Value (%s)"
+msgstr ""
+
+#: ../ccm/Settings.py:719 ../ccm/Settings.py:751 ../ccm/Settings.py:854
+#, python-format
+msgid "Edit %s"
+msgstr ""
+
+#: ../ccm/Settings.py:725 ../ccm/Settings.py:757 ../ccm/Settings.py:858
+#, python-format
+msgid "Value (%s) for %s:"
+msgstr ""
+
+#: ../ccm/Settings.py:925
+#, python-format
+msgid "Unhandled list type %s for %s"
+msgstr ""
+
+#: ../ccm/Window.py:42 ../ccm/Window.py:63
 msgid "CompizConfig Settings Manager"
 msgstr ""
 
-msgid "Filter your Plugin list"
-msgstr ""
-
-#, c-format
-msgid "Screen %i"
-msgstr ""
-
-msgid "Screen"
-msgstr ""
-
-msgid "Uncategorized"
-msgstr ""
-
-msgid "Category"
-msgstr ""
-
-msgid "About"
-msgstr ""
-
-msgid "Advanced Search"
-msgstr ""
-
+#: ../ccm/Window.py:44
 msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr ""
 
+#: ../ccm/Window.py:46
 msgid "translator-credits"
+msgstr ""
+
+#: ../ccm/Window.py:121
+msgid "Filter your Plugin list"
+msgstr ""
+
+#: ../ccm/Window.py:130
+#, python-format
+msgid "Screen %i"
+msgstr ""
+
+#: ../ccm/Window.py:135
+msgid "Screen"
+msgstr ""
+
+#: ../ccm/Window.py:143 ../ccm/Window.py:231
+msgid "Uncategorized"
+msgstr ""
+
+#: ../ccm/Window.py:152
+msgid "Category"
+msgstr ""
+
+#: ../ccm/Window.py:163
+msgid "About"
+msgstr ""
+
+#: ../ccm/Window.py:193
+msgid "Advanced Search"
 msgstr ""
