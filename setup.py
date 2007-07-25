@@ -3,11 +3,22 @@
 import sys, os, glob
 from distutils.core import setup
 from distutils.sysconfig import PREFIX
+from getopt import getopt
+
+prefix = None
+if len (sys.argv) > 2:
+    opts, args = getopt (sys.argv[2:], "", ['prefix='])
+    for o, a in opts:
+        if o == "--prefix":
+            prefix = a
+            break
+if not prefix:
+    prefix = PREFIX
 
 f = open (os.path.join ("ccm/Constants.py.in"), "rt")
 data = f.read ()
 f.close ()
-data = data.replace ("@prefix@", PREFIX)
+data = data.replace ("@prefix@", prefix)
 f = open (os.path.join ("ccm/Constants.py"), "wt")
 f.write (data)
 f.close ()
