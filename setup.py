@@ -5,6 +5,10 @@ from distutils.core import setup
 from distutils.sysconfig import PREFIX
 from getopt import getopt
 
+if not len (sys.argv) or sys.argv[1] not in ("install", "build"):
+    print "Please specify operation : install | build"
+    raise SystemExit
+
 prefix = None
 if len (sys.argv) > 2:
     opts, args = getopt (sys.argv[2:], "", ['prefix='])
@@ -12,6 +16,7 @@ if len (sys.argv) > 2:
         if o == "--prefix":
             if len (a):
                 prefix = a
+            if sys.argv[1] != "build":
                 break
             else:
                 for o in sys.argv:
@@ -45,10 +50,6 @@ data_files = [
                 ("share/applications", ["ccsm.desktop"]),
                 ("share/ccsm/images", images)
              ]
-
-if len (sys.argv) == 1 or sys.argv[1] not in ("install", "build"):
-    print "Please specify operation : install | build"
-    raise SystemExit
 
 podir = os.path.join (os.path.realpath ("."), "po")
 if os.path.isdir (podir):
