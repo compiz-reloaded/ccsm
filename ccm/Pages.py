@@ -578,6 +578,7 @@ class SelectorBox(gtk.ScrolledWindow):
 	def add_item(self, item, callback, markup="%s"):
 		button = gtk.Button()
 		label = Label()
+		item = item.replace("&", "&amp;")
 		label.set_markup(markup % item or _("General"))
 		button.add(label)
 		button.connect("clicked", callback, item)
