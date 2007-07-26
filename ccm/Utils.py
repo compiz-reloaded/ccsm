@@ -36,7 +36,7 @@ def getScreens():
 		screens.append(i)
 	return screens
 
-class Style():
+class Style:
 	def __init__(self):
 		fakeWindow = gtk.Window()
 		styleWidget = gtk.Entry()
