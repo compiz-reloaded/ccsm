@@ -53,7 +53,12 @@ class Setting:
 		self._Init()
 
 		if createUpdater and CurrentUpdater == None:
-			CurrentUpdater = Updater(self.Setting.Plugin.Context)
+			context = none
+			if self.Setting.__class__ == list:
+				context = self.Setting[0].Plugin.Context
+			else:
+				context = self.Setting.Plugin.Context
+			CurrentUpdater = Updater(context)
 
 		CurrentUpdater.Append(self)
 
