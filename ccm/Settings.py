@@ -53,7 +53,7 @@ class Setting:
 		self._Init()
 
 		if createUpdater and CurrentUpdater == None:
-			context = none
+			context = None
 			if self.Setting.__class__ == list:
 				context = self.Setting[0].Plugin.Context
 			else:
