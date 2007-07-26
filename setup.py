@@ -15,7 +15,7 @@ if len (sys.argv) > 2:
         if o == "--prefix":
             if len (a):
                 prefix = a
-                if sys.argv[1] != "build":
+                if sys.argv[1] == "install":
                     break
             for o in sys.argv:
                 if o.startswith ("--prefix"):
@@ -23,11 +23,11 @@ if len (sys.argv) > 2:
                     break
 if not prefix and "PREFIX" in os.environ:
     prefix = os.environ["PREFIX"]
-    if len (prefix):
+    if sys.argv[1] == "install" and len (prefix):
         sys.argv += ["--prefix", prefix]
 if not prefix or not len (prefix):
     prefix = "/usr/local"
-    if len (prefix):
+    if sys.argv[1] == "install":
         sys.argv += ["--prefix", prefix]
 
 f = open (os.path.join ("ccm/Constants.py.in"), "rt")
