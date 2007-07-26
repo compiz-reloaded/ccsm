@@ -240,8 +240,8 @@ class ActionPage:
 			keyEntry.set_text(gtk.accelerator_name(key, keyModifier) or 'None')
 			keyLabel = gtk.Label(_("Key"))
 			keyLabel.props.xalign = 0
-			table.attach(keyLabel, 0, 1, 0, 1, TDef, TDef, TXp, TYp)
-			table.attach(keyEntry, 1, 2, 0, 1, TDef, TDef, TXp, TYp)
+			table.attach(keyLabel, 0, 1, 0, 1, TableDef, TableDef, TableX, TableY)
+			table.attach(keyEntry, 1, 2, 0, 1, TableDef, TableDef, TableX, TableY)
 		
 		# Button
 		if setting.Info[1]:
@@ -249,8 +249,8 @@ class ActionPage:
 			buttonEntry.set_text(button)
 			buttonLabel = gtk.Label(_("Button"))
 			buttonLabel.props.xalign = 0
-			table.attach(buttonLabel, 0, 1, 1, 2, TDef, TDef, TXp, TYp)
-			table.attach(buttonEntry, 1, 2, 1, 2, TDef, TDef, TXp, TYp)
+			table.attach(buttonLabel, 0, 1, 1, 2, TableDef, TableDef, TableX, TableY)
+			table.attach(buttonEntry, 1, 2, 1, 2, TableDef, TableDef, TableX, TableY)
 		
 		# Edge + EdgeButton
 		if setting.Info[3]:
@@ -264,7 +264,7 @@ class ActionPage:
 				edgeCheck = gtk.CheckButton(e)
 				if edges.count(e) > 0:
 					edgeCheck.set_active(True)
-				edgeTable.attach(edgeCheck, col, col+1, row, row+1, TDef, TDef, TXp, TYp)
+				edgeTable.attach(edgeCheck, col, col+1, row, row+1, TableDef, TableDef, TableX, TableY)
 
 				col += 1
 				if col > 2:
@@ -276,8 +276,8 @@ class ActionPage:
 					
 			edgeLabel = gtk.Label(_("Screen Edges"))
 			edgeLabel.props.xalign = 0
-			table.attach(edgeLabel, 0, 1, 2, 3, TDef, TDef, TXp, TYp)
-			table.attach(edgeTable, 1, 2, 2, 3, TDef, TDef, TXp, TYp)
+			table.attach(edgeLabel, 0, 1, 2, 3, TableDef, TableDef, TableX, TableY)
+			table.attach(edgeTable, 1, 2, 2, 3, TableDef, TableDef, TableX, TableY)
 
 			edgeButtonCombo = gtk.ComboBox(self.EdgeButtonStore)
 			if edgeButton == _("None"):
@@ -289,14 +289,14 @@ class ActionPage:
 			edgeButtonCombo.add_attribute(edgeButtonComboRenderer,'text',0)
 			edgeButtonLabel = gtk.Label(_("Edge Button"))
 			edgeButtonLabel.props.xalign = 0
-			table.attach(edgeButtonLabel, 0, 1, 3, 4, TDef, TDef, TXp, TYp)
-			table.attach(edgeButtonCombo, 1, 2, 3, 4, TDef, TDef, TXp, TYp)
+			table.attach(edgeButtonLabel, 0, 1, 3, 4, TableDef, TableDef, TableX, TableY)
+			table.attach(edgeButtonCombo, 1, 2, 3, 4, TableDef, TableDef, TableX, TableY)
 		
 		# Bell
 		if setting.Info[2]:
 			bellButton = gtk.CheckButton(_("On System Bell"))
 			bellButton.set_active(bell)
-			table.attach(bellButton, 0, 2, 4, 5, TDef, TDef, TXp, TYp)
+			table.attach(bellButton, 0, 2, 4, 5, TableDef, TableDef, TableX, TableY)
 		
 		# Reset
 		box = gtk.HBox()
@@ -307,7 +307,7 @@ class ActionPage:
 		resetButton.set_image(resetImage)
 		box.pack_end(resetButton, False, False)
 		resetButton.connect('clicked', ResetButton, setting, iter)
-		table.attach(box, 0, 2, 5, 6, TDef, TDef, TXp, TYp)
+		table.attach(box, 0, 2, 5, 6, TableDef, TableDef, TableX, TableY)
 		
 		dlg.show_all()
 		resp = dlg.run()
