@@ -16,13 +16,12 @@ if len (sys.argv) > 2:
         if o == "--prefix":
             if len (a):
                 prefix = a
-            if sys.argv[1] != "build":
-                break
-            else:
-                for o in sys.argv:
-                    if o.startswith ("--prefix"):
-                        sys.argv.remove (o)
-                        break
+                if sys.argv[1] != "build":
+                    break
+            for o in sys.argv:
+                if o.startswith ("--prefix"):
+                    sys.argv.remove (o)
+                    break
 if not prefix and "PREFIX" in os.environ:
     prefix = os.environ["PREFIX"]
     if len (prefix):
