@@ -173,7 +173,7 @@ class FileSetting:
 		if custom_value != None:
 			value = custom_value
 		b = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_OPEN, gtk.RESPONSE_OK)
-		chooser = gtk.FileChooserDialog(title=_("Open file.."), parent=mainWin, buttons=b)
+		chooser = gtk.FileChooserDialog(title=_("Open file.."), buttons=b)
 		
 		if os.path.exists(value):
 			chooser.set_filename(value)
@@ -472,7 +472,7 @@ class MultiListSetting(Setting):
 			row += 1
 
 	def _Edit(self, values=None):
-		dlg = gtk.Dialog(_("Edit"), mainWin)
+		dlg = gtk.Dialog(_("Edit"))
 		dlg.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
 		dlg.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK).grab_default()
 		dlg.set_default_response(gtk.RESPONSE_OK)
@@ -721,7 +721,7 @@ class StringMatchListSetting(ListSetting):
 		return self.Store.get(iter, 0)[0]
 
 	def _Edit(self, value=""):
-		dlg = gtk.Dialog(_("Edit %s") % self.Setting.ShortDesc, mainWin)
+		dlg = gtk.Dialog(_("Edit %s") % self.Setting.ShortDesc)
 		dlg.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
 		dlg.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK).grab_default()
 		dlg.set_default_response(gtk.RESPONSE_OK)
@@ -753,7 +753,7 @@ class FileListSetting(StringMatchListSetting, FileSetting):
 		FileSetting.__init__(self, Setting)
 	
 	def _Edit(self, value=""):
-		dlg = gtk.Dialog(_("Edit %s") % self.Setting.ShortDesc, mainWin)
+		dlg = gtk.Dialog(_("Edit %s") % self.Setting.ShortDesc)
 		dlg.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
 		dlg.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK).grab_default()
 		dlg.set_default_response(gtk.RESPONSE_OK)
@@ -856,7 +856,7 @@ class IntFloatListSetting(ListSetting):
 		return eval(self.Store.get(Iter, 0)[0])
 
 	def _Edit(self, value = None):
-		dlg = gtk.Dialog(_("Edit %s") % self.Setting.ShortDesc, mainWin)
+		dlg = gtk.Dialog(_("Edit %s") % self.Setting.ShortDesc)
 		dlg.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
 		dlg.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK).grab_default()
 		dlg.set_default_response(gtk.RESPONSE_OK)
