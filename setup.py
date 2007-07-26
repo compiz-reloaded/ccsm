@@ -67,7 +67,7 @@ if os.path.isdir (podir):
 setup (
         name             = "ccsm",
         version          = "0.0.0",
-        description      = "OpenGL Fragment and Vertex Program editor",
+        description      = "CompizConfig Settings Manager",
         author           = "Patrick Niklaus",
         author_email     = "marex@opencompositing.org",
         url              = "http://opencompositing.org/",
