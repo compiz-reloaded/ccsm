@@ -2,7 +2,6 @@
 
 import sys, os, glob
 from distutils.core import setup
-from distutils.sysconfig import PREFIX
 from getopt import getopt
 
 if not len (sys.argv) or sys.argv[1] not in ("install", "build"):
@@ -27,7 +26,9 @@ if not prefix and "PREFIX" in os.environ:
     if len (prefix):
         sys.argv += ["--prefix", prefix]
 if not prefix or not len (prefix):
-    prefix = PREFIX
+    prefix = "/usr/local"
+    if len (prefix):
+        sys.argv += ["--prefix", prefix]
 
 f = open (os.path.join ("ccm/Constants.py.in"), "rt")
 data = f.read ()
