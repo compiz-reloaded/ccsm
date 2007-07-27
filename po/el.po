@@ -1,16 +1,16 @@
-# CompizConfig Greek Translation.
+#CompizConfig Greek Translation.
 # Copyright (C) 2007 Jim Dusis
 # This file is distributed under the same license as the ccsm package.
-# Jim Dusis (djdoo) <jimdusis@yahoo.gr>, 2007.
+# Δημήτρης (djdoo) <jimdusis@yahoo.gr>, 2007.
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: ccsm 0.0.1\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-07-02 10:00+0200\n"
-"PO-Revision-Date: 2007-07-016 01:00+0200\n"
-"Last-Translator:  Teddy <thodo_mitch@hotmail.com>\n"
+"POT-Creation-Date: 2007-07-09 17:41+0200\n"
+"PO-Revision-Date: 2007-07-24 03:20+0200\n"
+"Last-Translator:  djdoo <jimdusis@yahoo.gr>\n"
 "Language-Team: Compiz Fusion translators <i18n@lists.compiz-fusion.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -25,8 +25,8 @@ msgid ""
 "b> conflicts with the action <b>%s</b> of the <b>%s</b> plugin.\n"
 "Do you wish to disable <b>%s</b> in the <b>%s</b> plugin?"
 msgstr ""
-"Η νέα τιμή του %s συνδυασμού της ενέργειας <b>%s</b> στο πρόσθετο "
-"<b>%s</b> συγκρούεται με την ενέργεια <b>%s</b> του <b>%s</b> πρόσθετου.\n"
+"Η νέα τιμή του %s συνδυασμού της ενέργειας <b>%s</b> στο πρόσθετο <b>%s</b> "
+"συγκρούεται με την ενέργεια <b>%s</b> του <b>%s</b> πρόσθετου.\n"
 "Θέλετε να απενεργοποιήσετε το <b>%s</b> στο <b>%s</b> πρόσθετο?"
 
 #, c-format
@@ -47,8 +47,9 @@ msgid ""
 "This plugin is currently disabled.\n"
 "Do you wish to enable <b>%s</b> so the feature is available?"
 msgstr ""
-"Προσπαθείτε να χρησιμοποιήσετε το χαρακτηριστικό <b>%s</b> που παρέχεται απ το"
-"<b>%s</b>.\n Το πρόσθετο αυτό είναι τώρα απενεργοποιημένο.\n"
+"Προσπαθείτε να χρησιμοποιήσετε το χαρακτηριστικό <b>%s</b> που παρέχεται απ "
+"το<b>%s</b>.\n"
+" Το πρόσθετο αυτό είναι τώρα απενεργοποιημένο.\n"
 "Θέλετε να ενεργοποιήσετε το <b>%s</b> ωστε το χαρακτηριστικό να είναι "
 "διαθέσιμο?"
 
@@ -120,7 +121,7 @@ msgstr ""
 "%s"
 
 msgid "Enable these plugins"
-msgstr "Ενεργοποίηση προσθέτων"
+msgstr "Ενεργοποίηση συγκεκριμένων προσθέτων"
 
 #, c-format
 msgid "<b>%s</b> requires the plugin <b>%s</b>."
@@ -131,8 +132,8 @@ msgid ""
 "<b>%s</b> provides the feature <b>%s</b> which is required by the plugins <b>"
 "%s</b>."
 msgstr ""
-"<b>%s</b> παρέχει το στοιχείο <b>%s</b> το οποίο απαιτείται απο τα πρόσθετα <b"
-">%s</b>."
+"<b>%s</b> παρέχει το στοιχείο <b>%s</b> το οποίο απαιτείται απο τα πρόσθετα "
+"<b>%s</b>."
 
 msgid "Disable these plugins"
 msgstr "Απενεργοποίηση πρόσθετων"
@@ -156,6 +157,16 @@ msgstr "Κουμπί"
 
 msgid "Screen Edge"
 msgstr "Άκρη Οθόνης"
+
+#, c-format
+msgid "Button %i"
+msgstr "Κουμπί %i"
+
+msgid "None"
+msgstr "Κανένα"
+
+msgid "Edge Button"
+msgstr "Ακριανό Κουμπί"
 
 msgid "On System Bell"
 msgstr "Στο Καμπανάκι Συστήματος"
@@ -286,5 +297,16 @@ msgstr "Χωρίς Κατηγορία"
 msgid "Category"
 msgstr "Κατηγορία"
 
+msgid "About"
+msgstr "Σχετικά"
+
 msgid "Advanced Search"
 msgstr "Προχωρημένη Αναζήτηση"
+
+msgid "This is a settings manager for the CompizConfig configuration system."
+msgstr ""
+"Αυτός είναι ο διαχειριστής ρυθμίσεων του συστήματος ρύθμισης του "
+"CompizConfig."
+
+msgid "translator-credits"
+msgstr "στοιχεία-μεταφραστών"
