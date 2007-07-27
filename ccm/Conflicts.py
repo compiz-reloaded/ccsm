@@ -132,10 +132,10 @@ class FeatureRequirement(Conflict):
 		for plugin in context.Plugins.values():
 			if plugin.Features.__contains__(feature):
 				if not plugin.Enabled:
-					self.Requirement.append(plugin)
+					self.Requirements.append(plugin)
 	
 	def Resolve(self):
-		if len(self.Requriements) == 0:
+		if len(self.Requirements) == 0:
 			return True
 		
 		for plugin in self.Requirements:

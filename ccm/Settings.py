@@ -27,6 +27,7 @@ import mimetypes
 mimetypes.init()
 
 from ccm.Constants import *
+from ccm.Conflicts import *
 from ccm.Utils import *
 
 import locale
@@ -164,7 +165,8 @@ class FileSetting:
 		mime = mimetypes.types_map["." + ext]
 		if len(self.Setting.Hints) > 1:
 			if self.Setting.Hints[1] == 'image':
-				return CheckFeature(self.Setting.Plugin.Context, 'imagemime:' + mime)
+				require = FeatureRequirement(self.Setting.Plugin.Context, 'imagemime:' + mime)
+				return require.Resolve()
 		
 		return True
 			
