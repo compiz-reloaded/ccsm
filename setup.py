@@ -1,34 +1,35 @@
-#! /usr/bin/env python
+#!/usr/bin/env python
 
 import sys, os, glob
 from distutils.core import setup
-from getopt import getopt
 
-if not len (sys.argv) or sys.argv[1] not in ("install", "build"):
-    print "Please specify operation : install | build"
+ops = ("install", "build", "sdist")
+
+if not len (sys.argv) or sys.argv[1] not in ops:
+    print "Please specify operation : install | build | sdist"
     raise SystemExit
 
 prefix = None
-if len (sys.argv) > 2:
-    opts, args = getopt (sys.argv[2:], "", ['prefix='])
-    for o, a in opts:
-        if o == "--prefix":
-            if len (a):
-                prefix = a
-                if sys.argv[1] == "install":
-                    break
-            for o in sys.argv:
-                if o.startswith ("--prefix"):
-                    sys.argv.remove (o)
-                    break
+if len (sys.argv) >= 2:
+    i = 0
+    for o in sys.argv:
+        if o.startswith ("--prefix"):
+            if o == "--prefix":
+                if len (sys.argv) >= i:
+                    prefix = sys.argv[i + 1]
+                sys.argv.remove (prefix)
+            elif o.startswith ("--prefix=") and len (o[9:]):
+                prefix = o[9:]
+            sys.argv.remove (o)
+            break
+        i += 1
 if not prefix and "PREFIX" in os.environ:
     prefix = os.environ["PREFIX"]
-    if sys.argv[1] == "install" and len (prefix):
-        sys.argv += ["--prefix", prefix]
 if not prefix or not len (prefix):
     prefix = "/usr/local"
-    if sys.argv[1] == "install":
-        sys.argv += ["--prefix", prefix]
+
+if sys.argv[1] == "install" and len (prefix):
+    sys.argv += ["--prefix", prefix]
 
 f = open (os.path.join ("ccm/Constants.py.in"), "rt")
 data = f.read ()
