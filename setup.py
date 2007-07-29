@@ -5,12 +5,12 @@ from distutils.core import setup
 
 ops = ("install", "build", "sdist")
 
-if not len (sys.argv) or sys.argv[1] not in ops:
-    print "Please specify operation : install | build | sdist"
+if not len (sys.argv) >= 2 or sys.argv[1] not in ops:
+    print "Please specify operation : %s" % " | ".join (ops)
     raise SystemExit
 
 prefix = None
-if len (sys.argv) >= 2:
+if len (sys.argv) > 2:
     i = 0
     for o in sys.argv:
         if o.startswith ("--prefix"):
