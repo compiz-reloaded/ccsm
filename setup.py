@@ -65,9 +65,14 @@ if os.path.isdir (podir):
             os.system (buildcmd % (name, name))
             data_files.append ((destpath % name, [mopath % name]))
 
+version_file = open ("VERSION", "r")
+version = version_file.read ().strip ()
+if "=" in version:
+    version = version.split ("=")[1]
+
 setup (
         name             = "ccsm",
-        version          = "0.0.0",
+        version          = version,
         description      = "CompizConfig Settings Manager",
         author           = "Patrick Niklaus",
         author_email     = "marex@opencompositing.org",
