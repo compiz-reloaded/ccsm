@@ -611,6 +611,7 @@ class ListSetting(Setting):
 		self.Store.connect('row-deleted', self.Changed)
 		self.Store.connect('row-inserted', self.Changed)
 		self.Store.connect('rows-reordered', self.Changed)
+		self.View.connect('row-activated', self.Activated)
 		self.Select = self.View.get_selection()
 		self.Select.set_mode(gtk.SELECTION_MULTIPLE)
 
@@ -652,6 +653,9 @@ class ListSetting(Setting):
 		for path in selectedRows:
 			iter = self.Store.get_iter(path)
 			self.Store.remove(iter)
+
+	def Activated(self, object, path, col):
+		self.Edit(None)
 
 	def Edit(self, b):
 		selectedRows = self.Select.get_selected_rows()[1]
