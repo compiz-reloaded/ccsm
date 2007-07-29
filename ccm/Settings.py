@@ -469,7 +469,13 @@ class MultiListSetting(Setting):
 					sortedItems = sorted(setting.Info[1][2].items(), EnumSettingSortCompare)
 					value = sortedItems[pos][0]
 				else:
-					value = setting.Value[row]
+					if row < len(setting.Value):
+						value = setting.Value[row]
+					else:
+						if setting.Info[0] == 'Int':
+							value = 0
+						elif setting.Info[0] == 'String' or setting.Info[0] == 'Match':
+							value = ""
 				self.Store.set(iter, j, value)
 			row += 1
 
