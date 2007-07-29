@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 
 import sys, os, glob
+from stat import *
 from distutils.core import setup
 from distutils.command.install import install as _install
+from distutils.command.install_data import install_data as _install_data
 
 INSTALLED_FILES = "installed_files"
 
@@ -10,7 +12,7 @@ class install (_install):
 
     def run (self):
         _install.run (self)
-        outputs = self.get_outputs()
+        outputs = self.get_outputs ()
         length = 0
         if self.root:
             length += len (self.root)
@@ -28,6 +30,17 @@ class install (_install):
             return 
         file.write (data)
         file.close ()
+
+class install_data (_install_data):
+
+    def run (self):
+        def chmod_data_file (file):
+            try:
+                os.chmod (file, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)
+            except:
+                self.warn ("Could not chmod data file %s" % file)
+        _install_data.run (self)
+        map (chmod_data_file, self.get_outputs ())
 
 class uninstall (_install):
 
@@ -57,7 +70,7 @@ class uninstall (_install):
 
 ops = ("install", "build", "sdist", "uninstall", "clean")
 
-if not len (sys.argv) >= 2 or sys.argv[1] not in ops:
+if len (sys.argv) < 2 or sys.argv[1] not in ops:
     print "Please specify operation : %s" % " | ".join (ops)
     raise SystemExit
 
@@ -134,7 +147,8 @@ setup (
         packages         = ["ccm"],
         scripts          = ["ccsm"],
         cmdclass         = {"uninstall" : uninstall,
-                            "install" : install}
+                            "install" : install,
+                            "install_data" : install_data}
      )
 
 os.remove ("ccm/Constants.py")
