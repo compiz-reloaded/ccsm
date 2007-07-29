@@ -2,8 +2,60 @@
 
 import sys, os, glob
 from distutils.core import setup
+from distutils.command.install import install as _install
 
-ops = ("install", "build", "sdist")
+INSTALLED_FILES = "installed_files"
+
+class install (_install):
+
+    def run (self):
+        _install.run (self)
+        outputs = self.get_outputs()
+        length = 0
+        if self.root:
+            length += len (self.root)
+        if self.prefix:
+            length += len (self.prefix)
+        if length:
+            for counter in xrange (len (outputs)):
+                outputs[counter] = outputs[counter][length:]
+        data = "\n".join (outputs)
+        try:
+            file = open (INSTALLED_FILES, "w")
+        except:
+            self.warn ("Could not write installed files list %s" % \
+                       INSTALLED_FILES)
+            return 
+        file.write (data)
+        file.close ()
+
+class uninstall (_install):
+
+    def run (self):
+        try:
+            file = open (INSTALLED_FILES, "r")
+        except:
+            self.warn ("Could not read installed files list %s" % \
+                       INSTALLED_FILES)
+            return 
+        files = file.readlines ()
+        file.close ()
+        prepend = ""
+        if self.root:
+            prepend += self.root
+        if self.prefix:
+            prepend += self.prefix
+        if len (prepend):
+            for counter in xrange (len (files)):
+                files[counter] = prepend + files[counter].rstrip ()
+        for file in files:
+            print "Uninstalling %s" % file
+            try:
+                os.unlink (file)
+            except:
+                self.warn ("Could not remove file %s" % file)
+
+ops = ("install", "build", "sdist", "uninstall", "clean")
 
 if not len (sys.argv) >= 2 or sys.argv[1] not in ops:
     print "Please specify operation : %s" % " | ".join (ops)
@@ -28,7 +80,7 @@ if not prefix and "PREFIX" in os.environ:
 if not prefix or not len (prefix):
     prefix = "/usr/local"
 
-if sys.argv[1] == "install" and len (prefix):
+if sys.argv[1] in ("install", "uninstall") and len (prefix):
     sys.argv += ["--prefix", prefix]
 
 f = open (os.path.join ("ccm/Constants.py.in"), "rt")
@@ -80,7 +132,9 @@ setup (
         license          = "GPL",
         data_files       = data_files,
         packages         = ["ccm"],
-        scripts          = ["ccsm"]
+        scripts          = ["ccsm"],
+        cmdclass         = {"uninstall" : uninstall,
+                            "install" : install}
      )
 
 os.remove ("ccm/Constants.py")
