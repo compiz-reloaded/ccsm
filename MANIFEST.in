@@ -1,0 +1,5 @@
+include po/*
+include TODO README INSTALL AUTHORS COPYING LICENSE NEWS VERSION ChangeLog
+include ccsm.desktop
+include Makefile MANIFEST.in
+recursive-include images *
