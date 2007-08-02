@@ -117,18 +117,19 @@ data_files = [
                 ("share/ccsm/images", images)
              ]
 
-podir = os.path.join (os.path.realpath ("."), "po")
-if os.path.isdir (podir):
-    buildcmd = "msgfmt -o build/locale/%s/ccsm.mo po/%s.po"
-    mopath = "build/locale/%s/ccsm.mo"
-    destpath = "share/locale/%s/LC_MESSAGES"
-    for name in os.listdir (podir):
-        if name[-2:] == "po":
-            name = name[:-3]
-            if not os.path.isdir ("build/locale/" + name):
-                os.makedirs ("build/locale/" + name)
-            os.system (buildcmd % (name, name))
-            data_files.append ((destpath % name, [mopath % name]))
+if sys.argv[1] == "build":
+    podir = os.path.join (os.path.realpath ("."), "po")
+    if os.path.isdir (podir):
+        buildcmd = "msgfmt -o build/locale/%s/ccsm.mo po/%s.po"
+        mopath = "build/locale/%s/ccsm.mo"
+        destpath = "share/locale/%s/LC_MESSAGES"
+        for name in os.listdir (podir):
+            if name[-2:] == "po":
+                name = name[:-3]
+                if not os.path.isdir ("build/locale/" + name):
+                    os.makedirs ("build/locale/" + name)
+                os.system (buildcmd % (name, name))
+                data_files.append ((destpath % name, [mopath % name]))
 
 version_file = open ("VERSION", "r")
 version = version_file.read ().strip ()
