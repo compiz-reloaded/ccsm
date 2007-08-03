@@ -125,7 +125,9 @@ if os.path.isdir (podir):
     for name in os.listdir (podir):
         if name[-2:] == "po":
             name = name[:-3]
-            if sys.argv[1] == "build":
+            if sys.argv[1] == "build" \
+               or (sys.argv[1] == "install" and \
+                   not os.path.exists (mopath % name)):
                 if not os.path.isdir ("build/locale/" + name):
                     os.makedirs ("build/locale/" + name)
                 os.system (buildcmd % (name, name))
