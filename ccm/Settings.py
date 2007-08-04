@@ -265,6 +265,7 @@ class IntFloatSetting(Setting):
 		self.Scale.connect('focus-out-event', self.Changed)
 		self.Spin.connect('activate', self.Changed)
 		self.Spin.connect('button-release-event', self.Changed)
+		self.Spin.connect('focus-out-event', self.Changed)
 		self.Widget = self.Scale
 
 	def Attach(self, Table, row):
