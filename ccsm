@@ -27,7 +27,7 @@ try:
 	import sexy
 	has_sexy = True
 except ImportError:
-	print "Warning: No sexy-python package found."
+	print "Info: No sexy-python package found, don't worry it's optional."
 	has_sexy = False
 
 if gtk.pygtk_version < (2,10,0):

@@ -1,0 +1,274 @@
+# translation of zh_CN-ccsm.po to Chinese
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Thruth <gubotruth@gmail.com>, 2007
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: zh_CN-ccsm\n"
+"Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
+"POT-Creation-Date: 2007-06-30 17:59+0530\n"
+"PO-Revision-Date: 2007-07-12 09:02+0800\n"
+"Last-Translator: Thruth <gubotruth@gmail.com>\n"
+"Language-Team:  Chinese\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "PyGtk 2.10.0 or later required"
+msgstr "需要 PyGtk 2.10.0或更新版本"
+
+#, c-format
+msgid ""
+"The new value for the %s binding for the action <b>%s</b> in plugin <b>%s</b> conflicts with the action <b>%s</b> of the <b>%s</b> plugin.\n"
+"Do you wish to disable <b>%s</b> in the <b>%s</b> plugin?"
+msgstr ""
+" %s 组合 <b>%s</b> 动作的新值在 <b>%s</b> 插件中与动作 <b>%s</b> 相冲突，该动作在 <b>%s</b> 插件中。\n"
+"您要禁用 <b>%s</b> 么？它在 <b>%s</b> 插件中。"
+
+#, c-format
+msgid "Disable %s"
+msgstr "禁用 %s"
+
+#, c-format
+msgid "Don't set %s"
+msgstr "不要设置 %s"
+
+#, c-format
+msgid "Set %s anyway"
+msgstr "强制设置 %s"
+
+#, c-format
+msgid ""
+"You are trying to use the feature <b>%s</b> which is provided by <b>%s</b>.\n"
+"This plugin is currently disabled.\n"
+"Do you wish to enable <b>%s</b> so the feature is available?"
+msgstr ""
+"您试图使用 <b>%s</b> 功能，该功能由 <b>%s</b> 插件提供。\n"
+"该插件目前被禁用。\n"
+"您仍然希望启用 %s 插件以实现功能么?"
+
+#, c-format
+msgid "Enable %s"
+msgstr "启用 %s"
+
+#, c-format
+msgid "Don't enable %s"
+msgstr "不要启用 %s"
+
+msgid "Reset setting to the default value"
+msgstr "将设置重置为默认值"
+
+msgid "Browse for "
+msgstr "浏览"
+
+msgid "Images"
+msgstr "图像"
+
+msgid "File"
+msgstr "文件"
+
+msgid "Open file.."
+msgstr "打开文件.."
+
+msgid "Multi-list settings"
+msgstr "多列表设置"
+
+msgid "Edit"
+msgstr "编辑"
+
+#, c-format
+msgid "Value (%s)"
+msgstr "值 (%s)"
+
+#, c-format
+msgid "Edit %s"
+msgstr "编辑 %s"
+
+#, c-format
+msgid "Value (%s) for %s:"
+msgstr "值 (%s) 于 %s:"
+
+#, c-format
+msgid "Unhandled list type %s for %s"
+msgstr "未处理的列表类型 %s 于 %s"
+
+#, c-format
+msgid "Plugin <b>%s</b> provides feature <b>%s</b> which is also provided by <b>%s</b>"
+msgstr "<b>%s</b> 插件提供 <b>%s</b> 功能，该功能也可以由 <b>%s</b> 提供"
+
+#, c-format
+msgid "Plugin <b>%s</b> conflicts with <b>%s</b>."
+msgstr "<b>%s</b> 插件与 <b>%s</b>相冲突。"
+
+#, c-format
+msgid ""
+"<b>%s</b> requires feature <b>%s</b> which is provided by the following plugins:\n"
+"%s"
+msgstr ""
+"<b>%s</b> 需要 <b>%s</b> 功能，可以由下列插件提供:\n"
+"%s"
+
+msgid "Enable these plugins"
+msgstr "启用这些插件"
+
+#, c-format
+msgid "<b>%s</b> requires the plugin <b>%s</b>."
+msgstr "<b>%s</b> 需要 <b>%s</b> 插件。"
+
+#, c-format
+msgid "<b>%s</b> provides the feature <b>%s</b> which is required by the plugins <b>%s</b>."
+msgstr "<b>%s</b> 提供 <b>%s</b> 功能，<b>%s</b> 插件需要此功能。"
+
+msgid "Disable these plugins"
+msgstr "禁用这些插件"
+
+#, c-format
+msgid "Don't disable %s"
+msgstr "不要禁用 %s"
+
+#, c-format
+msgid "<b>%s</b> is required by the plugins <b>%s</b>."
+msgstr "<b>%s</b> 被 <b>%s</b>.插件需要。"
+
+msgid "Name"
+msgstr "名称"
+
+msgid "Key"
+msgstr "按键"
+
+msgid "Button"
+msgstr "按钮"
+
+msgid "Screen Edge"
+msgstr "屏幕边缘"
+
+msgid "On System Bell"
+msgstr "基于系统铃声"
+
+msgid "General"
+msgstr "一般"
+
+#, c-format
+msgid "Edit Action: %s"
+msgstr "编辑动作: %s"
+
+msgid "Screen Edges"
+msgstr "屏幕边缘"
+
+msgid "Reset To Defaults"
+msgstr "重置到默认"
+
+msgid "Filter"
+msgstr "关键字"
+
+#, c-format
+msgid "Search %s Plugin Options"
+msgstr "搜索 %s 插件选项"
+
+msgid "Use This Plugin"
+msgstr "使用此插件"
+
+msgid "Search Compiz Core Options"
+msgstr "搜索 Compiz Core 选项"
+
+msgid "Actions"
+msgstr "动作"
+
+msgid "Search in..."
+msgstr "寻找于..."
+
+msgid "Short description and name"
+msgstr "简短描述和名称"
+
+msgid "Long description"
+msgstr "具体描述"
+
+msgid "Settings value"
+msgstr "设置值"
+
+msgid "Settings"
+msgstr "设置"
+
+msgid "Profile & Backend"
+msgstr "存档和后端"
+
+msgid "Backend &amp; Profile"
+msgstr "后端 &amp; 存档"
+
+msgid "Configure the backend and profile used by the Compiz Configuration System."
+msgstr "配置 Conpiz 配置系统使用的后端和系统。"
+
+msgid "Add a New Profile"
+msgstr "添加新存档"
+
+msgid "Remove This Profile"
+msgstr "删除此存档"
+
+msgid "Default"
+msgstr "默认"
+
+msgid "Profile"
+msgstr "存档"
+
+msgid "Import"
+msgstr "导入"
+
+msgid "Import a CompizConfig Profile"
+msgstr "导入一个 CompizConfig 存档"
+
+msgid "Export"
+msgstr "导出"
+
+msgid "Export your CompizConfig Profile"
+msgstr "导出你的 CompizConfig 存档"
+
+msgid "Backend"
+msgstr "后端"
+
+msgid "Integration"
+msgstr "整合"
+
+msgid "Enable integration into the desktop environment"
+msgstr "开启与桌面环境的整合"
+
+msgid "Profiles (*.profile)"
+msgstr "存档 (*.profile)"
+
+msgid "All files"
+msgstr "所有文件"
+
+msgid "Save file.."
+msgstr "保存文件.."
+
+msgid "Enter a profile name"
+msgstr "输入存档名称"
+
+msgid "Please enter a name for the new profile:"
+msgstr "请输入一个新存档名称:"
+
+msgid "Backend not found."
+msgstr "未找到后端程序。"
+
+msgid "CompizConfig Settings Manager"
+msgstr "CompizConfig 设置管理器"
+
+msgid "Filter your Plugin list"
+msgstr "过滤你的插件列表"
+
+#, c-format
+msgid "Screen %i"
+msgstr "屏幕 %i"
+
+msgid "Screen"
+msgstr "屏幕"
+
+msgid "Uncategorized"
+msgstr "未分类"
+
+msgid "Category"
+msgstr "类别"
+
+msgid "Advanced Search"
+msgstr "高级搜索"
+
