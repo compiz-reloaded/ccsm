@@ -28,6 +28,13 @@ import gobject
 
 from ccm.Constants import *
 
+import locale
+import gettext
+locale.setlocale(locale.LC_ALL, "")
+gettext.bindtextdomain("ccsm", DataDir + "/locale")
+gettext.textdomain("ccsm")
+_ = gettext.gettext
+
 def getScreens():
 	screens = []
 	display = gtk.gdk.display_get_default()
@@ -53,25 +60,33 @@ class Image(gtk.Image):
 	def __init__(self, name=None, type=ImageNone, size = 32):
 		gtk.Image.__init__(self)
 
-		if type == ImagePlugin and name != None:
-			iconpath = "%s/plugin-%s.svg" % (PixmapDir, name)
-			if not os.path.exists(iconpath):
-				iconpath = "%s/plugin-unknown.svg"%PixmapDir
-			try:
-				pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(iconpath, size, size)
-				self.set_from_pixbuf(pixbuf)
-			except:
-				self.set_from_stock(gtk.STOCK_MISSING_IMAGE, gtk.ICON_SIZE_BUTTON)
-		
-		elif type == ImageCategory and name != None:
-			iconpath = "%s/category-%s.svg" % (PixmapDir, name)
-			if not os.path.exists(iconpath):
-				iconpath = "%s/category-uncategorized.svg" % PixmapDir
-			try:
-				pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(iconpath, size, size)
-				self.set_from_pixbuf(pixbuf)
-			except:
-				self.set_from_stock(gtk.STOCK_MISSING_IMAGE, gtk.ICON_SIZE_BUTTON)
+		if name != None:
+		    if type == ImagePlugin:
+			    iconpath = "%s/plugin-%s.svg" % (PixmapDir, name)
+			    if not os.path.exists(iconpath):
+				    iconpath = "%s/plugin-unknown.svg"%PixmapDir
+			    try:
+				    pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(iconpath, size, size)
+				    self.set_from_pixbuf(pixbuf)
+			    except:
+				    self.set_from_stock(gtk.STOCK_MISSING_IMAGE, gtk.ICON_SIZE_BUTTON)
+		    
+		    elif type == ImageCategory:
+			    iconpath = "%s/category-%s.svg" % (PixmapDir, name)
+			    if not os.path.exists(iconpath):
+				    iconpath = "%s/category-uncategorized.svg" % PixmapDir
+			    try:
+				    pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(iconpath, size, size)
+				    self.set_from_pixbuf(pixbuf)
+			    except:
+				    self.set_from_stock(gtk.STOCK_MISSING_IMAGE, gtk.ICON_SIZE_BUTTON)
+		    elif type == ImageThemed:
+				iconTheme = gtk.icon_theme_get_default()
+				try:
+					pixbuf = iconTheme.load_icon(name, size, 0)
+					self.set_from_pixbuf(pixbuf)
+				except:
+					self.set_from_stock(gtk.STOCK_MISSING_IMAGE, gtk.ICON_SIZE_BUTTON)
 
 class Label(gtk.Label):
 	def __init__(self, value = "", wrap = 160):
@@ -80,6 +95,23 @@ class Label(gtk.Label):
 		self.props.wrap_mode = gtk.WRAP_WORD
 		self.set_line_wrap(True)
 		self.set_size_request(wrap, -1)
+
+class NotFoundBox(gtk.Alignment):
+	def __init__(self, value):
+		gtk.Alignment.__init__(self, 0.5, 0.5, 0.0, 0.0)
+		
+		box = gtk.HBox()
+		self.Warning = gtk.Label()
+		self.Markup = _("<span size=\"large\"><b>No matches found.</b> </span><span>\n\n Your filter \"<b>%s</b>\" does not match any items.</span>")
+		self.Warning.set_markup(self.Markup % value)
+		image = Image("face-surprise", ImageThemed, 48)
+			
+		box.pack_start(image, False, False, 0)
+		box.pack_start(self.Warning, True, True, 15)
+		self.add(box)
+
+	def update(self, value):
+		self.Warning.set_markup(self.Markup % value)
 
 # Updates all registered setting when they where changed through CompizConfig
 class Updater:

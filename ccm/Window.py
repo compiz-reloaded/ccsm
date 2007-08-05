@@ -323,14 +323,33 @@ class MainWin(gtk.Window):
 		# Search in long description
 		if not foundPlugin and target == 0:
 			self.FilterTable(widget, 1)
-			return
 		# Search in category
 		elif not foundPlugin and target == 1:
 			self.FilterTable(widget, 2)
-			return
+		# Nothing found -- Ported from Gnome-Control-Center.
+		elif not foundPlugin and target == 2:
 
-		self.TableAttached = True
-		self.show_all()
+			# Already created only update message
+			if not self.TableAttached:
+				notFound = self.RightPane.get_child().get_child().get_child().get_children()[-1]
+				notFound.update(text)
+				return
+			
+			self.TableAttached = False
+			
+			box = self.RightPane.get_child().get_child().get_child()
+			notFound = NotFoundBox(text)
+			box.pack_start(notFound, True, False)
+			
+			self.show_all()
+		# Something found, display it
+		elif foundPlugin:
+			# Clean up not found Message
+			if not self.TableAttached:
+				self.RightPane.get_child().get_child().get_child().get_children()[-1].destroy()
+			
+			self.TableAttached = True
+			self.show_all()
 
 	def RebuildTable(self, widget, request):
 		cols = (request.width - 60) / 220
