@@ -23,6 +23,9 @@ import pygtk
 import gtk
 import gtk.gdk
 
+import compizconfig
+ccs = compizconfig
+
 from ccm.Constants import *
 from ccm.Settings import *
 from ccm.Conflicts import *
