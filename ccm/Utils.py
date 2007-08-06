@@ -61,30 +61,37 @@ class Image(gtk.Image):
 		gtk.Image.__init__(self)
 
 		if name != None:
-		    if type == ImagePlugin:
-			    iconpath = "%s/plugin-%s.svg" % (PixmapDir, name)
-			    if not os.path.exists(iconpath):
-				    iconpath = "%s/plugin-unknown.svg"%PixmapDir
-			    try:
-				    pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(iconpath, size, size)
-				    self.set_from_pixbuf(pixbuf)
-			    except:
-				    self.set_from_stock(gtk.STOCK_MISSING_IMAGE, gtk.ICON_SIZE_BUTTON)
-		    
-		    elif type == ImageCategory:
-			    iconpath = "%s/category-%s.svg" % (PixmapDir, name)
-			    if not os.path.exists(iconpath):
-				    iconpath = "%s/category-uncategorized.svg" % PixmapDir
-			    try:
-				    pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(iconpath, size, size)
-				    self.set_from_pixbuf(pixbuf)
-			    except:
-				    self.set_from_stock(gtk.STOCK_MISSING_IMAGE, gtk.ICON_SIZE_BUTTON)
-		    elif type == ImageThemed:
+			if type == ImagePlugin:
+				iconpath = "%s/plugin-%s.svg" % (PixmapDir, name)
+				if not os.path.exists(iconpath):
+					iconpath = "%s/plugin-unknown.svg"%PixmapDir
+				try:
+					pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(iconpath, size, size)
+					self.set_from_pixbuf(pixbuf)
+				except:
+					self.set_from_stock(gtk.STOCK_MISSING_IMAGE, gtk.ICON_SIZE_BUTTON)
+
+			elif type == ImageCategory:
+				iconpath = "%s/category-%s.svg" % (PixmapDir, name)
+				if not os.path.exists(iconpath):
+					iconpath = "%s/category-uncategorized.svg" % PixmapDir
+				try:
+					pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(iconpath, size, size)
+					self.set_from_pixbuf(pixbuf)
+				except:
+					self.set_from_stock(gtk.STOCK_MISSING_IMAGE, gtk.ICON_SIZE_BUTTON)
+
+			elif type == ImageThemed:
 				iconTheme = gtk.icon_theme_get_default()
 				try:
 					pixbuf = iconTheme.load_icon(name, size, 0)
 					self.set_from_pixbuf(pixbuf)
+				except:
+					self.set_from_stock(gtk.STOCK_MISSING_IMAGE, gtk.ICON_SIZE_BUTTON)
+
+			elif type == ImageStock:
+				try:
+					self.set_from_stock(name, size)
 				except:
 					self.set_from_stock(gtk.STOCK_MISSING_IMAGE, gtk.ICON_SIZE_BUTTON)
 
