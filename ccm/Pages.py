@@ -714,12 +714,13 @@ class FilterPage:
 		self.RightChild.pack_start(self.SettingsArea, True, True)
 
 		self.ActionPage = ActionPage(self.Context)
-
-		self.FilterChanged(filterEntry)
+		self.NotFoundBox = None
 
 		# Notebook
 		self.RightWidget.append_page(self.RightChild, gtk.Label(_("Settings")))
 		self.RightWidget.append_page(self.ActionPage.Widget, gtk.Label(_("Actions")))
+
+		self.FilterChanged(filterEntry)
 
 	def UpdateBoxes(self):
 		self.PluginBox.clear_list()
@@ -847,8 +848,35 @@ class FilterPage:
 		self.FilteredPlugins = plugins
 		self.UpdateBoxes()
 
+		# No settings found, remove page
+		if len(self.FilteredPlugins) == 0 and self.RightChild.get_parent():
+			self.RightWidget.remove_page(self.RightWidget.page_num(self.RightChild))
+		# Restore page
+		elif len(self.FilteredPlugins) > 0 and not self.RightChild.get_parent():
+			self.RightWidget.append_page(self.RightChild, gtk.Label(_("Settings")))
+
 		self.ActionPage.Filter = self.Filter
 		self.ActionPage.UpdateTreeView()
+		# No actions found, remove page
+		if self.ActionPage.Empty and self.ActionPage.Widget.get_parent():
+			self.RightWidget.remove_page(self.RightWidget.page_num(self.ActionPage.Widget))
+		# Restore page
+		elif not self.ActionPage.Empty and not self.ActionPage.Widget.get_parent():
+			self.RightWidget.append_page(self.ActionPage.Widget, gtk.Label(_("Actions")))
+
+		# Nothing found
+		if not self.RightChild.get_parent() and not self.ActionPage.Widget.get_parent():
+			if self.NotFoundBox:
+				self.NotFoundBox.update(self.Filter)
+			else:
+				self.NotFoundBox = NotFoundBox(self.Filter)
+				self.RightWidget.append_page(self.NotFoundBox, gtk.Label(_("Error")))
+		elif self.NotFoundBox:
+			self.RightWidget.remove_page(self.RightWidget.page_num(self.NotFoundBox))
+			self.NotFoundBox.destroy()
+			self.NotFoundBox = None
+
+		self.RightWidget.show_all()
 
 # Profile and Backend Page
 #
