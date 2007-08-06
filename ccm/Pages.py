@@ -892,24 +892,8 @@ class ProfileBackendPage:
 	def __init__(self, main, context):
 		self.Context = context
 		self.Main = main
-		self.LeftWidget = gtk.VBox(False, 10)
-		self.LeftWidget.set_border_width(15)
-		self.RightWidget = gtk.Notebook()
 		rightChild = gtk.VBox()
 		rightChild.set_border_width(10)
-		self.RightWidget.append_page(rightChild, gtk.Label(_("Profile & Backend")))
-
-		# Left Pane
-		self.DescLabel = Label()
-		self.DescLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>" % (self.Main.Style.BrightColor, _("Backend &amp; Profile")))
-		self.DescImg = Image("profiles",ImageCategory, 64)
-		self.LeftWidget.pack_start(self.DescImg, False, False)
-		self.LeftWidget.pack_start(self.DescLabel, False, False)
-		self.InfoLabelCont = gtk.HBox()
-		self.InfoLabelCont.set_border_width(10)
-		self.LeftWidget.pack_start(self.InfoLabelCont, False, False)
-		self.InfoLabel = Label(_("Configure the backend and profile used by the Compiz Configuration System."), 180)
-		self.InfoLabelCont.pack_start(self.InfoLabel, True, True)
 
 		# Profiles
 		profileBox = gtk.HBox()
@@ -976,13 +960,9 @@ class ProfileBackendPage:
 		self.IntegrationButton.set_sensitive(self.Context.CurrentBackend.IntegrationSupport)
 		self.IntegrationButton.connect("toggled", self.IntegrationChanged)
 		rightChild.pack_start(integrationLabel, False, False, 5)
-		rightChild.pack_start(self.IntegrationButton, False, False, 5)		
+		rightChild.pack_start(self.IntegrationButton, False, False, 5)
 
-		# Back Button
-		self.BackButton = gtk.Button(gtk.STOCK_GO_BACK)
-		self.BackButton.set_use_stock(True)
-		self.BackButton.connect('clicked', self.Main.BackToMain)
-		self.LeftWidget.pack_end(self.BackButton, False, False)
+		self.Widget = rightChild
 	
 	def UpdateProfiles(self, default = _("Default")):
 		self.Context.Read()
@@ -1093,6 +1073,38 @@ class ProfileBackendPage:
 
 		self.ProfileComboBox.set_sensitive(self.Context.CurrentBackend.ProfileSupport)
 		self.IntegrationButton.set_sensitive(self.Context.CurrentBackend.IntegrationSupport)
+
+# Preferences Page
+#
+class PreferencesPage:
+	def __init__(self, main, context):
+		self.Context = context
+		self.Main = main
+		self.LeftWidget = gtk.VBox(False, 10)
+		self.LeftWidget.set_border_width(15)
+		self.RightWidget = gtk.Notebook()
+
+		# Left Pane
+		self.DescLabel = Label()
+		self.DescLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>" % (self.Main.Style.BrightColor, _("Preferences")))
+		self.DescImg = Image("profiles",ImageCategory, 64)
+		self.LeftWidget.pack_start(self.DescImg, False, False)
+		self.LeftWidget.pack_start(self.DescLabel, False, False)
+		self.InfoLabelCont = gtk.HBox()
+		self.InfoLabelCont.set_border_width(10)
+		self.LeftWidget.pack_start(self.InfoLabelCont, False, False)
+		self.InfoLabel = Label(_("Configure the backend, profile and other internal settings used by the Compiz Configuration System."), 180)
+		self.InfoLabelCont.pack_start(self.InfoLabel, True, True)
+
+		# Back Button
+		self.BackButton = gtk.Button(gtk.STOCK_GO_BACK)
+		self.BackButton.set_use_stock(True)
+		self.BackButton.connect('clicked', self.Main.BackToMain)
+		self.LeftWidget.pack_end(self.BackButton, False, False)
+
+		# Profile & Backend Page
+		self.ProfileBackendPage = ProfileBackendPage(main, context)
+		self.RightWidget.append_page(self.ProfileBackendPage.Widget, gtk.Label(_("Profile & Backend")))
 
 # Page
 #

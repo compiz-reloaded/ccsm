@@ -174,19 +174,19 @@ class MainWin(gtk.Window):
 		aboutExitFrame.pack_start(aboutButton, False, False)
 		leftChild.pack_end(aboutExitFrame, False, False)
 
-		# Profiles and Backend
-		profBackLabel = Label()
-		profBackLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>" % (self.Style.BrightColor, _("Backend &amp; Profile")))
-		profBackImage = gtk.Image()
-		profBackImage.set_from_stock(gtk.STOCK_GO_FORWARD, gtk.ICON_SIZE_BUTTON)
-		profBackButton = gtk.Button()
-		profBackButton.connect("clicked", self.ShowProfileBackend)
-		profBackButton.set_relief(gtk.RELIEF_NONE)
-		profBackFrame = gtk.HBox()
-		profBackFrame.pack_start(profBackLabel, False, False)
-		profBackFrame.pack_end(profBackImage, False, False)
-		profBackButton.add(profBackFrame)
-		leftChild.pack_end(profBackButton, False, False)
+		# Preferences
+		prefLabel = Label()
+		prefLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>" % (self.Style.BrightColor, _("Preferences")))
+		prefImage = gtk.Image()
+		prefImage.set_from_stock(gtk.STOCK_GO_FORWARD, gtk.ICON_SIZE_BUTTON)
+		prefButton = gtk.Button()
+		prefButton.connect("clicked", self.ShowPreferences)
+		prefButton.set_relief(gtk.RELIEF_NONE)
+		prefFrame = gtk.HBox()
+		prefFrame.pack_start(prefLabel, False, False)
+		prefFrame.pack_end(prefImage, False, False)
+		prefButton.add(prefFrame)
+		leftChild.pack_end(prefButton, False, False)
 
 		# Advanced Search
 		searchLabel = Label()
@@ -432,14 +432,14 @@ class MainWin(gtk.Window):
 
 		return False
 	
-	def ShowProfileBackend(self, widget):
+	def ShowPreferences(self, widget):
 		self.RightVadj = self.RightPane.get_child().get_vadjustment().get_value()
 		for name, value in self.PluginImages.items():
 			widget = value.get_parent()
 			if widget:
 				widget.remove(value)
-		profBackPage = ProfileBackendPage(self, self.Context)
-		self.SetMainWidgets(profBackPage.LeftWidget, profBackPage.RightWidget)
+		preferencesPage = PreferencesPage(self, self.Context)
+		self.SetMainWidgets(preferencesPage.LeftWidget, preferencesPage.RightWidget)
 
 	def UpdatePlugins(self):
 		for category, container, plugins in self.TableCats.values():
