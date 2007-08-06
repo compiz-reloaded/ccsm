@@ -113,14 +113,13 @@ class ActionPage:
 		
 		self.Scroll.add(self.TreeView)
 		self.Widget.pack_start(self.Scroll, True, True)
-		self.Empty = True
 		self.TreeView.connect('row-activated', self.Activated)
 
 		self.UpdateTreeView()
 		
-	
 	def UpdateTreeView(self):
 		self.Store.clear()
+		self.Empty = True
 
 		self.Plugins = {}
 		if self.Plugin:
@@ -156,6 +155,7 @@ class ActionPage:
 				
 				settings = sum((v.values() for v in [subGroup.Display]+[subGroup.Screens[CurrentScreenNum]]), [])
 				settings = sorted(FilterSettings(settings, self.Filter), SettingSortCompare)
+
 				for setting in settings:
 					if setting.Type == 'Action':
 						if subGroupName != '':
@@ -436,6 +436,8 @@ class PluginPage:
 		self.LeftWidget.pack_start(infoLabelCont, False, False)
 		infoLabel = Label(plugin.LongDesc, 180)
 		infoLabelCont.pack_start(infoLabel, True, True)
+
+		self.NotFoundBox = None
 		
 		if plugin.Name != 'core':
 			Tooltips.set_tip(self.FilterEntry, _("Search %s Plugin Options") % plugin.ShortDesc)
@@ -498,7 +500,8 @@ class PluginPage:
 				groups.append((name, groupPage))
 
 		for page in self.RightWidget.get_children():
-			if self.RightWidget.get_tab_label(page).get_label() != _("Actions"):
+			label = self.RightWidget.get_tab_label(page).get_label()
+			if label != _("Actions") and label != _("Error"):
 				self.RightWidget.remove_page(self.RightWidget.page_num(page))
 				page.destroy()
 
@@ -508,6 +511,23 @@ class PluginPage:
 		if self.ActionPage:
 			self.ActionPage.Filter = filter
 			self.ActionPage.UpdateTreeView()
+			if self.ActionPage.Empty and self.ActionPage.Widget.get_parent():
+				self.RightWidget.remove_page(self.RightWidget.page_num(self.ActionPage.Widget))
+			elif not self.ActionPage.Empty and not self.ActionPage.Widget.get_parent():
+				self.RightWidget.append_page(self.ActionPage.Widget, gtk.Label(_("Actions")))
+
+		# Add
+		if len(self.RightWidget.get_children()) == 0 and not self.NotFoundBox:
+			self.NotFoundBox = NotFoundBox(filter)
+			self.RightWidget.append_page(self.NotFoundBox, gtk.Label(_("Error")))
+		# Update
+		elif len(self.RightWidget.get_children()) == 1 and self.NotFoundBox:
+			self.NotFoundBox.update(filter)
+		# Cleanup
+		elif len(self.RightWidget.get_children()) > 1 and self.NotFoundBox:
+			self.RightWidget.remove_page(self.RightWidget.page_num(self.NotFoundBox))
+			self.NotFoundBox.destroy()
+			self.NotFoundBox = None
 
 		self.RightWidget.show_all()
 
