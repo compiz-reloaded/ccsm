@@ -556,6 +556,13 @@ class SelectorButtons(gtk.HBox):
 		self.Buttons = []
 		self.Arrows = []
 
+	def clear_buttons(self):
+		for widget in (self.Arrows + self.Buttons):
+			widget.destroy()
+
+		self.Arrows = []
+		self.Buttons = []
+
 	def add_button(self, label, callback):
 		arrow = gtk.Arrow(gtk.ARROW_RIGHT, gtk.SHADOW_NONE)
 		button = gtk.Button(label)
@@ -763,6 +770,7 @@ class FilterPage:
 								self.SettingsBox.pack_start(sga.Widget, False, False)
 
 		if len(self.FilteredPlugins) == 0:
+			self.SelectorButtons.clear_buttons()
 			self.CurrentPlugin = None
 			self.CurrentGroup = None
 			self.CurrentSubGroup = None
