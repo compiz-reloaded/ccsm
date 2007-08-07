@@ -1203,6 +1203,12 @@ class PluginListPage:
 		upButton.connect('clicked', self.EnabledPluginsList.move_up)
 		downButton.connect('clicked', self.EnabledPluginsList.move_down)
 
+		# Add buttons
+		addButton = gtk.Button(gtk.STOCK_ADD)
+		addButton.set_use_stock(True)
+		addButton.connect('clicked', self.AddPlugin)
+
+		enabledButtonBox.pack_start(addButton, False, False)
 		enabledButtonBox.pack_start(upButton, False, False)
 		enabledButtonBox.pack_start(downButton, False, False)
 
@@ -1219,7 +1225,6 @@ class PluginListPage:
 		# Connect Store
 		self.EnabledPluginsList.Store.connect('row-changed', self.ListChanged)
 		self.EnabledPluginsList.Store.connect('row-deleted', self.ListChanged)
-		self.EnabledPluginsList.Store.connect('row-inserted', self.ListChanged)
 		self.EnabledPluginsList.Store.connect('rows-reordered', self.ListChanged)
 
 		rightChild.pack_start(listBox, False, False)
@@ -1252,16 +1257,39 @@ class PluginListPage:
 			if not plugin.Name in activePlugins:
 				self.DisabledPluginsList.append(plugin.Name)
 
+	def AddPlugin(self, widget):
+		dlg = gtk.Dialog(_("Add plugin"))
+		dlg.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
+		dlg.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK).grab_default()
+		dlg.set_default_response(gtk.RESPONSE_OK)
+		
+		ebox = gtk.EventBox()
+		label = gtk.Label(_("Plugin name:"))
+		ebox.add(label)
+		
+		Tooltips.set_tip(ebox, _("Insert plugin name"))
+		dlg.vbox.pack_start(ebox)
+		
+		entry = gtk.Entry()
+		entry.props.activates_default = True
+		dlg.vbox.pack_start(entry)
+
+		dlg.vbox.set_spacing(5)
+		
+		dlg.vbox.show_all()
+		ret = dlg.run()
+		dlg.destroy()
+
+		if ret == gtk.RESPONSE_OK:
+			self.EnabledPluginsList.append(entry.get_text())
+
 	def EnablePlugins(self, widget):
 		selectedRows = self.DisabledPluginsList.Select.get_selected_rows()[1]
-		self.Blocked = True
 		for path in selectedRows:
 			iter = self.DisabledPluginsList.Store.get_iter(path)
 			name = self.DisabledPluginsList.Store.get(iter, 0)[0]
 			self.EnabledPluginsList.append(name)
 		self.DisabledPluginsList.delete(widget)
-		self.Blocked = False
-		self.ListChanged()
 	
 	def ListChanged(self, *args, **kwargs):
 		if self.Blocked:
