@@ -161,6 +161,9 @@ class FileSetting:
 		return filter
 
 	def CheckFileType(self, filename):
+		if filename.find(".") == -1:
+			return True
+			
 		ext = filename.split(".")[-1]
 		mime = mimetypes.types_map["." + ext]
 		if len(self.Setting.Hints) > 1:
