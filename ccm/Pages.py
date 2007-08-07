@@ -1158,7 +1158,7 @@ class PluginListPage:
 		rightChild.set_border_width(10)
 		
 		# Auto sort
-		autoSort = gtk.CheckButton('Automatically plugin sorting')
+		autoSort = gtk.CheckButton(_("Automatically plugin sorting"))
 		rightChild.pack_start(autoSort, False, False, 10)
 		
 		# Lists
