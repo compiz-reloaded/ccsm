@@ -165,7 +165,10 @@ class FileSetting:
 			return True
 			
 		ext = filename.split(".")[-1]
-		mime = mimetypes.types_map["." + ext]
+		try:
+			mime = mimetypes.types_map["." + ext]
+		except:
+			return True
 		if len(self.Setting.Hints) > 1:
 			if self.Setting.Hints[1] == 'image':
 				require = FeatureRequirement(self.Setting.Plugin.Context, 'imagemime:' + mime)
