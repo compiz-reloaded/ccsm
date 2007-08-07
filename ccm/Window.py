@@ -358,9 +358,9 @@ class MainWin(gtk.Window):
 	def CatSortCompare(self, v1, v2):
 		if v1 == v2:
 			return cmp(v1, v2)
-		if v1 == _("General"):
+		if self.Context.Plugins['core'].Category == v1:
 			return cmp('', v2 or 'zzzzzzzz')
-		if v2 == _("General"):
+		if self.Context.Plugins['core'].Category == v2:
 			return cmp(v1 or 'zzzzzzz', '')
 		return cmp(v1 or 'zzzzzzzz', v2 or 'zzzzzzzz')
 
