@@ -1,0 +1,384 @@
+# translation of ccsm.gu.po to Gujarati
+# Copyright (C) 2007 opencompositing.org
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Ankit Patel <ankit644@yahoo.com>, 2007.
+# Ankit Patel <ankit@redhat.com>, 2007.
+msgid ""
+msgstr ""
+"Project-Id-Version: ccsm.gu\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-07-25 22:16+0200\n"
+"PO-Revision-Date: 2007-08-07 16:00+0530\n"
+"Last-Translator: Ankit Patel <ankit644@yahoo.com>\n"
+"Language-Team: IndianOSS Gujarati <indianoss-gujarati@lists.sourceforge.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms:  nplurals=2; plural=(n!=1);"
+
+#: ../ccm/Conflicts.py:113
+#, python-format
+msgid ""
+"The new value for the %s binding for the action <b>%s</b> in plugin <b>%s</"
+"b> conflicts with the action <b>%s</b> of the <b>%s</b> plugin.\n"
+"Do you wish to disable <b>%s</b> in the <b>%s</b> plugin?"
+msgstr ""
+"%s બાઈન્ડીંગ માટેની નવી કિંમત ક્રિયા <b>%s</b> માટે પ્લગઈન <b>%s</b> માં <b>%s</b> સાથે તકરાય છે કે જે <b>%s</b> પ્લગઈનનું છે.\n"
+"શું તમે <b>%s</b> ને <b>%s</b> પ્લગઈનમાં નિષ્ક્રિય કરવા ઈચ્છો છો?"
+
+#: ../ccm/Conflicts.py:119 ../ccm/Conflicts.py:258 ../ccm/Conflicts.py:265
+#, python-format
+msgid "Disable %s"
+msgstr "%s નિષ્ક્રિય કરો"
+
+#: ../ccm/Conflicts.py:120
+#, python-format
+msgid "Don't set %s"
+msgstr "%s સુયોજીત કરશો નહિં"
+
+#: ../ccm/Conflicts.py:121
+#, python-format
+msgid "Set %s anyway"
+msgstr "%s ને ગમે તે રીતે સુયોજીત કરો"
+
+#: ../ccm/Conflicts.py:149
+#, python-format
+msgid ""
+"You are trying to use the feature <b>%s</b> which is provided by <b>%s</b>.\n"
+"This plugin is currently disabled.\n"
+"Do you wish to enable <b>%s</b> so the feature is available?"
+msgstr ""
+"તમે <b>%s</b> લક્ષણ વાપરવાનો પ્રયાસ કરી રહ્યા છો કે જે <b>%s</b> દ્વારા પૂરું પાડવામાં આવેલ છે.\n"
+"આ પ્લગઈન વર્તમાનમાં નિષ્ક્રિય કરેલ છે.\n"
+"શું તમે <b>%s</b> સક્રિય કરવા ઈચ્છો છો કે જેથી લક્ષણ ઉપલબ્ધ બની જાય?"
+
+#: ../ccm/Conflicts.py:155 ../ccm/Conflicts.py:286 ../ccm/Pages.py:446
+#: ../ccm/Window.py:260
+#, python-format
+msgid "Enable %s"
+msgstr "%s સક્રિય કરો"
+
+#: ../ccm/Conflicts.py:156 ../ccm/Conflicts.py:259 ../ccm/Conflicts.py:266
+#: ../ccm/Conflicts.py:287
+#, python-format
+msgid "Don't enable %s"
+msgstr "%s સક્રિય કરશો નહિં"
+
+#: ../ccm/Conflicts.py:254
+#, python-format
+msgid ""
+"Plugin <b>%s</b> provides feature <b>%s</b> which is also provided by <b>%s</"
+"b>"
+msgstr "પ્લગઈન <b>%s</b> એ <b>%s</b> લક્ષણ પૂરું પાડે છે કે જે <b>%s</b> દ્વારા પણ પૂરું પાડવામાં આવે છે"
+
+#: ../ccm/Conflicts.py:262
+#, python-format
+msgid "Plugin <b>%s</b> conflicts with <b>%s</b>."
+msgstr "પ્લગઈન <b>%s</b> એ <b>%s</b> સાથે તકરાય છે."
+
+#: ../ccm/Conflicts.py:270
+#, python-format
+msgid ""
+"<b>%s</b> requires feature <b>%s</b> which is provided by the following "
+"plugins:\n"
+"%s"
+msgstr ""
+"<b>%s</b> માટે <b>%s</b> લક્ષણ જરૂરી છે કે જે નીચેના પ્લગઈનો દ્વારા પૂરું પાડવામાં આવે છે:\n"
+"%s"
+
+#: ../ccm/Conflicts.py:279
+msgid "Enable these plugins"
+msgstr "આ પ્લગઈનો સક્રિય કરો"
+
+#: ../ccm/Conflicts.py:283
+#, python-format
+msgid "<b>%s</b> requires the plugin <b>%s</b>."
+msgstr "<b>%s</b> માટે <b>%s</b> પ્લગઈન જરૂરી છે."
+
+#: ../ccm/Conflicts.py:291
+#, python-format
+msgid ""
+"<b>%s</b> provides the feature <b>%s</b> which is required by the plugins <b>"
+"%s</b>."
+msgstr "<b>%s</b> એ <b>%s</b> નું લક્ષણ પૂરું પાડે છે કે જે પ્લગઈનો <b>%s</b> દ્વારા જરૂરી છે."
+
+#: ../ccm/Conflicts.py:294 ../ccm/Conflicts.py:302
+msgid "Disable these plugins"
+msgstr "આ પ્લગઈનો નિષ્ક્રિય કરો"
+
+#: ../ccm/Conflicts.py:295 ../ccm/Conflicts.py:303
+#, python-format
+msgid "Don't disable %s"
+msgstr "%s નિષ્ક્રિય કરશો નહિં"
+
+#: ../ccm/Conflicts.py:299
+#, python-format
+msgid "<b>%s</b> is required by the plugins <b>%s</b>."
+msgstr "<b>%s</b> એ પ્લગઈનો <b>%s</b> દ્વારા જરૂરી છે."
+
+#: ../ccm/Pages.py:73
+msgid "Name"
+msgstr "નામ"
+
+#: ../ccm/Pages.py:78 ../ccm/Pages.py:241
+msgid "Key"
+msgstr "કી"
+
+#: ../ccm/Pages.py:82 ../ccm/Pages.py:250
+msgid "Button"
+msgstr "બટન"
+
+#: ../ccm/Pages.py:85
+msgid "Screen Edge"
+msgstr "સ્ક્રીન બાજુ"
+
+#: ../ccm/Pages.py:92 ../ccm/Pages.py:170 ../ccm/Pages.py:367
+#, python-format
+msgid "Button %i"
+msgstr "બટન %i"
+
+#: ../ccm/Pages.py:94 ../ccm/Pages.py:172 ../ccm/Pages.py:283
+#: ../ccm/Pages.py:350 ../ccm/Pages.py:369
+msgid "None"
+msgstr "કંઈ નહિં"
+
+#: ../ccm/Pages.py:101 ../ccm/Pages.py:290
+msgid "Edge Button"
+msgstr "બાજુ બટન"
+
+#: ../ccm/Pages.py:106 ../ccm/Pages.py:297
+msgid "On System Bell"
+msgstr "સિસ્ટમ ઘંટડી પર"
+
+#: ../ccm/Pages.py:142 ../ccm/Pages.py:463 ../ccm/Pages.py:492
+#: ../ccm/Pages.py:581 ../ccm/Pages.py:786 ../ccm/Pages.py:795
+#: ../ccm/Window.py:374 ../ccm/Window.py:376
+msgid "General"
+msgstr "સામાન્ય"
+
+#: ../ccm/Pages.py:230
+#, python-format
+msgid "Edit Action: %s"
+msgstr "ફેરફાર ક્રિયા: %s"
+
+#: ../ccm/Pages.py:277
+msgid "Screen Edges"
+msgstr "સ્ક્રીન બાજુઓ"
+
+#: ../ccm/Pages.py:303
+msgid "Reset To Defaults"
+msgstr "મૂળભૂતોમાં પુનઃસુયોજીત કરો"
+
+#: ../ccm/Pages.py:420 ../ccm/Pages.py:612 ../ccm/Window.py:114
+msgid "Filter"
+msgstr "ગાળક"
+
+#: ../ccm/Pages.py:438
+#, python-format
+msgid "Search %s Plugin Options"
+msgstr "%s પ્લગઈન વિકલ્પો શોધો"
+
+#: ../ccm/Pages.py:440
+msgid "Use This Plugin"
+msgstr "આ પ્લગઈન વાપરો"
+
+#: ../ccm/Pages.py:452
+msgid "Search Compiz Core Options"
+msgstr "Compiz મૂળ વિકલ્પો શોધો"
+
+#: ../ccm/Pages.py:471 ../ccm/Pages.py:498 ../ccm/Pages.py:698
+msgid "Actions"
+msgstr "ક્રિયાઓ"
+
+#: ../ccm/Pages.py:628
+msgid "Search in..."
+msgstr "માં શોધો..."
+
+#: ../ccm/Pages.py:633
+msgid "Short description and name"
+msgstr "ટૂંકુ વર્ણન અને નામ"
+
+#: ../ccm/Pages.py:638
+msgid "Long description"
+msgstr "લાંબુ વર્ણન"
+
+#: ../ccm/Pages.py:643
+msgid "Settings value"
+msgstr "સુયોજનો કિંમત"
+
+#: ../ccm/Pages.py:697
+msgid "Settings"
+msgstr "સુયોજનો"
+
+#: ../ccm/Pages.py:840
+msgid "Profile & Backend"
+msgstr "રૂપરેખા & પાશ્વભાગ"
+
+#: ../ccm/Pages.py:844 ../ccm/Window.py:179
+msgid "Backend &amp; Profile"
+msgstr "પાશ્વભાગ &amp; રૂપરેખા"
+
+#: ../ccm/Pages.py:851
+msgid "Configure the backend and profile used by the Compiz Configuration System."
+msgstr "Compiz રૂપરેખાંકન સિસ્ટમ દ્વારા વાપરવામાં આવતા પાશ્વભાગ અને રૂપરેખા રૂપરેખાંકિત કરો."
+
+#: ../ccm/Pages.py:858
+msgid "Add a New Profile"
+msgstr "નવી રૂપરેખા ઉમેરો"
+
+#: ../ccm/Pages.py:861
+msgid "Remove This Profile"
+msgstr "આ રૂપરેખા દૂર કરો"
+
+#: ../ccm/Pages.py:865 ../ccm/Pages.py:927 ../ccm/Pages.py:932
+#: ../ccm/Pages.py:951 ../ccm/Pages.py:1014
+msgid "Default"
+msgstr "મૂળભૂત"
+
+#: ../ccm/Pages.py:881
+msgid "Profile"
+msgstr "રૂપરેખા"
+
+#: ../ccm/Pages.py:884
+msgid "Import"
+msgstr "આયાત કરો"
+
+#: ../ccm/Pages.py:885
+msgid "Import a CompizConfig Profile"
+msgstr "CompizConfig રૂપરેખા આયાત કરો"
+
+#: ../ccm/Pages.py:886
+msgid "Export"
+msgstr "નિકાસ કરો"
+
+#: ../ccm/Pages.py:887
+msgid "Export your CompizConfig Profile"
+msgstr "તમારી CompizConfig રૂપરેખાની નિકાસ કરો"
+
+#: ../ccm/Pages.py:907
+msgid "Backend"
+msgstr "પાશ્વભાગ"
+
+#: ../ccm/Pages.py:913
+msgid "Integration"
+msgstr "સંકલન"
+
+#: ../ccm/Pages.py:914
+msgid "Enable integration into the desktop environment"
+msgstr "ડેસ્કટોપ પર્યાવરણમાં સંકલન સક્રિય કરો"
+
+#: ../ccm/Pages.py:962
+msgid "Profiles (*.profile)"
+msgstr "રૂપરેખાઓ (*.profile)"
+
+#: ../ccm/Pages.py:967
+msgid "All files"
+msgstr "બધી ફાઈલો"
+
+#: ../ccm/Pages.py:972
+msgid "Save file.."
+msgstr "ફાઈલ સંગ્રહો..."
+
+#: ../ccm/Pages.py:984 ../ccm/Settings.py:171
+msgid "Open file.."
+msgstr "ફાઈલ ખોલો..."
+
+#: ../ccm/Pages.py:995
+msgid "Enter a profile name"
+msgstr "રૂપરેખા નામ દાખલ કરો"
+
+#: ../ccm/Pages.py:1000
+msgid "Please enter a name for the new profile:"
+msgstr "મહેરબાની કરીને નવી રૂપરેખા માટેનું નામ દાખલ કરો:"
+
+#: ../ccm/Pages.py:1032
+msgid "Backend not found."
+msgstr "પાશ્વભાગ મળ્યું નહિં."
+
+#: ../ccm/Settings.py:49
+msgid "Reset setting to the default value"
+msgstr "સુયોજનને મૂળભૂત કિંમતમાં પુનઃસુયોજીત કરો"
+
+#: ../ccm/Settings.py:135
+msgid "Browse for "
+msgstr "માટે શોધો "
+
+#: ../ccm/Settings.py:144
+msgid "Images"
+msgstr "ચિત્રો"
+
+#: ../ccm/Settings.py:153
+msgid "File"
+msgstr "ફાઈલ"
+
+#: ../ccm/Settings.py:308
+msgid "Multi-list settings. You can double-click a row to edit the values."
+msgstr "વિવિધ-યાદી સુયોજનો. તમે કિંમતોમાં ફેરફાર કરવા માટે હરોળ પર બમણું-ક્લિક કરી શકો છો."
+
+#: ../ccm/Settings.py:470
+msgid "Edit"
+msgstr "ફેરફાર"
+
+#: ../ccm/Settings.py:710 ../ccm/Settings.py:845
+#, python-format
+msgid "Value (%s)"
+msgstr "કિંમત (%s)"
+
+#: ../ccm/Settings.py:719 ../ccm/Settings.py:751 ../ccm/Settings.py:854
+#, python-format
+msgid "Edit %s"
+msgstr "ફેરફાર %s"
+
+#: ../ccm/Settings.py:725 ../ccm/Settings.py:757 ../ccm/Settings.py:858
+#, python-format
+msgid "Value (%s) for %s:"
+msgstr "કિંમત (%s) એ %s માટે:"
+
+#: ../ccm/Settings.py:925
+#, python-format
+msgid "Unhandled list type %s for %s"
+msgstr "અનિયંત્રિત યાદી પ્રકાર %s એ %s માટે"
+
+#: ../ccm/Window.py:42 ../ccm/Window.py:63
+msgid "CompizConfig Settings Manager"
+msgstr "CompizConfig સુયોજનો વ્યવસ્થાપક"
+
+#: ../ccm/Window.py:44
+msgid "This is a settings manager for the CompizConfig configuration system."
+msgstr "આ CompizConfig રૂપરેખાંકન સિસ્ટમ માટે સુયોજનો વ્યવસ્થાપક છે."
+
+#: ../ccm/Window.py:46
+msgid "translator-credits"
+msgstr "અંકિત પટેલ <ankit644@yahoo.com>"
+
+#: ../ccm/Window.py:121
+msgid "Filter your Plugin list"
+msgstr "તમારી પ્લગઈન યાદી ગાળો"
+
+#: ../ccm/Window.py:130
+#, python-format
+msgid "Screen %i"
+msgstr "સ્ક્રીન %i"
+
+#: ../ccm/Window.py:135
+msgid "Screen"
+msgstr "સ્ક્રીન"
+
+#: ../ccm/Window.py:143 ../ccm/Window.py:231
+msgid "Uncategorized"
+msgstr "બિનવર્ગીકૃત"
+
+#: ../ccm/Window.py:152
+msgid "Category"
+msgstr "વર્ગ"
+
+#: ../ccm/Window.py:163
+msgid "About"
+msgstr "વિશે"
+
+#: ../ccm/Window.py:193
+msgid "Advanced Search"
+msgstr "અદ્યતન શોધ"
+
