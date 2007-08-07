@@ -1,7 +1,7 @@
 all:
 	@python setup.py build --prefix=${PREFIX}
 
-install:
+install: all
 	@python setup.py install --prefix=${PREFIX}
 
 uninstall:
