@@ -145,7 +145,7 @@ class FeatureRequirement(Conflict):
 				self.Context.Write()
 				return True
 
-	def AskUser(plugin):
+	def AskUser(self, plugin):
 		msg = _("You are trying to use the feature <b>%s</b> which is provided by <b>%s</b>.\n"\
 				"This plugin is currently disabled.\n"\
 				"Do you wish to enable <b>%s</b> so the feature is available?")
