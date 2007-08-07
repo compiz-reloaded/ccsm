@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm 0.0.1\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-08-07 16:59+0200\n"
-"PO-Revision-Date: 2007-08-07 16:59+0200\n"
+"POT-Creation-Date: 2007-08-07 17:52+0200\n"
+"PO-Revision-Date: 2007-08-07 17:52+0200\n"
 "Last-Translator: Danny Baumann <dannybaumann@web.de>\n"
 "Language-Team: Compiz Fusion translators <i18n@lists.compiz-fusion.org>\n"
 "MIME-Version: 1.0\n"
@@ -145,14 +145,6 @@ msgstr "Nicht unterstützter Listentyp %s für %s"
 msgid "CompizConfig Settings Manager"
 msgstr "CompizConfig Einstellungs-Manager"
 
-msgid "This is a settings manager for the CompizConfig configuration system."
-msgstr "Ein Einstellungs-Manager für das CompizConfig Konfigurations-System"
-
-msgid "translator-credits"
-msgstr ""
-"Danny Baumann <dannybaumann@web.de>\n"
-"Patrick Niklaus <marex@opencompositing.org>"
-
 msgid "Filter"
 msgstr "Filter"
 
@@ -172,15 +164,11 @@ msgstr "Ohne Kategorie"
 msgid "Category"
 msgstr "Kategorie"
 
-# Info == official German translation in GNOME
-msgid "About"
-msgstr "Info"
+msgid "Advanced Search"
+msgstr "Erweiterte Suche"
 
 msgid "Preferences"
 msgstr "Einstellungen"
-
-msgid "Advanced Search"
-msgstr "Erweiterte Suche"
 
 msgid "General"
 msgstr "Allgemein"
@@ -304,6 +292,7 @@ msgstr "Bitte geben Sie einen Namen für das neue Profil an:"
 msgid "Backend not found."
 msgstr "Backend nicht gefunden."
 
+#. Auto sort
 msgid "Automatic plugin sorting"
 msgstr "Automatische Pluginsortierung"
 
@@ -322,12 +311,27 @@ msgstr "Pluginname:"
 msgid "Insert plugin name"
 msgstr "Plugin-Namen eingeben"
 
+msgid "This is a settings manager for the CompizConfig configuration system."
+msgstr "Ein Einstellungs-Manager für das CompizConfig Konfigurations-System"
+
+msgid "translator-credits"
+msgstr ""
+"Danny Baumann <dannybaumann@web.de>\n"
+"Patrick Niklaus <marex@opencompositing.org>"
+
 msgid ""
 "Configure the backend, profile and other internal settings used by the "
 "Compiz Configuration System."
 msgstr ""
 "Von Compiz Configuration System verwendetes Backend, Profil und andere "
 "interne Einstellungen konfigurieren."
+
+# Info == official German translation in GNOME
+msgid "About"
+msgstr "Info"
+
+msgid "About CCSM..."
+msgstr "Über CCSM..."
 
 msgid "Profile & Backend"
 msgstr "Profil & Backend"
