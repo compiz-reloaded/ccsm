@@ -1215,9 +1215,9 @@ class PluginListPage:
 		enabledBox.pack_start(self.EnabledPluginsList, False, False)
 		enabledBox.pack_start(enabledAlignment, False, False)
 
-		listBox.pack_start(self.DisabledPluginsList, True, False)
+		listBox.pack_start(self.DisabledPluginsList, True, True)
 		listBox.pack_start(boxAlignment, True, False)
-		listBox.pack_start(enabledBox, True, False)
+		listBox.pack_start(enabledBox, True, True)
 
 		self.UpdateEnabledPluginsList()
 		self.UpdateDisabledPluginsList()
