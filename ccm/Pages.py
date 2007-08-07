@@ -451,6 +451,7 @@ class PluginPage:
 			enableCheck.add(Label(_("Enable %s") % plugin.ShortDesc, 120))
 			Tooltips.set_tip(enableCheck, plugin.LongDesc)
 			enableCheck.set_active(plugin.Enabled)
+			enableCheck.set_sensitive(plugin.Context.AutoSort)
 			enableCheckCont.pack_start(enableCheck, True, True)
 			enableCheck.connect('toggled', self.EnablePlugin)
 		else:
@@ -544,7 +545,6 @@ class PluginPage:
 			widget.set_active(self.Plugin.Enabled)
 		self.Plugin.Context.Write()
 		self.Block = self.Block-1
-
 
 # Filter Page
 #
@@ -1074,6 +1074,206 @@ class ProfileBackendPage:
 		self.ProfileComboBox.set_sensitive(self.Context.CurrentBackend.ProfileSupport)
 		self.IntegrationButton.set_sensitive(self.Context.CurrentBackend.IntegrationSupport)
 
+# ScrolledList Widget
+#
+class ScrolledList(gtk.ScrolledWindow):
+	def __init__(self, name):
+		gtk.ScrolledWindow.__init__(self)
+
+		self.props.hscrollbar_policy = gtk.POLICY_NEVER
+		self.props.vscrollbar_policy = gtk.POLICY_AUTOMATIC
+
+		self.Store = gtk.ListStore(gobject.TYPE_STRING)
+
+		self.Style = Style()
+
+		viewport = gtk.Viewport()
+		viewport.modify_bg(gtk.STATE_NORMAL, gtk.gdk.color_parse(self.Style.BackgroundColor))
+	
+		self.ListView = gtk.TreeView(self.Store)
+		self.ListView.set_headers_visible(True)
+		self.ListView.insert_column_with_attributes(-1, name, gtk.CellRendererText(), text=0)
+		
+		self.set_size_request(300, 300)
+		
+		viewport.add(self.ListView)
+		self.add(viewport)
+		
+		self.Select = self.ListView.get_selection()
+		self.Select.set_mode(gtk.SELECTION_SINGLE)
+
+	def get_list(self):
+		values = []
+		iter = self.Store.get_iter_first()
+		while iter:
+			value = self.Store.get(iter, 0)[0]
+			if value != "":
+				values.append(value)
+			iter = self.Store.iter_next(iter)	
+		return values
+
+	def clear(self):
+		self.Store.clear()
+	
+	def append(self, value):
+		iter = self.Store.append()
+		self.Store.set(iter, 0, value)
+
+	def set(self, pos, value):
+		iter = self.Store.get_iter(pos)
+		self.Store.set(iter, 0, value)
+
+	def delete(self, b):
+		selectedRows = self.Select.get_selected_rows()[1]
+		for path in selectedRows:
+			iter = self.Store.get_iter(path)
+			self.Store.remove(iter)
+	
+	def move_up(self, b):
+		selectedRows = self.Select.get_selected_rows()[1]
+		if len(selectedRows) == 1:
+			iter = self.Store.get_iter(selectedRows[0])
+			prev = self.Store.get_iter_first()
+			if not self.Store.get_path(prev) == self.Store.get_path(iter):
+				while prev is not None and not self.Store.get_path(self.Store.iter_next(prev)) == self.Store.get_path(iter):
+					prev = self.Store.iter_next(prev)
+				self.Store.swap(iter, prev)
+
+	def move_down(self, b):
+		selectedRows = self.Select.get_selected_rows()[1]
+		if len(selectedRows) == 1:
+			iter = self.Store.get_iter(selectedRows[0])
+			next = self.Store.iter_next(iter)
+			if next is not None:
+				self.Store.swap(iter, next)
+
+# Plugin List Page
+#
+class PluginListPage:
+	def __init__(self, main, context):
+		self.Context = context
+		self.Main = main
+		self.Blocked = False
+		rightChild = gtk.VBox()
+		rightChild.set_border_width(10)
+		
+		# Auto sort
+		autoSort = gtk.CheckButton('Automatically plugin sorting')
+		rightChild.pack_start(autoSort, False, False, 10)
+		
+		# Lists
+		listBox = gtk.HBox()
+		listBox.set_spacing(5)
+
+		self.DisabledPluginsList = ScrolledList(_("Disabled Plugins"))
+		self.EnabledPluginsList = ScrolledList(_("Enabled Plugins"))
+
+		# Left/Right buttons
+		buttonBox = gtk.VBox()
+		buttonBox.set_spacing(5)
+		boxAlignment = gtk.Alignment(0.0, 0.5, 0.0, 0.0)
+		boxAlignment.add(buttonBox)
+
+		rightButton = gtk.Button()
+		rightImage = Image(gtk.STOCK_GO_FORWARD, ImageStock, gtk.ICON_SIZE_BUTTON)
+		rightButton.set_image(rightImage)
+		rightButton.connect("clicked", self.EnablePlugins)
+
+		leftButton = gtk.Button()
+		leftImage = Image(gtk.STOCK_GO_BACK, ImageStock, gtk.ICON_SIZE_BUTTON)
+		leftButton.set_image(leftImage)
+		leftButton.connect("clicked", self.EnabledPluginsList.delete)
+
+		buttonBox.pack_start(rightButton, False, False)
+		buttonBox.pack_start(leftButton, False, False)
+
+		# Up/Down buttons
+		enabledBox = gtk.VBox()
+		enabledBox.set_spacing(10)
+
+		enabledAlignment = gtk.Alignment(0.5, 0.0, 0.0, 0.0)
+		enabledButtonBox = gtk.HBox()
+		enabledButtonBox.set_spacing(5)
+		enabledAlignment.add(enabledButtonBox)
+
+		upButton = gtk.Button(gtk.STOCK_GO_UP)
+		downButton = gtk.Button(gtk.STOCK_GO_DOWN)
+		upButton.set_use_stock(True)
+		downButton.set_use_stock(True)
+		upButton.connect('clicked', self.EnabledPluginsList.move_up)
+		downButton.connect('clicked', self.EnabledPluginsList.move_down)
+
+		enabledButtonBox.pack_start(upButton, False, False)
+		enabledButtonBox.pack_start(downButton, False, False)
+
+		enabledBox.pack_start(self.EnabledPluginsList, False, False)
+		enabledBox.pack_start(enabledAlignment, False, False)
+
+		listBox.pack_start(self.DisabledPluginsList, True, False)
+		listBox.pack_start(boxAlignment, True, False)
+		listBox.pack_start(enabledBox, True, False)
+
+		self.UpdateEnabledPluginsList()
+		self.UpdateDisabledPluginsList()
+
+		# Connect Store
+		self.EnabledPluginsList.Store.connect('row-changed', self.ListChanged)
+		self.EnabledPluginsList.Store.connect('row-deleted', self.ListChanged)
+		self.EnabledPluginsList.Store.connect('row-inserted', self.ListChanged)
+		self.EnabledPluginsList.Store.connect('rows-reordered', self.ListChanged)
+
+		rightChild.pack_start(listBox, False, False)
+
+		# Auto sort
+		autoSort.connect('toggled', self.AutoSortChanged)
+		autoSort.set_active(self.Context.AutoSort)
+
+		self.Widget = rightChild
+
+	def AutoSortChanged(self, widget):
+		self.Context.AutoSort = widget.get_active()
+		self.EnabledPluginsList.set_sensitive(not self.Context.AutoSort)
+		self.DisabledPluginsList.set_sensitive(not self.Context.AutoSort)
+
+	def UpdateEnabledPluginsList(self):
+		activePlugins = self.Context.Plugins['core'].Display['active_plugins'].Value
+		
+		self.EnabledPluginsList.clear()
+
+		for name in activePlugins:
+			self.EnabledPluginsList.append(name)
+
+	def UpdateDisabledPluginsList(self):
+		activePlugins = self.Context.Plugins['core'].Display['active_plugins'].Value
+
+		self.DisabledPluginsList.clear()
+
+		for plugin in sorted(self.Context.Plugins.values(), PluginSortCompare):
+			if not plugin.Name in activePlugins:
+				self.DisabledPluginsList.append(plugin.Name)
+
+	def EnablePlugins(self, widget):
+		selectedRows = self.DisabledPluginsList.Select.get_selected_rows()[1]
+		self.Blocked = True
+		for path in selectedRows:
+			iter = self.DisabledPluginsList.Store.get_iter(path)
+			name = self.DisabledPluginsList.Store.get(iter, 0)[0]
+			self.EnabledPluginsList.append(name)
+		self.DisabledPluginsList.delete(widget)
+		self.Blocked = False
+		self.ListChanged()
+	
+	def ListChanged(self, *args, **kwargs):
+		if self.Blocked:
+			return
+		self.Blocked = True
+		plugins = self.EnabledPluginsList.get_list()
+
+		self.Context.Plugins['core'].Display['active_plugins'].Value = plugins
+		self.Context.Write()
+		self.UpdateDisabledPluginsList()
+		self.Blocked = False
+
 # Preferences Page
 #
 class PreferencesPage:
@@ -1105,6 +1305,10 @@ class PreferencesPage:
 		# Profile & Backend Page
 		self.ProfileBackendPage = ProfileBackendPage(main, context)
 		self.RightWidget.append_page(self.ProfileBackendPage.Widget, gtk.Label(_("Profile & Backend")))
+
+		# Plugin List
+		self.PluginListPage = PluginListPage(main, context)
+		self.RightWidget.append_page(self.PluginListPage.Widget, gtk.Label(_("Plugin List")))
 
 # Page
 #
