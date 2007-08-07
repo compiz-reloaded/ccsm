@@ -35,24 +35,6 @@ gettext.bindtextdomain("ccsm", DataDir + "/locale")
 gettext.textdomain("ccsm")
 _ = gettext.gettext
 
-class AboutDialog(gtk.AboutDialog):
-	def __init__(self):
-		gtk.AboutDialog.__init__(self)
-
-		self.set_name(_("CompizConfig Settings Manager"))
-		self.set_version("0.1.0")
-		self.set_comments(_("This is a settings manager for the CompizConfig configuration system."))
-		self.set_copyright("Copyright \xC2\xA9 2007 Patrick Niklaus/Quinn Storm")
-		self.set_translator_credits(_("translator-credits"))
-		self.set_authors(["Patrick Niklaus <marex@opencompositing.org>",
-						  "Quinn Storm <quinn@beryl-project.org>"])
-		self.set_artists(["Andrew Wedderburn <andrew.wedderburn@gmail.com>",
-						  "Patrick Niklaus <marex@opencompositing.org>",
-						  "Gnome Icon Theme Team"])
-		self.set_icon(gtk.gdk.pixbuf_new_from_file(IconDir+"/apps/ccsm.svg"))
-		self.set_logo(gtk.gdk.pixbuf_new_from_file(IconDir+"/apps/ccsm.svg"))
-		self.set_website("http://www.opencompositing.org")
-
 class MainWin(gtk.Window):
 	def __init__(self, Context):
 		gtk.Window.__init__(self)
@@ -157,36 +139,7 @@ class MainWin(gtk.Window):
 		exitButton = gtk.Button(gtk.STOCK_CLOSE)
 		exitButton.set_use_stock(True)
 		exitButton.connect('clicked', self.Quit)
-
-		# About Button
-		aboutButton = gtk.Button()
-		Tooltips.set_tip(aboutButton, _("About"))
-		aboutButton.connect('clicked', self.ShowAboutDialog)
-		aboutImage = gtk.Image()
-		aboutImage.set_size_request(24, -1)
-		aboutImage.set_from_stock(gtk.STOCK_ABOUT, gtk.ICON_SIZE_BUTTON)
-		aboutButton.add(aboutImage)
-
-		# Exit/About Frame
-		aboutExitFrame = gtk.HBox()
-		aboutExitFrame.set_spacing(5)
-		aboutExitFrame.pack_start(exitButton, True, True)
-		aboutExitFrame.pack_start(aboutButton, False, False)
-		leftChild.pack_end(aboutExitFrame, False, False)
-
-		# Preferences
-		prefLabel = Label()
-		prefLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>" % (self.Style.BrightColor, _("Preferences")))
-		prefImage = gtk.Image()
-		prefImage.set_from_stock(gtk.STOCK_GO_FORWARD, gtk.ICON_SIZE_BUTTON)
-		prefButton = gtk.Button()
-		prefButton.connect("clicked", self.ShowPreferences)
-		prefButton.set_relief(gtk.RELIEF_NONE)
-		prefFrame = gtk.HBox()
-		prefFrame.pack_start(prefLabel, False, False)
-		prefFrame.pack_end(prefImage, False, False)
-		prefButton.add(prefFrame)
-		leftChild.pack_end(prefButton, False, False)
+		leftChild.pack_end(exitButton, False, False)
 
 		# Advanced Search
 		searchLabel = Label()
@@ -201,6 +154,20 @@ class MainWin(gtk.Window):
 		searchFrame.pack_end(searchImage, False, False)
 		searchButton.add(searchFrame)
 		leftChild.pack_end(searchButton, False, False)
+
+		# Preferences
+		prefLabel = Label()
+		prefLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>" % (self.Style.BrightColor, _("Preferences")))
+		prefImage = gtk.Image()
+		prefImage.set_from_stock(gtk.STOCK_GO_FORWARD, gtk.ICON_SIZE_BUTTON)
+		prefButton = gtk.Button()
+		prefButton.connect("clicked", self.ShowPreferences)
+		prefButton.set_relief(gtk.RELIEF_NONE)
+		prefFrame = gtk.HBox()
+		prefFrame.pack_start(prefLabel, False, False)
+		prefFrame.pack_end(prefImage, False, False)
+		prefButton.add(prefFrame)
+		leftChild.pack_end(prefButton, False, False)
 
 		pluginsVPort.modify_bg(gtk.STATE_NORMAL, gtk.gdk.color_parse(self.Style.BackgroundColor))
 		rightChild = gtk.ScrolledWindow()
@@ -396,12 +363,6 @@ class MainWin(gtk.Window):
 		if v2 == _("General"):
 			return cmp(v1 or 'zzzzzzz', '')
 		return cmp(v1 or 'zzzzzzzz', v2 or 'zzzzzzzz')
-
-	def ShowAboutDialog(self, widget):
-		about = AboutDialog()
-		about.show_all()
-		about.run()
-		about.destroy()
 
 	def ShowPlugin(self, obj, select):
 		self.RightVadj = self.RightPane.get_child().get_vadjustment().get_value()

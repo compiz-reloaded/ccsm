@@ -1302,6 +1302,26 @@ class PluginListPage:
 		self.UpdateDisabledPluginsList()
 		self.Blocked = False
 
+# About Dialog
+#
+class AboutDialog(gtk.AboutDialog):
+	def __init__(self):
+		gtk.AboutDialog.__init__(self)
+
+		self.set_name(_("CompizConfig Settings Manager"))
+		self.set_version("0.1.0")
+		self.set_comments(_("This is a settings manager for the CompizConfig configuration system."))
+		self.set_copyright("Copyright \xC2\xA9 2007 Patrick Niklaus/Quinn Storm")
+		self.set_translator_credits(_("translator-credits"))
+		self.set_authors(["Patrick Niklaus <marex@opencompositing.org>",
+						  "Quinn Storm <quinn@beryl-project.org>"])
+		self.set_artists(["Andrew Wedderburn <andrew.wedderburn@gmail.com>",
+						  "Patrick Niklaus <marex@opencompositing.org>",
+						  "Gnome Icon Theme Team"])
+		self.set_icon(gtk.gdk.pixbuf_new_from_file(IconDir+"/apps/ccsm.svg"))
+		self.set_logo(gtk.gdk.pixbuf_new_from_file(IconDir+"/apps/ccsm.svg"))
+		self.set_website("http://www.opencompositing.org")
+
 # Preferences Page
 #
 class PreferencesPage:
@@ -1324,11 +1344,30 @@ class PreferencesPage:
 		self.InfoLabel = Label(_("Configure the backend, profile and other internal settings used by the Compiz Configuration System."), 180)
 		self.InfoLabelCont.pack_start(self.InfoLabel, True, True)
 
+		# About Button
+		aboutLabel = Label()
+		aboutLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>" % (self.Main.Style.BrightColor, _("About")))
+		aboutButton = gtk.Button()
+		aboutButton.set_relief(gtk.RELIEF_NONE)
+		aboutImage = Image(gtk.STOCK_ABOUT, ImageStock, gtk.ICON_SIZE_BUTTON)
+		aboutFrame = gtk.HBox()
+		aboutFrame.set_spacing(5)
+		aboutFrame.pack_start(aboutImage, False, False)
+		aboutFrame.pack_start(Label(_("About CCSM...")), False, False)
+		aboutButton.add(aboutFrame)
+		Tooltips.set_tip(aboutButton, _("About"))
+		aboutButton.connect('clicked', self.ShowAboutDialog)
+		aboutBin = gtk.HBox()
+		aboutBin.set_border_width(10)
+		aboutBin.pack_start(aboutButton, False, False)
+		self.LeftWidget.pack_start(aboutLabel, False, False)
+		self.LeftWidget.pack_start(aboutBin, False, False)
+	
 		# Back Button
-		self.BackButton = gtk.Button(gtk.STOCK_GO_BACK)
-		self.BackButton.set_use_stock(True)
-		self.BackButton.connect('clicked', self.Main.BackToMain)
-		self.LeftWidget.pack_end(self.BackButton, False, False)
+		backButton = gtk.Button(gtk.STOCK_GO_BACK)
+		backButton.set_use_stock(True)
+		backButton.connect('clicked', self.Main.BackToMain)
+		self.LeftWidget.pack_end(backButton, False, False)
 
 		# Profile & Backend Page
 		self.ProfileBackendPage = ProfileBackendPage(main, context)
@@ -1337,6 +1376,12 @@ class PreferencesPage:
 		# Plugin List
 		self.PluginListPage = PluginListPage(main, context)
 		self.RightWidget.append_page(self.PluginListPage.Widget, gtk.Label(_("Plugin List")))
+
+	def ShowAboutDialog(self, widget):
+		about = AboutDialog()
+		about.show_all()
+		about.run()
+		about.destroy()
 
 # Page
 #
