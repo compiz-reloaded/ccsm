@@ -8,18 +8,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm 0.0.1\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-07-09 17:41+0200\n"
-"PO-Revision-Date: 2007-07-05 14:26+0200\n"
+"POT-Creation-Date: 2007-08-07 09:33+0200\n"
+"PO-Revision-Date: 2007-08-07 09:41+0200\n"
 "Last-Translator: Danny Baumann <dannybaumann@web.de>\n"
 "Language-Team: Compiz Fusion translators <i18n@lists.compiz-fusion.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-msgid "PyGtk 2.10.0 or later required"
-msgstr "PyGtk 2.10.0 oder später wird benötigt."
-
-#, c-format
+#, python-format
 msgid ""
 "The new value for the %s binding for the action <b>%s</b> in plugin <b>%s</"
 "b> conflicts with the action <b>%s</b> of the <b>%s</b> plugin.\n"
@@ -29,19 +26,19 @@ msgstr ""
 "Konflikt mit der Aktion <b>%s</b> des Plugins <b>%s</b>.\n"
 "Möchten Sie <b>%s</b> im Plugin <b>%s</b> deaktivieren?"
 
-#, c-format
+#, python-format
 msgid "Disable %s"
 msgstr "Deaktiviere %s"
 
-#, c-format
+#, python-format
 msgid "Don't set %s"
 msgstr "%s nicht übernehmen"
 
-#, c-format
+#, python-format
 msgid "Set %s anyway"
 msgstr "%s trotzdem setzen"
 
-#, c-format
+#, python-format
 msgid ""
 "You are trying to use the feature <b>%s</b> which is provided by <b>%s</b>.\n"
 "This plugin is currently disabled.\n"
@@ -52,13 +49,61 @@ msgstr ""
 "Dieses Plugin ist zur Zeit deaktiviert.\n"
 "Möchten Sie <b>%s</b> aktivieren, so dass dieses Feature zur Verfügung steht?"
 
-#, c-format
+#, python-format
 msgid "Enable %s"
 msgstr "Aktiviere %s"
 
-#, c-format
+#, python-format
 msgid "Don't enable %s"
 msgstr "%s nicht aktivieren"
+
+#, python-format
+msgid ""
+"Plugin <b>%s</b> provides feature <b>%s</b> which is also provided by <b>%s</"
+"b>"
+msgstr ""
+"Plugin <b>%s</b> stellt das Feature <b>%s</b> bereit, das auch von <b>%s</b> "
+"bereitgestellt wird."
+
+#, python-format
+msgid "Plugin <b>%s</b> conflicts with <b>%s</b>."
+msgstr "Plugin <b>%s</b> steht in Konflikt mit dem Plugin <b>%s</b>."
+
+#, python-format
+msgid ""
+"<b>%s</b> requires feature <b>%s</b> which is provided by the following "
+"plugins:\n"
+"%s"
+msgstr ""
+"<b>%s</b> benötigt das Feature <b>%s</b>, das von den folgenden Plugins bereit "
+"gestellt wird:\n"
+"%s"
+
+msgid "Enable these plugins"
+msgstr "Diese Plugins aktivieren"
+
+#, python-format
+msgid "<b>%s</b> requires the plugin <b>%s</b>."
+msgstr "<b>%s</b> benötigt das Plugin <b>%s</b>."
+
+#, python-format
+msgid ""
+"<b>%s</b> provides the feature <b>%s</b> which is required by the plugins <b>"
+"%s</b>."
+msgstr ""
+"<b>%s</b> stellt das Feature <b>%s</b> bereit, das von den Plugins <b>%s</b> "
+"benötigt wird."
+
+msgid "Disable these plugins"
+msgstr "Diese Plugins deaktivieren"
+
+#, python-format
+msgid "Don't disable %s"
+msgstr "%s nicht deaktivieren"
+
+#, python-format
+msgid "<b>%s</b> is required by the plugins <b>%s</b>."
+msgstr "<b>%s</b> wird von den Plugins <b>%s</b> benötigt."
 
 msgid "Reset setting to the default value"
 msgstr "Einstellung auf den Standardwert zurücksetzen"
@@ -75,76 +120,72 @@ msgstr "Datei"
 msgid "Open file.."
 msgstr "Öffne Datei.."
 
-msgid "Multi-list settings"
-msgstr "Zusammengesetzte Liste"
+msgid "Multi-list settings. You can double-click a row to edit the values."
+msgstr "Mehrfachliste - Doppelklick auf eine Zeile zum Bearbeiten"
 
 msgid "Edit"
 msgstr "Bearbeiten"
 
-#, c-format
+#, python-format
 msgid "Value (%s)"
 msgstr "Wert (%s)"
 
-#, c-format
+#, python-format
 msgid "Edit %s"
 msgstr "%s bearbeiten"
 
-#, c-format
+#, python-format
 msgid "Value (%s) for %s:"
 msgstr "Wert (%s) für %s"
 
-#, c-format
+#, python-format
 msgid "Unhandled list type %s for %s"
 msgstr "Nicht unterstützter Listentyp %s für %s"
 
-#, c-format
-msgid ""
-"Plugin <b>%s</b> provides feature <b>%s</b> which is also provided by <b>%s</"
-"b>"
+msgid "CompizConfig Settings Manager"
+msgstr "CompizConfig Einstellungs-Manager"
+
+msgid "This is a settings manager for the CompizConfig configuration system."
+msgstr "Ein Einstellungs-Manager für das CompizConfig Konfigurations-System"
+
+msgid "translator-credits"
 msgstr ""
-"Plugin <b>%s</b> stellt das Feature <b>%s</b> bereit, das auch von <b>%s</b> "
-"bereitgestellt wird."
+"Danny Baumann <dannybaumann@web.de>\n"
+"Patrick Niklaus <marex@opencompositing.org>"
 
-#, c-format
-msgid "Plugin <b>%s</b> conflicts with <b>%s</b>."
-msgstr "Plugin <b>%s</b> steht in Konflikt mit dem Plugin <b>%s</b>."
+msgid "Filter"
+msgstr "Filter"
 
-#, c-format
-msgid ""
-"<b>%s</b> requires feature <b>%s</b> which is provided by the following "
-"plugins:\n"
-"%s"
-msgstr ""
-"<b>%s</b> benötigt ein Feature, das von den folgenden Plugins bereit "
-"gestellt wird:\n"
-"%s"
+msgid "Filter your Plugin list"
+msgstr "Pluginliste filtern"
 
-msgid "Enable these plugins"
-msgstr "Diese Plugins aktivieren"
+#, python-format
+msgid "Screen %i"
+msgstr "Bildschirm %i"
 
-#, c-format
-msgid "<b>%s</b> requires the plugin <b>%s</b>."
-msgstr "<b>%s</b> benötigt das Plugin <b>%s</b>."
+msgid "Screen"
+msgstr "Bildschirm"
 
-#, c-format
-msgid ""
-"<b>%s</b> provides the feature <b>%s</b> which is required by the plugins <b>"
-"%s</b>."
-msgstr ""
-"<b>%s</b> stellt das Feature <b>%s</b> bereit, das von den Plugins <b>%s</b> "
-"benötigt wird."
+msgid "Uncategorized"
+msgstr "Ohne Kategorie"
 
-msgid "Disable these plugins"
-msgstr "Diese Plugins deaktivieren"
+msgid "Category"
+msgstr "Kategorie"
 
-#, c-format
-msgid "Don't disable %s"
-msgstr "%s nicht deaktivieren"
+# Info == official German translation in GNOME
+msgid "About"
+msgstr "Info"
 
-#, c-format
-msgid "<b>%s</b> is required by the plugins <b>%s</b>."
-msgstr "<b>%s</b> wird von den Plugins <b>%s</b> benötigt."
+msgid "Preferences"
+msgstr "Einstellungen"
 
+msgid "Advanced Search"
+msgstr "Erweiterte Suche"
+
+msgid "General"
+msgstr "Allgemein"
+
+#. Name
 msgid "Name"
 msgstr "Name"
 
@@ -157,7 +198,7 @@ msgstr "Maustaste"
 msgid "Screen Edge"
 msgstr "Bildschirmecke"
 
-#, c-format
+#, python-format
 msgid "Button %i"
 msgstr "Maustaste %i"
 
@@ -170,10 +211,7 @@ msgstr "Maustaste für Bildschirmecke"
 msgid "On System Bell"
 msgstr "Bei Systemglocke"
 
-msgid "General"
-msgstr "Allgemein"
-
-#, c-format
+#, python-format
 msgid "Edit Action: %s"
 msgstr "Aktion %s bearbeiten"
 
@@ -183,10 +221,7 @@ msgstr "Bildschirmecken"
 msgid "Reset To Defaults"
 msgstr "Auf Standardwert zurücksetzen"
 
-msgid "Filter"
-msgstr "Filter"
-
-#, c-format
+#, python-format
 msgid "Search %s Plugin Options"
 msgstr "Suche in den Einstellungen des Plugins %s"
 
@@ -198,6 +233,9 @@ msgstr "Suche in den Einstellungen des Compiz-Kerns"
 
 msgid "Actions"
 msgstr "Aktionen"
+
+msgid "Error"
+msgstr ""
 
 msgid "Search in..."
 msgstr "Suche in..."
@@ -211,19 +249,9 @@ msgstr "Ausführlicher Beschreibung"
 msgid "Settings value"
 msgstr "Einstellungswert"
 
+#. Notebook
 msgid "Settings"
 msgstr "Einstellungen"
-
-msgid "Profile & Backend"
-msgstr "Profil & Backend"
-
-msgid "Backend &amp; Profile"
-msgstr "Backend &amp; Profil"
-
-msgid ""
-"Configure the backend and profile used by the Compiz Configuration System."
-msgstr ""
-"Von Compiz Configuration System verwendetes Backend und Profil einstellen."
 
 msgid "Add a New Profile"
 msgstr "Neues Profil hinzufügen"
@@ -276,34 +304,18 @@ msgstr "Bitte geben Sie einen Namen für das neue Profil an:"
 msgid "Backend not found."
 msgstr "Backend nicht gefunden."
 
-msgid "CompizConfig Settings Manager"
-msgstr "CompizConfig Einstellungs-Manager"
+msgid ""
+"Configure the backend, profile and other internal settings used by the "
+"Compiz Configuration System."
+msgstr ""
+"Von Compiz Configuration System verwendetes Backend, Profil und andere interne Einstellungen konfigurieren."
 
-msgid "Filter your Plugin list"
-msgstr "Pluginliste filtern"
+msgid "Profile & Backend"
+msgstr "Profil & Backend"
 
-#, c-format
-msgid "Screen %i"
-msgstr "Bildschirm %i"
-
-msgid "Screen"
-msgstr "Bildschirm"
-
-msgid "Uncategorized"
-msgstr "Ohne Kategorie"
-
-msgid "Category"
-msgstr "Kategorie"
-
-# Info == official German translation in GNOME
-msgid "About"
-msgstr "Info"
-
-msgid "Advanced Search"
-msgstr "Erweiterte Suche"
-
-msgid "This is a settings manager for the CompizConfig configuration system."
-msgstr "Ein Einstellungs-Manager für das CompizConfig Konfigurations-System"
-
-msgid "translator-credits"
-msgstr "Danny Baumann <dannybaumann@web.de>\nPatrick Niklaus <marex@opencompositing.org>"
+#, python-format
+msgid ""
+"<span size=\"large\"><b>No matches found.</b> </span><span>\n"
+"\n"
+" Your filter \"<b>%s</b>\" does not match any items.</span>"
+msgstr ""
