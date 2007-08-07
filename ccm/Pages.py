@@ -1212,7 +1212,7 @@ class PluginListPage:
 		enabledButtonBox.pack_start(upButton, False, False)
 		enabledButtonBox.pack_start(downButton, False, False)
 
-		enabledBox.pack_start(self.EnabledPluginsList, False, False)
+		enabledBox.pack_start(self.EnabledPluginsList, True, True)
 		enabledBox.pack_start(enabledAlignment, False, False)
 
 		listBox.pack_start(self.DisabledPluginsList, True, True)
@@ -1227,7 +1227,7 @@ class PluginListPage:
 		self.EnabledPluginsList.Store.connect('row-deleted', self.ListChanged)
 		self.EnabledPluginsList.Store.connect('rows-reordered', self.ListChanged)
 
-		rightChild.pack_start(listBox, False, False)
+		rightChild.pack_start(listBox, True, True)
 
 		# Auto sort
 		autoSort.connect('toggled', self.AutoSortChanged)
