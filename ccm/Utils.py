@@ -165,8 +165,6 @@ def FilterSettings(settings, filter, run=0, noActions=False, singleRun=False):
 	for setting in settings:
 		if noActions and setting.Type == 'Action':
 			continue
-		if setting.Name == '____plugin_enabled':
-			continue
 		# First run, only search in shortDesc and name
 		if run == 0 or (singleRun and run.count(0) != 0):
 			shortDesc = setting.ShortDesc.lower()
@@ -214,8 +212,7 @@ def FilterSettings(settings, filter, run=0, noActions=False, singleRun=False):
 def HasOnlyType(settings, type):
 	empty = True
 	for setting in settings:
-			if not setting.Name == '____plugin_enabled':
-				empty = False
-				if setting.Type != type:
-					return False
+		empty = False
+		if setting.Type != type:
+			return False
 	return not empty

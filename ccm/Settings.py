@@ -977,8 +977,7 @@ class SubGroupArea:
 		self.Empty = True
 		row = 0
 		for setting in settings:
-			setName = setting.Name
-			if not setName == '____plugin_enabled' and not setName == 'active_plugins':
+			if not setting.Name == 'active_plugins':
 				set = MakeSetting(setting)
 				if set is not None:
 					set.Read()
