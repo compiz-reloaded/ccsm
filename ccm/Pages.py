@@ -1254,7 +1254,7 @@ class PluginListPage:
 		self.DisabledPluginsList.clear()
 
 		for plugin in sorted(self.Context.Plugins.values(), PluginSortCompare):
-			if not plugin.Name in activePlugins:
+			if not plugin.Name in activePlugins and plugin.Name != "core":
 				self.DisabledPluginsList.append(plugin.Name)
 
 	def AddPlugin(self, widget):
