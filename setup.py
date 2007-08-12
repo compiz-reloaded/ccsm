@@ -96,10 +96,14 @@ if not prefix or not len (prefix):
 if sys.argv[1] in ("install", "uninstall") and len (prefix):
     sys.argv += ["--prefix", prefix]
 
+f = open (os.path.join ("VERSION"), "rt")
+version = f.read()[8:-1]
+f.close()
 f = open (os.path.join ("ccm/Constants.py.in"), "rt")
 data = f.read ()
 f.close ()
 data = data.replace ("@prefix@", prefix)
+data = data.replace ("@version@", version)
 f = open (os.path.join ("ccm/Constants.py"), "wt")
 f.write (data)
 f.close ()
