@@ -1309,7 +1309,7 @@ class AboutDialog(gtk.AboutDialog):
 		gtk.AboutDialog.__init__(self)
 
 		self.set_name(_("CompizConfig Settings Manager"))
-		self.set_version("0.1.0")
+		self.set_version("0.5.2")
 		self.set_comments(_("This is a settings manager for the CompizConfig configuration system."))
 		self.set_copyright("Copyright \xC2\xA9 2007 Patrick Niklaus/Quinn Storm")
 		self.set_translator_credits(_("translator-credits"))
