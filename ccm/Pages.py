@@ -38,10 +38,13 @@ gettext.bindtextdomain("ccsm", DataDir + "/locale")
 gettext.textdomain("ccsm")
 _ = gettext.gettext
 
+CurrentUpdater = None
+
 # Action Page
 #
 class ActionPage:
-	def __init__(self, context, plugin = None, filter = None):
+	def __init__(self, context, plugin = None, filter = None, createUpdater=True):
+		global CurrentUpdater
 		self.EdgeList = ['None', 'TopLeft', 'Top', 'TopRight', 'Left', 'Right', 'BottomLeft', 'Bottom', 'BottomRight']
 		self.Widget = gtk.VBox()
 		self.Plugin = plugin
@@ -116,9 +119,18 @@ class ActionPage:
 		self.TreeView.connect('row-activated', self.Activated)
 
 		self.UpdateTreeView()
+
+		if createUpdater and CurrentUpdater == None:
+			CurrentUpdater = Updater(context)
+
+		CurrentUpdater.Append(self)
+
+	def Read(self):
+		self.UpdateTreeView()
 		
 	def UpdateTreeView(self):
 		self.Store.clear()
+		self.Setting = []
 		self.Empty = True
 
 		self.Plugins = {}
@@ -158,6 +170,8 @@ class ActionPage:
 
 				for setting in settings:
 					if setting.Type == 'Action':
+						self.Setting.append(setting)
+
 						if subGroupName != '':
 							i = self.Store.append(subGroupIter)
 						else:

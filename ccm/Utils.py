@@ -124,6 +124,7 @@ class NotFoundBox(gtk.Alignment):
 class Updater:
 	def __init__(self, context):
 		self.VisibleSettings = []
+		self.NotRemoved = []
 		self.Context = context
 
 		gobject.timeout_add(2000, self.Update)
@@ -134,12 +135,32 @@ class Updater:
 	def Update(self):
 		changed = self.Context.ProcessEvents()
 		if changed:
+			changedSettings = self.Context.ChangedSettings
 			for settingWidget in self.VisibleSettings:
-				if settingWidget.Widget.get_parent():
-					settingWidget.Read()
-				else:
+				# Remove already destroyed widgets
+				if not settingWidget.Widget.get_parent():
 					self.VisibleSettings.remove(settingWidget)
-			self.Context.ClearChangedSettings()
+				
+				# Exception for multi settings widgets (multi list widget, action page, etc.)
+				if settingWidget.Setting.__class__ != list:
+					if settingWidget.Setting in changedSettings:
+						settingWidget.Read()
+						changedSettings.remove(settingWidget.Setting)
+				else:
+					read = False
+					for setting in settingWidget.Setting:
+						if setting in changedSettings:
+							read = True
+							changedSettings.remove(setting)
+					if read:
+						settingWidget.Read()
+			# For removing non-visible settings
+			for oldSetting in self.NotRemoved:
+				if oldSetting in changedSettings:
+					changedSettings.remove(oldSetting)
+			self.NotRemoved = changedSettings
+			self.Context.ChangedSettings = changedSettings
+
 		return True
 
 class PureVirtualError(Exception):
