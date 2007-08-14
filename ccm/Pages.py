@@ -943,12 +943,17 @@ class ProfileBackendPage:
 		Tooltips.set_tip(profileImportButton, _("Import a CompizConfig Profile"))
 		profileExportButton = gtk.Button(_("Export"))
 		Tooltips.set_tip(profileExportButton, _("Export your CompizConfig Profile"))
+		profileResetButton = gtk.Button(_("Reset to defaults"))
+		Tooltips.set_tip(profileResetButton, _("Reset your CompizConfig Profile to the global defaults"))
+		profileResetButton.set_image(gtk.image_new_from_stock(gtk.STOCK_CLEAR, gtk.ICON_SIZE_BUTTON))
 		profileImportButton.set_image(gtk.image_new_from_stock(gtk.STOCK_OPEN, gtk.ICON_SIZE_BUTTON))
 		profileExportButton.set_image(gtk.image_new_from_stock(gtk.STOCK_SAVE, gtk.ICON_SIZE_BUTTON))
 		profileImportButton.connect("clicked", self.ImportProfile)
 		profileExportButton.connect("clicked", self.ExportProfile)
+		profileResetButton.connect("clicked", self.ResetProfile)
 		self.ProfileImportExportBox.pack_start(profileImportButton, False, False)
 		self.ProfileImportExportBox.pack_start(profileExportButton, False, False)
+		self.ProfileImportExportBox.pack_start(profileResetButton, False, False)
 		rightChild.pack_start(profileLabel, False, False, 5)
 		rightChild.pack_start(profileBox, False, False, 5)
 		rightChild.pack_start(self.ProfileImportExportBox, False, False, 5)
@@ -1020,6 +1025,18 @@ class ProfileBackendPage:
 		filter.add_pattern("*")
 		filter.set_name(_("All files"))
 		chooser.add_filter(filter)
+
+	def ResetProfile(self, widget):
+		
+		for plugin in self.Context.Plugins.values():
+			settings = sum((v.values() for v in [plugin.Display]+[plugin.Screens[CurrentScreenNum]]), [])
+			for setting in settings:
+				setting.Reset()
+
+		activePlugins = self.Context.Plugins['core'].Display['active_plugins'].Value
+		for plugin in self.Context.Plugins.values():
+			plugin.Enabled = plugin.Name in activePlugins
+		self.Context.Write()
 	
 	def ExportProfile(self, widget):
 		b = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_SAVE, gtk.RESPONSE_OK)
