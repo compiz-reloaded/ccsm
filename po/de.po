@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm 0.0.1\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-08-07 17:52+0200\n"
-"PO-Revision-Date: 2007-08-07 17:52+0200\n"
+"POT-Creation-Date: 2007-08-16 12:20+0200\n"
+"PO-Revision-Date: 2007-08-16 12:21+0200\n"
 "Last-Translator: Danny Baumann <dannybaumann@web.de>\n"
 "Language-Team: Compiz Fusion translators <i18n@lists.compiz-fusion.org>\n"
 "MIME-Version: 1.0\n"
@@ -170,9 +170,6 @@ msgstr "Erweiterte Suche"
 msgid "Preferences"
 msgstr "Einstellungen"
 
-msgid "General"
-msgstr "Allgemein"
-
 #. Name
 msgid "Name"
 msgstr "Name"
@@ -198,6 +195,9 @@ msgstr "Maustaste für Bildschirmecke"
 
 msgid "On System Bell"
 msgstr "Bei Systemglocke"
+
+msgid "General"
+msgstr "Allgemein"
 
 #, python-format
 msgid "Edit Action: %s"
@@ -264,6 +264,12 @@ msgstr "Exportieren"
 
 msgid "Export your CompizConfig Profile"
 msgstr "CompizConfig-Profil exportieren"
+
+msgid "Reset to defaults"
+msgstr "Zurücksetzen"
+
+msgid "Reset your CompizConfig Profile to the global defaults"
+msgstr "Aktuelles Profil auf Standardwerte zurücksetzen"
 
 msgid "Backend"
 msgstr "Backend"
