@@ -175,6 +175,9 @@ def FirstItemSortCompare(sg1, sg2):
 def EnumSettingSortCompare(v1, v2):
 	return cmp(v1[1], v2[1])
 
+def PluginSortCompare(p1, p2):
+	return cmp(p1.ShortDesc, p2.ShortDesc)
+
 # singleRun is used to combine the run stages, in this case run is a list
 # containing the run levels which should be used to filter the settings
 def FilterSettings(settings, filter, run=0, noActions=False, singleRun=False):
