@@ -34,6 +34,10 @@ gettext.bindtextdomain("ccsm", DataDir + "/locale")
 gettext.textdomain("ccsm")
 _ = gettext.gettext
 
+#
+# Try to use gtk like coding style for consistency
+#
+
 # Selector Buttons
 #
 class SelectorButtons(gtk.HBox):
@@ -41,15 +45,15 @@ class SelectorButtons(gtk.HBox):
 		gtk.HBox.__init__(self)
 		self.set_border_width(10)
 		self.set_spacing(5)
-		self.Buttons = []
-		self.Arrows = []
+		self.buttons = []
+		self.arrows = []
 
 	def clear_buttons(self):
-		for widget in (self.Arrows + self.Buttons):
+		for widget in (self.arrows + self.buttons):
 			widget.destroy()
 
-		self.Arrows = []
-		self.Buttons = []
+		self.arrows = []
+		self.buttons = []
 
 	def add_button(self, label, callback):
 		arrow = gtk.Arrow(gtk.ARROW_RIGHT, gtk.SHADOW_NONE)
@@ -58,42 +62,41 @@ class SelectorButtons(gtk.HBox):
 		button.connect('clicked', callback, label)
 		if len(self.get_children()) > 0:
 			self.pack_start(arrow, False, False)
-			self.Arrows.append(arrow)
+			self.arrows.append(arrow)
 		self.pack_start(button, False, False)
-		self.Buttons.append(button)
+		self.buttons.append(button)
 		self.show_all()
 
 	def remove_button(self, pos):
-		if pos > len(self.Buttons)-1:
+		if pos > len(self.buttons)-1:
 			return
-		self.Buttons[pos].destroy()
-		self.Buttons.remove(self.Buttons[pos])
+		self.buttons[pos].destroy()
+		self.buttons.remove(self.buttons[pos])
 		if pos > 0:
-			self.Arrows[pos-1].destroy()
-			self.Arrows.remove(self.Arrows[pos-1])
+			self.arrows[pos-1].destroy()
+			self.arrows.remove(self.arrows[pos-1])
 
 # Selector Box
 #
 class SelectorBox(gtk.ScrolledWindow):
 	def __init__(self, backgroundColor):
 		gtk.ScrolledWindow.__init__(self)
-		self.SelectedItem = None
-		self.Viewport = gtk.Viewport()
-		self.Viewport.modify_bg(gtk.STATE_NORMAL, gtk.gdk.color_parse(backgroundColor))
+		self.viewport = gtk.Viewport()
+		self.viewport.modify_bg(gtk.STATE_NORMAL, gtk.gdk.color_parse(backgroundColor))
 		self.props.hscrollbar_policy = gtk.POLICY_NEVER
 		self.props.vscrollbar_policy = gtk.POLICY_AUTOMATIC
 		self.set_size_request(210, 150)
-		self.Box = gtk.VBox()
-		self.Box.set_spacing(5)
-		self.Viewport.add(self.Box)
-		self.add(self.Viewport)
+		self.box = gtk.VBox()
+		self.box.set_spacing(5)
+		self.viewport.add(self.box)
+		self.add(self.viewport)
 
 	def close(self):
 		self.destroy()
-		self.Viewport.destroy()
-		for button in self.Box.get_children():
+		self.viewport.destroy()
+		for button in self.box.get_children():
 			button.destroy()
-		self.Box.destroy()
+		self.box.destroy()
 
 	def add_item(self, item, callback, markup="%s"):
 		button = gtk.Button()
@@ -103,10 +106,10 @@ class SelectorBox(gtk.ScrolledWindow):
 		button.add(label)
 		button.connect("clicked", callback, item)
 		button.set_relief(gtk.RELIEF_NONE)
-		self.Box.pack_start(button, False, False)
+		self.box.pack_start(button, False, False)
 
 	def clear_list(self):
-		for button in self.Box.get_children():
+		for button in self.box.get_children():
 			button.destroy()
 	
 	def set_item_list(self, list, callback):
@@ -114,7 +117,7 @@ class SelectorBox(gtk.ScrolledWindow):
 		for item in list:
 			self.add_item(item)
 			
-		self.Box.show_all()
+		self.box.show_all()
 
 # Scrolled List
 #
@@ -125,69 +128,69 @@ class ScrolledList(gtk.ScrolledWindow):
 		self.props.hscrollbar_policy = gtk.POLICY_NEVER
 		self.props.vscrollbar_policy = gtk.POLICY_AUTOMATIC
 
-		self.Store = gtk.ListStore(gobject.TYPE_STRING)
+		self.store = gtk.ListStore(gobject.TYPE_STRING)
 
-		self.Style = Style()
+		self.custom_style = Style()
 
 		viewport = gtk.Viewport()
-		viewport.modify_bg(gtk.STATE_NORMAL, gtk.gdk.color_parse(self.Style.BackgroundColor))
+		viewport.modify_bg(gtk.STATE_NORMAL, gtk.gdk.color_parse(self.custom_style.BackgroundColor))
 	
-		self.ListView = gtk.TreeView(self.Store)
-		self.ListView.set_headers_visible(True)
-		self.ListView.insert_column_with_attributes(-1, name, gtk.CellRendererText(), text=0)
+		self.view = gtk.TreeView(self.store)
+		self.view.set_headers_visible(True)
+		self.view.insert_column_with_attributes(-1, name, gtk.CellRendererText(), text=0)
 		
 		self.set_size_request(300, 300)
 		
-		viewport.add(self.ListView)
+		viewport.add(self.view)
 		self.add(viewport)
 		
-		self.Select = self.ListView.get_selection()
-		self.Select.set_mode(gtk.SELECTION_SINGLE)
+		self.select = self.view.get_selection()
+		self.select.set_mode(gtk.SELECTION_SINGLE)
 
 	def get_list(self):
 		values = []
-		iter = self.Store.get_iter_first()
+		iter = self.store.get_iter_first()
 		while iter:
-			value = self.Store.get(iter, 0)[0]
+			value = self.store.get(iter, 0)[0]
 			if value != "":
 				values.append(value)
-			iter = self.Store.iter_next(iter)	
+			iter = self.store.iter_next(iter)	
 		return values
 
 	def clear(self):
-		self.Store.clear()
+		self.store.clear()
 	
 	def append(self, value):
-		iter = self.Store.append()
-		self.Store.set(iter, 0, value)
+		iter = self.store.append()
+		self.store.set(iter, 0, value)
 
 	def set(self, pos, value):
-		iter = self.Store.get_iter(pos)
-		self.Store.set(iter, 0, value)
+		iter = self.store.get_iter(pos)
+		self.store.set(iter, 0, value)
 
 	def delete(self, b):
-		selectedRows = self.Select.get_selected_rows()[1]
-		for path in selectedRows:
-			iter = self.Store.get_iter(path)
-			self.Store.remove(iter)
+		selected_rows = self.select.get_selected_rows()[1]
+		for path in selected_rows:
+			iter = self.store.get_iter(path)
+			self.store.remove(iter)
 	
 	def move_up(self, b):
-		selectedRows = self.Select.get_selected_rows()[1]
-		if len(selectedRows) == 1:
-			iter = self.Store.get_iter(selectedRows[0])
-			prev = self.Store.get_iter_first()
-			if not self.Store.get_path(prev) == self.Store.get_path(iter):
-				while prev is not None and not self.Store.get_path(self.Store.iter_next(prev)) == self.Store.get_path(iter):
-					prev = self.Store.iter_next(prev)
-				self.Store.swap(iter, prev)
+		selected_rows = self.select.get_selected_rows()[1]
+		if len(selected_rows) == 1:
+			iter = self.store.get_iter(selected_rows[0])
+			prev = self.store.get_iter_first()
+			if not self.store.get_path(prev) == self.store.get_path(iter):
+				while prev is not None and not self.store.get_path(self.store.iter_next(prev)) == self.store.get_path(iter):
+					prev = self.store.iter_next(prev)
+				self.store.swap(iter, prev)
 
 	def move_down(self, b):
-		selectedRows = self.Select.get_selected_rows()[1]
-		if len(selectedRows) == 1:
-			iter = self.Store.get_iter(selectedRows[0])
-			next = self.Store.iter_next(iter)
+		selected_rows = self.select.get_selected_rows()[1]
+		if len(selected_rows) == 1:
+			iter = self.store.get_iter(selected_rows[0])
+			next = self.store.iter_next(iter)
 			if next is not None:
-				self.Store.swap(iter, next)
+				self.store.swap(iter, next)
 
 # About Dialog
 #
@@ -208,3 +211,4 @@ class AboutDialog(gtk.AboutDialog):
 		self.set_icon(gtk.gdk.pixbuf_new_from_file(IconDir+"/apps/ccsm.svg"))
 		self.set_logo(gtk.gdk.pixbuf_new_from_file(IconDir+"/apps/ccsm.svg"))
 		self.set_website("http://www.opencompositing.org")
+

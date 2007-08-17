@@ -1101,9 +1101,9 @@ class PluginListPage:
 		self.UpdateDisabledPluginsList()
 
 		# Connect Store
-		self.EnabledPluginsList.Store.connect('row-changed', self.ListChanged)
-		self.EnabledPluginsList.Store.connect('row-deleted', self.ListChanged)
-		self.EnabledPluginsList.Store.connect('rows-reordered', self.ListChanged)
+		self.EnabledPluginsList.store.connect('row-changed', self.ListChanged)
+		self.EnabledPluginsList.store.connect('row-deleted', self.ListChanged)
+		self.EnabledPluginsList.store.connect('rows-reordered', self.ListChanged)
 
 		rightChild.pack_start(listBox, True, True)
 
@@ -1162,10 +1162,10 @@ class PluginListPage:
 			self.EnabledPluginsList.append(entry.get_text())
 
 	def EnablePlugins(self, widget):
-		selectedRows = self.DisabledPluginsList.Select.get_selected_rows()[1]
+		selectedRows = self.DisabledPluginsList.select.get_selected_rows()[1]
 		for path in selectedRows:
-			iter = self.DisabledPluginsList.Store.get_iter(path)
-			name = self.DisabledPluginsList.Store.get(iter, 0)[0]
+			iter = self.DisabledPluginsList.store.get_iter(path)
+			name = self.DisabledPluginsList.store.get(iter, 0)[0]
 			self.EnabledPluginsList.append(name)
 		self.DisabledPluginsList.delete(widget)
 	
