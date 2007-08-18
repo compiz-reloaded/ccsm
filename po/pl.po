@@ -1,152 +1,176 @@
 # CompizConfig polish translation.
-# Copyright (C) 2007 Karol Sikora
+# Copyright (C) 2007 Artur Flinta
 # This file is distributed under the same license as the ccsm package.
+# Artur Flina <aflinta@gmail.com>, 2007.
 # Karol Sikora <elektrrrus@gmail.com>, 2007.
 # Mariusz Fik <fisiu82@gmail.com>, 2007.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: 0.1\n"
+"Project-Id-Version: ccsm 0.5.2\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-07-02 10:00+0200\n"
-"PO-Revision-Date: 2007-07-14 18:00+0200\n"
-"Last-Translator: Karol Sikora <elektrrrus@gmail.com>\n"
-"Language-Team: pl_PL <pl@li.org>\n"
+"POT-Creation-Date: 2007-08-17 20:37+0200\n"
+"PO-Revision-Date: 2007-08-17 22:00+0200\n"
+"Last-Translator: Artur Flinta <aflinta@gmail.com>\n"
+"Language-Team: Polish <gnome-l10n@lists.aviary.pl>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-msgid "PyGtk 2.10.0 or later required"
-msgstr "Wymagany jest PyGtk w wersji 2.10.0 lub późniejszej"
-
-#, c-format
+#, python-format
 msgid ""
 "The new value for the %s binding for the action <b>%s</b> in plugin <b>%s</"
 "b> conflicts with the action <b>%s</b> of the <b>%s</b> plugin.\n"
 "Do you wish to disable <b>%s</b> in the <b>%s</b> plugin?"
 msgstr ""
-"Nowa wartość %s skrótu dla akcji <b>%s</b> we wtyczce <b>%s</b>"
-"jest w konflikcie z akcją <b>%s</b> wtyczki <b>%s</b>.\n"
+"Nowa wartość %s skrótu dla działani <b>%s</b> we wtyczce <b>%s</b>jest w "
+"konflikcie z działaniem <b>%s</b> wtyczki <b>%s</b>.\n"
 "Czy chcesz wyłączyć <b>%s</b> we wtyczce <b>%s</b>?"
 
-#, c-format
+#, python-format
 msgid "Disable %s"
 msgstr "Wyłącz %s"
 
-#, c-format
+#, python-format
 msgid "Don't set %s"
 msgstr "Nie ustawiaj %s"
 
-#, c-format
-#, fuzzy
+#, python-format
 msgid "Set %s anyway"
-msgstr "Ustaw %s pomimo"
+msgstr "Ustaw %s"
 
-#, c-format
+#, python-format
 msgid ""
 "You are trying to use the feature <b>%s</b> which is provided by <b>%s</b>.\n"
 "This plugin is currently disabled.\n"
 "Do you wish to enable <b>%s</b> so the feature is available?"
 msgstr ""
-"Próbójesz użyć funkcji <b>%s</b> która jest dostępna w <b>%s</b>.\n"
-"Ta wtyczka jest aktualnie nieaktywna.\n"
-"Chcesz włączyć <b>%s</b> aby ta funkcja była aktywna?"
+"Próba użycia funkcji <b>%s</b> udostępnianej przez <b>%s</b>.\n"
+"Wtyczka ta jest aktualnie nieaktywna.\n"
+"Czy włączyć <b>%s</b> aby funkcja była dostępna?"
 
-#, c-format
+#, python-format
 msgid "Enable %s"
 msgstr "Włącz %s"
 
-#, c-format
+#, python-format
 msgid "Don't enable %s"
 msgstr "Nie włączaj %s"
 
-msgid "Reset setting to the default value"
-msgstr "Przywróć ustawienia domyślne"
-
-msgid "Browse for "
-msgstr "Przeglądaj w poszukiwaniu "
-
-msgid "Images"
-msgstr "Grafiki"
-
-msgid "File"
-msgstr "Pliku"
-
-msgid "Open file.."
-msgstr "Otwórz plik.."
-
-#, fuzzy
-msgid "Multi-list settings"
-msgstr "Lista ustawień"
-
-msgid "Edit"
-msgstr "Edycja"
-
-#, c-format
-msgid "Value (%s)"
-msgstr "Wartość (%s)"
-
-#, c-format
-msgid "Edit %s"
-msgstr "Edycja %s"
-
-#, c-format
-msgid "Value (%s) for %s:"
-msgstr "Wartość (%s) dla %s: "
-
-#, c-format
-msgid "Unhandled list type %s for %s"
-msgstr "Nieprawidłowa wartość %s dla %s"
-
-#, c-format
+#, python-format
 msgid ""
 "Plugin <b>%s</b> provides feature <b>%s</b> which is also provided by <b>%s</"
 "b>"
-msgstr "" 
-"Wtyczka <b>%s</b> dostarcza funkcję <b>%s</b> która jest dostępna we "
-"wtyczce <b%s</b>"
+msgstr ""
+"Wtyczka <b>%s</b> dostarcza funkcję <b>%s</b>, która jest udostępniana przez "
+"<b>%s</b>"
 
-#, c-format
+#, python-format
 msgid "Plugin <b>%s</b> conflicts with <b>%s</b>."
 msgstr "Wtyczka <b>%s</b> jest w konflikcie z <b>%s</b>."
 
-#, c-format
+#, python-format
 msgid ""
 "<b>%s</b> requires feature <b>%s</b> which is provided by the following "
 "plugins:\n"
 "%s"
 msgstr ""
-"<b>%s</b> wymaga funkcji <b>%s</b> która jest dostępna w następujących "
-"wtyczkach:\n"
-"%s"
+"<b>%s</b> wymaga funkcji <b>%s</b>, która jest udostępniana przez wtyczki:\n"
+" %s"
 
 msgid "Enable these plugins"
 msgstr "Włącz te wtyczki"
 
-#, c-format
+#, python-format
 msgid "<b>%s</b> requires the plugin <b>%s</b>."
 msgstr "<b>%s</b> wymaga wtyczki <b>%s</b>."
 
-#, c-format
+#, python-format
 msgid ""
 "<b>%s</b> provides the feature <b>%s</b> which is required by the plugins <b>"
 "%s</b>."
 msgstr ""
-"<b>%s</b> zawiera funkcję <b>%s</b>, która jest wymagana przez wtyczki <b>"
-"%s</b>"
+"<b>%s</b> udostępnia funkcję <b>%s</b>, która jest wymagana przez wtyczki <b>"
+"%s</b>."
 
 msgid "Disable these plugins"
 msgstr "Wyłącz te wtyczki"
 
-#, c-format
+#, python-format
 msgid "Don't disable %s"
 msgstr "Nie wyłączaj %s"
 
-#, c-format
+#, python-format
 msgid "<b>%s</b> is required by the plugins <b>%s</b>."
-msgstr "<b>%s</b> jest wymagane przez wtyczkę <b>%s</b>"
+msgstr "<b>%s</b> jest wymagane przez wtyczki <b>%s</b>."
 
+msgid "Reset setting to the default value"
+msgstr "Przywracanie ustawień domyślnych"
+
+msgid "Browse for "
+msgstr "Przeglądanie "
+
+msgid "Images"
+msgstr "Grafik"
+
+msgid "File"
+msgstr "Plików"
+
+msgid "Open file.."
+msgstr "Otwieranie pliku"
+
+msgid "Multi-list settings. You can double-click a row to edit the values."
+msgstr ""
+"Ustawienia listy. Podwójne kliknięcie wiersza spowoduje modyfikację wartości."
+
+msgid "Edit"
+msgstr "Modyfikuj"
+
+#, python-format
+msgid "Value (%s)"
+msgstr "Wartość (%s)"
+
+#, python-format
+msgid "Edit %s"
+msgstr "Modyfikacja %s"
+
+#, python-format
+msgid "Value (%s) for %s:"
+msgstr "Wartość (%s) dla %s:"
+
+#, python-format
+msgid "Unhandled list type %s for %s"
+msgstr "Nieobsługiwany rodzaj listy %s dla %s"
+
+msgid "CompizConfig Settings Manager"
+msgstr "Menedżer ustawień CompizConfig"
+
+msgid "Filter"
+msgstr "Filtr"
+
+msgid "Filter your Plugin list"
+msgstr "Filtr listy wtyczek"
+
+#, python-format
+msgid "Screen %i"
+msgstr "Ekran %i"
+
+msgid "Screen"
+msgstr "Ekran"
+
+msgid "Uncategorized"
+msgstr "Niesklasyfikowane"
+
+msgid "Category"
+msgstr "Kategoria"
+
+msgid "Advanced Search"
+msgstr "Wyszukiwanie zaawansowane"
+
+msgid "Preferences"
+msgstr "Preferencje"
+
+#. Name
 msgid "Name"
 msgstr "Nazwa"
 
@@ -157,72 +181,71 @@ msgid "Button"
 msgstr "Przycisk"
 
 msgid "Screen Edge"
-msgstr "Róg ekaranu"
+msgstr "Krawędź ekranu"
 
-#, fuzzy
+#, python-format
+msgid "Button %i"
+msgstr "Przycisk %i"
+
+msgid "None"
+msgstr "Brak"
+
+msgid "Edge Button"
+msgstr "Przycisk krawędziowy"
+
 msgid "On System Bell"
-msgstr "Na powiadomienie systemu"
+msgstr "Na dzwonek systemowy"
 
 msgid "General"
 msgstr "Ogólne"
 
-#, c-format
+#, python-format
 msgid "Edit Action: %s"
-msgstr "Edytuj akcję: %s"
+msgstr "Modyfikacja działania: %s"
 
 msgid "Screen Edges"
-msgstr "Narożniki ekranu"
+msgstr "Krawędzie ekranu"
 
 msgid "Reset To Defaults"
-msgstr "Przywróć do domyślnych"
+msgstr "Przywrócenie do domyślnych"
 
-msgid "Filter"
-msgstr "Filtr"
-
-#, c-format
+#, python-format
 msgid "Search %s Plugin Options"
-msgstr "Znajdź %s opcję wtyczki"
+msgstr "Wyszukiwanie opcji wtyczki %s"
 
 msgid "Use This Plugin"
-msgstr "Użyj wtyczki"
+msgstr "Użycie wtyczki"
 
 msgid "Search Compiz Core Options"
-msgstr "Znajdź opcję Compiz Core"
+msgstr "Wyszukiwanie opcji Compiz Core"
 
 msgid "Actions"
-msgstr "Akcje"
+msgstr "Działania"
+
+msgid "Error"
+msgstr "Błąd"
 
 msgid "Search in..."
-msgstr "Szukaj w..."
+msgstr "Wyszukiwanie w..."
 
 msgid "Short description and name"
 msgstr "Krótki opis i nazwa"
 
 msgid "Long description"
-msgstr "Pełnu opis"
+msgstr "Pełny opis"
 
 msgid "Settings value"
-msgstr "Wartość  ustawień"
+msgstr "Wartość ustawień"
 
+#. Notebook
 msgid "Settings"
 msgstr "Ustawienia"
 
-msgid "Profile & Backend"
-msgstr "Profile i sposób zapisania"
-
-msgid "Backend &amp; Profile"
-msgstr "Sposób zapisania i profile"
-
-msgid ""
-"Configure the backend and profile used by the Compiz Configuration System."
-msgstr ""
-"Konfiguracja sposobu zapisania i profil używany przez system konfiguracji Compiz-a"
-
 msgid "Add a New Profile"
-msgstr "Dodaj nowy profil"
+msgstr "Dodaje nowy profil"
 
 msgid "Remove This Profile"
-msgstr "Usuń ten profil"
+msgstr "Usuwa profil"
 
 msgid "Default"
 msgstr "Ustawienia domyślne"
@@ -231,25 +254,25 @@ msgid "Profile"
 msgstr "Profil"
 
 msgid "Import"
-msgstr "Importowanie"
+msgstr "Importuj..."
 
 msgid "Import a CompizConfig Profile"
-msgstr "Importowanie profilu CompizConfig"
+msgstr "Importuje profil CompizConfig"
 
 msgid "Export"
-msgstr "Eksportowanie"
+msgstr "Eksportuj..."
 
 msgid "Export your CompizConfig Profile"
-msgstr "Eksportuj Twój profil CompizConfig"
+msgstr "Eksportujue profil CompizConfig"
 
 msgid "Backend"
-msgstr "Sposób zapisania"
+msgstr "Format zapisu"
 
 msgid "Integration"
 msgstr "Integracja"
 
 msgid "Enable integration into the desktop environment"
-msgstr "Włącz integracje ze środowiskiem pulpitu"
+msgstr "Integracja z pulpitem"
 
 msgid "Profiles (*.profile)"
 msgstr "Profile (*.profile)"
@@ -258,35 +281,67 @@ msgid "All files"
 msgstr "Wszytstkie pliki"
 
 msgid "Save file.."
-msgstr "Zapisz plik.."
+msgstr "Zapis pliku"
 
 msgid "Enter a profile name"
-msgstr "Wprowadź nazwę profilu"
+msgstr "Wprowadzanie nazwy profilu"
 
 msgid "Please enter a name for the new profile:"
-msgstr "Wprowadź nazwę nowego profilu: "
+msgstr "Wprowadź nazwę nowego profilu:"
 
 msgid "Backend not found."
-msgstr "Sposób zapisania nie znaleziony."
+msgstr "Nie znaleziono modułu dla formatu zapisu."
 
-msgid "CompizConfig Settings Manager"
-msgstr "Manager ustawień CompizConfig"
+#. Auto sort
+msgid "Automatic plugin sorting"
+msgstr "Automatyczne sortowanie wtyczek"
 
-msgid "Filter your Plugin list"
-msgstr "Filtr Twojej listy wtyczek"
+msgid "Disabled Plugins"
+msgstr "Wtyczki wyłączone"
 
-#, c-format
-msgid "Screen %i"
-msgstr "Ekran %i"
+msgid "Enabled Plugins"
+msgstr "Wtyczki włączone"
 
-msgid "Screen"
-msgstr "Ekran"
+msgid "Add plugin"
+msgstr "Dodawanie wtyczki"
 
-msgid "Uncategorized"
-msgstr "Bez kategorii"
+msgid "Plugin name:"
+msgstr "Nazwa wtyczki:"
 
-msgid "Category"
-msgstr "Kategoria"
+msgid "Insert plugin name"
+msgstr "Wstawia nazwę wtyczki"
 
-msgid "Advanced Search"
-msgstr "Zaawansowane szukanie"
+msgid "This is a settings manager for the CompizConfig configuration system."
+msgstr "Jest to menedżer ustawień dla systemu konfiguracji CompizConfig."
+
+msgid "translator-credits"
+msgstr "GNOME PL Team <gnome-l10n@lists.aviary.pl>"
+
+msgid ""
+"Configure the backend, profile and other internal settings used by the "
+"Compiz Configuration System."
+msgstr ""
+"Konfiguracja formatu zapisu, profilu i innych wewnętrznych ustawień "
+"używanych przez system konfiguracji Compiza"
+
+msgid "About"
+msgstr "O programie"
+
+msgid "About CCSM..."
+msgstr "O CCSM..."
+
+msgid "Profile & Backend"
+msgstr "Profil i format zapisu"
+
+msgid "Plugin List"
+msgstr "Lista wtyczek"
+
+#, python-format
+msgid ""
+"<span size=\"large\"><b>No matches found.</b> </span><span>\n"
+"\n"
+" Your filter \"<b>%s</b>\" does not match any items.</span>"
+msgstr ""
+"<span size=\"large\"><b>Nie znaleziono pasujących.</b> </span><span>\n"
+"\n"
+"Filtr \"<b>%s</b>\" nie pasuje do żadnego elementu.</span>"
