@@ -1,0 +1,328 @@
+# Compizconfig Settings manager Dutch translation.
+# Copyright (C) 2007 compiz-fusion.org
+# This file is distributed under the same license as the ccsm package.
+# Rick - <mailmelist@gmail.com>, 2007.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
+"POT-Creation-Date: 2007-08-20 00:00+0200\n"
+"PO-Revision-Date: 2007-08-20 15:30+0530\n"
+"Last-Translator: Rick - <mailmelist@gmail.com>\n"
+"Language-Team: Dutch <mailmelist@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#, python-format
+msgid ""
+"The new value for the %s binding for the action <b>%s</b> in plugin <b>%s</"
+"b> conflicts with the action <b>%s</b> of the <b>%s</b> plugin.\n"
+"Do you wish to disable <b>%s</b> in the <b>%s</b> plugin?"
+msgstr ""
+
+#, python-format
+msgid "Disable %s"
+msgstr ""
+
+#, python-format
+msgid "Don't set %s"
+msgstr ""
+
+#, python-format
+msgid "Set %s anyway"
+msgstr ""
+
+#, python-format
+msgid ""
+"You are trying to use the feature <b>%s</b> which is provided by <b>%s</b>.\n"
+"This plugin is currently disabled.\n"
+"Do you wish to enable <b>%s</b> so the feature is available?"
+msgstr ""
+
+#, python-format
+msgid "Enable %s"
+msgstr ""
+
+#, python-format
+msgid "Don't enable %s"
+msgstr ""
+
+#, python-format
+msgid ""
+"Plugin <b>%s</b> provides feature <b>%s</b> which is also provided by <b>%s</"
+"b>"
+msgstr ""
+
+#, python-format
+msgid "Plugin <b>%s</b> conflicts with <b>%s</b>."
+msgstr ""
+
+#, python-format
+msgid ""
+"<b>%s</b> requires feature <b>%s</b> which is provided by the following "
+"plugins:\n"
+"%s"
+msgstr ""
+
+msgid "Enable these plugins"
+msgstr "Deze plugins inschakelen"
+
+#, python-format
+msgid "<b>%s</b> requires the plugin <b>%s</b>."
+msgstr ""
+
+#, python-format
+msgid ""
+"<b>%s</b> provides the feature <b>%s</b> which is required by the plugins <b>"
+"%s</b>."
+msgstr ""
+
+msgid "Disable these plugins"
+msgstr "Deze plugins uitschakelen"
+
+#, python-format
+msgid "Don't disable %s"
+msgstr "%s niet uitschakelen"
+
+#, python-format
+msgid "<b>%s</b> is required by the plugins <b>%s</b>."
+msgstr ""
+
+msgid "Reset setting to the default value"
+msgstr "Instelling naar standaard herstellen"
+
+msgid "Browse for "
+msgstr ""
+
+msgid "Images"
+msgstr "Plaatjes"
+
+msgid "File"
+msgstr "Bestand"
+
+msgid "Open file.."
+msgstr "Open bestand.."
+
+msgid "Multi-list settings. You can double-click a row to edit the values."
+msgstr ""
+
+msgid "Edit"
+msgstr "Wijzigen"
+
+#, python-format
+msgid "Value (%s)"
+msgstr "Waarde (%s)"
+
+#, python-format
+msgid "Edit %s"
+msgstr "Wijzigen %s"
+
+#, python-format
+msgid "Value (%s) for %s:"
+msgstr "Waarde (%s) voor %s:"
+
+#, python-format
+msgid "Unhandled list type %s for %s"
+msgstr ""
+
+msgid "CompizConfig Settings Manager"
+msgstr ""
+
+msgid "Filter"
+msgstr "Filter"
+
+msgid "Filter your Plugin list"
+msgstr "Filter je plugin lijst"
+
+#, python-format
+msgid "Screen %i"
+msgstr "Scherm %i"
+
+msgid "Screen"
+msgstr "Scherm"
+
+msgid "Uncategorized"
+msgstr "Niet gecategoriseerd"
+
+msgid "Category"
+msgstr "Categorie"
+
+msgid "Advanced Search"
+msgstr "Geavanceerd zoeken"
+
+msgid "Preferences"
+msgstr "Voorkeuren"
+
+#. Name
+msgid "Name"
+msgstr "Naam"
+
+msgid "Key"
+msgstr "Sleutel"
+
+msgid "Button"
+msgstr "Knop"
+
+msgid "Screen Edge"
+msgstr ""
+
+#, python-format
+msgid "Button %i"
+msgstr "Knop %i"
+
+msgid "None"
+msgstr ""
+
+msgid "Edge Button"
+msgstr ""
+
+msgid "On System Bell"
+msgstr ""
+
+msgid "General"
+msgstr "Algemeen"
+
+#, python-format
+msgid "Edit Action: %s"
+msgstr ""
+
+msgid "Screen Edges"
+msgstr ""
+
+msgid "Reset To Defaults"
+msgstr "Standaardwaarden herstellen"
+
+#, python-format
+msgid "Search %s Plugin Options"
+msgstr "Zoeken in %s plugin opties"
+
+msgid "Use This Plugin"
+msgstr "Plugin gebruiken"
+
+msgid "Search Compiz Core Options"
+msgstr ""
+
+msgid "Actions"
+msgstr ""
+
+msgid "Error"
+msgstr "Fout"
+
+msgid "Search in..."
+msgstr "Zoeken in.."
+
+msgid "Short description and name"
+msgstr "Korte beschrijving en naam"
+
+msgid "Long description"
+msgstr "Lange beschrijving"
+
+msgid "Settings value"
+msgstr ""
+
+#. Notebook
+msgid "Settings"
+msgstr "Instellingen"
+
+msgid "Add a New Profile"
+msgstr "Voeg nieuw profiel toe"
+
+msgid "Remove This Profile"
+msgstr "Verwijder dit profiel"
+
+msgid "Default"
+msgstr "Standaard"
+
+msgid "Profile"
+msgstr "Profiel"
+
+msgid "Import"
+msgstr "Importeren"
+
+msgid "Import a CompizConfig Profile"
+msgstr "Importeer een CompizConfig profiel"
+
+msgid "Export"
+msgstr "Exporteren"
+
+msgid "Export your CompizConfig Profile"
+msgstr "Exporteer je CompizConfig profiel"
+
+msgid "Reset to defaults"
+msgstr "Standaarden herstellen"
+
+msgid "Reset your CompizConfig Profile to the global defaults"
+msgstr "CompizConfig profiel herstellen naar standaarwaarden"
+
+msgid "Backend"
+msgstr ""
+
+msgid "Integration"
+msgstr "Integratie"
+
+msgid "Enable integration into the desktop environment"
+msgstr ""
+
+msgid "Profiles (*.profile)"
+msgstr "Profielen (*.profile)"
+
+msgid "All files"
+msgstr "Alle bestanden"
+
+msgid "Save file.."
+msgstr "Bestand opslaan.."
+
+msgid "Enter a profile name"
+msgstr "Geef een profiel naam"
+
+msgid "Please enter a name for the new profile:"
+msgstr "Geef een naam voor het nieuwe profiel:"
+
+msgid "Backend not found."
+msgstr ""
+
+#. Auto sort
+msgid "Automatic plugin sorting"
+msgstr "Plugins automatisch sorteren"
+
+msgid "Disabled Plugins"
+msgstr "Plugins uitschakelen"
+
+msgid "Enabled Plugins"
+msgstr "Ingeschakelde plugins"
+
+msgid "Add plugin"
+msgstr "Plugin toevoegen"
+
+msgid "Plugin name:"
+msgstr "Naam plugin:"
+
+msgid "Insert plugin name"
+msgstr "Invoeren naam plugin"
+
+msgid ""
+"Configure the backend, profile and other internal settings used by the "
+"Compiz Configuration System."
+msgstr ""
+
+msgid "About"
+msgstr "Info"
+
+msgid "About CCSM..."
+msgstr "Info over CCSM..."
+
+msgid "Profile & Backend"
+msgstr ""
+
+msgid "Plugin List"
+msgstr "Lijst plugins"
+
+#, python-format
+msgid ""
+"<span size=\"large\"><b>No matches found.</b> </span><span>\n"
+"\n"
+" Your filter \"<b>%s</b>\" does not match any items.</span>"
+msgstr ""
