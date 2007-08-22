@@ -64,7 +64,7 @@ class Image(gtk.Image):
             if type == ImagePlugin:
                 iconpath = "%s/plugin-%s.svg" % (PixmapDir, name)
                 if not os.path.exists(iconpath):
-                    iconpath = "%s/plugin-unknown.svg"%PixmapDir
+                    iconpath = "%s/plugin-unknown.svg" % PixmapDir
                 try:
                     pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(iconpath, size, size)
                     self.set_from_pixbuf(pixbuf)
