@@ -1003,8 +1003,13 @@ class EdgeSetting (Setting):
         ret = dlg.run ()
         dlg.destroy ()
 
-        if ret == gtk.RESPONSE_OK:
-            self.current = selector.current
+        if ret != gtk.RESPONSE_OK:
+            return
+
+        new = selector.current
+        conflict = ActionConflict (self, None, None, None, new, None)
+        if conflict.Resolve ():
+            self.current = new
             self.Changed ()
 
     def _Read (self):
