@@ -949,6 +949,8 @@ def MakeSetting(setting):
             return IntFloatListSetting(setting)
         else:
             raise TypeError, _("Unhandled list type %s for %s")%(setting.Info[0], setting.Name)
+    elif setting.Type == 'Bell':
+        return BellSetting(setting)
     return None
 
 class SubGroupArea:
