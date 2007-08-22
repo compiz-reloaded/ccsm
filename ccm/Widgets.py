@@ -194,21 +194,21 @@ class ScrolledList(gtk.ScrolledWindow):
 
 # About Dialog
 #
-class AboutDialog(gtk.AboutDialog):
-	def __init__(self):
-		gtk.AboutDialog.__init__(self)
+class AboutDialog (gtk.AboutDialog):
+	def __init__ (self):
+		gtk.AboutDialog.__init__ (self)
 
-		self.set_name(_("CompizConfig Settings Manager"))
-		self.set_version(Version)
-		self.set_comments(_("This is a settings manager for the CompizConfig configuration system."))
-		self.set_copyright("Copyright \xC2\xA9 2007 Patrick Niklaus/Quinn Storm")
-		self.set_translator_credits(_("translator-credits"))
-		self.set_authors(["Patrick Niklaus <marex@opencompositing.org>",
-						  "Quinn Storm <quinn@beryl-project.org>"])
-		self.set_artists(["Andrew Wedderburn <andrew.wedderburn@gmail.com>",
-						  "Patrick Niklaus <marex@opencompositing.org>",
-						  "Gnome Icon Theme Team"])
-		self.set_icon(gtk.gdk.pixbuf_new_from_file(IconDir+"/apps/ccsm.svg"))
-		self.set_logo(gtk.gdk.pixbuf_new_from_file(IconDir+"/apps/ccsm.svg"))
-		self.set_website("http://www.opencompositing.org")
+		self.set_name (_("CompizConfig Settings Manager"))
+		self.set_version (Version)
+		self.set_comments (_("This is a settings manager for the CompizConfig configuration system."))
+		self.set_copyright ("Copyright \xC2\xA9 2007 Patrick Niklaus/Quinn Storm")
+		self.set_translator_credits (_("translator-credits"))
+		self.set_authors (["Patrick Niklaus <marex@opencompositing.org>",
+						   "Quinn Storm <quinn@beryl-project.org>"])
+		self.set_artists (["Andrew Wedderburn <andrew.wedderburn@gmail.com>",
+						   "Patrick Niklaus <marex@opencompositing.org>",
+						   "Gnome Icon Theme Team"])
+		self.set_icon (gtk.gdk.pixbuf_new_from_file (IconDir+"/apps/ccsm.svg"))
+		self.set_logo (gtk.gdk.pixbuf_new_from_file (IconDir+"/apps/ccsm.svg"))
+		self.set_website ("http://www.compiz-fusion.org")
 
