@@ -217,9 +217,6 @@ def FilterSettings(settings, filter, run=0, singleRun=False):
                         if item[1] == int:
                             value += item[0]
                 value = value.lower()
-            # we also need actions support
-            elif setting.Type == 'Action':
-                value = str(setting.Value).lower()
             else:
                 value = str(setting.Value).lower()
             if value.find(filter) != -1:
