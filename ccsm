@@ -24,11 +24,11 @@ pygtk.require('2.0')
 import gtk
 
 try:
-	import sexy
-	has_sexy = True
+    import sexy
+    has_sexy = True
 except ImportError:
-	print "Info: No sexy-python package found, don't worry it's optional."
-	has_sexy = False
+    print "Info: No sexy-python package found, don't worry it's optional."
+    has_sexy = False
 
 if gtk.pygtk_version < (2,10,0):
     print "PyGtk 2.10.0 or later required"

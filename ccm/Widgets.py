@@ -23,6 +23,8 @@ import pygtk
 import gtk
 import gtk.gdk
 import gobject
+import cairo
+from math import pi, sqrt
 
 from ccm.Utils import *
 from ccm.Constants import *
@@ -41,174 +43,400 @@ _ = gettext.gettext
 # Selector Buttons
 #
 class SelectorButtons(gtk.HBox):
-	def __init__(self):
-		gtk.HBox.__init__(self)
-		self.set_border_width(10)
-		self.set_spacing(5)
-		self.buttons = []
-		self.arrows = []
+    def __init__(self):
+        gtk.HBox.__init__(self)
+        self.set_border_width(10)
+        self.set_spacing(5)
+        self.buttons = []
+        self.arrows = []
 
-	def clear_buttons(self):
-		for widget in (self.arrows + self.buttons):
-			widget.destroy()
+    def clear_buttons(self):
+        for widget in (self.arrows + self.buttons):
+            widget.destroy()
 
-		self.arrows = []
-		self.buttons = []
+        self.arrows = []
+        self.buttons = []
 
-	def add_button(self, label, callback):
-		arrow = gtk.Arrow(gtk.ARROW_RIGHT, gtk.SHADOW_NONE)
-		button = gtk.Button(label)
-		button.set_relief(gtk.RELIEF_NONE)
-		button.connect('clicked', callback, label)
-		if len(self.get_children()) > 0:
-			self.pack_start(arrow, False, False)
-			self.arrows.append(arrow)
-		self.pack_start(button, False, False)
-		self.buttons.append(button)
-		self.show_all()
+    def add_button(self, label, callback):
+        arrow = gtk.Arrow(gtk.ARROW_RIGHT, gtk.SHADOW_NONE)
+        button = gtk.Button(label)
+        button.set_relief(gtk.RELIEF_NONE)
+        button.connect('clicked', callback, label)
+        if len(self.get_children()) > 0:
+            self.pack_start(arrow, False, False)
+            self.arrows.append(arrow)
+        self.pack_start(button, False, False)
+        self.buttons.append(button)
+        self.show_all()
 
-	def remove_button(self, pos):
-		if pos > len(self.buttons)-1:
-			return
-		self.buttons[pos].destroy()
-		self.buttons.remove(self.buttons[pos])
-		if pos > 0:
-			self.arrows[pos-1].destroy()
-			self.arrows.remove(self.arrows[pos-1])
+    def remove_button(self, pos):
+        if pos > len(self.buttons)-1:
+            return
+        self.buttons[pos].destroy()
+        self.buttons.remove(self.buttons[pos])
+        if pos > 0:
+            self.arrows[pos-1].destroy()
+            self.arrows.remove(self.arrows[pos-1])
 
 # Selector Box
 #
 class SelectorBox(gtk.ScrolledWindow):
-	def __init__(self, backgroundColor):
-		gtk.ScrolledWindow.__init__(self)
-		self.viewport = gtk.Viewport()
-		self.viewport.modify_bg(gtk.STATE_NORMAL, gtk.gdk.color_parse(backgroundColor))
-		self.props.hscrollbar_policy = gtk.POLICY_NEVER
-		self.props.vscrollbar_policy = gtk.POLICY_AUTOMATIC
-		self.set_size_request(210, 150)
-		self.box = gtk.VBox()
-		self.box.set_spacing(5)
-		self.viewport.add(self.box)
-		self.add(self.viewport)
+    def __init__(self, backgroundColor):
+        gtk.ScrolledWindow.__init__(self)
+        self.viewport = gtk.Viewport()
+        self.viewport.modify_bg(gtk.STATE_NORMAL, gtk.gdk.color_parse(backgroundColor))
+        self.props.hscrollbar_policy = gtk.POLICY_NEVER
+        self.props.vscrollbar_policy = gtk.POLICY_AUTOMATIC
+        self.set_size_request(210, 150)
+        self.box = gtk.VBox()
+        self.box.set_spacing(5)
+        self.viewport.add(self.box)
+        self.add(self.viewport)
 
-	def close(self):
-		self.destroy()
-		self.viewport.destroy()
-		for button in self.box.get_children():
-			button.destroy()
-		self.box.destroy()
+    def close(self):
+        self.destroy()
+        self.viewport.destroy()
+        for button in self.box.get_children():
+            button.destroy()
+        self.box.destroy()
 
-	def add_item(self, item, callback, markup="%s"):
-		button = gtk.Button()
-		label = Label()
-		item = item.replace("&", "&amp;")
-		label.set_markup(markup % item or _("General"))
-		button.add(label)
-		button.connect("clicked", callback, item)
-		button.set_relief(gtk.RELIEF_NONE)
-		self.box.pack_start(button, False, False)
+    def add_item(self, item, callback, markup="%s"):
+        button = gtk.Button()
+        label = Label()
+        item = item.replace("&", "&amp;")
+        label.set_markup(markup % item or _("General"))
+        button.add(label)
+        button.connect("clicked", callback, item)
+        button.set_relief(gtk.RELIEF_NONE)
+        self.box.pack_start(button, False, False)
 
-	def clear_list(self):
-		for button in self.box.get_children():
-			button.destroy()
-	
-	def set_item_list(self, list, callback):
-		self.clear_list()
-		for item in list:
-			self.add_item(item)
-			
-		self.box.show_all()
+    def clear_list(self):
+        for button in self.box.get_children():
+            button.destroy()
+    
+    def set_item_list(self, list, callback):
+        self.clear_list()
+        for item in list:
+            self.add_item(item)
+            
+        self.box.show_all()
 
 # Scrolled List
 #
 class ScrolledList(gtk.ScrolledWindow):
-	def __init__(self, name):
-		gtk.ScrolledWindow.__init__(self)
+    def __init__(self, name):
+        gtk.ScrolledWindow.__init__(self)
 
-		self.props.hscrollbar_policy = gtk.POLICY_NEVER
-		self.props.vscrollbar_policy = gtk.POLICY_AUTOMATIC
+        self.props.hscrollbar_policy = gtk.POLICY_NEVER
+        self.props.vscrollbar_policy = gtk.POLICY_AUTOMATIC
 
-		self.store = gtk.ListStore(gobject.TYPE_STRING)
+        self.store = gtk.ListStore(gobject.TYPE_STRING)
 
-		self.custom_style = Style()
+        self.custom_style = Style()
 
-		viewport = gtk.Viewport()
-		viewport.modify_bg(gtk.STATE_NORMAL, gtk.gdk.color_parse(self.custom_style.BackgroundColor))
-	
-		self.view = gtk.TreeView(self.store)
-		self.view.set_headers_visible(True)
-		self.view.insert_column_with_attributes(-1, name, gtk.CellRendererText(), text=0)
-		
-		self.set_size_request(300, 300)
-		
-		viewport.add(self.view)
-		self.add(viewport)
-		
-		self.select = self.view.get_selection()
-		self.select.set_mode(gtk.SELECTION_SINGLE)
+        viewport = gtk.Viewport()
+        viewport.modify_bg(gtk.STATE_NORMAL, gtk.gdk.color_parse(self.custom_style.BackgroundColor))
+    
+        self.view = gtk.TreeView(self.store)
+        self.view.set_headers_visible(True)
+        self.view.insert_column_with_attributes(-1, name, gtk.CellRendererText(), text=0)
+        
+        self.set_size_request(300, 300)
+        
+        viewport.add(self.view)
+        self.add(viewport)
+        
+        self.select = self.view.get_selection()
+        self.select.set_mode(gtk.SELECTION_SINGLE)
 
-	def get_list(self):
-		values = []
-		iter = self.store.get_iter_first()
-		while iter:
-			value = self.store.get(iter, 0)[0]
-			if value != "":
-				values.append(value)
-			iter = self.store.iter_next(iter)	
-		return values
+    def get_list(self):
+        values = []
+        iter = self.store.get_iter_first()
+        while iter:
+            value = self.store.get(iter, 0)[0]
+            if value != "":
+                values.append(value)
+            iter = self.store.iter_next(iter)    
+        return values
 
-	def clear(self):
-		self.store.clear()
-	
-	def append(self, value):
-		iter = self.store.append()
-		self.store.set(iter, 0, value)
+    def clear(self):
+        self.store.clear()
+    
+    def append(self, value):
+        iter = self.store.append()
+        self.store.set(iter, 0, value)
 
-	def set(self, pos, value):
-		iter = self.store.get_iter(pos)
-		self.store.set(iter, 0, value)
+    def set(self, pos, value):
+        iter = self.store.get_iter(pos)
+        self.store.set(iter, 0, value)
 
-	def delete(self, b):
-		selected_rows = self.select.get_selected_rows()[1]
-		for path in selected_rows:
-			iter = self.store.get_iter(path)
-			self.store.remove(iter)
-	
-	def move_up(self, b):
-		selected_rows = self.select.get_selected_rows()[1]
-		if len(selected_rows) == 1:
-			iter = self.store.get_iter(selected_rows[0])
-			prev = self.store.get_iter_first()
-			if not self.store.get_path(prev) == self.store.get_path(iter):
-				while prev is not None and not self.store.get_path(self.store.iter_next(prev)) == self.store.get_path(iter):
-					prev = self.store.iter_next(prev)
-				self.store.swap(iter, prev)
+    def delete(self, b):
+        selected_rows = self.select.get_selected_rows()[1]
+        for path in selected_rows:
+            iter = self.store.get_iter(path)
+            self.store.remove(iter)
+    
+    def move_up(self, b):
+        selected_rows = self.select.get_selected_rows()[1]
+        if len(selected_rows) == 1:
+            iter = self.store.get_iter(selected_rows[0])
+            prev = self.store.get_iter_first()
+            if not self.store.get_path(prev) == self.store.get_path(iter):
+                while prev is not None and not self.store.get_path(self.store.iter_next(prev)) == self.store.get_path(iter):
+                    prev = self.store.iter_next(prev)
+                self.store.swap(iter, prev)
 
-	def move_down(self, b):
-		selected_rows = self.select.get_selected_rows()[1]
-		if len(selected_rows) == 1:
-			iter = self.store.get_iter(selected_rows[0])
-			next = self.store.iter_next(iter)
-			if next is not None:
-				self.store.swap(iter, next)
+    def move_down(self, b):
+        selected_rows = self.select.get_selected_rows()[1]
+        if len(selected_rows) == 1:
+            iter = self.store.get_iter(selected_rows[0])
+            next = self.store.iter_next(iter)
+            if next is not None:
+                self.store.swap(iter, next)
+
+# Edge selection widget
+#
+class EdgeSelector (gtk.DrawingArea):
+
+    _current = []
+
+    _base_surface   = None
+    _surface        = None
+
+    def __init__ (self, edge):
+        '''Prepare widget'''
+        super (EdgeSelector, self).__init__ ()
+        self.current = edge
+        background = "%s/display.png" % PixmapDir
+        self._base_surface = cairo.ImageSurface.create_from_png (background)
+        self.add_events (gtk.gdk.BUTTON_PRESS_MASK)
+        self.connect ("expose_event", self.expose)
+        self.connect ("button_press_event", self.button_press)
+        self.set_size_request (300, 300)
+
+    def set_current (self, value):
+        self._current = value.split ("|")
+
+    def get_current (self):
+        return "|".join (self._current)
+    current = property (get_current, set_current)
+
+    def draw (self, cr, width, height):
+        '''The actual drawing function'''
+        # Useful vars
+        x0 = 37
+        y0 = 50
+        x1 = 263
+        y1 = 187
+        x2 = x0 + 60
+        x3 = x1 - 60
+        y2 = y0 + 40
+        y3 = y1 - 40
+        cradius = 30
+        radius = 20
+        # Top left edge
+        cr.new_path ()
+        cr.move_to (x0, y0 - cradius)
+        cr.line_to (x0, y0)
+        cr.line_to (x0 + cradius, y0)
+        cr.arc (x0, y0, cradius, 0, pi / 2)
+        self.set_color (cr, "TopLeft")
+        cr.fill ()
+        # Top right edge
+        cr.new_path ()
+        cr.move_to (x1, y0 + cradius)
+        cr.line_to (x1, y0)
+        cr.line_to (x1 - cradius, y0)
+        cr.arc (x1, y0, cradius, pi / 2, pi)
+        self.set_color (cr, "TopRight")
+        cr.fill ()
+        # Bottom left edge
+        cr.new_path ()
+        cr.move_to (x0, y1 - cradius)
+        cr.line_to (x0, y1)
+        cr.line_to (x0 + cradius, y1)
+        cr.arc (x0, y1, cradius, 3 * pi / 2, 2 * pi)
+        self.set_color (cr, "BottomLeft")
+        cr.fill ()
+        # Bottom right edge
+        cr.new_path ()
+        cr.move_to (x1, y1 - cradius)
+        cr.line_to (x1, y1)
+        cr.line_to (x1 - cradius, y1)
+        cr.arc (x1, y1, cradius, pi, 3 * pi / 2)
+        self.set_color (cr, "BottomRight")
+        cr.fill ()
+        # Top edge
+        cr.new_path ()
+        cr.move_to (x2 + radius, y0)
+        cr.line_to (x3 - radius, y0)
+        cr.arc (x3 - radius, y0, radius, 0, pi / 2)
+        cr.line_to (x2 + radius, y0 + radius)
+        cr.arc (x2 + radius, y0, radius, pi / 2, pi)
+        self.set_color (cr, "Top")
+        cr.fill ()
+        # Bottom edge
+        cr.new_path ()
+        cr.move_to (x2 + radius, y1)
+        cr.line_to (x3 - radius, y1)
+        cr.arc_negative (x3 - radius, y1, radius, 0, - pi / 2)
+        cr.line_to (x2 + radius, y1 - radius)
+        cr.arc_negative (x2 + radius, y1, radius, - pi / 2, pi)
+        self.set_color (cr, "Bottom")
+        cr.fill ()
+        # Left edge
+        cr.new_path ()
+        cr.move_to (x0, y2 + radius)
+        cr.line_to (x0, y3 - radius)
+        cr.arc_negative (x0, y3 - radius, radius, pi / 2, 0)
+        cr.line_to (x0 + radius, y2 + radius)
+        cr.arc_negative (x0, y2 + radius, radius, 0, 3 * pi / 2)
+        self.set_color (cr, "Left")
+        cr.fill ()
+        # Right edge
+        cr.new_path ()
+        cr.move_to (x1, y2 + radius)
+        cr.line_to (x1, y3 - radius)
+        cr.arc (x1, y3 - radius, radius, pi / 2, pi)
+        cr.line_to (x1 - radius, y2 + radius)
+        cr.arc (x1, y2 + radius, radius, pi, 3 * pi / 2)
+        self.set_color (cr, "Right")
+        cr.fill ()
+
+    def set_color (self, cr, edge):
+        '''Set painting color for edge'''
+        if edge in self._current:
+            cr.set_source_rgb (0, 1, 0)
+        else:
+            cr.set_source_rgb (0.90, 0, 0)
+
+    def redraw (self, queue = False):
+        '''Redraw internal surface'''
+        alloc = self.get_allocation ()
+        # Prepare drawing surface
+        width, height = alloc.width, alloc.height
+        self._surface = cairo.ImageSurface (cairo.FORMAT_ARGB32, width, height)
+        cr = cairo.Context (self._surface)
+        # Draw background
+        cr.set_source_surface (self._base_surface)
+        cr.paint ()
+        # Draw
+        self.draw (cr, alloc.width, alloc.height)
+        # Queue expose event if required
+        if queue:
+            self.queue_draw ()
+
+    def expose (self, widget, event):
+        '''Expose event handler'''
+        cr = self.window.cairo_create ()
+        if not self._surface:
+            self.redraw ()
+        cr.set_source_surface (self._surface)
+        cr.rectangle (event.area.x, event.area.y,
+                      event.area.width, event.area.height)
+        cr.clip ()
+        cr.paint ()
+        return False
+
+    def in_circle_quarter (self, x, y, x0, y0, x1, y1, x2, y2, radius):
+        '''Args:
+            x, y = point coordinates
+            x0, y0 = center coordinates
+            x1, y1 = circle square top left coordinates
+            x2, y2 = circle square bottom right coordinates
+            radius = circle radius'''
+        if not self.in_rect (x, y, x1, y1, x2, y2):
+            return False
+        return self.dist (x, y, x0, y0) <= radius
+
+    def dist (self, x1, y1, x2, y2):
+        return sqrt ((x2 - x1) ** 2 + (y2 - y1) ** 2)
+
+    def in_rect (self, x, y, x0, y0, x1, y1):
+        return x >= x0 and y >= y0 and x <= x1 and y <= y1
+    
+    def button_press (self, widget, event):
+        x, y = event.x, event.y
+        edge = ""
+
+        # Useful vars
+        x0 = 37
+        y0 = 50
+        x1 = 263
+        y1 = 187
+        x2 = x0 + 60
+        x3 = x1 - 60
+        y2 = y0 + 40
+        y3 = y1 - 40
+        cradius = 30
+        radius = 20
+
+        if self.in_circle_quarter (x, y, x0, y0, x0, y0,
+                                   x0 + cradius, y0 + cradius,
+                                   cradius):
+            edge = "TopLeft"
+        elif self.in_circle_quarter (x, y, x1, y0, x1 - cradius, y0,
+                                     x1, y0 + cradius, cradius):
+            edge = "TopRight"
+        elif self.in_circle_quarter (x, y, x0, y1, x0, y1 - cradius,
+                                     x0 + cradius, y1, cradius):
+            edge = "BottomLeft"
+        elif self.in_circle_quarter (x, y, x1, y1, x1 - cradius, y1 - cradius,
+                                     x1, y1, cradius):
+            edge = "BottomRight"
+        elif self.in_rect (x, y, x2 + radius, y0, x3 - radius, y0 + radius) \
+             or self.in_circle_quarter (x, y, x2 + radius, y0, x2, y0,
+                                        x2 + radius, y0 + radius, radius) \
+             or self.in_circle_quarter (x, y, x3 - radius, y0, x3 - radius, y0,
+                                        x3, y0 + radius, radius):
+            edge = "Top"
+        elif self.in_rect (x, y, x2 + radius, y1 - radius, x3 - radius, y1) \
+             or self.in_circle_quarter (x, y, x2 + radius, y1, x2, y1 - radius,
+                                        x2 + radius, y1, radius) \
+             or self.in_circle_quarter (x, y, x3 - radius, y1,
+                                        x3 - radius, y1 - radius,
+                                        x3, y1, radius):
+            edge = "Bottom"
+        elif self.in_rect (x, y, x0, y2 + radius, x0 + radius, y3 - radius) \
+             or self.in_circle_quarter (x, y, x0, y2 + radius, x0, y2,
+                                        x0 + radius, y2 + radius, radius) \
+             or self.in_circle_quarter (x, y, x0, y3 - radius,
+                                        x0, y3 - radius,
+                                        x0 + radius, y3, radius):
+            edge = "Left"
+        elif self.in_rect (x, y, x1 - radius, y2 + radius, x1, y3 - radius) \
+             or self.in_circle_quarter (x, y, x1, y2 + radius, x1 - radius, y2,
+                                        x1, y2 + radius, radius) \
+             or self.in_circle_quarter (x, y, x1, y3 - radius,
+                                        x1 - radius, y3 - radius,
+                                        x1, y3, radius):
+            edge = "Right"
+
+        if not len (edge):
+            return
+        if edge in self._current:
+            self._current.remove (edge)
+        else:
+            self._current.append (edge)
+        self.redraw (queue = True)
 
 # About Dialog
 #
-class AboutDialog(gtk.AboutDialog):
-	def __init__(self):
-		gtk.AboutDialog.__init__(self)
+class AboutDialog (gtk.AboutDialog):
+    def __init__ (self):
+        gtk.AboutDialog.__init__ (self)
 
-		self.set_name(_("CompizConfig Settings Manager"))
-		self.set_version(Version)
-		self.set_comments(_("This is a settings manager for the CompizConfig configuration system."))
-		self.set_copyright("Copyright \xC2\xA9 2007 Patrick Niklaus/Quinn Storm")
-		self.set_translator_credits(_("translator-credits"))
-		self.set_authors(["Patrick Niklaus <marex@opencompositing.org>",
-						  "Quinn Storm <quinn@beryl-project.org>"])
-		self.set_artists(["Andrew Wedderburn <andrew.wedderburn@gmail.com>",
-						  "Patrick Niklaus <marex@opencompositing.org>",
-						  "Gnome Icon Theme Team"])
-		self.set_icon(gtk.gdk.pixbuf_new_from_file(IconDir+"/apps/ccsm.svg"))
-		self.set_logo(gtk.gdk.pixbuf_new_from_file(IconDir+"/apps/ccsm.svg"))
-		self.set_website("http://www.opencompositing.org")
+        self.set_name (_("CompizConfig Settings Manager"))
+        self.set_version (Version)
+        self.set_comments (_("This is a settings manager for the CompizConfig configuration system."))
+        self.set_copyright ("Copyright \xC2\xA9 2007 Patrick Niklaus/Quinn Storm")
+        self.set_translator_credits (_("translator-credits"))
+        self.set_authors (["Patrick Niklaus <marex@opencompositing.org>",
+                           "Quinn Storm <quinn@beryl-project.org>"])
+        self.set_artists (["Andrew Wedderburn <andrew.wedderburn@gmail.com>",
+                           "Patrick Niklaus <marex@opencompositing.org>",
+                           "Gnome Icon Theme Team"])
+        self.set_icon (gtk.gdk.pixbuf_new_from_file (IconDir+"/apps/ccsm.svg"))
+        self.set_logo (gtk.gdk.pixbuf_new_from_file (IconDir+"/apps/ccsm.svg"))
+        self.set_website ("http://www.compiz-fusion.org")
 
