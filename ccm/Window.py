@@ -36,6 +36,9 @@ gettext.textdomain("ccsm")
 _ = gettext.gettext
 
 class MainWin(gtk.Window):
+
+    currentCategory = ""
+
     def __init__(self, Context):
         gtk.Window.__init__(self)
         self.ShowingPlugin = None
@@ -102,6 +105,7 @@ class MainWin(gtk.Window):
             filterEntry = gtk.Entry()
         Tooltips.set_tip(filterEntry, _("Filter your Plugin list"))
         filterEntry.connect("changed", self.FilterTable)
+        self.filterEntry = filterEntry
         leftChild.pack_start(filterLabel, False, False)
         leftChild.pack_start(filterEntry, False, False)
 
@@ -121,7 +125,8 @@ class MainWin(gtk.Window):
         # Categories
         categoryBox = gtk.VBox()
         categoryBox.set_border_width(10)
-        for category in sorted(self.Categories, self.CatSortCompare):
+        categories = [_("All")] + sorted(self.Categories, self.CatSortCompare)
+        for category in categories:
             name = category or _("Uncategorized")
             categoryToggleLabel = Label(name)
             categoryToggle = gtk.Button()
@@ -240,7 +245,7 @@ class MainWin(gtk.Window):
     # 0 = plugin name and short description
     # 1 = plugin long description
     # 2 = category
-    def FilterTable(self, widget, target=0):
+    def FilterTable(self, widget, target = 0):
         text = widget.get_text().lower()
         cols = self.LastCols
         foundPlugin = False
@@ -256,6 +261,8 @@ class MainWin(gtk.Window):
             row = 0
             empty = True
             for pluginButton in categoryContainer[1]:
+                if not self.currentCategory in ("", categoryName):
+                    break
                 index = categoryContainer[1].index(pluginButton)
                 shortDesc = categoryContainer[2][index].ShortDesc.lower()
                 longDesc = categoryContainer[2][index].LongDesc.lower()
@@ -427,18 +434,11 @@ class MainWin(gtk.Window):
         plugin.Context.Write()
 
     def ToggleCategory(self, widget, category):
-        categoryContainer = self.TableCats[category]
-        categoryY = categoryContainer[0].get_parent().get_allocation().y
-        parentY = self.RightPane.get_child().get_allocation().y
-        parentHeight = self.RightPane.get_child().get_allocation().height
-        categoryBox = self.RightPane.get_child().get_child().get_child()
-        boxHeight = categoryBox.get_allocation().height
-        posY = categoryY - parentY
-        neededHeight = posY + parentHeight
-        if neededHeight > boxHeight:
-            posY =  boxHeight - parentHeight
-        self.RightPane.get_child().props.vadjustment.value = posY
-    
+        if category == "All":
+            category = ""
+        self.currentCategory = category
+        self.FilterTable (widget = self.filterEntry) 
+
     def ScreenChanged(self, widget):
         self.Context.Write()
         self.CurrentScreenNum = widget.get_active()
