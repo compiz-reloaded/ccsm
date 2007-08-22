@@ -132,6 +132,12 @@ class Updater:
     def Append(self, setting):
         self.VisibleSettings.append(setting)
 
+    def UpdateSetting (self, setting):
+        for widget in self.VisibleSettings:
+            if widget.Setting == setting:
+                widget.Read ()
+                break
+
     def Update(self):
         changed = self.Context.ProcessEvents()
         if changed:
