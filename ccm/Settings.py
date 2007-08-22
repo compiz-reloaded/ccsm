@@ -28,6 +28,7 @@ mimetypes.init()
 
 from ccm.Constants import *
 from ccm.Conflicts import *
+from ccm.Widgets import EdgeSelector
 from ccm.Utils import *
 
 import locale
@@ -918,6 +919,56 @@ class IntFloatListSetting(ListSetting):
             return adj.get_value()
         return None
 
+class EdgeSetting (Setting):
+
+    current = ""
+
+    def _Init (self):
+        self.Button = gtk.Button ()
+        self.setButtonLabel ()
+        self.Button.connect ("clicked", self.RunEdgeSelector)
+
+        Tooltips.set_tip(self.Button, self.Setting.LongDesc)
+
+        self.Widget = self.Button
+
+    def setButtonLabel (self):
+        label = self.current
+        if len (self.current):
+            edges = self.current.split ("|")
+            edges = map (lambda s: _(s), edges)
+            label = ", ".join (edges)
+        else:
+            label = _("None")
+        self.Button.set_label (label)
+
+    def RunEdgeSelector (self, widget):
+        dlg = gtk.Dialog (_("Edit %s") % self.Setting.ShortDesc)
+        dlg.add_button (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
+        dlg.add_button (gtk.STOCK_OK, gtk.RESPONSE_OK).grab_default()
+        dlg.set_default_response (gtk.RESPONSE_OK)
+        
+        selector = EdgeSelector (self.current)
+        
+        Tooltips.set_tip (selector, self.Setting.LongDesc)
+        dlg.vbox.pack_start (selector)
+        
+        dlg.vbox.show_all ()
+        ret = dlg.run ()
+        dlg.destroy ()
+
+        if ret == gtk.RESPONSE_OK:
+            self.current = selector.current
+            self.Changed ()
+
+    def _Read (self):
+        self.current = self.Setting.Value
+        self.setButtonLabel ()
+
+    def _Changed (self):
+        self.Setting.Value = self.current
+        self.setButtonLabel ()
+
 BellSetting = BoolSetting
 
 def MakeSetting(setting):
@@ -949,6 +1000,8 @@ def MakeSetting(setting):
             return IntFloatListSetting(setting)
         else:
             raise TypeError, _("Unhandled list type %s for %s")%(setting.Info[0], setting.Name)
+    elif setting.Type == 'Edge':
+        return EdgeSetting(setting)
     elif setting.Type == 'Bell':
         return BellSetting(setting)
     return None
