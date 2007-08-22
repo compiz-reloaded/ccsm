@@ -919,6 +919,52 @@ class IntFloatListSetting(ListSetting):
             return adj.get_value()
         return None
 
+class KeySetting (Setting):
+
+    key = 0
+    mods = 0
+    iter = None
+
+    def _Init (self):
+        self.store = gtk.ListStore (gobject.TYPE_UINT, gobject.TYPE_UINT)
+        self.store.append ([0, 0])
+        self.iter = self.store.get_iter_root ()
+        tv = gtk.TreeView (self.store)
+        tv.set_headers_visible (False)
+        key_renderer = gtk.CellRendererAccel ()
+        key_renderer.set_property ("editable", True)
+        key_renderer.connect ("accel-edited", self.bindingEdited)
+        key_renderer.connect ("accel-cleared", self.bindingCleared)
+        tv.insert_column_with_attributes (-1, "", key_renderer,
+                                          accel_key = 0, accel_mods = 1)
+
+        Tooltips.set_tip (tv, self.Setting.LongDesc)
+
+        alignment = gtk.Alignment (1.0)
+        alignment.add (tv)
+
+        self.Widget = alignment
+
+    def bindingCleared (self, renderer, path):
+        '''Binding cleared callback'''
+        self.bindingEdited (renderer, path, 0, 0, 0)
+
+    def bindingEdited (self, renderer, path, key, mods, keycode):
+        '''Binding edited callback'''
+        # Update & save binding
+        self.key = key
+        self.mods = mods
+        self.Changed ()
+        # Update store
+        self.store.set (self.iter, 0, key, 1, mods)
+
+    def _Read (self):
+        self.key, self.mods = gtk.accelerator_parse (self.Setting.Value)
+        self.store.set (self.iter, 0, self.key, 1, self.mods)
+
+    def _Changed (self):
+        self.Setting.Value = gtk.accelerator_name (self.key, self.mods)
+
 class EdgeSetting (Setting):
 
     current = ""
@@ -1000,6 +1046,8 @@ def MakeSetting(setting):
             return IntFloatListSetting(setting)
         else:
             raise TypeError, _("Unhandled list type %s for %s")%(setting.Info[0], setting.Name)
+    elif setting.Type == 'Key':
+        return KeySetting (setting)
     elif setting.Type == 'Edge':
         return EdgeSetting(setting)
     elif setting.Type == 'Bell':
