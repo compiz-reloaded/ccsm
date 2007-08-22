@@ -105,13 +105,7 @@ class PluginPage:
                 self.RightWidget.append_page(groupPage.Widget, gtk.Label(name))
                 self.Pages = self.Pages + [groupPage]
         
-        self.ActionPage = ActionPage(self.Main.Context, plugin)
-        if not self.ActionPage.Empty:
-            self.RightWidget.append_page(self.ActionPage.Widget, gtk.Label(_("Actions")))
-            self.Pages = self.Pages + [self.ActionPage]
-        else:
-            self.ActionPage = None
-            self.RightWidget.connect('size-allocate', self.ResetFocus)
+        self.RightWidget.connect('size-allocate', self.ResetFocus)
 
         self.Block = 0
 
@@ -141,14 +135,6 @@ class PluginPage:
 
         for name, groupPage in groups:
             self.RightWidget.append_page(groupPage.Widget, gtk.Label(name))
-
-        if self.ActionPage:
-            self.ActionPage.Filter = filter
-            self.ActionPage.UpdateTreeView()
-            if self.ActionPage.Empty and self.ActionPage.Widget.get_parent():
-                self.RightWidget.remove_page(self.RightWidget.page_num(self.ActionPage.Widget))
-            elif not self.ActionPage.Empty and not self.ActionPage.Widget.get_parent():
-                self.RightWidget.append_page(self.ActionPage.Widget, gtk.Label(_("Actions")))
 
         # Add
         if len(self.RightWidget.get_children()) == 0 and not self.NotFoundBox:
@@ -272,12 +258,10 @@ class FilterPage:
         self.SettingsArea.set_no_show_all(True)
         self.RightChild.pack_start(self.SettingsArea, True, True)
 
-        self.ActionPage = ActionPage(self.Context)
         self.NotFoundBox = None
 
         # Notebook
         self.RightWidget.append_page(self.RightChild, gtk.Label(_("Settings")))
-        self.RightWidget.append_page(self.ActionPage.Widget, gtk.Label(_("Actions")))
 
         self.FilterChanged(filterEntry)
 
@@ -415,17 +399,8 @@ class FilterPage:
         elif len(self.FilteredPlugins) > 0 and not self.RightChild.get_parent():
             self.RightWidget.append_page(self.RightChild, gtk.Label(_("Settings")))
 
-        self.ActionPage.Filter = self.Filter
-        self.ActionPage.UpdateTreeView()
-        # No actions found, remove page
-        if self.ActionPage.Empty and self.ActionPage.Widget.get_parent():
-            self.RightWidget.remove_page(self.RightWidget.page_num(self.ActionPage.Widget))
-        # Restore page
-        elif not self.ActionPage.Empty and not self.ActionPage.Widget.get_parent():
-            self.RightWidget.append_page(self.ActionPage.Widget, gtk.Label(_("Actions")))
-
         # Nothing found
-        if not self.RightChild.get_parent() and not self.ActionPage.Widget.get_parent():
+        if not self.RightChild.get_parent():
             if self.NotFoundBox:
                 self.NotFoundBox.update(self.Filter)
             else:
