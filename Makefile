@@ -8,4 +8,4 @@ uninstall:
 	@python setup.py uninstall --prefix=${PREFIX}
 
 clean:
-	rm -r build/
+	rm -rf build/

@@ -26,10 +26,10 @@ import gtk.gdk
 # Optional Imports
 #
 try:
-	import sexy
-	has_sexy = True
+    import sexy
+    has_sexy = True
 except ImportError:
-	has_sexy = False
+    has_sexy = False
 
 # Current Screen
 #
