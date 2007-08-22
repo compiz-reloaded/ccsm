@@ -779,7 +779,7 @@ class FilterPage:
                 for name, subGroup in plugin.Groups[group].items():
                     settings = sum((v.values() for v in [subGroup.Display]+[subGroup.Screens[CurrentScreenNum]]), [])
                     settings = sorted(settings, SettingSortCompare)
-                    settings = FilterSettings(settings, self.Filter, run=runLevels, noActions=True, singleRun=True)
+                    settings = FilterSettings(settings, self.Filter, run=runLevels, singleRun=True)
                     if len(settings) > 0:
                         subGroups.append((name, subGroup, settings))
                 if len(subGroups) > 0:

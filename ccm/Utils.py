@@ -180,15 +180,13 @@ def PluginSortCompare(p1, p2):
 
 # singleRun is used to combine the run stages, in this case run is a list
 # containing the run levels which should be used to filter the settings
-def FilterSettings(settings, filter, run=0, noActions=False, singleRun=False):
+def FilterSettings(settings, filter, run=0, singleRun=False):
     if filter == None:
         return settings
 
     filteredSettings = []
 
     for setting in settings:
-        if noActions and setting.Type == 'Action':
-            continue
         # First run, only search in shortDesc and name
         if run == 0 or (singleRun and run.count(0) != 0):
             shortDesc = setting.ShortDesc.lower()
@@ -229,7 +227,7 @@ def FilterSettings(settings, filter, run=0, noActions=False, singleRun=False):
 
     # Nothing was found, search also in the longDesc/value
     if len(filteredSettings) == 0 and run < 2 and not singleRun:
-        return FilterSettings(settings, filter, run+1, noActions, False)
+        return FilterSettings(settings, filter, run+1, False)
 
     return filteredSettings
 

@@ -918,6 +918,8 @@ class IntFloatListSetting(ListSetting):
             return adj.get_value()
         return None
 
+BellSetting = BoolSetting
+
 def MakeSetting(setting):
     if setting.Type == 'String' or setting.Type == 'Match':
         if len(setting.Hints) > 0 and setting.Hints.__contains__('file'):
@@ -952,7 +954,7 @@ def MakeSetting(setting):
 class SubGroupArea:
     def __init__(self, name, subGroup, filter=None):
         self.MySettings = []
-        settings = FilterSettings(sorted(sum((v.values() for v in [subGroup.Display]+[subGroup.Screens[CurrentScreenNum]]), []), SettingSortCompare), filter, noActions=True)
+        settings = FilterSettings(sorted(sum((v.values() for v in [subGroup.Display]+[subGroup.Screens[CurrentScreenNum]]), []), SettingSortCompare), filter)
         if name == '':
             self.Widget = gtk.Table()
             self.Child = self.Widget
