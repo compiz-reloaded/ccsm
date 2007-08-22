@@ -118,7 +118,7 @@ data_files = [
                 ("share/icons/hicolor/scalable/apps", ["images/ccsm.svg"]),
                 ("share/pixmaps", ["images/ccsm.png"]),
                 ("share/applications", ["ccsm.desktop"]),
-                ("share/ccsm/images", images)
+                ("share/ccsm/images", images + ["images/display.png"])
              ]
 
 podir = os.path.join (os.path.realpath ("."), "po")
