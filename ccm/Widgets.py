@@ -23,6 +23,8 @@ import pygtk
 import gtk
 import gtk.gdk
 import gobject
+import cairo
+from math import pi, sqrt
 
 from ccm.Utils import *
 from ccm.Constants import *
@@ -191,6 +193,232 @@ class ScrolledList(gtk.ScrolledWindow):
             next = self.store.iter_next(iter)
             if next is not None:
                 self.store.swap(iter, next)
+
+# Edge selection widget
+#
+class EdgeSelector (gtk.DrawingArea):
+
+    _current = []
+
+    _base_surface   = None
+    _surface        = None
+
+    def __init__ (self, edge):
+        '''Prepare widget'''
+        super (EdgeSelector, self).__init__ ()
+        self.current = edge
+        background = "%s/display.png" % PixmapDir
+        self._base_surface = cairo.ImageSurface.create_from_png (background)
+        self.add_events (gtk.gdk.BUTTON_PRESS_MASK)
+        self.connect ("expose_event", self.expose)
+        self.connect ("button_press_event", self.button_press)
+        self.set_size_request (300, 300)
+
+    def set_current (self, value):
+        self._current = value.split ("|")
+
+    def get_current (self):
+        return "|".join (self._current)
+    current = property (get_current, set_current)
+
+    def draw (self, cr, width, height):
+        '''The actual drawing function'''
+        # Useful vars
+        x0 = 37
+        y0 = 50
+        x1 = 263
+        y1 = 187
+        x2 = x0 + 60
+        x3 = x1 - 60
+        y2 = y0 + 40
+        y3 = y1 - 40
+        cradius = 30
+        radius = 20
+        # Top left edge
+        cr.new_path ()
+        cr.move_to (x0, y0 - cradius)
+        cr.line_to (x0, y0)
+        cr.line_to (x0 + cradius, y0)
+        cr.arc (x0, y0, cradius, 0, pi / 2)
+        self.set_color (cr, "TopLeft")
+        cr.fill ()
+        # Top right edge
+        cr.new_path ()
+        cr.move_to (x1, y0 + cradius)
+        cr.line_to (x1, y0)
+        cr.line_to (x1 - cradius, y0)
+        cr.arc (x1, y0, cradius, pi / 2, pi)
+        self.set_color (cr, "TopRight")
+        cr.fill ()
+        # Bottom left edge
+        cr.new_path ()
+        cr.move_to (x0, y1 - cradius)
+        cr.line_to (x0, y1)
+        cr.line_to (x0 + cradius, y1)
+        cr.arc (x0, y1, cradius, 3 * pi / 2, 2 * pi)
+        self.set_color (cr, "BottomLeft")
+        cr.fill ()
+        # Bottom right edge
+        cr.new_path ()
+        cr.move_to (x1, y1 - cradius)
+        cr.line_to (x1, y1)
+        cr.line_to (x1 - cradius, y1)
+        cr.arc (x1, y1, cradius, pi, 3 * pi / 2)
+        self.set_color (cr, "BottomRight")
+        cr.fill ()
+        # Top edge
+        cr.new_path ()
+        cr.move_to (x2 + radius, y0)
+        cr.line_to (x3 - radius, y0)
+        cr.arc (x3 - radius, y0, radius, 0, pi / 2)
+        cr.line_to (x2 + radius, y0 + radius)
+        cr.arc (x2 + radius, y0, radius, pi / 2, pi)
+        self.set_color (cr, "Top")
+        cr.fill ()
+        # Bottom edge
+        cr.new_path ()
+        cr.move_to (x2 + radius, y1)
+        cr.line_to (x3 - radius, y1)
+        cr.arc_negative (x3 - radius, y1, radius, 0, - pi / 2)
+        cr.line_to (x2 + radius, y1 - radius)
+        cr.arc_negative (x2 + radius, y1, radius, - pi / 2, pi)
+        self.set_color (cr, "Bottom")
+        cr.fill ()
+        # Left edge
+        cr.new_path ()
+        cr.move_to (x0, y2 + radius)
+        cr.line_to (x0, y3 - radius)
+        cr.arc_negative (x0, y3 - radius, radius, pi / 2, 0)
+        cr.line_to (x0 + radius, y2 + radius)
+        cr.arc_negative (x0, y2 + radius, radius, 0, 3 * pi / 2)
+        self.set_color (cr, "Left")
+        cr.fill ()
+        # Right edge
+        cr.new_path ()
+        cr.move_to (x1, y2 + radius)
+        cr.line_to (x1, y3 - radius)
+        cr.arc (x1, y3 - radius, radius, pi / 2, pi)
+        cr.line_to (x1 - radius, y2 + radius)
+        cr.arc (x1, y2 + radius, radius, pi, 3 * pi / 2)
+        self.set_color (cr, "Right")
+        cr.fill ()
+
+    def set_color (self, cr, edge):
+        '''Set painting color for edge'''
+        if edge in self._current:
+            cr.set_source_rgb (0, 1, 0)
+        else:
+            cr.set_source_rgb (0.90, 0, 0)
+
+    def redraw (self, queue = False):
+        '''Redraw internal surface'''
+        alloc = self.get_allocation ()
+        # Prepare drawing surface
+        width, height = alloc.width, alloc.height
+        self._surface = cairo.ImageSurface (cairo.FORMAT_ARGB32, width, height)
+        cr = cairo.Context (self._surface)
+        # Draw background
+        cr.set_source_surface (self._base_surface)
+        cr.paint ()
+        # Draw
+        self.draw (cr, alloc.width, alloc.height)
+        # Queue expose event if required
+        if queue:
+            self.queue_draw ()
+
+    def expose (self, widget, event):
+        '''Expose event handler'''
+        cr = self.window.cairo_create ()
+        if not self._surface:
+            self.redraw ()
+        cr.set_source_surface (self._surface)
+        cr.rectangle (event.area.x, event.area.y,
+                      event.area.width, event.area.height)
+        cr.clip ()
+        cr.paint ()
+        return False
+
+    def in_circle_quarter (self, x, y, x0, y0, x1, y1, x2, y2, radius):
+        '''Args:
+            x, y = point coordinates
+            x0, y0 = center coordinates
+            x1, y1 = circle square top left coordinates
+            x2, y2 = circle square bottom right coordinates
+            radius = circle radius'''
+        if not self.in_rect (x, y, x1, y1, x2, y2):
+            return False
+        return self.dist (x, y, x0, y0) <= radius
+
+    def dist (self, x1, y1, x2, y2):
+        return sqrt ((x2 - x1) ** 2 + (y2 - y1) ** 2)
+
+    def in_rect (self, x, y, x0, y0, x1, y1):
+        return x >= x0 and y >= y0 and x <= x1 and y <= y1
+    
+    def button_press (self, widget, event):
+        x, y = event.x, event.y
+        edge = ""
+
+        # Useful vars
+        x0 = 37
+        y0 = 50
+        x1 = 263
+        y1 = 187
+        x2 = x0 + 60
+        x3 = x1 - 60
+        y2 = y0 + 40
+        y3 = y1 - 40
+        cradius = 30
+        radius = 20
+
+        if self.in_circle_quarter (x, y, x0, y0, x0, y0,
+                                   x0 + cradius, y0 + cradius,
+                                   cradius):
+            edge = "TopLeft"
+        elif self.in_circle_quarter (x, y, x1, y0, x1 - cradius, y0,
+                                     x1, y0 + cradius, cradius):
+            edge = "TopRight"
+        elif self.in_circle_quarter (x, y, x0, y1, x0, y1 - cradius,
+                                     x0 + cradius, y1, cradius):
+            edge = "BottomLeft"
+        elif self.in_circle_quarter (x, y, x1, y1, x1 - cradius, y1 - cradius,
+                                     x1, y1, cradius):
+            edge = "BottomRight"
+        elif self.in_rect (x, y, x2 + radius, y0, x3 - radius, y0 + radius) \
+             or self.in_circle_quarter (x, y, x2 + radius, y0, x2, y0,
+                                        x2 + radius, y0 + radius, radius) \
+             or self.in_circle_quarter (x, y, x3 - radius, y0, x3 - radius, y0,
+                                        x3, y0 + radius, radius):
+            edge = "Top"
+        elif self.in_rect (x, y, x2 + radius, y1 - radius, x3 - radius, y1) \
+             or self.in_circle_quarter (x, y, x2 + radius, y1, x2, y1 - radius,
+                                        x2 + radius, y1, radius) \
+             or self.in_circle_quarter (x, y, x3 - radius, y1,
+                                        x3 - radius, y1 - radius,
+                                        x3, y1, radius):
+            edge = "Bottom"
+        elif self.in_rect (x, y, x0, y2 + radius, x0 + radius, y3 - radius) \
+             or self.in_circle_quarter (x, y, x0, y2 + radius, x0, y2,
+                                        x0 + radius, y2 + radius, radius) \
+             or self.in_circle_quarter (x, y, x0, y3 - radius,
+                                        x0, y3 - radius,
+                                        x0 + radius, y3, radius):
+            edge = "Left"
+        elif self.in_rect (x, y, x1 - radius, y2 + radius, x1, y3 - radius) \
+             or self.in_circle_quarter (x, y, x1, y2 + radius, x1 - radius, y2,
+                                        x1, y2 + radius, radius) \
+             or self.in_circle_quarter (x, y, x1, y3 - radius,
+                                        x1 - radius, y3 - radius,
+                                        x1, y3, radius):
+            edge = "Right"
+
+        if not len (edge):
+            return
+        if edge in self._current:
+            self._current.remove (edge)
+        else:
+            self._current.append (edge)
+        self.redraw (queue = True)
 
 # About Dialog
 #
