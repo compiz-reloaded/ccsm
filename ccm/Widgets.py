@@ -218,7 +218,7 @@ class EdgeSelector (gtk.DrawingArea):
         self._current = value.split ("|")
 
     def get_current (self):
-        return "|".join (self._current)
+        return "|".join (filter (lambda s: len (s) > 0, self._current))
     current = property (get_current, set_current)
 
     def draw (self, cr, width, height):
