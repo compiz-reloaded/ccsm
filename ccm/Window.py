@@ -434,7 +434,7 @@ class MainWin(gtk.Window):
         plugin.Context.Write()
 
     def ToggleCategory(self, widget, category):
-        if category == "All":
+        if category == _("All"):
             category = ""
         self.currentCategory = category
         self.FilterTable (widget = self.filterEntry) 
