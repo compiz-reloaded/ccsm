@@ -241,14 +241,14 @@ class BoolSetting (Setting):
         if self.Setting.Integrated:
             label.set_markup ("<span foreground=\"blue\">%s</span>" % \
                               self.Setting.ShortDesc)
-        self.align = gtk.Alignment (0, 0.5)
-        self.align.add (label)
-        self.buttonAlign = gtk.Alignment (0, 0.5)
-        self.buttonAlign.set_padding (0, 0, 0, 10)
-        self.buttonAlign.add (self.CheckButton)
+        align = gtk.Alignment (0, 0.5)
+        align.add (label)
+        buttonAlign = gtk.Alignment (0, 0.5)
+        buttonAlign.set_padding (0, 0, 0, 10)
+        buttonAlign.add (self.CheckButton)
         Tooltips.set_tip (self.CheckButton, self.Setting.LongDesc)
-        self.Widget.pack_start (self.align, True, True)
-        self.Widget.pack_start (self.buttonAlign, False, False)
+        self.Widget.pack_start (align, True, True)
+        self.Widget.pack_start (buttonAlign, False, False)
         self.Widget.pack_start (self.Reset, False, False)
         self.CheckButton.connect ('toggled', self.Changed)
 
@@ -927,6 +927,20 @@ class IntFloatListSetting(ListSetting):
             return adj.get_value()
         return None
 
+def makeActionImage (action):
+    img = gtk.Image ()
+    size = 22
+    path = "%s/mini-%s.png" % (PixmapDir, action)
+    try:
+        pixbuf = gtk.gdk.pixbuf_new_from_file_at_size (path, size, size)
+        bell.set_from_pixbuf (pixbuf)
+    except:
+        bell.set_from_stock (gtk.STOCK_MISSING_IMAGE, gtk.ICON_SIZE_BUTTON)
+    align = gtk.Alignment (0, 0.5)
+    align.set_padding (0, 0, 0, 10)
+    align.add (bell)
+    return align    
+
 class KeySetting (Setting):
 
     key = 0
@@ -1040,7 +1054,13 @@ class EdgeSetting (Setting):
         self.Setting.Value = self.current
         self.setButtonLabel ()
 
-BellSetting = BoolSetting
+class BellSetting (BoolSetting):
+
+    def _Init (self):
+        BoolSetting._Init (self)
+        bell = makeActionImage ("bell")
+        self.Widget.pack_start (bell, False, False)
+        self.Widget.reorder_child (bell, 0)
 
 def MakeSetting(setting):
     if setting.Type == 'String' or setting.Type == 'Match':
