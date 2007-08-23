@@ -421,6 +421,27 @@ class EdgeSelector (gtk.DrawingArea):
             self._current.append (edge)
         self.redraw (queue = True)
 
+# Popup
+#
+class Popup (gtk.Window):
+
+    def __init__ (self, parent, text):
+        gtk.Window.__init__ (self, gtk.WINDOW_POPUP)
+        self.set_position (gtk.WIN_POS_CENTER_ALWAYS)
+        self.set_transient_for (get_parent_toplevel (parent))
+        self.set_modal (True)
+        label = gtk.Label (text)
+        align = gtk.Alignment ()
+        align.set_padding (20, 20, 20, 20)
+        align.add (label)
+        self.add (align)
+        self.show_all ()
+        gtk_process_events ()
+
+    def destroy (self):
+        gtk.Window.destroy (self)
+        gtk_process_events ()
+
 # Key Grabber
 #
 class KeyGrabber (gtk.Button):
@@ -444,26 +465,9 @@ class KeyGrabber (gtk.Button):
         self.connect ("clicked", self.begin_key_grab)
         self.set_label ()
 
-    def open_popup (self, text):
-        self.popup = gtk.Window (gtk.WINDOW_POPUP)
-        self.popup.set_position (gtk.WIN_POS_CENTER_ALWAYS)
-        self.popup.set_transient_for (get_parent_toplevel (self))
-        self.popup.set_modal (True)
-        label = gtk.Label (text)
-        align = gtk.Alignment ()
-        align.set_padding (20, 20, 20, 20)
-        align.add (label)
-        self.popup.add (align)
-        self.popup.show_all ()
-        gtk_process_events ()
-
-    def close_popup (self):
-        self.popup.destroy ()
-        gtk_process_events ()
-
     def begin_key_grab (self, widget):
         self.add_events (gtk.gdk.KEY_PRESS_MASK)
-        self.open_popup (_("Please press the new key combination"))
+        self.popup = Popup (self, _("Please press the new key combination"))
         self.handler = self.popup.connect ("key-press-event",
                                            self.on_key_press_event)
         while gtk.gdk.keyboard_grab (self.popup.window) != gtk.gdk.GRAB_SUCCESS:
@@ -472,7 +476,7 @@ class KeyGrabber (gtk.Button):
     def end_key_grab (self):
         gtk.gdk.keyboard_ungrab (gtk.get_current_event_time ())
         self.popup.disconnect (self.handler)
-        self.close_popup ()
+        self.popup.destroy ()
 
     def on_key_press_event (self, widget, event):
         if event.keyval in (gtk.keysyms.Escape, gtk.keysyms.Return,

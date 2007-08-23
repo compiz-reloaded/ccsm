@@ -1005,9 +1005,10 @@ class KeySetting (EditableActionSetting):
             ErrorDialog (get_parent_toplevel (self.Widget),
                          _("\"%s\" is not a valid shortcut") % accel)
             return
-        self.Grabber.open_popup (_("Computing possible conflicts, please wait"))
+        popup = Popup (self.Widget, 
+                       _("Computing possible conflicts, please wait"))
         conflict = ActionConflict (self.Setting, key = name)
-        self.Grabber.close_popup ()
+        popup.destroy ()
         if conflict.Resolve (CurrentUpdater):
             self.Grabber.key = self.key = key
             self.Grabber.mods = self.mods = mods
@@ -1021,9 +1022,10 @@ class KeySetting (EditableActionSetting):
             accel = gtk.accelerator_name (key, mods)
         else:
             accel = "Disabled"
-        self.Grabber.open_popup (_("Computing possible conflicts, please wait"))
+        popup = Popup (self.Widget, 
+                       _("Computing possible conflicts, please wait"))
         conflict = ActionConflict (self.Setting, key = accel)
-        self.Grabber.close_popup ()
+        popup.destroy ()
         if conflict.Resolve (CurrentUpdater):
             self.key = key
             self.mods = mods
@@ -1052,7 +1054,7 @@ class EdgeSetting (Setting):
         self.Button = gtk.Button ()
         self.Button.connect ("clicked", self.RunEdgeSelector)
         Tooltips.set_tip (self.Button, self.Setting.LongDesc)
-        self.setButtonLabel ()
+        self.SetButtonLabel ()
 
         self.Widget = makeCustomSetting (self.Setting.ShortDesc,
                                          self.Setting.Integrated,
@@ -1063,7 +1065,7 @@ class EdgeSetting (Setting):
         self.Widget.pack_start (display, False, False)
         self.Widget.reorder_child (display, 0)
 
-    def setButtonLabel (self):
+    def SetButtonLabel (self):
         label = self.current
         if len (self.current):
             edges = self.current.split ("|")
@@ -1106,11 +1108,11 @@ class EdgeSetting (Setting):
 
     def _Read (self):
         self.current = self.Setting.Value
-        self.setButtonLabel ()
+        self.SetButtonLabel ()
 
     def _Changed (self):
         self.Setting.Value = self.current
-        self.setButtonLabel ()
+        self.SetButtonLabel ()
 
 class BellSetting (BoolSetting):
 
