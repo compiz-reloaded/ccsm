@@ -978,13 +978,21 @@ class EdgeSetting (Setting):
     current = ""
 
     def _Init (self):
+        self.Custom = True
+
         self.Button = gtk.Button ()
-        self.setButtonLabel ()
         self.Button.connect ("clicked", self.RunEdgeSelector)
-
         Tooltips.set_tip (self.Button, self.Setting.LongDesc)
+        self.setButtonLabel ()
 
-        self.Widget = self.Button
+        self.Widget = makeCustomSetting (self.Setting.ShortDesc,
+                                         self.Setting.Integrated,
+                                         self.Button,
+                                         self.Reset)
+
+        display = makeActionImage ("display")
+        self.Widget.pack_start (display, False, False)
+        self.Widget.reorder_child (display, 0)
 
     def setButtonLabel (self):
         label = self.current
