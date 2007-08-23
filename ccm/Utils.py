@@ -35,6 +35,10 @@ gettext.bindtextdomain("ccsm", DataDir + "/locale")
 gettext.textdomain("ccsm")
 _ = gettext.gettext
 
+def get_parent_toplevel (widget):
+    '''Returns a widget's parent gtk.Window'''
+    return widget.get_parent_window ().get_toplevel ().get_user_data ()
+
 def makeCustomSetting (desc, integrated, widget, reset):
     box = gtk.HBox ()
     label = gtk.Label (desc)
