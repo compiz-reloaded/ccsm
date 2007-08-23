@@ -925,6 +925,8 @@ class KeySetting (Setting):
     iter = None
 
     def _Init (self):
+        self.Custom = True
+
         self.store = gtk.ListStore (gobject.TYPE_UINT, gobject.TYPE_UINT)
         self.store.append ([0, 0])
         self.iter = self.store.get_iter_root ()
@@ -942,7 +944,14 @@ class KeySetting (Setting):
         alignment = gtk.Alignment (1.0)
         alignment.add (tv)
 
-        self.Widget = alignment
+        self.Widget = makeCustomSetting (self.Setting.ShortDesc,
+                                         self.Setting.Integrated,
+                                         alignment,
+                                         self.Reset)
+
+        keyboard = makeActionImage ("keyboard")
+        self.Widget.pack_start (keyboard, False, False)
+        self.Widget.reorder_child (keyboard, 0)
 
     def bindingCleared (self, renderer, path):
         '''Binding cleared callback'''
