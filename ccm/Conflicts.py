@@ -65,13 +65,10 @@ class ActionConflict (Conflict):
         lvalue = self.Setting.Value.lower ()
         checkKey = key and len (key)
         if checkKey:
-            lkey = key.lower ()
-            checkKey = lkey != "disabled" and lkey != "none" and lkey != lvalue
+            checkKey = key.lower () not in ("disabled", "none", lvalue)
         checkButton = button and len (button)
         if checkButton:
-            lbutton = button.lower ()
-            checkButton = lbutton != "disabled" and lbutton != "none" \
-                          and lbutton != lvalue
+            checkButton = button.lower () not in ("disabled", "none", lvalue)
         checkEdges = edges and len (edges)
         if checkEdges:
             newEdges = edges.split ("|")
