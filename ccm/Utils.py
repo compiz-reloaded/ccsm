@@ -43,6 +43,10 @@ def gtk_process_events ():
     while gtk.events_pending ():
         gtk.main_iteration ()
 
+def protect_pango_markup (string):
+    string = string.replace ("&", "&amp;")
+    return string.replace ("<", "&lt;").replace (">", "&gt;")
+
 def makeCustomSetting (desc, integrated, widget, reset):
     box = gtk.HBox ()
     label = gtk.Label (desc)
