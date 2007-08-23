@@ -453,9 +453,11 @@ class KeyGrabber (gtk.Button):
         align.add (label)
         self.popup.add (align)
         self.popup.show_all ()
+        gtk_process_events ()
 
     def close_popup (self):
         self.popup.destroy ()
+        gtk_process_events ()
 
     def begin_key_grab (self, widget):
         self.add_events (gtk.gdk.KEY_PRESS_MASK)
@@ -469,7 +471,6 @@ class KeyGrabber (gtk.Button):
         gtk.gdk.keyboard_ungrab (gtk.get_current_event_time ())
         self.disconnect (self.handler)
         self.close_popup ()
-        gtk_process_events ()
 
     def on_key_press_event (self, widget, event):
         if event.keyval in (gtk.keysyms.Escape, gtk.keysyms.Return,
