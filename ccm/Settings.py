@@ -952,11 +952,17 @@ class KeySetting (Setting):
     def bindingEdited (self, renderer, path, key, mods, keycode):
         '''Binding edited callback'''
         # Update & save binding
-        self.key = key
-        self.mods = mods
-        self.Changed ()
-        # Update store
-        self.store.set (self.iter, 0, key, 1, mods)
+        if key or mods:
+            accel = gtk.accelerator_name (key, mods)
+        else:
+            accel = "Disabled"
+        conflict = ActionConflict (self.Setting, key = accel)
+        if conflict.Resolve (CurrentUpdater):
+            self.key = key
+            self.mods = mods
+            self.Changed ()
+            # Update store
+            self.store.set (self.iter, 0, key, 1, mods)
 
     def _Read (self):
         self.key, self.mods = gtk.accelerator_parse (self.Setting.Value)
@@ -974,7 +980,7 @@ class EdgeSetting (Setting):
         self.setButtonLabel ()
         self.Button.connect ("clicked", self.RunEdgeSelector)
 
-        Tooltips.set_tip(self.Button, self.Setting.LongDesc)
+        Tooltips.set_tip (self.Button, self.Setting.LongDesc)
 
         self.Widget = self.Button
 
@@ -1007,8 +1013,8 @@ class EdgeSetting (Setting):
             return
 
         new = selector.current
-        conflict = ActionConflict (self, None, None, None, new, None)
-        if conflict.Resolve ():
+        conflict = ActionConflict (self.Setting, edges = new)
+        if conflict.Resolve (CurrentUpdater):
             self.current = new
             self.Changed ()
 
