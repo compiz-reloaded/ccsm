@@ -49,8 +49,8 @@ class Setting:
         self.MakeLabel()
         self.Reset = gtk.Button()
         Tooltips.set_tip(self.Reset,_("Reset setting to the default value"))
-        self.Reset.set_image(gtk.image_new_from_stock(
-            gtk.STOCK_CLEAR, gtk.ICON_SIZE_BUTTON))
+        self.Reset.set_image (Image (name = gtk.STOCK_CLEAR, type = ImageStock,
+                                     size = gtk.ICON_SIZE_BUTTON))
         self.Reset.connect('clicked', self.DoReset)
         self._Init()
 
