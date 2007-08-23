@@ -49,6 +49,18 @@ def makeActionImage (action):
     align.add (img)
     return align    
 
+def makeCustomSetting (desc, integrated, widget, reset):
+    box = gtk.HBox ()
+    label = gtk.Label (desc)
+    if integrated:
+        label.set_markup ("<span foreground=\"blue\">%s</span>" % desc)
+    align = gtk.Alignment (0, 0.5)
+    align.add (label)
+    box.pack_start (align, True, True)
+    box.pack_start (widget, False, False)
+    box.pack_start (reset, False, False)
+    return box
+
 def getScreens():
     screens = []
     display = gtk.gdk.display_get_default()

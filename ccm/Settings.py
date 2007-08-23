@@ -235,21 +235,15 @@ class BoolSetting (Setting):
 
     def _Init (self):
         self.Custom = True
-        self.Widget = gtk.HBox ()
         self.CheckButton = gtk.CheckButton ()
-        label = gtk.Label (self.Setting.ShortDesc)
-        if self.Setting.Integrated:
-            label.set_markup ("<span foreground=\"blue\">%s</span>" % \
-                              self.Setting.ShortDesc)
-        align = gtk.Alignment (0, 0.5)
-        align.add (label)
+        Tooltips.set_tip (self.CheckButton, self.Setting.LongDesc)
         buttonAlign = gtk.Alignment (0, 0.5)
         buttonAlign.set_padding (0, 0, 0, 10)
         buttonAlign.add (self.CheckButton)
-        Tooltips.set_tip (self.CheckButton, self.Setting.LongDesc)
-        self.Widget.pack_start (align, True, True)
-        self.Widget.pack_start (buttonAlign, False, False)
-        self.Widget.pack_start (self.Reset, False, False)
+        self.Widget = makeCustomSetting (self.Setting.ShortDesc,
+                                         self.Setting.Integrated,
+                                         buttonAlign,
+                                         self.Reset)
         self.CheckButton.connect ('toggled', self.Changed)
 
     def _Read (self):
