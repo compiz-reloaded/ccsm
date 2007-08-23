@@ -35,6 +35,20 @@ gettext.bindtextdomain("ccsm", DataDir + "/locale")
 gettext.textdomain("ccsm")
 _ = gettext.gettext
 
+def makeActionImage (action):
+    img = gtk.Image ()
+    size = 22
+    path = "%s/mini-%s.png" % (PixmapDir, action)
+    try:
+        pixbuf = gtk.gdk.pixbuf_new_from_file_at_size (path, size, size)
+        bell.set_from_pixbuf (pixbuf)
+    except:
+        bell.set_from_stock (gtk.STOCK_MISSING_IMAGE, gtk.ICON_SIZE_BUTTON)
+    align = gtk.Alignment (0, 0.5)
+    align.set_padding (0, 0, 0, 10)
+    align.add (bell)
+    return align    
+
 def getScreens():
     screens = []
     display = gtk.gdk.display_get_default()
