@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm 0.0.1\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-08-16 12:20+0200\n"
-"PO-Revision-Date: 2007-08-16 12:21+0200\n"
+"POT-Creation-Date: 2007-08-23 10:39+0200\n"
+"PO-Revision-Date: 2007-08-23 10:42+0200\n"
 "Last-Translator: Danny Baumann <dannybaumann@web.de>\n"
 "Language-Team: Compiz Fusion translators <i18n@lists.compiz-fusion.org>\n"
 "MIME-Version: 1.0\n"
@@ -28,7 +28,7 @@ msgstr ""
 
 #, python-format
 msgid "Disable %s"
-msgstr "Deaktiviere %s"
+msgstr "%s deaktivieren"
 
 #, python-format
 msgid "Don't set %s"
@@ -51,7 +51,7 @@ msgstr ""
 
 #, python-format
 msgid "Enable %s"
-msgstr "Aktiviere %s"
+msgstr "%s aktivieren"
 
 #, python-format
 msgid "Don't enable %s"
@@ -118,7 +118,7 @@ msgid "File"
 msgstr "Datei"
 
 msgid "Open file.."
-msgstr "Öffne Datei.."
+msgstr "Datei öffnen"
 
 msgid "Multi-list settings. You can double-click a row to edit the values."
 msgstr "Mehrfachliste - Doppelklick auf eine Zeile zum Bearbeiten"
@@ -137,6 +137,9 @@ msgstr "%s bearbeiten"
 #, python-format
 msgid "Value (%s) for %s:"
 msgstr "Wert (%s) für %s"
+
+msgid "None"
+msgstr "Nichts"
 
 #, python-format
 msgid "Unhandled list type %s for %s"
@@ -158,6 +161,9 @@ msgstr "Bildschirm %i"
 msgid "Screen"
 msgstr "Bildschirm"
 
+msgid "All"
+msgstr "Alle"
+
 msgid "Uncategorized"
 msgstr "Ohne Kategorie"
 
@@ -170,45 +176,6 @@ msgstr "Erweiterte Suche"
 msgid "Preferences"
 msgstr "Einstellungen"
 
-#. Name
-msgid "Name"
-msgstr "Name"
-
-msgid "Key"
-msgstr "Taste"
-
-msgid "Button"
-msgstr "Maustaste"
-
-msgid "Screen Edge"
-msgstr "Bildschirmecke"
-
-#, python-format
-msgid "Button %i"
-msgstr "Maustaste %i"
-
-msgid "None"
-msgstr "Nichts"
-
-msgid "Edge Button"
-msgstr "Maustaste für Bildschirmecke"
-
-msgid "On System Bell"
-msgstr "Bei Systemglocke"
-
-msgid "General"
-msgstr "Allgemein"
-
-#, python-format
-msgid "Edit Action: %s"
-msgstr "Aktion %s bearbeiten"
-
-msgid "Screen Edges"
-msgstr "Bildschirmecken"
-
-msgid "Reset To Defaults"
-msgstr "Auf Standardwert zurücksetzen"
-
 #, python-format
 msgid "Search %s Plugin Options"
 msgstr "Suche in den Einstellungen des Plugins %s"
@@ -218,6 +185,9 @@ msgstr "Dieses Plugin aktivieren"
 
 msgid "Search Compiz Core Options"
 msgstr "Suche in den Einstellungen des Compiz-Kerns"
+
+msgid "General"
+msgstr "Allgemein"
 
 msgid "Actions"
 msgstr "Aktionen"
@@ -287,7 +257,7 @@ msgid "All files"
 msgstr "Alle Dateien"
 
 msgid "Save file.."
-msgstr "Speichere Datei.."
+msgstr "Datei speichern"
 
 msgid "Enter a profile name"
 msgstr "Geben Sie einen Profilnamen ein"
@@ -316,14 +286,6 @@ msgstr "Pluginname:"
 
 msgid "Insert plugin name"
 msgstr "Plugin-Namen eingeben"
-
-msgid "This is a settings manager for the CompizConfig configuration system."
-msgstr "Ein Einstellungs-Manager für das CompizConfig Konfigurations-System"
-
-msgid "translator-credits"
-msgstr ""
-"Danny Baumann <dannybaumann@web.de>\n"
-"Patrick Niklaus <marex@opencompositing.org>"
 
 msgid ""
 "Configure the backend, profile and other internal settings used by the "
@@ -354,3 +316,42 @@ msgstr ""
 "<span size=\"large\"><b>Keine Übereinstimmungen gefunden.</b> </span><span>\n"
 "\n"
 " Der Filter \"<b>%s</b>\" stimmt mit keinem Element überein.</span>"
+
+#~ msgid "Name"
+#~ msgstr "Name"
+
+#~ msgid "Key"
+#~ msgstr "Taste"
+
+#~ msgid "Button"
+#~ msgstr "Maustaste"
+
+#~ msgid "Screen Edge"
+#~ msgstr "Bildschirmecke"
+
+#~ msgid "Button %i"
+#~ msgstr "Maustaste %i"
+
+#~ msgid "Edge Button"
+#~ msgstr "Maustaste für Bildschirmecke"
+
+#~ msgid "On System Bell"
+#~ msgstr "Bei Systemglocke"
+
+#~ msgid "Edit Action: %s"
+#~ msgstr "Aktion %s bearbeiten"
+
+#~ msgid "Screen Edges"
+#~ msgstr "Bildschirmecken"
+
+#~ msgid "Reset To Defaults"
+#~ msgstr "Auf Standardwert zurücksetzen"
+
+#~ msgid ""
+#~ "This is a settings manager for the CompizConfig configuration system."
+#~ msgstr "Ein Einstellungs-Manager für das CompizConfig Konfigurations-System"
+
+#~ msgid "translator-credits"
+#~ msgstr ""
+#~ "Danny Baumann <dannybaumann@web.de>\n"
+#~ "Patrick Niklaus <marex@opencompositing.org>"
