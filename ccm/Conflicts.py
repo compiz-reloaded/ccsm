@@ -105,7 +105,7 @@ class ActionConflict (Conflict):
             for b in self.ButtonConflicts:
                 answer = self.AskUser (self.Setting, b, 'Button')
                 if answer == gtk.RESPONSE_YES:
-                    b.Value = 'None'
+                    b.Value = 'Disabled'
                     updater.UpdateSetting (b)
                 if answer == gtk.RESPONSE_NO:
                     return False
