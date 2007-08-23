@@ -56,8 +56,11 @@ def makeCustomSetting (desc, integrated, widget, reset):
         label.set_markup ("<span foreground=\"blue\">%s</span>" % desc)
     align = gtk.Alignment (0, 0.5)
     align.add (label)
+    widgetAlign = gtk.Alignment (0, 0.5)
+    widgetAlign.set_padding (0, 0, 0, 10)
+    widgetAlign.add (widget)
     box.pack_start (align, True, True)
-    box.pack_start (widget, False, False)
+    box.pack_start (widgetAlign, False, False)
     box.pack_start (reset, False, False)
     return box
 

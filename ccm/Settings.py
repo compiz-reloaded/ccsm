@@ -237,12 +237,9 @@ class BoolSetting (Setting):
         self.Custom = True
         self.CheckButton = gtk.CheckButton ()
         Tooltips.set_tip (self.CheckButton, self.Setting.LongDesc)
-        buttonAlign = gtk.Alignment (0, 0.5)
-        buttonAlign.set_padding (0, 0, 0, 10)
-        buttonAlign.add (self.CheckButton)
         self.Widget = makeCustomSetting (self.Setting.ShortDesc,
                                          self.Setting.Integrated,
-                                         buttonAlign,
+                                         self.CheckButton,
                                          self.Reset)
         self.CheckButton.connect ('toggled', self.Changed)
 
