@@ -28,7 +28,7 @@ mimetypes.init()
 
 from ccm.Constants import *
 from ccm.Conflicts import *
-from ccm.Widgets import EdgeSelector, KeyGrabber
+from ccm.Widgets import *
 from ccm.Utils import *
 
 import locale
@@ -939,9 +939,59 @@ class KeySetting (Setting):
                                          alignment,
                                          self.Reset)
 
+        editButton = gtk.Button ()
+        editButton.add (Image (name = gtk.STOCK_EDIT, type = ImageStock,
+                               size = gtk.ICON_SIZE_BUTTON))
+        editButton.connect ("clicked", self.RunEditDialog)
+        editAlign = gtk.Alignment (0, 0.5)
+        editAlign.set_padding (0, 0, 0, 10)
+        editAlign.add (editButton)
+        self.Widget.pack_start (editAlign, False, False)
+        pos = len (self.Widget.get_children ()) - 2
+        self.Widget.reorder_child (editAlign, pos)
+
         keyboard = ActionImage ("keyboard")
         self.Widget.pack_start (keyboard, False, False)
         self.Widget.reorder_child (keyboard, 0)
+
+    def RunEditDialog (self, widget):
+        dlg = gtk.Dialog (_("Edit %s") % self.Setting.ShortDesc)
+        dlg.set_position (gtk.WIN_POS_CENTER_ON_PARENT)
+        dlg.set_transient_for (get_parent_toplevel (self.Widget))
+        dlg.add_button (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
+        dlg.add_button (gtk.STOCK_OK, gtk.RESPONSE_OK).grab_default()
+        dlg.set_default_response (gtk.RESPONSE_OK)
+        
+        entry = gtk.Entry (max = 200)
+        entry.set_text (gtk.accelerator_name (self.key, self.mods))
+        entry.connect ("activate", lambda *a: dlg.response (gtk.RESPONSE_OK))
+        alignment = gtk.Alignment (0.5, 0.5, 1, 1)
+        alignment.set_padding (10, 10, 10, 10)
+        alignment.add (entry)
+
+        Tooltips.set_tip (entry, self.Setting.LongDesc)
+        dlg.vbox.pack_start (alignment)
+        
+        dlg.vbox.show_all ()
+        ret = dlg.run ()
+        dlg.destroy ()
+
+        if ret != gtk.RESPONSE_OK:
+            return
+
+        accel = entry.get_text ()
+        key, mods = gtk.accelerator_parse (accel)
+        name = gtk.accelerator_name (key, mods)
+        if len (accel) != len (name):
+            ErrorDialog (get_parent_toplevel (self.Widget),
+                         _("The specified shortcut is invalid"))
+            return
+        conflict = ActionConflict (self.Setting, key = name)
+        if conflict.Resolve (CurrentUpdater):
+            self.Grabber.key = self.key = mods
+            self.Grabber.mods = self.mods = key
+            self.Grabber.set_label ()
+            self.Changed ()
 
     def bindingEdited (self, grabber, key, mods):
         '''Binding edited callback'''
