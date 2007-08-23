@@ -1001,9 +1001,12 @@ class EdgeSetting (Setting):
         dlg.set_default_response (gtk.RESPONSE_OK)
         
         selector = EdgeSelector (self.current)
-        
+        alignment = gtk.Alignment ()
+        alignment.set_padding (10, 10, 10, 10)
+        alignment.add (selector)
+
         Tooltips.set_tip (selector, self.Setting.LongDesc)
-        dlg.vbox.pack_start (selector)
+        dlg.vbox.pack_start (alignment)
         
         dlg.vbox.show_all ()
         ret = dlg.run ()
