@@ -91,12 +91,13 @@ class ActionConflict (Conflict):
                                 self.EdgeConflicts.append ((s, edge))
                                 break
 
-    def Resolve (self):
+    def Resolve (self, updater):
         if len (self.KeyConflicts):
             for k in self.KeyConflicts:
                 answer = self.AskUser (self.Setting, k, 'Key')
                 if answer == gtk.RESPONSE_YES:
-                    k.Value = 'None'
+                    k.Value = 'Disabled'
+                    updater.UpdateSetting (k)
                 if answer == gtk.RESPONSE_NO:
                     return False
         
@@ -105,6 +106,7 @@ class ActionConflict (Conflict):
                 answer = self.AskUser (self.Setting, b, 'Button')
                 if answer == gtk.RESPONSE_YES:
                     b.Value = 'None'
+                    updater.UpdateSetting (b)
                 if answer == gtk.RESPONSE_NO:
                     return False
 
@@ -115,6 +117,7 @@ class ActionConflict (Conflict):
                     value = e.Value.split ("|")
                     value.remove (edge)
                     e.Value = "|".join (value)
+                    updater.UpdateSetting (e)
                 if answer == gtk.RESPONSE_NO:
                     return False
 
