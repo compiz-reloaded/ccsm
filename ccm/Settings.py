@@ -231,24 +231,32 @@ class EnumSetting(Setting):
         active = self.Combo.get_active_text()
         self.Setting.Value = self.Setting.Info[2][active]
 
-class BoolSetting(Setting):
-    def _Init(self):
+class BoolSetting (Setting):
+
+    def _Init (self):
         self.Custom = True
-        self.Widget = gtk.HBox()
-        self.CheckButton = gtk.CheckButton(self.Setting.ShortDesc)
-        label = self.CheckButton.get_child()
+        self.Widget = gtk.HBox ()
+        self.CheckButton = gtk.CheckButton ()
+        label = gtk.Label (self.Setting.ShortDesc)
         if self.Setting.Integrated:
-            label.set_markup("<span foreground=\"blue\">%s</span>" % self.Setting.ShortDesc)
-        Tooltips.set_tip(self.CheckButton, self.Setting.LongDesc)
-        self.Widget.pack_start(self.CheckButton, True, True)
-        self.Widget.pack_start(self.Reset, False, False)
-        self.CheckButton.connect('toggled', self.Changed)
+            label.set_markup ("<span foreground=\"blue\">%s</span>" % \
+                              self.Setting.ShortDesc)
+        self.align = gtk.Alignment (0, 0.5)
+        self.align.add (label)
+        self.buttonAlign = gtk.Alignment (0, 0.5)
+        self.buttonAlign.set_padding (0, 0, 0, 10)
+        self.buttonAlign.add (self.CheckButton)
+        Tooltips.set_tip (self.CheckButton, self.Setting.LongDesc)
+        self.Widget.pack_start (self.align, True, True)
+        self.Widget.pack_start (self.buttonAlign, False, False)
+        self.Widget.pack_start (self.Reset, False, False)
+        self.CheckButton.connect ('toggled', self.Changed)
 
-    def _Read(self):
-        self.CheckButton.set_active(self.Setting.Value)
+    def _Read (self):
+        self.CheckButton.set_active (self.Setting.Value)
 
-    def _Changed(self):
-        self.Setting.Value = self.CheckButton.get_active()
+    def _Changed (self):
+        self.Setting.Value = self.CheckButton.get_active ()
 
 class IntFloatSetting(Setting):
     def _Init(self):
