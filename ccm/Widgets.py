@@ -527,3 +527,20 @@ class AboutDialog (gtk.AboutDialog):
         self.set_logo (gtk.gdk.pixbuf_new_from_file (IconDir+"/apps/ccsm.svg"))
         self.set_website ("http://www.compiz-fusion.org")
 
+# Error dialog
+#
+class ErrorDialog (gtk.MessageDialog):
+    '''Display an error dialog'''
+
+    def __init__ (self, parent, message):
+        gtk.MessageDialog.__init__ (self, parent,
+                                    gtk.DIALOG_DESTROY_WITH_PARENT,
+                                    gtk.MESSAGE_ERROR,
+                                    gtk.BUTTONS_CLOSE)
+        self.set_position (gtk.WIN_POS_CENTER)
+        self.set_markup (message)
+        self.set_title (_("An error has occured"))
+        self.set_icon (parent.get_icon ())
+        self.set_transient_for (parent)
+        self.show_all ()
+        self.connect ("response", lambda *args: self.destroy ())
