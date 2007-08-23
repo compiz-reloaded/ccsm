@@ -987,7 +987,9 @@ class KeySetting (Setting):
             ErrorDialog (get_parent_toplevel (self.Widget),
                          _("\"%s\" is not a valid shortcut") % accel)
             return
+        self.Grabber.open_popup (_("Computing possible conflicts, please wait"))
         conflict = ActionConflict (self.Setting, key = name)
+        self.Grabber.close_popup ()
         if conflict.Resolve (CurrentUpdater):
             self.Grabber.key = self.key = mods
             self.Grabber.mods = self.mods = key
@@ -1001,7 +1003,9 @@ class KeySetting (Setting):
             accel = gtk.accelerator_name (key, mods)
         else:
             accel = "Disabled"
+        self.Grabber.open_popup (_("Computing possible conflicts, please wait"))
         conflict = ActionConflict (self.Setting, key = accel)
+        self.Grabber.close_popup ()
         if conflict.Resolve (CurrentUpdater):
             self.key = key
             self.mods = mods
