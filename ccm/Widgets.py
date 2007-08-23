@@ -469,8 +469,7 @@ class KeyGrabber (gtk.Button):
         gtk.gdk.keyboard_ungrab (gtk.get_current_event_time ())
         self.disconnect (self.handler)
         self.close_popup ()
-        while gtk.events_pending ():
-            gtk.main_iteration ()
+        gtk_process_events ()
 
     def on_key_press_event (self, widget, event):
         if event.keyval in (gtk.keysyms.Escape, gtk.keysyms.Return,
