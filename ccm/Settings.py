@@ -991,8 +991,8 @@ class KeySetting (Setting):
         conflict = ActionConflict (self.Setting, key = name)
         self.Grabber.close_popup ()
         if conflict.Resolve (CurrentUpdater):
-            self.Grabber.key = self.key = mods
-            self.Grabber.mods = self.mods = key
+            self.Grabber.key = self.key = key
+            self.Grabber.mods = self.mods = mods
             self.Grabber.set_label ()
             self.Changed ()
 
