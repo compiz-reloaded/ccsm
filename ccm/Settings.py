@@ -231,24 +231,23 @@ class EnumSetting(Setting):
         active = self.Combo.get_active_text()
         self.Setting.Value = self.Setting.Info[2][active]
 
-class BoolSetting(Setting):
-    def _Init(self):
+class BoolSetting (Setting):
+
+    def _Init (self):
         self.Custom = True
-        self.Widget = gtk.HBox()
-        self.CheckButton = gtk.CheckButton(self.Setting.ShortDesc)
-        label = self.CheckButton.get_child()
-        if self.Setting.Integrated:
-            label.set_markup("<span foreground=\"blue\">%s</span>" % self.Setting.ShortDesc)
-        Tooltips.set_tip(self.CheckButton, self.Setting.LongDesc)
-        self.Widget.pack_start(self.CheckButton, True, True)
-        self.Widget.pack_start(self.Reset, False, False)
-        self.CheckButton.connect('toggled', self.Changed)
+        self.CheckButton = gtk.CheckButton ()
+        Tooltips.set_tip (self.CheckButton, self.Setting.LongDesc)
+        self.Widget = makeCustomSetting (self.Setting.ShortDesc,
+                                         self.Setting.Integrated,
+                                         self.CheckButton,
+                                         self.Reset)
+        self.CheckButton.connect ('toggled', self.Changed)
 
-    def _Read(self):
-        self.CheckButton.set_active(self.Setting.Value)
+    def _Read (self):
+        self.CheckButton.set_active (self.Setting.Value)
 
-    def _Changed(self):
-        self.Setting.Value = self.CheckButton.get_active()
+    def _Changed (self):
+        self.Setting.Value = self.CheckButton.get_active ()
 
 class IntFloatSetting(Setting):
     def _Init(self):
@@ -926,6 +925,8 @@ class KeySetting (Setting):
     iter = None
 
     def _Init (self):
+        self.Custom = True
+
         self.store = gtk.ListStore (gobject.TYPE_UINT, gobject.TYPE_UINT)
         self.store.append ([0, 0])
         self.iter = self.store.get_iter_root ()
@@ -943,7 +944,14 @@ class KeySetting (Setting):
         alignment = gtk.Alignment (1.0)
         alignment.add (tv)
 
-        self.Widget = alignment
+        self.Widget = makeCustomSetting (self.Setting.ShortDesc,
+                                         self.Setting.Integrated,
+                                         alignment,
+                                         self.Reset)
+
+        keyboard = makeActionImage ("keyboard")
+        self.Widget.pack_start (keyboard, False, False)
+        self.Widget.reorder_child (keyboard, 0)
 
     def bindingCleared (self, renderer, path):
         '''Binding cleared callback'''
@@ -952,11 +960,17 @@ class KeySetting (Setting):
     def bindingEdited (self, renderer, path, key, mods, keycode):
         '''Binding edited callback'''
         # Update & save binding
-        self.key = key
-        self.mods = mods
-        self.Changed ()
-        # Update store
-        self.store.set (self.iter, 0, key, 1, mods)
+        if key or mods:
+            accel = gtk.accelerator_name (key, mods)
+        else:
+            accel = "Disabled"
+        conflict = ActionConflict (self.Setting, key = accel)
+        if conflict.Resolve (CurrentUpdater):
+            self.key = key
+            self.mods = mods
+            self.Changed ()
+            # Update store
+            self.store.set (self.iter, 0, key, 1, mods)
 
     def _Read (self):
         self.key, self.mods = gtk.accelerator_parse (self.Setting.Value)
@@ -970,13 +984,21 @@ class EdgeSetting (Setting):
     current = ""
 
     def _Init (self):
+        self.Custom = True
+
         self.Button = gtk.Button ()
-        self.setButtonLabel ()
         self.Button.connect ("clicked", self.RunEdgeSelector)
+        Tooltips.set_tip (self.Button, self.Setting.LongDesc)
+        self.setButtonLabel ()
 
-        Tooltips.set_tip(self.Button, self.Setting.LongDesc)
+        self.Widget = makeCustomSetting (self.Setting.ShortDesc,
+                                         self.Setting.Integrated,
+                                         self.Button,
+                                         self.Reset)
 
-        self.Widget = self.Button
+        display = makeActionImage ("display")
+        self.Widget.pack_start (display, False, False)
+        self.Widget.reorder_child (display, 0)
 
     def setButtonLabel (self):
         label = self.current
@@ -990,21 +1012,32 @@ class EdgeSetting (Setting):
 
     def RunEdgeSelector (self, widget):
         dlg = gtk.Dialog (_("Edit %s") % self.Setting.ShortDesc)
+        dlg.set_position (gtk.WIN_POS_CENTER_ON_PARENT)
+        parent = self.Widget.get_parent_window ().get_toplevel ()
+        dlg.set_transient_for (parent.get_user_data ())
         dlg.add_button (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
         dlg.add_button (gtk.STOCK_OK, gtk.RESPONSE_OK).grab_default()
         dlg.set_default_response (gtk.RESPONSE_OK)
         
         selector = EdgeSelector (self.current)
-        
+        alignment = gtk.Alignment ()
+        alignment.set_padding (10, 10, 10, 10)
+        alignment.add (selector)
+
         Tooltips.set_tip (selector, self.Setting.LongDesc)
-        dlg.vbox.pack_start (selector)
+        dlg.vbox.pack_start (alignment)
         
         dlg.vbox.show_all ()
         ret = dlg.run ()
         dlg.destroy ()
 
-        if ret == gtk.RESPONSE_OK:
-            self.current = selector.current
+        if ret != gtk.RESPONSE_OK:
+            return
+
+        new = selector.current
+        conflict = ActionConflict (self.Setting, edges = new)
+        if conflict.Resolve (CurrentUpdater):
+            self.current = new
             self.Changed ()
 
     def _Read (self):
@@ -1015,7 +1048,13 @@ class EdgeSetting (Setting):
         self.Setting.Value = self.current
         self.setButtonLabel ()
 
-BellSetting = BoolSetting
+class BellSetting (BoolSetting):
+
+    def _Init (self):
+        BoolSetting._Init (self)
+        bell = makeActionImage ("bell")
+        self.Widget.pack_start (bell, False, False)
+        self.Widget.reorder_child (bell, 0)
 
 def MakeSetting(setting):
     if setting.Type == 'String' or setting.Type == 'Match':

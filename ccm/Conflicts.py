@@ -55,61 +55,75 @@ class Conflict:
 
         return answer
 
-class ActionConflict(Conflict):
-    def __init__(self, setting, key, button, bell, edges, edgeButton):
+class ActionConflict (Conflict):
+    def __init__ (self, setting, key = None, button = None, edges = None):
         self.KeyConflicts = []
         self.ButtonConflicts = []
         self.EdgeConflicts = []
         self.Setting = setting
 
-        checkKey = key and key != '' and key.lower() != 'disabled' and key.lower() != 'none'
-        checkButton = button and button != '' and button.lower() != 'disabled' and button.lower() != 'none'
-        checkEdges = edges != None and edges != []
-        
+        checkKey = key and len (key) and key.lower () != "disabled" \
+                   and key.lower() != "none"
+        checkButton = button and len (button) \
+                      and button.lower () != "disabled" \
+                      and button.lower() != "none"
+        checkEdges = edges and len (edges)
+
+        if not checkKey and not checkButton and not checkEdges:
+            return
+
         # this might be a bit slow but anyway...
-        for plugin in setting.Plugin.Context.Plugins.values():
+        for plugin in setting.Plugin.Context.Plugins.values ():
             if plugin.Enabled:
-                settings = sum((z.values() for z in [plugin.Screens[CurrentScreenNum]]+[plugin.Display]), [])
+                settings = sum ((z.values () for z in [plugin.Screens[CurrentScreenNum]]+[plugin.Display]), [])
                 for s in settings:
-                    if s.Type == 'Action' and s != setting:
-                        if checkKey and s.Value[0] == key:
-                            self.KeyConflicts.append(s)
-                        if checkButton and s.Value[1] == button:
-                            self.ButtonConflicts.append(s)
-                        if checkEdges and s.Value[3] == edges:
-                            self.EdgeConflicts.append(s)
+                    if s == setting:
+                        continue
+                    if s.Type == 'Key' and checkKey:
+                        if s.Value == key:
+                            self.KeyConflicts.append (s)
+                    elif s.Type == 'Button' and checkButton:
+                        if s.Value == button:
+                            self.ButtonConflicts.append (s)
+                    elif s.Type == 'Edge' and checkEdges:
+                        for edge in edges.split ("|"):
+                            if edge in s.Value.split ("|"):
+                                self.EdgeConflicts.append ((s, edge))
+                                break
 
-    def Resolve(self):
-        if len(self.KeyConflicts):
+    def Resolve (self, updater):
+        if len (self.KeyConflicts):
             for k in self.KeyConflicts:
-                answer = self.AskUser(self.Setting, k, 'Key')
+                answer = self.AskUser (self.Setting, k, 'Key')
                 if answer == gtk.RESPONSE_YES:
-                    value = k.Value
-                    k.Value = ['None', value[1], value[2], value[3], value[4]]
+                    k.Value = 'Disabled'
+                    updater.UpdateSetting (k)
                 if answer == gtk.RESPONSE_NO:
                     return False
         
-        if len(self.ButtonConflicts):
+        if len (self.ButtonConflicts):
             for b in self.ButtonConflicts:
-                answer = self.AskUser(self.Setting, b, 'Button')
+                answer = self.AskUser (self.Setting, b, 'Button')
                 if answer == gtk.RESPONSE_YES:
-                    value = b.Value
-                    b.Value = [value[0], 'None', value[2], value[3], value[4]]
+                    b.Value = 'Disabled'
+                    updater.UpdateSetting (b)
                 if answer == gtk.RESPONSE_NO:
                     return False
 
-        if len(self.EdgeConflicts):
-            for e in self.EdgeConflicts:
-                answer = self.AskUser(self.Setting, e, 'Edge')
+        if len (self.EdgeConflicts):
+            for e, edge in self.EdgeConflicts:
+                answer = self.AskUser (self.Setting, e, 'Edge')
                 if answer == gtk.RESPONSE_YES:
-                    value = e.Value
-                    e.Value = [value[0], value[1], value[2], [], value[4]]
+                    value = e.Value.split ("|")
+                    value.remove (edge)
+                    e.Value = "|".join (value)
+                    updater.UpdateSetting (e)
                 if answer == gtk.RESPONSE_NO:
                     return False
 
         return True
 
-    def AskUser(self, setting, con, typ):
+    def AskUser (self, setting, con, typ):
         msg = _("The new value for the %s binding for the action <b>%s</b> "\
               "in plugin <b>%s</b> conflicts with the action <b>%s</b> of the <b>%s</b> plugin.\n"\
               "Do you wish to disable <b>%s</b> in the <b>%s</b> plugin?")
@@ -120,7 +134,7 @@ class ActionConflict(Conflict):
         noButton     = (_("Don't set %s") % setting.ShortDesc,  gtk.STOCK_NO,   gtk.RESPONSE_NO)
         ignoreButton = (_("Set %s anyway") % setting.ShortDesc, gtk.STOCK_STOP, gtk.RESPONSE_REJECT)
 
-        return self.Ask(msg, (yesButton, noButton, ignoreButton))
+        return self.Ask (msg, (yesButton, noButton, ignoreButton))
 
 # Not used for plugin dependencies (which are handled by ccs) but own feature checking e.g. image support
 class FeatureRequirement(Conflict):

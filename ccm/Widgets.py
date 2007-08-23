@@ -212,28 +212,28 @@ class EdgeSelector (gtk.DrawingArea):
         self.add_events (gtk.gdk.BUTTON_PRESS_MASK)
         self.connect ("expose_event", self.expose)
         self.connect ("button_press_event", self.button_press)
-        self.set_size_request (300, 300)
+        self.set_size_request (200, 200)
 
     def set_current (self, value):
         self._current = value.split ("|")
 
     def get_current (self):
-        return "|".join (self._current)
+        return "|".join (filter (lambda s: len (s) > 0, self._current))
     current = property (get_current, set_current)
 
     def draw (self, cr, width, height):
         '''The actual drawing function'''
         # Useful vars
-        x0 = 37
-        y0 = 50
-        x1 = 263
-        y1 = 187
-        x2 = x0 + 60
-        x3 = x1 - 60
-        y2 = y0 + 40
-        y3 = y1 - 40
-        cradius = 30
-        radius = 20
+        x0 = 25
+        y0 = 33
+        x1 = 175
+        y1 = 125
+        x2 = x0 + 40
+        x3 = x1 - 40
+        y2 = y0 + 27
+        y3 = y1 - 27
+        cradius = 20
+        radius = 13
         # Top left edge
         cr.new_path ()
         cr.move_to (x0, y0 - cradius)
@@ -360,16 +360,16 @@ class EdgeSelector (gtk.DrawingArea):
         edge = ""
 
         # Useful vars
-        x0 = 37
-        y0 = 50
-        x1 = 263
-        y1 = 187
-        x2 = x0 + 60
-        x3 = x1 - 60
-        y2 = y0 + 40
-        y3 = y1 - 40
-        cradius = 30
-        radius = 20
+        x0 = 25
+        y0 = 33
+        x1 = 175
+        y1 = 125
+        x2 = x0 + 40
+        x3 = x1 - 40
+        y2 = y0 + 27
+        y3 = y1 - 27
+        cradius = 20
+        radius = 13
 
         if self.in_circle_quarter (x, y, x0, y0, x0, y0,
                                    x0 + cradius, y0 + cradius,

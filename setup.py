@@ -109,7 +109,8 @@ f.write (data)
 f.close ()
 
 def filter_images (image):
-    return image.startswith ("plugin-") or image.startswith ("category-")
+    return image.startswith ("plugin-") or image.startswith ("category-") \
+           or image.startswith ("mini-")
 
 images = map (lambda i: "images/%s" % i, 
               filter (filter_images, os.listdir ("images")))
