@@ -983,8 +983,9 @@ class KeySetting (Setting):
         key, mods = gtk.accelerator_parse (accel)
         name = gtk.accelerator_name (key, mods)
         if len (accel) != len (name):
+            accel = protect_pango_markup (accel)
             ErrorDialog (get_parent_toplevel (self.Widget),
-                         _("The specified shortcut is invalid"))
+                         _("\"%s\" is not a valid shortcut") % accel)
             return
         conflict = ActionConflict (self.Setting, key = name)
         if conflict.Resolve (CurrentUpdater):
