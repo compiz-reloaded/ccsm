@@ -62,12 +62,23 @@ class ActionConflict (Conflict):
         self.EdgeConflicts = []
         self.Setting = setting
 
-        checkKey = key and len (key) and key.lower () != "disabled" \
-                   and key.lower() != "none"
-        checkButton = button and len (button) \
-                      and button.lower () != "disabled" \
-                      and button.lower() != "none"
+        lvalue = self.Setting.Value.lower ()
+        checkKey = key and len (key)
+        if checkKey:
+            lkey = key.lower ()
+            checkKey = lkey != "disabled" and lkey != "none" and lkey != lvalue
+        checkButton = button and len (button)
+        if checkButton:
+            lbutton = button.lower ()
+            checkButton = lbutton != "disabled" and lbutton != "none" \
+                          and lbutton != lvalue
         checkEdges = edges and len (edges)
+        if checkEdges:
+            newEdges = edges.split ("|")
+            oldEdges = self.Setting.Value.split ("|")
+            diff = filter (lambda e: e not in newEdges, oldEdges)
+            diff += filter (lambda e: e not in oldEdges, newEdges)
+            checkEdges = len (diff) > 0 
 
         if not checkKey and not checkButton and not checkEdges:
             return
