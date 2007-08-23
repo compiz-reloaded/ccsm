@@ -1101,7 +1101,10 @@ class EdgeSetting (Setting):
             return
 
         new = selector.current
+        popup = Popup (self.Widget, 
+                       _("Computing possible conflicts, please wait"))
         conflict = ActionConflict (self.Setting, edges = new)
+        popup.destroy ()
         if conflict.Resolve (CurrentUpdater):
             self.current = new
             self.Changed ()
