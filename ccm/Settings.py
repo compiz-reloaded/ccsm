@@ -28,7 +28,7 @@ mimetypes.init()
 
 from ccm.Constants import *
 from ccm.Conflicts import *
-from ccm.Widgets import EdgeSelector
+from ccm.Widgets import EdgeSelector, KeyGrabber
 from ccm.Utils import *
 
 import locale
@@ -927,22 +927,12 @@ class KeySetting (Setting):
     def _Init (self):
         self.Custom = True
 
-        self.store = gtk.ListStore (gobject.TYPE_UINT, gobject.TYPE_UINT)
-        self.store.append ([0, 0])
-        self.iter = self.store.get_iter_root ()
-        tv = gtk.TreeView (self.store)
-        tv.set_headers_visible (False)
-        key_renderer = gtk.CellRendererAccel ()
-        key_renderer.set_property ("editable", True)
-        key_renderer.connect ("accel-edited", self.bindingEdited)
-        key_renderer.connect ("accel-cleared", self.bindingCleared)
-        tv.insert_column_with_attributes (-1, "", key_renderer,
-                                          accel_key = 0, accel_mods = 1)
-
-        Tooltips.set_tip (tv, self.Setting.LongDesc)
+        self.Grabber = KeyGrabber ()
+        self.Grabber.connect ("changed", self.bindingEdited)
+        Tooltips.set_tip (self.Grabber, self.Setting.LongDesc)
 
         alignment = gtk.Alignment (1.0)
-        alignment.add (tv)
+        alignment.add (self.Grabber)
 
         self.Widget = makeCustomSetting (self.Setting.ShortDesc,
                                          self.Setting.Integrated,
@@ -953,11 +943,7 @@ class KeySetting (Setting):
         self.Widget.pack_start (keyboard, False, False)
         self.Widget.reorder_child (keyboard, 0)
 
-    def bindingCleared (self, renderer, path):
-        '''Binding cleared callback'''
-        self.bindingEdited (renderer, path, 0, 0, 0)
-
-    def bindingEdited (self, renderer, path, key, mods, keycode):
+    def bindingEdited (self, grabber, key, mods):
         '''Binding edited callback'''
         # Update & save binding
         if key or mods:
@@ -969,12 +955,16 @@ class KeySetting (Setting):
             self.key = key
             self.mods = mods
             self.Changed ()
-            # Update store
-            self.store.set (self.iter, 0, key, 1, mods)
+        else:
+            self.Grabber.key = self.key
+            self.Grabber.mods = self.mods
+            self.Grabber.set_label ()
 
     def _Read (self):
         self.key, self.mods = gtk.accelerator_parse (self.Setting.Value)
-        self.store.set (self.iter, 0, self.key, 1, self.mods)
+        self.Grabber.key = self.key
+        self.Grabber.mods = self.mods
+        self.Grabber.set_label ()
 
     def _Changed (self):
         self.Setting.Value = gtk.accelerator_name (self.key, self.mods)
