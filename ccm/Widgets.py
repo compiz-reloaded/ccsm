@@ -486,10 +486,12 @@ class KeyGrabber (gtk.Button):
         mods = event.state & gtk.accelerator_get_default_mod_mask ()
 
         if gtk.accelerator_valid (key, mods):
+            self.set_label (key, mods)
             self.end_key_grab ()
             self.key = key
             self.mods = mods
             self.emit ("changed", self.key, self.mods)
+            return
 
         self.set_label (key, mods)
 
