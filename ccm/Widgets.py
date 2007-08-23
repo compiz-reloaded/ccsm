@@ -451,7 +451,6 @@ class keyGrabber (gtk.Button):
         self.disconnect (self.handler)
 
     def on_key_press_event (self, widget, event):
-
         if event.keyval in (gtk.keysyms.Escape, gtk.keysyms.Return,
                             gtk.keysyms.BackSpace):
             if event.keyval == gtk.keysyms.BackSpace:
