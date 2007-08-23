@@ -922,7 +922,6 @@ class KeySetting (Setting):
 
     key = 0
     mods = 0
-    iter = None
 
     def _Init (self):
         self.Custom = True
