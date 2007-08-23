@@ -444,28 +444,31 @@ class KeyGrabber (gtk.Button):
         self.connect ("clicked", self.begin_key_grab)
         self.set_label ()
 
-    def open_popup (self):
+    def open_popup (self, text):
         self.popup = gtk.Window (gtk.WINDOW_POPUP)
         self.popup.set_position (gtk.WIN_POS_CENTER_ALWAYS)
-        label = gtk.Label (_("Please press the new key combination"))
+        label = gtk.Label (text)
         align = gtk.Alignment ()
         align.set_padding (20, 20, 20, 20)
         align.add (label)
         self.popup.add (align)
         self.popup.show_all ()
 
+    def close_popup (self):
+        self.popup.destroy ()
+
     def begin_key_grab (self, widget):
         self.add_events (gtk.gdk.KEY_PRESS_MASK)
         self.handler = self.connect ("key-press-event",
                                      self.on_key_press_event)
-        self.open_popup ()
+        self.open_popup (_("Please press the new key combination"))
         while gtk.gdk.keyboard_grab (self.window) != gtk.gdk.GRAB_SUCCESS:
             time.sleep (0.1)
 
     def end_key_grab (self):
         gtk.gdk.keyboard_ungrab (gtk.get_current_event_time ())
         self.disconnect (self.handler)
-        self.popup.destroy ()
+        self.close_popup ()
         while gtk.events_pending ():
             gtk.main_iteration ()
 
