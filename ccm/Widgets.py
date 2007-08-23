@@ -504,7 +504,7 @@ class KeyGrabber (gtk.Button):
             mods = self.mods
         label = gtk.accelerator_name (key, mods)
         if not len (label):
-            label = "Disabled"
+            label = _("Disabled")
         gtk.Button.set_label (self, label)
 
 # About Dialog
