@@ -1005,15 +1005,7 @@ class KeySetting (EditableActionSetting):
             ErrorDialog (get_parent_toplevel (self.Widget),
                          _("\"%s\" is not a valid shortcut") % accel)
             return
-        popup = Popup (self.Widget, 
-                       _("Computing possible conflicts, please wait"))
-        conflict = ActionConflict (self.Setting, key = name)
-        popup.destroy ()
-        if conflict.Resolve (CurrentUpdater):
-            self.Grabber.key = self.key = key
-            self.Grabber.mods = self.mods = mods
-            self.Grabber.set_label ()
-            self.Changed ()
+        self.BindingEdited (self.Grabber, key, mods)
 
     def BindingEdited (self, grabber, key, mods):
         '''Binding edited callback'''
@@ -1027,13 +1019,13 @@ class KeySetting (EditableActionSetting):
         conflict = ActionConflict (self.Setting, key = accel)
         popup.destroy ()
         if conflict.Resolve (CurrentUpdater):
-            self.key = key
-            self.mods = mods
+            self.Grabber.key = self.key = key
+            self.Grabber.mods = self.mods = mods
             self.Changed ()
         else:
             self.Grabber.key = self.key
             self.Grabber.mods = self.mods
-            self.Grabber.set_label ()
+        self.Grabber.set_label ()
 
     def _Read (self):
         self.key, self.mods = gtk.accelerator_parse (self.Setting.Value)
