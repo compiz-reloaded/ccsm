@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm 0.0.1\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-08-14 20:08+0200\n"
-"PO-Revision-Date: 2007-08-14 20:07+0200\n"
+"POT-Creation-Date: 2007-08-23 12:14+0200\n"
+"PO-Revision-Date: 2007-08-23 12:12+0200\n"
 "Last-Translator: Milo Casagrande <milo_casagrande@yahoo.it>\n"
 "Language-Team: Compiz Fusion translators <i18n@lists.compiz-fusion.org>\n"
 "MIME-Version: 1.0\n"
@@ -25,7 +25,7 @@ msgid ""
 msgstr ""
 "Il nuovo valore per la scorciatoia %s dell'azione <b>%s</b> nel plug-in <b>%"
 "s</b>, va in conflitto con l'azione <b>%s</b> del plug-in <b>%s</b>\n"
-"Disabilitare l'opzione <b>%s</b> del plug-in <b>%s</b>?"
+"Disabilitare <b>%s</b> nel plug-in <b>%s</b>?"
 
 #, python-format
 msgid "Disable %s"
@@ -82,7 +82,7 @@ msgstr ""
 "%s"
 
 msgid "Enable these plugins"
-msgstr "Attivare questi plug-in"
+msgstr "Attiva questi plug-in"
 
 #, python-format
 msgid "<b>%s</b> requires the plugin <b>%s</b>."
@@ -143,6 +143,11 @@ msgstr "Modifica %s"
 msgid "Value (%s) for %s:"
 msgstr "Valore (%s) per %s:"
 
+# (NdT) questo è quello che si vede nella scheda Azioni
+# quando non è associato nulla alla particolare azione...
+msgid "None"
+msgstr "Nessuno"
+
 #, python-format
 msgid "Unhandled list type %s for %s"
 msgstr "Tipo di elenco %s non gestito per %s"
@@ -163,6 +168,9 @@ msgstr "Schermo: %i"
 msgid "Screen"
 msgstr "Schermo"
 
+msgid "All"
+msgstr "Tutti"
+
 msgid "Uncategorized"
 msgstr "Senza categoria"
 
@@ -177,47 +185,6 @@ msgstr "Ricerca avanzata"
 msgid "Preferences"
 msgstr "Preferenze"
 
-#. Name
-msgid "Name"
-msgstr "Nome"
-
-msgid "Key"
-msgstr "Tasto"
-
-msgid "Button"
-msgstr "Pulsante"
-
-msgid "Screen Edge"
-msgstr "Bordo dello schermo"
-
-#, python-format
-msgid "Button %i"
-msgstr "Pulsante %i"
-
-# (NdT) questo è quello che si vede nella scheda Azioni
-# quando non è associato nulla alla particolare azione...
-msgid "None"
-msgstr "Nessuno"
-
-msgid "Edge Button"
-msgstr "Pulsante bordo"
-
-msgid "On System Bell"
-msgstr "Al suono di sistema"
-
-msgid "General"
-msgstr "Generale"
-
-#, python-format
-msgid "Edit Action: %s"
-msgstr "Modifica azione: %s"
-
-msgid "Screen Edges"
-msgstr "Bordi dello schermo"
-
-msgid "Reset To Defaults"
-msgstr "Ripristina valori predefiniti"
-
 #, python-format
 msgid "Search %s Plugin Options"
 msgstr "Cerca tra le opzioni del plug-in %s"
@@ -227,6 +194,9 @@ msgstr "Usa questo plug-in"
 
 msgid "Search Compiz Core Options"
 msgstr "Cerca tra le opzioni principali di Compiz"
+
+msgid "General"
+msgstr "Generale"
 
 msgid "Actions"
 msgstr "Azioni"
@@ -344,13 +314,6 @@ msgstr "Nome del plug-in:"
 msgid "Insert plugin name"
 msgstr "Inserire il nome del plug-in"
 
-msgid "This is a settings manager for the CompizConfig configuration system."
-msgstr ""
-"Un gestore delle impostazioni per il sistema di configurazione CompizConfig."
-
-msgid "translator-credits"
-msgstr "Milo Casagrande <milo_casagrande@yahoo.it>"
-
 # (NdT) descrizione di cosa si può fare...
 msgid ""
 "Configure the backend, profile and other internal settings used by the "
@@ -387,6 +350,45 @@ msgstr ""
 "<span size=\"large\"><b>Nessuna corrispondenza trovata.</b> </span><span>\n"
 "\n"
 " Il filtro «<b>%s</b>» non corrisponde ad alcuna voce.</span>"
+
+#~ msgid "Name"
+#~ msgstr "Nome"
+
+#~ msgid "Key"
+#~ msgstr "Tasto"
+
+#~ msgid "Button"
+#~ msgstr "Pulsante"
+
+#~ msgid "Screen Edge"
+#~ msgstr "Bordo dello schermo"
+
+#~ msgid "Button %i"
+#~ msgstr "Pulsante %i"
+
+#~ msgid "Edge Button"
+#~ msgstr "Pulsante bordo"
+
+#~ msgid "On System Bell"
+#~ msgstr "Al suono di sistema"
+
+#~ msgid "Edit Action: %s"
+#~ msgstr "Modifica azione: %s"
+
+#~ msgid "Screen Edges"
+#~ msgstr "Bordi dello schermo"
+
+#~ msgid "Reset To Defaults"
+#~ msgstr "Ripristina valori predefiniti"
+
+#~ msgid ""
+#~ "This is a settings manager for the CompizConfig configuration system."
+#~ msgstr ""
+#~ "Un gestore delle impostazioni per il sistema di configurazione "
+#~ "CompizConfig."
+
+#~ msgid "translator-credits"
+#~ msgstr "Milo Casagrande <milo_casagrande@yahoo.it>"
 
 #~ msgid "PyGtk 2.10.0 or later required"
 #~ msgstr "È richiesto PyGtk 2.10.0 o successivo"
