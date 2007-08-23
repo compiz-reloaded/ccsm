@@ -918,20 +918,13 @@ class IntFloatListSetting(ListSetting):
             return adj.get_value()
         return None
 
-class KeySetting (Setting):
+class EditableActionSetting (Setting):
 
-    key = 0
-    mods = 0
-
-    def _Init (self):
+    def _Init (self, widget, action):
         self.Custom = True
 
-        self.Grabber = KeyGrabber ()
-        self.Grabber.connect ("changed", self.bindingEdited)
-        Tooltips.set_tip (self.Grabber, self.Setting.LongDesc)
-
         alignment = gtk.Alignment (1.0)
-        alignment.add (self.Grabber)
+        alignment.add (widget)
 
         self.Widget = makeCustomSetting (self.Setting.ShortDesc,
                                          self.Setting.Integrated,
@@ -949,9 +942,9 @@ class KeySetting (Setting):
         pos = len (self.Widget.get_children ()) - 2
         self.Widget.reorder_child (editAlign, pos)
 
-        keyboard = ActionImage ("keyboard")
-        self.Widget.pack_start (keyboard, False, False)
-        self.Widget.reorder_child (keyboard, 0)
+        action = ActionImage (action)
+        self.Widget.pack_start (action, False, False)
+        self.Widget.reorder_child (action, 0)
 
     def RunEditDialog (self, widget):
         dlg = gtk.Dialog (_("Edit %s") % self.Setting.ShortDesc)
@@ -962,7 +955,7 @@ class KeySetting (Setting):
         dlg.set_default_response (gtk.RESPONSE_OK)
         
         entry = gtk.Entry (max = 200)
-        entry.set_text (gtk.accelerator_name (self.key, self.mods))
+        entry.set_text (self.GetDialogText ())
         entry.connect ("activate", lambda *a: dlg.response (gtk.RESPONSE_OK))
         alignment = gtk.Alignment (0.5, 0.5, 1, 1)
         alignment.set_padding (10, 10, 10, 10)
@@ -978,7 +971,31 @@ class KeySetting (Setting):
         if ret != gtk.RESPONSE_OK:
             return
 
-        accel = entry.get_text ()
+        self.HandleDialogText (entry.get_text ())
+
+    def GetDialogText (self):
+        self.PureVirtual ('GetDialogText')
+
+    def HandleDialogText (self, text):
+        self.PureVirtual ('HandleDialogText')
+
+class KeySetting (EditableActionSetting):
+
+    key = 0
+    mods = 0
+
+    def _Init (self):
+
+        self.Grabber = KeyGrabber ()
+        self.Grabber.connect ("changed", self.bindingEdited)
+        Tooltips.set_tip (self.Grabber, self.Setting.LongDesc)
+        
+        EditableActionSetting._Init (self, self.Grabber, "keyboard")
+
+    def GetDialogText (self):
+        return gtk.accelerator_name (self.key, self.mods)
+
+    def HandleDialogText (self, accel):
         key, mods = gtk.accelerator_parse (accel)
         name = gtk.accelerator_name (key, mods)
         if len (accel) != len (name):
