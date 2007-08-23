@@ -475,6 +475,7 @@ class KeyGrabber (gtk.Button):
                 self.mods = 0
             self.end_key_grab ()
             self.set_label ()
+            return
 
         key = gtk.gdk.keyval_to_lower (event.keyval)
         if (key == gtk.keysyms.ISO_Left_Tab):
