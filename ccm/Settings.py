@@ -939,7 +939,7 @@ class KeySetting (Setting):
                                          alignment,
                                          self.Reset)
 
-        keyboard = makeActionImage ("keyboard")
+        keyboard = ActionImage ("keyboard")
         self.Widget.pack_start (keyboard, False, False)
         self.Widget.reorder_child (keyboard, 0)
 
@@ -986,7 +986,7 @@ class EdgeSetting (Setting):
                                          self.Button,
                                          self.Reset)
 
-        display = makeActionImage ("display")
+        display = ActionImage ("display")
         self.Widget.pack_start (display, False, False)
         self.Widget.reorder_child (display, 0)
 
@@ -1042,7 +1042,7 @@ class BellSetting (BoolSetting):
 
     def _Init (self):
         BoolSetting._Init (self)
-        bell = makeActionImage ("bell")
+        bell = ActionImage ("bell")
         self.Widget.pack_start (bell, False, False)
         self.Widget.reorder_child (bell, 0)
 

@@ -35,20 +35,6 @@ gettext.bindtextdomain("ccsm", DataDir + "/locale")
 gettext.textdomain("ccsm")
 _ = gettext.gettext
 
-def makeActionImage (action):
-    img = gtk.Image ()
-    size = 22
-    path = "%s/mini-%s.png" % (PixmapDir, action)
-    try:
-        pixbuf = gtk.gdk.pixbuf_new_from_file_at_size (path, size, size)
-        img.set_from_pixbuf (pixbuf)
-    except:
-        img.set_from_stock (gtk.STOCK_MISSING_IMAGE, gtk.ICON_SIZE_BUTTON)
-    align = gtk.Alignment (0, 0.5)
-    align.set_padding (0, 0, 0, 10)
-    align.add (img)
-    return align    
-
 def makeCustomSetting (desc, integrated, widget, reset):
     box = gtk.HBox ()
     label = gtk.Label (desc)
@@ -85,44 +71,45 @@ class Style:
         styleWidget.destroy()
         fakeWindow.destroy()
 
-class Image(gtk.Image):
-    def __init__(self, name=None, type=ImageNone, size = 32):
-        gtk.Image.__init__(self)
+class Image (gtk.Image):
 
-        if name != None:
-            if type == ImagePlugin:
-                iconpath = "%s/plugin-%s.svg" % (PixmapDir, name)
-                if not os.path.exists(iconpath):
-                    iconpath = "%s/plugin-unknown.svg" % PixmapDir
-                try:
-                    pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(iconpath, size, size)
-                    self.set_from_pixbuf(pixbuf)
-                except:
-                    self.set_from_stock(gtk.STOCK_MISSING_IMAGE, gtk.ICON_SIZE_BUTTON)
+    def __init__ (self, name = None, type = ImageNone, size = 32):
+        gtk.Image.__init__ (self)
 
-            elif type == ImageCategory:
-                iconpath = "%s/category-%s.svg" % (PixmapDir, name)
-                if not os.path.exists(iconpath):
-                    iconpath = "%s/category-uncategorized.svg" % PixmapDir
-                try:
-                    pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(iconpath, size, size)
-                    self.set_from_pixbuf(pixbuf)
-                except:
-                    self.set_from_stock(gtk.STOCK_MISSING_IMAGE, gtk.ICON_SIZE_BUTTON)
+        if not name:
+            return
 
+        try:
+            if type in (ImagePlugin, ImageCategory, ImageAction):
+                if type == ImagePlugin:
+                    path = "plugin-%s.svg" % name
+                    fallback = "plugin-unknown.svg"
+                elif type == ImageCategory:
+                    path = "category-%s.svg" % name
+                    fallback = "category-uncategorized.svg"
+                else:
+                    path = "mini-%s.png" % name
+                    fallback = None
+                if not os.path.exists ("%s/%s" % (PixmapDir, path)):
+                    path = fallback    
+                path = "%s/%s" % (PixmapDir, path)
+                pixbuf = gtk.gdk.pixbuf_new_from_file_at_size (path, size, size)
+                self.set_from_pixbuf (pixbuf)
             elif type == ImageThemed:
-                iconTheme = gtk.icon_theme_get_default()
-                try:
-                    pixbuf = iconTheme.load_icon(name, size, 0)
-                    self.set_from_pixbuf(pixbuf)
-                except:
-                    self.set_from_stock(gtk.STOCK_MISSING_IMAGE, gtk.ICON_SIZE_BUTTON)
-
+                iconTheme = gtk.icon_theme_get_default ()
+                pixbuf = iconTheme.load_icon (name, size, 0)
+                self.set_from_pixbuf (pixbuf)
             elif type == ImageStock:
-                try:
-                    self.set_from_stock(name, size)
-                except:
-                    self.set_from_stock(gtk.STOCK_MISSING_IMAGE, gtk.ICON_SIZE_BUTTON)
+                self.set_from_stock (name, size)
+        except:
+            self.set_from_stock (gtk.STOCK_MISSING_IMAGE, gtk.ICON_SIZE_BUTTON)
+
+class ActionImage (gtk.Alignment):
+
+    def __init__ (self, action):
+        gtk.Alignment.__init__ (self, 0, 0.5)
+        self.set_padding (0, 0, 0, 10)
+        self.add (Image (name = action, type = ImageAction, size = 22))
 
 class Label(gtk.Label):
     def __init__(self, value = "", wrap = 160):
