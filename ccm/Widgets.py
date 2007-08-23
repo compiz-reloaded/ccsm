@@ -423,7 +423,11 @@ class EdgeSelector (gtk.DrawingArea):
 
 # Key Grabber
 #
-class keyGrabber (gtk.Button):
+class KeyGrabber (gtk.Button):
+
+    __gsignals__    = {"changed" : (gobject.SIGNAL_RUN_FIRST,
+                                    gobject.TYPE_NONE,
+                                    [gobject.TYPE_INT, gobject.TYPE_INT])}
 
     key     = 0
     mods    = 0
@@ -431,7 +435,7 @@ class keyGrabber (gtk.Button):
 
     def __init__ (self, key = 0, mods = 0):
         '''Prepare widget'''
-        super (keyGrabber, self).__init__ ()
+        super (KeyGrabber, self).__init__ ()
 
         self.key = key
         self.mods = mods
@@ -469,6 +473,7 @@ class keyGrabber (gtk.Button):
             self.end_key_grab ()
             self.key = key
             self.mods = mods
+            self.emit ("changed", self.key, self.mods)
 
         self.set_label (key, mods)
 
