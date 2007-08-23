@@ -35,6 +35,35 @@ gettext.bindtextdomain("ccsm", DataDir + "/locale")
 gettext.textdomain("ccsm")
 _ = gettext.gettext
 
+def makeActionImage (action):
+    img = gtk.Image ()
+    size = 22
+    path = "%s/mini-%s.png" % (PixmapDir, action)
+    try:
+        pixbuf = gtk.gdk.pixbuf_new_from_file_at_size (path, size, size)
+        img.set_from_pixbuf (pixbuf)
+    except:
+        img.set_from_stock (gtk.STOCK_MISSING_IMAGE, gtk.ICON_SIZE_BUTTON)
+    align = gtk.Alignment (0, 0.5)
+    align.set_padding (0, 0, 0, 10)
+    align.add (img)
+    return align    
+
+def makeCustomSetting (desc, integrated, widget, reset):
+    box = gtk.HBox ()
+    label = gtk.Label (desc)
+    if integrated:
+        label.set_markup ("<span foreground=\"blue\">%s</span>" % desc)
+    align = gtk.Alignment (0, 0.5)
+    align.add (label)
+    widgetAlign = gtk.Alignment (0, 0.5)
+    widgetAlign.set_padding (0, 0, 0, 10)
+    widgetAlign.add (widget)
+    box.pack_start (align, True, True)
+    box.pack_start (widgetAlign, False, False)
+    box.pack_start (reset, False, False)
+    return box
+
 def getScreens():
     screens = []
     display = gtk.gdk.display_get_default()
@@ -131,6 +160,12 @@ class Updater:
     
     def Append(self, setting):
         self.VisibleSettings.append(setting)
+
+    def UpdateSetting (self, setting):
+        for widget in self.VisibleSettings:
+            if widget.Setting == setting:
+                widget.Read ()
+                break
 
     def Update(self):
         changed = self.Context.ProcessEvents()
