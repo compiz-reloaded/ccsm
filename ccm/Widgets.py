@@ -25,6 +25,7 @@ import gtk.gdk
 import gobject
 import cairo
 from math import pi, sqrt
+import time
 
 from ccm.Utils import *
 from ccm.Constants import *
@@ -419,6 +420,67 @@ class EdgeSelector (gtk.DrawingArea):
         else:
             self._current.append (edge)
         self.redraw (queue = True)
+
+# Key Grabber
+#
+class keyGrabber (gtk.Button):
+
+    key     = 0
+    mods    = 0
+    handler = None
+
+    def __init__ (self, key = 0, mods = 0):
+        '''Prepare widget'''
+        super (keyGrabber, self).__init__ ()
+
+        self.key = key
+        self.mods = mods
+
+        self.connect ("clicked", self.begin_key_grab)
+        self.set_label ()
+
+    def begin_key_grab (self, widget):
+        self.add_events (gtk.gdk.KEY_PRESS_MASK)
+        self.handler = self.connect ("key-press-event",
+                                     self.on_key_press_event)
+        while gtk.gdk.keyboard_grab (self.window) != gtk.gdk.GRAB_SUCCESS:
+            time.sleep (0.1)
+
+    def end_key_grab (self):
+        gtk.gdk.keyboard_ungrab (gtk.get_current_event_time ())
+        self.disconnect (self.handler)
+
+    def on_key_press_event (self, widget, event):
+
+        if event.keyval in (gtk.keysyms.Escape, gtk.keysyms.Return,
+                            gtk.keysyms.BackSpace):
+            if event.keyval == gtk.keysyms.BackSpace:
+                self.key = 0
+                self.mods = 0
+            self.end_key_grab ()
+            self.set_label ()
+
+        key = gtk.gdk.keyval_to_lower (event.keyval)
+        if (key == gtk.keysyms.ISO_Left_Tab):
+            key = gtk.keysyms.Tab
+
+        mods = event.state & gtk.accelerator_get_default_mod_mask ()
+
+        if gtk.accelerator_valid (key, mods):
+            self.end_key_grab ()
+            self.key = key
+            self.mods = mods
+
+        self.set_label (key, mods)
+
+    def set_label (self, key = None, mods = None):
+        if key == None and mods == None:
+            key = self.key
+            mods = self.mods
+        label = gtk.accelerator_name (key, mods)
+        if not len (label):
+            label = "Disabled"
+        gtk.Button.set_label (self, label)
 
 # About Dialog
 #
