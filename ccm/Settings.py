@@ -1102,41 +1102,42 @@ class BellSetting (BoolSetting):
         self.Widget.pack_start (bell, False, False)
         self.Widget.reorder_child (bell, 0)
 
-def MakeSetting(setting):
-    if setting.Type == 'String' or setting.Type == 'Match':
-        if len(setting.Hints) > 0 and setting.Hints.__contains__('file'):
-            return FileStringSetting(setting)
+def MakeSetting (setting):
+    if setting.Type in ("String", "Match"):
+        if len (setting.Hints) > 0 and "file" in setting.Hints:
+            return FileStringSetting (setting)
         else:
-            return StringMatchSetting(setting)
-    elif setting.Type == 'Bool':
-        return BoolSetting(setting)
-    elif setting.Type == 'Int' and len(setting.Info[2].keys()) > 0:
-        return EnumSetting(setting)
-    elif setting.Type == 'Float' or setting.Type == 'Int':
-        return IntFloatSetting(setting)
-    elif setting.Type == 'Color':
-        return ColorSetting(setting)
-    elif setting.Type == 'List':
-        if setting.Info[0] == 'String' or setting.Info[0] == 'Match':
-            if len(setting.Hints) > 0 and setting.Hints.__contains__('file'):
-                return FileListSetting(setting)
+            return StringMatchSetting (setting)
+    elif setting.Type == "Bool":
+        return BoolSetting (setting)
+    elif setting.Type == "Int" and len (setting.Info[2].keys ()) > 0:
+        return EnumSetting (setting)
+    elif setting.Type in ("Float", "Int"):
+        return IntFloatSetting (setting)
+    elif setting.Type == "Color":
+        return ColorSetting (setting)
+    elif setting.Type == "List":
+        if setting.Info[0] == "String" or setting.Info[0] == "Match":
+            if len (setting.Hints) > 0 and "file" in setting.Hints:
+                return FileListSetting (setting)
             else:
-                return StringMatchListSetting(setting)
-        elif setting.Info[0] == 'Int':
+                return StringMatchListSetting (setting)
+        elif setting.Info[0] == "Int":
             if len(setting.Info[1][2]) > 0:
-                return IntDescListSetting(setting)
+                return IntDescListSetting (setting)
             else:
-                return IntFloatListSetting(setting)
-        elif setting.Info[0] == 'Float':
-            return IntFloatListSetting(setting)
+                return IntFloatListSetting (setting)
+        elif setting.Info[0] == "Float":
+            return IntFloatListSetting (setting)
         else:
-            raise TypeError, _("Unhandled list type %s for %s")%(setting.Info[0], setting.Name)
-    elif setting.Type == 'Key':
+            raise TypeError, _("Unhandled list type %s for %s") % \
+                              (setting.Info[0], setting.Name)
+    elif setting.Type == "Key":
         return KeySetting (setting)
-    elif setting.Type == 'Edge':
-        return EdgeSetting(setting)
-    elif setting.Type == 'Bell':
-        return BellSetting(setting)
+    elif setting.Type == "Edge":
+        return EdgeSetting (setting)
+    elif setting.Type == "Bell":
+        return BellSetting (setting)
     return None
 
 class SubGroupArea:
