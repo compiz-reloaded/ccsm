@@ -989,7 +989,7 @@ class KeySetting (EditableActionSetting):
     def _Init (self):
 
         self.Grabber = KeyGrabber ()
-        self.Grabber.connect ("changed", self.bindingEdited)
+        self.Grabber.connect ("changed", self.BindingEdited)
         Tooltips.set_tip (self.Grabber, self.Setting.LongDesc)
         
         EditableActionSetting._Init (self, self.Grabber, "keyboard")
@@ -1015,7 +1015,7 @@ class KeySetting (EditableActionSetting):
             self.Grabber.set_label ()
             self.Changed ()
 
-    def bindingEdited (self, grabber, key, mods):
+    def BindingEdited (self, grabber, key, mods):
         '''Binding edited callback'''
         # Update & save binding
         if key or mods:
