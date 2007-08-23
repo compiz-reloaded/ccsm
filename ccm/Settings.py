@@ -1060,6 +1060,7 @@ class EdgeSetting (Setting):
         dlg.set_position (gtk.WIN_POS_CENTER_ON_PARENT)
         parent = self.Widget.get_parent_window ().get_toplevel ()
         dlg.set_transient_for (parent.get_user_data ())
+        dlg.set_modal (True)
         dlg.add_button (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
         dlg.add_button (gtk.STOCK_OK, gtk.RESPONSE_OK).grab_default()
         dlg.set_default_response (gtk.RESPONSE_OK)
