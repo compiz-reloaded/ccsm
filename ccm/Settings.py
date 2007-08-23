@@ -74,8 +74,10 @@ class Setting:
             table.attach(self.Widget, 1, 99, row, row+1, TableDef, TableDef, TableX, TableX)
             table.attach(self.Reset, 99, 100, row, row+1, 0, TableDef, TableX, TableX)
 
-    def PureVirtual(self, str):
-        raise PureVirtualError, str, self.Setting.Name
+    def PureVirtual (self, func):
+        message = "Missing %s function for %s setting (%s)"
+        value = message % (func, self.Setting.Name, self)
+        raise PureVirtualError, value
 
     def _Init(self):
         self.PureVirtual('_Init')
