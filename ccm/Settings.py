@@ -1154,7 +1154,7 @@ class ButtonSetting (EditableActionSetting):
         for s in edges + self.mods:
             if "<%s>" % s in old:
                 new += "<%s>" % s
-        for i in range (1, 6):
+        for i in range (1, 10):
             if "Button%d" % i in old:
                 new += "Button%d" % i
                 break
@@ -1234,7 +1234,7 @@ class ButtonSetting (EditableActionSetting):
         box.pack_start (modifierSelector)
 
         buttonCombo = gtk.combo_box_new_text ()
-        for i in range (1, 6):
+        for i in range (1, 10):
             button = "Button%d" % i
             buttonCombo.append_text (button)
             if button in self.current or i == 1:
