@@ -17,6 +17,7 @@
 #
 # Authors: Quinn Storm (quinn@beryl-project.org)
 #          Patrick Niklaus (marex@opencompositing.org)
+#          Guillaume Seguin (guillaume@segu.in)
 # Copyright (C) 2007 Quinn Storm
 
 import os
