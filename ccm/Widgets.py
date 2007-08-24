@@ -578,12 +578,16 @@ class KeyGrabber (gtk.Button):
     handler = None
     popup   = None
 
-    def __init__ (self, key = 0, mods = 0):
+    label   = None
+
+    def __init__ (self, key = 0, mods = 0, label = None):
         '''Prepare widget'''
         super (KeyGrabber, self).__init__ ()
 
         self.key = key
         self.mods = mods
+
+        self.label = label
 
         self.connect ("clicked", self.begin_key_grab)
         self.set_label ()
@@ -629,6 +633,9 @@ class KeyGrabber (gtk.Button):
         self.set_label (key, mods)
 
     def set_label (self, key = None, mods = None):
+        if self.label:
+            gtk.Button.set_label (self.label)
+            return
         if key == None and mods == None:
             key = self.key
             mods = self.mods
