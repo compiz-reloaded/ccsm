@@ -41,6 +41,7 @@ import ccm
 screens = ccm.getScreens()
 context = ccs.Context(screens)
 mainWin = ccm.MainWin(context)
+idle = ccm.IdleSettingsParser(context)
 mainWin.show_all()
 
 gtk.main()

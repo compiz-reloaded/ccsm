@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm 0.0.1\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-08-23 12:14+0200\n"
-"PO-Revision-Date: 2007-08-23 12:12+0200\n"
+"POT-Creation-Date: 2007-08-24 12:33+0200\n"
+"PO-Revision-Date: 2007-08-24 12:24+0200\n"
 "Last-Translator: Milo Casagrande <milo_casagrande@yahoo.it>\n"
 "Language-Team: Compiz Fusion translators <i18n@lists.compiz-fusion.org>\n"
 "MIME-Version: 1.0\n"
@@ -27,17 +27,26 @@ msgstr ""
 "s</b>, va in conflitto con l'azione <b>%s</b> del plug-in <b>%s</b>\n"
 "Disabilitare <b>%s</b> nel plug-in <b>%s</b>?"
 
+# (ndt) pulsante
+# le virgolette non ci sono ma 's' indica il nome
+# del plug-in, le metto per differenziare
 #, python-format
 msgid "Disable %s"
-msgstr "Disattiva %s"
+msgstr "Disattiva «%s»"
 
+# (ndt) pulsante
+# le virgolette non ci sono ma 's' indica il nome
+# del plug-in, le metto per differenziare
 #, python-format
 msgid "Don't set %s"
-msgstr "Non impostare %s"
+msgstr "Non impostare «%s»"
 
+# (ndt) pulsante
+# le virgolette non ci sono ma 's' indica il nome
+# del plug-in, le metto per differenziare
 #, python-format
 msgid "Set %s anyway"
-msgstr "Imposta %s comunque"
+msgstr "Imposta «%s» comunque"
 
 #, python-format
 msgid ""
@@ -142,6 +151,23 @@ msgstr "Modifica %s"
 #, python-format
 msgid "Value (%s) for %s:"
 msgstr "Valore (%s) per %s:"
+
+#, python-format
+msgid "\"%s\" is not a valid shortcut"
+msgstr "«%s» non è una scorciatoia valida"
+
+msgid "Computing possible conflicts, please wait"
+msgstr "Calcolo dei possibile conflitti, attendere"
+
+#, python-format
+msgid "\"%s\" is not a valid button"
+msgstr "«%s» non è un pulsante valido"
+
+msgid "Disabled"
+msgstr "Disattivato"
+
+msgid "Enabled"
+msgstr "Attivato"
 
 # (NdT) questo è quello che si vede nella scheda Azioni
 # quando non è associato nulla alla particolare azione...

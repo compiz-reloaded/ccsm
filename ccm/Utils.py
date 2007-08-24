@@ -145,6 +145,25 @@ class NotFoundBox(gtk.Alignment):
     def update(self, value):
         self.Warning.set_markup(self.Markup % value)
 
+class IdleSettingsParser:
+    def __init__(self, context):
+        self.Context = context
+        self.PluginList = filter(lambda i: not i[1].Initialized, self.Context.Plugins.items())
+        
+        gobject.idle_add(self.ParseSettings)
+
+    def ParseSettings(self):
+        if len(self.PluginList) == 0:
+            return False
+
+        name, plugin = self.PluginList[0]
+        
+        plugin.Update()
+
+        self.PluginList = self.PluginList[1:]
+
+        return True
+
 # Updates all registered setting when they where changed through CompizConfig
 class Updater:
     def __init__(self, context):

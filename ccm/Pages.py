@@ -96,6 +96,7 @@ class PluginPage:
         self.LeftWidget.pack_end(backButton, False, False)
         backButton.connect('clicked', main.BackToMain)
         self.RightWidget = gtk.Notebook()
+        self.RightWidget.set_scrollable(True)
         self.Pages = []
 
         groupsSorted = sorted(plugin.Groups.items(), FirstItemSortCompare)
