@@ -23,7 +23,7 @@ import pygtk
 import gtk
 import gtk.gdk
 import gobject
-import cairo
+import cairo, pangocairo
 from math import pi, sqrt
 import time
 
@@ -194,6 +194,128 @@ class ScrolledList(gtk.ScrolledWindow):
             next = self.store.iter_next(iter)
             if next is not None:
                 self.store.swap(iter, next)
+
+# Button modifier selection widget
+#
+class ModifierSelector (gtk.DrawingArea):
+
+    _current = []
+
+    _base_surface   = None
+    _surface        = None
+
+    _x0     = 0
+    _y0     = 12
+    _width  = 100
+    _height = 50
+
+    _font   = "Sans 12 Bold"
+
+    def __init__ (self, edge):
+        '''Prepare widget'''
+        super (ModifierSelector, self).__init__ ()
+        self.current = edge
+        modifier = "%s/modifier.png" % PixmapDir
+        self._base_surface = cairo.ImageSurface.create_from_png (modifier)
+        self.add_events (gtk.gdk.BUTTON_PRESS_MASK)
+        self.connect ("expose_event", self.expose)
+        self.connect ("button_press_event", self.button_press)
+        self.set_size_request (200, 120)
+
+        x0, y0, width, height = self._x0, self._y0, self._width, self._height
+        self._modifiers = {
+            "Shift"     : (x0, y0),
+            "Control"   : (x0, y0 + height),
+            "Super"     : (x0 + width, y0),
+            "Alt"       : (x0 + width, y0 + height)
+        }
+
+        self._names = {
+            "Control"   : "Ctrl"
+        }
+
+    def set_current (self, value):
+        self._current = value.split ("|")
+
+    def get_current (self):
+        return "|".join (filter (lambda s: len (s) > 0, self._current))
+    current = property (get_current, set_current)
+
+    def draw (self, cr, width, height):
+        '''The actual drawing function'''
+        for mod in self._modifiers:
+            x, y = self._modifiers[mod]
+            if mod in self._names: text = self._names[mod]
+            else: text = mod
+            cr.set_source_surface (self._base_surface, x, y)
+            cr.rectangle (x, y, self._width, self._height)
+            cr.fill_preserve ()
+            if mod in self._current:
+                cr.set_source_rgb (0.3, 0.3, 0.3)
+                self.write (cr, x + 23, y + 12, text)
+                cr.set_source_rgb (0.5, 1, 0)
+            else:
+                cr.set_source_rgb (0, 0, 0)
+            self.write (cr, x + 22, y + 11, text)
+
+    def write (self, cr, x, y, text):
+        cr.move_to (x, y)
+        markup = '''<span font_desc="%s">%s</span>''' % (self._font, text)
+        pcr = pangocairo.CairoContext (cr)
+        layout = pcr.create_layout ()
+        layout.set_markup (markup)
+        pcr.show_layout (layout) 
+
+    def redraw (self, queue = False):
+        '''Redraw internal surface'''
+        alloc = self.get_allocation ()
+        # Prepare drawing surface
+        width, height = alloc.width, alloc.height
+        self._surface = cairo.ImageSurface (cairo.FORMAT_ARGB32, width, height)
+        cr = cairo.Context (self._surface)
+        # Clear
+        cr.set_operator (cairo.OPERATOR_CLEAR)
+        cr.paint ()
+        cr.set_operator (cairo.OPERATOR_OVER)
+        # Draw
+        self.draw (cr, alloc.width, alloc.height)
+        # Queue expose event if required
+        if queue:
+            self.queue_draw ()
+
+    def expose (self, widget, event):
+        '''Expose event handler'''
+        cr = self.window.cairo_create ()
+        if not self._surface:
+            self.redraw ()
+        cr.set_source_surface (self._surface)
+        cr.rectangle (event.area.x, event.area.y,
+                      event.area.width, event.area.height)
+        cr.clip ()
+        cr.paint ()
+        return False
+
+    def in_rect (self, x, y, x0, y0, x1, y1):
+        return x >= x0 and y >= y0 and x <= x1 and y <= y1
+    
+    def button_press (self, widget, event):
+        x, y = event.x, event.y
+        mod = ""
+
+        for modifier in self._modifiers:
+            x0, y0 = self._modifiers[modifier]
+            if self.in_rect (x, y, x0, y0,
+                             x0 + self._width, y0 + self._height):
+                mod = modifier
+                break
+
+        if not len (mod):
+            return
+        if mod in self._current:
+            self._current.remove (mod)
+        else:
+            self._current.append (mod)
+        self.redraw (queue = True)
 
 # Edge selection widget
 #
@@ -428,7 +550,7 @@ class Popup (gtk.Window):
     def __init__ (self, parent, text):
         gtk.Window.__init__ (self, gtk.WINDOW_POPUP)
         self.set_position (gtk.WIN_POS_CENTER_ALWAYS)
-        self.set_transient_for (get_parent_toplevel (parent))
+        self.set_transient_for (parent.get_toplevel ())
         self.set_modal (True)
         label = gtk.Label (text)
         align = gtk.Alignment ()

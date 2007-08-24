@@ -110,7 +110,8 @@ f.close ()
 
 def filter_images (image):
     return image.startswith ("plugin-") or image.startswith ("category-") \
-           or image.startswith ("mini-")
+           or image.startswith ("mini-") \
+           or image in ("display.png", "modifier.png")
 
 images = map (lambda i: "images/%s" % i, 
               filter (filter_images, os.listdir ("images")))
@@ -119,7 +120,7 @@ data_files = [
                 ("share/icons/hicolor/scalable/apps", ["images/ccsm.svg"]),
                 ("share/pixmaps", ["images/ccsm.png"]),
                 ("share/applications", ["ccsm.desktop"]),
-                ("share/ccsm/images", images + ["images/display.png"])
+                ("share/ccsm/images", images)
              ]
 
 podir = os.path.join (os.path.realpath ("."), "po")

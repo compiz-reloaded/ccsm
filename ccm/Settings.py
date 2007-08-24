@@ -951,7 +951,7 @@ class EditableActionSetting (Setting):
     def RunEditDialog (self, widget):
         dlg = gtk.Dialog (_("Edit %s") % self.Setting.ShortDesc)
         dlg.set_position (gtk.WIN_POS_CENTER_ON_PARENT)
-        dlg.set_transient_for (get_parent_toplevel (self.Widget))
+        dlg.set_transient_for (self.Widget.get_toplevel ())
         dlg.add_button (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
         dlg.add_button (gtk.STOCK_OK, gtk.RESPONSE_OK).grab_default()
         dlg.set_default_response (gtk.RESPONSE_OK)
@@ -1002,7 +1002,7 @@ class KeySetting (EditableActionSetting):
         name = gtk.accelerator_name (key, mods)
         if len (accel) != len (name):
             accel = protect_pango_markup (accel)
-            ErrorDialog (get_parent_toplevel (self.Widget),
+            ErrorDialog (self.Widget.get_toplevel (),
                          _("\"%s\" is not a valid shortcut") % accel)
             return
         self.BindingEdited (self.Grabber, key, mods)
@@ -1035,6 +1035,166 @@ class KeySetting (EditableActionSetting):
 
     def _Changed (self):
         self.Setting.Value = gtk.accelerator_name (self.key, self.mods)
+
+class ButtonSetting (EditableActionSetting):
+
+    current = ""
+    edges = ["Left", "Right", "Top", "Bottom",
+             "TopLeft", "TopRight", "BottomLeft", "BottomRight"]
+    mods = ["Shift", "Control", "Mod1", "Mod2", "Mod3", "Mod4", "Mod5", "Alt",
+            "Meta", "Super", "Hyper", "ModeSwitch"]
+
+    def _Init (self):
+
+        self.Button = gtk.Button ()
+        self.Button.connect ("clicked", self.RunButtonSelector)
+        Tooltips.set_tip (self.Button, self.Setting.LongDesc)
+        self.SetButtonLabel ()
+        
+        EditableActionSetting._Init (self, self.Button, "mouse")
+
+    def ReorderButtonString (self, old):
+        new = ""
+        edges = map (lambda e: "%sEdge" % e, self.edges)
+        for s in edges + self.mods:
+            if "<%s>" % s in old:
+                new += "<%s>" % s
+        for i in range (1, 6):
+            if "Button%d" % i in old:
+                new += "Button%d" % i
+                break
+        return new
+
+    def GetDialogText (self):
+        return self.current
+
+    def HandleDialogText (self, button):
+        def ShowErrorDialog (button):
+            button = protect_pango_markup (button)
+            ErrorDialog (self.Widget.get_toplevel (),
+                         _("\"%s\" is not a valid button") % button)
+        if button.lower ().strip () in ("", "disabled", "none"):
+            self.ButtonEdited ("Disabled")
+            return
+        new = self.ReorderButtonString (button)
+        if len (button) != len (new):
+            ShowErrorDialog (button)
+            return
+        self.ButtonEdited (new)
+
+    def SetButtonLabel (self):
+        label = self.current
+        if not len (self.current):
+            label = _("Disabled")
+        self.Button.set_label (label)
+
+    def RunButtonSelector (self, widget):
+        def ShowHideBox (button, box, dialog):
+            if button.get_active ():
+                box.show ()
+            else:
+                box.hide ()
+                dialog.resize (1, 1)
+        dlg = gtk.Dialog (_("Edit %s") % self.Setting.ShortDesc)
+        dlg.set_position (gtk.WIN_POS_CENTER_ALWAYS)
+        dlg.set_transient_for (self.Widget.get_toplevel ())
+        dlg.set_modal (True)
+        dlg.add_button (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
+        dlg.add_button (gtk.STOCK_OK, gtk.RESPONSE_OK).grab_default ()
+        dlg.set_default_response (gtk.RESPONSE_OK)
+
+        mainBox = gtk.VBox ()
+        alignment = gtk.Alignment ()
+        alignment.set_padding (10, 10, 10, 10)
+        alignment.add (mainBox)
+        dlg.vbox.pack_start (alignment)
+
+        checkButton = gtk.CheckButton (_("Enabled"))
+        active = len (self.current) \
+                 and self.current.lower () not in ("disabled", "none")
+        checkButton.set_active (active)
+        Tooltips.set_tip (checkButton, self.Setting.LongDesc)
+        mainBox.pack_start (checkButton)
+
+        box = gtk.VBox ()
+        checkButton.connect ("toggled", ShowHideBox, box, dlg)
+        mainBox.pack_start (box)
+
+        currentEdges = ""
+        for edge in self.edges:
+            if "<%sEdge>" % edge in self.current:
+                currentEdges += "%s|" % edge
+        currentEdges.rstrip ("|")
+        edgeSelector = EdgeSelector (currentEdges)
+        Tooltips.set_tip (edgeSelector, self.Setting.LongDesc)
+        box.pack_start (edgeSelector)
+
+        currentMods = ""
+        for mod in self.mods:
+            if "<%s>" % mod in self.current:
+                currentMods += "%s|" % mod
+        currentMods.rstrip ("|")
+        modifierSelector = ModifierSelector (currentMods)
+        Tooltips.set_tip (modifierSelector, self.Setting.LongDesc)
+        box.pack_start (modifierSelector)
+
+        buttonCombo = gtk.combo_box_new_text ()
+        for i in range (1, 6):
+            button = "Button%d" % i
+            buttonCombo.append_text (button)
+            if button in self.current or i == 1:
+                buttonCombo.set_active (i - 1) 
+        Tooltips.set_tip (buttonCombo, self.Setting.LongDesc)
+        box.pack_start (buttonCombo)
+
+        dlg.vbox.show_all ()
+        ShowHideBox (checkButton, box, dlg)
+        ret = dlg.run ()
+        dlg.destroy ()
+
+        if ret != gtk.RESPONSE_OK:
+            return
+
+        if not checkButton.get_active ():
+            self.ButtonEdited ("Disabled")
+            return
+
+        edges = edgeSelector.current
+        modifiers = modifierSelector.current
+        button = buttonCombo.get_active_text ()
+
+        edges = edges.split ("|")
+        if len (edges):
+            edges = "<%sEdge>" % "Edge><".join (edges)
+        else: edges = ""
+
+        modifiers = modifiers.split ("|")
+        if len (modifiers):
+            modifiers = "<%s>" % "><".join (modifiers)
+        else: modifiers = ""
+
+        button = "%s%s%s" % (edges, modifiers, button)
+        button = self.ReorderButtonString (button)
+
+        self.ButtonEdited (button)
+
+    def ButtonEdited (self, button):
+        '''Button edited callback'''
+        popup = Popup (self.Widget, 
+                       _("Computing possible conflicts, please wait"))
+        conflict = ActionConflict (self.Setting, button = button)
+        popup.destroy ()
+        if conflict.Resolve (CurrentUpdater):
+            self.current = button
+            self.Changed ()
+        self.SetButtonLabel ()
+
+    def _Read (self):
+        self.current = self.Setting.Value
+        self.SetButtonLabel ()
+
+    def _Changed (self):
+        self.Setting.Value = self.current
 
 class EdgeSetting (Setting):
 
@@ -1070,8 +1230,7 @@ class EdgeSetting (Setting):
     def RunEdgeSelector (self, widget):
         dlg = gtk.Dialog (_("Edit %s") % self.Setting.ShortDesc)
         dlg.set_position (gtk.WIN_POS_CENTER_ON_PARENT)
-        parent = self.Widget.get_parent_window ().get_toplevel ()
-        dlg.set_transient_for (parent.get_user_data ())
+        dlg.set_transient_for (self.Widget.get_toplevel ())
         dlg.set_modal (True)
         dlg.add_button (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
         dlg.add_button (gtk.STOCK_OK, gtk.RESPONSE_OK).grab_default()
@@ -1149,6 +1308,8 @@ def MakeSetting (setting):
                               (setting.Info[0], setting.Name)
     elif setting.Type == "Key":
         return KeySetting (setting)
+    elif setting.Type == "Button":
+        return ButtonSetting (setting)
     elif setting.Type == "Edge":
         return EdgeSetting (setting)
     elif setting.Type == "Bell":
