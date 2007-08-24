@@ -200,8 +200,10 @@ class ScrolledList(gtk.ScrolledWindow):
 #
 class ModifierSelector (gtk.DrawingArea):
 
-    __gsignals__    = {"changed" : (gobject.SIGNAL_RUN_FIRST,
-                                    gobject.TYPE_NONE, [])}
+    __gsignals__    = {"added" : (gobject.SIGNAL_RUN_FIRST,
+                                    gobject.TYPE_NONE, [gobject.TYPE_STRING]),
+                       "removed" : (gobject.SIGNAL_RUN_FIRST,
+                                    gobject.TYPE_NONE, [gobject.TYPE_STRING])}
 
     _current = []
 
@@ -318,9 +320,10 @@ class ModifierSelector (gtk.DrawingArea):
             return
         if mod in self._current:
             self._current.remove (mod)
+            self.emit ("removed", mod)
         else:
             self._current.append (mod)
-        self.emit ("changed")
+            self.emit ("added", mod)
         self.redraw (queue = True)
 
 # Edge selection widget
