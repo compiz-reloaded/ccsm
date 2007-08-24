@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm 0.5.2\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-08-21 00:00+0200\n"
+"POT-Creation-Date: 2007-08-24 00:01+0200\n"
 "PO-Revision-Date: 2007-08-22 00:02+0200\n"
 "Last-Translator:  djdoo <jimdusis@yahoo.gr>\n"
 "Language-Team: Compiz Fusion translators <i18n@lists.compiz-fusion.org>\n"
@@ -141,6 +141,9 @@ msgstr "Επεξεργασία %s"
 msgid "Value (%s) for %s:"
 msgstr "Τιμή (%s) για %s:"
 
+msgid "None"
+msgstr "Κανένα"
+
 #, python-format
 msgid "Unhandled list type %s for %s"
 msgstr "Μη έγκυρος τύπος λίστας %s για %s"
@@ -161,6 +164,9 @@ msgstr "Οθόνη %i"
 msgid "Screen"
 msgstr "Οθόνη"
 
+msgid "All"
+msgstr "Όλα"
+
 msgid "Uncategorized"
 msgstr "Χωρίς Κατηγορία"
 
@@ -173,45 +179,6 @@ msgstr "Προχωρημένη Αναζήτηση"
 msgid "Preferences"
 msgstr "Ιδιότητες"
 
-#. Name
-msgid "Name"
-msgstr "Όνομα"
-
-msgid "Key"
-msgstr "Πλήκτρο"
-
-msgid "Button"
-msgstr "Κουμπί"
-
-msgid "Screen Edge"
-msgstr "Άκρη Οθόνης"
-
-#, python-format
-msgid "Button %i"
-msgstr "Κουμπί %i"
-
-msgid "None"
-msgstr "Κανένα"
-
-msgid "Edge Button"
-msgstr "Ακριανό Κουμπί"
-
-msgid "On System Bell"
-msgstr "Στο Καμπανάκι Συστήματος"
-
-msgid "General"
-msgstr "Γενικά"
-
-#, python-format
-msgid "Edit Action: %s"
-msgstr "Επεξεργασία Ενέργειας: %s"
-
-msgid "Screen Edges"
-msgstr "Άκρες Οθόνης"
-
-msgid "Reset To Defaults"
-msgstr "Επαναφορά στις Προεπιλεγμένες Ρυθμίσεις"
-
 #, python-format
 msgid "Search %s Plugin Options"
 msgstr "Αναζήτηση %s Επιλογών Πρόσθετου"
@@ -221,6 +188,9 @@ msgstr "Χρησιμοποίηση αυτου του πρόσθετου"
 
 msgid "Search Compiz Core Options"
 msgstr "Αναζήτηση των επιλογών του πυρήνα του Compiz"
+
+msgid "General"
+msgstr "Γενικά"
 
 msgid "Actions"
 msgstr "Ενέργειες"
@@ -332,7 +302,7 @@ msgid "About"
 msgstr "Σχετικά"
 
 msgid "About CCSM..."
-msgstr "Σχετικά με το CCSM"
+msgstr "Σχετικά με το CCSM..."
 
 msgid "Profile & Backend"
 msgstr "Προφίλ & Κύρια Εφαρμογή"
@@ -349,6 +319,36 @@ msgstr ""
 "<span size=\"large\"><b>Δεν βρέθηκε ταίριασμα.</b> </span><span>\n"
 "\n"
 "Το φίλτρο σας \"<b>%s</b>\" δεν ταιριάζει με κανένα στοιχείο.</span>"
+
+#~ msgid "Name"
+#~ msgstr "Όνομα"
+
+#~ msgid "Key"
+#~ msgstr "Πλήκτρο"
+
+#~ msgid "Button"
+#~ msgstr "Κουμπί"
+
+#~ msgid "Screen Edge"
+#~ msgstr "Άκρη Οθόνης"
+
+#~ msgid "Button %i"
+#~ msgstr "Κουμπί %i"
+
+#~ msgid "Edge Button"
+#~ msgstr "Ακριανό Κουμπί"
+
+#~ msgid "On System Bell"
+#~ msgstr "Στο Καμπανάκι Συστήματος"
+
+#~ msgid "Edit Action: %s"
+#~ msgstr "Επεξεργασία Ενέργειας: %s"
+
+#~ msgid "Screen Edges"
+#~ msgstr "Άκρες Οθόνης"
+
+#~ msgid "Reset To Defaults"
+#~ msgstr "Επαναφορά στις Προεπιλεγμένες Ρυθμίσεις"
 
 #~ msgid ""
 #~ "This is a settings manager for the CompizConfig configuration system."
