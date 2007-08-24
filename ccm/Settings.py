@@ -984,58 +984,152 @@ class EditableActionSetting (Setting):
 
 class KeySetting (EditableActionSetting):
 
-    key = 0
-    mods = 0
+    current = ""
+
+    mods = ["Shift", "Control", "Mod1", "Mod2", "Mod3", "Mod4", "Mod5", "Alt",
+            "Meta", "Super", "Hyper", "ModeSwitch"]
 
     def _Init (self):
 
-        self.Grabber = KeyGrabber ()
-        self.Grabber.connect ("changed", self.BindingEdited)
-        Tooltips.set_tip (self.Grabber, self.Setting.LongDesc)
+        self.Button = gtk.Button ()
+        self.Button.connect ("clicked", self.RunKeySelector)
+        Tooltips.set_tip (self.Button, self.Setting.LongDesc)
+        self.SetButtonLabel ()
         
-        EditableActionSetting._Init (self, self.Grabber, "keyboard")
+        EditableActionSetting._Init (self, self.Button, "keyboard")
+
+    def ReorderKeyString (self, accel):
+        key, mods = gtk.accelerator_parse (accel)
+        return gtk.accelerator_name (key, mods)
 
     def GetDialogText (self):
-        return gtk.accelerator_name (self.key, self.mods)
+        return self.current
 
     def HandleDialogText (self, accel):
-        key, mods = gtk.accelerator_parse (accel)
-        name = gtk.accelerator_name (key, mods)
+        name = self.ReorderKeyString (accel)
         if len (accel) != len (name):
             accel = protect_pango_markup (accel)
             ErrorDialog (self.Widget.get_toplevel (),
                          _("\"%s\" is not a valid shortcut") % accel)
             return
-        self.BindingEdited (self.Grabber, key, mods)
+        self.BindingEdited (accel)
 
-    def BindingEdited (self, grabber, key, mods):
+    def SetButtonLabel (self):
+        label = self.current
+        if not len (self.current):
+            label = _("Disabled")
+        self.Button.set_label (label)
+
+    def RunKeySelector (self, widget):
+
+        def HandleGrabberChanged (grabber, key, mods, label, selector):
+            new = gtk.accelerator_name (key, mods)
+            label.set_text (new)
+            mods = ""
+            for mod in self.mods:
+                if "<%s>" % mod in new or "%s_L" % mod in new \
+                   or "%s_R" % mod in new:
+                    mods += "%s|" % mod
+            mods.rstrip ("|")
+            selector.current = mods
+
+        def HandleModifierAdded (selector, modifier, label):
+            current = label.get_text ()
+            if current == _("Disabled"):
+                current = "%s_L" % modifier
+            else:
+                current = ("<%s>" % modifier) + current
+            label.set_text (self.ReorderKeyString (current))
+
+        def HandleModifierRemoved (selector, modifier, label):
+            current = label.get_text ()
+            if "<%s>" % modifier in current:
+                new = current.replace ("<%s>" % modifier, "")
+            elif "%s_L" % modifier in current:
+                new = current.replace ("%s_L" % modifier, "")
+            elif "%s_R" % modifier in current:
+                new = current.replace ("%s_R" % modifier, "")
+            if not len (new):
+                new = _("Disabled")
+            label.set_text (new)
+
+        dlg = gtk.Dialog (_("Edit %s") % self.Setting.ShortDesc)
+        dlg.set_position (gtk.WIN_POS_CENTER_ALWAYS)
+        dlg.set_transient_for (self.Widget.get_toplevel ())
+        dlg.set_modal (True)
+        dlg.add_button (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
+        dlg.add_button (gtk.STOCK_OK, gtk.RESPONSE_OK).grab_default ()
+        dlg.set_default_response (gtk.RESPONSE_OK)
+
+        box = gtk.VBox ()
+        alignment = gtk.Alignment ()
+        alignment.set_padding (0, 10, 10, 10)
+        alignment.add (box)
+        dlg.vbox.pack_start (alignment)
+
+
+        currentMods = ""
+        for mod in self.mods:
+            if "<%s>" % mod in self.current:
+                currentMods += "%s|" % mod
+        currentMods.rstrip ("|")
+        modifierSelector = ModifierSelector (currentMods)
+        Tooltips.set_tip (modifierSelector, self.Setting.LongDesc)
+        alignment = gtk.Alignment (0.5)
+        alignment.add (modifierSelector)
+        box.pack_start (alignment)
+
+        key, mods = gtk.accelerator_parse (self.current)
+        grabber = KeyGrabber (key = key, mods = mods,
+                              label = _("Grab key combination"))
+        Tooltips.set_tip (grabber, self.Setting.LongDesc)
+        box.pack_start (grabber)
+
+        label = gtk.Label (self.current)
+        Tooltips.set_tip (label, self.Setting.LongDesc)
+        alignment = gtk.Alignment (0.5, 0.5)
+        alignment.set_padding (15, 0, 0, 0)
+        alignment.add (label)
+        box.pack_start (alignment)
+
+        modifierSelector.connect ("added", HandleModifierAdded, label)
+        modifierSelector.connect ("removed", HandleModifierRemoved, label)
+        grabber.connect ("changed", HandleGrabberChanged, label,
+                         modifierSelector)
+        grabber.connect ("current-changed", HandleGrabberChanged, label,
+                         modifierSelector)
+
+        dlg.vbox.show_all ()
+        ret = dlg.run ()
+        dlg.destroy ()
+
+        if ret != gtk.RESPONSE_OK:
+            return
+
+        new = label.get_text ()
+
+        new = self.ReorderKeyString (new)
+
+        self.BindingEdited (new)
+
+    def BindingEdited (self, accel):
         '''Binding edited callback'''
         # Update & save binding
-        if key or mods:
-            accel = gtk.accelerator_name (key, mods)
-        else:
-            accel = "Disabled"
         popup = Popup (self.Widget, 
                        _("Computing possible conflicts, please wait"))
         conflict = ActionConflict (self.Setting, key = accel)
         popup.destroy ()
         if conflict.Resolve (CurrentUpdater):
-            self.Grabber.key = self.key = key
-            self.Grabber.mods = self.mods = mods
+            self.current = accel
             self.Changed ()
-        else:
-            self.Grabber.key = self.key
-            self.Grabber.mods = self.mods
-        self.Grabber.set_label ()
+        self.SetButtonLabel ()
 
     def _Read (self):
-        self.key, self.mods = gtk.accelerator_parse (self.Setting.Value)
-        self.Grabber.key = self.key
-        self.Grabber.mods = self.mods
-        self.Grabber.set_label ()
+        self.current = self.Setting.Value
+        self.SetButtonLabel ()
 
     def _Changed (self):
-        self.Setting.Value = gtk.accelerator_name (self.key, self.mods)
+        self.Setting.Value = self.current
 
 class ButtonSetting (EditableActionSetting):
 
