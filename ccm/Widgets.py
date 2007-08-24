@@ -240,6 +240,7 @@ class ModifierSelector (gtk.DrawingArea):
 
     def set_current (self, value):
         self._current = value.split ("|")
+        self.redraw (queue = True)
 
     def get_current (self):
         return "|".join (filter (lambda s: len (s) > 0, self._current))
@@ -344,6 +345,7 @@ class EdgeSelector (gtk.DrawingArea):
 
     def set_current (self, value):
         self._current = value.split ("|")
+        self.redraw (queue = True)
 
     def get_current (self):
         return "|".join (filter (lambda s: len (s) > 0, self._current))
