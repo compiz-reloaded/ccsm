@@ -634,7 +634,7 @@ class KeyGrabber (gtk.Button):
 
     def set_label (self, key = None, mods = None):
         if self.label:
-            gtk.Button.set_label (self.label)
+            gtk.Button.set_label (self, self.label)
             return
         if key == None and mods == None:
             key = self.key
