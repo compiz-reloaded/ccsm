@@ -616,7 +616,8 @@ class KeyGrabber (gtk.Button):
 
         mods = event.state & gtk.accelerator_get_default_mod_mask ()
 
-        if gtk.accelerator_valid (key, mods):
+        if gtk.accelerator_valid (key, mods) \
+           or (key == gtk.keysyms.Tab and mods):
             self.set_label (key, mods)
             self.end_key_grab ()
             self.key = key
