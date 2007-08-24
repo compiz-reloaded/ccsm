@@ -577,6 +577,9 @@ class KeyGrabber (gtk.Button):
 
     __gsignals__    = {"changed" : (gobject.SIGNAL_RUN_FIRST,
                                     gobject.TYPE_NONE,
+                                    [gobject.TYPE_INT, gobject.TYPE_INT]),
+                       "current-changed" : (gobject.SIGNAL_RUN_FIRST,
+                                    gobject.TYPE_NONE,
                                     [gobject.TYPE_INT, gobject.TYPE_INT])}
 
     key     = 0
@@ -640,6 +643,8 @@ class KeyGrabber (gtk.Button):
 
     def set_label (self, key = None, mods = None):
         if self.label:
+            if key != None and mods != None:
+                self.emit ("current-changed", key, mods)
             gtk.Button.set_label (self, self.label)
             return
         if key == None and mods == None:
