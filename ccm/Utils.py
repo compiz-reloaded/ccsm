@@ -288,10 +288,6 @@ def FilterSettings(settings, filter, run=0, singleRun=False):
 
     return filteredSettings
 
-def HasOnlyType(settings, type):
-    empty = True
-    for setting in settings:
-        empty = False
-        if setting.Type != type:
-            return False
-    return not empty
+def HasOnlyType (settings, type):
+    f = filter (lambda s: s.Type != type, settings)
+    return len (settings) > 0 and len (f) == 0
