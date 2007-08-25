@@ -147,8 +147,12 @@ class NotFoundBox(gtk.Alignment):
 
 class IdleSettingsParser:
     def __init__(self, context):
+        def FilterPlugin (p):
+            return not p.Initialized and p.Enabled
+
         self.Context = context
-        self.PluginList = filter(lambda i: not i[1].Initialized, self.Context.Plugins.items())
+        self.PluginList = filter (lambda p: FilterPlugin (p[1]),
+                                  self.Context.Plugins.items ())
         
         gobject.idle_add(self.ParseSettings)
 
@@ -157,10 +161,11 @@ class IdleSettingsParser:
             return False
 
         name, plugin = self.PluginList[0]
-        
-        plugin.Update()
 
-        self.PluginList = self.PluginList[1:]
+        if not plugin.Initialized:
+            plugin.Update ()
+
+        self.PluginList.remove (self.PluginList[0])
 
         return True
 
