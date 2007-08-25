@@ -1154,7 +1154,7 @@ class ButtonSetting (EditableActionSetting):
         for s in edges + self.mods:
             if "<%s>" % s in old:
                 new += "<%s>" % s
-        for i in range (1, 10):
+        for i in range (1, 100):
             if "Button%d" % i in old:
                 new += "Button%d" % i
                 break
