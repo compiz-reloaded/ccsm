@@ -154,15 +154,15 @@ class IdleSettingsParser:
         self.PluginList = filter (lambda p: FilterPlugin (p[1]),
                                   self.Context.Plugins.items ())
         
-        gobject.timeout_add(200, self.Wait)
+        gobject.timeout_add (200, self.Wait)
 
     def Wait(self):
-        if len(self.PluginList) == 0:
+        if len (self.PluginList) == 0:
             return False
         
-        gobject.idle_add(self.ParseSettings)
+        gobject.idle_add (self.ParseSettings)
         
-        return True
+        return False
     
     def ParseSettings(self):
         name, plugin = self.PluginList[0]
@@ -171,6 +171,8 @@ class IdleSettingsParser:
             plugin.Update ()
 
         self.PluginList.remove (self.PluginList[0])
+
+        gobject.timeout_add (200, self.Wait)
 
         return False
 
