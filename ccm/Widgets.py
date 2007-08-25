@@ -714,4 +714,4 @@ class WarningDialog (gtk.MessageDialog):
         self.set_title (_("Warning"))
         self.set_icon (parent.get_icon ())
         self.set_transient_for (parent)
-        self.connect ("response", lambda *args: self.destroy ())
+        self.connect_after ("response", lambda *args: self.destroy ())
