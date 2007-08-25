@@ -618,8 +618,11 @@ class KeyGrabber (gtk.Button):
         self.popup.destroy ()
 
     def on_key_press_event (self, widget, event):
+        mods = event.state & gtk.accelerator_get_default_mod_mask ()
+
         if event.keyval in (gtk.keysyms.Escape, gtk.keysyms.Return,
-                            gtk.keysyms.BackSpace):
+                            gtk.keysyms.BackSpace) \
+            and not mods:
             if event.keyval == gtk.keysyms.BackSpace:
                 self.key = 0
                 self.mods = 0
@@ -633,8 +636,6 @@ class KeyGrabber (gtk.Button):
         key = gtk.gdk.keyval_to_lower (event.keyval)
         if (key == gtk.keysyms.ISO_Left_Tab):
             key = gtk.keysyms.Tab
-
-        mods = event.state & gtk.accelerator_get_default_mod_mask ()
 
         if gtk.accelerator_valid (key, mods) \
            or (key == gtk.keysyms.Tab and mods):
