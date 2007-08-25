@@ -154,12 +154,17 @@ class IdleSettingsParser:
         self.PluginList = filter (lambda p: FilterPlugin (p[1]),
                                   self.Context.Plugins.items ())
         
-        gobject.idle_add(self.ParseSettings)
+        gobject.timeout_add(200, self.Wait)
 
-    def ParseSettings(self):
+    def Wait(self):
         if len(self.PluginList) == 0:
             return False
-
+        
+        gobject.idle_add(self.ParseSettings)
+        
+        return True
+    
+    def ParseSettings(self):
         name, plugin = self.PluginList[0]
 
         if not plugin.Initialized:
@@ -167,7 +172,7 @@ class IdleSettingsParser:
 
         self.PluginList.remove (self.PluginList[0])
 
-        return True
+        return False
 
 # Updates all registered setting when they where changed through CompizConfig
 class Updater:
