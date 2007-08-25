@@ -217,10 +217,10 @@ class ModifierSelector (gtk.DrawingArea):
 
     _font   = "Sans 12 Bold"
 
-    def __init__ (self, edge):
+    def __init__ (self, mods):
         '''Prepare widget'''
         super (ModifierSelector, self).__init__ ()
-        self._current = edge.split ("|")
+        self._current = mods.split ("|")
         modifier = "%s/modifier.png" % PixmapDir
         self._base_surface = cairo.ImageSurface.create_from_png (modifier)
         self.add_events (gtk.gdk.BUTTON_PRESS_MASK)
