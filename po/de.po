@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm 0.0.1\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-08-23 10:39+0200\n"
-"PO-Revision-Date: 2007-08-23 10:42+0200\n"
+"POT-Creation-Date: 2007-08-25 19:30+0200\n"
+"PO-Revision-Date: 2007-08-25 19:31+0200\n"
 "Last-Translator: Danny Baumann <dannybaumann@web.de>\n"
 "Language-Team: Compiz Fusion translators <i18n@lists.compiz-fusion.org>\n"
 "MIME-Version: 1.0\n"
@@ -138,6 +138,35 @@ msgstr "%s bearbeiten"
 msgid "Value (%s) for %s:"
 msgstr "Wert (%s) für %s"
 
+#, python-format
+msgid "\"%s\" is not a valid shortcut"
+msgstr "\"%s\" ist keine gültige Tastenkombination"
+
+msgid "Disabled"
+msgstr "Deaktiviert"
+
+msgid "Grab key combination"
+msgstr "Tastenkombination auswählen"
+
+msgid "Computing possible conflicts, please wait"
+msgstr "Werte mögliche Konflikte aus ... bitte warten."
+
+#, python-format
+msgid "\"%s\" is not a valid button"
+msgstr "\"%s\" ist keine gültige Taste"
+
+msgid "Enabled"
+msgstr "Aktiviert"
+
+#, python-format
+msgid ""
+"Using Button1 without modifiers can prevent any left click and thus break "
+"your configuration. Do you really want to set \"%s\" button to Button1 ?"
+msgstr ""
+"Die Verwendung von Maustaste 1 kann Links-Klicks verhindern und damit Ihr "
+"System unverwendbar machen. Möchten Sie wirklich \"%s\" zu Maustaste "
+"1zuweisen?"
+
 msgid "None"
 msgstr "Nichts"
 
@@ -176,6 +205,26 @@ msgstr "Erweiterte Suche"
 msgid "Preferences"
 msgstr "Einstellungen"
 
+msgid "General"
+msgstr "Allgemein"
+
+msgid "Please press the new key combination"
+msgstr "Bitte drücken Sie die gewünschte Tastenkombination"
+
+msgid "This is a settings manager for the CompizConfig configuration system."
+msgstr "Ein Einstellungs-Manager für das CompizConfig Konfigurations-System"
+
+msgid "translator-credits"
+msgstr ""
+"Danny Baumann <dannybaumann@web.de>\n"
+"Patrick Niklaus <marex@opencompositing.org>"
+
+msgid "An error has occured"
+msgstr "Ein Fehler ist aufgetreten."
+
+msgid "Warning"
+msgstr "Warnung"
+
 #, python-format
 msgid "Search %s Plugin Options"
 msgstr "Suche in den Einstellungen des Plugins %s"
@@ -185,9 +234,6 @@ msgstr "Dieses Plugin aktivieren"
 
 msgid "Search Compiz Core Options"
 msgstr "Suche in den Einstellungen des Compiz-Kerns"
-
-msgid "General"
-msgstr "Allgemein"
 
 msgid "Actions"
 msgstr "Aktionen"
@@ -346,12 +392,3 @@ msgstr ""
 
 #~ msgid "Reset To Defaults"
 #~ msgstr "Auf Standardwert zurücksetzen"
-
-#~ msgid ""
-#~ "This is a settings manager for the CompizConfig configuration system."
-#~ msgstr "Ein Einstellungs-Manager für das CompizConfig Konfigurations-System"
-
-#~ msgid "translator-credits"
-#~ msgstr ""
-#~ "Danny Baumann <dannybaumann@web.de>\n"
-#~ "Patrick Niklaus <marex@opencompositing.org>"

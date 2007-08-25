@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-08-16 14:21+0530\n"
+"POT-Creation-Date: 2007-08-25 19:20+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -125,6 +125,35 @@ msgid "Value (%s) for %s:"
 msgstr ""
 
 #, python-format
+msgid "\"%s\" is not a valid shortcut"
+msgstr ""
+
+msgid "Disabled"
+msgstr ""
+
+msgid "Grab key combination"
+msgstr ""
+
+msgid "Computing possible conflicts, please wait"
+msgstr ""
+
+#, python-format
+msgid "\"%s\" is not a valid button"
+msgstr ""
+
+msgid "Enabled"
+msgstr ""
+
+#, python-format
+msgid ""
+"Using Button1 without modifiers can prevent any left click and thus break "
+"your configuration. Do you really want to set \"%s\" button to Button1 ?"
+msgstr ""
+
+msgid "None"
+msgstr ""
+
+#, python-format
 msgid "Unhandled list type %s for %s"
 msgstr ""
 
@@ -144,6 +173,9 @@ msgstr ""
 msgid "Screen"
 msgstr ""
 
+msgid "All"
+msgstr ""
+
 msgid "Uncategorized"
 msgstr ""
 
@@ -156,45 +188,6 @@ msgstr ""
 msgid "Preferences"
 msgstr ""
 
-#. Name
-msgid "Name"
-msgstr ""
-
-msgid "Key"
-msgstr ""
-
-msgid "Button"
-msgstr ""
-
-msgid "Screen Edge"
-msgstr ""
-
-#, python-format
-msgid "Button %i"
-msgstr ""
-
-msgid "None"
-msgstr ""
-
-msgid "Edge Button"
-msgstr ""
-
-msgid "On System Bell"
-msgstr ""
-
-msgid "General"
-msgstr ""
-
-#, python-format
-msgid "Edit Action: %s"
-msgstr ""
-
-msgid "Screen Edges"
-msgstr ""
-
-msgid "Reset To Defaults"
-msgstr ""
-
 #, python-format
 msgid "Search %s Plugin Options"
 msgstr ""
@@ -203,6 +196,9 @@ msgid "Use This Plugin"
 msgstr ""
 
 msgid "Search Compiz Core Options"
+msgstr ""
+
+msgid "General"
 msgstr ""
 
 msgid "Actions"
@@ -251,6 +247,12 @@ msgstr ""
 msgid "Export your CompizConfig Profile"
 msgstr ""
 
+msgid "Reset to defaults"
+msgstr ""
+
+msgid "Reset your CompizConfig Profile to the global defaults"
+msgstr ""
+
 msgid "Backend"
 msgstr ""
 
@@ -295,12 +297,6 @@ msgid "Plugin name:"
 msgstr ""
 
 msgid "Insert plugin name"
-msgstr ""
-
-msgid "This is a settings manager for the CompizConfig configuration system."
-msgstr ""
-
-msgid "translator-credits"
 msgstr ""
 
 msgid ""
