@@ -708,12 +708,10 @@ class WarningDialog (gtk.MessageDialog):
         gtk.MessageDialog.__init__ (self, parent,
                                     gtk.DIALOG_DESTROY_WITH_PARENT,
                                     gtk.MESSAGE_WARNING,
-                                    gtk.BUTTONS_CLOSE)
+                                    gtk.BUTTONS_YES_NO)
         self.set_position (gtk.WIN_POS_CENTER)
         self.set_markup (message)
         self.set_title (_("Warning"))
         self.set_icon (parent.get_icon ())
         self.set_transient_for (parent)
-        self.set_modal (True)
-        self.show_all ()
         self.connect ("response", lambda *args: self.destroy ())
