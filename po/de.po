@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm 0.0.1\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-08-23 10:39+0200\n"
-"PO-Revision-Date: 2007-08-23 10:42+0200\n"
+"POT-Creation-Date: 2007-08-25 19:20+0200\n"
+"PO-Revision-Date: 2007-08-25 19:23+0200\n"
 "Last-Translator: Danny Baumann <dannybaumann@web.de>\n"
 "Language-Team: Compiz Fusion translators <i18n@lists.compiz-fusion.org>\n"
 "MIME-Version: 1.0\n"
@@ -137,6 +137,35 @@ msgstr "%s bearbeiten"
 #, python-format
 msgid "Value (%s) for %s:"
 msgstr "Wert (%s) für %s"
+
+#, python-format
+msgid "\"%s\" is not a valid shortcut"
+msgstr ""
+
+msgid "Disabled"
+msgstr "Deaktiviert"
+
+msgid "Grab key combination"
+msgstr "Tastenkombination auswählen"
+
+msgid "Computing possible conflicts, please wait"
+msgstr "Werte mögliche Konflikte aus ... bitte warten."
+
+#, python-format
+msgid "\"%s\" is not a valid button"
+msgstr "\"%s\" ist keine gültige Taste"
+
+msgid "Enabled"
+msgstr "Aktiviert"
+
+#, python-format
+msgid ""
+"Using Button1 without modifiers can prevent any left click and thus break "
+"your configuration. Do you really want to set \"%s\" button to Button1 ?"
+msgstr ""
+"Die Verwendung von Maustaste 1 kann Links-Klicks verhindern und damit "
+"Ihr System unverwendbar machen. Möchten Sie wirklich \"%s\" zu Maustaste 1"
+"zuweisen?"
 
 msgid "None"
 msgstr "Nichts"
