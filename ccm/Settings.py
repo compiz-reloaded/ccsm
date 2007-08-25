@@ -1247,7 +1247,7 @@ class ButtonSetting (EditableActionSetting):
             buttonCombo.append_text ("Button%d" % currentButton)
             buttonCombo.set_active (maxButton)
         else:
-            buttonCombo.set_active (i - 1)
+            buttonCombo.set_active (currentButton - 1)
         Tooltips.set_tip (buttonCombo, self.Setting.LongDesc)
         box.pack_start (buttonCombo)
 
