@@ -623,6 +623,7 @@ class KeyGrabber (gtk.Button):
             if event.keyval == gtk.keysyms.BackSpace:
                 self.key = 0
                 self.mods = 0
+                self.emit ("changed", self.key, self.mods)
             self.end_key_grab ()
             self.set_label ()
             return
