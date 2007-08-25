@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: ccsm 0.0.1\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
 "POT-Creation-Date: 2007-08-24 12:33+0200\n"
-"PO-Revision-Date: 2007-08-25 21:10+0100\n"
+"PO-Revision-Date: 2007-08-25 21:15+0100\n"
 "Last-Translator: Marco Trevisan (Treviño) <trevi55@gmail.com>\n"
 "Language-Team: Compiz Fusion translators <i18n@lists.compiz-fusion.org>\n"
 "MIME-Version: 1.0\n"
@@ -146,7 +146,7 @@ msgid "Disabled"
 msgstr "Disattivato"
 
 msgid "Grab key combination"
-msgstr ""
+msgstr "Cattura la combinazione di tasti"
 
 msgid "Computing possible conflicts, please wait"
 msgstr "Calcolo dei possibile conflitti, attendere"
@@ -160,7 +160,7 @@ msgstr "Attivato"
 
 #, python-format
 msgid "Using Button1 without modifiers can prevent any left click and thus break your configuration. Do you really want to set \"%s\" button to Button1 ?"
-msgstr ""
+msgstr "Usare il Pulsante1 senza modificatori può rendere inattivo ogni click sinistro e quindi far confusione nella tua configurazione. Vuoi davvero usare il Pulsante1 per la funzione \"%s\"?"
 
 # (NdT) questo è quello che si vede nella scheda Azioni
 # quando non è associato nulla alla particolare azione...
