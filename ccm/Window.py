@@ -202,8 +202,18 @@ class MainWin(gtk.Window):
         self.TableCats = {}
         self.TableAttached = False
         self.LastCols = -1
+        currentCategory = None
         for category in sorted(self.Categories, self.CatSortCompare):
+            if currentCategory:
+                alignment = gtk.Alignment (0, 0, 1, 1)
+                alignment.set_padding (0, 20, 0, 0)
+                alignment.add (gtk.HSeparator ())
+                categoryBox.pack_start (alignment)
+                categoryBox.separatorAlignment = alignment
+            currentCategory = category
+
             pluginList = sorted(self.Categories[category], PluginSortCompare)
+
             categoryBox = gtk.VBox()
             categoryHeader = gtk.HBox()
             categoryHeader.set_spacing(10)
@@ -298,12 +308,23 @@ class MainWin(gtk.Window):
                     if col >=  cols:
                         col = 0
                         row = row+1
+
+            categoryBox = categoryContainer[0].get_parent ()
             if empty:
-                categoryContainer[0].get_parent().set_no_show_all(True)
-                categoryContainer[0].get_parent().hide()
+                categoryBox.set_no_show_all(True)
+                categoryBox.hide()
             else:
-                categoryContainer[0].get_parent().set_no_show_all(False)
-                categoryContainer[0].attach(gtk.Label(), cols+5, cols+6, 0, 1, gtk.EXPAND)
+                categoryBox.set_no_show_all(False)
+                categoryContainer[0].attach (gtk.Label (), cols + 5, cols + 6,
+                                             0, 1, gtk.EXPAND)
+
+            if hasattr (categoryBox, "separatorAlignment"):
+                sep = categoryBox.separatorAlignment
+                if self.currentCategory == categoryName:
+                    sep.set_no_show_all (True)
+                    sep.hide ()
+                else:
+                    sep.set_no_show_all (False)
     
         # Search in long description
         if not foundPlugin and target == 0:
