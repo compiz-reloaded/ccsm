@@ -624,6 +624,8 @@ class KeyGrabber (gtk.Button):
                 self.key = 0
                 self.mods = 0
                 self.emit ("changed", self.key, self.mods)
+            elif event.keyval == gtk.keysyms.Escape:
+                self.emit ("changed", self.key, self.mods)
             self.end_key_grab ()
             self.set_label ()
             return
