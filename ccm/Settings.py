@@ -1014,17 +1014,19 @@ class KeySetting (EditableActionSetting):
             return
         self.BindingEdited (accel)
 
+    def GetLabelText (self, text):
+        if not len (text):
+            text = _("Disabled")
+        return text
+
     def SetButtonLabel (self):
-        label = self.current
-        if not len (self.current):
-            label = _("Disabled")
-        self.Button.set_label (label)
+        self.Button.set_label (self.GetLabelText (self.current))
 
     def RunKeySelector (self, widget):
 
         def HandleGrabberChanged (grabber, key, mods, label, selector):
             new = gtk.accelerator_name (key, mods)
-            label.set_text (new)
+            label.set_text (self.GetLabelText (new))
             mods = ""
             for mod in self.mods:
                 if "<%s>" % mod in new or "%s_L" % mod in new \
@@ -1049,9 +1051,7 @@ class KeySetting (EditableActionSetting):
                 new = current.replace ("%s_L" % modifier, "")
             elif "%s_R" % modifier in current:
                 new = current.replace ("%s_R" % modifier, "")
-            if not len (new):
-                new = _("Disabled")
-            label.set_text (new)
+            label.set_text (self.GetLabelText (new))
 
         dlg = gtk.Dialog (_("Edit %s") % self.Setting.ShortDesc)
         dlg.set_position (gtk.WIN_POS_CENTER_ALWAYS)
