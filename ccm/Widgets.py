@@ -695,6 +695,7 @@ class ErrorDialog (gtk.MessageDialog):
         self.set_title (_("An error has occured"))
         self.set_icon (parent.get_icon ())
         self.set_transient_for (parent)
+        self.set_modal (True)
         self.show_all ()
         self.connect ("response", lambda *args: self.destroy ())
 
