@@ -1234,11 +1234,20 @@ class ButtonSetting (EditableActionSetting):
         box.pack_start (modifierSelector)
 
         buttonCombo = gtk.combo_box_new_text ()
-        for i in range (1, 10):
+        currentButton = 1
+        for i in range (99, 0, -1):
+            if "Button%d" % i in self.current:
+                currentButton = i
+                break
+        maxButton = 9
+        for i in range (1, maxButton + 1):
             button = "Button%d" % i
             buttonCombo.append_text (button)
-            if button in self.current or i == 1:
-                buttonCombo.set_active (i - 1) 
+        if currentButton > maxButton:
+            buttonCombo.append_text ("Button%d" % currentButton)
+            buttonCombo.set_active (maxButton)
+        else:
+            buttonCombo.set_active (i - 1)
         Tooltips.set_tip (buttonCombo, self.Setting.LongDesc)
         box.pack_start (buttonCombo)
 
