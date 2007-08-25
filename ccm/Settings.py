@@ -1284,6 +1284,14 @@ class ButtonSetting (EditableActionSetting):
 
     def ButtonEdited (self, button):
         '''Button edited callback'''
+        if button == "Button1":
+            warning = WarningDialog (self.Widget.get_toplevel (),
+                                     _("Using Button1 without modifiers can \
+prevent any left click and thus break your configuration. Do you really want \
+to set \"%s\" button to Button1 ?") % self.Setting.ShortDesc)
+            response = warning.run ()
+            if response != gtk.RESPONSE_YES:
+                return
         popup = Popup (self.Widget, 
                        _("Computing possible conflicts, please wait"))
         conflict = ActionConflict (self.Setting, button = button)
