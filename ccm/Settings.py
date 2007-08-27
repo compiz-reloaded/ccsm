@@ -139,8 +139,9 @@ class StringMatchSetting(Setting):
         self.Setting.Value = self.Entry.get_text()
 
 class FileSetting:
-    def __init__(self, Setting):
-        self.Setting = Setting
+    def __init__(self, setting, isDirectory=False):
+        self.Setting = setting
+        self.IsDirectory = isDirectory 
         self.Open = gtk.Button()
         Tooltips.set_tip(self.Open, _("Browse for ") + self.Setting.LongDesc)
         self.Open.set_image(gtk.image_new_from_stock(
@@ -186,27 +187,32 @@ class FileSetting:
             value = custom_value
         b = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_OPEN, gtk.RESPONSE_OK)
         chooser = gtk.FileChooserDialog(title=_("Open file.."), buttons=b)
-        
+        if self.IsDirectory:
+            chooser.set_action(gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER)
+
         if os.path.exists(value):
             chooser.set_filename(value)
         else:
             chooser.set_current_folder(os.environ.get("HOME"))
-        chooser.set_filter(self.CreateFilter())
+        
+        if not self.IsDirectory:
+            chooser.set_filter(self.CreateFilter())
+        
         ret = chooser.run()
         
         filename = chooser.get_filename()
         chooser.destroy()
         if ret == gtk.RESPONSE_OK:
-            if self.CheckFileType(filename):
+            if self.IsDirectory or self.CheckFileType(filename):
                 self.SetFileName(filename)
     
     def SetFileName(self, text):
         self.PureVirtual('SetFileName')
 
 class FileStringSetting(StringMatchSetting, FileSetting):
-    def __init__(self, Setting):
+    def __init__(self, Setting, isDirectory=False):
         StringMatchSetting.__init__(self, Setting)
-        FileSetting.__init__(self, Setting)
+        FileSetting.__init__(self, Setting, isDirectory)
         self.Widget = gtk.HBox()
         self.Widget.set_spacing(5)
         self.Widget.pack_start(self.Entry, True, True)
@@ -770,9 +776,9 @@ class StringMatchListSetting(ListSetting):
         return None
 
 class FileListSetting(StringMatchListSetting, FileSetting):
-    def __init__(self, Setting):
+    def __init__(self, Setting, isDirectory=False):
         StringMatchListSetting.__init__(self, Setting)
-        FileSetting.__init__(self, Setting)
+        FileSetting.__init__(self, Setting, isDirectory)
     
     def _Edit(self, value=""):
         dlg = gtk.Dialog(_("Edit %s") % self.Setting.ShortDesc)
@@ -1390,8 +1396,13 @@ class BellSetting (BoolSetting):
 
 def MakeSetting (setting):
     if setting.Type in ("String", "Match"):
-        if len (setting.Hints) > 0 and "file" in setting.Hints:
-            return FileStringSetting (setting)
+        if len (setting.Hints) > 0:
+            if "file" in setting.Hints:
+                return FileStringSetting (setting)
+            elif "directory" in setting.Hints:
+                return FileStringSetting (setting, isDirectory=True)
+            else:
+                return StringMatchSetting (setting)
         else:
             return StringMatchSetting (setting)
     elif setting.Type == "Bool":
@@ -1404,8 +1415,13 @@ def MakeSetting (setting):
         return ColorSetting (setting)
     elif setting.Type == "List":
         if setting.Info[0] == "String" or setting.Info[0] == "Match":
-            if len (setting.Hints) > 0 and "file" in setting.Hints:
-                return FileListSetting (setting)
+            if len (setting.Hints) > 0:
+                if "file" in setting.Hints:
+                    return FileListSetting (setting)
+                elif "directory" in setting.Hints:
+                    return FileListSetting (setting, isDirectory=True)
+                else:
+                    return StringMatchListSetting (setting)
             else:
                 return StringMatchListSetting (setting)
         elif setting.Info[0] == "Int":
