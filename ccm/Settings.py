@@ -186,7 +186,12 @@ class FileSetting:
         if custom_value != None:
             value = custom_value
         b = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_OPEN, gtk.RESPONSE_OK)
-        chooser = gtk.FileChooserDialog(title=_("Open file.."), buttons=b)
+        if self.IsDirectory:
+            title = _("Open directory...")
+        else:
+            title = _("Open file...")
+
+        chooser = gtk.FileChooserDialog(title = title, buttons = b)
         if self.IsDirectory:
             chooser.set_action(gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER)
 
