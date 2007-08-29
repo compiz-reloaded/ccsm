@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm 0.0.1\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-08-25 19:30+0200\n"
-"PO-Revision-Date: 2007-08-25 19:31+0200\n"
+"POT-Creation-Date: 2007-08-29 10:48+0200\n"
+"PO-Revision-Date: 2007-08-29 10:48+0200\n"
 "Last-Translator: Danny Baumann <dannybaumann@web.de>\n"
 "Language-Team: Compiz Fusion translators <i18n@lists.compiz-fusion.org>\n"
 "MIME-Version: 1.0\n"
@@ -117,7 +117,10 @@ msgstr "Bilder"
 msgid "File"
 msgstr "Datei"
 
-msgid "Open file.."
+msgid "Open directory..."
+msgstr "Verzeichnis auswählen"
+
+msgid "Open file..."
 msgstr "Datei öffnen"
 
 msgid "Multi-list settings. You can double-click a row to edit the values."
@@ -304,6 +307,9 @@ msgstr "Alle Dateien"
 
 msgid "Save file.."
 msgstr "Datei speichern"
+
+msgid "Open file.."
+msgstr "Datei öffnen"
 
 msgid "Enter a profile name"
 msgstr "Geben Sie einen Profilnamen ein"
