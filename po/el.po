@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm 0.5.2\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-08-24 00:01+0200\n"
-"PO-Revision-Date: 2007-08-22 00:02+0200\n"
+"POT-Creation-Date: 2007-08-31 00:01+0200\n"
+"PO-Revision-Date: 2007-08-31 01:00+0200\n"
 "Last-Translator:  djdoo <jimdusis@yahoo.gr>\n"
 "Language-Team: Compiz Fusion translators <i18n@lists.compiz-fusion.org>\n"
 "MIME-Version: 1.0\n"
@@ -118,8 +118,11 @@ msgstr "Εικόνες"
 msgid "File"
 msgstr "Αρχείο"
 
-msgid "Open file.."
-msgstr "Άνοιγμα Αρχείου.."
+msgid "Open directory..."
+msgstr "Άνοιγμα διαδρομής..."
+
+msgid "Open file..."
+msgstr "Άνοιγμα Αρχείου..."
 
 msgid "Multi-list settings. You can double-click a row to edit the values."
 msgstr ""
@@ -140,6 +143,35 @@ msgstr "Επεξεργασία %s"
 #, python-format
 msgid "Value (%s) for %s:"
 msgstr "Τιμή (%s) για %s:"
+
+#, python-format
+msgid "\"%s\" is not a valid shortcut"
+msgstr ""
+
+msgid "Disabled"
+msgstr "Απενεργοποιημένο"
+
+msgid "Grab key combination"
+msgstr "Πιάσιμο συνδυασμού πλήκτρων"
+
+msgid "Computing possible conflicts, please wait"
+msgstr "Υπολογισμός πιθανών διενέξεων, παρακαλώ περιμένετε"
+
+#, python-format
+msgid "\"%s\" is not a valid button"
+msgstr "\"%s\" δεν είναι σωστό κουμπί"
+
+msgid "Enabled"
+msgstr "Ενεργοποιημένο"
+
+#, python-format
+msgid ""
+"Using Button1 without modifiers can prevent any left click and thus break "
+"your configuration. Do you really want to set \"%s\" button to Button1 ?"
+msgstr ""
+"Η χρησιμοποίηση του Κουμπιού1 χωρίς αλλαγές μπορεί να σταματήσει κάθε αριστερο"
+" κλικ κ επομένως να καταστρέψει την ρύθμισή σας. Θέλετε πραγματικά να θέσετε "
+"\"%s\" κουμπί στο Κουμπί1 ?"
 
 msgid "None"
 msgstr "Κανένα"
@@ -179,6 +211,26 @@ msgstr "Προχωρημένη Αναζήτηση"
 msgid "Preferences"
 msgstr "Ιδιότητες"
 
+msgid "General"
+msgstr "Γενικά"
+
+msgid "Please press the new key combination"
+msgstr "Παρακαλώ χρησιμοποιήστε τον νέο συνδυασμό πλήκτρων"
+
+msgid "This is a settings manager for the CompizConfig configuration system."
+msgstr ""
+"Αυτός είναι ο διαχειριστής ρυθμίσεων του συστήματος ρύθμισης του "
+"CompizConfig."
+
+msgid "translator-credits"
+msgstr "στοιχεία-μεταφραστών"
+
+msgid "An error has occured"
+msgstr "Ένα σφάλμα προέκυψε"
+
+msgid "Warning"
+msgstr "Προσοχή"
+
 #, python-format
 msgid "Search %s Plugin Options"
 msgstr "Αναζήτηση %s Επιλογών Πρόσθετου"
@@ -188,9 +240,6 @@ msgstr "Χρησιμοποίηση αυτου του πρόσθετου"
 
 msgid "Search Compiz Core Options"
 msgstr "Αναζήτηση των επιλογών του πυρήνα του Compiz"
-
-msgid "General"
-msgstr "Γενικά"
 
 msgid "Actions"
 msgstr "Ενέργειες"
@@ -262,6 +311,9 @@ msgstr "Όλα τα αρχεία"
 
 msgid "Save file.."
 msgstr "Αποθήκευση Αρχείου.."
+
+msgid "Open file.."
+msgstr "Άνοιγμα Αρχείου.."
 
 msgid "Enter a profile name"
 msgstr "Εισάγετε όνομα προφίλ"
@@ -349,15 +401,6 @@ msgstr ""
 
 #~ msgid "Reset To Defaults"
 #~ msgstr "Επαναφορά στις Προεπιλεγμένες Ρυθμίσεις"
-
-#~ msgid ""
-#~ "This is a settings manager for the CompizConfig configuration system."
-#~ msgstr ""
-#~ "Αυτός είναι ο διαχειριστής ρυθμίσεων του συστήματος ρύθμισης του "
-#~ "CompizConfig."
-
-#~ msgid "translator-credits"
-#~ msgstr "στοιχεία-μεταφραστών"
 
 #~ msgid "PyGtk 2.10.0 or later required"
 #~ msgstr "PyGtk 2.10.0 ή νεότερο απαιτείται"
