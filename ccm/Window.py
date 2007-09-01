@@ -358,7 +358,7 @@ class MainWin(gtk.Window):
             self.show_all()
 
     def RebuildTable(self, widget, request):
-        cols = (request.width - 60) / 220
+        cols = (request.width - 40) / 220
         if cols == self.LastCols:
             return
         
