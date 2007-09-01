@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm 0.0.1\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-08-29 10:48+0200\n"
-"PO-Revision-Date: 2007-08-29 10:48+0200\n"
+"POT-Creation-Date: 2007-09-01 14:38+0200\n"
+"PO-Revision-Date: 2007-09-01 14:36+0200\n"
 "Last-Translator: Danny Baumann <dannybaumann@web.de>\n"
 "Language-Team: Compiz Fusion translators <i18n@lists.compiz-fusion.org>\n"
 "MIME-Version: 1.0\n"
@@ -18,92 +18,113 @@ msgstr ""
 
 #, python-format
 msgid ""
-"The new value for the %s binding for the action <b>%s</b> in plugin <b>%s</"
-"b> conflicts with the action <b>%s</b> of the <b>%s</b> plugin.\n"
-"Do you wish to disable <b>%s</b> in the <b>%s</b> plugin?"
+"The new value for the %(binding)s binding for the action <b>%(action)s</b> "
+"in plugin <b>%(plugin)s</b> conflicts with the action <b>%(action_conflict)"
+"s</b> of the <b>%(plugin_conflict)s</b> plugin.\n"
+"Do you wish to disable <b>%(action_conflict)s</b> in the <b>%"
+"(plugin_conflict)s</b> plugin?"
 msgstr ""
-"Der neue Wert für %s der Aktion <b>%s</b> im Plugin <b>%s</b> steht in "
-"Konflikt mit der Aktion <b>%s</b> des Plugins <b>%s</b>.\n"
-"Möchten Sie <b>%s</b> im Plugin <b>%s</b> deaktivieren?"
+"Der neue Wert für %(binding)s der Aktion <b>%(action)s</b> im Plugin <b>%"
+"(plugin)s</b> steht in Konflikt mit der Aktion <b>%(action_conflict)s</b>des "
+"Plugins <b>%(plugin_conflict)s</b>.\n"
+"Möchten Sie <b>%(action_conflict)s</b> im Plugin <b>%(plugin_conflict)s</b> "
+"deaktivieren?"
 
 #, python-format
-msgid "Disable %s"
-msgstr "%s deaktivieren"
+msgid "Disable %(action_conflict)s"
+msgstr "%(action_conflict)s deaktivieren"
 
 #, python-format
-msgid "Don't set %s"
-msgstr "%s nicht übernehmen"
+msgid "Don't set %(action)s"
+msgstr "%(action)s nicht übernehmen"
 
 #, python-format
-msgid "Set %s anyway"
-msgstr "%s trotzdem setzen"
+msgid "Set %(action)s anyway"
+msgstr "%(action)s trotzdem setzen"
 
 #, python-format
 msgid ""
-"You are trying to use the feature <b>%s</b> which is provided by <b>%s</b>.\n"
+"You are trying to use the feature <b>%(feature)s</b> which is provided by <b>"
+"%(plugin)s</b>.\n"
 "This plugin is currently disabled.\n"
-"Do you wish to enable <b>%s</b> so the feature is available?"
+"Do you wish to enable <b>%(plugin)s</b> so the feature is available?"
 msgstr ""
-"Sie versuchen, das Feature <b>%s</b> zu verwenden, das von <b>%s</b> zur "
-"Verfügung gestellt wird.\n"
+"Sie versuchen, das von <b>%(plugin)s</b> zur Verfügung gestellte Feature <b>%"
+"(feature)s</b> zu verwenden.\n"
 "Dieses Plugin ist zur Zeit deaktiviert.\n"
-"Möchten Sie <b>%s</b> aktivieren, so dass dieses Feature zur Verfügung steht?"
+"Möchten Sie <b>%(plugin)s</b> aktivieren, so dass dieses Feature zur "
+"Verfügung steht?"
 
 #, python-format
-msgid "Enable %s"
-msgstr "%s aktivieren"
+msgid "Enable %(plugin)s"
+msgstr "%(plugin)s aktivieren"
 
 #, python-format
-msgid "Don't enable %s"
-msgstr "%s nicht aktivieren"
-
-#, python-format
-msgid ""
-"Plugin <b>%s</b> provides feature <b>%s</b> which is also provided by <b>%s</"
-"b>"
-msgstr ""
-"Plugin <b>%s</b> stellt das Feature <b>%s</b> bereit, das auch von <b>%s</b> "
-"bereitgestellt wird."
-
-#, python-format
-msgid "Plugin <b>%s</b> conflicts with <b>%s</b>."
-msgstr "Plugin <b>%s</b> steht in Konflikt mit dem Plugin <b>%s</b>."
+msgid "Don't enable %(feature)s"
+msgstr "%(feature)s nicht aktivieren"
 
 #, python-format
 msgid ""
-"<b>%s</b> requires feature <b>%s</b> which is provided by the following "
-"plugins:\n"
-"%s"
+"Plugin <b>%(plugin_conflict)s</b> provides feature <b>%(feature)s</b> which "
+"is also provided by <b>%(plugin)s</b>"
 msgstr ""
-"<b>%s</b> benötigt das Feature <b>%s</b>, das von den folgenden Plugins "
-"bereit gestellt wird:\n"
-"%s"
+"Plugin <b>%(plugin_conflict)s</b> stellt das Feature <b>%(feature)s</b> "
+"bereit, welch auch von <b>%(plugin)s</b> bereitgestellt wird."
+
+#, python-format
+msgid "Disable %(plugin_conflict)s"
+msgstr "%(plugin_conflict)s deaktivieren"
+
+#, python-format
+msgid "Don't enable %(plugin)s"
+msgstr "%(plugin)s nicht aktivieren"
+
+#, python-format
+msgid "Plugin <b>%(plugin_conflict)s</b> conflicts with <b>%(plugin)s</b>."
+msgstr ""
+"Plugin <b>%(plugin_conflict)s</b> steht in Konflikt mit dem Plugin <b>%"
+"(plugin)s</b>."
+
+#, python-format
+msgid ""
+"<b>%(plugin)s</b> requires feature <b>%(feature)s</b> which is provided by "
+"the following plugins:\n"
+"%(plugin_list)s"
+msgstr ""
+"<b>%(plugin)s</b> benötigt das Feature <b>%(feature)s</b>, das von den "
+"folgenden Plugins bereit gestellt wird:\n"
+"%(plugin_list)s"
 
 msgid "Enable these plugins"
 msgstr "Diese Plugins aktivieren"
 
 #, python-format
-msgid "<b>%s</b> requires the plugin <b>%s</b>."
-msgstr "<b>%s</b> benötigt das Plugin <b>%s</b>."
+msgid "<b>%(plugin)s</b> requires the plugin <b>%(require)s</b>."
+msgstr "<b>%(plugin)s</b> benötigt das Plugin <b>%(require)s</b>."
+
+#, python-format
+msgid "Enable %(require)s"
+msgstr "%(require)s aktivieren"
 
 #, python-format
 msgid ""
-"<b>%s</b> provides the feature <b>%s</b> which is required by the plugins <b>"
-"%s</b>."
+"<b>%(plugin)s</b> provides the feature <b>%(feature)s</b> which is required "
+"by the plugins <b>%(plugin_list)s</b>."
 msgstr ""
-"<b>%s</b> stellt das Feature <b>%s</b> bereit, das von den Plugins <b>%s</b> "
-"benötigt wird."
+"<b>%(plugin)s</b> stellt das Feature <b>%(feature)s</b> bereit, das von den "
+"Plugins <b>%(plugin_list)s</b> benötigt wird."
 
 msgid "Disable these plugins"
 msgstr "Diese Plugins deaktivieren"
 
 #, python-format
-msgid "Don't disable %s"
-msgstr "%s nicht deaktivieren"
+msgid "Don't disable %(plugin)s"
+msgstr "%(plugin)s nicht deaktivieren"
 
 #, python-format
-msgid "<b>%s</b> is required by the plugins <b>%s</b>."
-msgstr "<b>%s</b> wird von den Plugins <b>%s</b> benötigt."
+msgid "<b>%(plugin)s</b> is required by the plugins <b>%(plugin_list)s</b>."
+msgstr ""
+"<b>%(plugin)s</b> wird von den Plugins <b>%(plugin_list)s</b> benötigt."
 
 msgid "Reset setting to the default value"
 msgstr "Einstellung auf den Standardwert zurücksetzen"
@@ -138,8 +159,8 @@ msgid "Edit %s"
 msgstr "%s bearbeiten"
 
 #, python-format
-msgid "Value (%s) for %s:"
-msgstr "Wert (%s) für %s"
+msgid "Value (%(value)s) for %(setting)s"
+msgstr "Wert (%(value)s) für %(setting)s"
 
 #, python-format
 msgid "\"%s\" is not a valid shortcut"
@@ -147,6 +168,9 @@ msgstr "\"%s\" ist keine gültige Tastenkombination"
 
 msgid "Disabled"
 msgstr "Deaktiviert"
+
+msgid "Enabled"
+msgstr "Aktiviert"
 
 msgid "Grab key combination"
 msgstr "Tastenkombination auswählen"
@@ -157,9 +181,6 @@ msgstr "Werte mögliche Konflikte aus ... bitte warten."
 #, python-format
 msgid "\"%s\" is not a valid button"
 msgstr "\"%s\" ist keine gültige Taste"
-
-msgid "Enabled"
-msgstr "Aktiviert"
 
 #, python-format
 msgid ""
@@ -207,6 +228,10 @@ msgstr "Erweiterte Suche"
 
 msgid "Preferences"
 msgstr "Einstellungen"
+
+#, python-format
+msgid "Enable %s"
+msgstr "%s aktivieren"
 
 msgid "General"
 msgstr "Allgemein"
@@ -368,6 +393,13 @@ msgstr ""
 "<span size=\"large\"><b>Keine Übereinstimmungen gefunden.</b> </span><span>\n"
 "\n"
 " Der Filter \"<b>%s</b>\" stimmt mit keinem Element überein.</span>"
+
+#, fuzzy
+#~ msgid "Value (%(value)s) for %(setting)"
+#~ msgstr "Wert (%(value)s) für %(setting)s"
+
+#~ msgid "Disable %s"
+#~ msgstr "%s deaktivieren"
 
 #~ msgid "Name"
 #~ msgstr "Name"
