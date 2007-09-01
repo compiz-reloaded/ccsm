@@ -87,7 +87,7 @@ class MainWin(gtk.Window):
         self.BlockEnablePlugin = 0
         self.ResetMainWidgets()
 
-    def Quit(self, foo):
+    def Quit(self, *args):
         gtk.main_quit()
 
     def ResetMainWidgets(self):
