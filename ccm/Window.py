@@ -45,7 +45,7 @@ class MainWin(gtk.Window):
         self.ShowingPlugin = None
         self.Context = Context
         self.connect("destroy", self.Quit)
-        self.set_default_size(960, 580)
+        self.set_default_size(990, 580)
         self.set_title(_("CompizConfig Settings Manager"))
         try:
             self.set_icon (gtk.gdk.pixbuf_new_from_file(IconDir+"/apps/ccsm.svg"))
