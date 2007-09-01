@@ -1014,7 +1014,7 @@ class EditableActionSetting (Setting):
         if ret != gtk.RESPONSE_OK:
             return
 
-        self.HandleDialogText (entry.get_text ())
+        self.HandleDialogText (entry.get_text ().strip ())
 
     def GetDialogText (self):
         self.PureVirtual ('GetDialogText')
