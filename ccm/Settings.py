@@ -1073,19 +1073,22 @@ class KeySetting (EditableActionSetting):
 
         def HandleGrabberChanged (grabber, key, mods, label, selector):
             new = gtk.accelerator_name (key, mods)
-            label.set_text (self.GetLabelText (new))
             mods = ""
             for mod in self.mods:
-                if "<%s>" % mod in new or "%s_L" % mod in new \
-                   or "%s_R" % mod in new:
+                if "%s_L" % mod in new:
+                    new = new.replace ("%s_L" % mod, "<%s>" % mod)
+                if "%s_R" % mod in new:
+                    new = new.replace ("%s_R" % mod, "<%s>" % mod)
+                if "<%s>" % mod in new:
                     mods += "%s|" % mod
             mods.rstrip ("|")
+            label.set_text (self.GetLabelText (new))
             selector.current = mods
 
         def HandleModifierAdded (selector, modifier, label):
             current = label.get_text ()
             if current == _("Disabled"):
-                current = "%s_L" % modifier
+                current = "<%s>" % modifier
             else:
                 current = ("<%s>" % modifier) + current
             label.set_text (self.ReorderKeyString (current))
