@@ -715,3 +715,24 @@ class WarningDialog (gtk.MessageDialog):
         self.set_icon (parent.get_icon ())
         self.set_transient_for (parent)
         self.connect_after ("response", lambda *args: self.destroy ())
+
+# Buffered callback handler for gtk.Range or such
+#
+class BufferedHandler:
+
+    callback = None
+    handler = None
+
+    def __init__ (self, widget, signal, callback):
+        widget.connect (signal, self.CallbackHandler)
+        self.callback = callback
+
+    def CallbackHandler (self, widget):
+        if self.handler:
+            return
+        self.handler = gobject.timeout_add (500, self.TimeoutHandler, widget)
+
+    def TimeoutHandler (self, widget):
+        self.callback (widget)
+        self.handler = None
+        return False
