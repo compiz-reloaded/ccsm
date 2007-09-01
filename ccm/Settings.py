@@ -1064,6 +1064,13 @@ class KeySetting (EditableActionSetting):
 
     def RunKeySelector (self, widget):
 
+        def ShowHideBox (button, box, dialog):
+            if button.get_active ():
+                box.show ()
+            else:
+                box.hide ()
+                dialog.resize (1, 1)
+
         def HandleGrabberChanged (grabber, key, mods, label, selector):
             new = gtk.accelerator_name (key, mods)
             label.set_text (self.GetLabelText (new))
@@ -1101,12 +1108,22 @@ class KeySetting (EditableActionSetting):
         dlg.add_button (gtk.STOCK_OK, gtk.RESPONSE_OK).grab_default ()
         dlg.set_default_response (gtk.RESPONSE_OK)
 
-        box = gtk.VBox ()
+        mainBox = gtk.VBox ()
         alignment = gtk.Alignment ()
-        alignment.set_padding (0, 10, 10, 10)
-        alignment.add (box)
+        alignment.set_padding (10, 10, 10, 10)
+        alignment.add (mainBox)
         dlg.vbox.pack_start (alignment)
 
+        checkButton = gtk.CheckButton (_("Enabled"))
+        active = len (self.current) \
+                 and self.current.lower () not in ("disabled", "none")
+        checkButton.set_active (active)
+        Tooltips.set_tip (checkButton, self.Setting.LongDesc)
+        mainBox.pack_start (checkButton)
+
+        box = gtk.VBox ()
+        checkButton.connect ("toggled", ShowHideBox, box, dlg)
+        mainBox.pack_start (box)
 
         currentMods = ""
         for mod in self.mods:
@@ -1140,10 +1157,15 @@ class KeySetting (EditableActionSetting):
                          modifierSelector)
 
         dlg.vbox.show_all ()
+        ShowHideBox (checkButton, box, dlg)
         ret = dlg.run ()
         dlg.destroy ()
 
         if ret != gtk.RESPONSE_OK:
+            return
+
+        if not checkButton.get_active ():
+            self.BindingEdited ("Disabled")
             return
 
         new = label.get_text ()
