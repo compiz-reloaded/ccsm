@@ -74,6 +74,7 @@ class MainWin(gtk.Window):
         self.Categories = {}
         self.PluginImages = {}
         self.RightVadj = 0.0
+        self.FilterValue = ""
         
         for pluginName, plugin in self.Context.Plugins.items():
             self.PluginImages[pluginName] = Image(plugin.Name, ImagePlugin)
@@ -404,6 +405,7 @@ class MainWin(gtk.Window):
 
     def ShowPlugin(self, obj, select):
         self.RightVadj = self.RightPane.get_child().get_vadjustment().get_value()
+        self.FilterValue = self.filterEntry.get_text()
         for name, value in self.PluginImages.items():
             widget = value.get_parent()
             if widget:
@@ -420,6 +422,7 @@ class MainWin(gtk.Window):
             return
 
         self.RightVadj = self.RightPane.get_child().get_vadjustment().get_value()
+        self.FilterValue = self.filterEntry.get_text()
         for name, value in self.PluginImages.items():
             widget = value.get_parent()
             if widget:
@@ -434,6 +437,7 @@ class MainWin(gtk.Window):
     
     def ShowPreferences(self, widget):
         self.RightVadj = self.RightPane.get_child().get_vadjustment().get_value()
+        self.FilterValue = self.filterEntry.get_text()
         for name, value in self.PluginImages.items():
             widget = value.get_parent()
             if widget:
@@ -475,9 +479,14 @@ class MainWin(gtk.Window):
         self.CurrentScreenNum = widget.get_active()
         self.Context.Read()
 
-    def BackToMain(self, obj):
+    def BackToMain(self, widget, run=0):
+        if run == 1:
+            self.filterEntry.set_text(self.FilterValue)
+            return
+
         self.VisibleSettings = []
         self.ResetMainWidgets()
         del self.ShowingPlugin
         # make sure its cleaned up here, since this is a nice safe place to do so
         self.ShowingPlugin = None
+        gobject.timeout_add(100, self.BackToMain, widget, 1)
