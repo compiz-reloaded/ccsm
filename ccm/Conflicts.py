@@ -145,9 +145,9 @@ class ActionConflict (Conflict):
 
         msg = msg % msg_dict
 
-        yesButton    = (_("Disable %(action_conflict)s") % con.ShortDesc,  gtk.STOCK_YES,  gtk.RESPONSE_YES)
-        noButton     = (_("Don't set %(action)s") %  setting.ShortDesc,    gtk.STOCK_NO,   gtk.RESPONSE_NO)
-        ignoreButton = (_("Set %(action)s anyway") % setting.ShortDesc,    gtk.STOCK_STOP, gtk.RESPONSE_REJECT)
+        yesButton    = (_("Disable %(action_conflict)s") % msg_dict,  gtk.STOCK_YES,  gtk.RESPONSE_YES)
+        noButton     = (_("Don't set %(action)s") %  msg_dict,    gtk.STOCK_NO,   gtk.RESPONSE_NO)
+        ignoreButton = (_("Set %(action)s anyway") % msg_dict,    gtk.STOCK_STOP, gtk.RESPONSE_REJECT)
 
         return self.Ask (msg, (yesButton, noButton, ignoreButton))
 
@@ -184,8 +184,8 @@ class FeatureRequirement(Conflict):
 
         msg = msg % msg_dict
 
-        yesButton = (_("Enable %(plugin)s") % plugin.ShortDesc,       gtk.STOCK_YES, gtk.RESPONSE_YES)
-        noButton  = (_("Don't enable %(feature)s") % plugin.ShortDesc, gtk.STOCK_NO,  gtk.RESPONSE_NO)
+        yesButton = (_("Enable %(plugin)s") % msg_dict,       gtk.STOCK_YES, gtk.RESPONSE_YES)
+        noButton  = (_("Don't enable %(feature)s") % msg_dict, gtk.STOCK_NO,  gtk.RESPONSE_NO)
 
         answer = self.Ask(msg, (yesButton, noButton))
     
