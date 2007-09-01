@@ -58,7 +58,6 @@ class MainWin(gtk.Window):
         self.MainBox = gtk.HBox()
         self.add(self.MainBox)
         self.LeftPane = gtk.Alignment()
-        self.LeftPane.set_size_request(230, 520)
         self.RightPane = gtk.Alignment()
         self.RightPane.set_border_width(5)
         self.RightPane.props.yscale = 1
