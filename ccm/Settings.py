@@ -76,8 +76,13 @@ class Setting:
             table.attach(self.Reset, 99, 100, row, row+1, 0, TableDef, TableX, TableX)
 
     def PureVirtual (self, func):
-        message = "Missing %s function for %s setting (%s)"
-        value = message % (func, self.Setting.Name, self)
+        message = "Missing %(function)s function for %(name)s setting (%(class)s)"
+
+        msg_dict = {'function': func,
+                    'name': self.Setting.Name,
+                    'class': self}
+
+        value = message % msg_dict
         raise PureVirtualError, value
 
     def _Init(self):
@@ -760,7 +765,15 @@ class StringMatchListSetting(ListSetting):
         dlg.set_default_response(gtk.RESPONSE_OK)
         
         ebox = gtk.EventBox()
-        label = gtk.Label(_("Value (%s) for %s:") % (self.Setting.Info[0], self.Setting.ShortDesc))
+        
+        msg = _("Value (%(value)s) for %(setting)")
+
+        msg_dict = {'value': self.Setting.Info[0],
+                    'setting': self.Setting.ShortDesc}
+        
+        msg = msg % msg_dict
+
+        label = gtk.Label(msg)
         ebox.add(label)
         
         Tooltips.set_tip(ebox, self.Setting.LongDesc)
@@ -792,7 +805,15 @@ class FileListSetting(StringMatchListSetting, FileSetting):
         dlg.set_default_response(gtk.RESPONSE_OK)
         
         ebox = gtk.EventBox()
-        label = gtk.Label(_("Value (%s) for %s:") % (self.Setting.Info[0], self.Setting.ShortDesc))
+        
+        msg = _("Value (%(value)s) for %(setting)")
+
+        msg_dict = {'value': self.Setting.Info[0],
+                    'setting': self.Setting.ShortDesc}
+        
+        msg = msg % msg_dict
+        
+        label = gtk.Label(msg)
         ebox.add(label)
         
         Tooltips.set_tip(ebox, self.Setting.LongDesc)
@@ -893,7 +914,15 @@ class IntFloatListSetting(ListSetting):
         dlg.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
         dlg.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK).grab_default()
         dlg.set_default_response(gtk.RESPONSE_OK)
-        label = gtk.Label(_("Value (%s) for %s:") % (self.Setting.Info[0], self.Setting.ShortDesc))
+
+        msg = _("Value (%(value)s) for %(setting)")
+
+        msg_dict = {'value': self.Setting.Info[0],
+                    'setting': self.Setting.ShortDesc}
+
+        msg = msg % msg_dict
+
+        label = gtk.Label(msg)
         ebox = gtk.EventBox()
         ebox.add(label)
         Tooltips.set_tip(ebox, self.Setting.LongDesc)

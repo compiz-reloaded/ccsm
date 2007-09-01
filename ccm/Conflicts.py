@@ -133,15 +133,21 @@ class ActionConflict (Conflict):
         return True
 
     def AskUser (self, setting, con, typ):
-        msg = _("The new value for the %s binding for the action <b>%s</b> "\
-              "in plugin <b>%s</b> conflicts with the action <b>%s</b> of the <b>%s</b> plugin.\n"\
-              "Do you wish to disable <b>%s</b> in the <b>%s</b> plugin?")
-         
-        msg = msg % (typ, setting.ShortDesc, setting.Plugin.ShortDesc, con.ShortDesc, con.Plugin.ShortDesc, con.ShortDesc, con.Plugin.ShortDesc)
+        msg = _("The new value for the %(binding)s binding for the action <b>%(action)s</b> "\
+              "in plugin <b>%(plugin)s</b> conflicts with the action <b>%(action_conflict)s</b> of the <b>%(plugin_conflict)s</b> plugin.\n"\
+              "Do you wish to disable <b>%(action_conflict)s</b> in the <b>%(plugin_conflict)s</b> plugin?")
 
-        yesButton    = (_("Disable %s") % con.ShortDesc,        gtk.STOCK_YES,  gtk.RESPONSE_YES)
-        noButton     = (_("Don't set %s") % setting.ShortDesc,  gtk.STOCK_NO,   gtk.RESPONSE_NO)
-        ignoreButton = (_("Set %s anyway") % setting.ShortDesc, gtk.STOCK_STOP, gtk.RESPONSE_REJECT)
+        msg_dict = {'binding': typ,
+                    'action': setting.ShortDesc,
+                    'plugin': setting.Plugin.ShortDesc,
+                    'action_conflict': con.ShortDesc,
+                    'plugin_conflict': con.Plugin.ShortDesc}
+
+        msg = msg % msg_dict
+
+        yesButton    = (_("Disable %(action_conflict)s") % con.ShortDesc,  gtk.STOCK_YES,  gtk.RESPONSE_YES)
+        noButton     = (_("Don't set %(action)s") %  setting.ShortDesc,    gtk.STOCK_NO,   gtk.RESPONSE_NO)
+        ignoreButton = (_("Set %(action)s anyway") % setting.ShortDesc,    gtk.STOCK_STOP, gtk.RESPONSE_REJECT)
 
         return self.Ask (msg, (yesButton, noButton, ignoreButton))
 
@@ -169,14 +175,17 @@ class FeatureRequirement(Conflict):
                 return True
 
     def AskUser(self, plugin):
-        msg = _("You are trying to use the feature <b>%s</b> which is provided by <b>%s</b>.\n"\
+        msg = _("You are trying to use the feature <b>%(feature)s</b> which is provided by <b>%(plugin)s</b>.\n"\
                 "This plugin is currently disabled.\n"\
-                "Do you wish to enable <b>%s</b> so the feature is available?")
+                "Do you wish to enable <b>%(plugin)s</b> so the feature is available?")
 
-        msg = msg % (self.Feature, plugin.ShortDesc, plugin.ShortDesc)
+        msg_dict = {'feature': self.Feature,
+                    'plugin': plugin.ShortDesc}
 
-        yesButton = (_("Enable %s") % plugin.ShortDesc,       gtk.STOCK_YES, gtk.RESPONSE_YES)
-        noButton  = (_("Don't enable %s") % plugin.ShortDesc, gtk.STOCK_NO,  gtk.RESPONSE_NO)
+        msg = msg % msg_dict
+
+        yesButton = (_("Enable %(plugin)s") % plugin.ShortDesc,       gtk.STOCK_YES, gtk.RESPONSE_YES)
+        noButton  = (_("Don't enable %(feature)s") % plugin.ShortDesc, gtk.STOCK_NO,  gtk.RESPONSE_NO)
 
         answer = self.Ask(msg, (yesButton, noButton))
     
@@ -274,24 +283,34 @@ class PluginConflict(Conflict):
         cancelMsg = ""
         widgets = []
         if conflict[0] == 'ConflictFeature':
-            msg = _("Plugin <b>%s</b> provides feature <b>%s</b> which is also "\
-                "provided by <b>%s</b>")
-            msg = msg % (conflict[2][0].ShortDesc, conflict[1], plugin.ShortDesc)
+            msg = _("Plugin <b>%(plugin_conflict)s</b> provides feature <b>%(feature)s</b> which is also "\
+                "provided by <b>%(plugin)s</b>")
+            
+            msg_dict = {'plugin_conflict': conflict[2][0].ShortDesc,
+                        'feature': conflict[1],
+                        'plugin': plugin.ShortDesc}
 
-            okMsg     = _("Disable %s") % conflict[2][0].ShortDesc
-            cancelMsg = _("Don't enable %s") % plugin.ShortDesc
+            msg = msg % msg_dict
+
+            okMsg     = _("Disable %(plugin_conflict)s") % msg_dict
+            cancelMsg = _("Don't enable %(plugin)s") % msg_dict
         
         elif conflict[0] == 'ConflictPlugin':
-            msg = _("Plugin <b>%s</b> conflicts with <b>%s</b>.")
-            msg = msg % (conflict[2][0].ShortDesc, plugin.ShortDesc)
+            msg = _("Plugin <b>%(plugin_conflict)s</b> conflicts with <b>%(plugin)s</b>.")
+            msg = msg % msg_dict
 
-            okMsg = _("Disable %s") % conflict[2][0].ShortDesc
-            cancelMsg = _("Don't enable %s") % plugin.ShortDesc
+            okMsg = _("Disable %(plugin_conflict)s") % msg_dict
+            cancelMsg = _("Don't enable %(plugin)s") % msg_dict
         
         elif conflict[0] == 'RequiresFeature':
             pluginList = ', '.join("\"%s\"" % plugin.ShortDesc for plugin in conflict[2])
-            msg = _("<b>%s</b> requires feature <b>%s</b> which is provided by the following plugins:\n%s")
-            msg = msg % (plugin.ShortDesc, conflict[1], pluginList)
+            msg = _("<b>%(plugin)s</b> requires feature <b>%(feature)s</b> which is provided by the following plugins:\n%(plugin_list)s")
+            
+            msg_dict = {'plugin': plugin.ShortDesc,
+                        'feature': conflict[1],
+                        'plugin_list': pluginList}
+
+            msg = msg % msg_dict
 
             cmb = gtk.combo_box_new_text()
             for plugin in conflict[2]:
@@ -300,30 +319,41 @@ class PluginConflict(Conflict):
             widgets.append(cmb)
 
             okMsg = _("Enable these plugins")
-            cancelMsg_("Don't enable %s") % plugin.ShortDesc
+            cancelMsg_("Don't enable %(plugin)s") % msg_dict
         
         elif conflict[0] == 'RequiresPlugin':
-            msg = _("<b>%s</b> requires the plugin <b>%s</b>.")
-            msg = msg % (plugin.ShortDesc, conflict[2][0].ShortDesc)
+            msg = _("<b>%(plugin)s</b> requires the plugin <b>%(require)s</b>.")
 
-            okMsg = _("Enable %s") % conflict[2][0].ShortDesc
-            cancelMsg = _("Don't enable %s") % plugin.ShortDesc
+            msg_dict = {'plugin': plugin.ShortDesc,
+                        'require': conflict[2][0].ShortDesc}
+
+            okMsg = _("Enable %(require)s") % msg_dict
+            cancelMsg = _("Don't enable %(plugin)s") % msg_dict
         
         elif conflict[0] == 'FeatureNeeded':
             pluginList = ', '.join("\"%s\"" % plugin.ShortDesc for plugin in conflict[2])
-            msg = _("<b>%s</b> provides the feature <b>%s</b> which is required by the plugins <b>%s</b>.")
-            msg = msg % (plugin.ShortDesc, conflict[1], pluginList) 
+            msg = _("<b>%(plugin)s</b> provides the feature <b>%(feature)s</b> which is required by the plugins <b>%(plugin_list)s</b>.")
+            
+            msg_dict = {'plugin': plugin.ShortDesc,
+                        'feature': conflict[1],
+                        'plugin_list': pluginList}
+            
+            msg = msg % msg_dict
 
             okMsg = _("Disable these plugins")
-            cancelMsg = _("Don't disable %s") % plugin.ShortDesc
+            cancelMsg = _("Don't disable %(plugin)s") % msg_dict
         
         elif conflict[0] == 'PluginNeeded':
             pluginList = ', '.join("\"%s\"" % plugin.ShortDesc for plugin in conflict[2])
-            msg = _("<b>%s</b> is required by the plugins <b>%s</b>.")
-            msg = msg % (plugin.ShortDesc, pluginList)
+            msg = _("<b>%(plugin)s</b> is required by the plugins <b>%(plugin_list)s</b>.")
+            
+            msg_dict = {'plugin': plugin.ShortDesc,
+                        'plugin_list': pluginList}
+            
+            msg = msg % msg_dict
 
             okMsg = _("Disable these plugins")
-            cancelMsg = _("Don't disable %s") % plugin.ShortDesc
+            cancelMsg = _("Don't disable %(plugin)s") % msg_dict
 
         okButton     = (okMsg,     gtk.STOCK_OK,     gtk.RESPONSE_OK)
         cancelButton = (cancelMsg, gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
