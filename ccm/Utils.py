@@ -89,22 +89,11 @@ class Image (gtk.Image):
             return
 
         try:
-            if type in (ImagePlugin, ImageCategory, ImageAction):
+            if type in  (ImagePlugin, ImageCategory, ImageThemed):
                 if type == ImagePlugin:
-                    path = "plugin-%s.svg" % name
-                    fallback = "plugin-unknown.svg"
+                    name = "compiz-plugin-" + name
                 elif type == ImageCategory:
-                    path = "category-%s.svg" % name
-                    fallback = "category-uncategorized.svg"
-                else:
-                    path = "mini-%s.png" % name
-                    fallback = None
-                if not os.path.exists ("%s/%s" % (PixmapDir, path)):
-                    path = fallback    
-                path = "%s/%s" % (PixmapDir, path)
-                pixbuf = gtk.gdk.pixbuf_new_from_file_at_size (path, size, size)
-                self.set_from_pixbuf (pixbuf)
-            elif type == ImageThemed:
+                    name = "compiz-category-" + name
                 iconTheme = gtk.icon_theme_get_default ()
                 pixbuf = iconTheme.load_icon (name, size, 0)
                 self.set_from_pixbuf (pixbuf)
@@ -118,7 +107,12 @@ class ActionImage (gtk.Alignment):
     def __init__ (self, action):
         gtk.Alignment.__init__ (self, 0, 0.5)
         self.set_padding (0, 0, 0, 10)
-        self.add (Image (name = action, type = ImageAction, size = 22))
+        name = action
+        if action == "edges":
+            name = "video-display"
+        elif action == "bell":
+            name = "audio-x-generic"
+        self.add (Image (name = name, type = ImageThemed, size = 22))
 
 class Label(gtk.Label):
     def __init__(self, value = "", wrap = 160):
