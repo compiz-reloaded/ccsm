@@ -915,7 +915,7 @@ class IntFloatListSetting(ListSetting):
         dlg.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK).grab_default()
         dlg.set_default_response(gtk.RESPONSE_OK)
 
-        msg = _("Value (%(value)s) for %(setting)")
+        msg = _("Value (%(value)s) for %(setting)s")
 
         msg_dict = {'value': self.Setting.Info[0],
                     'setting': self.Setting.ShortDesc}
