@@ -1374,9 +1374,11 @@ to set \"%s\" button to Button1 ?") % self.Setting.ShortDesc)
     def _Changed (self):
         self.Setting.Value = self.current
 
-class EdgeSetting (Setting):
+class EdgeSetting (EditableActionSetting):
 
     current = ""
+    edges = ["Left", "Right", "Top", "Bottom",
+             "TopLeft", "TopRight", "BottomLeft", "BottomRight"]
 
     def _Init (self):
         self.Custom = True
@@ -1386,14 +1388,24 @@ class EdgeSetting (Setting):
         Tooltips.set_tip (self.Button, self.Setting.LongDesc)
         self.SetButtonLabel ()
 
-        self.Widget = makeCustomSetting (self.Setting.ShortDesc,
-                                         self.Setting.Integrated,
-                                         self.Button,
-                                         self.Reset)
+        EditableActionSetting._Init (self, self.Button, "display")
 
-        display = ActionImage ("display")
-        self.Widget.pack_start (display, False, False)
-        self.Widget.reorder_child (display, 0)
+    def GetDialogText (self):
+        return self.current
+
+    def HandleDialogText (self, mask):
+        edges = mask.split ("|")
+        valid = True
+        for edge in edges:
+            if edge not in self.edges:
+                valid = False
+                break
+        if not valid:
+            mask = protect_pango_markup (mask)
+            ErrorDialog (self.Widget.get_toplevel (),
+                         _("\"%s\" is not a valid edge mask") % mask)
+            return
+        self.EdgeEdited ("|".join (edges))
 
     def SetButtonLabel (self):
         label = self.current
@@ -1429,14 +1441,18 @@ class EdgeSetting (Setting):
         if ret != gtk.RESPONSE_OK:
             return
 
-        new = selector.current
+        self.EdgeEdited (selector.current)
+
+    def EdgeEdited (self, edge):
+        '''Edge edited callback'''
         popup = Popup (self.Widget, 
                        _("Computing possible conflicts, please wait"))
-        conflict = ActionConflict (self.Setting, edges = new)
+        conflict = ActionConflict (self.Setting, edges = edge)
         popup.destroy ()
         if conflict.Resolve (CurrentUpdater):
-            self.current = new
+            self.current = edge
             self.Changed ()
+        self.SetButtonLabel ()
 
     def _Read (self):
         self.current = self.Setting.Value
