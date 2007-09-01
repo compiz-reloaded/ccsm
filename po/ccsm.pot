@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-08-25 19:20+0200\n"
+"POT-Creation-Date: 2007-09-01 12:48+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -103,7 +103,10 @@ msgstr ""
 msgid "File"
 msgstr ""
 
-msgid "Open file.."
+msgid "Open directory..."
+msgstr ""
+
+msgid "Open file..."
 msgstr ""
 
 msgid "Multi-list settings. You can double-click a row to edit the values."
@@ -188,6 +191,24 @@ msgstr ""
 msgid "Preferences"
 msgstr ""
 
+msgid "General"
+msgstr ""
+
+msgid "Please press the new key combination"
+msgstr ""
+
+msgid "This is a settings manager for the CompizConfig configuration system."
+msgstr ""
+
+msgid "translator-credits"
+msgstr ""
+
+msgid "An error has occured"
+msgstr ""
+
+msgid "Warning"
+msgstr ""
+
 #, python-format
 msgid "Search %s Plugin Options"
 msgstr ""
@@ -196,9 +217,6 @@ msgid "Use This Plugin"
 msgstr ""
 
 msgid "Search Compiz Core Options"
-msgstr ""
-
-msgid "General"
 msgstr ""
 
 msgid "Actions"
@@ -269,6 +287,9 @@ msgid "All files"
 msgstr ""
 
 msgid "Save file.."
+msgstr ""
+
+msgid "Open file.."
 msgstr ""
 
 msgid "Enter a profile name"
