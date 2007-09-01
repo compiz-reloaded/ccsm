@@ -286,11 +286,8 @@ class IntFloatSetting(Setting):
         self.Scale = gtk.HScale(self.Adj)
         Tooltips.set_tip(self.Scale, self.Setting.LongDesc)
         self.Scale.props.draw_value = False
-        self.Scale.connect('button-release-event', self.Changed)
-        self.Scale.connect('focus-out-event', self.Changed)
-        self.Spin.connect('activate', self.Changed)
-        self.Spin.connect('button-release-event', self.Changed)
-        self.Spin.connect('focus-out-event', self.Changed)
+        BufferedHandler (self.Scale, "value-changed", self.Changed)
+        BufferedHandler (self.Spin, "value-changed", self.Changed)
         self.Widget = self.Scale
 
     def Attach(self, Table, row):
