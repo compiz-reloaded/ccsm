@@ -1106,6 +1106,7 @@ class KeySetting (EditableActionSetting):
         dlg = gtk.Dialog (_("Edit %s") % self.Setting.ShortDesc)
         dlg.set_position (gtk.WIN_POS_CENTER_ALWAYS)
         dlg.set_transient_for (self.Widget.get_toplevel ())
+        dlg.set_icon (self.Widget.get_toplevel ().get_icon ())
         dlg.set_modal (True)
         dlg.add_button (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
         dlg.add_button (gtk.STOCK_OK, gtk.RESPONSE_OK).grab_default ()

@@ -562,6 +562,7 @@ class Popup (gtk.Window):
         self.set_type_hint (gtk.gdk.WINDOW_TYPE_HINT_UTILITY)
         self.set_position (gtk.WIN_POS_CENTER_ALWAYS)
         self.set_transient_for (parent.get_toplevel ())
+        self.set_icon (parent.get_toplevel ().get_icon ())
         self.set_modal (True)
         label = gtk.Label (text)
         align = gtk.Alignment ()
