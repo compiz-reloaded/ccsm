@@ -558,7 +558,8 @@ class EdgeSelector (gtk.DrawingArea):
 class Popup (gtk.Window):
 
     def __init__ (self, parent, text):
-        gtk.Window.__init__ (self, gtk.WINDOW_POPUP)
+        gtk.Window.__init__ (self, gtk.WINDOW_TOPLEVEL)
+        self.set_type_hint (gtk.gdk.WINDOW_TYPE_HINT_UTILITY)
         self.set_position (gtk.WIN_POS_CENTER_ALWAYS)
         self.set_transient_for (parent.get_toplevel ())
         self.set_modal (True)
