@@ -108,20 +108,26 @@ f = open (os.path.join ("ccm/Constants.py"), "wt")
 f.write (data)
 f.close ()
 
-def filter_images (image):
-    return image.startswith ("plugin-") or image.startswith ("category-") \
-           or image.startswith ("mini-") \
-           or image in ("display.png", "modifier.png")
-
-images = map (lambda i: "images/%s" % i, 
-              filter (filter_images, os.listdir ("images")))
+custom_images = []
 
 data_files = [
-                ("share/icons/hicolor/scalable/apps", ["images/ccsm.svg"]),
-                ("share/pixmaps", ["images/ccsm.png"]),
+                ("share/pixmaps", ["images/128x128/apps/ccsm.png"]),
                 ("share/applications", ["ccsm.desktop"]),
-                ("share/ccsm/images", images)
              ]
+
+for dir, subdirs, files in os.walk("images/"):
+    if dir == "images/":
+        for file in files:
+            custom_images.append(dir + file)
+    else:
+        images = []
+        for file in files:
+            if file.find(".svg") or file.find(".png"):
+                images.append(dir + '/' + file)
+        if len(images) > 0:
+            data_files.append(("share/icons/hicolor/" + dir[7:], images))
+
+data_files.append(("share/ccsm/images", custom_images))
 
 podir = os.path.join (os.path.realpath ("."), "po")
 if os.path.isdir (podir):
