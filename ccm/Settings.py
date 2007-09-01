@@ -766,7 +766,7 @@ class StringMatchListSetting(ListSetting):
         
         ebox = gtk.EventBox()
         
-        msg = _("Value (%(value)s) for %(setting)")
+        msg = _("Value (%(value)s) for %(setting)s")
 
         msg_dict = {'value': self.Setting.Info[0],
                     'setting': self.Setting.ShortDesc}
@@ -806,7 +806,7 @@ class FileListSetting(StringMatchListSetting, FileSetting):
         
         ebox = gtk.EventBox()
         
-        msg = _("Value (%(value)s) for %(setting)")
+        msg = _("Value (%(value)s) for %(setting)s")
 
         msg_dict = {'value': self.Setting.Info[0],
                     'setting': self.Setting.ShortDesc}
