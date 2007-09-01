@@ -621,14 +621,9 @@ class KeyGrabber (gtk.Button):
     def on_key_press_event (self, widget, event):
         mods = event.state & gtk.accelerator_get_default_mod_mask ()
 
-        if event.keyval in (gtk.keysyms.Escape, gtk.keysyms.Return,
-                            gtk.keysyms.BackSpace) \
+        if event.keyval in (gtk.keysyms.Escape, gtk.keysyms.Return) \
             and not mods:
-            if event.keyval == gtk.keysyms.BackSpace:
-                self.key = 0
-                self.mods = 0
-                self.emit ("changed", self.key, self.mods)
-            elif event.keyval == gtk.keysyms.Escape:
+            if event.keyval == gtk.keysyms.Escape:
                 self.emit ("changed", self.key, self.mods)
             self.end_key_grab ()
             self.set_label ()
