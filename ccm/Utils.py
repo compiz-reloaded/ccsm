@@ -131,8 +131,6 @@ class PrettyButton (gtk.Button):
         self.set_relief (gtk.RELIEF_NONE)
         self.connect ("focus-in-event", self.update_state_in, "focus")
         self.connect ("focus-out-event", self.update_state_out, "focus")
-        self.connect ("enter", self.update_state_in, "pointer")
-        self.connect ("leave", self.update_state_out, "pointer")
 
     def update_state_in (self, *args):
         widget, state = args[0], args[-1]
