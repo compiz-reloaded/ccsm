@@ -280,7 +280,7 @@ class MainWin(gtk.Window):
             row = 0
             empty = True
             for pluginButton in categoryContainer[1]:
-                if not self.currentCategory in ("", categoryName):
+                if not self.currentCategory in (None, categoryName):
                     break
                 index = categoryContainer[1].index(pluginButton)
                 shortDesc = categoryContainer[2][index].ShortDesc.lower()
@@ -468,7 +468,7 @@ class MainWin(gtk.Window):
 
     def ToggleCategory(self, widget, category):
         if category == _("All"):
-            category = ""
+            category = None
         self.currentCategory = category
         self.FilterTable (widget = self.filterEntry) 
 
