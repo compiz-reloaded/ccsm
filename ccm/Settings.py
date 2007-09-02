@@ -1210,7 +1210,7 @@ class ButtonSetting (EditableActionSetting):
         Tooltips.set_tip (self.Button, self.Setting.LongDesc)
         self.SetButtonLabel ()
         
-        EditableActionSetting._Init (self, self.Button, "mouse")
+        EditableActionSetting._Init (self, self.Button, "button")
 
     def ReorderButtonString (self, old):
         new = ""
@@ -1386,7 +1386,7 @@ class EdgeSetting (EditableActionSetting):
         Tooltips.set_tip (self.Button, self.Setting.LongDesc)
         self.SetButtonLabel ()
 
-        EditableActionSetting._Init (self, self.Button, "display")
+        EditableActionSetting._Init (self, self.Button, "edges")
 
     def GetDialogText (self):
         return self.current

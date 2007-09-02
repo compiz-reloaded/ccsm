@@ -104,15 +104,18 @@ class Image (gtk.Image):
 
 class ActionImage (gtk.Alignment):
 
+    map = {
+            "keyboard"  : "input-keyboard",
+            "button"    : "input-mouse",
+            "edges"     : "video-display",
+            "bell"      : "audio-x-generic"
+          }
+
     def __init__ (self, action):
         gtk.Alignment.__init__ (self, 0, 0.5)
         self.set_padding (0, 0, 0, 10)
-        name = action
-        if action == "edges":
-            name = "video-display"
-        elif action == "bell":
-            name = "audio-x-generic"
-        self.add (Image (name = name, type = ImageThemed, size = 22))
+        if action in self.map: action = self.map[action]
+        self.add (Image (name = action, type = ImageThemed, size = 22))
 
 class PrettyButton (gtk.Button):
 
