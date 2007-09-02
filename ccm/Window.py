@@ -187,7 +187,7 @@ class MainWin(gtk.Window):
         rightChild = gtk.ScrolledWindow()
         rightChild.props.hscrollbar_policy = gtk.POLICY_NEVER
         rightChild.props.vscrollbar_policy = gtk.POLICY_AUTOMATIC
-        rightChild.set_size_request(280,-1)
+        rightChild.set_size_request (220,-1)
         rightChild.add(pluginsVPort)
         self.BuildTable(pluginsVPort)
         rightChild.connect('size-allocate', self.RebuildTable)
