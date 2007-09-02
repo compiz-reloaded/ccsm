@@ -131,7 +131,7 @@ class MainWin(gtk.Window):
             name = category or _("Uncategorized")
             iconName = name.lower ().replace (" ", "_")
             categoryToggleIcon = Image (name = iconName, type = ImageCategory,
-                                        size = 20)
+                                        size = 22)
             categoryToggleLabel = Label (name)
             align = gtk.Alignment (0, 0.5, 1, 1)
             align.set_padding (0, 0, 0, 10)
