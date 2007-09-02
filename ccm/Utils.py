@@ -253,9 +253,8 @@ class Updater:
                     if read:
                         settingWidget.Read()
             # For removing non-visible settings
-            for oldSetting in self.NotRemoved:
-                if oldSetting in changedSettings:
-                    changedSettings.remove(oldSetting)
+            map (lambda s: changedSettings.remove (s),
+                 filter (lambda s: s in changedSettings, self.NotRemoved))
             self.NotRemoved = changedSettings
             self.Context.ChangedSettings = changedSettings
 
