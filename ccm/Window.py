@@ -139,8 +139,7 @@ class MainWin(gtk.Window):
             categoryToggleBox = gtk.HBox ()
             categoryToggleBox.pack_start (align, False, False)
             categoryToggleBox.pack_start (categoryToggleLabel, True, True)
-            categoryToggle = gtk.Button()
-            categoryToggle.set_relief(gtk.RELIEF_NONE)
+            categoryToggle = PrettyButton ()
             categoryToggle.add(categoryToggleBox)
             categoryToggle.connect("clicked", self.ToggleCategory, category)
             categoryBox.pack_start(categoryToggle, False, False)
@@ -234,10 +233,9 @@ class MainWin(gtk.Window):
             categoryBox.pack_start(categoryTab, False, False)
             
             for plugin in pluginList:
-                pluginButton = gtk.Button()
+                pluginButton = PrettyButton ()
                 pluginButton.connect('clicked', self.ShowPlugin, plugin)
                 pluginButton.set_size_request(200, -1)
-                pluginButton.set_relief(gtk.RELIEF_NONE)
                 pluginButtonBox = gtk.HBox(False, 10)
                 pluginButtonBox.set_border_width(10)
                 pluginImage = self.PluginImages[plugin.Name]

@@ -114,6 +114,51 @@ class ActionImage (gtk.Alignment):
             name = "audio-x-generic"
         self.add (Image (name = name, type = ImageThemed, size = 22))
 
+class PrettyButton (gtk.Button):
+
+    states = {
+                "focus"   : False,
+                "pointer" : False
+             }
+
+    __gsignals__ = {
+        'expose-event'      : 'override',
+    }
+
+    def __init__ (self):
+        super (PrettyButton, self).__init__ ()
+        self.set_size_request (200, -1)
+        self.set_relief (gtk.RELIEF_NONE)
+        self.connect ("focus-in-event", self.update_state_in, "focus")
+        self.connect ("focus-out-event", self.update_state_out, "focus")
+        self.connect ("enter", self.update_state_in, "pointer")
+        self.connect ("leave", self.update_state_out, "pointer")
+
+    def update_state_in (self, *args):
+        widget, state = args[0], args[-1]
+        widget.set_state (gtk.STATE_PRELIGHT)
+        self.states[state] = True
+
+    def update_state_out (self, *args):
+        widget, state = args[0], args[-1]
+        self.states[state] = False
+        if True in self.states.values ():
+            widget.set_state (gtk.STATE_PRELIGHT)
+        else:
+            widget.set_state (gtk.STATE_NORMAL)
+
+    def do_expose_event (self, event):
+        has_focus = self.flags () & gtk.HAS_FOCUS
+        if has_focus:
+            self.unset_flags (gtk.HAS_FOCUS)
+
+        ret = super (PrettyButton, self).do_expose_event (self, event)
+
+        if has_focus:
+            self.set_flags (gtk.HAS_FOCUS)
+
+        return ret
+
 class Label(gtk.Label):
     def __init__(self, value = "", wrap = 160):
         gtk.Label.__init__(self, value)
