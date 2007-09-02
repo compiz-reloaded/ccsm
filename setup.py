@@ -96,9 +96,11 @@ if not prefix or not len (prefix):
 if sys.argv[1] in ("install", "uninstall") and len (prefix):
     sys.argv += ["--prefix", prefix]
 
-f = open (os.path.join ("VERSION"), "rt")
-version = f.read()[8:-1]
-f.close()
+version_file = open ("VERSION", "r")
+version = version_file.read ().strip ()
+if "=" in version:
+    version = version.split ("=")[1]
+
 f = open (os.path.join ("ccm/Constants.py.in"), "rt")
 data = f.read ()
 f.close ()
@@ -144,11 +146,6 @@ if os.path.isdir (podir):
                     os.makedirs ("build/locale/" + name)
                 os.system (buildcmd % (name, name))
             data_files.append ((destpath % name, [mopath % name]))
-
-version_file = open ("VERSION", "r")
-version = version_file.read ().strip ()
-if "=" in version:
-    version = version.split ("=")[1]
 
 setup (
         name             = "ccsm",
