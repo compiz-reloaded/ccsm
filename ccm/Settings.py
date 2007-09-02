@@ -96,10 +96,10 @@ class Setting:
     def MakeLabel(self):
         self.Label = gtk.EventBox()
         label = gtk.Label()
-        if self.Setting.Integrated:
-            label.set_markup("<span foreground=\"blue\">%s</span>" % self.Setting.ShortDesc)
-        else:
-            label.set_markup("<span>%s</span>" % self.Setting.ShortDesc)
+        desc = protect_pango_markup (self.Setting.ShortDesc)
+        style = ""
+        if self.Setting.Integrated: style = ''' foreground="blue"'''
+        label.set_markup("<span%s>%s</span>" % (style, desc))
         self.Label.add(label)
         Tooltips.set_tip(self.Label, self.Setting.LongDesc)
         label.props.xalign = 0
@@ -625,7 +625,8 @@ class ListSetting(Setting):
         self.Widget = gtk.Frame(self.Setting.ShortDesc)
         label = self.Widget.get_label_widget()
         if self.Setting.Integrated:
-            label.set_markup("<span foreground=\"blue\">%s</span>" % self.Setting.ShortDesc)
+            label.set_markup("<span foreground=\"blue\">%s</span>" % \
+                             protect_pango_markup (self.Setting.ShortDesc))
         self.Custom = True
         
         info = self._ListInfo()
