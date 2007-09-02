@@ -130,6 +130,8 @@ class MainWin(gtk.Window):
         for category in categories:
             name = category or _("Uncategorized")
             iconName = name.lower ().replace (" ", "_")
+            if name == _("All"):
+                iconName = "all"
             categoryToggleIcon = Image (name = iconName, type = ImageCategory,
                                         size = 22)
             categoryToggleLabel = Label (name)
