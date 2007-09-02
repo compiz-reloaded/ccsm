@@ -116,17 +116,16 @@ class ActionImage (gtk.Alignment):
 
 class PrettyButton (gtk.Button):
 
-    states = {
-                "focus"   : False,
-                "pointer" : False
-             }
-
     __gsignals__ = {
         'expose-event'      : 'override',
     }
 
     def __init__ (self):
         super (PrettyButton, self).__init__ ()
+        self.states = {
+                        "focus"   : False,
+                        "pointer" : False
+                      }
         self.set_size_request (200, -1)
         self.set_relief (gtk.RELIEF_NONE)
         self.connect ("focus-in-event", self.update_state_in, "focus")
