@@ -38,7 +38,7 @@ _ = gettext.gettext
 
 class MainWin(gtk.Window):
 
-    currentCategory = ""
+    currentCategory = None
 
     def __init__(self, Context):
         gtk.Window.__init__(self)

@@ -133,17 +133,17 @@ class PrettyButton (gtk.Button):
         self.connect ("focus-out-event", self.update_state_out, "focus")
 
     def update_state_in (self, *args):
-        widget, state = args[0], args[-1]
-        widget.set_state (gtk.STATE_PRELIGHT)
+        state = args[-1]
+        self.set_state (gtk.STATE_PRELIGHT)
         self.states[state] = True
 
     def update_state_out (self, *args):
-        widget, state = args[0], args[-1]
+        state = args[-1]
         self.states[state] = False
         if True in self.states.values ():
-            widget.set_state (gtk.STATE_PRELIGHT)
+            self.set_state (gtk.STATE_PRELIGHT)
         else:
-            widget.set_state (gtk.STATE_NORMAL)
+            self.set_state (gtk.STATE_NORMAL)
 
     def do_expose_event (self, event):
         has_focus = self.flags () & gtk.HAS_FOCUS
