@@ -503,23 +503,20 @@ class ProfileBackendPage:
 
         self.Widget = rightChild
     
-    def UpdateProfiles(self, default = _("Default")):
-        self.Context.Read()
-        self.Context.UpdateProfiles()
+    def UpdateProfiles (self, default = _("Default")):
+        self.Context.Read ()
+        self.Context.UpdateProfiles ()
 
-        self.ProfileComboBox.get_model().clear()
-        self.ProfileComboBox.append_text(_("Default"))
-        for profile in self.Context.Profiles.values():
-            self.ProfileComboBox.append_text(profile.Name)
-
-        index = -1
-        counter = 0
-        for m in self.ProfileComboBox.get_model():
-            if m[0] == default:
-                index=counter
-            counter += 1
-        if index >= 0:
-            self.ProfileComboBox.set_active(index)
+        self.ProfileComboBox.get_model ().clear ()
+        self.ProfileComboBox.append_text (_("Default"))
+        index = 0
+        set = False
+        for profile in self.Context.Profiles.values ():
+            self.ProfileComboBox.append_text (profile.Name)
+            if profile.Name == default and not set:
+                self.ProfileComboBox.set_active (index)
+                set = True
+            index += 1
 
     def IntegrationChanged(self, widget):
         value = widget.get_active()
