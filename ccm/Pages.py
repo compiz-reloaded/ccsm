@@ -511,9 +511,9 @@ class ProfileBackendPage:
         self.ProfileComboBox.append_text (_("Default"))
         index = 0
         set = False
-        for profile in self.Context.Profiles.values ():
-            self.ProfileComboBox.append_text (profile.Name)
-            if profile.Name == default and not set:
+        for profile in self.Context.Profiles.keys ():
+            self.ProfileComboBox.append_text (profile)
+            if profile == default and not set:
                 self.ProfileComboBox.set_active (index)
                 set = True
             index += 1
