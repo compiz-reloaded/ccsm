@@ -250,6 +250,7 @@ class MainWin(gtk.Window):
 
                 if plugin.Name !=  'core':
                     pluginEnable = gtk.CheckButton()
+                    PluginSetting (plugin, pluginEnable)
                     Tooltips.set_tip(pluginEnable, _("Enable %s") % plugin.ShortDesc)
                     pluginEnable.set_active(plugin.Enabled)
                     pluginEnable.connect("toggled", self.EnablePlugin, plugin)
