@@ -217,13 +217,16 @@ class IdleSettingsParser:
 
 # Updates all registered setting when they where changed through CompizConfig
 class Updater:
-    def __init__(self, context):
+
+    def __init__ (self):
         self.VisibleSettings = []
         self.NotRemoved = []
+
+    def SetContext (self, context):
         self.Context = context
 
-        gobject.timeout_add(2000, self.Update)
-    
+        gobject.timeout_add (2000, self.Update)
+
     def Append(self, setting):
         self.VisibleSettings.append(setting)
 
@@ -262,6 +265,8 @@ class Updater:
             self.Context.ChangedSettings = changedSettings
 
         return True
+
+GlobalUpdater = Updater ()
 
 class PureVirtualError(Exception):
     pass

@@ -39,11 +39,8 @@ gettext.bindtextdomain("ccsm", DataDir + "/locale")
 gettext.textdomain("ccsm")
 _ = gettext.gettext
 
-CurrentUpdater = None
-
 class Setting:
-    def __init__(self, Setting, createUpdater=True):
-        global CurrentUpdater
+    def __init__(self, Setting):
         self.Custom = False
         self.Setting = Setting
         self.Blocked = 0
@@ -55,15 +52,7 @@ class Setting:
         self.Reset.connect('clicked', self.DoReset)
         self._Init()
 
-        if createUpdater and CurrentUpdater == None:
-            context = None
-            if self.Setting.__class__ == list:
-                context = self.Setting[0].Plugin.Context
-            else:
-                context = self.Setting.Plugin.Context
-            CurrentUpdater = Updater(context)
-
-        CurrentUpdater.Append(self)
+        GlobalUpdater.Append(self)
 
     def Attach(self, table, row):
         self.Reset.set_sensitive(not self.Setting.ReadOnly)
@@ -1185,7 +1174,7 @@ class KeySetting (EditableActionSetting):
                        _("Computing possible conflicts, please wait"))
         conflict = ActionConflict (self.Setting, key = accel)
         popup.destroy ()
-        if conflict.Resolve (CurrentUpdater):
+        if conflict.Resolve (GlobalUpdater):
             self.current = accel
             self.Changed ()
         self.SetButtonLabel ()
@@ -1362,7 +1351,7 @@ to set \"%s\" button to Button1 ?") % self.Setting.ShortDesc)
                        _("Computing possible conflicts, please wait"))
         conflict = ActionConflict (self.Setting, button = button)
         popup.destroy ()
-        if conflict.Resolve (CurrentUpdater):
+        if conflict.Resolve (GlobalUpdater):
             self.current = button
             self.Changed ()
         self.SetButtonLabel ()
@@ -1449,7 +1438,7 @@ class EdgeSetting (EditableActionSetting):
                        _("Computing possible conflicts, please wait"))
         conflict = ActionConflict (self.Setting, edges = edge)
         popup.destroy ()
-        if conflict.Resolve (CurrentUpdater):
+        if conflict.Resolve (GlobalUpdater):
             self.current = edge
             self.Changed ()
         self.SetButtonLabel ()

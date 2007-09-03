@@ -36,9 +36,11 @@ if gtk.pygtk_version < (2,10,0):
 
 import compizconfig
 import ccm
+from ccm.Utils import GlobalUpdater
 
 screens = ccm.getScreens()
 context = compizconfig.Context(screens)
+GlobalUpdater.SetContext (context)
 mainWin = ccm.MainWin(context)
 idle = ccm.IdleSettingsParser(context)
 mainWin.show_all()
