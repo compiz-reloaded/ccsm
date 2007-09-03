@@ -327,6 +327,8 @@ class PluginConflict(Conflict):
             msg_dict = {'plugin': plugin.ShortDesc,
                         'require': conflict[2][0].ShortDesc}
 
+            msg = msg % msg_dict
+
             okMsg = _("Enable %(require)s") % msg_dict
             cancelMsg = _("Don't enable %(plugin)s") % msg_dict
         
