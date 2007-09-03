@@ -220,6 +220,7 @@ class Updater:
 
     def __init__ (self):
         self.VisibleSettings = []
+        self.Plugins = []
         self.NotRemoved = []
 
     def SetContext (self, context):
@@ -229,6 +230,9 @@ class Updater:
 
     def Append(self, setting):
         self.VisibleSettings.append(setting)
+
+    def AppendPlugin (self, plugin):
+        self.Plugins.append (plugin)
 
     def UpdateSetting (self, setting):
         for widget in self.VisibleSettings:
@@ -240,6 +244,10 @@ class Updater:
         changed = self.Context.ProcessEvents()
         if changed:
             changedSettings = self.Context.ChangedSettings
+            if len (filter (lambda s :  s.Plugin.Name == "core" and \
+                                        s.Name == "active_plugins",
+                            changedSettings)):
+                map (lambda plugin: plugin.Read (), self.Plugins)
             for settingWidget in self.VisibleSettings:
                 # Remove already destroyed widgets
                 if not settingWidget.Widget.get_parent():
@@ -267,6 +275,16 @@ class Updater:
         return True
 
 GlobalUpdater = Updater ()
+
+class PluginSetting:
+
+    def __init__ (self, plugin, widget):
+        self.Widget = widget
+        self.Plugin = plugin
+        GlobalUpdater.AppendPlugin (self)
+
+    def Read (self):
+        self.Widget.set_active (self.Plugin.Enabled)
 
 class PureVirtualError(Exception):
     pass
