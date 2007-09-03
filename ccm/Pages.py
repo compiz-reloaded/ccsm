@@ -508,10 +508,9 @@ class ProfileBackendPage:
         self.Context.UpdateProfiles ()
 
         self.ProfileComboBox.get_model ().clear ()
-        self.ProfileComboBox.append_text (_("Default"))
         index = 0
         set = False
-        for profile in self.Context.Profiles.keys ():
+        for profile in [default] + self.Context.Profiles.keys ():
             self.ProfileComboBox.append_text (profile)
             if profile == default and not set:
                 self.ProfileComboBox.set_active (index)
