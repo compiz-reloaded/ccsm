@@ -95,9 +95,9 @@ class Image (gtk.Image):
         try:
             if type in  (ImagePlugin, ImageCategory, ImageThemed):
                 if type == ImagePlugin:
-                    name = "compiz-plugin-" + name
+                    name = "plugin-" + name
                 elif type == ImageCategory:
-                    name = "compiz-category-" + name
+                    name = "plugins-" + name
                 pixbuf = IconTheme.load_icon (name, size, 0)
                 self.set_from_pixbuf (pixbuf)
             elif type == ImageStock:
