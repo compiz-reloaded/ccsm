@@ -964,6 +964,8 @@ class EditableActionSetting (Setting):
     def _Init (self, widget, action):
         self.Custom = True
 
+        widget.set_size_request (100, -1)
+
         alignment = gtk.Alignment (1.0)
         alignment.add (widget)
 
