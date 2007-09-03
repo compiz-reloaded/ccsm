@@ -527,7 +527,10 @@ class ProfileBackendPage:
             self.Context.ResetProfile()
         elif name in self.Context.Profiles:
             self.Context.CurrentProfile = self.Context.Profiles[name]
-        
+        else:
+            self.ProfileComboBox.set_active (0)
+            return
+
         self.Context.Read()
         self.Context.Write()
 
