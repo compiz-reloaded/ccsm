@@ -127,7 +127,7 @@ for dir, subdirs, files in os.walk("images/"):
             if file.find(".svg") or file.find(".png"):
                 images.append(dir + '/' + file)
         if len(images) > 0:
-            data_files.append(("share/icons/hicolor/" + dir[7:], images))
+            data_files.append(("share/ccsm/icons/hicolor/" + dir[7:], images))
 
 data_files.append(("share/ccsm/images", custom_images))
 
@@ -167,7 +167,7 @@ os.remove ("ccm/Constants.py")
 
 if sys.argv[1] == "install":
     gtk_update_icon_cache = '''gtk-update-icon-cache -f -t \
-%s/share/icons/hicolor''' % prefix
+%s/share/ccsm/icons/hicolor''' % prefix
     root_specified = len (filter (lambda s: s.startswith ("--root"),
                                   sys.argv)) > 0
     if not root_specified:

@@ -676,8 +676,8 @@ class AboutDialog (gtk.AboutDialog):
         self.set_artists (["Andrew Wedderburn <andrew.wedderburn@gmail.com>",
                            "Patrick Niklaus <marex@opencompositing.org>",
                            "Gnome Icon Theme Team"])
-        self.set_icon (gtk.gdk.pixbuf_new_from_file (IconDir+"/apps/ccsm.svg"))
-        self.set_logo (gtk.gdk.pixbuf_new_from_file (IconDir+"/apps/ccsm.svg"))
+        self.set_icon (gtk.gdk.pixbuf_new_from_file (IconDir+"/hicolor/scalable/apps/ccsm.svg"))
+        self.set_logo (gtk.gdk.pixbuf_new_from_file (IconDir+"/hicolor/scalable/apps/ccsm.svg"))
         self.set_website ("http://www.compiz-fusion.org")
 
 # Error dialog
