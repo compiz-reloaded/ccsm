@@ -529,7 +529,7 @@ class ProfileBackendPage:
         name = widget.get_active_text()
         if name == _("Default"):
             self.Context.ResetProfile()
-        else:
+        elif name in self.Context.Profiles:
             self.Context.CurrentProfile = self.Context.Profiles[name]
         
         self.Context.Read()
