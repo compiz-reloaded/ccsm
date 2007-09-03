@@ -53,7 +53,7 @@ ImageStock    = 4
 # Paths
 #
 DataDir = "@prefix@/share"
-IconDir = DataDir+"/icons/hicolor/scalable"
+IconDir = DataDir+"/ccsm/icons"
 PixmapDir = DataDir+"/ccsm/images"
 
 # Tooltips

@@ -36,6 +36,10 @@ gettext.bindtextdomain("ccsm", DataDir + "/locale")
 gettext.textdomain("ccsm")
 _ = gettext.gettext
 
+IconTheme = gtk.icon_theme_get_default()
+if not IconDir in IconTheme.get_search_path():
+    IconTheme.prepend_search_path(IconDir)
+
 def gtk_process_events ():
     while gtk.events_pending ():
         gtk.main_iteration ()
@@ -94,8 +98,7 @@ class Image (gtk.Image):
                     name = "compiz-plugin-" + name
                 elif type == ImageCategory:
                     name = "compiz-category-" + name
-                iconTheme = gtk.icon_theme_get_default ()
-                pixbuf = iconTheme.load_icon (name, size, 0)
+                pixbuf = IconTheme.load_icon (name, size, 0)
                 self.set_from_pixbuf (pixbuf)
             elif type == ImageStock:
                 self.set_from_stock (name, size)
