@@ -456,17 +456,22 @@ class ProfileBackendPage:
         self.ProfileImportExportBox.set_spacing(5)
         profileImportButton = gtk.Button(_("Import"))
         Tooltips.set_tip(profileImportButton, _("Import a CompizConfig Profile"))
+        profileImportAsButton = gtk.Button(_("Import as..."))
+        Tooltips.set_tip(profileImportAsButton, _("Import a CompizConfig Profile as a new profile"))
         profileExportButton = gtk.Button(_("Export"))
         Tooltips.set_tip(profileExportButton, _("Export your CompizConfig Profile"))
         profileResetButton = gtk.Button(_("Reset to defaults"))
         Tooltips.set_tip(profileResetButton, _("Reset your CompizConfig Profile to the global defaults"))
         profileResetButton.set_image(gtk.image_new_from_stock(gtk.STOCK_CLEAR, gtk.ICON_SIZE_BUTTON))
         profileImportButton.set_image(gtk.image_new_from_stock(gtk.STOCK_OPEN, gtk.ICON_SIZE_BUTTON))
+        profileImportAsButton.set_image(gtk.image_new_from_stock(gtk.STOCK_OPEN, gtk.ICON_SIZE_BUTTON))
         profileExportButton.set_image(gtk.image_new_from_stock(gtk.STOCK_SAVE, gtk.ICON_SIZE_BUTTON))
         profileImportButton.connect("clicked", self.ImportProfile)
+        profileImportAsButton.connect("clicked", self.ImportProfileAs)
         profileExportButton.connect("clicked", self.ExportProfile)
         profileResetButton.connect("clicked", self.ResetProfile)
         self.ProfileImportExportBox.pack_start(profileImportButton, False, False)
+        self.ProfileImportExportBox.pack_start(profileImportAsButton, False, False)
         self.ProfileImportExportBox.pack_start(profileExportButton, False, False)
         self.ProfileImportExportBox.pack_start(profileResetButton, False, False)
         rightChild.pack_start(profileLabel, False, False, 5)
@@ -565,35 +570,62 @@ class ProfileBackendPage:
         if ret == gtk.RESPONSE_OK:
             self.Context.Export(path)
 
-    def ImportProfile(self, widget):
-        b = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_OPEN, gtk.RESPONSE_OK)
-        chooser = gtk.FileChooserDialog(title=_("Open file.."), parent=self.Main, buttons=b)
-        chooser.set_current_folder(os.environ.get("HOME"))
-        self.CreateFilter(chooser)
-        ret = chooser.run()
+    def ImportProfileDialog (self):
+        b = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
+             gtk.STOCK_OPEN, gtk.RESPONSE_OK)
+        chooser = gtk.FileChooserDialog (title = _("Open file.."),
+                                         parent = self.Main, buttons = b)
+        chooser.set_current_folder (os.environ.get ("HOME"))
+        self.CreateFilter (chooser)
+        ret = chooser.run ()
 
-        path = chooser.get_filename()
-        chooser.destroy()
+        path = chooser.get_filename ()
+        chooser.destroy ()
         if ret == gtk.RESPONSE_OK:
-            self.Context.Import(path)
+            return path
+        return False
 
-    def AddProfile(self, widget):
-        dlg = gtk.Dialog(_("Enter a profile name"), self.Main, gtk.DIALOG_MODAL)
-        dlg.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
-        dlg.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
+    def ProfileNameDialog (self):
+        dlg = gtk.Dialog (_("Enter a profile name"), self.Main,
+                          gtk.DIALOG_MODAL)
+        dlg.add_button (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
+        dlg.add_button (gtk.STOCK_OK, gtk.RESPONSE_OK)
         
-        entry = gtk.Entry()
-        label = gtk.Label(_("Please enter a name for the new profile:"))
-        dlg.vbox.pack_start(label, False, False, 5)
-        dlg.vbox.pack_start(entry, False, False, 5)
+        entry = gtk.Entry ()
+        label = gtk.Label (_("Please enter a name for the new profile:"))
+        dlg.vbox.pack_start (label, False, False, 5)
+        dlg.vbox.pack_start (entry, False, False, 5)
 
-        dlg.set_size_request(340, 120)
-        dlg.show_all()
-        ret = dlg.run()
-        if ret == gtk.RESPONSE_OK:
-            self.Context.CurrentProfile = ccs.Profile(self.Context, entry.get_text())
-            self.UpdateProfiles(entry.get_text())
+        dlg.set_size_request (340, 120)
+        dlg.show_all ()
+        ret = dlg.run ()
+        text = entry.get_text ()
         dlg.destroy()
+        if ret == gtk.RESPONSE_OK:
+            return text
+        return False
+
+    def ImportProfile (self, widget):
+        path = self.ImportProfileDialog ()
+        if path:
+            self.Context.Import (path)
+
+    def ImportProfileAs (self, widget):
+        path = self.ImportProfileDialog ()
+        if not path:
+            return
+        name = self.ProfileNameDialog ()
+        if not name:
+            return
+        self.Context.CurrentProfile = ccs.Profile (self.Context, name)
+        self.UpdateProfiles (name)
+        self.Context.Import (path)
+
+    def AddProfile (self, widget):
+        name = self.ProfileNameDialog ()
+        if name:
+            self.Context.CurrentProfile = ccs.Profile (self.Context, name)
+            self.UpdateProfiles (name)
     
     def RemoveProfile(self, widget):
         name = self.ProfileComboBox.get_active_text()
