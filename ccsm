@@ -35,11 +35,10 @@ if gtk.pygtk_version < (2,10,0):
     raise SystemExit
 
 import compizconfig
-ccs = compizconfig
 import ccm
 
 screens = ccm.getScreens()
-context = ccs.Context(screens)
+context = compizconfig.Context(screens)
 mainWin = ccm.MainWin(context)
 idle = ccm.IdleSettingsParser(context)
 mainWin.show_all()
