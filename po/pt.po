@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm 0.0.1\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-09-05 00:55+0530\n"
+"POT-Creation-Date: 2007-09-04 00:01+0200\n"
 "PO-Revision-Date: 2007-09-04 12:31+0200\n"
 "Last-Translator: Nicolau Gonçalves <excentriko@gmail.com>\n"
 "Language-Team: Portuguese\n"
@@ -18,17 +18,11 @@ msgstr ""
 
 #, python-format
 msgid ""
-"The new value for the %(binding)s binding for the action <b>%(action)s</b> "
-"in plugin <b>%(plugin)s</b> conflicts with the action <b>%(action_conflict)"
-"s</b> of the <b>%(plugin_conflict)s</b> plugin.\n"
-"Do you wish to disable <b>%(action_conflict)s</b> in the <b>%"
-"(plugin_conflict)s</b> plugin?"
+"The new value for the %(binding)s binding for the action <b>%(action)s</b> in plugin <b>%(plugin)s</b> conflicts with the action <b>%(action_conflict)s</b> of the <b>%(plugin_conflict)s</b> plugin.\n"
+"Do you wish to disable <b>%(action_conflict)s</b> in the <b>%(plugin_conflict)s</b> plugin?"
 msgstr ""
-"O novo valor para o atalho %(binding)s da acção <b>%(action)s</b> do plugin "
-"<b>%(plugin)s</b> entra em conflito com a acção <b>%(action_conflict)s</b> "
-"do plugin <b>%(plugin_conflict)s</b>.\n"
-"Deseja desactivar <b>%(action_conflict)s</b> do plugin <b>%(plugin_conflict)"
-"s</b>?"
+"O novo valor para o atalho %(binding)s da acção <b>%(action)s</b> do plugin <b>%(plugin)s</b> entra em conflito com a acção <b>%(action_conflict)s</b> do plugin <b>%(plugin_conflict)s</b>.\n"
+"Deseja desactivar <b>%(action_conflict)s</b> do plugin <b>%(plugin_conflict)s</b>?"
 
 #, python-format
 msgid "Disable %(action_conflict)s"
@@ -44,13 +38,11 @@ msgstr "Definir %(action)s de qualquer maneira"
 
 #, python-format
 msgid ""
-"You are trying to use the feature <b>%(feature)s</b> which is provided by <b>"
-"%(plugin)s</b>.\n"
+"You are trying to use the feature <b>%(feature)s</b> which is provided by <b>%(plugin)s</b>.\n"
 "This plugin is currently disabled.\n"
 "Do you wish to enable <b>%(plugin)s</b> so the feature is available?"
 msgstr ""
-"Está a tentar utilizar a acção <b>%(feature)s</b> que é proporcionada por <b>"
-"%(plugin)s</b>.\n"
+"Está a tentar utilizar a acção <b>%(feature)s</b> que é proporcionada por <b>%(plugin)s</b>.\n"
 "Este plugin está actualmente desactivado.\n"
 "Deseja activar <b>%(plugin)s</b> de modo a permitir realizar esta acção?"
 
@@ -63,12 +55,8 @@ msgid "Don't enable %(feature)s"
 msgstr "Não activar %(feature)s"
 
 #, python-format
-msgid ""
-"Plugin <b>%(plugin_conflict)s</b> provides feature <b>%(feature)s</b> which "
-"is also provided by <b>%(plugin)s</b>"
-msgstr ""
-"O plugin <b>%(plugin_conflict)s</b> permite realizar a acção <b>%(feature)s</"
-"b> que também é activada por <b>%(plugin)s</b>"
+msgid "Plugin <b>%(plugin_conflict)s</b> provides feature <b>%(feature)s</b> which is also provided by <b>%(plugin)s</b>"
+msgstr "O plugin <b>%(plugin_conflict)s</b> permite realizar a acção <b>%(feature)s</b> que também é activada por <b>%(plugin)s</b>"
 
 #, python-format
 msgid "Disable %(plugin_conflict)s"
@@ -80,17 +68,14 @@ msgstr "Não activar %(plugin)s"
 
 #, python-format
 msgid "Plugin <b>%(plugin_conflict)s</b> conflicts with <b>%(plugin)s</b>."
-msgstr ""
-"O plugin <b>%(plugin_conflict)s</b> entra em conflito com <b>%(plugin)s</b>."
+msgstr "O plugin <b>%(plugin_conflict)s</b> entra em conflito com <b>%(plugin)s</b>."
 
 #, python-format
 msgid ""
-"<b>%(plugin)s</b> requires feature <b>%(feature)s</b> which is provided by "
-"the following plugins:\n"
+"<b>%(plugin)s</b> requires feature <b>%(feature)s</b> which is provided by the following plugins:\n"
 "%(plugin_list)s"
 msgstr ""
-"<b>%(plugin)s</b> necessita da acção <b>%(feature)s</b> que é proporcionada "
-"pelos seguintes plugins:\n"
+"<b>%(plugin)s</b> necessita da acção <b>%(feature)s</b> que é proporcionada pelos seguintes plugins:\n"
 "%(plugin_list)s"
 
 msgid "Enable these plugins"
@@ -105,12 +90,8 @@ msgid "Enable %(require)s"
 msgstr "Activar %(require)s"
 
 #, python-format
-msgid ""
-"<b>%(plugin)s</b> provides the feature <b>%(feature)s</b> which is required "
-"by the plugins <b>%(plugin_list)s</b>."
-msgstr ""
-"<b>%(plugin)s</b> proporciona a acção <b>%(feature)s</b> que é requerida "
-"pelos plugins <b>%(plugin_list)s</b>."
+msgid "<b>%(plugin)s</b> provides the feature <b>%(feature)s</b> which is required by the plugins <b>%(plugin_list)s</b>."
+msgstr "<b>%(plugin)s</b> proporciona a acção <b>%(feature)s</b> que é requerida pelos plugins <b>%(plugin_list)s</b>."
 
 msgid "Disable these plugins"
 msgstr "Desactivar estes plugins"
@@ -142,9 +123,7 @@ msgid "Open file..."
 msgstr "Abrir ficheiro..."
 
 msgid "Multi-list settings. You can double-click a row to edit the values."
-msgstr ""
-"Definições multi-lista. Pode clicar duas vezes numa linha para editar os "
-"valores."
+msgstr "Definições multi-lista. Pode clicar duas vezes numa linha para editar os valores."
 
 msgid "Edit"
 msgstr "Editar"
@@ -182,13 +161,8 @@ msgid "\"%s\" is not a valid button"
 msgstr "\"%s\" não é um botão válido"
 
 #, python-format
-msgid ""
-"Using Button1 without modifiers can prevent any left click and thus break "
-"your configuration. Do you really want to set \"%s\" button to Button1 ?"
-msgstr ""
-"Utilizar o Botão1 sem modificadores pode impedir o uso de qualquer clique da "
-"tecla esquerda, impedindo assim o correcto funcionamento da sua "
-"configuração. De certeza que deseja definir o botão \"%s\" para o Botão1?"
+msgid "Using Button1 without modifiers can prevent any left click and thus break your configuration. Do you really want to set \"%s\" button to Button1 ?"
+msgstr "Utilizar o Botão1 sem modificadores pode impedir o uso de qualquer clique da tecla esquerda, impedindo assim o correcto funcionamento da sua configuração. De certeza que deseja definir o botão \"%s\" para o Botão1?"
 
 #, python-format
 msgid "\"%s\" is not a valid edge mask"
@@ -243,8 +217,7 @@ msgid "Please press the new key combination"
 msgstr "Por favor, pressione a nova combinação de teclas"
 
 msgid "This is a settings manager for the CompizConfig configuration system."
-msgstr ""
-"Este é o gestor de definições para o sistema de configuração do CompizConfig"
+msgstr "Este é o gestor de definições para o sistema de configuração do CompizConfig"
 
 msgid "translator-credits"
 msgstr "Nicolau Gonçalves"
@@ -310,7 +283,7 @@ msgstr "Importar como..."
 
 #, fuzzy
 msgid "Import a CompizConfig Profile as a new profile"
-msgstr "Importar um perfil do Sistema de Configuração do Compiz"
+msgstr "Importar um perfil do Sistema de Configuração do Compiz como um novo perfil"
 
 msgid "Export"
 msgstr "Exportar"
@@ -373,12 +346,8 @@ msgstr "Nome do plugin:"
 msgid "Insert plugin name"
 msgstr "Inserir o nome do plugin"
 
-msgid ""
-"Configure the backend, profile and other internal settings used by the "
-"Compiz Configuration System."
-msgstr ""
-"Configurar o backend, o perfil e outras definições internas usadas pelo "
-"Sistema de Configuração do Compiz."
+msgid "Configure the backend, profile and other internal settings used by the Compiz Configuration System."
+msgstr "Configurar o backend, o perfil e outras definições internas usadas pelo Sistema de Configuração do Compiz."
 
 msgid "About"
 msgstr "Acerca"
@@ -401,3 +370,5 @@ msgstr ""
 "<span size=\"large\"><b>Nenhuma ocorrência encontrada.</b> </span><span>\n"
 "\n"
 " O filtro \"<b>%s</b>\" não coincide com nenhum item.</span>"
+
+
