@@ -135,6 +135,23 @@ class ActionImage (gtk.Alignment):
         if action in self.map: action = self.map[action]
         self.add (Image (name = action, type = ImageThemed, size = 22))
 
+class SizedButton (gtk.Button):
+
+    minWidth = -1
+    minHeight = -1
+
+    def __init__ (self, minWidth = -1, minHeight = -1):
+        super (SizedButton, self).__init__ ()
+        self.minWidth = minWidth
+        self.minHeight = minHeight
+        self.connect ("size-request", self.adjust_size)
+
+    def adjust_size (self, widget, requisition):
+        width, height = requisition.width, requisition.height
+        newWidth = max (width, self.minWidth)
+        newHeight = max (height, self.minHeight)
+        self.set_size_request (newWidth, newHeight)
+
 class PrettyButton (gtk.Button):
 
     __gsignals__ = {
