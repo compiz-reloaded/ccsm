@@ -296,22 +296,26 @@ class IntFloatSetting(Setting):
 
 class ColorSetting(Setting):
     def _Init(self):
-        self.Widget = gtk.ColorButton()
-        Tooltips.set_tip(self.Widget, self.Setting.LongDesc)
-        self.Widget.set_use_alpha(True)
-        self.Widget.connect('color-set', self.Changed)
+        self.Button = gtk.ColorButton()
+        self.Button.set_size_request (100, -1)
+        Tooltips.set_tip(self.Button, self.Setting.LongDesc)
+        self.Button.set_use_alpha(True)
+        self.Button.connect('color-set', self.Changed)
+
+        self.Widget = gtk.Alignment (1, 0.5)
+        self.Widget.add (self.Button)
 
     def _Read(self):
         col = gtk.gdk.Color()
         col.red = self.Setting.Value[0]
         col.green = self.Setting.Value[1]
         col.blue = self.Setting.Value[2]
-        self.Widget.set_color(col)
-        self.Widget.set_alpha(self.Setting.Value[3])
+        self.Button.set_color(col)
+        self.Button.set_alpha(self.Setting.Value[3])
 
     def _Changed(self):
-        col = self.Widget.get_color()
-        alpha = self.Widget.get_alpha()
+        col = self.Button.get_color()
+        alpha = self.Button.get_alpha()
         self.Setting.Value = [col.red, col.green, col.blue, alpha]
 
 class MultiListSetting(Setting):
