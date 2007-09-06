@@ -1018,7 +1018,7 @@ class KeySetting (EditableActionSetting):
 
     def _Init (self):
 
-        self.Button = gtk.Button ()
+        self.Button = SizedButton (minWidth = 100)
         self.Button.connect ("clicked", self.RunKeySelector)
         Tooltips.set_tip (self.Button, self.Setting.LongDesc)
         self.SetButtonLabel ()
@@ -1194,7 +1194,7 @@ class ButtonSetting (EditableActionSetting):
 
     def _Init (self):
 
-        self.Button = gtk.Button ()
+        self.Button = SizedButton (minWidth = 100)
         self.Button.connect ("clicked", self.RunButtonSelector)
         Tooltips.set_tip (self.Button, self.Setting.LongDesc)
         self.SetButtonLabel ()
@@ -1370,7 +1370,7 @@ class EdgeSetting (EditableActionSetting):
     def _Init (self):
         self.Custom = True
 
-        self.Button = gtk.Button ()
+        self.Button = SizedButton (minWidth = 100)
         self.Button.connect ("clicked", self.RunEdgeSelector)
         Tooltips.set_tip (self.Button, self.Setting.LongDesc)
         self.SetButtonLabel ()
