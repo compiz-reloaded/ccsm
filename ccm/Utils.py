@@ -94,15 +94,30 @@ class Image (gtk.Image):
 
         try:
             if type in  (ImagePlugin, ImageCategory, ImageThemed):
+                pixbuf = None
+                
                 if type == ImagePlugin:
                     name = "plugin-" + name
+                    try:
+                        pixbuf = IconTheme.load_icon (name, size, 0)
+                    except gobject.GError:
+                        pixbuf = IconTheme.load_icon ("plugin-unknown", size, 0)
+                
                 elif type == ImageCategory:
                     name = "plugins-" + name
-                pixbuf = IconTheme.load_icon (name, size, 0)
+                    try:
+                        pixbuf = IconTheme.load_icon (name, size, 0)
+                    except gobject.GError:
+                        pixbuf = IconTheme.load_icon ("plugins-unknown", size, 0)
+                
+                else:
+                    pixbuf = IconTheme.load_icon (name, size, 0)
+
                 self.set_from_pixbuf (pixbuf)
+            
             elif type == ImageStock:
                 self.set_from_stock (name, size)
-        except:
+        except gobject.GError, e:
             self.set_from_stock (gtk.STOCK_MISSING_IMAGE, gtk.ICON_SIZE_BUTTON)
 
 class ActionImage (gtk.Alignment):
