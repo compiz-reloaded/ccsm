@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm 0.0.1\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-09-04 00:01+0200\n"
-"PO-Revision-Date: 2007-09-04 12:31+0200\n"
+"POT-Creation-Date: 2007-09-08 00:01+0200\n"
+"PO-Revision-Date: 2007-09-08 19:29+0200\n"
 "Last-Translator: Nicolau Gonçalves <excentriko@gmail.com>\n"
 "Language-Team: Portuguese\n"
 "MIME-Version: 1.0\n"
@@ -281,7 +281,6 @@ msgstr "Importar um perfil do Sistema de Configuração do Compiz"
 msgid "Import as..."
 msgstr "Importar como..."
 
-#, fuzzy
 msgid "Import a CompizConfig Profile as a new profile"
 msgstr "Importar um perfil do Sistema de Configuração do Compiz como um novo perfil"
 
@@ -370,5 +369,4 @@ msgstr ""
 "<span size=\"large\"><b>Nenhuma ocorrência encontrada.</b> </span><span>\n"
 "\n"
 " O filtro \"<b>%s</b>\" não coincide com nenhum item.</span>"
-
 
