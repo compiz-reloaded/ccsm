@@ -1,125 +1,108 @@
-# CompizConfig ca_ES translation.
+# CompizConfig ca translation.
 # Copyright (C) 2007 compiz-fusion.org
 # This file is distributed under the same license as the ccsm package.
 # Gustau L. Castells (Karasu) <gustaucastells@gmail.com>, 2007.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Compiz Settings Manager 0.5.2\n"
-"Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-09-02 22:52+0530\n"
-"PO-Revision-Date: 2007-08-29 00:27+0100\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2007-09-09 01:49+0100\n"
 "Last-Translator: Gustau L. Castells (Karasu) <gustaucastells@gmail.com>\n"
 "Language-Team: Catalan <gustaucastells@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: Catalan\n"
-"X-Poedit-Country: SPAIN\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 
-#, fuzzy, python-format
+#, python-format
 msgid ""
-"The new value for the %(binding)s binding for the action <b>%(action)s</b> "
-"in plugin <b>%(plugin)s</b> conflicts with the action <b>%(action_conflict)"
-"s</b> of the <b>%(plugin_conflict)s</b> plugin.\n"
-"Do you wish to disable <b>%(action_conflict)s</b> in the <b>%"
-"(plugin_conflict)s</b> plugin?"
+"The new value for the %(binding)s binding for the action <b>%(action)s</b> in plugin <b>%(plugin)s</b> conflicts with the action <b>%(action_conflict)s</b> of the <b>%(plugin_conflict)s</b> plugin.\n"
+"Do you wish to disable <b>%(action_conflict)s</b> in the <b>%(plugin_conflict)s</b> plugin?"
 msgstr ""
-"El nou valor per la vinculació %s per a l'acció <b>%s</b> en el connector <b>"
-"%s</b> entra en conflicte amb l'acció <b>%s</b> del connector <b>%s</b>.\n"
-"Vols desactivar <b>%s</b> en el connector <b>%s</b> ?"
+"El nou valor per la vinculació %(binding)s per a l'acció <b>%(action)s</b> en el connector <b>%(plugin)s</b> entra en conflicte amb l'acció <b>%(action_conflict)s</b> del connector <b>%(plugin_conflict)s</b>.\n"
+"Vols desactivar <b>%(action_conflict)s</b> en el connector <b>%(plugin_conflict)s</b> ?"
 
 #, python-format
 msgid "Disable %(action_conflict)s"
-msgstr ""
+msgstr "Desactiva %(action_conflict)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Don't set %(action)s"
-msgstr "No marquis %s"
+msgstr "No marquis %(action)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Set %(action)s anyway"
-msgstr "Marca %s de totes maneres"
+msgstr "Marca %(action)s de totes maneres"
 
-#, fuzzy, python-format
+#, python-format
 msgid ""
-"You are trying to use the feature <b>%(feature)s</b> which is provided by <b>"
-"%(plugin)s</b>.\n"
+"You are trying to use the feature <b>%(feature)s</b> which is provided by <b>%(plugin)s</b>.\n"
 "This plugin is currently disabled.\n"
 "Do you wish to enable <b>%(plugin)s</b> so the feature is available?"
 msgstr ""
-"Estàs intentant usar la característica <b>%s</b> que és proporcionada per <b>"
-"%s</b>.\n"
+"Estàs intentant usar la característica <b>%(feature)s</b> que és proporcionada per <b>%(plugin)s</b>.\n"
 "Aquest connector està desactivat.\n"
-"Vols activar <b>%s</b> per poder usar la característica ?"
+"Vols activar <b>%(plugin)s</b> per poder usar la característica ?"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Enable %(plugin)s"
-msgstr "Connectors activats"
+msgstr "Activa %(plugin)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Don't enable %(feature)s"
-msgstr "No activar %s"
+msgstr "No activar %(feature)s"
 
-#, fuzzy, python-format
-msgid ""
-"Plugin <b>%(plugin_conflict)s</b> provides feature <b>%(feature)s</b> which "
-"is also provided by <b>%(plugin)s</b>"
-msgstr ""
-"El connector <b>%s</b> proporciona la característica <b>%s</b> que també és "
-"proporcionada per <b>%s</b>"
+#, python-format
+msgid "Plugin <b>%(plugin_conflict)s</b> provides feature <b>%(feature)s</b> which is also provided by <b>%(plugin)s</b>"
+msgstr "El connector <b>%(plugin_conflict)s</b> proporciona la característica <b>%(feature)s</b> que també és proporcionada per <b>%(plugin)s</b>"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Disable %(plugin_conflict)s"
-msgstr "Connectors desactivats"
+msgstr "Desactiva %(plugin_conflict)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Don't enable %(plugin)s"
-msgstr "No activar %s"
+msgstr "No activis %(plugin)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Plugin <b>%(plugin_conflict)s</b> conflicts with <b>%(plugin)s</b>."
-msgstr "El connector <b>%s</b> entra en conflicte amb <b>%s</b>."
+msgstr "El connector <b>%(plugin_conflict)s</b> entra en conflicte amb <b>%(plugin)s</b>."
 
-#, fuzzy, python-format
+#, python-format
 msgid ""
-"<b>%(plugin)s</b> requires feature <b>%(feature)s</b> which is provided by "
-"the following plugins:\n"
+"<b>%(plugin)s</b> requires feature <b>%(feature)s</b> which is provided by the following plugins:\n"
 "%(plugin_list)s"
 msgstr ""
-"<b>%s</b> requereix la característica <b>%s</b> que es proporcionada pels "
-"següents connectors:\n"
-"%s"
+"<b>%(plugin)s</b> requereix la característica <b>%(feature)s</b> que es proporcionada pels següents connectors:\n"
+"%(plugin_list)s"
 
 msgid "Enable these plugins"
 msgstr "Activa aquests connectors"
 
-#, fuzzy, python-format
+#, python-format
 msgid "<b>%(plugin)s</b> requires the plugin <b>%(require)s</b>."
-msgstr "<b>%s</b> requereix el connector <b>%s</b>."
+msgstr "<b>%(plugin)s</b> requereix el connector <b>%(require)s</b>."
 
-#, fuzzy, python-format
+#, python-format
 msgid "Enable %(require)s"
-msgstr "Activa %s"
+msgstr "Activa %(require)s"
 
-#, fuzzy, python-format
-msgid ""
-"<b>%(plugin)s</b> provides the feature <b>%(feature)s</b> which is required "
-"by the plugins <b>%(plugin_list)s</b>."
-msgstr ""
-"<b>%s</b> proporciona la característica <b>%s</b> que és requerida per els "
-"connectors <b>%s</b>."
+#, python-format
+msgid "<b>%(plugin)s</b> provides the feature <b>%(feature)s</b> which is required by the plugins <b>%(plugin_list)s</b>."
+msgstr "<b>%(plugin)s</b> proporciona la característica <b>%(feature)s</b> que és requerida per els connectors <b>%(plugin_list)s</b>."
 
 msgid "Disable these plugins"
 msgstr "Desactiva aquests connectors"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Don't disable %(plugin)s"
-msgstr "No desactivis %s"
+msgstr "No desactivis %(plugin)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "<b>%(plugin)s</b> is required by the plugins <b>%(plugin_list)s</b>."
-msgstr "<b>%s</b> es requerit pels connectors <b>%s</b>."
+msgstr "<b>%(plugin)s</b> es requerit pels connectors <b>%(plugin_list)s</b>."
 
 msgid "Reset setting to the default value"
 msgstr "Reseteja al seu valor per defecte"
@@ -137,12 +120,10 @@ msgid "Open directory..."
 msgstr "Obre directori..."
 
 msgid "Open file..."
-msgstr "Obre arxiu..."
+msgstr "Obre fitxer..."
 
 msgid "Multi-list settings. You can double-click a row to edit the values."
-msgstr ""
-"Paràmetres multillista. Pots fer un doble clic a una fila per editar els "
-"valors."
+msgstr "Paràmetres multillista. Pots fer un doble clic a una fila per editar els valors."
 
 msgid "Edit"
 msgstr "Editar"
@@ -155,9 +136,9 @@ msgstr "Valor (%s)"
 msgid "Edit %s"
 msgstr "Editar %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Value (%(value)s) for %(setting)s"
-msgstr "Valor (%s) per %s:"
+msgstr "Valor (%(value)s) per %(setting)s"
 
 #, python-format
 msgid "\"%s\" is not a valid shortcut"
@@ -180,16 +161,12 @@ msgid "\"%s\" is not a valid button"
 msgstr "\"%s\" no es un botó vàlid"
 
 #, python-format
-msgid ""
-"Using Button1 without modifiers can prevent any left click and thus break "
-"your configuration. Do you really want to set \"%s\" button to Button1 ?"
-msgstr ""
-"Usar el Botó1 sense modificadors pot prevenir qualsevol clic esquerre i "
-"trencar la configuració. Estàs segur que vols posar el botó \"%s\" al Botó1 ?"
+msgid "Using Button1 without modifiers can prevent any left click and thus break your configuration. Do you really want to set \"%s\" button to Button1 ?"
+msgstr "Usar el Botó1 sense modificadors pot prevenir qualsevol clic esquerre i trencar la configuració. Estàs segur que vols posar el botó \"%s\" al Botó1 ?"
 
-#, fuzzy, python-format
+#, python-format
 msgid "\"%s\" is not a valid edge mask"
-msgstr "\"%s\" no és una drecera vàlida"
+msgstr "\"%s\" no és una màscara de vora vàlida"
 
 msgid "None"
 msgstr "Cap"
@@ -224,7 +201,7 @@ msgid "Category"
 msgstr "Categoria"
 
 msgid "Advanced Search"
-msgstr "Cerca Avançada"
+msgstr "Cerca avançada"
 
 msgid "Preferences"
 msgstr "Preferències"
@@ -240,9 +217,7 @@ msgid "Please press the new key combination"
 msgstr "Pressiona la nova combinació de tecles"
 
 msgid "This is a settings manager for the CompizConfig configuration system."
-msgstr ""
-"Això es un gestor dels paràmetres pel sistema de configuració del "
-"CompizConfig"
+msgstr "Això es un gestor dels paràmetres pel sistema de configuració del CompizConfig"
 
 msgid "translator-credits"
 msgstr "Karasu <gustaucastells@gmail.com>"
@@ -255,10 +230,10 @@ msgstr "Alerta"
 
 #, python-format
 msgid "Search %s Plugin Options"
-msgstr "Busca Opcions del Connector %s"
+msgstr "Busca opcions del connector %s"
 
 msgid "Use This Plugin"
-msgstr "Usa Aquest Connector"
+msgstr "Usa aquest connector"
 
 msgid "Search Compiz Core Options"
 msgstr "Cerca opcions del nucli del Compiz"
@@ -286,10 +261,10 @@ msgid "Settings"
 msgstr "Paràmetres"
 
 msgid "Add a New Profile"
-msgstr "Afegeix un Nou Perfil"
+msgstr "Afegeix un perfil nou"
 
 msgid "Remove This Profile"
-msgstr "Esborra Aquest Perfil"
+msgstr "Esborra aquest perfil"
 
 msgid "Default"
 msgstr "Defecte"
@@ -302,6 +277,12 @@ msgstr "Importar"
 
 msgid "Import a CompizConfig Profile"
 msgstr "Importa un perfil CompizConfig"
+
+msgid "Import as..."
+msgstr "Importa com..."
+
+msgid "Import a CompizConfig Profile as a new profile"
+msgstr "Importa un perfil CompizConfig com un nou perfil"
 
 msgid "Export"
 msgstr "Exporta"
@@ -364,12 +345,8 @@ msgstr "Nom del connector:"
 msgid "Insert plugin name"
 msgstr "Inserta el nom del connector"
 
-msgid ""
-"Configure the backend, profile and other internal settings used by the "
-"Compiz Configuration System."
-msgstr ""
-"Configura el rerefons, perfil i d'altres paràmetres interns usats pel "
-"Sistema de Configuració del Compiz"
+msgid "Configure the backend, profile and other internal settings used by the Compiz Configuration System."
+msgstr "Configura el rerefons, perfil i d'altres paràmetres interns usats pel Sistema de Configuració del Compiz"
 
 msgid "About"
 msgstr "Quant a"
@@ -389,9 +366,7 @@ msgid ""
 "\n"
 " Your filter \"<b>%s</b>\" does not match any items.</span>"
 msgstr ""
-"<span size=\"large\"><b>No s'han trobat coïncidències.</b> </span><span>\n"
+"<span size=\"large\"><b>No s'han trobat coincidències.</b> </span><span>\n"
 "\n"
 " El teu filtre \"<b>%s</b>\" no concorda amb cap element.</span>"
 
-#~ msgid "Disable %s"
-#~ msgstr "Desactiva %s"
