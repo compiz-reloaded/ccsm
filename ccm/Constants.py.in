@@ -63,3 +63,26 @@ Tooltips = gtk.Tooltips()
 # Version
 #
 Version = "@version@"
+
+
+# Translation
+#
+import locale
+import gettext
+locale.setlocale(locale.LC_ALL, "")
+gettext.bindtextdomain("ccsm", DataDir + "/locale")
+gettext.textdomain("ccsm")
+_ = gettext.gettext
+
+# Category Transaltion Table
+#
+CategoryTranslation = {
+"General": _("General"),
+"Accessibility": _("Accessibility"),
+"Desktop": _("Desktop"),
+"Extras": _("Extras"),
+"Window Management": _("Window Management"),
+"Effetcs": _("Effects"),
+"Image Loading": _("Image Loading"),
+"Utility": _("Utility")
+}
