@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-09-05 00:55+0530\n"
+"POT-Creation-Date: 2007-09-09 14:23+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -104,6 +104,30 @@ msgstr ""
 
 #, python-format
 msgid "<b>%(plugin)s</b> is required by the plugins <b>%(plugin_list)s</b>."
+msgstr ""
+
+msgid "General"
+msgstr ""
+
+msgid "Accessibility"
+msgstr ""
+
+msgid "Desktop"
+msgstr ""
+
+msgid "Extras"
+msgstr ""
+
+msgid "Window Management"
+msgstr ""
+
+msgid "Effects"
+msgstr ""
+
+msgid "Image Loading"
+msgstr ""
+
+msgid "Utility"
 msgstr ""
 
 msgid "Reset setting to the default value"
@@ -212,9 +236,6 @@ msgstr ""
 
 #, python-format
 msgid "Enable %s"
-msgstr ""
-
-msgid "General"
 msgstr ""
 
 msgid "Please press the new key combination"

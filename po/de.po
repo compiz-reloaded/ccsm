@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm 0.0.1\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-09-01 14:38+0200\n"
+"POT-Creation-Date: 2007-09-09 14:23+0200\n"
 "PO-Revision-Date: 2007-09-01 14:36+0200\n"
 "Last-Translator: Danny Baumann <dannybaumann@web.de>\n"
 "Language-Team: Compiz Fusion translators <i18n@lists.compiz-fusion.org>\n"
@@ -126,6 +126,31 @@ msgid "<b>%(plugin)s</b> is required by the plugins <b>%(plugin_list)s</b>."
 msgstr ""
 "<b>%(plugin)s</b> wird von den Plugins <b>%(plugin_list)s</b> benötigt."
 
+msgid "General"
+msgstr "Allgemein"
+
+# Taken from gnome-control-center
+msgid "Accessibility"
+msgstr "Hilfstechnologien"
+
+msgid "Desktop"
+msgstr "Arbeitsfläsche"
+
+msgid "Extras"
+msgstr "Sonstiges"
+
+msgid "Window Management"
+msgstr "Fensterverwaltung"
+
+msgid "Effects"
+msgstr "Effekte"
+
+msgid "Image Loading"
+msgstr "Bildverarbeitung"
+
+msgid "Utility"
+msgstr "Werkzeuge"
+
 msgid "Reset setting to the default value"
 msgstr "Einstellung auf den Standardwert zurücksetzen"
 
@@ -191,6 +216,10 @@ msgstr ""
 "System unverwendbar machen. Möchten Sie wirklich \"%s\" zu Maustaste "
 "1zuweisen?"
 
+#, fuzzy, python-format
+msgid "\"%s\" is not a valid edge mask"
+msgstr "\"%s\" ist keine gültige Tastenkombination"
+
 msgid "None"
 msgstr "Nichts"
 
@@ -232,9 +261,6 @@ msgstr "Einstellungen"
 #, python-format
 msgid "Enable %s"
 msgstr "%s aktivieren"
-
-msgid "General"
-msgstr "Allgemein"
 
 msgid "Please press the new key combination"
 msgstr "Bitte drücken Sie die gewünschte Tastenkombination"
@@ -301,6 +327,14 @@ msgid "Import"
 msgstr "Importieren"
 
 msgid "Import a CompizConfig Profile"
+msgstr "CompizConfig-Profil importieren"
+
+#, fuzzy
+msgid "Import as..."
+msgstr "Importieren"
+
+#, fuzzy
+msgid "Import a CompizConfig Profile as a new profile"
 msgstr "CompizConfig-Profil importieren"
 
 msgid "Export"
