@@ -2,22 +2,22 @@
 # Copyright (C) 2007 Treviño (Marco Trevisan)
 # This file is distributed under the same license as the ccsm package.
 # Treviño (Marco Trevisan) <trevi55@gmail.com>, 2007.
-# Milo Casagrande <milo_casagrande@yahoo.it>
+# Milo Casagrande <milo_casagrande@yahoo.it>, 2007
 #
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: ccsm 0.0.1\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-09-02 22:39+0200\n"
-"PO-Revision-Date: 2007-09-02 22:40+0200\n"
+"POT-Creation-Date: 2007-09-09 21:50+0530\n"
+"PO-Revision-Date: 2007-08-31 22:51+0200\n"
 "Last-Translator: Milo Casagrande <milo_casagrande@yahoo.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "The new value for the %(binding)s binding for the action <b>%(action)s</b> "
 "in plugin <b>%(plugin)s</b> conflicts with the action <b>%(action_conflict)"
@@ -25,109 +25,135 @@ msgid ""
 "Do you wish to disable <b>%(action_conflict)s</b> in the <b>%"
 "(plugin_conflict)s</b> plugin?"
 msgstr ""
-"Il nuovo valore per la scorciatoia %(binding)s dell'azione <b>%(action)s</b> "
-"nel plug-in <b>%(plugin)s</b>, va in conflitto con l'azione <b>%"
-"(action_conflict)s</b> del plug-in <b>%(plugin_conflict)s</b>\n"
-"Disabilitare <b>%(action_conflict)s</b> nel plug-in <b>%(plugin_conflict)s</"
-"b>?"
+"Il nuovo valore per la scorciatoia %s dell'azione <b>%s</b> nel plug-in <b>%"
+"s</b>, va in conflitto con l'azione <b>%s</b> del plug-in <b>%s</b>\n"
+"Disabilitare <b>%s</b> nel plug-in <b>%s</b>?"
 
 #, python-format
 msgid "Disable %(action_conflict)s"
-msgstr "Disabilita %(action_conflict)s"
+msgstr ""
 
 # (ndt) pulsante
-#, python-format
+# le virgolette non ci sono ma 's' indica il nome
+# del plug-in, le metto per differenziare
+#, fuzzy, python-format
 msgid "Don't set %(action)s"
-msgstr "Non impostare %(action)s"
+msgstr "Non impostare «%s»"
 
 # (ndt) pulsante
-#, python-format
+# le virgolette non ci sono ma 's' indica il nome
+# del plug-in, le metto per differenziare
+#, fuzzy, python-format
 msgid "Set %(action)s anyway"
-msgstr "Imposta %(action)s comunque"
+msgstr "Imposta «%s» comunque"
 
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "You are trying to use the feature <b>%(feature)s</b> which is provided by <b>"
 "%(plugin)s</b>.\n"
 "This plugin is currently disabled.\n"
 "Do you wish to enable <b>%(plugin)s</b> so the feature is available?"
 msgstr ""
-"Si sta cercando di usare la funzionalità <b>%(feature)s</b> che è fornita da "
-"<b>%(plugin)s</b>.\n"
+"Si sta cercando di usare la funzionalità <b>%s</b> che è fornita da <b>%s</"
+"b>.\n"
 "Questo plug-in è attualmente disabilitato.\n"
-"Abilitare <b>%(plugin)s</b> per rendere la funzionalità disponibile?"
+"Abilitare <b>%s</b> per rendere la funzionalità disponibile?"
 
-#, python-format
+# (NdT) intestazione elenco
+#, fuzzy, python-format
 msgid "Enable %(plugin)s"
-msgstr "Abilita %(plugin)s"
+msgstr "Plug-in abilitati"
 
-#, python-format
+#, fuzzy, python-format
 msgid "Don't enable %(feature)s"
-msgstr "Non abilitare %(feature)s"
+msgstr "Non abilitare «%s»"
 
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "Plugin <b>%(plugin_conflict)s</b> provides feature <b>%(feature)s</b> which "
 "is also provided by <b>%(plugin)s</b>"
 msgstr ""
-"Il plug-in <b>%(plugin_conflict)s</b> fornisce la funzionalità <b>%(feature)"
-"s</b> fornita anche da <b>%(plugin)s</b>"
+"Il plug-in <b>%s</b> fornisce la funzionalità <b>%s</b> fornita anche da <b>%"
+"s</b>"
 
-#, python-format
+# (NdT) intestazione elenco
+#, fuzzy, python-format
 msgid "Disable %(plugin_conflict)s"
-msgstr "Disabilita %(plugin_conflict)s"
+msgstr "Plug-in disabilitati"
 
-#, python-format
+#, fuzzy, python-format
 msgid "Don't enable %(plugin)s"
-msgstr "Non abilitare %(plugin)s"
+msgstr "Non abilitare «%s»"
 
-#, python-format
+#, fuzzy, python-format
 msgid "Plugin <b>%(plugin_conflict)s</b> conflicts with <b>%(plugin)s</b>."
-msgstr ""
-"Il plug-in <b>%(plugin_conflict)s</b> va in conflitto con <b>%(plugin)s</b>."
+msgstr "Il plug-in <b>%s</b> va in conflitto con <b>%s</b>."
 
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "<b>%(plugin)s</b> requires feature <b>%(feature)s</b> which is provided by "
 "the following plugins:\n"
 "%(plugin_list)s"
 msgstr ""
-"<b>%(plugin)s</b> richiede la funzionalità <b>%(feature)s</b> che viene "
-"fornita dai seguenti plug-in:\n"
-"%(plugin_list)s"
+"<b>%s</b> richiede la funzionalità <b>%s</b> che viene fornita dai seguenti "
+"plug-in:\n"
+"%s"
 
 msgid "Enable these plugins"
 msgstr "Abilita questi plug-in"
 
-#, python-format
+#, fuzzy, python-format
 msgid "<b>%(plugin)s</b> requires the plugin <b>%(require)s</b>."
-msgstr "<b>%(plugin)s</b> richiede il plug-in <b>%(require)s</b>."
+msgstr "<b>%s</b> richiede il plug-in <b>%s</b>."
 
 # (NdT) opzione
-#, python-format
+#, fuzzy, python-format
 msgid "Enable %(require)s"
-msgstr "Abilitare %(require)s"
+msgstr "Abilitare «%s»"
 
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "<b>%(plugin)s</b> provides the feature <b>%(feature)s</b> which is required "
 "by the plugins <b>%(plugin_list)s</b>."
 msgstr ""
-"<b>%(plugin)s</b> fornisce la funzionalità <b>%(feature)s</b> richiesta dai "
-"plug-in <b>%(plugin_list)s</b>."
+"<b>%s</b> fornisce la funzionalità <b>%s</b> richiesta dai plug-in <b>%s</b>."
 
 # (NdT) pulsante
 msgid "Disable these plugins"
 msgstr "Disabilita questi plug-in"
 
 # (NdT) pulsante
-#, python-format
+#, fuzzy, python-format
 msgid "Don't disable %(plugin)s"
-msgstr "Non disabilitare %(plugin)s"
+msgstr "Non disabilitare %s"
 
-#, python-format
+#, fuzzy, python-format
 msgid "<b>%(plugin)s</b> is required by the plugins <b>%(plugin_list)s</b>."
-msgstr "<b>%(plugin)s</b> è richiesto dai plug-in <b>%(plugin_list)s</b>"
+msgstr "<b>%s</b> è richiesto dai plug-in <b>%s</b>"
+
+msgid "General"
+msgstr "Generale"
+
+msgid "Accessibility"
+msgstr ""
+
+msgid "Desktop"
+msgstr ""
+
+msgid "Extras"
+msgstr ""
+
+msgid "Window Management"
+msgstr ""
+
+msgid "Effects"
+msgstr ""
+
+msgid "Image Loading"
+msgstr ""
+
+msgid "Utility"
+msgstr ""
 
 msgid "Reset setting to the default value"
 msgstr "Ripristina l'impostazione al valore predefinito"
@@ -141,9 +167,11 @@ msgstr "Immagini"
 msgid "File"
 msgstr "File"
 
+#, fuzzy
 msgid "Open directory..."
-msgstr "Apri directory..."
+msgstr "Apri file..."
 
+#, fuzzy
 msgid "Open file..."
 msgstr "Apri file..."
 
@@ -163,42 +191,45 @@ msgstr "Valore (%s)"
 msgid "Edit %s"
 msgstr "Modifica %s"
 
-#, python-format
+#, fuzzy, python-format
 msgid "Value (%(value)s) for %(setting)s"
-msgstr "Valore (%(value)s) per %(setting)s:"
+msgstr "Valore (%s) per %s:"
 
 #, python-format
 msgid "\"%s\" is not a valid shortcut"
-msgstr "«%s» non è una scorciatoia valida"
+msgstr ""
 
+# (ndt) pulsante
+# le virgolette non ci sono ma 's' indica il nome
+# del plug-in, le metto per differenziare
+#, fuzzy
 msgid "Disabled"
-msgstr "Disabilitato"
+msgstr "Disabilita «%s»"
 
+# (NdT) opzione
+#, fuzzy
 msgid "Enabled"
-msgstr "Attivato"
+msgstr "Abilitare «%s»"
 
 msgid "Grab key combination"
-msgstr "Ottieni combinazione tasti"
+msgstr ""
 
 msgid "Computing possible conflicts, please wait"
-msgstr "Calcolo dei possibile conflitti, attendere"
+msgstr ""
 
 #, python-format
 msgid "\"%s\" is not a valid button"
-msgstr "«%s» non è un pulsante valido"
+msgstr ""
 
 #, python-format
 msgid ""
 "Using Button1 without modifiers can prevent any left click and thus break "
 "your configuration. Do you really want to set \"%s\" button to Button1 ?"
 msgstr ""
-"Usare Pulsante1 senza alcun modificatore può prevenire il clic col tasto "
-"sinistro del mouse e rompere la configurazione. Impostare veramente «%s» per "
-"Pulsante1?"
 
 #, python-format
 msgid "\"%s\" is not a valid edge mask"
-msgstr "«%s» non è una maschera valida"
+msgstr ""
 
 # (NdT) questo è quello che si vede nella scheda Azioni
 # quando non è associato nulla alla particolare azione...
@@ -226,7 +257,7 @@ msgid "Screen"
 msgstr "Schermo"
 
 msgid "All"
-msgstr "Tutti"
+msgstr ""
 
 msgid "Uncategorized"
 msgstr "Senza categoria"
@@ -247,11 +278,8 @@ msgstr "Preferenze"
 msgid "Enable %s"
 msgstr "Abilitare «%s»"
 
-msgid "General"
-msgstr "Generale"
-
 msgid "Please press the new key combination"
-msgstr "Premere la nuova combinazione di tasti"
+msgstr ""
 
 msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr ""
@@ -261,10 +289,10 @@ msgid "translator-credits"
 msgstr "Milo Casagrande <milo_casagrande@yahoo.it>"
 
 msgid "An error has occured"
-msgstr "Si è verificato un errore"
+msgstr ""
 
 msgid "Warning"
-msgstr "Avviso"
+msgstr ""
 
 #, python-format
 msgid "Search %s Plugin Options"
@@ -321,6 +349,16 @@ msgid "Import a CompizConfig Profile"
 msgstr "Importa un profilo di CompizConfig"
 
 # (NdT) pulsante
+#, fuzzy
+msgid "Import as..."
+msgstr "Importa"
+
+# (NdT) suggerimento
+#, fuzzy
+msgid "Import a CompizConfig Profile as a new profile"
+msgstr "Importa un profilo di CompizConfig"
+
+# (NdT) pulsante
 msgid "Export"
 msgstr "Esporta"
 
@@ -328,12 +366,14 @@ msgstr "Esporta"
 msgid "Export your CompizConfig Profile"
 msgstr "Esporta il profilo di CompizConfig selezionato"
 
+#, fuzzy
 msgid "Reset to defaults"
-msgstr "Ripristinare predefiniti"
+msgstr "Ripristina valori predefiniti"
 
 # (NdT) suggerimento
+#, fuzzy
 msgid "Reset your CompizConfig Profile to the global defaults"
-msgstr "Ripristina il profilo ai valori predefiniti"
+msgstr "Esporta il profilo di CompizConfig selezionato"
 
 msgid "Backend"
 msgstr "Backend"
@@ -375,11 +415,11 @@ msgstr "Ordinamento plug-in automatico"
 
 # (NdT) intestazione elenco
 msgid "Disabled Plugins"
-msgstr "Plug-in disattivati"
+msgstr "Plug-in disabilitati"
 
 # (NdT) intestazione elenco
 msgid "Enabled Plugins"
-msgstr "Plug-in attivati"
+msgstr "Plug-in abilitati"
 
 # (NdT) titolo finestra di dialogo
 msgid "Add plugin"
@@ -431,3 +471,30 @@ msgstr ""
 "<span size=\"large\"><b>Nessuna corrispondenza trovata.</b> </span><span>\n"
 "\n"
 " Il filtro «<b>%s</b>» non corrisponde ad alcuna voce.</span>"
+
+#~ msgid "Name"
+#~ msgstr "Nome"
+
+#~ msgid "Key"
+#~ msgstr "Tasto"
+
+#~ msgid "Button"
+#~ msgstr "Pulsante"
+
+#~ msgid "Screen Edge"
+#~ msgstr "Bordo dello schermo"
+
+#~ msgid "Button %i"
+#~ msgstr "Pulsante %i"
+
+#~ msgid "Edge Button"
+#~ msgstr "Pulsante bordo"
+
+#~ msgid "On System Bell"
+#~ msgstr "Al suono di sistema"
+
+#~ msgid "Edit Action: %s"
+#~ msgstr "Modifica azione: %s"
+
+#~ msgid "Screen Edges"
+#~ msgstr "Bordi dello schermo"
