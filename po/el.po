@@ -1,5 +1,5 @@
 # CompizConfig Greek Translation.
-# Copyright (C) 2007 Jim Dusis
+# Copyright (C) 2007 compiz-fusion.org
 # This file is distributed under the same license as the ccsm package.
 # Δημήτρης (djdoo) <jimdusis@yahoo.gr>, 2007.
 #
@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm 0.5.2\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-09-08 00:01+0200\n"
+"POT-Creation-Date: 2007-09-11 11:51+0530\n"
 "PO-Revision-Date: 2007-09-08 04:00+0200\n"
 "Last-Translator:  djdoo <jimdusis@yahoo.gr>\n"
 "Language-Team: Compiz Fusion translators <i18n@lists.compiz-fusion.org>\n"
@@ -125,6 +125,30 @@ msgstr "Μην απενεργοποιήσεις %(plugin)s"
 msgid "<b>%(plugin)s</b> is required by the plugins <b>%(plugin_list)s</b>."
 msgstr "<b>%(plugin)s</b> απαιτείται απο τα πρόσθετα <b>%(plugin_list)s</b>."
 
+msgid "General"
+msgstr "Γενικά"
+
+msgid "Accessibility"
+msgstr "Προσβασιμότητα"
+
+msgid "Desktop"
+msgstr "Επιφάνεια Εργασίας"
+
+msgid "Extras"
+msgstr "Εξτρά"
+
+msgid "Window Management"
+msgstr "Διαχείριση Παραθύρων"
+
+msgid "Effects"
+msgstr "Εφέ"
+
+msgid "Image Loading"
+msgstr "Φόρτωση Εικόνας"
+
+msgid "Utility"
+msgstr "Χρήσιμες Εφαρμογές"
+
 msgid "Reset setting to the default value"
 msgstr "Επαναφορά της ρύθμισης στη προεπιλεγμένη τιμή"
 
@@ -237,9 +261,6 @@ msgstr "Ιδιότητες"
 #, python-format
 msgid "Enable %s"
 msgstr "Ενεργοποίηση %s"
-
-msgid "General"
-msgstr "Γενικά"
 
 msgid "Please press the new key combination"
 msgstr "Παρακαλώ χρησιμοποιήστε τον νέο συνδυασμό πλήκτρων"
@@ -446,4 +467,3 @@ msgstr ""
 
 #~ msgid "Backend &amp; Profile"
 #~ msgstr "Κύρια Εφαρμογή &amp; Προφίλ"
-
