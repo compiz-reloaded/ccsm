@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm 0.0.1\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-09-09 14:54+0200\n"
-"PO-Revision-Date: 2007-09-01 14:36+0200\n"
-"Last-Translator: Danny Baumann <dannybaumann@web.de>\n"
+"POT-Creation-Date: 2007-09-11 23:15+0200\n"
+"PO-Revision-Date: 2007-09-11 23:16+0200\n"
+"Last-Translator: Danny Baumann <maniac@opencompositing.org>\n"
 "Language-Team: Compiz Fusion translators <i18n@lists.compiz-fusion.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -215,9 +215,9 @@ msgstr ""
 "System unverwendbar machen. Möchten Sie wirklich \"%s\" zu Maustaste "
 "1zuweisen?"
 
-#, fuzzy, python-format
+#, python-format
 msgid "\"%s\" is not a valid edge mask"
-msgstr "\"%s\" ist keine gültige Tastenkombination"
+msgstr "\"%s\" ist keine gültige Bildschirmecke"
 
 msgid "None"
 msgstr "Nichts"
@@ -269,7 +269,7 @@ msgstr "Ein Einstellungs-Manager für das CompizConfig Konfigurations-System"
 
 msgid "translator-credits"
 msgstr ""
-"Danny Baumann <dannybaumann@web.de>\n"
+"Danny Baumann <maniac@opencompositing.org>\n"
 "Patrick Niklaus <marex@opencompositing.org>"
 
 msgid "An error has occured"
@@ -328,13 +328,11 @@ msgstr "Importieren"
 msgid "Import a CompizConfig Profile"
 msgstr "CompizConfig-Profil importieren"
 
-#, fuzzy
 msgid "Import as..."
-msgstr "Importieren"
+msgstr "Import als..."
 
-#, fuzzy
 msgid "Import a CompizConfig Profile as a new profile"
-msgstr "CompizConfig-Profil importieren"
+msgstr "CompizConfig-Profil als neues Profil importieren"
 
 msgid "Export"
 msgstr "Exportieren"
@@ -426,10 +424,6 @@ msgstr ""
 "<span size=\"large\"><b>Keine Übereinstimmungen gefunden.</b> </span><span>\n"
 "\n"
 " Der Filter \"<b>%s</b>\" stimmt mit keinem Element überein.</span>"
-
-#, fuzzy
-#~ msgid "Value (%(value)s) for %(setting)"
-#~ msgstr "Wert (%(value)s) für %(setting)s"
 
 #~ msgid "Disable %s"
 #~ msgstr "%s deaktivieren"
