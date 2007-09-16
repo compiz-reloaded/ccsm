@@ -144,15 +144,12 @@ class FileSetting:
     
     def CreateFilter(self):
         filter = gtk.FileFilter()
-        if len(self.Setting.Hints) > 1:
-            if self.Setting.Hints[1] == 'image':
-                filter.set_name(_("Images"))
-                filter.add_pattern("*.png")
-                filter.add_pattern("*.jpg")
-                filter.add_pattern("*.jpeg")
-                filter.add_pattern("*.svg")
-            else:
-                filter.add_pattern("*.*")
+        if "image" in self.Setting.Hints:
+            filter.set_name(_("Images"))
+            filter.add_pattern("*.png")
+            filter.add_pattern("*.jpg")
+            filter.add_pattern("*.jpeg")
+            filter.add_pattern("*.svg")
         else:
             filter.add_pattern("*")
             filter.set_name(_("File"))
