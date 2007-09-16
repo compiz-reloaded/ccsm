@@ -171,7 +171,18 @@ class FileSetting:
                 return require.Resolve()
         
         return True
-            
+
+    def UpdatePreview (self, widget):
+        path = widget.get_preview_filename ()
+        if path is None or os.path.isdir (path):
+            widget.get_preview_widget ().set_from_file (None)
+            return
+        try:
+            pixbuf = gtk.gdk.pixbuf_new_from_file_at_size (path, 100, 100)
+        except gobject.GError:
+            return
+        widget.get_preview_widget ().set_from_pixbuf (pixbuf)
+
     def OpenFileChooser(self, widget, custom_value=None):
         value = self.Setting.Value
         if custom_value != None:
@@ -193,7 +204,12 @@ class FileSetting:
         
         if not self.IsDirectory:
             chooser.set_filter(self.CreateFilter())
-        
+
+        if "image" in self.Setting.Hints:
+            chooser.set_use_preview_label (False)
+            chooser.set_preview_widget (gtk.Image ())
+            chooser.connect ("selection-changed", self.UpdatePreview)
+ 
         ret = chooser.run()
         
         filename = chooser.get_filename()
