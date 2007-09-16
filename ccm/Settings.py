@@ -178,7 +178,7 @@ class FileSetting:
             widget.get_preview_widget ().set_from_file (None)
             return
         try:
-            pixbuf = gtk.gdk.pixbuf_new_from_file_at_size (path, 100, 100)
+            pixbuf = gtk.gdk.pixbuf_new_from_file_at_size (path, 128, 128)
         except gobject.GError:
             return
         widget.get_preview_widget ().set_from_pixbuf (pixbuf)
