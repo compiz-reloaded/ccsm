@@ -129,10 +129,18 @@ class MainWin(gtk.Window):
         categories = [_("All")] + sorted(self.Categories, self.CatSortCompare)
         for category in categories:
             name = category or _("Uncategorized")
-            label = _(category) or _("Uncategorized")
-            iconName = name.lower ().replace (" ", "_")
-            if name == _("All"):
+            if category == "":
+                label = _("Uncategorized")
+            else:
+                label = _(category)
+
+            if category == "":
+                iconName = "uncategorized"
+            elif name == _("All"):
                 iconName = "all"
+            else:
+                iconName = name.lower ().replace (" ", "_")
+
             categoryToggleIcon = Image (name = iconName, type = ImageCategory,
                                         size = 22)
             categoryToggleLabel = Label (label)
@@ -224,9 +232,19 @@ class MainWin(gtk.Window):
             pluginWindow.pack_start(categoryBox, False, False)
 
             name = category or _("Uncategorized")
-            label = _(category) or _("Uncategorized")
+            if category == "":
+                label = _("Uncategorized")
+            else:
+                label = _(category)
+
             categoryLabel.set_markup("<span color='#aaa' size='x-large' weight='800'>%s</span>" % label)
-            categoryImg = Image(name.lower().replace(" ", "_"), ImageCategory)
+
+            if category == "":
+                iconName = "uncategorized"
+            else:
+                iconName = name.lower().replace (" ", "_")
+
+            categoryImg = Image(iconName, ImageCategory)
             if categoryImg:
                 categoryHeader.pack_start(categoryImg, False, False)
             categoryHeader.pack_start(categoryLabel, False, False)
