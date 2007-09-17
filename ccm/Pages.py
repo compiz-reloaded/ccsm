@@ -438,13 +438,13 @@ class ProfileBackendPage:
         self.ProfileComboBox.append_text(_("Default"))
         for profile in self.Context.Profiles.values():
             self.ProfileComboBox.append_text(profile.Name)
-        if self.Context.CurrentProfile.Name == '' or self.Context.CurrentProfile.Name == 'Default':
-            self.ProfileComboBox.set_active(0)
-        else:
-            name = self.Context.CurrentProfile.Name
+        self.ProfileComboBox.connect("changed", self.ProfileChanged)
+        name = self.Context.CurrentProfile.Name
+        if name in self.Context.Profiles: 
             index = self.Context.Profiles.values().index(self.Context.Profiles[name])
             self.ProfileComboBox.set_active(index+1)
-        self.ProfileComboBox.connect("changed", self.ProfileChanged)
+        else:
+            self.ProfileComboBox.set_active(0) 
         profileAdd.connect("clicked", self.AddProfile)
         profileRemove.connect("clicked", self.RemoveProfile)
         profileBox.pack_start(self.ProfileComboBox, True, True)
