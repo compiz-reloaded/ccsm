@@ -33,11 +33,14 @@ gettext.textdomain("ccsm")
 _ = gettext.gettext
 
 class Conflict:
-    def __init__(self):
-        pass
+    def __init__(self, autoResolve = True):
+        self.AutoResolve = autoResolve
 
     # buttons = (text, type/icon, response_id)
     def Ask(self, message, buttons, custom_widgets=None):
+        if self.AutoResolve:
+            return gtk.RESPONSE_OK
+
         dialog = gtk.MessageDialog(flags=gtk.DIALOG_MODAL, type=gtk.MESSAGE_WARNING)
 
         for text, icon, response in buttons:
@@ -57,7 +60,8 @@ class Conflict:
         return answer
 
 class ActionConflict (Conflict):
-    def __init__ (self, setting, key = None, button = None, edges = None):
+    def __init__ (self, setting, key = None, button = None, edges = None, autoResolve = False):
+        Conflict.__init__(self, autoResolve)
         self.KeyConflicts = []
         self.ButtonConflicts = []
         self.EdgeConflicts = []
@@ -153,7 +157,8 @@ class ActionConflict (Conflict):
 
 # Not used for plugin dependencies (which are handled by ccs) but own feature checking e.g. image support
 class FeatureRequirement(Conflict):
-    def __init__(self, context, feature):
+    def __init__(self, context, feature, autoResolve = False):
+        Conflict.__init__(self, autoResolve)
         self.Requirements = []
         self.Context = context
         self.Feature = feature
@@ -192,7 +197,8 @@ class FeatureRequirement(Conflict):
         return answer
 
 class PluginConflict(Conflict):
-    def __init__(self, plugin, conflicts):
+    def __init__(self, plugin, conflicts, autoResolve = False):
+        Conflict.__init__(self, autoResolve)
         self.Conflicts = conflicts
         self.Plugin = plugin
 
