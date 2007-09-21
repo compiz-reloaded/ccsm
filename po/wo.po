@@ -1,22 +1,24 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Wolof translation of ccsm
+# Copyright (C) 2007 compiz-fusion.org
+# This file is distributed under the same license as the ccsm package.
+# FIRST AUTHOR Werner Landgraf <werner@copaya.yi.org>, 2007-09-12
+# Algumas palavras não tenham tradução adequada, os quais no momento
+#   coloco em portugues, geralmente entendido no local
+#    iconv -t UTF-8 wo.pot > wo.po ;  msgfmt -cv wo.po  
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: ccsm 20070908\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
 "POT-Creation-Date: 2007-09-21 19:06+0530\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2007-09-21 19:06+530\n"
+"Last-Translator: Werner Landgraf <werner@copaya.yi.org>\n"
+"Language-Team: Wolof\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "The new value for the %(binding)s binding for the action <b>%(action)s</b> "
 "in plugin <b>%(plugin)s</b> conflicts with the action <b>%(action_conflict)"
@@ -24,90 +26,97 @@ msgid ""
 "Do you wish to disable <b>%(action_conflict)s</b> in the <b>%"
 "(plugin_conflict)s</b> plugin?"
 msgstr ""
+"Defaay %s u <b>%s</b> ci biir <b>%s</b> def na jöffë-jöffë ak <b>%s</b> ci "
+"biir <b>%s</b>.\n"
+"Ndax nga bögge taxal <b>%s</b> ci biir <b>%s</b> ?"
 
 #, python-format
 msgid "Disable %(action_conflict)s"
 msgstr ""
 
-#, python-format
+#, fuzzy, python-format
 msgid "Don't set %(action)s"
-msgstr ""
+msgstr "Bul teg genn ñög ngir %s"
 
-#, python-format
+#, fuzzy, python-format
 msgid "Set %(action)s anyway"
-msgstr ""
+msgstr "Tegal genn ñög ngir %s"
 
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "You are trying to use the feature <b>%(feature)s</b> which is provided by <b>"
 "%(plugin)s</b>.\n"
 "This plugin is currently disabled.\n"
 "Do you wish to enable <b>%(plugin)s</b> so the feature is available?"
 msgstr ""
+"Da nga jêem y ñöriñ  <b>%s</b> li  <b>%s</b> indil na.\n"
+"Waaye loolu dafa taxal\n"
+"Ndax nga böggë ñöriñ <b>%s</b>  dügge-düggë ?"
 
-#, python-format
+#, fuzzy, python-format
 msgid "Enable %(plugin)s"
-msgstr ""
+msgstr "defëkaay yu tann nañu"
 
-#, python-format
+#, fuzzy, python-format
 msgid "Don't enable %(feature)s"
-msgstr ""
+msgstr "Bul ñöriñàl %s"
 
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "Plugin <b>%(plugin_conflict)s</b> provides feature <b>%(feature)s</b> which "
 "is also provided by <b>%(plugin)s</b>"
 msgstr ""
+"Def na jöffë-jöffë nä <b>%s</b> waye <b>%s</b> itam indil neñu  <b>%s</b> "
 
-#, python-format
+#, fuzzy, python-format
 msgid "Disable %(plugin_conflict)s"
-msgstr ""
+msgstr "defëkaay yu fay nañu"
 
-#, python-format
+#, fuzzy, python-format
 msgid "Don't enable %(plugin)s"
-msgstr ""
+msgstr "Bul ñöriñàl %s"
 
-#, python-format
+#, fuzzy, python-format
 msgid "Plugin <b>%(plugin_conflict)s</b> conflicts with <b>%(plugin)s</b>."
-msgstr ""
+msgstr "<b>%s</b> dafa döppu ak <b>%s</b>."
 
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "<b>%(plugin)s</b> requires feature <b>%(feature)s</b> which is provided by "
 "the following plugins:\n"
 "%(plugin_list)s"
-msgstr ""
+msgstr "<b>%s</b> soxla na <b>%s</b> li %s mën nañu indil"
 
 msgid "Enable these plugins"
-msgstr ""
+msgstr "taxalal defaay yooyu"
 
-#, python-format
+#, fuzzy, python-format
 msgid "<b>%(plugin)s</b> requires the plugin <b>%(require)s</b>."
-msgstr ""
+msgstr "<b>%s</b> soxla na <b>%s</b>."
 
-#, python-format
+#, fuzzy, python-format
 msgid "Enable %(require)s"
-msgstr ""
+msgstr "Ñöriñal %s"
 
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "<b>%(plugin)s</b> provides the feature <b>%(feature)s</b> which is required "
 "by the plugins <b>%(plugin_list)s</b>."
-msgstr ""
+msgstr "<b>%s</b> indil na defaay <b>%s</b> li <b>%s</b> soxla neñu ko."
 
 msgid "Disable these plugins"
-msgstr ""
+msgstr "taxalal defukaay yoñu"
 
-#, python-format
+#, fuzzy, python-format
 msgid "Don't disable %(plugin)s"
-msgstr ""
+msgstr "Bul taxalal %s"
 
-#, python-format
+#, fuzzy, python-format
 msgid "<b>%(plugin)s</b> is required by the plugins <b>%(plugin_list)s</b>."
-msgstr ""
+msgstr "<b>%s</b> dafa ñöriñu i <b>%s</b>."
 
 msgid "General"
-msgstr ""
+msgstr "bu yoon"
 
 msgid "Accessibility"
 msgstr ""
@@ -131,50 +140,54 @@ msgid "Utility"
 msgstr ""
 
 msgid "Reset setting to the default value"
-msgstr ""
+msgstr "Ñögal ñög gu wees gi"
 
 msgid "Browse for "
-msgstr ""
+msgstr "Wuut "
 
 msgid "Images"
-msgstr ""
+msgstr "Natal yi"
 
 msgid "File"
-msgstr ""
+msgstr "Binday"
 
+#, fuzzy
 msgid "Open directory..."
-msgstr ""
+msgstr "Ubbi binday.."
 
+#, fuzzy
 msgid "Open file..."
-msgstr ""
+msgstr "Ubbi binday.."
 
 msgid "Multi-list settings. You can double-click a row to edit the values."
-msgstr ""
+msgstr "Fí, mön nga tann dara ci, ngir nga mbinde ko"
 
 msgid "Edit"
-msgstr ""
+msgstr "binde ..."
 
 #, python-format
 msgid "Value (%s)"
-msgstr ""
+msgstr "Ñög gi (%s)"
 
 #, python-format
 msgid "Edit %s"
-msgstr ""
+msgstr "binde %s"
 
-#, python-format
+#, fuzzy, python-format
 msgid "Value (%(value)s) for %(setting)s"
-msgstr ""
+msgstr "Ñög gi (%s) u %s:"
 
 #, python-format
 msgid "\"%s\" is not a valid shortcut"
 msgstr ""
 
+#, fuzzy
 msgid "Disabled"
-msgstr ""
+msgstr "taxalal %s"
 
+#, fuzzy
 msgid "Enabled"
-msgstr ""
+msgstr "Ñöriñal %s"
 
 msgid "Grab key combination"
 msgstr ""
@@ -197,55 +210,55 @@ msgid "\"%s\" is not a valid edge mask"
 msgstr ""
 
 msgid "None"
-msgstr ""
+msgstr "du dara"
 
 #, python-format
 msgid "Unhandled list type %s for %s"
-msgstr ""
+msgstr "%s u %s du xamal"
 
 msgid "CompizConfig Settings Manager"
-msgstr ""
+msgstr "tannay u  CompizConfig"
 
 msgid "Filter"
-msgstr ""
+msgstr "tannaay"
 
 msgid "Filter your Plugin list"
-msgstr ""
+msgstr "tann na sa defëkaay yi"
 
 #, python-format
 msgid "Screen %i"
-msgstr ""
+msgstr "Telha %i"
 
 msgid "Screen"
-msgstr ""
+msgstr "Telha"
 
 msgid "All"
 msgstr ""
 
 msgid "Uncategorized"
-msgstr ""
+msgstr "ñak xät"
 
 msgid "Category"
-msgstr ""
+msgstr "xät"
 
 msgid "Advanced Search"
-msgstr ""
+msgstr "wut gönnë baax..."
 
 msgid "Preferences"
-msgstr ""
+msgstr "tanne"
 
 #, python-format
 msgid "Enable %s"
-msgstr ""
+msgstr "Ñöriñal %s"
 
 msgid "Please press the new key combination"
 msgstr ""
 
 msgid "This is a settings manager for the CompizConfig configuration system."
-msgstr ""
+msgstr "Li dafa programa bu ogosu na CompizConfig bi. "
 
 msgid "translator-credits"
-msgstr ""
+msgstr "tekkimi"
 
 msgid "An error has occured"
 msgstr ""
@@ -255,137 +268,141 @@ msgstr ""
 
 #, python-format
 msgid "Search %s Plugin Options"
-msgstr ""
+msgstr "Wuut na lu defëkaay %s mën na defë"
 
 msgid "Use This Plugin"
-msgstr ""
+msgstr "Ñöriñ defëkaay bii"
 
 msgid "Search Compiz Core Options"
-msgstr ""
+msgstr "Wuut na lu %s mën na defë"
 
 msgid "Actions"
-msgstr ""
+msgstr "defaay yi"
 
 msgid "Error"
-msgstr ""
+msgstr "juum"
 
 msgid "Search in..."
-msgstr ""
+msgstr "wuutë ci ..."
 
 msgid "Short description and name"
-msgstr ""
+msgstr "Tekke tey tudde"
 
 msgid "Long description"
-msgstr ""
+msgstr "Tekke bu rey"
 
 msgid "Settings value"
-msgstr ""
+msgstr "Ñeg ñu tegu"
 
 #. Notebook
 msgid "Settings"
-msgstr ""
+msgstr "Ñeg ñu"
 
 msgid "Add a New Profile"
-msgstr ""
+msgstr "Tegal xät u lüggey bu bees"
 
 msgid "Remove This Profile"
-msgstr ""
+msgstr "Fayal xät u bii"
 
 msgid "Default"
-msgstr ""
+msgstr "bu yoon"
 
 msgid "Profile"
-msgstr ""
+msgstr "xät u lüggey"
 
 msgid "Import"
-msgstr ""
+msgstr "indil"
 
 msgid "Import a CompizConfig Profile"
-msgstr ""
+msgstr "indil ab xät u lüggey ngir CompizConfig"
 
+#, fuzzy
 msgid "Import as..."
-msgstr ""
+msgstr "indil"
 
+#, fuzzy
 msgid "Import a CompizConfig Profile as a new profile"
-msgstr ""
+msgstr "indil ab xät u lüggey ngir CompizConfig"
 
 msgid "Export"
-msgstr ""
+msgstr "indal"
 
 msgid "Export your CompizConfig Profile"
-msgstr ""
+msgstr "indal sa xeet u  CompizConfig"
 
+#, fuzzy
 msgid "Reset to defaults"
-msgstr ""
+msgstr "Teg ñög yu wees yi"
 
+#, fuzzy
 msgid "Reset your CompizConfig Profile to the global defaults"
-msgstr ""
+msgstr "indal sa xeet u  CompizConfig"
 
 msgid "Backend"
-msgstr ""
+msgstr "Programa ci biir"
 
 msgid "Integration"
-msgstr ""
+msgstr "Integração"
 
 msgid "Enable integration into the desktop environment"
-msgstr ""
+msgstr "defare integração ci taabal"
 
 msgid "Profiles (*.profile)"
-msgstr ""
+msgstr "xät i lüggey yi (*.profile)"
 
 msgid "All files"
-msgstr ""
+msgstr "binday yöpp"
 
 msgid "Save file.."
-msgstr ""
+msgstr "denc binday"
 
 msgid "Open file.."
-msgstr ""
+msgstr "Ubbi binday.."
 
 msgid "Enter a profile name"
-msgstr ""
+msgstr "bindal tudde u lüggey am xät"
 
 msgid "Please enter a name for the new profile:"
-msgstr ""
+msgstr "bindal ab tudde ngir xät bu bees bi, bü là nääxë"
 
 msgid "Backend not found."
-msgstr ""
+msgstr "hamul programa ci biir bi ...  :("
 
 #. Auto sort
 msgid "Automatic plugin sorting"
-msgstr ""
+msgstr "Sortear automático dos engatos"
 
 msgid "Disabled Plugins"
-msgstr ""
+msgstr "defëkaay yu fay nañu"
 
 msgid "Enabled Plugins"
-msgstr ""
+msgstr "defëkaay yu tann nañu"
 
 msgid "Add plugin"
-msgstr ""
+msgstr "yookàl ab defukaay"
 
 msgid "Plugin name:"
-msgstr ""
+msgstr "tudde u defëkaay:"
 
 msgid "Insert plugin name"
-msgstr ""
+msgstr "bindal tudde u defekaay"
 
 msgid ""
 "Configure the backend, profile and other internal settings used by the "
 "Compiz Configuration System."
-msgstr ""
+msgstr "ogos na programa tey dara ngir ogosu Compiz, tey xät yu lüggey i ñit  "
 
 msgid "About"
-msgstr ""
+msgstr "Sobre"
 
 msgid "About CCSM..."
-msgstr ""
+msgstr "Sobre CCSM"
 
 msgid "Profile & Backend"
-msgstr ""
+msgstr "Programa ci biir, tey xeet u lüggey"
 
 msgid "Plugin List"
-msgstr ""
+msgstr "defëkaay yi"
 
 #, python-format
 msgid ""
@@ -393,3 +410,33 @@ msgid ""
 "\n"
 " Your filter \"<b>%s</b>\" does not match any items.</span>"
 msgstr ""
+"<span size=\"large\"><b>Hamul du dara melo.</b> </span><span>\n"
+"\n"
+" Sa wuute ngir \"<b>%s</b>\" hamulhoon ndamm.</span>"
+
+#~ msgid "Name"
+#~ msgstr "Tudde"
+
+#~ msgid "Key"
+#~ msgstr "Chave"
+
+#~ msgid "Button"
+#~ msgstr "Botão"
+
+#~ msgid "Screen Edge"
+#~ msgstr "Margin da Telha"
+
+#~ msgid "Button %i"
+#~ msgstr "Botão %i"
+
+#~ msgid "Edge Button"
+#~ msgstr "Botão na Beirada"
+
+#~ msgid "On System Bell"
+#~ msgstr "Campaínha"
+
+#~ msgid "Edit Action: %s"
+#~ msgstr "bindal bu wares na def: %s"
+
+#~ msgid "Screen Edges"
+#~ msgstr "Margins da Telha"
