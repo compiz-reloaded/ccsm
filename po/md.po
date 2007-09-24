@@ -1,20 +1,21 @@
-# CompizConfig  Mandingo translation.
+# CompizConfig  Mandingo translation.     
 # Copyright (C) 2007 compiz-fusion.org
 # This file is distributed under the same license as the ccsm package.
 # Werner Landgraf <werner@copaya.yi.org>
 #   Por falta de ortografia oficial, uso essentialmente àquela de:
 #   Carreira, António:  Mandingas da Guiné Portuguesa.  Bissão 1947
-#   mas substituo dj -> j ;  j -> y . Sonderzeichen ã,õ,ĩ,ẽ,ũ
+#   mas substituo dj -> j ;  j -> y . 
+#  Sonderzeichen ã,õ,ĩ,ẽ,ũ,ñ die auch nachfolgendes ŋ einschließen
 #   Palavras que não sei, coloquei em português.
 #    iconv -t UTF-8 *.pot > *.po ;  msgfmt -cv *.po  
 msgid ""
 msgstr ""
 "Project-Id-Version: md-ccsm\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-09-24 20:42+0530\n"
+"POT-Creation-Date: 2007-09-24 22:43+0530\n"
 "PO-Revision-Date: 2007-09-23 20:00-0300\n"
 "Last-Translator: Werner Landgraf <werner@copaya.yi.org>\n"
-"Language-Team: \n"
+"Language-Team: Mandingo\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -93,7 +94,7 @@ msgid ""
 msgstr ""
 "Dorão-lu <b>%(plugin)s</b> çohla <b>%(feature)s</b> le ti, mim çãbãdi nã "
 "dorão-lu:\n"
-"%(plugin_list)s"
+" %(plugin_list)s"
 
 msgid "Enable these plugins"
 msgstr "dorão-lu ñĩ malã bã !"
@@ -162,7 +163,7 @@ msgid "File"
 msgstr "kaito"
 
 msgid "Open directory..."
-msgstr "kulũo iêlela ..."
+msgstr "kaito-lu-la kulũo iêlela ..."
 
 msgid "Open file..."
 msgstr "kaito iêlela ..."
@@ -217,7 +218,7 @@ msgstr ""
 
 #, python-format
 msgid "\"%s\" is not a valid edge mask"
-msgstr "\"%s\" a-mãbetêa"
+msgstr "\"%s\" a-mãbetêa !"
 
 msgid "None"
 msgstr "Hanni fẽ"
@@ -252,10 +253,10 @@ msgid "Category"
 msgstr "çifo"
 
 msgid "Advanced Search"
-msgstr "ñinnĩarla ba"
+msgstr "ñinnĩarla ba ..."
 
 msgid "Preferences"
-msgstr "tõbõke"
+msgstr "tõbõkelu"
 
 #, python-format
 msgid "Enable %s"
@@ -290,7 +291,7 @@ msgid "Actions"
 msgstr "kêebaarolu"
 
 msgid "Error"
-msgstr "tano"
+msgstr "tano !"
 
 msgid "Search in..."
 msgstr "jubela... : "
@@ -346,7 +347,7 @@ msgstr "da-lu tilĩdĩolu çêĩdila ..."
 
 #
 msgid "Reset your CompizConfig Profile to the global defaults"
-msgstr "i-la dokuo-la kêeñão CompizConfig-ña -la da-lu tilĩdĩolu çêĩdi !"
+msgstr "i-la dokuo-la kêeñão CompizConfig-ña -la da-lu tilĩdĩolu çêĩdi "
 
 msgid "Backend"
 msgstr "programa kono"
@@ -376,7 +377,7 @@ msgid "Please enter a name for the new profile:"
 msgstr "dokuola  kêeño a-kotama -la to çafe !"
 
 msgid "Backend not found."
-msgstr "programma mãçotto !"
+msgstr "programma mãçotto !  :("
 
 #. Auto sort
 msgid "Automatic plugin sorting"
@@ -401,6 +402,7 @@ msgid ""
 "Configure the backend, profile and other internal settings used by the "
 "Compiz Configuration System."
 msgstr ""
+"ogos na programa tey löpp ngir ogosu Compiz, tey xät yu lüggey i ñit ... "
 "programa, dokuola  kêeño-lu, anĩ dokuo-la dalu, mim CompizConfig ka naffa le "
 "kono-ya,  tillĩdĩdirĩla ..."
 
@@ -416,14 +418,14 @@ msgstr "programma & dokuola kêeño kono"
 msgid "Plugin List"
 msgstr "dorãolu"
 
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "<span size=\"large\"><b>No matches found.</b> </span><span>\n"
 "\n"
 " Your filter \"<b>%s</b>\" does not match any items.</span>"
 msgstr ""
 "<span size=\"large\"><b>Hanni fẽ a-ñinnĩta.</b> </span><span>\n"
-"\n"
+" \n"
 " Feñ kommko \"<b>%s</b>\" mã çotto.</span>"
 
 #~ msgid "Name"
