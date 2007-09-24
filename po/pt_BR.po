@@ -1,16 +1,17 @@
 # CompizConfig  Brazilian Portuguese translation.
-# Based on Portugal Portuguese translation by Nicolau Gonçalves
+# Translated from scratch by Werner Landgraf, 2007 Aug 31,
+# new itens 2007 Sep 12-4.  Format corrected by the other authors
 # Copyright (C) 2007 compiz-fusion.org
 # This file is distributed under the same license as the ccsm package.
+# Werner Landgraf <werner@copaya.yi.org>
 # Marco Ribeiro (salsichad2) <salsichad2@yahoo.com.br>, 2007.
 # Marco A S Ribeiro <salsichad2@yahoo.com.br>
-# Werner Landgraf <werner@copaya.yi.org>
 msgid ""
 msgstr ""
 "Project-Id-Version: pt_BR-ccsm\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-09-21 19:08+0530\n"
-"PO-Revision-Date: 2007-07-10 20:00-0300\n"
+"POT-Creation-Date: 2007-09-24 23:51+0530\n"
+"PO-Revision-Date: 2007-09-24 15:00-0300\n"
 "Last-Translator: Werner Landgraf <werner@copaya.yi.org>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "The new value for the %(binding)s binding for the action <b>%(action)s</b> "
 "in plugin <b>%(plugin)s</b> conflicts with the action <b>%(action_conflict)"
@@ -26,125 +27,129 @@ msgid ""
 "Do you wish to disable <b>%(action_conflict)s</b> in the <b>%"
 "(plugin_conflict)s</b> plugin?"
 msgstr ""
-"Os novos valores de %s para a ação <b>%s</b> no engato <b>%s</b> estão em "
-"contradição com a ação <b>%s</b> do engato <b>%s</b>.\n"
-"Voce queira deshabilitar <b>%s</b> no engato <b>%s</b> ?"
+"O novo valor de %(binding)s para a ação <b>%(action)s</b> no engato <b>%"
+"(plugin)s</b> está em conflito com a ação <b>%(action_conflict)s</b> do "
+"engato <b>%(plugin_conflict)s</b>.\n"
+"Voce queira deshabilitar <b>%(action_conflict)s</b> no engato <b>%"
+"(plugin_conflict)s</b> ?"
 
 #, python-format
 msgid "Disable %(action_conflict)s"
-msgstr ""
+msgstr "Deshabilita %(action_conflict)s !"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Don't set %(action)s"
-msgstr "Não atribua valor a %s"
+msgstr "Não atribua valor a %(action)s !"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Set %(action)s anyway"
-msgstr "Atribua valor a %s de qualquer forma"
+msgstr "Atribua um valor a %(action)s de qualquer forma !"
 
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "You are trying to use the feature <b>%(feature)s</b> which is provided by <b>"
 "%(plugin)s</b>.\n"
 "This plugin is currently disabled.\n"
 "Do you wish to enable <b>%(plugin)s</b> so the feature is available?"
 msgstr ""
-"Voce está tentando a usar a função <b>%s</b> que foi incluido por <b>%s</"
-"b>.\n"
+"Voce está tentando a usar à função <b>%(feature)s</b> que é providenciado "
+"por <b>%(plugin)s</b>.\n"
 "Este engato atualmente está deshabilitado.\n"
-"Voce queria habilitar <b>%s</b> de modo que possa ser usado?"
+"Voce queria habilitar <b>%(plugin)s</b> de modo que possa ser usada aquela "
+"função?"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Enable %(plugin)s"
-msgstr "Engatos habilitados"
+msgstr "habilita engato %(plugin)s !"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Don't enable %(feature)s"
-msgstr "Não habilita %s"
+msgstr "Não habilita %(feature)s !"
 
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Plugin <b>%(plugin_conflict)s</b> provides feature <b>%(feature)s</b> which "
 "is also provided by <b>%(plugin)s</b>"
 msgstr ""
-"Engato <b>%s</b> providencia a função <b>%s</b> a qual também esta sendo "
-"providenciado por engato <b>%s</b>"
+"Conflito:  Engato <b>%(plugin_conflict)s</b> providencia a função <b>%"
+"(feature)s</b> a qual também esta sendo providenciado pelo engato <b>%"
+"(plugin)s</b>"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Disable %(plugin_conflict)s"
-msgstr "Engatos deshabilitados"
+msgstr "deshabilita engato  %(plugin_conflict)s !"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Don't enable %(plugin)s"
-msgstr "Não habilita %s"
+msgstr "Não habilita %(plugin)s !"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Plugin <b>%(plugin_conflict)s</b> conflicts with <b>%(plugin)s</b>."
-msgstr "Gato <b>%s</b> conflita com <b>%s</b>."
+msgstr "Gato <b>%(plugin_conflict)s</b> conflita com <b>%(plugin)s</b>."
 
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "<b>%(plugin)s</b> requires feature <b>%(feature)s</b> which is provided by "
 "the following plugins:\n"
 "%(plugin_list)s"
 msgstr ""
-"<b>%s</b> necessita da função <b>%s</b> a qual é providenciada pelos "
-"engatos:\n"
-"%s"
+"<b>%(plugin)s</b> necessita da função <b>%(feature)s</b> a qual é "
+"providenciada pelos engatos:\n"
+"%(plugin_list)s"
 
 msgid "Enable these plugins"
-msgstr "Habilita estes gatos"
+msgstr "Habilita estes gatos !"
 
-#, fuzzy, python-format
+#, python-format
 msgid "<b>%(plugin)s</b> requires the plugin <b>%(require)s</b>."
-msgstr "<b>%s</b> necessita do engato <b>%s</b>."
+msgstr "<b>%(plugin)s</b> necessita do engato <b>%(require)s</b>."
 
-#, fuzzy, python-format
+#, python-format
 msgid "Enable %(require)s"
-msgstr "Habilita %s"
+msgstr "Habilita %(require)s !"
 
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "<b>%(plugin)s</b> provides the feature <b>%(feature)s</b> which is required "
 "by the plugins <b>%(plugin_list)s</b>."
 msgstr ""
-"<b>%s</b> providencia a função <b>%s</b> a qual é necessária para os entagos "
-"<b>%s</b>."
+"<b>%(plugin)s</b> providencia à função <b>%(feature)s</b> a qual é "
+"necessária para os entagos <b>%(plugin_list)s</b>."
 
 msgid "Disable these plugins"
-msgstr "Deshabilita estes gatos"
+msgstr "Deshabilita estes gatos !"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Don't disable %(plugin)s"
-msgstr "Não deshabilita %s"
+msgstr "Não deshabilita %(plugin)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "<b>%(plugin)s</b> is required by the plugins <b>%(plugin_list)s</b>."
-msgstr "<b>%s</b> é necessário para os engatos <b>%s</b>."
+msgstr "<b>%(plugin)s</b> é necessário para os engatos <b>%(plugin_list)s</b>."
 
 msgid "General"
 msgstr "Geral"
 
 msgid "Accessibility"
-msgstr ""
+msgstr "Acesiblidade"
 
 msgid "Desktop"
-msgstr ""
+msgstr "Área de Trabalho"
 
 msgid "Extras"
-msgstr ""
+msgstr "Extras"
 
 msgid "Window Management"
-msgstr ""
+msgstr "Gerenciador de Janelas"
 
 msgid "Effects"
-msgstr ""
+msgstr "Enfeitos"
 
 msgid "Image Loading"
-msgstr ""
+msgstr "Carregar Imagem"
 
 msgid "Utility"
-msgstr ""
+msgstr "Ferramento"
 
 msgid "Reset setting to the default value"
 msgstr "Reinicialisação do valor padrão"
@@ -158,16 +163,14 @@ msgstr "Imagens"
 msgid "File"
 msgstr "Arquivo"
 
-#, fuzzy
 msgid "Open directory..."
-msgstr "Arquivo aberto.."
+msgstr "abre pasta ..."
 
-#, fuzzy
 msgid "Open file..."
-msgstr "Arquivo aberto.."
+msgstr "abre arquivo ..."
 
 msgid "Multi-list settings. You can double-click a row to edit the values."
-msgstr "Lista de escolha. Voce pode clicar na linha para editar os valores"
+msgstr "Lista de escolha. Voce pode clicar nas linhas para editar seus valores"
 
 msgid "Edit"
 msgstr "Editar"
@@ -180,41 +183,43 @@ msgstr "Valor (%s)"
 msgid "Edit %s"
 msgstr "Editar %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Value (%(value)s) for %(setting)s"
-msgstr "Valor (%s) de %s:"
+msgstr "Valor (%(value)s) de %(setting)s:"
 
 #, python-format
 msgid "\"%s\" is not a valid shortcut"
-msgstr ""
+msgstr "\"%s\" não é um atalho válido"
 
 #, fuzzy
 msgid "Disabled"
-msgstr "Deshabilita %s"
+msgstr "Deshabilitado %s"
 
-#, fuzzy
 msgid "Enabled"
-msgstr "Habilita %s"
+msgstr "Habilitado %s"
 
 msgid "Grab key combination"
-msgstr ""
+msgstr "Efetuar o conjunto dos butões"
 
 msgid "Computing possible conflicts, please wait"
-msgstr ""
+msgstr "Verificando possíveis conflitos, favor esperar ..."
 
 #, python-format
 msgid "\"%s\" is not a valid button"
-msgstr ""
+msgstr "\"%s\" não é um botão válido"
 
 #, python-format
 msgid ""
 "Using Button1 without modifiers can prevent any left click and thus break "
 "your configuration. Do you really want to set \"%s\" button to Button1 ?"
 msgstr ""
+"Usar Botão-1 sem modificadoras possa impossibilitar clicar pela esquerda e "
+"daí estragar à sua configuração.  Voçe mesmo quer colocar botão \"%s\"  como "
+"Botão-1 ?"
 
 #, python-format
 msgid "\"%s\" is not a valid edge mask"
-msgstr ""
+msgstr "\"%s\" não é marca de margin válida"
 
 msgid "None"
 msgstr "Nada"
@@ -240,7 +245,7 @@ msgid "Screen"
 msgstr "Telha"
 
 msgid "All"
-msgstr ""
+msgstr "Todo"
 
 msgid "Uncategorized"
 msgstr "Não-Especificado"
@@ -252,14 +257,14 @@ msgid "Advanced Search"
 msgstr "Procura Avançada"
 
 msgid "Preferences"
-msgstr "Preferências"
+msgstr "Preferéncias"
 
 #, python-format
 msgid "Enable %s"
 msgstr "Habilita %s"
 
 msgid "Please press the new key combination"
-msgstr ""
+msgstr "Por favor aperta a nova seleção de botões"
 
 msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr "Este é o Panel do configurador CompizConfig. "
@@ -268,20 +273,20 @@ msgid "translator-credits"
 msgstr "tradutor"
 
 msgid "An error has occured"
-msgstr ""
+msgstr "Occoreu um erro"
 
 msgid "Warning"
-msgstr ""
+msgstr "Aviso"
 
 #, python-format
 msgid "Search %s Plugin Options"
-msgstr "Procurar as Opções do engato %s"
+msgstr "Procurar das Opções do engato %s ..."
 
 msgid "Use This Plugin"
 msgstr "Utiliza este gato"
 
 msgid "Search Compiz Core Options"
-msgstr "Procura às Opções de Compiz Core"
+msgstr "Procura das Opções de Compiz Core ..."
 
 msgid "Actions"
 msgstr "Ações"
@@ -323,13 +328,11 @@ msgstr "Importar"
 msgid "Import a CompizConfig Profile"
 msgstr "Importar o Perfile de CompizConfig"
 
-#, fuzzy
 msgid "Import as..."
-msgstr "Importar"
+msgstr "Importar como..."
 
-#, fuzzy
 msgid "Import a CompizConfig Profile as a new profile"
-msgstr "Importar o Perfile de CompizConfig"
+msgstr "Importar o Perfile de CompizConfig como novo"
 
 msgid "Export"
 msgstr "Exportar"
@@ -337,13 +340,12 @@ msgstr "Exportar"
 msgid "Export your CompizConfig Profile"
 msgstr "Exportar o seu Perfile de CompizConfig"
 
-#, fuzzy
 msgid "Reset to defaults"
-msgstr "Reinicialisar Valores Padrões"
+msgstr "Reinicialisar os Valores Padrões"
 
-#, fuzzy
 msgid "Reset your CompizConfig Profile to the global defaults"
-msgstr "Exportar o seu Perfile de CompizConfig"
+msgstr ""
+"Reinicializar o seu Perfile de CompizConfig com todos os valores padrões"
 
 msgid "Backend"
 msgstr "Programa interno"
@@ -364,20 +366,20 @@ msgid "Save file.."
 msgstr "Salvar Aquivo"
 
 msgid "Open file.."
-msgstr "Arquivo aberto.."
+msgstr "Abrir Arquivo"
 
 msgid "Enter a profile name"
-msgstr "Digita o Nome do Perfile"
+msgstr "Digita o Nome do Perfile !"
 
 msgid "Please enter a name for the new profile:"
-msgstr "Favor digita um nome para o Perfile novo"
+msgstr "Favor digita um nome para o Perfile novo:"
 
 msgid "Backend not found."
 msgstr "Programa interno não achado"
 
 #. Auto sort
 msgid "Automatic plugin sorting"
-msgstr "Sortear automático dos engatos"
+msgstr "Sortear automáticamente os engatos ..."
 
 msgid "Disabled Plugins"
 msgstr "Engatos deshabilitados"
@@ -392,7 +394,7 @@ msgid "Plugin name:"
 msgstr "Nome do Engato:"
 
 msgid "Insert plugin name"
-msgstr "Insertar nome do Engato"
+msgstr "Inserir nome do Engato"
 
 msgid ""
 "Configure the backend, profile and other internal settings used by the "
@@ -411,7 +413,7 @@ msgid "Profile & Backend"
 msgstr "Perfile & Programa Interna"
 
 msgid "Plugin List"
-msgstr "Liats dos Engatos"
+msgstr "Lista dos Engatos"
 
 #, python-format
 msgid ""
