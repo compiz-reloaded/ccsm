@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm 20070908\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-09-24 22:42+0530\n"
-"PO-Revision-Date: 2007-09-24 09:00+0200\n"
+"POT-Creation-Date: 2007-09-25 11:47+0530\n"
+"PO-Revision-Date: 2007-09-24 23:00+0200\n"
 "Last-Translator: Werner Landgraf <werner@copaya.yi.org>\n"
 "Language-Team: Wolof\n"
 "MIME-Version: 1.0\n"
@@ -36,11 +36,11 @@ msgstr "fayal %(action_conflict)s ..."
 
 #, python-format
 msgid "Don't set %(action)s"
-msgstr "Bul teg genn ñög ngir %(action)s !"
+msgstr "Bul ñörĩàl %(action)s !"
 
 #, python-format
 msgid "Set %(action)s anyway"
-msgstr "Tegal genn ñög ngir %(action)s de !"
+msgstr "Ñörĩàlal %(action)s dê !"
 
 #, python-format
 msgid ""
@@ -75,7 +75,7 @@ msgstr "Fayal %(plugin_conflict)s !"
 
 #, python-format
 msgid "Don't enable %(plugin)s"
-msgstr "Bul fay %(plugin)s !"
+msgstr "Bul taxal %(plugin)s !"
 
 #, python-format
 msgid "Plugin <b>%(plugin_conflict)s</b> conflicts with <b>%(plugin)s</b>."
@@ -114,7 +114,7 @@ msgstr "Fayal defukaay yoñu !"
 
 #, python-format
 msgid "Don't disable %(plugin)s"
-msgstr "Bul taxalal %(plugin)s !"
+msgstr "Bul fay %(plugin)s !"
 
 #, python-format
 msgid "<b>%(plugin)s</b> is required by the plugins <b>%(plugin_list)s</b>."
@@ -148,7 +148,7 @@ msgid "Reset setting to the default value"
 msgstr "Ñögal ñög gu wees gi"
 
 msgid "Browse for "
-msgstr "Wuutë ... : "
+msgstr "Wuutë ngir : ... "
 
 msgid "Images"
 msgstr "Natal yi"
@@ -193,26 +193,26 @@ msgid "Enabled"
 msgstr "taxàl"
 
 msgid "Grab key combination"
-msgstr "iêlerlalu mutala ..."
+msgstr "taanal am mbootaay y butão !"
 
 msgid "Computing possible conflicts, please wait"
 msgstr "gis ndax hame jöfë-jöfë ... , xaral bü là näxë !"
 
 #, python-format
 msgid "\"%s\" is not a valid button"
-msgstr "Mo a mã butão \"%s\" naffa nole !"
+msgstr "Mënesul taan butão \"%s\"  !"
 
 #, python-format
 msgid ""
 "Using Button1 without modifiers can prevent any left click and thus break "
 "your configuration. Do you really want to set \"%s\" button to Button1 ?"
 msgstr ""
-"Ñörĩ Butão-1 ñak coppeku, loolu mënna indil jöffe-jöffe.Ndax nga bögge ñörĩu "
-"\"%s\" ngir  Butão-1 düggë-düggë ?"
+"Ñörĩ Butão-1 fi, loolu mënna indil jöffe-jöffe ndaxte tere ñörĩ ko naka yoon."
+"Ndax nga bögge teg \"%s\" ngir  Butão-1 düggë-düggë ?"
 
 #, python-format
 msgid "\"%s\" is not a valid edge mask"
-msgstr "\"%s\" baaxul !"
+msgstr " Hamul koĩ \"%s\" !"
 
 msgid "None"
 msgstr "du dara"
@@ -257,13 +257,13 @@ msgid "Enable %s"
 msgstr "Taxalal %s !"
 
 msgid "Please press the new key combination"
-msgstr "I jêlerla a-kotama çafe bã !"
+msgstr "jänal mbootaay y butão mu taanoo !"
 
 msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr "Li dafa programa bu ogosu na CompizConfig bi. "
 
 msgid "translator-credits"
-msgstr "tekkimi"
+msgstr "tekkimi: Werner Landgraf <werner@copaya.yi.org>"
 
 msgid "An error has occured"
 msgstr "Hamna ab njuumte !"
@@ -273,13 +273,13 @@ msgstr "Möy tul !"
 
 #, python-format
 msgid "Search %s Plugin Options"
-msgstr "Wuut na lu defëkaay %s mën na defë ..."
+msgstr "Wuut na ngir defëkaay %s -am mënnéel yi ..."
 
 msgid "Use This Plugin"
 msgstr "Ñöriñal defëkaay bii !"
 
 msgid "Search Compiz Core Options"
-msgstr "Wuut na lu Compiz Core  mën na defë ..."
+msgstr "Wuut na ngir Compiz Core  mënnéel yi ..."
 
 msgid "Actions"
 msgstr "defaay yi"
@@ -288,7 +288,7 @@ msgid "Error"
 msgstr "njuumte !"
 
 msgid "Search in..."
-msgstr "wuutë ci ..."
+msgstr "wuutë ci biir ... :"
 
 msgid "Short description and name"
 msgstr "Tekke tey tudde:"
@@ -327,7 +327,7 @@ msgstr "indil naka ..."
 
 #
 msgid "Import a CompizConfig Profile as a new profile"
-msgstr "indil ab xät u lüggey u CompizConfig ngir ñeriñ ko leegi ... "
+msgstr "indil ab xät u lüggey u CompizConfig ngir ñeriñ ko lêegi ... "
 
 msgid "Export"
 msgstr "indal ..."
@@ -341,7 +341,7 @@ msgstr "Teg ñög-yu-jaad yi ... "
 
 #
 msgid "Reset your CompizConfig Profile to the global defaults"
-msgstr "Teg ñög-yu-jaad yi ngir CompizConfig -am xät u lüggey löppë "
+msgstr "Teg ñög-yu-jaad yi ñöppë ngir CompizConfig -am xät u lüggey ... "
 
 msgid "Backend"
 msgstr "Programa ci biir"
@@ -365,7 +365,7 @@ msgid "Open file.."
 msgstr "hubbi binday ..."
 
 msgid "Enter a profile name"
-msgstr "bindal tudde u lüggey -am xät"
+msgstr "bindal tudde u lüggey -am xät ! "
 
 msgid "Please enter a name for the new profile:"
 msgstr "bindal ab tudde ngir xät bu bees bi, bü là nääxë"
@@ -375,7 +375,7 @@ msgstr "hamul programa ci biir bi ...  :("
 
 #. Auto sort
 msgid "Automatic plugin sorting"
-msgstr "Sortear automáticamente aos engatos ..."
+msgstr "sèddàl defëkaay yi ..."
 
 msgid "Disabled Plugins"
 msgstr "defëkaay yu fay nañu:"
@@ -405,7 +405,7 @@ msgid "About CCSM..."
 msgstr "Sobre CCSM"
 
 msgid "Profile & Backend"
-msgstr "Programa ci biir & xeet u lüggey"
+msgstr "Programa ci biir & xéet u lüggey"
 
 msgid "Plugin List"
 msgstr "defëkaay yi"
@@ -420,29 +420,35 @@ msgstr ""
 " \n"
 " Sa wuute ngir \"<b>%s</b>\" hamulhoon ndamm.</span>"
 
+#~ msgid "Disable %s"
+#~ msgstr "Fay ... "
+
 #~ msgid "Name"
 #~ msgstr "Tudde"
 
 #~ msgid "Key"
-#~ msgstr "Chave"
+#~ msgstr "Botão u teclado"
 
 #~ msgid "Button"
-#~ msgstr "Botão"
+#~ msgstr "botão u jénnax"
 
 #~ msgid "Screen Edge"
-#~ msgstr "Margin da Telha"
+#~ msgstr "koĩ u telha"
 
 #~ msgid "Button %i"
-#~ msgstr "Botão %i"
+#~ msgstr "Botão %i u jénnax"
 
 #~ msgid "Edge Button"
-#~ msgstr "Botão na Beirada"
+#~ msgstr "butão ngir koĩ u telha"
 
 #~ msgid "On System Bell"
-#~ msgstr "Campaínha"
+#~ msgstr "ao tocar a campaínha"
 
 #~ msgid "Edit Action: %s"
-#~ msgstr "bindal bu wares na def: %s"
+#~ msgstr "bindal bu war na def defaay %s ! "
 
 #~ msgid "Screen Edges"
-#~ msgstr "Margins da Telha"
+#~ msgstr "ay koĩ i telha"
+
+#~ msgid "Reset To Defaults"
+#~ msgstr "Ñögàl ñög ñu wees yi ..."

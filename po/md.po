@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: md-ccsm\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-09-24 22:43+0530\n"
-"PO-Revision-Date: 2007-09-23 20:00-0300\n"
+"POT-Creation-Date: 2007-09-25 11:46+0530\n"
+"PO-Revision-Date: 2007-09-24 23:00-0300\n"
 "Last-Translator: Werner Landgraf <werner@copaya.yi.org>\n"
 "Language-Team: Mandingo\n"
 "MIME-Version: 1.0\n"
@@ -40,11 +40,11 @@ msgstr "%(action_conflict)s dubẽna ..."
 
 #, python-format
 msgid "Don't set %(action)s"
-msgstr "Kanna %(action)s malã !"
+msgstr "Kanna %(action)s malãdi !"
 
 #, python-format
 msgid "Set %(action)s anyway"
-msgstr "%(action)s malã jiko-o-jiko !"
+msgstr "%(action)s malãdi jiko-o-jiko !"
 
 #, python-format
 msgid ""
@@ -60,11 +60,11 @@ msgstr ""
 
 #, python-format
 msgid "Enable %(plugin)s"
-msgstr "%(plugin)s malã bã !"
+msgstr "%(plugin)s malãdi bã !"
 
 #, python-format
 msgid "Don't enable %(feature)s"
-msgstr "Kanna %(feature)s malã !"
+msgstr "Kanna %(feature)s malãdi !"
 
 #, python-format
 msgid ""
@@ -80,7 +80,7 @@ msgstr "%(plugin_conflict)s  dubẽ bã !"
 
 #, python-format
 msgid "Don't enable %(plugin)s"
-msgstr "Kanna %(plugin)s dubẽ ! "
+msgstr "Kanna %(plugin)s malãdi ! "
 
 #, python-format
 msgid "Plugin <b>%(plugin_conflict)s</b> conflicts with <b>%(plugin)s</b>."
@@ -97,7 +97,7 @@ msgstr ""
 " %(plugin_list)s"
 
 msgid "Enable these plugins"
-msgstr "dorão-lu ñĩ malã bã !"
+msgstr "ñĩ dorão-lu  malãdi bã !"
 
 #, python-format
 msgid "<b>%(plugin)s</b> requires the plugin <b>%(require)s</b>."
@@ -105,7 +105,7 @@ msgstr "Dorão-lu <b>%(plugin)s</b>, dorão <b>%(require)s</b> çohla."
 
 #, python-format
 msgid "Enable %(require)s"
-msgstr "%(require)s malã bã !"
+msgstr "%(require)s malãdi bã !"
 
 #, python-format
 msgid ""
@@ -154,7 +154,7 @@ msgid "Reset setting to the default value"
 msgstr "da-tillĩdĩolu çêĩdila ..."
 
 msgid "Browse for "
-msgstr "ñininna ... : "
+msgstr "ñininna katuko :   ... "
 
 msgid "Images"
 msgstr "natalolu"
@@ -199,7 +199,7 @@ msgid "Enabled"
 msgstr "a-malãta"
 
 msgid "Grab key combination"
-msgstr "iêlerlalu mutala ..."
+msgstr "teclado -la butão-lu la kafo tõbõ !"
 
 msgid "Computing possible conflicts, please wait"
 msgstr "jubela fa tanolu sotto ... , batu domãdĩ !"
@@ -213,12 +213,12 @@ msgid ""
 "Using Button1 without modifiers can prevent any left click and thus break "
 "your configuration. Do you really want to set \"%s\" button to Button1 ?"
 msgstr ""
-"I butão-1 naffa, ñĩ tanolu çãba nã nole. Fa i lafta \"%s\" naffala kõmko "
+"I butão-1 naffa jã, ñĩ tanolu çãba nã nole. Fa i lafta \"%s\" naffala kõmko "
 "butão-1 ñãoñã ? "
 
 #, python-format
 msgid "\"%s\" is not a valid edge mask"
-msgstr "\"%s\" a-mãbetêa !"
+msgstr "\"%s\" koofo mãçotto !"
 
 msgid "None"
 msgstr "Hanni fẽ"
@@ -263,13 +263,13 @@ msgid "Enable %s"
 msgstr " %s malã bã !"
 
 msgid "Please press the new key combination"
-msgstr "I jêlerla a-kotama çafe bã !"
+msgstr "teclado -la butão-lu la kafo mim a-tõbõta,  diki bã !"
 
 msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr "Ñĩ, CompizConfig mu compiz -la tillĩdirão, le ti  :). "
 
 msgid "translator-credits"
-msgstr "kãaçorrla"
+msgstr "kãaçorrla: Werner Landgraf <werner@copaya.yi.org>"
 
 msgid "An error has occured"
 msgstr "tano çoto !"
@@ -294,7 +294,7 @@ msgid "Error"
 msgstr "tano !"
 
 msgid "Search in..."
-msgstr "jubela... : "
+msgstr "jubela ... kono : "
 
 msgid "Short description and name"
 msgstr "farãfãço anĩ to:"
@@ -347,7 +347,7 @@ msgstr "da-lu tilĩdĩolu çêĩdila ..."
 
 #
 msgid "Reset your CompizConfig Profile to the global defaults"
-msgstr "i-la dokuo-la kêeñão CompizConfig-ña -la da-lu tilĩdĩolu çêĩdi "
+msgstr "i-la dokuo-la kêeñão CompizConfig-ña -la da-lu tilĩdĩolu çêĩdi ... "
 
 msgid "Backend"
 msgstr "programa kono"
@@ -356,7 +356,7 @@ msgid "Integration"
 msgstr "mábôko"
 
 msgid "Enable integration into the desktop environment"
-msgstr "mábôko bẽtãdĩo kono malã !"
+msgstr "mábôko bẽtãdĩo kono malãdi !"
 
 msgid "Profiles (*.profile)"
 msgstr "dokuola  kêeño-lu (*.profile)"
@@ -371,7 +371,7 @@ msgid "Open file.."
 msgstr "kaito iêlela .."
 
 msgid "Enter a profile name"
-msgstr "dokuola  kêeño tõbõ !"
+msgstr "dokuola  kêeño tõbõ bã !"
 
 msgid "Please enter a name for the new profile:"
 msgstr "dokuola  kêeño a-kotama -la to çafe !"
@@ -402,7 +402,6 @@ msgid ""
 "Configure the backend, profile and other internal settings used by the "
 "Compiz Configuration System."
 msgstr ""
-"ogos na programa tey löpp ngir ogosu Compiz, tey xät yu lüggey i ñit ... "
 "programa, dokuola  kêeño-lu, anĩ dokuo-la dalu, mim CompizConfig ka naffa le "
 "kono-ya,  tillĩdĩdirĩla ..."
 
@@ -428,29 +427,35 @@ msgstr ""
 " \n"
 " Feñ kommko \"<b>%s</b>\" mã çotto.</span>"
 
+#~ msgid "Disable %s"
+#~ msgstr " dubẽna ... "
+
 #~ msgid "Name"
 #~ msgstr "To"
 
 #~ msgid "Key"
-#~ msgstr "Iêlerão"
+#~ msgstr "teclado-la Botão"
 
 #~ msgid "Button"
-#~ msgstr "Botão"
+#~ msgstr "niño-la botão"
 
 #~ msgid "Screen Edge"
-#~ msgstr "tele-la dẽdẽo"
+#~ msgstr "tele-la koofo"
 
 #~ msgid "Button %i"
-#~ msgstr "Butão %i"
+#~ msgstr "niño-la Butão %i"
 
 #~ msgid "Edge Button"
-#~ msgstr "dẽdẽo-la butão"
+#~ msgstr "tele-la koofo -la butão"
 
 #~ msgid "On System Bell"
-#~ msgstr "Talão"
+#~ msgstr "Talão-la kumo -la tumo"
 
 #~ msgid "Edit Action: %s"
-#~ msgstr "kêebarão çafe: %s"
+#~ msgstr "kêebarão %s fãdi ! "
 
 #~ msgid "Screen Edges"
-#~ msgstr "tele la dẽdẽolu"
+#~ msgstr "tele-la koofo-lu"
+
+#~ msgid "Reset To Defaults"
+#~ msgstr "da-tillĩdĩolu çêĩdila ..."
