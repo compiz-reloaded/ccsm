@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pt_BR-ccsm\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-09-24 23:51+0530\n"
-"PO-Revision-Date: 2007-09-24 15:00-0300\n"
+"POT-Creation-Date: 2007-09-25 11:46+0530\n"
+"PO-Revision-Date: 2007-09-24 19:00-0300\n"
 "Last-Translator: Werner Landgraf <werner@copaya.yi.org>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -189,7 +189,7 @@ msgstr "Valor (%(value)s) de %(setting)s:"
 
 #, python-format
 msgid "\"%s\" is not a valid shortcut"
-msgstr "\"%s\" não é um atalho válido"
+msgstr "\"%s\" não é um conjunto de butões válido"
 
 #, fuzzy
 msgid "Disabled"
@@ -199,7 +199,7 @@ msgid "Enabled"
 msgstr "Habilitado %s"
 
 msgid "Grab key combination"
-msgstr "Efetuar o conjunto dos butões"
+msgstr "Seleciona o conjunto dos butões"
 
 msgid "Computing possible conflicts, please wait"
 msgstr "Verificando possíveis conflitos, favor esperar ..."
@@ -213,20 +213,20 @@ msgid ""
 "Using Button1 without modifiers can prevent any left click and thus break "
 "your configuration. Do you really want to set \"%s\" button to Button1 ?"
 msgstr ""
-"Usar Botão-1 sem modificadoras possa impossibilitar clicar pela esquerda e "
-"daí estragar à sua configuração.  Voçe mesmo quer colocar botão \"%s\"  como "
+"Usar Botão-1 do rato mesmo possa impossibilitar clicar pela esquerda e daí "
+"estragar à sua configuração.  Voçe mesmo quer atribuir botão \"%s\"  ao "
 "Botão-1 ?"
 
 #, python-format
 msgid "\"%s\" is not a valid edge mask"
-msgstr "\"%s\" não é marca de margin válida"
+msgstr "\"%s\" não é designação válido dum canto da telha"
 
 msgid "None"
 msgstr "Nada"
 
 #, python-format
 msgid "Unhandled list type %s for %s"
-msgstr "Item não tratado %s para %s"
+msgstr "Item não suportado %s para %s"
 
 msgid "CompizConfig Settings Manager"
 msgstr "Panel do configurador  CompizConfig"
@@ -239,7 +239,7 @@ msgstr "Filtrar a lista de engatos"
 
 #, python-format
 msgid "Screen %i"
-msgstr "Telha %i"
+msgstr "Telha no. %i"
 
 msgid "Screen"
 msgstr "Telha"
@@ -248,13 +248,13 @@ msgid "All"
 msgstr "Todo"
 
 msgid "Uncategorized"
-msgstr "Não-Especificado"
+msgstr "Sem classificação"
 
 msgid "Category"
 msgstr "Típo"
 
 msgid "Advanced Search"
-msgstr "Procura Avançada"
+msgstr "Busca Avançada"
 
 msgid "Preferences"
 msgstr "Preferéncias"
@@ -270,7 +270,7 @@ msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr "Este é o Panel do configurador CompizConfig. "
 
 msgid "translator-credits"
-msgstr "tradutor"
+msgstr "Werner Landgraf <werner@copaya.yi.org>"
 
 msgid "An error has occured"
 msgstr "Occoreu um erro"
@@ -283,10 +283,10 @@ msgid "Search %s Plugin Options"
 msgstr "Procurar das Opções do engato %s ..."
 
 msgid "Use This Plugin"
-msgstr "Utiliza este gato"
+msgstr "Ativa este gato"
 
 msgid "Search Compiz Core Options"
-msgstr "Procura das Opções de Compiz Core ..."
+msgstr "Busca das Opções de Compiz Core ..."
 
 msgid "Actions"
 msgstr "Ações"
@@ -308,7 +308,7 @@ msgstr "Valores Atribuidos"
 
 #. Notebook
 msgid "Settings"
-msgstr "Valores"
+msgstr "Adaptações"
 
 msgid "Add a New Profile"
 msgstr "Adicionar um novo Perfile"
@@ -363,10 +363,10 @@ msgid "All files"
 msgstr "Todos Arquivos"
 
 msgid "Save file.."
-msgstr "Salvar Aquivo"
+msgstr "Salvar Aquivo ..."
 
 msgid "Open file.."
-msgstr "Abrir Arquivo"
+msgstr "Abrir Arquivo ..."
 
 msgid "Enter a profile name"
 msgstr "Digita o Nome do Perfile !"
@@ -425,29 +425,35 @@ msgstr ""
 "\n"
 " Seu filtro de procura \"<b>%s</b>\" não bate com nenhum item.</span>"
 
+#~ msgid "Disable %s"
+#~ msgstr "deshabilitar %s"
+
 #~ msgid "Name"
 #~ msgstr "Nome"
 
 #~ msgid "Key"
-#~ msgstr "Chave"
+#~ msgstr "Butão do Teclado"
 
 #~ msgid "Button"
-#~ msgstr "Botão"
+#~ msgstr "Botão do Rato"
 
 #~ msgid "Screen Edge"
-#~ msgstr "Margin da Telha"
+#~ msgstr "Canto da Telha"
 
 #~ msgid "Button %i"
-#~ msgstr "Botão %i"
+#~ msgstr "Botão no. %i do Rato"
 
 #~ msgid "Edge Button"
-#~ msgstr "Botão na Beirada"
+#~ msgstr "Botão atribuido ao canto da telha"
 
 #~ msgid "On System Bell"
-#~ msgstr "Campainha"
+#~ msgstr "Ao tocar a Campainha"
 
 #~ msgid "Edit Action: %s"
 #~ msgstr "Editar Ação: %s"
 
 #~ msgid "Screen Edges"
-#~ msgstr "Margins da Telha"
+#~ msgstr "Cantos da Telha"
+
+#~ msgid "Reset To Defaults"
+#~ msgstr "Voltar aos valores-padrão"
