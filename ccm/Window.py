@@ -478,7 +478,8 @@ class MainWin(gtk.Window):
     def EnablePlugin(self, widget, plugin):
         if self.BlockEnablePlugin > 0:
             return
-
+        self.BlockEnablePlugin += 1
+        
         # attempt to resolve conflicts...
         conflicts = plugin.Enabled and plugin.DisableConflicts or plugin.EnableConflicts
         conflict = PluginConflict(plugin, conflicts)
@@ -486,10 +487,10 @@ class MainWin(gtk.Window):
             plugin.Enabled = widget.get_active()
             self.UpdatePlugins()
         else:
-            self.BlockEnablePlugin += 1
             widget.set_active(plugin.Enabled)
-            self.BlockEnablePlugin -= 1
         plugin.Context.Write()
+        
+        self.BlockEnablePlugin -= 1
 
     def ToggleCategory(self, widget, category):
         if category == _("All"):
