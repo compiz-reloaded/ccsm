@@ -1,19 +1,21 @@
-# CompizConfig  Brazilian Portuguese translation.
-# Translated from scratch by Werner Landgraf, 2007 Aug 31,
-# new itens 2007 Sep 12-4.  Format corrected by the other authors
+# CompizConfig  Mandingo translation.     
 # Copyright (C) 2007 compiz-fusion.org
 # This file is distributed under the same license as the ccsm package.
 # Werner Landgraf <werner@copaya.yi.org>
-# Marco Ribeiro (salsichad2) <salsichad2@yahoo.com.br>, 2007.
-# Marco A S Ribeiro <salsichad2@yahoo.com.br>
+#   Por falta de ortografia oficial, uso essentialmente àquela de:
+#   Carreira, António:  Mandingas da Guiné Portuguesa.  Bissão 1947
+#   mas substituo dj -> j ;  j -> y . 
+#  Sonderzeichen ã,õ,ĩ,ẽ,ũ,ñ die auch nachfolgendes ŋ einschließen
+#   Palavras que não sei, coloquei em português.
+#    iconv -t UTF-8 *.pot > *.po ;  msgfmt -cv *.po  
 msgid ""
 msgstr ""
-"Project-Id-Version: pt_BR-ccsm\n"
+"Project-Id-Version: md-ccsm\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
 "POT-Creation-Date: 2007-09-25 11:46+0530\n"
-"PO-Revision-Date: 2007-09-24 19:00-0300\n"
+"PO-Revision-Date: 2007-09-24 23:00-0300\n"
 "Last-Translator: Werner Landgraf <werner@copaya.yi.org>\n"
-"Language-Team: \n"
+"Language-Team: Mandingo\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -27,23 +29,22 @@ msgid ""
 "Do you wish to disable <b>%(action_conflict)s</b> in the <b>%"
 "(plugin_conflict)s</b> plugin?"
 msgstr ""
-"O novo valor de %(binding)s para a ação <b>%(action)s</b> no engato <b>%"
-"(plugin)s</b> está em conflito com a ação <b>%(action_conflict)s</b> do "
-"engato <b>%(plugin_conflict)s</b>.\n"
-"Voce queira deshabilitar <b>%(action_conflict)s</b> no engato <b>%"
-"(plugin_conflict)s</b> ?"
+"Dorão <b>%(plugin)s</b> -la kêebaarão <b>%(action)s</b> -la da %(binding)s a-"
+"ualita dorão <b>%(plugin_conflict)s</b> -la kêbarão <b>%(action_conflict)s</"
+"b> le ti.Fa i lafita dorão <b>%(plugin_conflict)s</b> -la kêbarão <b>%"
+"(action_conflict)s</b> dubẽna ?"
 
 #, python-format
 msgid "Disable %(action_conflict)s"
-msgstr "Deshabilita %(action_conflict)s !"
+msgstr "%(action_conflict)s dubẽna ..."
 
 #, python-format
 msgid "Don't set %(action)s"
-msgstr "Não atribua valor a %(action)s !"
+msgstr "Kanna %(action)s malãdi !"
 
 #, python-format
 msgid "Set %(action)s anyway"
-msgstr "Atribua um valor a %(action)s de qualquer forma !"
+msgstr "%(action)s malãdi jiko-o-jiko !"
 
 #, python-format
 msgid ""
@@ -52,40 +53,38 @@ msgid ""
 "This plugin is currently disabled.\n"
 "Do you wish to enable <b>%(plugin)s</b> so the feature is available?"
 msgstr ""
-"Voce está tentando a usar à função <b>%(feature)s</b> que é providenciado "
-"por <b>%(plugin)s</b>.\n"
-"Este engato atualmente está deshabilitado.\n"
-"Voce queria habilitar <b>%(plugin)s</b> de modo que possa ser usada aquela "
-"função?"
+"I ka kitindila dorão <b>%(plugin)s</b> -lu-la kêebaarão <b>%(feature)s</b> "
+"naffala.\n"
+"Ñĩ dorão, a-dubẽta.\n"
+"Fa i lafta <b>%(plugin)s</b> malãdila, fo i a naffa nola?"
 
 #, python-format
 msgid "Enable %(plugin)s"
-msgstr "habilita engato %(plugin)s !"
+msgstr "%(plugin)s malãdi bã !"
 
 #, python-format
 msgid "Don't enable %(feature)s"
-msgstr "Não habilita %(feature)s !"
+msgstr "Kanna %(feature)s malãdi !"
 
 #, python-format
 msgid ""
 "Plugin <b>%(plugin_conflict)s</b> provides feature <b>%(feature)s</b> which "
 "is also provided by <b>%(plugin)s</b>"
 msgstr ""
-"Conflito:  Engato <b>%(plugin_conflict)s</b> providencia a função <b>%"
-"(feature)s</b> a qual também esta sendo providenciado pelo engato <b>%"
-"(plugin)s</b>"
+"Dorão <b>%(plugin_conflict)s</b> çãba nã kêbarão <b>%(feature)s</b> le mim "
+"çãba nã dorão <b>%(plugin)s</b> fanã. Ñĩ a-ualita."
 
 #, python-format
 msgid "Disable %(plugin_conflict)s"
-msgstr "deshabilita engato  %(plugin_conflict)s !"
+msgstr "%(plugin_conflict)s  dubẽ bã !"
 
 #, python-format
 msgid "Don't enable %(plugin)s"
-msgstr "Não habilita %(plugin)s !"
+msgstr "Kanna %(plugin)s malãdi ! "
 
 #, python-format
 msgid "Plugin <b>%(plugin_conflict)s</b> conflicts with <b>%(plugin)s</b>."
-msgstr "Gato <b>%(plugin_conflict)s</b> conflita com <b>%(plugin)s</b>."
+msgstr "Dorão-lu <b>%(plugin_conflict)s</b> anĩ <b>%(plugin)s</b> a-ualita."
 
 #, python-format
 msgid ""
@@ -93,367 +92,370 @@ msgid ""
 "the following plugins:\n"
 "%(plugin_list)s"
 msgstr ""
-"<b>%(plugin)s</b> necessita da função <b>%(feature)s</b> a qual é "
-"providenciada pelos engatos:\n"
-"%(plugin_list)s"
+"Dorão-lu <b>%(plugin)s</b> çohla <b>%(feature)s</b> le ti, mim çãbãdi nã "
+"dorão-lu:\n"
+" %(plugin_list)s"
 
 msgid "Enable these plugins"
-msgstr "Habilita estes gatos !"
+msgstr "ñĩ dorão-lu  malãdi bã !"
 
 #, python-format
 msgid "<b>%(plugin)s</b> requires the plugin <b>%(require)s</b>."
-msgstr "<b>%(plugin)s</b> necessita do engato <b>%(require)s</b>."
+msgstr "Dorão-lu <b>%(plugin)s</b>, dorão <b>%(require)s</b> çohla."
 
 #, python-format
 msgid "Enable %(require)s"
-msgstr "Habilita %(require)s !"
+msgstr "%(require)s malãdi bã !"
 
 #, python-format
 msgid ""
 "<b>%(plugin)s</b> provides the feature <b>%(feature)s</b> which is required "
 "by the plugins <b>%(plugin_list)s</b>."
 msgstr ""
-"<b>%(plugin)s</b> providencia à função <b>%(feature)s</b> a qual é "
-"necessária para os entagos <b>%(plugin_list)s</b>."
+"Dorão <b>%(plugin)s</b> , kêbarão <b>%(feature)s</b> çãba nã mim çohlãdi "
+"dorão-lu <b>%(plugin_list)s</b>."
 
 msgid "Disable these plugins"
-msgstr "Deshabilita estes gatos !"
+msgstr "dorão-lu ñĩ, dubẽ bã !"
 
 #, python-format
 msgid "Don't disable %(plugin)s"
-msgstr "Não deshabilita %(plugin)s"
+msgstr "Dorão-lu %(plugin)s, kanna dubẽ !"
 
 #, python-format
 msgid "<b>%(plugin)s</b> is required by the plugins <b>%(plugin_list)s</b>."
-msgstr "<b>%(plugin)s</b> é necessário para os engatos <b>%(plugin_list)s</b>."
+msgstr "Dorão-lu <b>%(plugin_list)s</b>, dorão-lu <b>%(plugin)s</b> çohla."
 
 msgid "General"
-msgstr "Geral"
+msgstr "Tilĩdĩo"
 
 msgid "Accessibility"
-msgstr "Acesiblidade"
+msgstr "çônêa"
 
 msgid "Desktop"
-msgstr "Área de Trabalho"
+msgstr "bẽtãdĩo"
 
 msgid "Extras"
-msgstr "Extras"
+msgstr "lãkãolu"
 
 msgid "Window Management"
-msgstr "Gerenciador de Janelas"
+msgstr "mãçã-parãterolu"
 
 msgid "Effects"
-msgstr "Enfeitos"
+msgstr "kêeolu"
 
 msgid "Image Loading"
-msgstr "Carregar Imagem"
+msgstr "natalolu çãbala nã ..."
 
 msgid "Utility"
-msgstr "Ferramento"
+msgstr "dorão"
 
 msgid "Reset setting to the default value"
-msgstr "Reinicialisação do valor padrão"
+msgstr "da-tillĩdĩolu çêĩdila ..."
 
 msgid "Browse for "
-msgstr "Procura de "
+msgstr "ñininna katuko :   ... "
 
 msgid "Images"
-msgstr "Imagens"
+msgstr "natalolu"
 
 msgid "File"
-msgstr "Arquivo"
+msgstr "kaito"
 
 msgid "Open directory..."
-msgstr "abre pasta ..."
+msgstr "kaito-lu-la kulũo iêlela ..."
 
 msgid "Open file..."
-msgstr "abre arquivo ..."
+msgstr "kaito iêlela ..."
 
 msgid "Multi-list settings. You can double-click a row to edit the values."
-msgstr "Lista de escolha. Voce pode clicar nas linhas para editar seus valores"
+msgstr "Jã, i fẽ tõbonna anĩ çaferola nole"
 
 msgid "Edit"
-msgstr "Editar"
+msgstr "çaferola ..."
 
 #, python-format
 msgid "Value (%s)"
-msgstr "Valor (%s)"
+msgstr "da (%s)"
 
 #, python-format
 msgid "Edit %s"
-msgstr "Editar %s"
+msgstr " %s çafe !"
 
 #, python-format
 msgid "Value (%(value)s) for %(setting)s"
-msgstr "Valor (%(value)s) de %(setting)s:"
+msgstr "%(setting)s -la da,  (%(value)s) le ti."
 
 #, python-format
 msgid "\"%s\" is not a valid shortcut"
-msgstr "\"%s\" não é um conjunto de butões válido"
+msgstr "\"%s\" a-mãbetêa"
 
-#, fuzzy
+#
 msgid "Disabled"
-msgstr "Deshabilitado %s"
+msgstr "a-dubẽta"
 
+#
 msgid "Enabled"
-msgstr "Habilitado %s"
+msgstr "a-malãta"
 
 msgid "Grab key combination"
-msgstr "Seleciona o conjunto dos butões"
+msgstr "teclado -la butão-lu la kafo tõbõ !"
 
 msgid "Computing possible conflicts, please wait"
-msgstr "Verificando possíveis conflitos, favor esperar ..."
+msgstr "jubela fa tanolu sotto ... , batu domãdĩ !"
 
 #, python-format
 msgid "\"%s\" is not a valid button"
-msgstr "\"%s\" não é um botão válido"
+msgstr "Mo a mã butão \"%s\" naffa nole !"
 
 #, python-format
 msgid ""
 "Using Button1 without modifiers can prevent any left click and thus break "
 "your configuration. Do you really want to set \"%s\" button to Button1 ?"
 msgstr ""
-"Usar Botão-1 do rato mesmo possa impossibilitar clicar pela esquerda e daí "
-"estragar à sua configuração.  Voçe mesmo quer atribuir botão \"%s\"  ao "
-"Botão-1 ?"
+"I butão-1 naffa jã, ñĩ tanolu çãba nã nole. Fa i lafta \"%s\" naffala kõmko "
+"butão-1 ñãoñã ? "
 
 #, python-format
 msgid "\"%s\" is not a valid edge mask"
-msgstr "\"%s\" não é designação válido dum canto da telha"
+msgstr "\"%s\" koofo mãçotto !"
 
 msgid "None"
-msgstr "Nada"
+msgstr "Hanni fẽ"
 
 #, python-format
 msgid "Unhandled list type %s for %s"
-msgstr "Item não suportado %s para %s"
+msgstr " %s a mã naffa nole komko %s"
 
 msgid "CompizConfig Settings Manager"
-msgstr "Panel do configurador  CompizConfig"
+msgstr "CompizConfig compiz -la tillĩdirão leti"
 
 msgid "Filter"
-msgstr "Filtro"
+msgstr "tombõdão"
 
 msgid "Filter your Plugin list"
-msgstr "Filtrar a lista de engatos"
+msgstr "I i-la dorão-lu tombõ bã !"
 
 #, python-format
 msgid "Screen %i"
-msgstr "Telha no. %i"
+msgstr "Telha %i"
 
 msgid "Screen"
 msgstr "Telha"
 
 msgid "All"
-msgstr "Todo"
+msgstr "bê"
 
 msgid "Uncategorized"
-msgstr "Sem classificação"
+msgstr "çifa-tão"
 
 msgid "Category"
-msgstr "Típo"
+msgstr "çifo"
 
 msgid "Advanced Search"
-msgstr "Busca Avançada"
+msgstr "ñinnĩarla ba ..."
 
 msgid "Preferences"
-msgstr "Preferéncias"
+msgstr "tõbõkelu"
 
 #, python-format
 msgid "Enable %s"
-msgstr "Habilita %s"
+msgstr " %s malã bã !"
 
 msgid "Please press the new key combination"
-msgstr "Por favor aperta a nova seleção de botões"
+msgstr "teclado -la butão-lu la kafo mim a-tõbõta,  diki bã !"
 
 msgid "This is a settings manager for the CompizConfig configuration system."
-msgstr "Este é o Panel do configurador CompizConfig. "
+msgstr "Ñĩ, CompizConfig mu compiz -la tillĩdirão, le ti  :). "
 
 msgid "translator-credits"
-msgstr "Werner Landgraf <werner@copaya.yi.org>"
+msgstr "kãaçorrla: Werner Landgraf <werner@copaya.yi.org>"
 
 msgid "An error has occured"
-msgstr "Occoreu um erro"
+msgstr "tano çoto !"
 
 msgid "Warning"
-msgstr "Aviso"
+msgstr "I hakilto !"
 
 #, python-format
 msgid "Search %s Plugin Options"
-msgstr "Procurar das Opções do engato %s ..."
+msgstr "Dorão %s -la tõbõdãolu ñinnĩla ... "
 
 msgid "Use This Plugin"
-msgstr "Ativa este gato"
+msgstr "Dorão ñĩ naffa bã !"
 
 msgid "Search Compiz Core Options"
-msgstr "Busca das Opções de Compiz Core ..."
+msgstr "CompizCore -la tõbõdãolu ñinnĩla ... "
 
 msgid "Actions"
-msgstr "Ações"
+msgstr "kêebaarolu"
 
 msgid "Error"
-msgstr "Erro"
+msgstr "tano !"
 
 msgid "Search in..."
-msgstr "Procurar em..."
+msgstr "jubela ... kono : "
 
 msgid "Short description and name"
-msgstr "Descrição resumida e Nome"
+msgstr "farãfãço anĩ to:"
 
 msgid "Long description"
-msgstr "Descrição detalhada"
+msgstr "farãfãço ba:"
 
 msgid "Settings value"
-msgstr "Valores Atribuidos"
+msgstr "Da:"
 
 #. Notebook
 msgid "Settings"
-msgstr "Adaptações"
+msgstr "Dalu"
 
 msgid "Add a New Profile"
-msgstr "Adicionar um novo Perfile"
+msgstr "Dokuo-la kêeña kotoma kefũna ..."
 
 msgid "Remove This Profile"
-msgstr "Apagar este Perfile"
+msgstr "Dokuo-la kêeña dubẽna ..."
 
 msgid "Default"
-msgstr "Padrão"
+msgstr "da a-tillĩdĩ"
 
 msgid "Profile"
-msgstr "Perfile"
+msgstr "Dokuo-la kêeña"
 
 msgid "Import"
-msgstr "Importar"
+msgstr "çãbala nã ..."
 
 msgid "Import a CompizConfig Profile"
-msgstr "Importar o Perfile de CompizConfig"
+msgstr "dokuo-la kêeñão CompizConfig -ya çãbala nã ..."
 
+#
 msgid "Import as..."
-msgstr "Importar como..."
+msgstr "çãbala nã kõmko ..."
 
+#
 msgid "Import a CompizConfig Profile as a new profile"
-msgstr "Importar o Perfile de CompizConfig como novo"
+msgstr "çãba nã dokuo-la kêeñão a-kotama CompizConfig -ya le ..."
 
 msgid "Export"
-msgstr "Exportar"
+msgstr "çãba jêe ..."
 
 msgid "Export your CompizConfig Profile"
-msgstr "Exportar o seu Perfile de CompizConfig"
+msgstr "çãba jê i-la dokuo-la kêeñão CompizConfig -ya le ..."
 
+#
 msgid "Reset to defaults"
-msgstr "Reinicialisar os Valores Padrões"
+msgstr "da-lu tilĩdĩolu çêĩdila ..."
 
+#
 msgid "Reset your CompizConfig Profile to the global defaults"
-msgstr ""
-"Reinicializar o seu Perfile de CompizConfig com todos os valores padrões"
+msgstr "i-la dokuo-la kêeñão CompizConfig-ña -la da-lu tilĩdĩolu çêĩdi ... "
 
 msgid "Backend"
-msgstr "Programa interno"
+msgstr "programa kono"
 
 msgid "Integration"
-msgstr "Integração"
+msgstr "mábôko"
 
 msgid "Enable integration into the desktop environment"
-msgstr "Habilitar a Integração com o Ambiente de Trabalho"
+msgstr "mábôko bẽtãdĩo kono malãdi !"
 
 msgid "Profiles (*.profile)"
-msgstr "Perfiles (*.profile)"
+msgstr "dokuola  kêeño-lu (*.profile)"
 
 msgid "All files"
-msgstr "Todos Arquivos"
+msgstr "kaitalu bê"
 
 msgid "Save file.."
-msgstr "Salvar Aquivo ..."
+msgstr "kaito mabôla ..."
 
 msgid "Open file.."
-msgstr "Abrir Arquivo ..."
+msgstr "kaito iêlela .."
 
 msgid "Enter a profile name"
-msgstr "Digita o Nome do Perfile !"
+msgstr "dokuola  kêeño tõbõ bã !"
 
 msgid "Please enter a name for the new profile:"
-msgstr "Favor digita um nome para o Perfile novo:"
+msgstr "dokuola  kêeño a-kotama -la to çafe !"
 
 msgid "Backend not found."
-msgstr "Programa interno não achado"
+msgstr "programma mãçotto !  :("
 
 #. Auto sort
 msgid "Automatic plugin sorting"
-msgstr "Sortear automáticamente os engatos ..."
+msgstr "dorão-lu ke kurĩna ..."
 
 msgid "Disabled Plugins"
-msgstr "Engatos deshabilitados"
+msgstr "dorão-lu a-dubẽta:"
 
 msgid "Enabled Plugins"
-msgstr "Engatos habilitados"
+msgstr "dorão-lu a-malãta:"
 
 msgid "Add plugin"
-msgstr "Adicionar Engato"
+msgstr "dorão kafũna ..."
 
 msgid "Plugin name:"
-msgstr "Nome do Engato:"
+msgstr "dorão-la to:"
 
 msgid "Insert plugin name"
-msgstr "Inserir nome do Engato"
+msgstr "dorão-la to çafê !"
 
 msgid ""
 "Configure the backend, profile and other internal settings used by the "
 "Compiz Configuration System."
 msgstr ""
-"Configuração do programa interno, dos perfiles do uso, e de outros valores "
-"internos usados pelo sistema da configuração do Compiz."
+"programa, dokuola  kêeño-lu, anĩ dokuo-la dalu, mim CompizConfig ka naffa le "
+"kono-ya,  tillĩdĩdirĩla ..."
 
 msgid "About"
-msgstr "Sobre"
+msgstr "... dũ"
 
 msgid "About CCSM..."
-msgstr "Sobre CCSM"
+msgstr "CCSM dũ"
 
 msgid "Profile & Backend"
-msgstr "Perfile & Programa Interna"
+msgstr "programma & dokuola kêeño kono"
 
 msgid "Plugin List"
-msgstr "Lista dos Engatos"
+msgstr "dorãolu"
 
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "<span size=\"large\"><b>No matches found.</b> </span><span>\n"
 "\n"
 " Your filter \"<b>%s</b>\" does not match any items.</span>"
 msgstr ""
-"<span size=\"large\"><b>Nada achado que correspondesse.</b> </span><span>\n"
-"\n"
-" Seu filtro de procura \"<b>%s</b>\" não bate com nenhum item.</span>"
+"<span size=\"large\"><b>Hanni fẽ a-ñinnĩta.</b> </span><span>\n"
+" \n"
+" Feñ kommko \"<b>%s</b>\" mã çotto.</span>"
 
 #~ msgid "Disable %s"
-#~ msgstr "deshabilitar %s"
+#~ msgstr " dubẽna ... "
 
 #~ msgid "Name"
-#~ msgstr "Nome"
+#~ msgstr "To"
 
 #~ msgid "Key"
-#~ msgstr "Butão do Teclado"
+#~ msgstr "teclado-la Botão"
 
 #~ msgid "Button"
-#~ msgstr "Botão do Rato"
+#~ msgstr "niño-la botão"
 
 #~ msgid "Screen Edge"
-#~ msgstr "Canto da Telha"
+#~ msgstr "tele-la koofo"
 
 #~ msgid "Button %i"
-#~ msgstr "Botão no. %i do Rato"
+#~ msgstr "niño-la Butão %i"
 
 #~ msgid "Edge Button"
-#~ msgstr "Botão atribuido ao canto da telha"
+#~ msgstr "tele-la koofo -la butão"
 
 #~ msgid "On System Bell"
-#~ msgstr "Ao tocar a Campainha"
+#~ msgstr "Talão-la kumo -la tumo"
 
 #~ msgid "Edit Action: %s"
-#~ msgstr "Editar Ação: %s"
+#~ msgstr "kêebarão %s fãdi ! "
 
 #~ msgid "Screen Edges"
-#~ msgstr "Cantos da Telha"
+#~ msgstr "tele-la koofo-lu"
 
 #~ msgid "Reset To Defaults"
-#~ msgstr "Voltar aos valores-padrão"
+#~ msgstr "da-tillĩdĩolu çêĩdila ..."
