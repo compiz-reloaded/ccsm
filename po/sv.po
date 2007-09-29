@@ -4,14 +4,15 @@
 # Daniel Nylander <po@danielnylander.se>, 2007.
 # Erik Eloff <erik@eloff.se>, 2007.
 # Sebastian Parborg <zedDB@hotmail.com>, 2007.
+# Fredrik Karlsson <mjukis@gmail.com>, 2007.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: compiz-fusion-plugins 0.0.1\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-09-22 13:03+0530\n"
+"POT-Creation-Date: 2007-09-29 18:36+0530\n"
 "PO-Revision-Date: 2007-07-20 18:17+0100\n"
-"Last-Translator: Sebastian Parborg <zedDB@hotmail.com>\n"
+"Last-Translator: Fredrik Karlsson <mjukis@gmail.com>\n"
 "Language-Team: Compiz Fusion Translators <i18n@lists.compiz-fusion.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -33,7 +34,7 @@ msgstr ""
 
 #, python-format
 msgid "Disable %(action_conflict)s"
-msgstr "Avaktivera %(action_conflict)s"
+msgstr "Inaktivera %(action_conflict)s"
 
 #, fuzzy, python-format
 msgid "Don't set %(action)s"
@@ -138,7 +139,6 @@ msgstr "Skrivbord"
 msgid "Extras"
 msgstr "Extras"
 
-#, fuzzy
 msgid "Window Management"
 msgstr "Fönsterhantering"
 
@@ -146,14 +146,13 @@ msgid "Effects"
 msgstr "Effekter"
 
 msgid "Image Loading"
-msgstr "Bild laddning"
+msgstr "Bildladdning"
 
-#, fuzzy
 msgid "Utility"
-msgstr "Användbarhet"
+msgstr "Verktyg"
 
 msgid "Reset setting to the default value"
-msgstr "Återställ inställning till standardvärdet"
+msgstr "Återställ inställning till standardvärde"
 
 msgid "Browse for "
 msgstr "Bläddra efter "
@@ -172,7 +171,8 @@ msgstr "Öppna fil..."
 
 #, fuzzy
 msgid "Multi-list settings. You can double-click a row to edit the values."
-msgstr "Multilist inställningar. Du kan dubbleklicka en rad och ändra värdena"
+msgstr ""
+"Multilist-inställningar. Du kan dubbelklicka en rad för att ändra värdena"
 
 msgid "Edit"
 msgstr "Redigera"
@@ -187,7 +187,7 @@ msgstr "Redigera %s"
 
 #, fuzzy, python-format
 msgid "Value (%(value)s) for %(setting)s"
-msgstr "Värde (%(value)s) för  %(settings)s:"
+msgstr "Värde (%(value)s) för  %(settings)s"
 
 #, python-format
 msgid "\"%s\" is not a valid shortcut"
@@ -201,7 +201,7 @@ msgstr "Aktiverad"
 
 #, fuzzy
 msgid "Grab key combination"
-msgstr "Ta tangengkompination"
+msgstr "Fånga tangentkombination"
 
 #, fuzzy
 msgid "Computing possible conflicts, please wait"
@@ -216,9 +216,9 @@ msgid ""
 "Using Button1 without modifiers can prevent any left click and thus break "
 "your configuration. Do you really want to set \"%s\" button to Button1 ?"
 msgstr ""
-"Användadet av Knapp1 utan modifierare can hindra vänterklickande och på "
-"såsätt ha sönder din konfiguration. Vill du verkligen binda \"%s\" knappen "
-"tillKnapp1 ?"
+"Användandet av Knapp1 utan modifierare kan förhindra vänsterklickande och på "
+"så sätt ha sönder din konfiguration. Vill du verkligen binda \"%s\" "
+"knappentill Knapp1 ?"
 
 #, python-format
 msgid "\"%s\" is not a valid edge mask"
@@ -267,14 +267,15 @@ msgid "Enable %s"
 msgstr "Aktivera %s"
 
 msgid "Please press the new key combination"
-msgstr "Var snäll och tryck in den nya tangenkompinationen"
+msgstr "Var snäll och tryck den nya tangenkombinationen"
 
 msgid "This is a settings manager for the CompizConfig configuration system."
-msgstr "Det här är en inställningshanterare för CompizConfig systemet"
+msgstr ""
+"Det här är en inställningshanterare för CompizConfig konfigurations-system"
 
 #, fuzzy
 msgid "translator-credits"
-msgstr "översättarlista"
+msgstr "översättare"
 
 msgid "An error has occured"
 msgstr "Ett fel har inträffat"
@@ -332,13 +333,12 @@ msgstr "Importera"
 msgid "Import a CompizConfig Profile"
 msgstr "Importera en CompizConfig-profil"
 
-#, fuzzy
 msgid "Import as..."
-msgstr "Importera"
+msgstr "Importera som..."
 
 #, fuzzy
 msgid "Import a CompizConfig Profile as a new profile"
-msgstr "Importera en CompizConfig-profil"
+msgstr "Importera en CompizConfig-profil som ny profil"
 
 msgid "Export"
 msgstr "Exportera"
@@ -346,13 +346,12 @@ msgstr "Exportera"
 msgid "Export your CompizConfig Profile"
 msgstr "Exportera en CompizConfig-profil"
 
-#, fuzzy
 msgid "Reset to defaults"
 msgstr "Återställ till standardvärden"
 
 #, fuzzy
 msgid "Reset your CompizConfig Profile to the global defaults"
-msgstr "Exportera en CompizConfig-profil"
+msgstr "Återställ din Compizconfig-profil till de globala standardvärdena"
 
 msgid "Backend"
 msgstr "Bakände"
@@ -361,7 +360,7 @@ msgid "Integration"
 msgstr "Integration"
 
 msgid "Enable integration into the desktop environment"
-msgstr "Aktivera integration med skrivbordsmiljön"
+msgstr "Aktivera integration med skrivbordsmiljö"
 
 msgid "Profiles (*.profile)"
 msgstr "Profiler (*.profile)"
@@ -382,36 +381,35 @@ msgid "Please enter a name for the new profile:"
 msgstr "Ange ett namn för den nya profilen:"
 
 msgid "Backend not found."
-msgstr "Bakänden hittades inte."
+msgstr "Bakände hittades inte."
 
 #. Auto sort
 msgid "Automatic plugin sorting"
-msgstr "Automatisk instickingingsmodulsortering"
+msgstr "Automatisk sortering av instickningsmoduler"
 
-#, fuzzy
 msgid "Disabled Plugins"
-msgstr "Inaktivera dessa insticksmoduler"
+msgstr "Inaktiverade insticksmoduler"
 
-#, fuzzy
 msgid "Enabled Plugins"
-msgstr "Aktivera dessa insticksmoduler"
+msgstr "Aktiverade insticksmoduler"
 
 msgid "Add plugin"
-msgstr "Lägg till instickmoduler"
+msgstr "Lägg till instickmodul"
 
 #, fuzzy
 msgid "Plugin name:"
-msgstr "Instickningsmodul namn:"
+msgstr "Instickningsmodulens namn:"
 
 msgid "Insert plugin name"
-msgstr "Sätt in instickningsmodul namn"
+msgstr "Skriv instickningsmodulens namn"
 
 #, fuzzy
 msgid ""
 "Configure the backend, profile and other internal settings used by the "
 "Compiz Configuration System."
 msgstr ""
-"Konfigurera backends och profilen som används av Compiz konfigurationssystem."
+"Konfigurera bakände, profil och andra interna inställningar  som används av "
+"Compiz konfigurationssystem."
 
 msgid "About"
 msgstr "Om"
