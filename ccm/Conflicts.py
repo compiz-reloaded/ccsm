@@ -153,7 +153,7 @@ class ActionConflict (Conflict):
         noButton     = (_("Don't set %(action)s") %  msg_dict,    gtk.STOCK_NO,   gtk.RESPONSE_NO)
         ignoreButton = (_("Set %(action)s anyway") % msg_dict,    gtk.STOCK_STOP, gtk.RESPONSE_REJECT)
 
-        return self.Ask (msg, (yesButton, noButton, ignoreButton))
+        return self.Ask (msg, (ignoreButton, noButton, yesButton))
 
 # Not used for plugin dependencies (which are handled by ccs) but own feature checking e.g. image support
 class FeatureRequirement(Conflict):
@@ -192,7 +192,7 @@ class FeatureRequirement(Conflict):
         yesButton = (_("Enable %(plugin)s") % msg_dict,       gtk.STOCK_YES, gtk.RESPONSE_YES)
         noButton  = (_("Don't enable %(feature)s") % msg_dict, gtk.STOCK_NO,  gtk.RESPONSE_NO)
 
-        answer = self.Ask(msg, (yesButton, noButton))
+        answer = self.Ask(msg, (noButton, yesButton))
     
         return answer
 
@@ -366,7 +366,7 @@ class PluginConflict(Conflict):
         okButton     = (okMsg,     gtk.STOCK_OK,     gtk.RESPONSE_OK)
         cancelButton = (cancelMsg, gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
         
-        answer = self.Ask(msg, (okButton, cancelButton), widgets)
+        answer = self.Ask(msg, (cancelButton, okButton), widgets)
         if conflict[0] == 'RequiresFeature':
             choise = widgets[0].get_active_text() 
             return answer, choise
