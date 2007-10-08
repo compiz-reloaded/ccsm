@@ -3,17 +3,16 @@
 # Copyright (C) 2007 compiz-fusion
 # This file is distributed under the same license as the Compiz Fusion packages.
 #
-#
 # Festor Wailon Dacoba <festor90@gmail.com>, 2007.
 # Fran Diéguez (GLUG) <fran.dieguez@glug.es>, 2007.
 msgid ""
 msgstr ""
 "Project-Id-Version: gl-ccsm\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-09-21 14:05+0530\n"
+"POT-Creation-Date: 2007-10-08 23:03+0530\n"
 "PO-Revision-Date: 2007-09-18 03:28+0200\n"
 "Last-Translator: Fran Diéguez (GLUG) <fran.dieguez@glug.es>\n"
-"Language-Team: Galician <gl@li.org>\n"
+"Language-Team: Galician <fran.dieguez@glug.es>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -214,8 +213,8 @@ msgid ""
 "Using Button1 without modifiers can prevent any left click and thus break "
 "your configuration. Do you really want to set \"%s\" button to Button1 ?"
 msgstr ""
-"Empregar Button1 sen modificacdores pode previr algún click esquerdo e "
-"romper a configuración. ¿Queres realmente poñer o botón \"%s\" ó Button1 ?"
+"Empregar Button1 sen modificadores pode previr algún click esquerdo e romper "
+"a súa configuración. ¿Queres realmente poñer o botón \"%s\" ó Button1 ?"
 
 #, python-format
 msgid "\"%s\" is not a valid edge mask"
@@ -345,7 +344,7 @@ msgid "Reset to defaults"
 msgstr "Volver á configuración por defecto"
 
 msgid "Reset your CompizConfig Profile to the global defaults"
-msgstr "Reiniciar tu perfil CompizConfig a las opciones por defecto globales."
+msgstr "Reiniciar o teu perfil CompizConfig ás opcións xerais por defecto."
 
 msgid "Backend"
 msgstr "Backend"
@@ -354,32 +353,32 @@ msgid "Integration"
 msgstr "Integración"
 
 msgid "Enable integration into the desktop environment"
-msgstr "Habilitar integración con el entorno de escritorio"
+msgstr "Habilitar integración co entorno de escritorio"
 
 msgid "Profiles (*.profile)"
-msgstr "Perfiles (*.profile)"
+msgstr "Perfís (*.profile)"
 
 msgid "All files"
-msgstr "Todos los archivos"
+msgstr "Tódolos ficheiros"
 
 msgid "Save file.."
-msgstr "Guardar archivo..."
+msgstr "Gardar ficheiro..."
 
 msgid "Open file.."
-msgstr "Abrir archivo.."
+msgstr "Abrir ficheiro.."
 
 msgid "Enter a profile name"
-msgstr "Introducir nombre del perfil"
+msgstr "Inserir nome de perfil"
 
 msgid "Please enter a name for the new profile:"
-msgstr "Por favor introducir un nombre para el perfil nuevo:"
+msgstr "Por favor insira un nombre para o novo perfil:"
 
 msgid "Backend not found."
-msgstr "Backend no encontrado."
+msgstr "Backend non atopado."
 
 #. Auto sort
 msgid "Automatic plugin sorting"
-msgstr "Ordenar automáticamente los plugins"
+msgstr "Ordeálos plugins automáticamente"
 
 msgid "Disabled Plugins"
 msgstr "Plugins deshabilitados"
@@ -388,19 +387,19 @@ msgid "Enabled Plugins"
 msgstr "Plugins habilitados"
 
 msgid "Add plugin"
-msgstr "Añadir plugin"
+msgstr "Engadir plugin"
 
 msgid "Plugin name:"
-msgstr "Nombre del plugin"
+msgstr "Nome do plugin"
 
 msgid "Insert plugin name"
-msgstr "Insertar nombre del plugin"
+msgstr "Inserir nome do plugin"
 
 msgid ""
 "Configure the backend, profile and other internal settings used by the "
 "Compiz Configuration System."
 msgstr ""
-"Configurar el backend, los perfiles y otras opciones internas usadas por el "
+"Configuralo backend, os perfís e outras opcións internas empregadas polo "
 "Sistema de Configuración de Compiz"
 
 msgid "About"
@@ -421,6 +420,6 @@ msgid ""
 "\n"
 " Your filter \"<b>%s</b>\" does not match any items.</span>"
 msgstr ""
-"<span size=\"large\"><b>Ninguna coincidencia.</b> </span><span>\n"
+"<span size=\"large\"><b>Ningunha coincidencia.</b> </span><span>\n"
 "\n"
-" Tu filtro \"<b>%s</b>\" no ha devuelto ningún resultado.</span>"
+" Tu filtro \"<b>%s</b>\" non retornou ningún resultado.</span>"
