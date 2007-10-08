@@ -1,5 +1,6 @@
 This software depends on Python and PyGTK >= 2.10
 sexy-python (libsexy bindings) is also used but optionnal.
+Of course librsvg-common is needed for a proper svg support in gtk/gdk.
 
 Run the setup.py script to install, e.g.:
     python setup.py install (as root, or with root rights using sudo)
