@@ -5,12 +5,13 @@
 # This file is distributed under the same license as the ccsm package.
 # Werner Landgraf <werner@copaya.yi.org>
 # Marco Ribeiro (salsichad2) <salsichad2@yahoo.com.br>, 2007.
+# Marco A S Ribeiro <salsichad2@yahoo.com.br>
 # Emerson R. de Mello <ribmello-compiz@yahoo.com.br>
 msgid ""
 msgstr ""
 "Project-Id-Version: pt_BR-ccsm\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-10-08 22:16+0530\n"
+"POT-Creation-Date: 2007-10-09 20:08+0530\n"
 "PO-Revision-Date: 2007-10-08 13:15-0300\n"
 "Last-Translator: Emerson Ribeiro de Mello <ribmello-compiz@yahoo.com.br>\n"
 "Language-Team: Portuguese/Brazil <gnome-l10n-br@listas.cipsga.org.br>\n"
@@ -214,8 +215,8 @@ msgid ""
 "your configuration. Do you really want to set \"%s\" button to Button1 ?"
 msgstr ""
 "Usar o Botão-1 do mouse sem qualquer outro modificador pode lhe "
-"impossibilitarde usar o mouse de forma correta em todo o seu sistema. Você "
-"realmente desejaatribuir o botão \"%s\" ao Botão-1 do mouse?"
+"impossibilitar de usar o mouse de forma correta em todo o seu sistema. Você "
+"realmente deseja atribuir o botão \"%s\" ao Botão-1 do mouse?"
 
 #, python-format
 msgid "\"%s\" is not a valid edge mask"
@@ -271,8 +272,8 @@ msgstr "Este é o Painel de configuração do CompizConfig."
 
 msgid "translator-credits"
 msgstr ""
-"Werner Landgraf <werner@copaya.yi.org>Emerson Ribeiro de Mello <ribmello-"
-"compiz@yahoo.com.br>"
+"Werner Landgraf <werner@copaya.yi.org>\n"
+"Emerson Ribeiro de Mello <ribmello-compiz@yahoo.com.br>"
 
 msgid "An error has occured"
 msgstr "Ocorreu um erro"
@@ -401,8 +402,8 @@ msgid ""
 "Configure the backend, profile and other internal settings used by the "
 "Compiz Configuration System."
 msgstr ""
-"Configuração do programa interno, dos perfis de uso, e de outros "
-"valoresinternos usados pelo sistema de configuração do Compiz."
+"Configuração do programa interno, dos perfis de uso, e de outros valores "
+"internos usados pelo sistema de configuração do Compiz."
 
 msgid "About"
 msgstr "Sobre"
