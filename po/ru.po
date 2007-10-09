@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-10-08 23:03+0530\n"
+"POT-Creation-Date: 2007-10-09 20:05+0530\n"
 "PO-Revision-Date: 2007-10-03 18:06+0500\n"
 "Last-Translator: Denis Rahmangulov <danfocus@gmail.com>\n"
 "Language-Team:Russian <danfocus@gmail.com> \n"
@@ -32,7 +32,7 @@ msgstr ""
 
 #, python-format
 msgid "Disable %(action_conflict)s"
-msgstr "Выключить %(action_conflict)s"
+msgstr "Отключить %(action_conflict)s"
 
 #, python-format
 msgid "Don't set %(action)s"
@@ -51,7 +51,7 @@ msgid ""
 msgstr ""
 "Вы пробуете воспользоваться возможностью <b>%(feature)s</b> которую "
 "предоставляет <b>%(plugin)s</b>.\n"
-"Этот модуль сейчас выключен.\n"
+"Этот модуль сейчас отключен.\n"
 "Вы хотите включить <b>%(plugin)s</b>, чтобы сделать возможность доступной?"
 
 #, python-format
@@ -72,7 +72,7 @@ msgstr ""
 
 #, python-format
 msgid "Disable %(plugin_conflict)s"
-msgstr "Выключить %(plugin_conflict)s"
+msgstr "Отключить %(plugin_conflict)s"
 
 #, python-format
 msgid "Don't enable %(plugin)s"
@@ -112,11 +112,11 @@ msgstr ""
 "требуется модулям <b>%(plugin_list)s</b>."
 
 msgid "Disable these plugins"
-msgstr "Выключить эти модули"
+msgstr "Отключить эти модули"
 
 #, python-format
 msgid "Don't disable %(plugin)s"
-msgstr "Не выключать %(plugin)s"
+msgstr "Не отключать %(plugin)s"
 
 #, python-format
 msgid "<b>%(plugin)s</b> is required by the plugins <b>%(plugin_list)s</b>."
@@ -144,7 +144,7 @@ msgid "Image Loading"
 msgstr "Загрузка изображения"
 
 msgid "Utility"
-msgstr "Утилита"
+msgstr "Утилиты"
 
 msgid "Reset setting to the default value"
 msgstr "Сбросить настройку на значения по умолчанию"
@@ -189,7 +189,7 @@ msgid "\"%s\" is not a valid shortcut"
 msgstr "\"%s\" не является верным ярлыком"
 
 msgid "Disabled"
-msgstr "Выключено"
+msgstr "Отключено"
 
 msgid "Enabled"
 msgstr "Включено"
@@ -294,13 +294,13 @@ msgid "Search in..."
 msgstr "Искать в..."
 
 msgid "Short description and name"
-msgstr "Краткое описание и наименование"
+msgstr "Кратком описании и наименовании"
 
 msgid "Long description"
-msgstr "Подробное описание"
+msgstr "Подробном описании"
 
 msgid "Settings value"
-msgstr "Значение настроек"
+msgstr "Значении настроек"
 
 #. Notebook
 msgid "Settings"
@@ -343,7 +343,7 @@ msgid "Reset your CompizConfig Profile to the global defaults"
 msgstr "Сбросить Ваш профиль CompizConfig на общие значения по умолчанию"
 
 msgid "Backend"
-msgstr "Бэкэнд"
+msgstr "Формат хранения настроек"
 
 msgid "Integration"
 msgstr "Интеграция"
@@ -370,14 +370,14 @@ msgid "Please enter a name for the new profile:"
 msgstr "Пожалуйста введите наименование нового профиля:"
 
 msgid "Backend not found."
-msgstr "Бэкэнд не найден."
+msgstr "Формат хранения настроек не найден."
 
 #. Auto sort
 msgid "Automatic plugin sorting"
 msgstr "Автоматическая сортировка модулей"
 
 msgid "Disabled Plugins"
-msgstr "Выключенные модули"
+msgstr "Отключенные модули"
 
 msgid "Enabled Plugins"
 msgstr "Включенные модули"
@@ -395,8 +395,8 @@ msgid ""
 "Configure the backend, profile and other internal settings used by the "
 "Compiz Configuration System."
 msgstr ""
-"Конфигурировать бэкэнд, профиль и другие внутренние настройки используя "
-"систему конфигурации Compiz."
+"Конфигурировать формат хранения настроек, профиль и другие внутренние "
+"настройки используя систему конфигурации Compiz."
 
 msgid "About"
 msgstr "О программе"
@@ -405,7 +405,7 @@ msgid "About CCSM..."
 msgstr "О CCSM..."
 
 msgid "Profile & Backend"
-msgstr "Профиль и бэкэнд"
+msgstr "Профиль и формат хранения настроек"
 
 msgid "Plugin List"
 msgstr "Список модулей"
