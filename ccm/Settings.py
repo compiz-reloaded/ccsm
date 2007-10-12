@@ -24,6 +24,7 @@ import pygtk
 import gtk
 import gobject
 import os
+import re
 import mimetypes
 mimetypes.init()
 
@@ -117,6 +118,149 @@ class Setting:
 
     def _Changed(self):
         self.PureVirtual('_Changed')
+
+class MatchSetting(Setting):
+    def _Init(self):
+        self.Widget = gtk.HBox()
+        self.Widget.set_spacing(5)
+
+        self.Entry = gtk.Entry()
+        self.Entry.connect('activate', self.Changed)
+        self.Entry.connect('focus-out-event', self.Changed)
+
+        editButton = gtk.Button ()
+        editButton.add (Image (name = gtk.STOCK_EDIT, type = ImageStock,
+                               size = gtk.ICON_SIZE_BUTTON))
+        editButton.connect ("clicked", self.RunEditDialog)
+
+        self.Widget.pack_start(self.Entry, True, True)
+        self.Widget.pack_start(editButton, False, False)
+
+    def _Read(self):
+        self.Entry.set_text(self.Setting.Value)
+
+    def _Changed(self):
+        self.Setting.Value = self.Entry.get_text()
+
+    # Taken from beryl-settings
+    def GetXprop(self, regexp):
+        xpropOutput = os.popen("xprop").readlines()
+        rex = re.compile(regexp)
+        value = ""
+        for line in xpropOutput:
+            if rex.search(line):
+                m = rex.match(line)
+                value = m.group(1).lower().capitalize()
+
+        return value
+
+    # Regular Expressions taken from beryl-settings
+    def GrabValue(self, widget, valueWidget, typeWidget):
+        value = ""
+        type = typeWidget.get_active_text()
+
+        if type == "Window Type":
+            value = self.GetXprop("^_NET_WM_WINDOW_TYPE\(ATOM\) = _NET_WM_WINDOW_TYPE_(\w+)")
+        elif type == "Window Class":
+            value = self.GetXprop("^WM_CLASS\(STRING\) = \"([^\"]+)\"")
+        elif type == "Window Title":
+            value = self.GetXprop("^WM_NAME\(STRING\) = \"([^\"]+)\"")
+        elif type == "Owning Program":
+            pid = self.GetXprop("^_NET_WM_PID\(CARDINAL\) = (\d+)")
+            value = os.popen("ps -p%s -ocomm=" % pid).read().rstrip("\r\n")
+
+        valueWidget.set_text(value)
+
+    def GenerateMatch(self, type, value, relation, invert):
+        match = ""
+        text = self.Entry.get_text()
+        typePrefixs = {\
+                    _("Window Title"): 'title',
+                    _("Window Class"): 'class',
+                    _("Window Type"): 'type',
+                    _("Owning Program"): 'program'
+                    }
+        relationSymbol = {\
+                    _("And"): '&',
+                    _("Or"): '|'
+                    }
+        prefix = typePrefixs[type]
+        symbol = relationSymbol[relation]
+
+        # check if the current match needs some brackets
+        if text[-1] != ')' and text[0] != '(':
+            match = "(%s)" % text
+        else:
+            match = text
+
+        if invert:
+            match = "%s %s !(%s=%s)" % (match, symbol, prefix, value)
+        else:
+            match = "%s %s %s=%s" % (match, symbol, prefix, value)
+
+        return match
+
+    def RunEditDialog (self, widget):
+        dlg = gtk.Dialog (_("Edit %s") % self.Setting.ShortDesc)
+        dlg.set_position (gtk.WIN_POS_CENTER_ON_PARENT)
+        dlg.set_transient_for (self.Widget.get_toplevel ())
+        dlg.add_button (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
+        dlg.add_button (gtk.STOCK_ADD, gtk.RESPONSE_OK).grab_default()
+        dlg.set_default_response (gtk.RESPONSE_OK)
+
+        table = gtk.Table()
+
+        widgetRows = []
+
+        typeLabel = Label(_("Type"))
+        typeChooser = gtk.combo_box_new_text()
+        types = (_("Window Title"), _("Window Class"), _("Window Type"), _("Owning Program"))
+        for type in types:
+            typeChooser.append_text(type)
+        typeChooser.set_active(0)
+        widgetRows.append((typeLabel, typeChooser))
+
+        valueLabel = Label(_("Value"))
+        valueBox = gtk.HBox()
+        valueBox.set_spacing(5)
+        valueEntry = gtk.Entry()
+        valueGrabButton = gtk.Button(_("Grab"))
+        valueGrabButton.connect('clicked', self.GrabValue, valueEntry, typeChooser)
+        valueBox.pack_start(valueEntry, True, True)
+        valueBox.pack_start(valueGrabButton, False, False)
+        widgetRows.append((valueLabel, valueBox))
+
+        relationLabel = Label(_("Relation"))
+        relationChooser = gtk.combo_box_new_text()
+        relations = (_("And"), _("Or"))
+        for relation in relations:
+            relationChooser.append_text(relation)
+        relationChooser.set_active(0)
+        widgetRows.append((relationLabel, relationChooser))
+
+        invertLabel = Label(_("Invert"))
+        invertCheck = gtk.CheckButton()
+        widgetRows.append((invertLabel, invertCheck))
+
+        row = 0
+        for label, widget in widgetRows:
+            table.attach(label, 0, 1, row, row+1, yoptions=0, xpadding=TableX, ypadding=TableY)
+            table.attach(widget, 1, 2, row, row+1, yoptions=0, xpadding=TableX, ypadding=TableY)
+            row += 1
+
+        dlg.vbox.pack_start(table)
+        dlg.vbox.set_spacing(5)
+        dlg.show_all()
+
+        response = dlg.run()
+        dlg.destroy()
+        if response == gtk.RESPONSE_OK:
+            type = typeChooser.get_active_text()
+            value = valueEntry.get_text()
+            relation = relationChooser.get_active_text()
+            invert = invertCheck.get_active()
+            match = self.GenerateMatch(type, value, relation, invert)
+            self.Entry.set_text(match)
 
 class StringMatchSetting(Setting):
     def _Init(self):
@@ -1484,7 +1628,10 @@ def MakeSetting (setting):
             else:
                 return StringMatchSetting (setting)
         else:
-            return StringMatchSetting (setting)
+            if setting.Type == "Match":
+                return MatchSetting (setting)
+            else:
+                return StringMatchSetting (setting)
     elif setting.Type == "Bool":
         return BoolSetting (setting)
     elif setting.Type == "Int" and len (setting.Info[2].keys ()) > 0:
