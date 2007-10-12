@@ -150,7 +150,8 @@ class MatchSetting(Setting):
         for line in xpropOutput:
             if rex.search(line):
                 m = rex.match(line)
-                value = m.group(1).lower().capitalize()
+                value = m.group(1)
+                break
 
         return value
 
@@ -161,8 +162,10 @@ class MatchSetting(Setting):
 
         if type == "Window Type":
             value = self.GetXprop("^_NET_WM_WINDOW_TYPE\(ATOM\) = _NET_WM_WINDOW_TYPE_(\w+)")
+            value = value.lower().capitalize()
         elif type == "Window Class":
             value = self.GetXprop("^WM_CLASS\(STRING\) = \"([^\"]+)\"")
+            value = value.lower().capitalize()
         elif type == "Window Title":
             value = self.GetXprop("^WM_NAME\(STRING\) = \"([^\"]+)\"")
         elif type == "Owning Program":
