@@ -265,7 +265,7 @@ class MatchSetting(Setting):
             match = self.GenerateMatch(type, value, relation, invert)
             self.Entry.set_text(match)
 
-class StringMatchSetting(Setting):
+class StringSetting(Setting):
     def _Init(self):
         self.Entry = gtk.Entry()
         Tooltips.set_tip(self.Entry, self.Setting.LongDesc)
@@ -368,9 +368,9 @@ class FileSetting:
     def SetFileName(self, text):
         self.PureVirtual('SetFileName')
 
-class FileStringSetting(StringMatchSetting, FileSetting):
+class FileStringSetting(StringSetting, FileSetting):
     def __init__(self, Setting, isDirectory=False):
-        StringMatchSetting.__init__(self, Setting)
+        StringSetting.__init__(self, Setting)
         FileSetting.__init__(self, Setting, isDirectory)
         self.Widget = gtk.HBox()
         self.Widget.set_spacing(5)
@@ -1622,19 +1622,18 @@ class BellSetting (BoolSetting):
         self.Widget.reorder_child (bell, 0)
 
 def MakeSetting (setting):
-    if setting.Type in ("String", "Match"):
+    if setting.Type == "Match":
+        return MatchSetting (setting)
+    if setting.Type == "String":
         if len (setting.Hints) > 0:
             if "file" in setting.Hints:
                 return FileStringSetting (setting)
             elif "directory" in setting.Hints:
                 return FileStringSetting (setting, isDirectory=True)
             else:
-                return StringMatchSetting (setting)
+                return StringSetting (setting)
         else:
-            if setting.Type == "Match":
-                return MatchSetting (setting)
-            else:
-                return StringMatchSetting (setting)
+            return StringSetting (setting)
     elif setting.Type == "Bool":
         return BoolSetting (setting)
     elif setting.Type == "Int" and len (setting.Info[2].keys ()) > 0:
