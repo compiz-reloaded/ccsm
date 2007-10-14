@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-10-09 20:08+0530\n"
+"POT-Creation-Date: 2007-10-14 14:24+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -133,6 +133,43 @@ msgstr ""
 msgid "Reset setting to the default value"
 msgstr ""
 
+msgid "Window Title"
+msgstr ""
+
+msgid "Window Class"
+msgstr ""
+
+msgid "Window Type"
+msgstr ""
+
+msgid "Owning Program"
+msgstr ""
+
+msgid "And"
+msgstr ""
+
+msgid "Or"
+msgstr ""
+
+#, python-format
+msgid "Edit %s"
+msgstr ""
+
+msgid "Type"
+msgstr ""
+
+msgid "Value"
+msgstr ""
+
+msgid "Grab"
+msgstr ""
+
+msgid "Relation"
+msgstr ""
+
+msgid "Invert"
+msgstr ""
+
 msgid "Browse for "
 msgstr ""
 
@@ -156,10 +193,6 @@ msgstr ""
 
 #, python-format
 msgid "Value (%s)"
-msgstr ""
-
-#, python-format
-msgid "Edit %s"
 msgstr ""
 
 #, python-format
