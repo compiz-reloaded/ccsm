@@ -165,6 +165,8 @@ class MatchSetting(Setting):
             value = value.lower().capitalize()
         elif type == "Window Role":
             value = self.GetXprop("^WM_WINDOW_ROLE\(STRING\) = \"([^\"]+)\"")
+        elif type == "Window Name":
+            value = self.GetXprop("^WM_CLASS\(STRING\) = \"([^\"]+)\"")
         elif type == "Window Class":
             value = self.GetXprop("^WM_CLASS\(STRING\) = \"([^\"]+)\", \"([^\"]+)\"")
         elif type == "Window Title":
@@ -188,6 +190,7 @@ class MatchSetting(Setting):
         typePrefixs = {\
                     _("Window Title"): 'title',
                     _("Window Role"): 'role',
+                    _("Window Name"): 'name',
                     _("Window Class"): 'class',
                     _("Window Type"): 'type',
                     _("Owning Program"): 'program'
@@ -226,7 +229,7 @@ class MatchSetting(Setting):
 
         typeLabel = Label(_("Type"))
         typeChooser = gtk.combo_box_new_text()
-        types = (_("Window Title"), _("Window Class"), _("Window Type"), _("Window Role"), _("Owning Program"))
+        types = (_("Window Title"), _("Window Class"), _("Window Type"), _("Window Name"), _("Window Role"), _("Owning Program"))
         for type in types:
             typeChooser.append_text(type)
         typeChooser.set_active(0)
