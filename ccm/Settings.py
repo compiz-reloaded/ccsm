@@ -180,9 +180,6 @@ class MatchSetting(Setting):
                 value = self.GetXprop("^WM_NAME\(STRING\) = \"([^\"]+)\"")
         elif type == "Window ID":
             value = self.GetXprop("^xwininfo: Window id: ([^\s]+)", "xwininfo")
-        elif type == "Owning Program":
-            pid = self.GetXprop("^_NET_WM_PID\(CARDINAL\) = (\d+)")
-            value = os.popen("ps -p%s -ocomm=" % pid).read().rstrip("\r\n")
 
         valueWidget.set_text(value)
 
@@ -196,7 +193,6 @@ class MatchSetting(Setting):
                     _("Window Class"): 'class',
                     _("Window Type"): 'type',
                     _("Window ID"): 'xid',
-                    _("Owning Program"): 'program'
                     }
         relationSymbol = {\
                     _("And"): '&',
