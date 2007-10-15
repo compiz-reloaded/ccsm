@@ -167,7 +167,14 @@ class MatchSetting(Setting):
             value = self.GetXprop("^WM_CLASS\(STRING\) = \"([^\"]+)\"")
             value = value.lower().capitalize()
         elif type == "Window Title":
-            value = self.GetXprop("^WM_NAME\(STRING\) = \"([^\"]+)\"")
+            value = self.GetXprop("^_NET_WM_NAME\(UTF8_STRING\) = ([^\n]+)")
+            if value:
+                list = value.split(", ")
+                value = ""
+                for hex in list:
+                    value += "%c" % int(hex, 16)
+            else:
+                value = self.GetXprop("^WM_NAME\(STRING\) = \"([^\"]+)\"")
         elif type == "Owning Program":
             pid = self.GetXprop("^_NET_WM_PID\(CARDINAL\) = (\d+)")
             value = os.popen("ps -p%s -ocomm=" % pid).read().rstrip("\r\n")
