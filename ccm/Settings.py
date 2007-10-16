@@ -228,8 +228,8 @@ class MatchSetting(Setting):
 
         typeLabel = Label(_("Type"))
         typeChooser = gtk.combo_box_new_text()
-        types = (_("Window Title"), _("Window Class"), _("Window Type"), _("Window Name"),
-                 _("Window ID"), _("Window Role"), _("Owning Program"))
+        types = (_("Window Title"), _("Window Class"), _("Window Type"),
+                 _("Window Name"), _("Window ID"), _("Window Role"))
         for type in types:
             typeChooser.append_text(type)
         typeChooser.set_active(0)
