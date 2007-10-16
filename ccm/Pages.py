@@ -657,7 +657,7 @@ class PluginListPage:
     def __init__(self, main, context):
         self.Context = context
         self.Main = main
-        self.Blocked = False
+        self.Block = 0
         rightChild = gtk.VBox()
         rightChild.set_border_width(10)
         
@@ -738,7 +738,6 @@ class PluginListPage:
         autoSort.set_active(self.Context.AutoSort)
 
         self.Widget = rightChild
-        self.Block = 0
 
     def AutoSortChanged(self, widget):
         if self.Block > 0:
@@ -812,15 +811,15 @@ class PluginListPage:
         self.DisabledPluginsList.delete(widget)
     
     def ListChanged(self, *args, **kwargs):
-        if self.Blocked:
+        if self.Block > 0:
             return
-        self.Blocked = True
+        self.Block += 1
         plugins = self.EnabledPluginsList.get_list()
 
         self.Context.Plugins['core'].Display['active_plugins'].Value = plugins
         self.Context.Write()
         self.UpdateDisabledPluginsList()
-        self.Blocked = False
+        self.Block -= 1
 
 # Preferences Page
 #
