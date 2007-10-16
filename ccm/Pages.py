@@ -738,9 +738,25 @@ class PluginListPage:
         autoSort.set_active(self.Context.AutoSort)
 
         self.Widget = rightChild
+        self.Block = 0
 
     def AutoSortChanged(self, widget):
-        self.Context.AutoSort = widget.get_active()
+        if self.Block > 0:
+            return
+
+        autoSort = widget.get_active()
+        if not autoSort:
+            dlg = gtk.MessageDialog(type=gtk.MESSAGE_WARNING, buttons=gtk.BUTTONS_YES_NO)
+            dlg.set_markup(_("Do you really want to disable automatic plugin sorting? This will also disable conflict handling. You should only do this if you know what you are doing."))
+            response = dlg.run()
+            dlg.destroy()
+            if response == gtk.RESPONSE_NO:
+                self.Block += 1
+                widget.set_active(True)
+                self.Block -= 1
+                return
+
+        self.Context.AutoSort = autoSort
         self.EnabledPluginsList.set_sensitive(not self.Context.AutoSort)
         self.DisabledPluginsList.set_sensitive(not self.Context.AutoSort)
 
