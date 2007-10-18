@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: compiz-fusion-plugins 0.0.1\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-09-29 18:36+0530\n"
+"POT-Creation-Date: 2007-10-18 13:30+0530\n"
 "PO-Revision-Date: 2007-07-20 18:17+0100\n"
 "Last-Translator: Fredrik Karlsson <mjukis@gmail.com>\n"
 "Language-Team: Compiz Fusion Translators <i18n@lists.compiz-fusion.org>\n"
@@ -154,6 +154,53 @@ msgstr "Verktyg"
 msgid "Reset setting to the default value"
 msgstr "Återställ inställning till standardvärde"
 
+msgid "Window Title"
+msgstr "Fönstertitel"
+
+#, fuzzy
+msgid "Window Role"
+msgstr "Fönster roll"
+
+#, fuzzy
+msgid "Window Name"
+msgstr "Fönsterhantering"
+
+msgid "Window Class"
+msgstr "Fönsterklass"
+
+msgid "Window Type"
+msgstr "Fönstertyp"
+
+msgid "Window ID"
+msgstr "Fönster-ID"
+
+msgid "And"
+msgstr "Och"
+
+msgid "Or"
+msgstr "Eller"
+
+#, python-format
+msgid "Edit %s"
+msgstr "Redigera %s"
+
+msgid "Type"
+msgstr "Typ"
+
+#, fuzzy
+msgid "Value"
+msgstr "Värde (%s)"
+
+msgid "Grab"
+msgstr "Greppa"
+
+#, fuzzy
+msgid "Relation"
+msgstr "Relation"
+
+msgid "Invert"
+msgstr "Invertera"
+
 msgid "Browse for "
 msgstr "Bläddra efter "
 
@@ -180,10 +227,6 @@ msgstr "Redigera"
 #, python-format
 msgid "Value (%s)"
 msgstr "Värde (%s)"
-
-#, python-format
-msgid "Edit %s"
-msgstr "Redigera %s"
 
 #, fuzzy, python-format
 msgid "Value (%(value)s) for %(setting)s"
@@ -393,6 +436,12 @@ msgstr "Inaktiverade insticksmoduler"
 msgid "Enabled Plugins"
 msgstr "Aktiverade insticksmoduler"
 
+msgid ""
+"Do you really want to disable automatic plugin sorting? This will also "
+"disable conflict handling. You should only do this if you know what you are "
+"doing."
+msgstr ""
+
 msgid "Add plugin"
 msgstr "Lägg till instickmodul"
 
@@ -432,3 +481,7 @@ msgstr ""
 "<span size=\"large\"><b>Inga matchingar hittades.</b> </span><span>\n"
 "\n"
 " Ditt filter \"<b>%s</b>\" matchar inga objekt.</span>"
+
+#, fuzzy
+#~ msgid "Owning Program"
+#~ msgstr "Ägandeprogram"
