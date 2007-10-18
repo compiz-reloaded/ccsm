@@ -160,16 +160,17 @@ class MatchSetting(Setting):
         value = ""
         type = typeWidget.get_active_text()
 
-        if type == "Window Type":
+        # FIXME: better use a translated string list shared with GenerateMatch
+        if type == _("Window Type"):
             value = self.GetXprop("^_NET_WM_WINDOW_TYPE\(ATOM\) = _NET_WM_WINDOW_TYPE_(\w+)")
             value = value.lower().capitalize()
-        elif type == "Window Role":
+        elif type == _("Window Role"):
             value = self.GetXprop("^WM_WINDOW_ROLE\(STRING\) = \"([^\"]+)\"")
-        elif type == "Window Name":
+        elif type == _("Window Name"):
             value = self.GetXprop("^WM_CLASS\(STRING\) = \"([^\"]+)\"")
-        elif type == "Window Class":
+        elif type == _("Window Class"):
             value = self.GetXprop("^WM_CLASS\(STRING\) = \"([^\"]+)\", \"([^\"]+)\"")
-        elif type == "Window Title":
+        elif type == _("Window Title"):
             value = self.GetXprop("^_NET_WM_NAME\(UTF8_STRING\) = ([^\n]+)")
             if value:
                 list = value.split(", ")
@@ -178,7 +179,7 @@ class MatchSetting(Setting):
                     value += "%c" % int(hex, 16)
             else:
                 value = self.GetXprop("^WM_NAME\(STRING\) = \"([^\"]+)\"")
-        elif type == "Window ID":
+        elif type == _("Window ID"):
             value = self.GetXprop("^xwininfo: Window id: ([^\s]+)", "xwininfo")
 
         valueWidget.set_text(value)
