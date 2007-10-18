@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-10-14 14:24+0530\n"
+"POT-Creation-Date: 2007-10-18 13:25+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -136,13 +136,19 @@ msgstr ""
 msgid "Window Title"
 msgstr ""
 
+msgid "Window Role"
+msgstr ""
+
+msgid "Window Name"
+msgstr ""
+
 msgid "Window Class"
 msgstr ""
 
 msgid "Window Type"
 msgstr ""
 
-msgid "Owning Program"
+msgid "Window ID"
 msgstr ""
 
 msgid "And"
@@ -392,6 +398,12 @@ msgid "Disabled Plugins"
 msgstr ""
 
 msgid "Enabled Plugins"
+msgstr ""
+
+msgid ""
+"Do you really want to disable automatic plugin sorting? This will also "
+"disable conflict handling. You should only do this if you know what you are "
+"doing."
 msgstr ""
 
 msgid "Add plugin"
