@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm 0.0.1\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-09-11 23:15+0200\n"
-"PO-Revision-Date: 2007-09-11 23:52+0200\n"
+"POT-Creation-Date: 2007-10-18 11:14+0200\n"
+"PO-Revision-Date: 2007-10-18 11:24+0200\n"
 "Last-Translator: Danny Baumann <maniac@opencompositing.org>\n"
 "Language-Team: Compiz Fusion translators <i18n@lists.compiz-fusion.org>\n"
 "MIME-Version: 1.0\n"
@@ -153,6 +153,49 @@ msgstr "Werkzeuge"
 msgid "Reset setting to the default value"
 msgstr "Einstellung auf den Standardwert zurücksetzen"
 
+msgid "Window Title"
+msgstr "Fenstertitel"
+
+msgid "Window Role"
+msgstr "Fensterfunktion"
+
+msgid "Window Name"
+msgstr "Fensterklassenname"
+
+msgid "Window Class"
+msgstr "Fensterklasse"
+
+msgid "Window Type"
+msgstr "Fenstertyp"
+
+msgid "Window ID"
+msgstr "Fenster-ID"
+
+msgid "And"
+msgstr "Und"
+
+msgid "Or"
+msgstr "Oder"
+
+#, python-format
+msgid "Edit %s"
+msgstr "%s bearbeiten"
+
+msgid "Type"
+msgstr "Typ"
+
+msgid "Value"
+msgstr "Wert"
+
+msgid "Grab"
+msgstr "Auswählen"
+
+msgid "Relation"
+msgstr "Beziehung"
+
+msgid "Invert"
+msgstr "Umkehren"
+
 msgid "Browse for "
 msgstr "Suche nach "
 
@@ -177,10 +220,6 @@ msgstr "Bearbeiten"
 #, python-format
 msgid "Value (%s)"
 msgstr "Wert (%s)"
-
-#, python-format
-msgid "Edit %s"
-msgstr "%s bearbeiten"
 
 #, python-format
 msgid "Value (%(value)s) for %(setting)s"
@@ -212,8 +251,8 @@ msgid ""
 "your configuration. Do you really want to set \"%s\" button to Button1 ?"
 msgstr ""
 "Die Verwendung von Maustaste 1 kann Links-Klicks verhindern und damit Ihr "
-"System unverwendbar machen. Möchten Sie wirklich \"%s\" zu Maustaste "
-"1 zuweisen?"
+"System unverwendbar machen. Möchten Sie wirklich \"%s\" zu Maustaste 1 "
+"zuweisen?"
 
 #, python-format
 msgid "\"%s\" is not a valid edge mask"
@@ -385,6 +424,12 @@ msgstr "Deaktivierte Plugins"
 
 msgid "Enabled Plugins"
 msgstr "Aktivierte Plugins"
+
+msgid ""
+"Do you really want to disable automatic plugin sorting? This will also "
+"disable conflict handling. You should only do this if you know what you are "
+"doing."
+msgstr ""
 
 msgid "Add plugin"
 msgstr "Plugin hinzufügen"
