@@ -1,20 +1,21 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# translation of ccsm.po to Euskara
+# Copyright (C) 2007 compiz-fusion
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
+# Ander Elortondo <ander.elor@gmail.com>, 2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: ccsm\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
 "POT-Creation-Date: 2007-10-18 13:26+0530\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2007-10-09 10:45+0200\n"
+"Last-Translator: Ander Elortondo <ander.elor@gmail.com>\n"
+"Language-Team: Euskara <librezale@librezale.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
 #, python-format
 msgid ""
@@ -24,18 +25,23 @@ msgid ""
 "Do you wish to disable <b>%(action_conflict)s</b> in the <b>%"
 "(plugin_conflict)s</b> plugin?"
 msgstr ""
+"<b>%(plugin)s</b> plugineko <b>%(action)s</b> ekintzaren %(binding)s lotura "
+"balio berriak gatazka sortzen du, <b>%(plugin_conflict)s</b> pluginaren <b>%"
+"(action_conflict)s</b> ekintzarekin. \n"
+"<b>%(plugin_conflict)s</b> pluginaren <b>%(action_conflict)s</b> ekintza "
+"ezgaitzerik nahi?"
 
 #, python-format
 msgid "Disable %(action_conflict)s"
-msgstr ""
+msgstr "Ezgaitu %(action_conflict)s"
 
 #, python-format
 msgid "Don't set %(action)s"
-msgstr ""
+msgstr "Ez aukeratu %(action)s"
 
 #, python-format
 msgid "Set %(action)s anyway"
-msgstr ""
+msgstr "Aukeratu %(action)s"
 
 #, python-format
 msgid ""
@@ -44,32 +50,40 @@ msgid ""
 "This plugin is currently disabled.\n"
 "Do you wish to enable <b>%(plugin)s</b> so the feature is available?"
 msgstr ""
+"<b>%(plugin)s</b> plugineko <b>%(feature)s</b> ezaugarria erabili nahi "
+"duzu.\n"
+"Plugin hau orain ezgaitua dago.\n"
+"<b>%(plugin)s</b> gaitu nahi duzu, ezaugarria erabilgarri izateko?"
 
 #, python-format
 msgid "Enable %(plugin)s"
-msgstr ""
+msgstr "Gaitu  %(plugin)s "
 
 #, python-format
 msgid "Don't enable %(feature)s"
-msgstr ""
+msgstr "Ez gaitu %(feature)s"
 
 #, python-format
 msgid ""
 "Plugin <b>%(plugin_conflict)s</b> provides feature <b>%(feature)s</b> which "
 "is also provided by <b>%(plugin)s</b>"
 msgstr ""
+" plugina honek <b>%(plugin_conflict)s</b> beste  <b>%(plugin)s</b> pluginak "
+"ere ematen duen <b>%(feature)s</b> ezaugarria ematen du."
 
 #, python-format
 msgid "Disable %(plugin_conflict)s"
-msgstr ""
+msgstr "Ezgaitu %(plugin_conflict)s"
 
 #, python-format
 msgid "Don't enable %(plugin)s"
-msgstr ""
+msgstr "Ez gaitu %(plugin)s"
 
 #, python-format
 msgid "Plugin <b>%(plugin_conflict)s</b> conflicts with <b>%(plugin)s</b>."
 msgstr ""
+"<b>%(plugin_conflict)s</b> pluginak gatazkan dago <b>%(plugin)s</b> "
+"pluginarekin."
 
 #, python-format
 msgid ""
@@ -77,37 +91,45 @@ msgid ""
 "the following plugins:\n"
 "%(plugin_list)s"
 msgstr ""
+"<b>%(plugin)s</b> pluginak <b>%(feature)s</b> ezaugarria beharrezko du, "
+"ondorengo pluginek emana:\n"
+"%(plugin_list)s"
 
 msgid "Enable these plugins"
-msgstr ""
+msgstr "Gaitu plugin hauek"
 
 #, python-format
 msgid "<b>%(plugin)s</b> requires the plugin <b>%(require)s</b>."
 msgstr ""
+"<b>%(plugin)s</b> pluginek beste hau beharrezko dute: <b>%(require)s</b>."
 
 #, python-format
 msgid "Enable %(require)s"
-msgstr ""
+msgstr "Gaitu %(require)s"
 
 #, python-format
 msgid ""
 "<b>%(plugin)s</b> provides the feature <b>%(feature)s</b> which is required "
 "by the plugins <b>%(plugin_list)s</b>."
 msgstr ""
+"<b>%(plugin)s</b> pluginak <b>%(feature)s</b> ezaugarria ematen du, "
+"ondorengo pluginek beharrezko dutena: <b>%(plugin_list)s</b>."
 
 msgid "Disable these plugins"
-msgstr ""
+msgstr "Ezgaitu plugin hauek"
 
 #, python-format
 msgid "Don't disable %(plugin)s"
-msgstr ""
+msgstr "Ez ezgaitu %(plugin)s"
 
 #, python-format
 msgid "<b>%(plugin)s</b> is required by the plugins <b>%(plugin_list)s</b>."
 msgstr ""
+"<b>%(plugin)s</b> beharrezkoa da ondorengo plugnientzat: <b>%(plugin_list)s</"
+"b>."
 
 msgid "General"
-msgstr ""
+msgstr "Orokorra"
 
 msgid "Accessibility"
 msgstr ""
@@ -131,7 +153,7 @@ msgid "Utility"
 msgstr ""
 
 msgid "Reset setting to the default value"
-msgstr ""
+msgstr "Lehenetsitako balioetan jarri ezarpenak"
 
 msgid "Window Title"
 msgstr ""
@@ -159,246 +181,252 @@ msgstr ""
 
 #, python-format
 msgid "Edit %s"
-msgstr ""
+msgstr "Editatu %s"
 
 msgid "Type"
 msgstr ""
 
+#, fuzzy
 msgid "Value"
-msgstr ""
+msgstr "Balioa (%s)"
 
 msgid "Grab"
 msgstr ""
 
+#, fuzzy
 msgid "Relation"
-msgstr ""
+msgstr "Integrazioa"
 
 msgid "Invert"
 msgstr ""
 
 msgid "Browse for "
-msgstr ""
+msgstr "Arakatu"
 
 msgid "Images"
-msgstr ""
+msgstr "Irudiak"
 
 msgid "File"
-msgstr ""
+msgstr "Fitxategia"
 
 msgid "Open directory..."
-msgstr ""
+msgstr "Zabaldu karpeta..."
 
 msgid "Open file..."
-msgstr ""
+msgstr "Zabaldu fitxategia..."
 
 msgid "Multi-list settings. You can double-click a row to edit the values."
 msgstr ""
+"Lerro anitzeko ezarpenak. Baloreak editatzeko klik bikoitza egin lerroan."
 
 msgid "Edit"
-msgstr ""
+msgstr "Editatu"
 
 #, python-format
 msgid "Value (%s)"
-msgstr ""
+msgstr "Balioa (%s)"
 
 #, python-format
 msgid "Value (%(value)s) for %(setting)s"
-msgstr ""
+msgstr "%(setting)s-dako balioa (%(value)s)"
 
 #, python-format
 msgid "\"%s\" is not a valid shortcut"
-msgstr ""
+msgstr "\"%s\"ez da baliozko laster-tekla"
 
 msgid "Disabled"
-msgstr ""
+msgstr "Ezgaitua"
 
 msgid "Enabled"
-msgstr ""
+msgstr "Gaitua"
 
 msgid "Grab key combination"
-msgstr ""
+msgstr "Tekla konbinazioa grabatu"
 
 msgid "Computing possible conflicts, please wait"
-msgstr ""
+msgstr "Gatazkak ote dauden aztertzen. Mesedez itxaron"
 
 #, python-format
 msgid "\"%s\" is not a valid button"
-msgstr ""
+msgstr "\"%s\" ez da baliozko botoia"
 
 #, python-format
 msgid ""
 "Using Button1 without modifiers can prevent any left click and thus break "
 "your configuration. Do you really want to set \"%s\" button to Button1 ?"
 msgstr ""
+"1botoia aldaketa gabe erabiltzeak ezkerreko edozein kliki aurrea hartu "
+"diezaioke eta ezarpenak hautsi. Ziur \"%s\" botoia 1botoiaz ezarri nahi "
+"duzula?"
 
 #, python-format
 msgid "\"%s\" is not a valid edge mask"
-msgstr ""
+msgstr "\"%s\" eza da maskara ertz baliokoa"
 
 msgid "None"
-msgstr ""
+msgstr "Ezer ez"
 
 #, python-format
 msgid "Unhandled list type %s for %s"
-msgstr ""
+msgstr "%s ezohiko lista mota %s -entzat"
 
 msgid "CompizConfig Settings Manager"
-msgstr ""
+msgstr "Compiz ezarpen kudeatzailea"
 
 msgid "Filter"
-msgstr ""
+msgstr "Iragazki"
 
 msgid "Filter your Plugin list"
-msgstr ""
+msgstr "Iragazi zure plugin zerrenda"
 
 #, python-format
 msgid "Screen %i"
-msgstr ""
+msgstr "%i pantaila"
 
 msgid "Screen"
-msgstr ""
+msgstr "Pantaila"
 
 msgid "All"
-msgstr ""
+msgstr "Denak"
 
 msgid "Uncategorized"
-msgstr ""
+msgstr "Kategori gabekoa"
 
 msgid "Category"
-msgstr ""
+msgstr "Kategoria"
 
 msgid "Advanced Search"
-msgstr ""
+msgstr "Bilaketa aureratua"
 
 msgid "Preferences"
-msgstr ""
+msgstr "Aukerak"
 
 #, python-format
 msgid "Enable %s"
-msgstr ""
+msgstr "Gaitu %s"
 
 msgid "Please press the new key combination"
-msgstr ""
+msgstr "Mesedez sakatu tekla konbinaketa berria"
 
 msgid "This is a settings manager for the CompizConfig configuration system."
-msgstr ""
+msgstr "Hau ezarpen kudeatzailea da, Compiz sistemaren ezarpenerako."
 
 msgid "translator-credits"
-msgstr ""
+msgstr "Itzultzaile kredituak"
 
 msgid "An error has occured"
-msgstr ""
+msgstr "Errore bat eman da"
 
 msgid "Warning"
-msgstr ""
+msgstr "Kontuz"
 
 #, python-format
 msgid "Search %s Plugin Options"
-msgstr ""
+msgstr "Bilatu %s plugin aukerak"
 
 msgid "Use This Plugin"
-msgstr ""
+msgstr "Plugin hau erabili"
 
 msgid "Search Compiz Core Options"
-msgstr ""
+msgstr "Compiz core aukerak bilatu"
 
 msgid "Actions"
-msgstr ""
+msgstr "Ekintzak"
 
 msgid "Error"
-msgstr ""
+msgstr "Errorea"
 
 msgid "Search in..."
-msgstr ""
+msgstr "Bilatu..."
 
 msgid "Short description and name"
-msgstr ""
+msgstr "Izena eta deskribapen motza"
 
 msgid "Long description"
-msgstr ""
+msgstr "Deskribapen luzea"
 
 msgid "Settings value"
-msgstr ""
+msgstr "Ezarpen balioak"
 
 #. Notebook
 msgid "Settings"
-msgstr ""
+msgstr "Ezarpenak"
 
 msgid "Add a New Profile"
-msgstr ""
+msgstr "Profil berria gehitu"
 
 msgid "Remove This Profile"
-msgstr ""
+msgstr "Ezabatu profil hau"
 
 msgid "Default"
-msgstr ""
+msgstr "Lehenetsia"
 
 msgid "Profile"
-msgstr ""
+msgstr "Profila"
 
 msgid "Import"
-msgstr ""
+msgstr "Inportatu"
 
 msgid "Import a CompizConfig Profile"
-msgstr ""
+msgstr "Inportatu Compiz ezarpen profila"
 
 msgid "Import as..."
-msgstr ""
+msgstr "Inportatu honela..."
 
 msgid "Import a CompizConfig Profile as a new profile"
-msgstr ""
+msgstr "Inportatu Compiz ezarpen profila, profil berrira"
 
 msgid "Export"
-msgstr ""
+msgstr "Esportatu"
 
 msgid "Export your CompizConfig Profile"
-msgstr ""
+msgstr "Esportatu zure Compiz ezarpen profila"
 
 msgid "Reset to defaults"
-msgstr ""
+msgstr "Ezarri lehenetsiak"
 
 msgid "Reset your CompizConfig Profile to the global defaults"
-msgstr ""
+msgstr "Ezarrri zure Compìz ezarpen profila, lehenetsi orokorretara"
 
 msgid "Backend"
-msgstr ""
+msgstr "Backend"
 
 msgid "Integration"
-msgstr ""
+msgstr "Integrazioa"
 
 msgid "Enable integration into the desktop environment"
-msgstr ""
+msgstr "Gaitu integrazioa mahagain ingurunean"
 
 msgid "Profiles (*.profile)"
-msgstr ""
+msgstr "Profilak (*.profile)"
 
 msgid "All files"
-msgstr ""
+msgstr "Fitxategi guztiak"
 
 msgid "Save file.."
-msgstr ""
+msgstr "Gorde fitxategia.."
 
 msgid "Open file.."
-msgstr ""
+msgstr "Ireki fitxategia.."
 
 msgid "Enter a profile name"
-msgstr ""
+msgstr "Sartu profile izena"
 
 msgid "Please enter a name for the new profile:"
-msgstr ""
+msgstr "Mesedez sartu izena profil berriari:"
 
 msgid "Backend not found."
-msgstr ""
+msgstr "Backend not found."
 
 #. Auto sort
 msgid "Automatic plugin sorting"
-msgstr ""
+msgstr "Pluginak automatikoki antolatu"
 
 msgid "Disabled Plugins"
-msgstr ""
+msgstr "Plugin ezgaituak"
 
 msgid "Enabled Plugins"
-msgstr ""
+msgstr "Plugin gaituak"
 
 msgid ""
 "Do you really want to disable automatic plugin sorting? This will also "
@@ -407,30 +435,32 @@ msgid ""
 msgstr ""
 
 msgid "Add plugin"
-msgstr ""
+msgstr "Gehitu plugina"
 
 msgid "Plugin name:"
-msgstr ""
+msgstr "Plugin izena:"
 
 msgid "Insert plugin name"
-msgstr ""
+msgstr "Sartu plugin izena"
 
 msgid ""
 "Configure the backend, profile and other internal settings used by the "
 "Compiz Configuration System."
 msgstr ""
+"Backend, profil eta beste barne ezarpen batzuen konfigurazioa Copiz ezarpen "
+"sistema erabiliz."
 
 msgid "About"
-msgstr ""
+msgstr "Honi buruz"
 
 msgid "About CCSM..."
-msgstr ""
+msgstr "CCSMri buruz..."
 
 msgid "Profile & Backend"
-msgstr ""
+msgstr "Profil & Backend"
 
 msgid "Plugin List"
-msgstr ""
+msgstr "Plugin zerrenda"
 
 #, python-format
 msgid ""
@@ -438,3 +468,6 @@ msgid ""
 "\n"
 " Your filter \"<b>%s</b>\" does not match any items.</span>"
 msgstr ""
+"<span size=\"large\"><b> ez du aurkitu </b> </span><span>\n"
+"\n"
+"Zure \"<b>%s</b>\" iragazkiak ez du elementurik aurkitu </span>"
