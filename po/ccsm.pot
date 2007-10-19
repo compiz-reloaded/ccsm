@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-10-18 13:30+0530\n"
+"POT-Creation-Date: 2007-10-19 11:19+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -133,7 +133,8 @@ msgstr ""
 msgid "Reset setting to the default value"
 msgstr ""
 
-msgid "Window Title"
+#. FIXME: better use a translated string list shared with GenerateMatch
+msgid "Window Type"
 msgstr ""
 
 msgid "Window Role"
@@ -145,7 +146,7 @@ msgstr ""
 msgid "Window Class"
 msgstr ""
 
-msgid "Window Type"
+msgid "Window Title"
 msgstr ""
 
 msgid "Window ID"
