@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pt_BR-ccsm\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-10-09 20:08+0530\n"
-"PO-Revision-Date: 2007-10-08 13:15-0300\n"
+"POT-Creation-Date: 2007-10-19 18:28+0530\n"
+"PO-Revision-Date: 2007-10-18 13:18-0200\n"
 "Last-Translator: Emerson Ribeiro de Mello <ribmello-compiz@yahoo.com.br>\n"
 "Language-Team: Portuguese/Brazil <gnome-l10n-br@listas.cipsga.org.br>\n"
 "MIME-Version: 1.0\n"
@@ -154,6 +154,50 @@ msgstr "Utilidade"
 msgid "Reset setting to the default value"
 msgstr "Restaurar as configurações padrões"
 
+#. FIXME: better use a translated string list shared with GenerateMatch
+msgid "Window Type"
+msgstr "Tipo da janela"
+
+msgid "Window Role"
+msgstr "Papel da janela"
+
+msgid "Window Name"
+msgstr "Nome da janela"
+
+msgid "Window Class"
+msgstr "Classe da janela"
+
+msgid "Window Title"
+msgstr "Título da janela"
+
+msgid "Window ID"
+msgstr "ID da janela"
+
+msgid "And"
+msgstr "E"
+
+msgid "Or"
+msgstr "Ou"
+
+#, python-format
+msgid "Edit %s"
+msgstr "Editar %s"
+
+msgid "Type"
+msgstr "Tipo"
+
+msgid "Value"
+msgstr "Valor"
+
+msgid "Grab"
+msgstr "Agarrar"
+
+msgid "Relation"
+msgstr "Relação"
+
+msgid "Invert"
+msgstr "Inverter"
+
 msgid "Browse for "
 msgstr "Procura por"
 
@@ -180,10 +224,6 @@ msgstr "Editar"
 #, python-format
 msgid "Value (%s)"
 msgstr "Valor (%s)"
-
-#, python-format
-msgid "Edit %s"
-msgstr "Editar %s"
 
 #, python-format
 msgid "Value (%(value)s) for %(setting)s"
@@ -388,6 +428,15 @@ msgstr "Plugins desabilitados"
 
 msgid "Enabled Plugins"
 msgstr "Plugins habilitados"
+
+msgid ""
+"Do you really want to disable automatic plugin sorting? This will also "
+"disable conflict handling. You should only do this if you know what you are "
+"doing."
+msgstr ""
+"Você realmente deseja desabilitar a ordenação automática dos plugins? Isso "
+"também irá desabilitar o tratador de conflitos. Faça isso somente se você "
+"realmente souber o que está fazendo."
 
 msgid "Add plugin"
 msgstr "Adicionar plugin"
