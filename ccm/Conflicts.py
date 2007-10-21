@@ -174,7 +174,11 @@ class FeatureRequirement(Conflict):
         if len(self.Requirements) == 0 and self.Found:
             return True
         elif not self.Found:
-            return False
+            answer = self.ErrorAskUser()
+            if answer == gtk.RESPONSE_YES:
+                return True
+            else:
+                return False
         
         for plugin in self.Requirements:
             answer = self.AskUser(plugin)
@@ -182,6 +186,21 @@ class FeatureRequirement(Conflict):
                 plugin.Enabled = True
                 self.Context.Write()
                 return True
+
+    def ErrorAskUser(self):
+        msg = _("You are trying to use the feature <b>%(feature)s</b> which is <b>not</b> provided by any plugin.\n"\
+                "Do you wish to use this feature anyway?")
+
+        msg_dict = {'feature': self.Feature}
+
+        msg = msg % msg_dict
+
+        yesButton = (_("Use %(feature)s") % msg_dict,       gtk.STOCK_YES, gtk.RESPONSE_YES)
+        noButton  = (_("Don't use %(feature)s") % msg_dict, gtk.STOCK_NO,  gtk.RESPONSE_NO)
+
+        answer = self.Ask(msg, (noButton, yesButton))
+
+        return answer
 
     def AskUser(self, plugin):
         msg = _("You are trying to use the feature <b>%(feature)s</b> which is provided by <b>%(plugin)s</b>.\n"\
@@ -197,7 +216,7 @@ class FeatureRequirement(Conflict):
         noButton  = (_("Don't enable %(feature)s") % msg_dict, gtk.STOCK_NO,  gtk.RESPONSE_NO)
 
         answer = self.Ask(msg, (noButton, yesButton))
-    
+
         return answer
 
 class PluginConflict(Conflict):
