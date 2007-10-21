@@ -662,8 +662,9 @@ class KeyGrabber (gtk.Button):
 # About Dialog
 #
 class AboutDialog (gtk.AboutDialog):
-    def __init__ (self):
+    def __init__ (self, parent):
         gtk.AboutDialog.__init__ (self)
+        self.set_parent (parent)
 
         self.set_name (_("CompizConfig Settings Manager"))
         self.set_version (Version)
@@ -676,8 +677,8 @@ class AboutDialog (gtk.AboutDialog):
         self.set_artists (["Andrew Wedderburn <andrew.wedderburn@gmail.com>",
                            "Patrick Niklaus <marex@opencompositing.org>",
                            "Gnome Icon Theme Team"])
-        self.set_icon (gtk.gdk.pixbuf_new_from_file (IconDir+"/hicolor/scalable/apps/ccsm.svg"))
-        self.set_logo (gtk.gdk.pixbuf_new_from_file (IconDir+"/hicolor/scalable/apps/ccsm.svg"))
+        self.set_icon (parent.get_icon())
+        self.set_logo (IconTheme.load_icon("ccsm", 64, gtk.ICON_LOOKUP_FORCE_SVG))
         self.set_website ("http://www.compiz-fusion.org")
 
 # Error dialog

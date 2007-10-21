@@ -877,7 +877,7 @@ class PreferencesPage:
         self.RightWidget.append_page(self.PluginListPage.Widget, gtk.Label(_("Plugin List")))
 
     def ShowAboutDialog(self, widget):
-        about = AboutDialog()
+        about = AboutDialog(widget.get_toplevel())
         about.show_all()
         about.run()
         about.destroy()
