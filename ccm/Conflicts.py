@@ -163,14 +163,18 @@ class FeatureRequirement(Conflict):
         self.Context = context
         self.Feature = feature
 
+        self.Found = False
         for plugin in context.Plugins.values():
-            if plugin.Features.__contains__(feature):
+            if feature in plugin.Features:
+                self.Found = True
                 if not plugin.Enabled:
                     self.Requirements.append(plugin)
     
     def Resolve(self):
-        if len(self.Requirements) == 0:
+        if len(self.Requirements) == 0 and self.Found:
             return True
+        elif not self.Found:
+            return False
         
         for plugin in self.Requirements:
             answer = self.AskUser(plugin)
