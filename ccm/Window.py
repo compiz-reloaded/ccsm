@@ -48,7 +48,13 @@ class MainWin(gtk.Window):
         self.set_default_size(990, 580)
         self.set_title(_("CompizConfig Settings Manager"))
         try:
-            self.set_icon (gtk.gdk.pixbuf_new_from_file(IconDir+"/hicolor/scalable/apps/ccsm.svg"))
+            list = (\
+                IconTheme.load_icon("ccsm", 16, 0),
+                IconTheme.load_icon("ccsm", 32, 0),
+                IconTheme.load_icon("ccsm", 48, 0),
+                IconTheme.load_icon("ccsm", 128, 0)
+            )
+            self.set_icon_list (*list)
         except:
             pass
         
