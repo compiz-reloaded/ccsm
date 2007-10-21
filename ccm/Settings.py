@@ -121,6 +121,19 @@ class Setting:
 
 class MatchSetting(Setting):
     def _Init(self):
+        self.TypePrefix = {\
+            _("Window Title"): 'title',
+            _("Window Role"): 'role',
+            _("Window Name"): 'name',
+            _("Window Class"): 'class',
+            _("Window Type"): 'type',
+            _("Window ID"): 'xid',
+        }
+        self.RelationSymbol = {\
+            _("And"): '&',
+            _("Or"): '|'
+        }
+
         self.Widget = gtk.HBox()
         self.Widget.set_spacing(5)
 
@@ -158,19 +171,18 @@ class MatchSetting(Setting):
     # Regular Expressions taken from beryl-settings
     def GrabValue(self, widget, valueWidget, typeWidget):
         value = ""
-        type = typeWidget.get_active_text()
+        prefix = self.TypePrefix[typeWidget.get_active_text()]
 
-        # FIXME: better use a translated string list shared with GenerateMatch
-        if type == _("Window Type"):
+        if prefix == "type":
             value = self.GetXprop("^_NET_WM_WINDOW_TYPE\(ATOM\) = _NET_WM_WINDOW_TYPE_(\w+)")
             value = value.lower().capitalize()
-        elif type == _("Window Role"):
+        elif prefix == "role":
             value = self.GetXprop("^WM_WINDOW_ROLE\(STRING\) = \"([^\"]+)\"")
-        elif type == _("Window Name"):
+        elif prefix == "name":
             value = self.GetXprop("^WM_CLASS\(STRING\) = \"([^\"]+)\"")
-        elif type == _("Window Class"):
+        elif prefix == "class":
             value = self.GetXprop("^WM_CLASS\(STRING\) = \"([^\"]+)\", \"([^\"]+)\"")
-        elif type == _("Window Title"):
+        elif prefix == "title":
             value = self.GetXprop("^_NET_WM_NAME\(UTF8_STRING\) = ([^\n]+)")
             if value:
                 list = value.split(", ")
@@ -179,7 +191,7 @@ class MatchSetting(Setting):
                     value += "%c" % int(hex, 16)
             else:
                 value = self.GetXprop("^WM_NAME\(STRING\) = \"([^\"]+)\"")
-        elif type == _("Window ID"):
+        elif prefix == "id":
             value = self.GetXprop("^xwininfo: Window id: ([^\s]+)", "xwininfo")
 
         valueWidget.set_text(value)
@@ -187,20 +199,9 @@ class MatchSetting(Setting):
     def GenerateMatch(self, type, value, relation, invert):
         match = ""
         text = self.Entry.get_text()
-        typePrefixs = {\
-                    _("Window Title"): 'title',
-                    _("Window Role"): 'role',
-                    _("Window Name"): 'name',
-                    _("Window Class"): 'class',
-                    _("Window Type"): 'type',
-                    _("Window ID"): 'xid',
-                    }
-        relationSymbol = {\
-                    _("And"): '&',
-                    _("Or"): '|'
-                    }
-        prefix = typePrefixs[type]
-        symbol = relationSymbol[relation]
+
+        prefix = self.TypePrefix[type]
+        symbol = self.RelationSymbol[relation]
 
         # check if the current match needs some brackets
         if text[-1] != ')' and text[0] != '(':
@@ -229,9 +230,7 @@ class MatchSetting(Setting):
 
         typeLabel = Label(_("Type"))
         typeChooser = gtk.combo_box_new_text()
-        types = (_("Window Title"), _("Window Class"), _("Window Type"),
-                 _("Window Name"), _("Window ID"), _("Window Role"))
-        for type in types:
+        for type in self.TypePrefix.keys():
             typeChooser.append_text(type)
         typeChooser.set_active(0)
         widgetRows.append((typeLabel, typeChooser))
@@ -248,8 +247,7 @@ class MatchSetting(Setting):
 
         relationLabel = Label(_("Relation"))
         relationChooser = gtk.combo_box_new_text()
-        relations = (_("And"), _("Or"))
-        for relation in relations:
+        for relation in self.RelationSymbol.keys():
             relationChooser.append_text(relation)
         relationChooser.set_active(0)
         widgetRows.append((relationLabel, relationChooser))
