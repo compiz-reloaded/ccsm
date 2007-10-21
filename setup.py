@@ -114,6 +114,7 @@ custom_images = []
 
 data_files = [
                 ("share/pixmaps", ["images/128x128/apps/ccsm.png"]),
+                ("share/icons/hicolor/16x16/apps", ["images/16x16/apps/ccsm.png"]),
                 ("share/applications", ["ccsm.desktop"]),
              ]
 
