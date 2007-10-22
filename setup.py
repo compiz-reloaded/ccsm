@@ -113,12 +113,11 @@ f.close ()
 custom_images = []
 
 data_files = [
-                ("share/pixmaps", ["images/128x128/apps/ccsm.png"]),
-                ("share/icons/hicolor/16x16/apps", ["images/16x16/apps/ccsm.png"]),
-                ("share/icons/hicolor/22x22/apps", ["images/22x22/apps/ccsm.png"]),
-                ("share/icons/hicolor/scalable/apps", ["images/scalable/apps/ccsm.svg"]),
                 ("share/applications", ["ccsm.desktop"]),
              ]
+
+global_icon_path = "share/icons/hicolor/"
+local_icon_path = "share/ccsm/icons/hicolor/"
 
 for dir, subdirs, files in os.walk("images/"):
     if dir == "images/":
@@ -126,11 +125,23 @@ for dir, subdirs, files in os.walk("images/"):
             custom_images.append(dir + file)
     else:
         images = []
+        global_images = []
+
         for file in files:
             if file.find(".svg") or file.find(".png"):
-                images.append(dir + '/' + file)
+                file_path = "%s/%s" % (dir, file)
+                # global image
+                if file[:-4] == "ccsm":
+                    global_images.append(file_path)
+                # local image
+                else:
+                    images.append(file_path)
+        # local
         if len(images) > 0:
-            data_files.append(("share/ccsm/icons/hicolor/" + dir[7:], images))
+            data_files.append((local_icon_path + dir[7:], images))
+        # global
+        if len(global_images) > 0:
+            data_files.append((global_icon_path + dir[7:], global_images))
 
 data_files.append(("share/ccsm/images", custom_images))
 
