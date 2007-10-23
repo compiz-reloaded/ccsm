@@ -10,10 +10,10 @@
 # Tristan RABLAT <tristan.rablat@gmail.com>, 2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: fr-ccsm\n"
+"Project-Id-Version: ccsm\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-10-08 23:02+0530\n"
-"PO-Revision-Date: 2007-10-05 19:29+0200\n"
+"POT-Creation-Date: 2007-10-23 21:49+0530\n"
+"PO-Revision-Date: 2007-10-22 15:58+0200\n"
 "Last-Translator: Tristan RABLAT <tristan.rablat@gmail.com>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -48,6 +48,25 @@ msgstr "Ne pas définir %(action)s"
 msgid "Set %(action)s anyway"
 msgstr "Définir %(action)s malgré tout"
 
+#, fuzzy, python-format
+msgid ""
+"You are trying to use the feature <b>%(feature)s</b> which is <b>not</b> "
+"provided by any plugin.\n"
+"Do you wish to use this feature anyway?"
+msgstr ""
+"Vous essayez d'activer la fonctionnalité <b>%(feature)s</b> qui est fournie "
+"par <b>%(plugin)s</b>. Cette extension est actuellement désactivée.\n"
+" Voulez vous activer <b>%(plugin)s</b> pour que la fonctionnalité soit "
+"disponible?"
+
+#, fuzzy, python-format
+msgid "Use %(feature)s"
+msgstr "Ne pas activer %(feature)s"
+
+#, fuzzy, python-format
+msgid "Don't use %(feature)s"
+msgstr "Ne pas activer %(feature)s"
+
 #, python-format
 msgid ""
 "You are trying to use the feature <b>%(feature)s</b> which is provided by <b>"
@@ -74,7 +93,7 @@ msgid ""
 "is also provided by <b>%(plugin)s</b>"
 msgstr ""
 "L'extension <b>%(plugin_conflict)s</b> fournit la fonctionnalité <b>%"
-"(feature)s</b> qui est aussi fournie par <b>%(plugin)s</b>"
+"(feature)s</b> qui est aussi fournie par <b>%(plugin)s</b>."
 
 #, python-format
 msgid "Disable %(plugin_conflict)s"
@@ -116,7 +135,7 @@ msgid ""
 "by the plugins <b>%(plugin_list)s</b>."
 msgstr ""
 "<b>%(plugin)s</b> fournit la fonctionnalité <b>%(feature)s</b> qui est "
-"requise par les extensions <b>%(plugin_list)s</b>"
+"requise par les extensions <b>%(plugin_list)s</b>."
 
 msgid "Disable these plugins"
 msgstr "Désactiver ces extensions"
@@ -134,7 +153,7 @@ msgid "General"
 msgstr "Général"
 
 msgid "Accessibility"
-msgstr "Accesibilité"
+msgstr "Accessibilité"
 
 msgid "Desktop"
 msgstr "Bureau"
@@ -156,6 +175,52 @@ msgstr "Utilitaire"
 
 msgid "Reset setting to the default value"
 msgstr "Revenir à la configuration par défaut"
+
+msgid "Window Title"
+msgstr "Titre de fenêtre"
+
+#, fuzzy
+msgid "Window Role"
+msgstr "Titre de fenêtre"
+
+#, fuzzy
+msgid "Window Name"
+msgstr "Type de fenêtre"
+
+msgid "Window Class"
+msgstr "Classe de fenêtre"
+
+msgid "Window Type"
+msgstr "Type de fenêtre"
+
+#, fuzzy
+msgid "Window ID"
+msgstr "Type de fenêtre"
+
+msgid "And"
+msgstr "Et"
+
+msgid "Or"
+msgstr "Ou"
+
+#, python-format
+msgid "Edit %s"
+msgstr "Éditer %s"
+
+msgid "Type"
+msgstr "Type"
+
+msgid "Value"
+msgstr "Valeur"
+
+msgid "Grab"
+msgstr "Saisir"
+
+msgid "Relation"
+msgstr "Relation"
+
+msgid "Invert"
+msgstr "Inverser"
 
 msgid "Browse for "
 msgstr "Naviguer pour "
@@ -183,10 +248,6 @@ msgstr "Editer"
 #, python-format
 msgid "Value (%s)"
 msgstr "Valeur (%s)"
-
-#, python-format
-msgid "Edit %s"
-msgstr "Éditer %s"
 
 #, python-format
 msgid "Value (%(value)s) for %(setting)s"
@@ -218,7 +279,7 @@ msgid ""
 "your configuration. Do you really want to set \"%s\" button to Button1 ?"
 msgstr ""
 "Utiliser Button1 sans modificateurs peut intercepter tous les clics gauches "
-"et donc risque de casser votre configuration. voulez vous vraiment associer "
+"et risque donc de casser votre configuration. voulez vous vraiment associer "
 "le bouton \"%s\" à Button1?"
 
 #, python-format
@@ -243,10 +304,10 @@ msgstr "Filtrer votre liste d'extensions"
 
 #, python-format
 msgid "Screen %i"
-msgstr "Ecran %i"
+msgstr "Écran %i"
 
 msgid "Screen"
-msgstr "Ecran"
+msgstr "Écran"
 
 msgid "All"
 msgstr "Tous"
@@ -286,13 +347,13 @@ msgstr "Attention"
 
 #, python-format
 msgid "Search %s Plugin Options"
-msgstr "Chercher %s "
+msgstr "Chercher les options de l'extension %s"
 
 msgid "Use This Plugin"
 msgstr "Utiliser cette Extension"
 
 msgid "Search Compiz Core Options"
-msgstr "Chercher Compiz Core Options"
+msgstr "Chercher les options de Compiz Core"
 
 msgid "Actions"
 msgstr "Actions"
@@ -392,6 +453,12 @@ msgstr "Extensions désactivées"
 msgid "Enabled Plugins"
 msgstr "Extensions activées"
 
+msgid ""
+"Do you really want to disable automatic plugin sorting? This will also "
+"disable conflict handling. You should only do this if you know what you are "
+"doing."
+msgstr ""
+
 msgid "Add plugin"
 msgstr "Ajouter une extension"
 
@@ -405,7 +472,7 @@ msgid ""
 "Configure the backend, profile and other internal settings used by the "
 "Compiz Configuration System."
 msgstr ""
-"Configurer le backend,le profil et d'autres réglages internes utilisés par "
+"Configurer le backend, le profil et d'autres réglages internes utilisés par "
 "le Système de Configuration de Compiz."
 
 msgid "About"
@@ -426,5 +493,8 @@ msgid ""
 "\n"
 " Your filter \"<b>%s</b>\" does not match any items.</span>"
 msgstr ""
-"<span size=\"large\"><b>Pas de correspondance trouvée.</b> </span><br><br> "
+"<span size=\"large\"><b>Pas de concordance trouvée.</b> </span><br><br> "
 "Votre filtre \"<b>%s</b>\" ne correspond à aucun objet."
+
+#~ msgid "Owning Program"
+#~ msgstr "Programme"
