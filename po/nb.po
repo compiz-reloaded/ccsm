@@ -1,14 +1,14 @@
 # Norwegian Bokmaal translation for CSSM.
 # Copyright (C) 2007 Free Software Foundation, Inc.
-# This file is distributed under the same license as the PACKAGE package.
-# ketil.w.aanensen@gmail.com, 2007.
+# This file is distributed under the same license as the CCSM package.
+# <ketil.w.aanensen@gmail.com>, 2007.
 #
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: CompizConfig Settings Manager\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-10-18 13:27+0530\n"
+"POT-Creation-Date: 2007-10-25 15:35+0530\n"
 "PO-Revision-Date: 2007-10-17 11:30+0100\n"
 "Last-Translator: Ketil W. Aanensen <ketil.w.aanensen@gmail.com>\n"
 "Language-Team: Norwegian Bokmaal <LL@li.org>\n"
@@ -41,6 +41,24 @@ msgstr "Ikke velg %(action)s"
 #, python-format
 msgid "Set %(action)s anyway"
 msgstr "Velg %(action)s uansett"
+
+#, python-format
+msgid ""
+"You are trying to use the feature <b>%(feature)s</b> which is <b>not</b> "
+"provided by any plugin.\n"
+"Do you wish to use this feature anyway?"
+msgstr ""
+"Du prøver å bruke funksjonaliteten <b>%(feature)s</b> som <b>ikke</b> "
+"leveres av noe tillegg.\n"
+"Ønsker du å bruke denne funksjonaliteten uansett?"
+
+#, python-format
+msgid "Use %(feature)s"
+msgstr "Bruk %(feature)s"
+
+#, python-format
+msgid "Don't use %(feature)s"
+msgstr "Ikke bruk %(feature)s"
 
 #, python-format
 msgid ""
@@ -262,7 +280,7 @@ msgstr "Ingen"
 
 #, python-format
 msgid "Unhandled list type %s for %s"
-msgstr "Ikke-håndtert listetype %s for %s"
+msgstr "Uhåndtert listetype %s for %s"
 
 msgid "CompizConfig Settings Manager"
 msgstr "CompizConfig Innstillingshåndterer"
