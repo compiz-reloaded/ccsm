@@ -1,13 +1,13 @@
 # Translation of CCSM to ru
 # Copyright (C) 2007 compiz-fusion.org
 # This file is distributed under the same license as the ccsm packages.
-# Denis Rahmangulov <danfocus@gmail.com>, 2007
+# Denis Rakhmangulov <danfocus@gmail.com>, 2007
 msgid ""
 msgstr ""
 "Project-Id-Version: ccsm\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-10-18 13:29+0530\n"
-"PO-Revision-Date: 2007-10-15 12:42+0500\n"
+"POT-Creation-Date: 2007-10-25 15:37+0530\n"
+"PO-Revision-Date: 2007-10-22 12:59+0500\n"
 "Last-Translator: Denis Rakhmangulov <danfocus@gmail.com>\n"
 "Language-Team: Russian <danfocus@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -41,6 +41,24 @@ msgstr "Не устанавливать %(action)s"
 #, python-format
 msgid "Set %(action)s anyway"
 msgstr "Установить %(action)s все равно"
+
+#, python-format
+msgid ""
+"You are trying to use the feature <b>%(feature)s</b> which is <b>not</b> "
+"provided by any plugin.\n"
+"Do you wish to use this feature anyway?"
+msgstr ""
+"Вы пытаетесь использовать возможность <b>%(feature)s</b>, которая <b>не</b> "
+"предоставлена ни одним модулем.\n"
+"Вы все равно хотите использовать эту возможность?"
+
+#, python-format
+msgid "Use %(feature)s"
+msgstr "Использовать %(feature)s"
+
+#, python-format
+msgid "Don't use %(feature)s"
+msgstr "Не использовать %(feature)s"
 
 #, python-format
 msgid ""
@@ -152,13 +170,11 @@ msgstr "Сбросить настройку на значения по умол�
 msgid "Window Title"
 msgstr "Заголовок окна"
 
-#, fuzzy
 msgid "Window Role"
-msgstr "Заголовок окна"
+msgstr "Роль окна"
 
-#, fuzzy
 msgid "Window Name"
-msgstr "Тип окна"
+msgstr "Имя окна"
 
 msgid "Window Class"
 msgstr "Класс окна"
@@ -166,9 +182,8 @@ msgstr "Класс окна"
 msgid "Window Type"
 msgstr "Тип окна"
 
-#, fuzzy
 msgid "Window ID"
-msgstr "Тип окна"
+msgstr "ID окна"
 
 msgid "And"
 msgstr "И"
@@ -429,6 +444,9 @@ msgid ""
 "disable conflict handling. You should only do this if you know what you are "
 "doing."
 msgstr ""
+"Вы действительно хотите отключить автоматическую сортировку модулей? Это "
+"отключит разрешение конфликтов. Вы можете это сделать если знаете, что "
+"делаете."
 
 msgid "Add plugin"
 msgstr "Добавить модуль"
@@ -467,6 +485,3 @@ msgstr ""
 "<span size=\"large\"><b>Не найдено совпадений.</b> </span><span>\n"
 "\n"
 " Ваш фильтр \"<b>%s</b>\" не совпал ни с чем.</span>"
-
-#~ msgid "Owning Program"
-#~ msgstr "Программа-владелец"
