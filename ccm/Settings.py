@@ -142,7 +142,7 @@ class MatchSetting(Setting):
         self.Entry.connect('focus-out-event', self.Changed)
 
         editButton = gtk.Button ()
-        editButton.add (Image (name = gtk.STOCK_EDIT, type = ImageStock,
+        editButton.add (Image (name = gtk.STOCK_ADD, type = ImageStock,
                                size = gtk.ICON_SIZE_BUTTON))
         editButton.connect ("clicked", self.RunEditDialog)
 
