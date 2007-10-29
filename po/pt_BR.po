@@ -6,13 +6,13 @@
 # Werner Landgraf <werner@copaya.yi.org>
 # Marco Ribeiro (salsichad2) <salsichad2@yahoo.com.br>, 2007.
 # Marco A S Ribeiro <salsichad2@yahoo.com.br>
-# Emerson R. de Mello <ribmello-compiz@yahoo.com.br>
+# Emerson Ribeiro de Mello <ribmello-compiz@yahoo.com.br>
 msgid ""
 msgstr ""
 "Project-Id-Version: pt_BR-ccsm\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-10-19 18:28+0530\n"
-"PO-Revision-Date: 2007-10-18 13:18-0200\n"
+"POT-Creation-Date: 2007-10-29 16:18+0530\n"
+"PO-Revision-Date: 2007-10-26 13:33-0200\n"
 "Last-Translator: Emerson Ribeiro de Mello <ribmello-compiz@yahoo.com.br>\n"
 "Language-Team: Portuguese/Brazil <gnome-l10n-br@listas.cipsga.org.br>\n"
 "MIME-Version: 1.0\n"
@@ -47,22 +47,38 @@ msgstr "Atribua um valor a %(action)s de qualquer forma !"
 
 #, python-format
 msgid ""
+"You are trying to use the feature <b>%(feature)s</b> which is <b>not</b> "
+"provided by any plugin.\n"
+"Do you wish to use this feature anyway?"
+msgstr ""
+"Você está tentando a usar a função <b>%(feature)s</b> que <b>não</b> é "
+"provida por qualquer plugin.\n"
+"Você quer usar essa função assim mesmo?"
+
+#, python-format
+msgid "Use %(feature)s"
+msgstr "Habilita %(feature)s"
+
+#, python-format
+msgid "Don't use %(feature)s"
+msgstr "Não habilita %(feature)s"
+
+#, fuzzy, python-format
+msgid ""
 "You are trying to use the feature <b>%(feature)s</b> which is provided by <b>"
 "%(plugin)s</b>.\n"
 "This plugin is currently disabled.\n"
 "Do you wish to enable <b>%(plugin)s</b> so the feature is available?"
 msgstr ""
-"Você está tentando a usar a função <b>%(feature)s</b> que é provida por <b>%"
-"(plugin)s</b>.\n"
-"No momento este plugin está desabilitado.\n"
-"Você quer habilitar <b>%(plugin)s</b> de modo que possa assim utilizar "
-"aquela função?"
+"Você está tentando a usar a função <b>%(feature)s</b> que <b>não</b> é "
+"provida por qualquer plugin.\n"
+"Você quer usar essa função assim mesmo?"
 
-#, python-format
+#, fuzzy, python-format
 msgid "Enable %(plugin)s"
-msgstr "Habilita %(plugin)s !"
+msgstr "Plugins habilitados"
 
-#, python-format
+#, fuzzy, python-format
 msgid "Don't enable %(feature)s"
 msgstr "Não habilita %(feature)s"
 
@@ -154,9 +170,8 @@ msgstr "Utilidade"
 msgid "Reset setting to the default value"
 msgstr "Restaurar as configurações padrões"
 
-#. FIXME: better use a translated string list shared with GenerateMatch
-msgid "Window Type"
-msgstr "Tipo da janela"
+msgid "Window Title"
+msgstr "Título da janela"
 
 msgid "Window Role"
 msgstr "Papel da janela"
@@ -167,8 +182,8 @@ msgstr "Nome da janela"
 msgid "Window Class"
 msgstr "Classe da janela"
 
-msgid "Window Title"
-msgstr "Título da janela"
+msgid "Window Type"
+msgstr "Tipo da janela"
 
 msgid "Window ID"
 msgstr "ID da janela"
