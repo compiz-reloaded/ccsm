@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm 0.0.1\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-10-19 11:19+0530\n"
-"PO-Revision-Date: 2007-10-18 23:12+0200\n"
+"POT-Creation-Date: 2007-10-30 11:47+0530\n"
+"PO-Revision-Date: 2007-10-29 21:48+0100\n"
 "Last-Translator: Milo Casagrande <milo_casagrande@yahoo.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "MIME-Version: 1.0\n"
@@ -44,6 +44,24 @@ msgstr "Non impostare %(action)s"
 #, python-format
 msgid "Set %(action)s anyway"
 msgstr "Imposta %(action)s comunque"
+
+#, python-format
+msgid ""
+"You are trying to use the feature <b>%(feature)s</b> which is <b>not</b> "
+"provided by any plugin.\n"
+"Do you wish to use this feature anyway?"
+msgstr ""
+"Si sta cercando di usare la funzionalità <b>%(feature)s</b> che <b>non</b> è "
+"fornita da alcun plug-in.\n"
+"Usare ugualmente questa funzionalità?"
+
+#, python-format
+msgid "Use %(feature)s"
+msgstr "Usare %(feature)s"
+
+#, python-format
+msgid "Don't use %(feature)s"
+msgstr "Non usare %(feature)s"
 
 #, python-format
 msgid ""
@@ -156,9 +174,8 @@ msgstr "Utilità"
 msgid "Reset setting to the default value"
 msgstr "Ripristina l'impostazione al valore predefinito"
 
-#. FIXME: better use a translated string list shared with GenerateMatch
-msgid "Window Type"
-msgstr "Tipo finestra"
+msgid "Window Title"
+msgstr "Titolo finestra"
 
 msgid "Window Role"
 msgstr "Ruolo finestra"
@@ -169,8 +186,8 @@ msgstr "Nome finestra"
 msgid "Window Class"
 msgstr "Classe finestra"
 
-msgid "Window Title"
-msgstr "Titolo finestra"
+msgid "Window Type"
+msgstr "Tipo finestra"
 
 msgid "Window ID"
 msgstr "ID finestra"
