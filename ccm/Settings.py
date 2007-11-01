@@ -204,15 +204,17 @@ class MatchSetting(Setting):
         symbol = self.RelationSymbol[relation]
 
         # check if the current match needs some brackets
-        if text[-1] != ')' and text[0] != '(':
+        if len(text) > 0 and text[-1] != ')' and text[0] != '(':
             match = "(%s)" % text
         else:
             match = text
 
         if invert:
             match = "%s %s !(%s=%s)" % (match, symbol, prefix, value)
-        else:
+        elif len(match) > 0:
             match = "%s %s %s=%s" % (match, symbol, prefix, value)
+        else:
+            match = "%s=%s" % (prefix, value)
 
         return match
 
