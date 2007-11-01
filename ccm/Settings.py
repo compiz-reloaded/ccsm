@@ -277,6 +277,7 @@ class MatchSetting(Setting):
             invert = invertCheck.get_active()
             match = self.GenerateMatch(type, value, relation, invert)
             self.Entry.set_text(match)
+            self.Changed()
 
 class StringSetting(Setting):
     def _Init(self):
