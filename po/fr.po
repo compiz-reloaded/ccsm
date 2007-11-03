@@ -1,19 +1,17 @@
-# translation of fr-ccsm.po to
-# translation of ccsm.po to
+# translation of ccsm.po to fr-ccsm.po
 # CompizConfig French translation
-# Copyright (C) 2007 compiz-fusion.org 
-# Copyright (C) 2007 Sylvain Debray
-# Guillaume Seguin <guillaume@segu.in>
+# Copyright (C) 2007 compiz-fusion.org
 # This file is distributed under the same license as the ccsm package.
 #
-# Sylvain Debray <sylvain.debray@wanadoo.fr, 2007.
+# Guillaume Seguin <guillaume@segu.in>.
+# Sylvain Debray <sylvain.debray@wanadoo.fr>, 2007.
 # Tristan RABLAT <tristan.rablat@gmail.com>, 2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: ccsm\n"
+"Project-Id-Version: fr-ccsm\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-10-23 21:49+0530\n"
-"PO-Revision-Date: 2007-10-22 15:58+0200\n"
+"POT-Creation-Date: 2007-11-03 14:46+0530\n"
+"PO-Revision-Date: 2007-10-30 20:11+0100\n"
 "Last-Translator: Tristan RABLAT <tristan.rablat@gmail.com>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -48,24 +46,23 @@ msgstr "Ne pas définir %(action)s"
 msgid "Set %(action)s anyway"
 msgstr "Définir %(action)s malgré tout"
 
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "You are trying to use the feature <b>%(feature)s</b> which is <b>not</b> "
 "provided by any plugin.\n"
 "Do you wish to use this feature anyway?"
 msgstr ""
-"Vous essayez d'activer la fonctionnalité <b>%(feature)s</b> qui est fournie "
-"par <b>%(plugin)s</b>. Cette extension est actuellement désactivée.\n"
-" Voulez vous activer <b>%(plugin)s</b> pour que la fonctionnalité soit "
-"disponible?"
+"Vous essayez d'utiliser la fonctionnalité <b>%(feature)s</b> qui n'est "
+"fournie par <b>aucune</b> extension.\n"
+"Voulez vous tout de même utiliser cette fonctionnalité?"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Use %(feature)s"
-msgstr "Ne pas activer %(feature)s"
+msgstr "Utiliser %(feature)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Don't use %(feature)s"
-msgstr "Ne pas activer %(feature)s"
+msgstr "Ne pas utiliser %(feature)s"
 
 #, python-format
 msgid ""
@@ -177,25 +174,22 @@ msgid "Reset setting to the default value"
 msgstr "Revenir à la configuration par défaut"
 
 msgid "Window Title"
-msgstr "Titre de fenêtre"
+msgstr "Titre de la fenêtre"
 
-#, fuzzy
 msgid "Window Role"
-msgstr "Titre de fenêtre"
+msgstr "Rôle de la fenêtre"
 
-#, fuzzy
 msgid "Window Name"
-msgstr "Type de fenêtre"
+msgstr "Nom de la fenêtre"
 
 msgid "Window Class"
-msgstr "Classe de fenêtre"
+msgstr "Classe de la fenêtre"
 
 msgid "Window Type"
 msgstr "Type de fenêtre"
 
-#, fuzzy
 msgid "Window ID"
-msgstr "Type de fenêtre"
+msgstr "ID de la fenêtre"
 
 msgid "And"
 msgstr "Et"
@@ -239,8 +233,8 @@ msgstr "Ouvrir un fichier..."
 
 msgid "Multi-list settings. You can double-click a row to edit the values."
 msgstr ""
-"Configuration multi-liste. Vous pouvez double-cliquer une ligne pour éditer "
-"la valeur."
+"Configuration multi-liste. Vous pouvez double-cliquer sur une ligne pour "
+"éditer la valeur."
 
 msgid "Edit"
 msgstr "Editer"
@@ -278,9 +272,9 @@ msgid ""
 "Using Button1 without modifiers can prevent any left click and thus break "
 "your configuration. Do you really want to set \"%s\" button to Button1 ?"
 msgstr ""
-"Utiliser Button1 sans modificateurs peut intercepter tous les clics gauches "
-"et risque donc de casser votre configuration. voulez vous vraiment associer "
-"le bouton \"%s\" à Button1?"
+"Utiliser Button1 sans modificateurs interceptera tous les clics gauches et "
+"risque donc de casser votre configuration. Voulez vous vraiment associer le "
+"bouton \"%s\" à Button1?"
 
 #, python-format
 msgid "\"%s\" is not a valid edge mask"
@@ -353,7 +347,7 @@ msgid "Use This Plugin"
 msgstr "Utiliser cette Extension"
 
 msgid "Search Compiz Core Options"
-msgstr "Chercher les options de Compiz Core"
+msgstr "Chercher les options du Noyau de Compiz (compiz-core)"
 
 msgid "Actions"
 msgstr "Actions"
@@ -458,6 +452,9 @@ msgid ""
 "disable conflict handling. You should only do this if you know what you are "
 "doing."
 msgstr ""
+"Voulez vous vraiment désactiver le tri automatique des extensions? Cela "
+"désactivera également la gestion des conflits. Vous devriez seulement faire "
+"cela si vous êtes sûr de ce que vous faites."
 
 msgid "Add plugin"
 msgstr "Ajouter une extension"
@@ -495,6 +492,3 @@ msgid ""
 msgstr ""
 "<span size=\"large\"><b>Pas de concordance trouvée.</b> </span><br><br> "
 "Votre filtre \"<b>%s</b>\" ne correspond à aucun objet."
-
-#~ msgid "Owning Program"
-#~ msgstr "Programme"
