@@ -1451,7 +1451,7 @@ class ButtonSetting (EditableActionSetting):
             if "<%sEdge>" % edge in self.current:
                 currentEdges += "%s|" % edge
         currentEdges.rstrip ("|")
-        edgeSelector = EdgeSelector (currentEdges)
+        edgeSelector = SingleEdgeSelector (currentEdges)
         Tooltips.set_tip (edgeSelector, self.Setting.LongDesc)
         box.pack_start (edgeSelector)
 
@@ -1591,7 +1591,7 @@ class EdgeSetting (EditableActionSetting):
         dlg.add_button (gtk.STOCK_OK, gtk.RESPONSE_OK).grab_default()
         dlg.set_default_response (gtk.RESPONSE_OK)
         
-        selector = EdgeSelector (self.current)
+        selector = SingleEdgeSelector (self.current)
         alignment = gtk.Alignment ()
         alignment.set_padding (10, 10, 10, 10)
         alignment.add (selector)

@@ -60,7 +60,7 @@ class Conflict:
         return answer
 
 class ActionConflict (Conflict):
-    def __init__ (self, setting, key = None, button = None, edges = None, autoResolve = False):
+    def __init__ (self, setting, key = None, button = None, edges = None, settings = [], autoResolve = False):
         Conflict.__init__(self, autoResolve)
         self.KeyConflicts = []
         self.ButtonConflicts = []
@@ -85,24 +85,26 @@ class ActionConflict (Conflict):
         if not checkKey and not checkButton and not checkEdges:
             return
 
-        # this might be a bit slow but anyway...
-        for plugin in setting.Plugin.Context.Plugins.values ():
-            if plugin.Enabled:
-                settings = sum ((z.values () for z in [plugin.Screens[CurrentScreenNum]]+[plugin.Display]), [])
-                for s in settings:
-                    if s == setting:
-                        continue
-                    if s.Type == 'Key' and checkKey:
-                        if s.Value == key:
-                            self.KeyConflicts.append (s)
-                    elif s.Type == 'Button' and checkButton:
-                        if s.Value == button:
-                            self.ButtonConflicts.append (s)
-                    elif s.Type == 'Edge' and checkEdges:
-                        for edge in edges.split ("|"):
-                            if edge in s.Value.split ("|"):
-                                self.EdgeConflicts.append ((s, edge))
-                                break
+        if len(settings) == 0:
+            for plugin in setting.Plugin.Context.Plugins.values ():
+                if plugin.Enabled:
+                    sets = sum ((z.values () for z in [plugin.Screens[CurrentScreenNum]]+[plugin.Display]), [])
+                    settings += sets
+
+        for s in settings:
+            if s == setting:
+                continue
+            if s.Type == 'Key' and checkKey:
+                if s.Value == key:
+                    self.KeyConflicts.append (s)
+            elif s.Type == 'Button' and checkButton:
+                if s.Value == button:
+                    self.ButtonConflicts.append (s)
+            elif s.Type == 'Edge' and checkEdges:
+                for edge in edges.split ("|"):
+                    if edge in s.Value.split ("|"):
+                        self.EdgeConflicts.append ((s, edge))
+                        break
 
     def Resolve (self, updater):
         if len (self.KeyConflicts):
