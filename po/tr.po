@@ -1,13 +1,13 @@
 # translation of ccsm-new.po to
 # Copyright (C) 2007 compiz-fusion.org
-# This file is distributed under the same license as the PACKAGE package.
+# This file is distributed under the same license as the ccsm package.
 #
 # Serdar Soytetir <tulliana@gmail.com>, 2007.
 msgid ""
 msgstr ""
 "Project-Id-Version: ccsm-new\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-09-25 11:27+0530\n"
+"POT-Creation-Date: 2007-11-05 17:41+0530\n"
 "PO-Revision-Date: 2007-09-24 04:09+0300\n"
 "Last-Translator: Serdar Soytetir\n"
 "Language-Team:  <tr@li.org>\n"
@@ -43,6 +43,26 @@ msgstr "%(action)s Özelliğini Kullanma"
 #, python-format
 msgid "Set %(action)s anyway"
 msgstr "%(action)s Özelliğini Herşeye Rağmen Kullan"
+
+#, fuzzy, python-format
+msgid ""
+"You are trying to use the feature <b>%(feature)s</b> which is <b>not</b> "
+"provided by any plugin.\n"
+"Do you wish to use this feature anyway?"
+msgstr ""
+"<b>%(feature)s</b> özelliğini kullanmaya çalışıyorsunuz ancak bu özellik <b>%"
+"(plugin)s</b> eklentisi tarafından sağlanıyor.\n"
+"Bu eklenti şuanda etkin durumda değil.\n"
+"<b>%(plugin)s</b> eklentisini etkinleştirerek bu özelliği kullanmak ister "
+"misiniz?"
+
+#, fuzzy, python-format
+msgid "Use %(feature)s"
+msgstr "%(feature)s Özelliğini Etkinleştirme"
+
+#, fuzzy, python-format
+msgid "Don't use %(feature)s"
+msgstr "%(feature)s Özelliğini Etkinleştirme"
 
 #, python-format
 msgid ""
@@ -158,6 +178,52 @@ msgstr "Araçlar"
 msgid "Reset setting to the default value"
 msgstr "Ayarları öntanımlı değerlere döndür"
 
+msgid "Window Title"
+msgstr ""
+
+msgid "Window Role"
+msgstr ""
+
+#, fuzzy
+msgid "Window Name"
+msgstr "Pencere Yönetimi"
+
+msgid "Window Class"
+msgstr ""
+
+msgid "Window Type"
+msgstr ""
+
+msgid "Window ID"
+msgstr ""
+
+msgid "And"
+msgstr ""
+
+msgid "Or"
+msgstr ""
+
+#, python-format
+msgid "Edit %s"
+msgstr "Düzenle %s"
+
+msgid "Type"
+msgstr ""
+
+#, fuzzy
+msgid "Value"
+msgstr "Değer (%s)"
+
+msgid "Grab"
+msgstr ""
+
+#, fuzzy
+msgid "Relation"
+msgstr "Bütünleşme"
+
+msgid "Invert"
+msgstr ""
+
 msgid "Browse for "
 msgstr "Bunun için gözat "
 
@@ -184,10 +250,6 @@ msgstr "Düzenle"
 #, python-format
 msgid "Value (%s)"
 msgstr "Değer (%s)"
-
-#, python-format
-msgid "Edit %s"
-msgstr "Düzenle %s"
 
 #, python-format
 msgid "Value (%(value)s) for %(setting)s"
@@ -391,6 +453,12 @@ msgstr "Pasif Eklentiler"
 
 msgid "Enabled Plugins"
 msgstr "Etkin Eklentiler"
+
+msgid ""
+"Do you really want to disable automatic plugin sorting? This will also "
+"disable conflict handling. You should only do this if you know what you are "
+"doing."
+msgstr ""
 
 msgid "Add plugin"
 msgstr "Eklenti Ekle"
