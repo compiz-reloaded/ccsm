@@ -1,15 +1,16 @@
+# translation of ccsm.po to
 # translation of ccsm-new.po to
-# Copyright (C) 2007 compiz-fusion.org
+# Copyright (C) 2007 compiz-fusion.org 
 # This file is distributed under the same license as the ccsm package.
 #
 # Serdar Soytetir <tulliana@gmail.com>, 2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: ccsm-new\n"
+"Project-Id-Version: ccsm\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-11-05 17:41+0530\n"
-"PO-Revision-Date: 2007-09-24 04:09+0300\n"
-"Last-Translator: Serdar Soytetir\n"
+"POT-Creation-Date: 2007-11-05 17:46+0530\n"
+"PO-Revision-Date: 2007-10-28 05:43+0200\n"
+"Last-Translator: Serdar Soytetir <tulliana@gmail.com>\n"
 "Language-Team:  <tr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -44,25 +45,23 @@ msgstr "%(action)s Özelliğini Kullanma"
 msgid "Set %(action)s anyway"
 msgstr "%(action)s Özelliğini Herşeye Rağmen Kullan"
 
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "You are trying to use the feature <b>%(feature)s</b> which is <b>not</b> "
 "provided by any plugin.\n"
 "Do you wish to use this feature anyway?"
 msgstr ""
-"<b>%(feature)s</b> özelliğini kullanmaya çalışıyorsunuz ancak bu özellik <b>%"
-"(plugin)s</b> eklentisi tarafından sağlanıyor.\n"
-"Bu eklenti şuanda etkin durumda değil.\n"
-"<b>%(plugin)s</b> eklentisini etkinleştirerek bu özelliği kullanmak ister "
-"misiniz?"
+"<b>%(feature)s</b> özelliğini kullanmaya çalışıyorsunuz ancak bu özellik "
+"<b>hiçbir</b> eklenti tarafından sağlanmıyor.\n"
+"Yine de bu özelliği etkinleştirmek ister misiniz?"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Use %(feature)s"
-msgstr "%(feature)s Özelliğini Etkinleştirme"
+msgstr "%(feature)s Özelliğini Kullan"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Don't use %(feature)s"
-msgstr "%(feature)s Özelliğini Etkinleştirme"
+msgstr "%(feature)s Özelliğini Kullanma"
 
 #, python-format
 msgid ""
@@ -179,50 +178,47 @@ msgid "Reset setting to the default value"
 msgstr "Ayarları öntanımlı değerlere döndür"
 
 msgid "Window Title"
-msgstr ""
+msgstr "Pencere Başlığı"
 
 msgid "Window Role"
-msgstr ""
+msgstr "Pencere Rolü"
 
-#, fuzzy
 msgid "Window Name"
-msgstr "Pencere Yönetimi"
+msgstr "Pencere Adı"
 
 msgid "Window Class"
-msgstr ""
+msgstr "Pencere Sınıfı"
 
 msgid "Window Type"
-msgstr ""
+msgstr "Pencere Tipi"
 
 msgid "Window ID"
-msgstr ""
+msgstr "Pencere Kimliği"
 
 msgid "And"
-msgstr ""
+msgstr "Ve"
 
 msgid "Or"
-msgstr ""
+msgstr "Veya"
 
 #, python-format
 msgid "Edit %s"
-msgstr "Düzenle %s"
+msgstr "%s Ögesini Düzenle"
 
 msgid "Type"
-msgstr ""
+msgstr "Tip"
 
-#, fuzzy
 msgid "Value"
-msgstr "Değer (%s)"
+msgstr "Değer"
 
 msgid "Grab"
-msgstr ""
+msgstr "Yakala"
 
-#, fuzzy
 msgid "Relation"
-msgstr "Bütünleşme"
+msgstr "İlişki"
 
 msgid "Invert"
-msgstr ""
+msgstr "Tersine Çevir"
 
 msgid "Browse for "
 msgstr "Bunun için gözat "
@@ -234,7 +230,7 @@ msgid "File"
 msgstr "Dosya"
 
 msgid "Open directory..."
-msgstr "Dizin aç.."
+msgstr "Dizin aç..."
 
 msgid "Open file..."
 msgstr "Dosya aç..."
@@ -459,6 +455,9 @@ msgid ""
 "disable conflict handling. You should only do this if you know what you are "
 "doing."
 msgstr ""
+"Otomatik eklenti sıralamasını pasifleştirmek istediğinizden emin misiniz? Bu "
+"aynı zamanda çakışmaların kontrol edilmesini de engelleyecektir. Bunu sadece "
+"ne yaptığınızı biliyorsanız yapın."
 
 msgid "Add plugin"
 msgstr "Eklenti Ekle"
