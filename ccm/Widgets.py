@@ -30,6 +30,7 @@ import time
 
 from ccm.Utils import *
 from ccm.Constants import *
+from ccm.Conflicts import *
 
 import locale
 import gettext
@@ -330,15 +331,18 @@ class ModifierSelector (gtk.DrawingArea):
 #
 class EdgeSelector (gtk.DrawingArea):
 
-    _current = []
+    __gsignals__    = {"clicked" : (gobject.SIGNAL_RUN_FIRST,
+                                    gobject.TYPE_NONE, (gobject.TYPE_STRING, gobject.TYPE_PYOBJECT,))}
 
     _base_surface   = None
     _surface        = None
+    _radius         = 13
+    _cradius        = 20
+    _coords         = []
 
-    def __init__ (self, edge):
+    def __init__ (self):
         '''Prepare widget'''
         super (EdgeSelector, self).__init__ ()
-        self._current = edge.split ("|")
         background = "%s/display.png" % PixmapDir
         self._base_surface = cairo.ImageSurface.create_from_png (background)
         self.add_events (gtk.gdk.BUTTON_PRESS_MASK)
@@ -346,27 +350,24 @@ class EdgeSelector (gtk.DrawingArea):
         self.connect ("button_press_event", self.button_press)
         self.set_size_request (200, 200)
 
-    def set_current (self, value):
-        self._current = value.split ("|")
-        self.redraw (queue = True)
-
-    def get_current (self):
-        return "|".join (filter (lambda s: len (s) > 0, self._current))
-    current = property (get_current, set_current)
-
-    def draw (self, cr, width, height):
-        '''The actual drawing function'''
         # Useful vars
         x0 = 25
         y0 = 33
         x1 = 175
         y1 = 125
         x2 = x0 + 40
-        x3 = x1 - 40
         y2 = y0 + 27
+        x3 = x1 - 40
         y3 = y1 - 27
-        cradius = 20
-        radius = 13
+        self._coords = (x0, y0, x1, y1, x2, y2, x3, y3)
+
+    def draw (self, cr, width, height):
+        '''The actual drawing function'''
+        # Useful vars
+        x0, y0, x1, y1, x2, y2, x3, y3 = self._coords
+        cradius = self._cradius
+        radius  = self._radius
+
         # Top left edge
         cr.new_path ()
         cr.move_to (x0, y0 - cradius)
@@ -438,10 +439,7 @@ class EdgeSelector (gtk.DrawingArea):
 
     def set_color (self, cr, edge):
         '''Set painting color for edge'''
-        if edge in self._current:
-            cr.set_source_rgb (0, 1, 0)
-        else:
-            cr.set_source_rgb (0.90, 0, 0)
+        cr.set_source_rgb (0.9, 0.9, 0.9)
 
     def redraw (self, queue = False):
         '''Redraw internal surface'''
@@ -487,22 +485,15 @@ class EdgeSelector (gtk.DrawingArea):
 
     def in_rect (self, x, y, x0, y0, x1, y1):
         return x >= x0 and y >= y0 and x <= x1 and y <= y1
-    
+
     def button_press (self, widget, event):
         x, y = event.x, event.y
         edge = ""
 
         # Useful vars
-        x0 = 25
-        y0 = 33
-        x1 = 175
-        y1 = 125
-        x2 = x0 + 40
-        x3 = x1 - 40
-        y2 = y0 + 27
-        y3 = y1 - 27
-        cradius = 20
-        radius = 13
+        x0, y0, x1, y1, x2, y2, x3, y3 = self._coords
+        cradius = self._cradius
+        radius  = self._radius
 
         if self.in_circle_quarter (x, y, x0, y0, x0, y0,
                                    x0 + cradius, y0 + cradius,
@@ -545,13 +536,134 @@ class EdgeSelector (gtk.DrawingArea):
                                         x1, y3, radius):
             edge = "Right"
 
+        if edge:
+            self.emit ("clicked", edge, event)
+
+# Edge selection widget
+#
+class SingleEdgeSelector (EdgeSelector):
+
+    _current = []
+
+    def __init__ (self, edge):
+        '''Prepare widget'''
+        EdgeSelector.__init__ (self)
+        self._current = edge.split ("|")
+        self.connect ('clicked', self.edge_clicked)
+
+    def set_current (self, value):
+        self._current = value.split ("|")
+        self.redraw (queue = True)
+
+    def get_current (self):
+        return "|".join (filter (lambda s: len (s) > 0, self._current))
+    current = property (get_current, set_current)
+
+    def set_color (self, cr, edge):
+        '''Set painting color for edge'''
+        if edge in self._current:
+            cr.set_source_rgb (0, 1, 0)
+        else:
+            cr.set_source_rgb (0.90, 0, 0)
+
+    def edge_clicked (self, widget, edge, event):
         if not len (edge):
             return
         if edge in self._current:
             self._current.remove (edge)
         else:
             self._current.append (edge)
+
         self.redraw (queue = True)
+
+# Global Edge Selector
+#
+class GlobalEdgeSelector(EdgeSelector):
+
+    _settings = []
+    _edges = {}
+    _context = None
+
+    def __init__ (self, context, settings=[]):
+        EdgeSelector.__init__ (self)
+
+        self._context = context
+        self._settings = settings
+
+        self.connect ("clicked", self.show_popup)
+
+        if len (settings) <= 0:
+            self.generate_setting_list ()
+
+    def set_color (self, cr, edge):
+        '''Set painting color for edge'''
+        if self._edges.has_key(edge):
+            cr.set_source_rgb (0, 1, 0)
+        else:
+            cr.set_source_rgb (0.90, 0, 0)
+
+    def set_settings (self, value):
+        self._settings = value
+
+    def get_settings (self):
+        return self._settings
+    settings = property (get_settings, set_settings)
+
+    def generate_setting_list (self):
+        self._settings = []
+
+        def filter_settings(plugin):
+            if plugin.Enabled:
+                settings = sorted (sum ( (v.values() for v in [plugin.Display]+[plugin.Screens[CurrentScreenNum]]), []), SettingSortCompare)
+                settings = filter (lambda s: s.Type == 'Edge', settings)
+                return settings
+            return []
+
+        for plugin in self._context.Plugins.values ():
+            self._settings += filter_settings (plugin)
+
+        for setting in self._settings:
+            edges = setting.Value.split ("|")
+            for edge in edges:
+                self._edges[edge] = setting
+
+    def set_edge_settings (self, widget, setting, edge):
+        if not setting:
+            if self._edges.has_key(edge):
+                self._edges.pop(edge)
+            for setting in self._settings:
+              value = setting.Value.split ("|")
+              if edge in value:
+                value.remove(edge)
+                value = "|".join (filter (lambda s: len (s) > 0, value))
+                setting.Value = value
+        else:
+            value = setting.Value.split ("|")
+            if not edge in value:
+                value.append (edge)
+            value = "|".join (filter (lambda s: len (s) > 0, value))
+
+            conflict = ActionConflict (setting, edges = value, settings = self._settings, autoResolve = True)
+            if conflict.Resolve (GlobalUpdater):
+                setting.Value = value
+                self._edges[edge] = setting
+
+        self._context.Write()
+        self.redraw (queue = True)
+
+    def show_popup (self, widget, edge, event):
+        menu = gtk.Menu ()
+
+        item = gtk.MenuItem (_("None"))
+        item.connect ('activate', self.set_edge_settings, None, edge)
+        menu.append (item)
+        for setting in self._settings:
+            item = gtk.MenuItem ("%s: %s" % (setting.Plugin.ShortDesc, setting.ShortDesc))
+            item.connect ('activate', self.set_edge_settings, setting, edge)
+            menu.append (item)
+
+        menu.show_all ()
+        menu.popup (None, None, None, event.button, event.time)
 
 # Popup
 #
