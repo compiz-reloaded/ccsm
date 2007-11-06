@@ -567,7 +567,11 @@ class ProfileBackendPage:
         path = chooser.get_filename()
         chooser.destroy()
         if ret == gtk.RESPONSE_OK:
-            self.Context.Export(path)
+            dlg = gtk.MessageDialog(type=gtk.MESSAGE_QUESTION, buttons=gtk.BUTTONS_YES_NO)
+            dlg.set_markup(_("Do you want to skip default option values while exporting your profile?"))
+            ret = dlg.run()
+            dlg.destroy()
+            self.Context.Export(path, ret == gtk.RESPONSE_YES)
 
     def ImportProfileDialog (self):
         b = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
