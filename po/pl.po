@@ -3,15 +3,15 @@
 # This file is distributed under the same license as the ccsm package.
 # Karol Sikora <elektrrrus@gmail.com>, 2007.
 # Mariusz Fik <fisiu82@gmail.com>, 2007.
+# Maciej Warnecki <maciekw5@gmail.com>, 2007.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-11-04 15:09+0530\n"
-"PO-Revision-Date: 2007-07-14 18:00+0200\n"
-"Last-Translator: Karol Sikora <elektrrrus@gmail.com>\n"
+"POT-Creation-Date: 2007-11-09 17:17+0530\n"
+"PO-Revision-Date: 2007-11-08 17:18+0100\n"
+"Last-Translator: Maciej Warnecki <maciekw5@gmail.com>\n"
 "Language-Team: pl_PL <pl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -31,52 +31,53 @@ msgstr ""
 
 #, python-format
 msgid "Disable %(action_conflict)s"
-msgstr ""
+msgstr "Wyłącz %(action_conflict)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Don't set %(action)s"
-msgstr "Nie ustawiaj %s"
+msgstr "Nie ustawiaj %(action)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Set %(action)s anyway"
-msgstr "Ustaw %s pomimo"
+msgstr "Ustaw %(action)s mimo wszystko"
 
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "You are trying to use the feature <b>%(feature)s</b> which is <b>not</b> "
 "provided by any plugin.\n"
 "Do you wish to use this feature anyway?"
 msgstr ""
-"Próbójesz użyć funkcji <b>%s</b> która jest dostępna w <b>%s</b>.\n"
-"Ta wtyczka jest aktualnie nieaktywna.\n"
-"Chcesz włączyć <b>%s</b> aby ta funkcja była aktywna?"
+"Próbujesz użyć funkcji <b>%(feature)s</b> która <b> nie </b> jest "
+"udosępniana przez żadną z wtyczek. \n"
+"Czy chcesz jej użyć mimo to?"
 
 #, python-format
 msgid "Use %(feature)s"
-msgstr ""
+msgstr "Użyj %(feature)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Don't use %(feature)s"
-msgstr "Nie ustawiaj %s"
+msgstr "Nie używajj %(feature)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "You are trying to use the feature <b>%(feature)s</b> which is provided by <b>"
 "%(plugin)s</b>.\n"
 "This plugin is currently disabled.\n"
 "Do you wish to enable <b>%(plugin)s</b> so the feature is available?"
 msgstr ""
-"Próbójesz użyć funkcji <b>%s</b> która jest dostępna w <b>%s</b>.\n"
+"Próbójesz użyć funkcji <b>%(feature)s</b> która jest dostępna w <b>%(plugin)"
+"s</b>.\n"
 "Ta wtyczka jest aktualnie nieaktywna.\n"
-"Chcesz włączyć <b>%s</b> aby ta funkcja była aktywna?"
+"Chcesz włączyć <b>%(plugin)s</b> aby ta funkcja była aktywna?"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Enable %(plugin)s"
-msgstr "Włącz te wtyczki"
+msgstr "Włącz %(plugin)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Don't enable %(feature)s"
-msgstr "Nie włączaj %s"
+msgstr "Nie włączaj %(feature)s"
 
 #, fuzzy, python-format
 msgid ""
@@ -86,38 +87,38 @@ msgstr ""
 "Wtyczka <b>%s</b> dostarcza funkcję <b>%s</b> która jest dostępna we wtyczce "
 "<b%s</b>"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Disable %(plugin_conflict)s"
-msgstr "Wyłącz te wtyczki"
+msgstr "Wyłącz %(plugin_conflict)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Don't enable %(plugin)s"
-msgstr "Nie włączaj %s"
+msgstr "Nie włączaj %(plugin)s"
 
 #, fuzzy, python-format
 msgid "Plugin <b>%(plugin_conflict)s</b> conflicts with <b>%(plugin)s</b>."
 msgstr "Wtyczka <b>%s</b> jest w konflikcie z <b>%s</b>."
 
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "<b>%(plugin)s</b> requires feature <b>%(feature)s</b> which is provided by "
 "the following plugins:\n"
 "%(plugin_list)s"
 msgstr ""
-"<b>%s</b> wymaga funkcji <b>%s</b> która jest dostępna w następujących "
-"wtyczkach:\n"
-"%s"
+"<b>%(plugin)s</b> wymaga funkcji <b>%(feature)s</b> która jest dostępna w "
+"następujących wtyczkach:\n"
+"%(plugin_list)s"
 
 msgid "Enable these plugins"
 msgstr "Włącz te wtyczki"
 
-#, fuzzy, python-format
+#, python-format
 msgid "<b>%(plugin)s</b> requires the plugin <b>%(require)s</b>."
-msgstr "<b>%s</b> wymaga wtyczki <b>%s</b>."
+msgstr "<b>%(plugin)s</b> wymaga wtyczki <b>%(require)s</b>."
 
-#, fuzzy, python-format
+#, python-format
 msgid "Enable %(require)s"
-msgstr "Włącz %s"
+msgstr "Włącz %(require)s"
 
 #, fuzzy, python-format
 msgid ""
@@ -130,9 +131,9 @@ msgstr ""
 msgid "Disable these plugins"
 msgstr "Wyłącz te wtyczki"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Don't disable %(plugin)s"
-msgstr "Nie wyłączaj %s"
+msgstr "Nie wyłączaj %(plugin)s"
 
 #, fuzzy, python-format
 msgid "<b>%(plugin)s</b> is required by the plugins <b>%(plugin_list)s</b>."
@@ -142,73 +143,71 @@ msgid "General"
 msgstr "Ogólne"
 
 msgid "Accessibility"
-msgstr ""
+msgstr "Dostępność"
 
 msgid "Desktop"
-msgstr ""
+msgstr "Pulpit"
 
 msgid "Extras"
-msgstr ""
+msgstr "Dodatki"
 
 msgid "Window Management"
-msgstr ""
+msgstr "Zarządzanie oknami"
 
 msgid "Effects"
-msgstr ""
+msgstr "Efekty"
 
 msgid "Image Loading"
-msgstr ""
+msgstr "Ładowanie obrazków"
 
 msgid "Utility"
-msgstr ""
+msgstr "Narzędzia"
 
 msgid "Reset setting to the default value"
 msgstr "Przywróć ustawienia domyślne"
 
 msgid "Window Title"
-msgstr ""
+msgstr "Tytuł okna"
 
 msgid "Window Role"
-msgstr ""
+msgstr "Rola okna"
 
 msgid "Window Name"
-msgstr ""
+msgstr "Nazwa okna"
 
 msgid "Window Class"
-msgstr ""
+msgstr "Klasa okna"
 
 msgid "Window Type"
-msgstr ""
+msgstr "Typ okna"
 
 msgid "Window ID"
-msgstr ""
+msgstr "ID okna"
 
 msgid "And"
-msgstr ""
+msgstr "I"
 
 msgid "Or"
-msgstr ""
+msgstr "Lub"
 
 #, python-format
 msgid "Edit %s"
 msgstr "Edycja %s"
 
 msgid "Type"
-msgstr ""
+msgstr "Typ"
 
-#, fuzzy
 msgid "Value"
-msgstr "Wartość (%s)"
+msgstr "Wartość "
 
 msgid "Grab"
 msgstr ""
 
-#, fuzzy
 msgid "Relation"
-msgstr "Integracja"
+msgstr "Relacja"
 
 msgid "Invert"
-msgstr ""
+msgstr "Odwróć"
 
 msgid "Browse for "
 msgstr "Przeglądaj w poszukiwaniu "
@@ -219,11 +218,9 @@ msgstr "Grafiki"
 msgid "File"
 msgstr "Pliku"
 
-#, fuzzy
 msgid "Open directory..."
-msgstr "Otwórz plik.."
+msgstr "Otwórz folder..."
 
-#, fuzzy
 msgid "Open file..."
 msgstr "Otwórz plik.."
 
@@ -237,31 +234,29 @@ msgstr "Edycja"
 msgid "Value (%s)"
 msgstr "Wartość (%s)"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Value (%(value)s) for %(setting)s"
-msgstr "Wartość (%s) dla %s: "
+msgstr "Wartość (%(value)s) dla %(setting)s: "
 
 #, python-format
 msgid "\"%s\" is not a valid shortcut"
-msgstr ""
+msgstr "\"%s\" nie jest poprawnym skrótem"
 
-#, fuzzy
 msgid "Disabled"
-msgstr "Wyłącz %s"
+msgstr "Wyłączone"
 
-#, fuzzy
 msgid "Enabled"
-msgstr "Włącz %s"
+msgstr "Włączone"
 
 msgid "Grab key combination"
-msgstr ""
+msgstr "Przechwyć kombinację klawiszy"
 
 msgid "Computing possible conflicts, please wait"
-msgstr ""
+msgstr "Obliczanie możliwych konfliktów, proszę czekać"
 
 #, python-format
 msgid "\"%s\" is not a valid button"
-msgstr ""
+msgstr "\"%s\" nie jest porawnym przyciskiem"
 
 #, python-format
 msgid ""
@@ -274,7 +269,7 @@ msgid "\"%s\" is not a valid edge mask"
 msgstr ""
 
 msgid "None"
-msgstr ""
+msgstr "Żadne"
 
 #, python-format
 msgid "Unhandled list type %s for %s"
@@ -297,7 +292,7 @@ msgid "Screen"
 msgstr "Ekran"
 
 msgid "All"
-msgstr ""
+msgstr "Wszystkie"
 
 msgid "Uncategorized"
 msgstr "Bez kategorii"
@@ -309,26 +304,26 @@ msgid "Advanced Search"
 msgstr "Zaawansowane szukanie"
 
 msgid "Preferences"
-msgstr ""
+msgstr "Preferencje"
 
 #, python-format
 msgid "Enable %s"
 msgstr "Włącz %s"
 
 msgid "Please press the new key combination"
-msgstr ""
+msgstr "Proszę wpisać nową kombinację klawiszy"
 
 msgid "This is a settings manager for the CompizConfig configuration system."
-msgstr ""
+msgstr "To jest menedżer ustawień dla systemu konfiguracji CompizConfig."
 
 msgid "translator-credits"
 msgstr ""
 
 msgid "An error has occured"
-msgstr ""
+msgstr "Wystąpił błąd"
 
 msgid "Warning"
-msgstr ""
+msgstr "Ostrzeżenie"
 
 #, python-format
 msgid "Search %s Plugin Options"
@@ -344,7 +339,7 @@ msgid "Actions"
 msgstr "Akcje"
 
 msgid "Error"
-msgstr ""
+msgstr "Błąd"
 
 msgid "Search in..."
 msgstr "Szukaj w..."
@@ -380,13 +375,11 @@ msgstr "Importowanie"
 msgid "Import a CompizConfig Profile"
 msgstr "Importowanie profilu CompizConfig"
 
-#, fuzzy
 msgid "Import as..."
 msgstr "Importowanie"
 
-#, fuzzy
 msgid "Import a CompizConfig Profile as a new profile"
-msgstr "Importowanie profilu CompizConfig"
+msgstr "Importowanie nowego profilu CompizConfig"
 
 msgid "Export"
 msgstr "Eksportowanie"
@@ -394,13 +387,11 @@ msgstr "Eksportowanie"
 msgid "Export your CompizConfig Profile"
 msgstr "Eksportuj Twój profil CompizConfig"
 
-#, fuzzy
 msgid "Reset to defaults"
 msgstr "Przywróć do domyślnych"
 
-#, fuzzy
 msgid "Reset your CompizConfig Profile to the global defaults"
-msgstr "Eksportuj Twój profil CompizConfig"
+msgstr "Resetuj swój profil CompizConfig do domyślnych wartości"
 
 msgid "Backend"
 msgstr "Sposób zapisania"
@@ -420,6 +411,9 @@ msgstr "Wszytstkie pliki"
 msgid "Save file.."
 msgstr "Zapisz plik.."
 
+msgid "Do you want to skip default option values while exporting your profile?"
+msgstr "Czy chcesz ominąć domyślne wartości opcji eksportując swój profil?"
+
 msgid "Open file.."
 msgstr "Otwórz plik.."
 
@@ -434,50 +428,49 @@ msgstr "Sposób zapisania nie znaleziony."
 
 #. Auto sort
 msgid "Automatic plugin sorting"
-msgstr ""
+msgstr "Automatyczne sortowanie wtyczek"
 
-#, fuzzy
 msgid "Disabled Plugins"
-msgstr "Wyłącz te wtyczki"
+msgstr "Wyłączone wtyczki"
 
-#, fuzzy
 msgid "Enabled Plugins"
-msgstr "Włącz te wtyczki"
+msgstr "Włączone wtyczki"
 
 msgid ""
 "Do you really want to disable automatic plugin sorting? This will also "
 "disable conflict handling. You should only do this if you know what you are "
 "doing."
 msgstr ""
+"Czy na pewno chcesz wyłączyć automatyczne sortowanie wtyczek? To wyłączy "
+"także obsługę konfliktów. Powinieneś to robić tylko jeśli wiesz co robisz."
 
 msgid "Add plugin"
-msgstr ""
+msgstr "Dodaj wtyczkę"
 
 msgid "Plugin name:"
-msgstr ""
+msgstr "Nazwa wtyczki:"
 
 msgid "Insert plugin name"
-msgstr ""
+msgstr "Wpisz nazwę wtyczki"
 
-#, fuzzy
 msgid ""
 "Configure the backend, profile and other internal settings used by the "
 "Compiz Configuration System."
 msgstr ""
-"Konfiguracja sposobu zapisania i profil używany przez system konfiguracji "
+"Konfiguracja sposobu zapisania i profilu używanego przez system konfiguracji "
 "Compiz-a"
 
 msgid "About"
-msgstr ""
+msgstr "O..."
 
 msgid "About CCSM..."
-msgstr ""
+msgstr "O CCSM..."
 
 msgid "Profile & Backend"
 msgstr "Profile i sposób zapisania"
 
 msgid "Plugin List"
-msgstr ""
+msgstr "Lista wtyczek"
 
 #, python-format
 msgid ""
@@ -485,6 +478,9 @@ msgid ""
 "\n"
 " Your filter \"<b>%s</b>\" does not match any items.</span>"
 msgstr ""
+"<span size=\"large\"><b>Nic nie znaleziono.</b> </span><span>\n"
+"\n"
+" Twój filtr \"<b>%s</b>\" nie pasje do żadnych wyników wyszkiwania.</span>"
 
 #~ msgid "PyGtk 2.10.0 or later required"
 #~ msgstr "Wymagany jest PyGtk w wersji 2.10.0 lub wyższej"
