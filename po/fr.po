@@ -1,17 +1,16 @@
-# translation of ccsm.po to fr-ccsm.po
 # CompizConfig French translation
 # Copyright (C) 2007 compiz-fusion.org
 # This file is distributed under the same license as the ccsm package.
 #
-# Guillaume Seguin <guillaume@segu.in>.
 # Sylvain Debray <sylvain.debray@wanadoo.fr>, 2007.
 # Tristan RABLAT <tristan.rablat@gmail.com>, 2007.
+# Guillaume Seguin <guillaume@segu.in>.
 msgid ""
 msgstr ""
 "Project-Id-Version: fr-ccsm\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-11-03 14:46+0530\n"
-"PO-Revision-Date: 2007-10-30 20:11+0100\n"
+"POT-Creation-Date: 2007-11-09 17:15+0530\n"
+"PO-Revision-Date: 2007-11-06 22:27+0100\n"
 "Last-Translator: Tristan RABLAT <tristan.rablat@gmail.com>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -78,7 +77,7 @@ msgstr ""
 
 #, python-format
 msgid "Enable %(plugin)s"
-msgstr "Activer %(plugin)s"
+msgstr "Activer \"%(plugin)s\""
 
 #, python-format
 msgid "Don't enable %(feature)s"
@@ -425,8 +424,13 @@ msgstr "Tous les fichiers"
 msgid "Save file.."
 msgstr "Sauvegarder..."
 
+msgid "Do you want to skip default option values while exporting your profile?"
+msgstr ""
+"Désirez vous ommettre les valeurs d'option par défaut en exportant votre "
+"profil?"
+
 msgid "Open file.."
-msgstr "Ouvrir un fichier.."
+msgstr "Ouvrir un fichier..."
 
 msgid "Enter a profile name"
 msgstr "Entrer un nom pour le profil"
