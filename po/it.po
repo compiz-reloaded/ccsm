@@ -1,16 +1,16 @@
 # CompizConfig Italian translation
 # Copyright (C) 2007 compiz-fusion.org 
 # This file is distributed under the same license as the ccsm package.
-# Treviño (Marco Trevisan) <trevi55@gmail.com>, 2007.
-# Milo Casagrande <milo_casagrande@yahoo.it>
+# Treviño (Marco Trevisan) <trevi55@gmail.com>, 2007
+# Milo Casagrande <milo_casagrande@yahoo.it>, 2007
 #
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: ccsm 0.0.1\n"
+"Project-Id-Version: ccsm\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-10-30 11:47+0530\n"
-"PO-Revision-Date: 2007-10-29 21:48+0100\n"
+"POT-Creation-Date: 2007-11-10 18:55+0530\n"
+"PO-Revision-Date: 2007-11-09 21:12+0100\n"
 "Last-Translator: Milo Casagrande <milo_casagrande@yahoo.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "MIME-Version: 1.0\n"
@@ -442,6 +442,10 @@ msgstr "Tutti i file"
 msgid "Save file.."
 msgstr "Salva file..."
 
+msgid "Do you want to skip default option values while exporting your profile?"
+msgstr ""
+"Tralasciare i valori predefiniti per le opzioni nell'esportare il profilo?"
+
 msgid "Open file.."
 msgstr "Apri file..."
 
@@ -503,8 +507,7 @@ msgid "About"
 msgstr "Informazioni"
 
 # (NdT) siccome CCSM sta per CompizConfig Setting Manager,
-# ma è stato tradotto come "Gestore configurazione Compiz",
-# tralascio l'acronimo...
+# ma è stato tradotto in altro modo tralascio l'acronimo...
 msgid "About CCSM..."
 msgstr "Informazioni su..."
 
@@ -527,6 +530,3 @@ msgstr ""
 "<span size=\"large\"><b>Nessuna corrispondenza trovata.</b> </span><span>\n"
 "\n"
 " Il filtro «<b>%s</b>» non corrisponde ad alcuna voce.</span>"
-
-#~ msgid "Owning Program"
-#~ msgstr "Programma proprietario"
