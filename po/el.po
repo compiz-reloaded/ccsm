@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm 0.6.0\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-10-03 14:31+0530\n"
-"PO-Revision-Date: 2007-10-02 23:40+0200\n"
+"POT-Creation-Date: 2007-11-15 16:42+0530\n"
+"PO-Revision-Date: 2007-11-14 23:40+0200\n"
 "Last-Translator:  djdoo <jimdusis@yahoo.gr>\n"
 "Language-Team: Compiz Fusion translators <i18n@lists.compiz-fusion.org>\n"
 "MIME-Version: 1.0\n"
@@ -41,6 +41,23 @@ msgstr "Μην Θέσεις %(action)s"
 #, python-format
 msgid "Set %(action)s anyway"
 msgstr "Θέσε %(action)s οπωσδήποτε"
+
+msgid ""
+"You are trying to use the feature <b>%(feature)s</b> which is <b>not</b> "
+"provided by any plugin.\n"
+"Do you wish to use this feature anyway?"
+msgstr ""
+"Προσπαθείτε να χρησιμοποιήσετε το χαρακτηριστικό <b>%(feature)s</b> που <b>%"
+"δεν</b> παρέχεται απο κάθε πρόσθετο.\n"
+"Θέλετε να ενεργοποιήσετε αυτό το χαρακτηριστικό οπωσδήποτε?"
+
+#, python-format
+msgid "Use %(feature)s"
+msgstr "Χρήση %(feature)s"
+
+#, python-format
+msgid "Don't use %(feature)s"
+msgstr "Μη χρήση %(feature)s"
 
 #, python-format
 msgid ""
@@ -152,6 +169,49 @@ msgstr "Χρήσιμες Εφαρμογές"
 msgid "Reset setting to the default value"
 msgstr "Επαναφορά της ρύθμισης στη προεπιλεγμένη τιμή"
 
+msgid "Window Title"
+msgstr "Τίτλος Παραθύρου"
+
+msgid "Window Role"
+msgstr "Ρόλος Παραθύρου"
+
+msgid "Window Name"
+msgstr "Όνομα Παραθύρου"
+
+msgid "Window Class"
+msgstr "Κλάση Παραθύρου"
+
+msgid "Window Type"
+msgstr "Τύπος Παραθύρου"
+
+msgid "Window ID"
+msgstr "ID Παραθύρου"
+
+msgid "And"
+msgstr "Και"
+
+msgid "Or"
+msgstr "Ή"
+
+#, python-format
+msgid "Edit %s"
+msgstr "Επεξεργασία %s"
+
+msgid "Type"
+msgstr "Τύπος"
+
+msgid "Value"
+msgstr "Τιμή"
+
+msgid "Grab"
+msgstr "Αρπαγή"
+
+msgid "Relation"
+msgstr "Σχέση"
+
+msgid "Invert"
+msgstr "Αντίθετο"
+
 msgid "Browse for "
 msgstr "Περιήγηση για "
 
@@ -178,10 +238,6 @@ msgstr "Επεξεργασία"
 #, python-format
 msgid "Value (%s)"
 msgstr "Τιμή (%s)"
-
-#, python-format
-msgid "Edit %s"
-msgstr "Επεξεργασία %s"
 
 #, python-format
 msgid "Value (%(value)s) for %(setting)s"
@@ -272,9 +328,9 @@ msgstr ""
 
 msgid "translator-credits"
 msgstr ""
-"Μεταφραστές: Δημήτρης (djdoo) <jimdusis@yahoo.gr> Κώστας (diafanos) "
-"<kostasagn@hotmail.com> Thodo Mitch (Teddy) <thodo_mitch@hotmail.com> Dimman "
-"Ramone (dimmanramone) <ramone@online.ie> Άρης (Arielis) <arlst4@hotmail.com>"
+"Μεταφραστές: Δημήτρης (djdoo) <jimdusis@yahoo.gr>Κώστας (diafanos) "
+"<kostasagn@hotmail.com>Thodo Mitch (Teddy) <thodo_mitch@hotmail.com>Dimman "
+"Ramone (dimmanramone) <ramone@online.ie>Άρης (Arielis) <arlst4@hotmail.com>"
 
 msgid "An error has occured"
 msgstr "Ένα σφάλμα προέκυψε"
@@ -369,6 +425,11 @@ msgstr "Όλα τα αρχεία"
 msgid "Save file.."
 msgstr "Αποθήκευση Αρχείου.."
 
+msgid "Do you want to skip default option values while exporting your profile?"
+msgstr ""
+"Θέλετε να αγνοηθούν οι προεπιλεγμένες τιμές των επιλογών όταν εξάγετε το "
+"προφίλ σας?"
+
 msgid "Open file.."
 msgstr "Άνοιγμα Αρχείου.."
 
@@ -390,6 +451,15 @@ msgstr "Απενεργοποιημένα πρόσθετα"
 
 msgid "Enabled Plugins"
 msgstr "Ενεργοποιημένα πρόσθετα"
+
+msgid ""
+"Do you really want to disable automatic plugin sorting? This will also "
+"disable conflict handling. You should only do this if you know what you are "
+"doing."
+msgstr ""
+"Θέλετε όντως να απενεργοποιήσετε την αυτόματη ταξινόμηση τον προσθέτων? Αυτό "
+"θα απενεργοποιήσει επίσης τον χειρισμό διενέξεων. Θα πρέπει να το κάνετε "
+"αυτό μόνο αν ξέρετε τι κάνετε."
 
 msgid "Add plugin"
 msgstr "Προσθήκη πρόσθετου"
