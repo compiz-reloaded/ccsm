@@ -27,6 +27,7 @@ import gobject
 import cairo, pangocairo
 from math import pi, sqrt
 import time
+import re
 
 from ccm.Utils import *
 from ccm.Constants import *
@@ -770,6 +771,174 @@ class KeyGrabber (gtk.Button):
         if not len (label):
             label = _("Disabled")
         gtk.Button.set_label (self, label)
+
+# Match Button
+#
+class MatchButton(gtk.Button):
+
+    __gsignals__    = {"changed" : (gobject.SIGNAL_RUN_FIRST,
+                                    gobject.TYPE_NONE,
+                                    [gobject.TYPE_STRING])}
+
+    prefix = {\
+            _("Window Title"): 'title',
+            _("Window Role"): 'role',
+            _("Window Name"): 'name',
+            _("Window Class"): 'class',
+            _("Window Type"): 'type',
+            _("Window ID"): 'xid',
+    }
+
+    symbols = {\
+            _("And"): '&',
+            _("Or"): '|'
+    }
+
+    match   = None
+    setting = None
+
+    def __init__ (self, setting = None):
+        '''Prepare widget'''
+        super (MatchButton, self).__init__ ()
+
+        self.setting = setting
+        self.match = setting.Value
+
+        self.add (Image (name = gtk.STOCK_ADD, type = ImageStock,
+                         size = gtk.ICON_SIZE_BUTTON))
+        self.connect ("clicked", self.run_edit_dialog)
+
+    def set_match (self, value):
+        self.match = value
+        self.emit ("changed", self.match)
+
+    def get_xprop (self, regexp, proc = "xprop"):
+        proc = os.popen (proc)
+        output = proc.readlines ()
+        rex = re.compile (regexp)
+        value = ""
+        for line in output:
+            if rex.search (line):
+                m = rex.match (line)
+                value = m.groups () [-1]
+                break
+
+        return value
+
+    # Regular Expressions taken from beryl-settings
+    def grab_value (self, widget, value_widget, type_widget):
+        value = ""
+        prefix = self.prefix[type_widget.get_active_text()]
+
+        if prefix == "type":
+            value = self.get_xprop("^_NET_WM_WINDOW_TYPE\(ATOM\) = _NET_WM_WINDOW_TYPE_(\w+)")
+            value = value.lower().capitalize()
+        elif prefix == "role":
+            value = self.get_xprop("^WM_WINDOW_ROLE\(STRING\) = \"([^\"]+)\"")
+        elif prefix == "name":
+            value = self.get_xprop("^WM_CLASS\(STRING\) = \"([^\"]+)\"")
+        elif prefix == "class":
+            value = self.get_xprop("^WM_CLASS\(STRING\) = \"([^\"]+)\", \"([^\"]+)\"")
+        elif prefix == "title":
+            value = self.get_xprop("^_NET_WM_NAME\(UTF8_STRING\) = ([^\n]+)")
+            if value:
+                list = value.split(", ")
+                value = ""
+                for hex in list:
+                    value += "%c" % int(hex, 16)
+            else:
+                value = self.get_xprop("^WM_NAME\(STRING\) = \"([^\"]+)\"")
+        elif prefix == "id":
+            value = self.get_xprop("^xwininfo: Window id: ([^\s]+)", "xwininfo")
+
+        value_widget.set_text(value)
+
+    def generate_match (self, type, value, relation, invert):
+        match = ""
+        text = self.match
+
+        prefix = self.prefix[type]
+        symbol = self.symbols[relation]
+
+        # check if the current match needs some brackets
+        if len(text) > 0 and text[-1] != ')' and text[0] != '(':
+            match = "(%s)" % text
+        else:
+            match = text
+
+        if invert:
+            match = "%s %s !(%s=%s)" % (match, symbol, prefix, value)
+        elif len(match) > 0:
+            match = "%s %s %s=%s" % (match, symbol, prefix, value)
+        else:
+            match = "%s=%s" % (prefix, value)
+
+        self.set_match (match)
+
+    def run_edit_dialog (self, widget):
+        '''Run dialog to generate a match'''
+
+        dlg = gtk.Dialog (_("Edit %s") % self.setting.ShortDesc)
+        dlg.set_position (gtk.WIN_POS_CENTER_ON_PARENT)
+        dlg.set_transient_for (self.get_parent ().get_toplevel ())
+        dlg.add_button (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
+        dlg.add_button (gtk.STOCK_ADD, gtk.RESPONSE_OK).grab_default ()
+        dlg.set_default_response (gtk.RESPONSE_OK)
+
+        table = gtk.Table ()
+
+        rows = []
+
+        # Type
+        label = Label (_("Type"))
+        type_chooser = gtk.combo_box_new_text ()
+        for type in self.prefix.keys ():
+            type_chooser.append_text (type)
+        type_chooser.set_active (0)
+        rows.append ((label, type_chooser))
+
+        # Value
+        label = Label (_("Value"))
+        box = gtk.HBox ()
+        box.set_spacing (5)
+        entry = gtk.Entry ()
+        button = gtk.Button (_("Grab"))
+        button.connect ('clicked', self.grab_value, entry, type_chooser)
+        box.pack_start (entry, True, True)
+        box.pack_start (button, False, False)
+        rows.append ((label, box))
+
+        # Relation
+        label = Label (_("Relation"))
+        relation_chooser = gtk.combo_box_new_text ()
+        for relation in self.symbols.keys ():
+            relation_chooser.append_text (relation)
+        relation_chooser.set_active (0)
+        rows.append ((label, relation_chooser))
+
+        # Invert
+        label = Label (_("Invert"))
+        check = gtk.CheckButton ()
+        rows.append ((label, check))
+
+        row = 0
+        for label, widget in rows:
+            table.attach(label, 0, 1, row, row+1, yoptions=0, xpadding=TableX, ypadding=TableY)
+            table.attach(widget, 1, 2, row, row+1, yoptions=0, xpadding=TableX, ypadding=TableY)
+            row += 1
+
+        dlg.vbox.pack_start (table)
+        dlg.vbox.set_spacing (5)
+        dlg.show_all ()
+
+        response = dlg.run ()
+        dlg.destroy ()
+        if response == gtk.RESPONSE_OK:
+            type     = type_chooser.get_active_text ()
+            value    = entry.get_text ()
+            relation = relation_chooser.get_active_text ()
+            invert   = check.get_active ()
+            self.generate_match (type, value, relation, invert)
 
 # About Dialog
 #
