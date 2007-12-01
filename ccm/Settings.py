@@ -544,6 +544,9 @@ class MultiListSetting(Setting):
         row = 0
         widgets = []
         for setting in self.Settings:
+            def MatchChanged(widget, match, entry):
+                entry.set_text(match)
+
             ebox = gtk.EventBox()
             label = gtk.Label(setting.ShortDesc)
             ebox.add(label)
@@ -563,6 +566,20 @@ class MultiListSetting(Setting):
                 table.attach(ebox, 0, 1, row, row+1, xpadding=5, xoptions=gtk.FILL)
                 table.attach(comboBox, 2, 3, row, row+1, xpadding=5)
                 widgets.append(comboBox)
+
+            # Match settings
+            elif type == gobject.TYPE_STRING and setting.Info[0] == 'Match':
+                entry = gtk.Entry()
+                button = MatchButton(setting)
+                button.connect('changed', MatchChanged, entry)
+                Tooltips.set_tip(ebox, setting.LongDesc)
+                Tooltips.set_tip(entry, setting.LongDesc)
+                if values != None:
+                    entry.set_text(values[row])
+                table.attach(ebox, 0, 1, row, row+1, xpadding=5, xoptions=gtk.FILL)
+                table.attach(entry, 2, 3, row, row+1, xpadding=5)
+                table.attach(button, 3, 4, row, row+1, xpadding=5, xoptions=gtk.FILL)
+                widgets.append(entry)
 
             # String settings
             elif type == gobject.TYPE_STRING:
