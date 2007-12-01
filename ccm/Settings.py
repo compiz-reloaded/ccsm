@@ -127,7 +127,7 @@ class MatchSetting(Setting):
         self.Entry.connect('activate', self.Changed)
         self.Entry.connect('focus-out-event', self.Changed)
 
-        self.MatchButton = MatchButton(self.Setting)
+        self.MatchButton = MatchButton(self.Setting.Value)
         self.MatchButton.connect('changed', self.MatchChanged)
 
         self.Widget.pack_start(self.Entry, True, True)
@@ -570,12 +570,13 @@ class MultiListSetting(Setting):
             # Match settings
             elif type == gobject.TYPE_STRING and setting.Info[0] == 'Match':
                 entry = gtk.Entry()
-                button = MatchButton(setting)
+                button = MatchButton()
                 button.connect('changed', MatchChanged, entry)
                 Tooltips.set_tip(ebox, setting.LongDesc)
                 Tooltips.set_tip(entry, setting.LongDesc)
                 if values != None:
                     entry.set_text(values[row])
+                    button.set_match(values[row])
                 table.attach(ebox, 0, 1, row, row+1, xpadding=5, xoptions=gtk.FILL)
                 table.attach(entry, 2, 3, row, row+1, xpadding=5)
                 table.attach(button, 3, 4, row, row+1, xpadding=5, xoptions=gtk.FILL)

@@ -795,14 +795,12 @@ class MatchButton(gtk.Button):
     }
 
     match   = None
-    setting = None
 
-    def __init__ (self, setting = None):
+    def __init__ (self, match = None):
         '''Prepare widget'''
         super (MatchButton, self).__init__ ()
 
-        self.setting = setting
-        self.match = setting.Value
+        self.match = match
 
         self.add (Image (name = gtk.STOCK_ADD, type = ImageStock,
                          size = gtk.ICON_SIZE_BUTTON))
@@ -878,7 +876,7 @@ class MatchButton(gtk.Button):
     def run_edit_dialog (self, widget):
         '''Run dialog to generate a match'''
 
-        dlg = gtk.Dialog (_("Edit %s") % self.setting.ShortDesc)
+        dlg = gtk.Dialog (_("Edit match"))
         dlg.set_position (gtk.WIN_POS_CENTER_ON_PARENT)
         dlg.set_transient_for (self.get_parent ().get_toplevel ())
         dlg.add_button (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
