@@ -24,7 +24,6 @@ import pygtk
 import gtk
 import gobject
 import os
-import re
 import mimetypes
 mimetypes.init()
 
@@ -121,19 +120,6 @@ class Setting:
 
 class MatchSetting(Setting):
     def _Init(self):
-        self.TypePrefix = {\
-            _("Window Title"): 'title',
-            _("Window Role"): 'role',
-            _("Window Name"): 'name',
-            _("Window Class"): 'class',
-            _("Window Type"): 'type',
-            _("Window ID"): 'xid',
-        }
-        self.RelationSymbol = {\
-            _("And"): '&',
-            _("Or"): '|'
-        }
-
         self.Widget = gtk.HBox()
         self.Widget.set_spacing(5)
 
@@ -141,143 +127,21 @@ class MatchSetting(Setting):
         self.Entry.connect('activate', self.Changed)
         self.Entry.connect('focus-out-event', self.Changed)
 
-        editButton = gtk.Button ()
-        editButton.add (Image (name = gtk.STOCK_ADD, type = ImageStock,
-                               size = gtk.ICON_SIZE_BUTTON))
-        editButton.connect ("clicked", self.RunEditDialog)
+        self.MatchButton = MatchButton(self.Setting)
+        self.MatchButton.connect('changed', self.MatchChanged)
 
         self.Widget.pack_start(self.Entry, True, True)
-        self.Widget.pack_start(editButton, False, False)
+        self.Widget.pack_start(self.MatchButton, False, False)
 
     def _Read(self):
         self.Entry.set_text(self.Setting.Value)
 
+    def MatchChanged(self, widget, match):
+        self.Entry.set_text(match)
+
     def _Changed(self):
         self.Setting.Value = self.Entry.get_text()
-
-    # Taken from beryl-settings
-    def GetXprop(self, regexp, proc="xprop"):
-        procOutput = os.popen(proc).readlines()
-        rex = re.compile(regexp)
-        value = ""
-        for line in procOutput:
-            if rex.search(line):
-                m = rex.match(line)
-                value = m.groups()[-1]
-                break
-
-        return value
-
-    # Regular Expressions taken from beryl-settings
-    def GrabValue(self, widget, valueWidget, typeWidget):
-        value = ""
-        prefix = self.TypePrefix[typeWidget.get_active_text()]
-
-        if prefix == "type":
-            value = self.GetXprop("^_NET_WM_WINDOW_TYPE\(ATOM\) = _NET_WM_WINDOW_TYPE_(\w+)")
-            value = value.lower().capitalize()
-        elif prefix == "role":
-            value = self.GetXprop("^WM_WINDOW_ROLE\(STRING\) = \"([^\"]+)\"")
-        elif prefix == "name":
-            value = self.GetXprop("^WM_CLASS\(STRING\) = \"([^\"]+)\"")
-        elif prefix == "class":
-            value = self.GetXprop("^WM_CLASS\(STRING\) = \"([^\"]+)\", \"([^\"]+)\"")
-        elif prefix == "title":
-            value = self.GetXprop("^_NET_WM_NAME\(UTF8_STRING\) = ([^\n]+)")
-            if value:
-                list = value.split(", ")
-                value = ""
-                for hex in list:
-                    value += "%c" % int(hex, 16)
-            else:
-                value = self.GetXprop("^WM_NAME\(STRING\) = \"([^\"]+)\"")
-        elif prefix == "id":
-            value = self.GetXprop("^xwininfo: Window id: ([^\s]+)", "xwininfo")
-
-        valueWidget.set_text(value)
-
-    def GenerateMatch(self, type, value, relation, invert):
-        match = ""
-        text = self.Entry.get_text()
-
-        prefix = self.TypePrefix[type]
-        symbol = self.RelationSymbol[relation]
-
-        # check if the current match needs some brackets
-        if len(text) > 0 and text[-1] != ')' and text[0] != '(':
-            match = "(%s)" % text
-        else:
-            match = text
-
-        if invert:
-            match = "%s %s !(%s=%s)" % (match, symbol, prefix, value)
-        elif len(match) > 0:
-            match = "%s %s %s=%s" % (match, symbol, prefix, value)
-        else:
-            match = "%s=%s" % (prefix, value)
-
-        return match
-
-    def RunEditDialog (self, widget):
-        dlg = gtk.Dialog (_("Edit %s") % self.Setting.ShortDesc)
-        dlg.set_position (gtk.WIN_POS_CENTER_ON_PARENT)
-        dlg.set_transient_for (self.Widget.get_toplevel ())
-        dlg.add_button (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
-        dlg.add_button (gtk.STOCK_ADD, gtk.RESPONSE_OK).grab_default()
-        dlg.set_default_response (gtk.RESPONSE_OK)
-
-        table = gtk.Table()
-
-        widgetRows = []
-
-        typeLabel = Label(_("Type"))
-        typeChooser = gtk.combo_box_new_text()
-        for type in self.TypePrefix.keys():
-            typeChooser.append_text(type)
-        typeChooser.set_active(0)
-        widgetRows.append((typeLabel, typeChooser))
-
-        valueLabel = Label(_("Value"))
-        valueBox = gtk.HBox()
-        valueBox.set_spacing(5)
-        valueEntry = gtk.Entry()
-        valueGrabButton = gtk.Button(_("Grab"))
-        valueGrabButton.connect('clicked', self.GrabValue, valueEntry, typeChooser)
-        valueBox.pack_start(valueEntry, True, True)
-        valueBox.pack_start(valueGrabButton, False, False)
-        widgetRows.append((valueLabel, valueBox))
-
-        relationLabel = Label(_("Relation"))
-        relationChooser = gtk.combo_box_new_text()
-        for relation in self.RelationSymbol.keys():
-            relationChooser.append_text(relation)
-        relationChooser.set_active(0)
-        widgetRows.append((relationLabel, relationChooser))
-
-        invertLabel = Label(_("Invert"))
-        invertCheck = gtk.CheckButton()
-        widgetRows.append((invertLabel, invertCheck))
-
-        row = 0
-        for label, widget in widgetRows:
-            table.attach(label, 0, 1, row, row+1, yoptions=0, xpadding=TableX, ypadding=TableY)
-            table.attach(widget, 1, 2, row, row+1, yoptions=0, xpadding=TableX, ypadding=TableY)
-            row += 1
-
-        dlg.vbox.pack_start(table)
-        dlg.vbox.set_spacing(5)
-        dlg.show_all()
-
-        response = dlg.run()
-        dlg.destroy()
-        if response == gtk.RESPONSE_OK:
-            type = typeChooser.get_active_text()
-            value = valueEntry.get_text()
-            relation = relationChooser.get_active_text()
-            invert = invertCheck.get_active()
-            match = self.GenerateMatch(type, value, relation, invert)
-            self.Entry.set_text(match)
-            self.Changed()
+        self.MatchButton.set_match(self.Setting.Value)
 
 class StringSetting(Setting):
     def _Init(self):
@@ -546,7 +410,7 @@ class MultiListSetting(Setting):
             self._Changed()
             self.Settings[0].Plugin.Context.Write()
 
-    def DoReset(self, foo):
+    def DoReset(self, widget):
         for setting in self.Settings:
             setting.Reset()
         self.Setting[0].Plugin.Context.Write()
@@ -555,7 +419,7 @@ class MultiListSetting(Setting):
     def MakeLabel(self):
         pass
     
-    def Add(self, b):
+    def Add(self, widget):
         values = []
         for setting in self.Settings:
             if len(setting.Info) > 0 and setting.Info[0] == 'Int' and len(setting.Info[1][2]) > 0:
@@ -579,13 +443,13 @@ class MultiListSetting(Setting):
                 col += 1
             self.Changed()
 
-    def Delete(self, b):
+    def Delete(self, widget):
         selectedRows = self.Select.get_selected_rows()[1]
         for path in selectedRows:
             iter = self.Store.get_iter(path)
             self.Store.remove(iter)
 
-    def Edit(self, b):
+    def Edit(self, widget):
         selectedRows = self.Select.get_selected_rows()[1]
         if len(selectedRows) == 1:
             iter = self.Store.get_iter(selectedRows[0])
@@ -601,7 +465,7 @@ class MultiListSetting(Setting):
                     col += 1
                 self.Changed()
 
-    def MoveUp(self, b):
+    def MoveUp(self, widget):
         selectedRows = self.Select.get_selected_rows()[1]
         if len(selectedRows) == 1:
             iter = self.Store.get_iter(selectedRows[0])
@@ -611,7 +475,7 @@ class MultiListSetting(Setting):
                     prev = self.Store.iter_next(prev)
                 self.Store.swap(iter, prev)
 
-    def MoveDown(self, b):
+    def MoveDown(self, widget):
         selectedRows = self.Select.get_selected_rows()[1]
         if len(selectedRows) == 1:
             iter = self.Store.get_iter(selectedRows[0])
@@ -684,7 +548,10 @@ class MultiListSetting(Setting):
             label = gtk.Label(setting.ShortDesc)
             ebox.add(label)
             Tooltips.set_tip(ebox, setting.LongDesc)
-            if self.Types[row] == gobject.TYPE_STRING and setting.Info[0] == 'Int' and len(setting.Info[1][2]) > 0:
+            type = self.Types[row]
+
+            # Int description setting
+            if type == gobject.TYPE_STRING and setting.Info[0] == 'Int' and len(setting.Info[1][2]) > 0:
                 comboBox = gtk.combo_box_new_text()
                 sortedItems = sorted(setting.Info[1][2].items(), EnumSettingSortCompare)
                 for item in sortedItems:
@@ -696,7 +563,9 @@ class MultiListSetting(Setting):
                 table.attach(ebox, 0, 1, row, row+1, xpadding=5, xoptions=gtk.FILL)
                 table.attach(comboBox, 2, 3, row, row+1, xpadding=5)
                 widgets.append(comboBox)
-            elif self.Types[row] == gobject.TYPE_STRING:
+
+            # String settings
+            elif type == gobject.TYPE_STRING:
                 Tooltips.set_tip(ebox, setting.LongDesc)
                 entry = gtk.Entry()
                 Tooltips.set_tip(entry, setting.LongDesc)
@@ -705,7 +574,9 @@ class MultiListSetting(Setting):
                 table.attach(ebox, 0, 1, row, row+1, xpadding=5, xoptions=gtk.FILL)
                 table.attach(entry, 2, 3, row, row+1, xpadding=5)
                 widgets.append(entry)
-            elif self.Types[row] == gobject.TYPE_INT or self.Types[row] == gobject.TYPE_FLOAT:
+
+            # Int and float settings
+            elif type == gobject.TYPE_INT or type == gobject.TYPE_FLOAT:
                 inc = 0
                 if setting.Info[0] == 'Int':
                     inc = 1
