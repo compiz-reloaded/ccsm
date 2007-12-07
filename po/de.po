@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm 0.0.1\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-10-18 11:14+0200\n"
+"POT-Creation-Date: 2007-12-07 16:29+0100\n"
 "PO-Revision-Date: 2007-10-18 11:24+0200\n"
 "Last-Translator: Danny Baumann <maniac@opencompositing.org>\n"
 "Language-Team: Compiz Fusion translators <i18n@lists.compiz-fusion.org>\n"
@@ -41,6 +41,26 @@ msgstr "%(action)s nicht übernehmen"
 #, python-format
 msgid "Set %(action)s anyway"
 msgstr "%(action)s trotzdem setzen"
+
+#, fuzzy, python-format
+msgid ""
+"You are trying to use the feature <b>%(feature)s</b> which is <b>not</b> "
+"provided by any plugin.\n"
+"Do you wish to use this feature anyway?"
+msgstr ""
+"Sie versuchen, das von <b>%(plugin)s</b> zur Verfügung gestellte Feature <b>%"
+"(feature)s</b> zu verwenden.\n"
+"Dieses Plugin ist zur Zeit deaktiviert.\n"
+"Möchten Sie <b>%(plugin)s</b> aktivieren, so dass dieses Feature zur "
+"Verfügung steht?"
+
+#, fuzzy, python-format
+msgid "Use %(feature)s"
+msgstr "%(feature)s nicht aktivieren"
+
+#, fuzzy, python-format
+msgid "Don't use %(feature)s"
+msgstr "%(feature)s nicht aktivieren"
 
 #, python-format
 msgid ""
@@ -153,49 +173,6 @@ msgstr "Werkzeuge"
 msgid "Reset setting to the default value"
 msgstr "Einstellung auf den Standardwert zurücksetzen"
 
-msgid "Window Title"
-msgstr "Fenstertitel"
-
-msgid "Window Role"
-msgstr "Fensterfunktion"
-
-msgid "Window Name"
-msgstr "Fensterklassenname"
-
-msgid "Window Class"
-msgstr "Fensterklasse"
-
-msgid "Window Type"
-msgstr "Fenstertyp"
-
-msgid "Window ID"
-msgstr "Fenster-ID"
-
-msgid "And"
-msgstr "Und"
-
-msgid "Or"
-msgstr "Oder"
-
-#, python-format
-msgid "Edit %s"
-msgstr "%s bearbeiten"
-
-msgid "Type"
-msgstr "Typ"
-
-msgid "Value"
-msgstr "Wert"
-
-msgid "Grab"
-msgstr "Auswählen"
-
-msgid "Relation"
-msgstr "Beziehung"
-
-msgid "Invert"
-msgstr "Umkehren"
-
 msgid "Browse for "
 msgstr "Suche nach "
 
@@ -220,6 +197,10 @@ msgstr "Bearbeiten"
 #, python-format
 msgid "Value (%s)"
 msgstr "Wert (%s)"
+
+#, python-format
+msgid "Edit %s"
+msgstr "%s bearbeiten"
 
 #, python-format
 msgid "Value (%(value)s) for %(setting)s"
@@ -302,6 +283,52 @@ msgstr "%s aktivieren"
 
 msgid "Please press the new key combination"
 msgstr "Bitte drücken Sie die gewünschte Tastenkombination"
+
+msgid "Window Title"
+msgstr "Fenstertitel"
+
+msgid "Window Role"
+msgstr "Fensterfunktion"
+
+msgid "Window Name"
+msgstr "Fensterklassenname"
+
+msgid "Window Class"
+msgstr "Fensterklasse"
+
+msgid "Window Type"
+msgstr "Fenstertyp"
+
+msgid "Window ID"
+msgstr "Fenster-ID"
+
+msgid "And"
+msgstr "Und"
+
+msgid "Or"
+msgstr "Oder"
+
+msgid "Edit match"
+msgstr "Match bearbeiten"
+
+#. Type
+msgid "Type"
+msgstr "Typ"
+
+#. Value
+msgid "Value"
+msgstr "Wert"
+
+msgid "Grab"
+msgstr "Auswählen"
+
+#. Relation
+msgid "Relation"
+msgstr "Beziehung"
+
+#. Invert
+msgid "Invert"
+msgstr "Umkehren"
 
 msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr "Ein Einstellungs-Manager für das CompizConfig Konfigurations-System"
@@ -403,6 +430,9 @@ msgstr "Alle Dateien"
 msgid "Save file.."
 msgstr "Datei speichern"
 
+msgid "Do you want to skip default option values while exporting your profile?"
+msgstr "Wollen sie standart Optionswerte beim Exportieren des Profils überspringen?"
+
 msgid "Open file.."
 msgstr "Datei öffnen"
 
@@ -430,6 +460,9 @@ msgid ""
 "disable conflict handling. You should only do this if you know what you are "
 "doing."
 msgstr ""
+"Wollen sie wirklich das automatische Sortieren der Plugins deaktivieren? Dies "
+"wird außerdem die Konflikt Behebung außer Kraft setzen. Sie sollten dies "
+"nur tun, wenn sie wissen was sie tun."
 
 msgid "Add plugin"
 msgstr "Plugin hinzufügen"
