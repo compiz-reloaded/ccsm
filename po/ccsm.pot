@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-11-21 13:14+0530\n"
+"POT-Creation-Date: 2007-12-07 16:29+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -148,49 +148,6 @@ msgstr ""
 msgid "Reset setting to the default value"
 msgstr ""
 
-msgid "Window Title"
-msgstr ""
-
-msgid "Window Role"
-msgstr ""
-
-msgid "Window Name"
-msgstr ""
-
-msgid "Window Class"
-msgstr ""
-
-msgid "Window Type"
-msgstr ""
-
-msgid "Window ID"
-msgstr ""
-
-msgid "And"
-msgstr ""
-
-msgid "Or"
-msgstr ""
-
-#, python-format
-msgid "Edit %s"
-msgstr ""
-
-msgid "Type"
-msgstr ""
-
-msgid "Value"
-msgstr ""
-
-msgid "Grab"
-msgstr ""
-
-msgid "Relation"
-msgstr ""
-
-msgid "Invert"
-msgstr ""
-
 msgid "Browse for "
 msgstr ""
 
@@ -214,6 +171,10 @@ msgstr ""
 
 #, python-format
 msgid "Value (%s)"
+msgstr ""
+
+#, python-format
+msgid "Edit %s"
 msgstr ""
 
 #, python-format
@@ -293,6 +254,52 @@ msgid "Enable %s"
 msgstr ""
 
 msgid "Please press the new key combination"
+msgstr ""
+
+msgid "Window Title"
+msgstr ""
+
+msgid "Window Role"
+msgstr ""
+
+msgid "Window Name"
+msgstr ""
+
+msgid "Window Class"
+msgstr ""
+
+msgid "Window Type"
+msgstr ""
+
+msgid "Window ID"
+msgstr ""
+
+msgid "And"
+msgstr ""
+
+msgid "Or"
+msgstr ""
+
+msgid "Edit match"
+msgstr ""
+
+#. Type
+msgid "Type"
+msgstr ""
+
+#. Value
+msgid "Value"
+msgstr ""
+
+msgid "Grab"
+msgstr ""
+
+#. Relation
+msgid "Relation"
+msgstr ""
+
+#. Invert
+msgid "Invert"
 msgstr ""
 
 msgid "This is a settings manager for the CompizConfig configuration system."
