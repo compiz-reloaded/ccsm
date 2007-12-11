@@ -1,22 +1,23 @@
-# translation of zh_CN-ccsm.po to Chinese
+# translation of hu.po to hungarian
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# Thruth <gubotruth@gmail.com>, 2007
 #
+# Karoly Gossler <connor@connor.hu>, 2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: zh_CN-ccsm\n"
+"Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
 "POT-Creation-Date: 2007-12-12 01:11+0530\n"
-"PO-Revision-Date: 2007-12-11 16:59+0100\n"
-"Last-Translator: Thruth Wang <gubotruth@gmail.com>\n"
-"Language-Team: Chinese\n"
+"PO-Revision-Date: 2007-12-07 15:14+0100\n"
+"Last-Translator: Karoly Gossler <connor@connor.hu>\n"
+"Language-Team: hungarian <hu@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Pootle 1.0.2\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: KBabel 1.11.4\n"
 
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "The new value for the %(binding)s binding for the action <b>%(action)s</b> "
 "in plugin <b>%(plugin)s</b> conflicts with the action <b>%(action_conflict)"
@@ -24,193 +25,186 @@ msgid ""
 "Do you wish to disable <b>%(action_conflict)s</b> in the <b>%"
 "(plugin_conflict)s</b> plugin?"
 msgstr ""
-" %s 组合 <b>%s</b> 动作的新值在 <b>%s</b> 插件中与动作 <b>%s</b> 相冲突，该动"
-"作在 <b>%s</b> 插件中。\n"
-"您要禁用 <b>%s</b> 么？它在 <b>%s</b> 插件中。"
 
 #, python-format
 msgid "Disable %(action_conflict)s"
-msgstr "禁用 %(action_conflict)s"
+msgstr ""
 
 #, python-format
 msgid "Don't set %(action)s"
-msgstr "不要设置 %(action)s"
+msgstr ""
 
 #, python-format
 msgid "Set %(action)s anyway"
-msgstr "强制设置 %(action)s"
+msgstr ""
 
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "You are trying to use the feature <b>%(feature)s</b> which is <b>not</b> "
 "provided by any plugin.\n"
 "Do you wish to use this feature anyway?"
 msgstr ""
-"您试图使用 <b>%s</b> 功能，该功能由 <b>%s</b> 插件提供。\n"
-"该插件目前被禁用。\n"
-"您仍然希望启用 %s 插件以实现功能么?"
 
 #, python-format
 msgid "Use %(feature)s"
-msgstr "使用 %(feature)s"
+msgstr ""
 
 #, python-format
 msgid "Don't use %(feature)s"
-msgstr "不使用 %(feature)s"
+msgstr ""
 
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "You are trying to use the feature <b>%(feature)s</b> which is provided by <b>"
 "%(plugin)s</b>.\n"
 "This plugin is currently disabled.\n"
 "Do you wish to enable <b>%(plugin)s</b> so the feature is available?"
 msgstr ""
-"您试图使用 <b>%s</b> 功能，该功能由 <b>%s</b> 插件提供。\n"
-"该插件目前被禁用。\n"
-"您仍然希望启用 %s 插件以实现功能么?"
+
+#, fuzzy, python-format
+msgid "Enable %(plugin)s"
+msgstr "Engedélyezett bővítmények"
 
 #, python-format
-msgid "Enable %(plugin)s"
-msgstr "启用插件 %(plugin)s"
-
-#, fuzzy, python-format
 msgid "Don't enable %(feature)s"
-msgstr "不要启用 %s"
+msgstr ""
 
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Plugin <b>%(plugin_conflict)s</b> provides feature <b>%(feature)s</b> which "
 "is also provided by <b>%(plugin)s</b>"
-msgstr "<b>%s</b> 插件提供 <b>%s</b> 功能，该功能也可以由 <b>%s</b> 提供"
+msgstr ""
 
 #, fuzzy, python-format
 msgid "Disable %(plugin_conflict)s"
-msgstr "禁用这些插件"
+msgstr "Tiltott bővítmények"
+
+#, fuzzy, python-format
+msgid "Don't enable %(plugin)s"
+msgstr "Engedélyezett bővítmények"
 
 #, python-format
-msgid "Don't enable %(plugin)s"
-msgstr "不要启用插件 %(plugin)s"
-
-#, fuzzy, python-format
 msgid "Plugin <b>%(plugin_conflict)s</b> conflicts with <b>%(plugin)s</b>."
-msgstr "<b>%s</b> 插件与 <b>%s</b>相冲突。"
+msgstr ""
 
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "<b>%(plugin)s</b> requires feature <b>%(feature)s</b> which is provided by "
 "the following plugins:\n"
 "%(plugin_list)s"
 msgstr ""
-"<b>%s</b> 需要 <b>%s</b> 功能，可以由下列插件提供:\n"
-"%s"
 
 msgid "Enable these plugins"
-msgstr "启用这些插件"
+msgstr "Következő bővítmények engedélyezése"
 
 #, fuzzy, python-format
 msgid "<b>%(plugin)s</b> requires the plugin <b>%(require)s</b>."
-msgstr "<b>%s</b> 需要 <b>%s</b> 插件。"
+msgstr "A(z) <b>%s</b> szükséges a(z) <b>%s</b> bővítmények számára."
 
 #, fuzzy, python-format
 msgid "Enable %(require)s"
-msgstr "启用 %s"
+msgstr "%s engedélyezése"
 
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "<b>%(plugin)s</b> provides the feature <b>%(feature)s</b> which is required "
 "by the plugins <b>%(plugin_list)s</b>."
-msgstr "<b>%s</b> 提供 <b>%s</b> 功能，<b>%s</b> 插件需要此功能。"
+msgstr ""
 
 msgid "Disable these plugins"
-msgstr "禁用这些插件"
+msgstr "Következő bővítmények tiltása"
 
 #, fuzzy, python-format
 msgid "Don't disable %(plugin)s"
-msgstr "不要禁用 %s"
+msgstr "Tiltott bővítmények"
 
-#, python-format
+#, fuzzy, python-format
 msgid "<b>%(plugin)s</b> is required by the plugins <b>%(plugin_list)s</b>."
-msgstr "插件<b>%(plugin)s</b>被插件<b>%(plugin_list)s</b>需要。"
+msgstr "A(z) <b>%s</b> szükséges a(z) <b>%s</b> bővítmények számára."
 
 msgid "General"
-msgstr "一般"
+msgstr "Általános"
 
 msgid "Accessibility"
-msgstr "辅助功能"
+msgstr ""
 
 msgid "Desktop"
-msgstr "桌面"
+msgstr ""
 
 msgid "Extras"
-msgstr "额外功能"
+msgstr ""
 
 msgid "Window Management"
-msgstr "窗口管理"
+msgstr ""
 
 msgid "Effects"
-msgstr "特效"
+msgstr ""
 
 msgid "Image Loading"
-msgstr "图像载入中"
+msgstr ""
 
 msgid "Utility"
-msgstr "工具"
+msgstr ""
 
 msgid "Reset setting to the default value"
-msgstr "重置设置为默认值"
+msgstr "Alapértelmezett beállítás visszaállítása"
 
 msgid "Browse for "
-msgstr "浏览"
+msgstr ""
 
 msgid "Images"
-msgstr "图像"
+msgstr "Képek"
 
 msgid "File"
-msgstr "文件"
+msgstr "Fájl"
 
+#, fuzzy
 msgid "Open directory..."
-msgstr "打开目录.."
+msgstr "Fájl megnyitása..."
 
+#, fuzzy
 msgid "Open file..."
-msgstr "打开文件.."
+msgstr "Fájl megnyitása..."
 
 msgid "Multi-list settings. You can double-click a row to edit the values."
 msgstr ""
 
 msgid "Edit"
-msgstr "编辑"
+msgstr "Szerkesztés"
 
 #, python-format
 msgid "Value (%s)"
-msgstr "值 (%s)"
+msgstr "Érték (%s)"
 
 #, python-format
 msgid "Edit %s"
-msgstr "编辑 %s"
+msgstr "%s szerkesztése"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Value (%(value)s) for %(setting)s"
-msgstr "值 (%s) 于 %s:"
+msgstr ""
 
 #, python-format
 msgid "\"%s\" is not a valid shortcut"
-msgstr "\"%s\"不是一个有效的快捷键"
+msgstr ""
 
+#, fuzzy
 msgid "Disabled"
-msgstr "禁用"
+msgstr "%s tiltása"
 
+#, fuzzy
 msgid "Enabled"
-msgstr "启用"
+msgstr "%s engedélyezése"
 
 msgid "Grab key combination"
-msgstr "获取按键组合"
+msgstr ""
 
 msgid "Computing possible conflicts, please wait"
-msgstr "正在计算可能存在的冲突，请稍候"
+msgstr ""
 
 #, python-format
 msgid "\"%s\" is not a valid button"
-msgstr "\"%s\"不是一个有效的按键"
+msgstr ""
 
 #, python-format
 msgid ""
@@ -223,259 +217,255 @@ msgid "\"%s\" is not a valid edge mask"
 msgstr ""
 
 msgid "None"
-msgstr "无"
+msgstr ""
 
 #, python-format
 msgid "Unhandled list type %s for %s"
-msgstr "未处理的列表类型 %s 于 %s"
+msgstr ""
 
 msgid "CompizConfig Settings Manager"
-msgstr "CompizConfig 设置管理器"
+msgstr ""
 
 msgid "Filter"
-msgstr "关键字"
+msgstr "Szűrő"
 
 msgid "Filter your Plugin list"
-msgstr "过滤你的插件列表"
+msgstr "Bővítménylista szűrése"
 
 #, python-format
 msgid "Screen %i"
-msgstr "屏幕 %i"
+msgstr ""
 
 msgid "Screen"
-msgstr "屏幕"
+msgstr "Képernyő"
 
 msgid "All"
-msgstr "全部"
+msgstr ""
 
 msgid "Uncategorized"
-msgstr "未分类"
+msgstr ""
 
 msgid "Category"
-msgstr "类别"
+msgstr "Kategória"
 
 msgid "Advanced Search"
-msgstr "高级搜索"
+msgstr "Haladó keresés"
 
 msgid "Preferences"
-msgstr "首选项"
+msgstr "Beállítások"
 
 #, python-format
 msgid "Enable %s"
-msgstr "启用 %s"
+msgstr "%s engedélyezése"
 
 msgid "Please press the new key combination"
-msgstr "请按下新按键组合"
+msgstr ""
 
 msgid "Window Title"
-msgstr "窗口标题"
+msgstr ""
 
 msgid "Window Role"
-msgstr "窗口角色"
+msgstr ""
 
 msgid "Window Name"
-msgstr "窗口名称"
+msgstr ""
 
 msgid "Window Class"
-msgstr "窗口类别"
+msgstr ""
 
 msgid "Window Type"
-msgstr "窗口类型"
+msgstr ""
 
 msgid "Window ID"
-msgstr "窗口 ID"
+msgstr ""
 
 msgid "And"
-msgstr "和"
+msgstr ""
 
 msgid "Or"
-msgstr "或"
+msgstr ""
 
 msgid "Edit match"
 msgstr ""
 
 #. Type
 msgid "Type"
-msgstr "类型"
+msgstr ""
 
 #. Value
+#, fuzzy
 msgid "Value"
-msgstr "值"
+msgstr "Érték (%s)"
 
 msgid "Grab"
-msgstr "抓取"
+msgstr ""
 
 #. Relation
-#, fuzzy
 msgid "Relation"
-msgstr "整合"
+msgstr ""
 
 #. Invert
 msgid "Invert"
-msgstr "反向"
+msgstr ""
 
 msgid "This is a settings manager for the CompizConfig configuration system."
-msgstr "这是一个针对CompizConfig配置系统的设置管理器"
+msgstr ""
 
 msgid "translator-credits"
-msgstr "Thruth Wang <gubotruth@gmail.com>"
+msgstr ""
 
 msgid "An error has occured"
-msgstr "产生了一个错误"
+msgstr ""
 
 msgid "Warning"
-msgstr "警告"
+msgstr ""
 
 #, python-format
 msgid "Search %s Plugin Options"
-msgstr "搜索 %s 插件选项"
+msgstr ""
 
 msgid "Use This Plugin"
-msgstr "使用此插件"
+msgstr ""
 
 msgid "Search Compiz Core Options"
-msgstr "搜索 Compiz Core 选项"
+msgstr ""
 
 msgid "Actions"
-msgstr "动作"
+msgstr "Műveletek"
 
 msgid "Error"
-msgstr "错误"
+msgstr "Hiba"
 
 msgid "Search in..."
-msgstr "寻找于..."
+msgstr "Keresés..."
 
 msgid "Short description and name"
-msgstr "简短描述和名称"
+msgstr "Rövid leírásban és névben"
 
 msgid "Long description"
-msgstr "具体描述"
+msgstr "Hosszú leírásban"
 
 msgid "Settings value"
-msgstr "设置值"
+msgstr "Beállítások értékeiben"
 
 #. Notebook
 msgid "Settings"
-msgstr "设置"
+msgstr "Beállítások"
 
 msgid "Add a New Profile"
-msgstr "添加新存档"
+msgstr ""
 
 msgid "Remove This Profile"
-msgstr "删除此存档"
+msgstr ""
 
 msgid "Default"
-msgstr "默认"
+msgstr "Alapértelmezett"
 
 msgid "Profile"
-msgstr "存档"
+msgstr "Profil"
 
 msgid "Import"
-msgstr "导入"
+msgstr "Importálás"
 
 msgid "Import a CompizConfig Profile"
-msgstr "导入一个 CompizConfig 存档"
+msgstr "CompizConfig profil importálása"
 
+#, fuzzy
 msgid "Import as..."
-msgstr "做为……导入"
+msgstr "Importálás"
 
 #, fuzzy
 msgid "Import a CompizConfig Profile as a new profile"
-msgstr "导入一个 CompizConfig 存档"
+msgstr "CompizConfig profil importálása"
 
 msgid "Export"
-msgstr "导出"
+msgstr "Exportálás"
 
 msgid "Export your CompizConfig Profile"
-msgstr "导出你的 CompizConfig 存档"
+msgstr "CompizConfig profil exportálása"
 
+#, fuzzy
 msgid "Reset to defaults"
-msgstr "重置到默认"
+msgstr "Alapértelmezett beállítás visszaállítása"
 
 #, fuzzy
 msgid "Reset your CompizConfig Profile to the global defaults"
-msgstr "导出你的 CompizConfig 存档"
+msgstr "CompizConfig profil exportálása"
 
 msgid "Backend"
-msgstr "后端"
+msgstr ""
 
 msgid "Integration"
-msgstr "整合"
+msgstr ""
 
 msgid "Enable integration into the desktop environment"
-msgstr "开启与桌面环境的整合"
+msgstr ""
 
 msgid "Profiles (*.profile)"
-msgstr "存档 (*.profile)"
+msgstr "Profilok (*.profile)"
 
 msgid "All files"
-msgstr "所有文件"
+msgstr "Összes fájl"
 
 msgid "Save file.."
-msgstr "保存文件.."
+msgstr "Fájl mentáse.."
 
 msgid "Do you want to skip default option values while exporting your profile?"
-msgstr "您想在导出存档时忽略默认设置么？"
+msgstr ""
 
 msgid "Open file.."
-msgstr "打开文件.."
+msgstr "Fájl megnyitása..."
 
 msgid "Enter a profile name"
-msgstr "输入存档名称"
+msgstr "Profil név megadása"
 
 msgid "Please enter a name for the new profile:"
-msgstr "请输入一个新存档名称:"
+msgstr "Adjon meg egy nevet az új profil számára:"
 
 msgid "Backend not found."
-msgstr "未找到后端程序。"
+msgstr ""
 
 #. Auto sort
 msgid "Automatic plugin sorting"
-msgstr "插件自动排序"
+msgstr "Autómatikus bővítmény-sorrend"
 
-#, fuzzy
 msgid "Disabled Plugins"
-msgstr "禁用这些插件"
+msgstr "Tiltott bővítmények"
 
-#, fuzzy
 msgid "Enabled Plugins"
-msgstr "启用这些插件"
+msgstr "Engedélyezett bővítmények"
 
-#, fuzzy
 msgid ""
 "Do you really want to disable automatic plugin sorting? This will also "
 "disable conflict handling. You should only do this if you know what you are "
 "doing."
 msgstr ""
-"您真的想禁用插件自动排序么？这将同时禁用冲突检测。如果您明确知道您将导致的结"
-"果，方可继续。"
 
 msgid "Add plugin"
-msgstr "添加插件"
+msgstr "Bővítmény hozzáadása"
 
 msgid "Plugin name:"
-msgstr "插件名："
+msgstr "Bővítmény neve:"
 
 msgid "Insert plugin name"
-msgstr "插入插件名称"
+msgstr ""
 
-#, fuzzy
 msgid ""
 "Configure the backend, profile and other internal settings used by the "
 "Compiz Configuration System."
-msgstr "配置 Conpiz 配置系统使用的后端和系统。"
+msgstr ""
 
 msgid "About"
-msgstr "关于"
+msgstr "Névjegy"
 
 msgid "About CCSM..."
-msgstr "关于CCSM……"
+msgstr "CCSM névjegye..."
 
 msgid "Profile & Backend"
-msgstr "存档和后端"
+msgstr ""
 
 msgid "Plugin List"
-msgstr "插件列表"
+msgstr "Bővítmény lista"
 
 #, python-format
 msgid ""
@@ -483,35 +473,15 @@ msgid ""
 "\n"
 " Your filter \"<b>%s</b>\" does not match any items.</span>"
 msgstr ""
-"<span size=\"large\"><b>未找到匹配项。</b> </span><span>\n"
-" Your filter \"<b>%s</b>\" does not match any items.</span>"
-
-#~ msgid "PyGtk 2.10.0 or later required"
-#~ msgstr "需要 PyGtk 2.10.0或更新版本"
-
-#~ msgid "Multi-list settings"
-#~ msgstr "多列表设置"
+"<span size=\"large\"><b>Nincs találat.</b> </span><span>\n"
+"\n"
+" A szűrő (\"<b>%s</b>\") nem adott találatot.</span>"
 
 #~ msgid "Name"
-#~ msgstr "名称"
+#~ msgstr "Név"
 
 #~ msgid "Key"
-#~ msgstr "按键"
+#~ msgstr "Billentyű"
 
 #~ msgid "Button"
-#~ msgstr "按钮"
-
-#~ msgid "Screen Edge"
-#~ msgstr "屏幕边缘"
-
-#~ msgid "On System Bell"
-#~ msgstr "基于系统铃声"
-
-#~ msgid "Edit Action: %s"
-#~ msgstr "编辑动作: %s"
-
-#~ msgid "Screen Edges"
-#~ msgstr "屏幕边缘"
-
-#~ msgid "Backend &amp; Profile"
-#~ msgstr "后端 &amp; 存档"
+#~ msgstr "Gomb"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm 0.5.2\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-10-08 23:03+0530\n"
+"POT-Creation-Date: 2007-12-12 01:11+0530\n"
 "PO-Revision-Date: 2007-10-07 10:08+0200\n"
 "Last-Translator: Peter Pepino <sk.cfteam@gmail.com>\n"
 "Language-Team: SLOVAK <sk.cfteam@gmail.com>\n"
@@ -38,6 +38,24 @@ msgstr "Nenastavuj %s"
 #, fuzzy, python-format
 msgid "Set %(action)s anyway"
 msgstr "Nastav %s aj tak"
+
+#, fuzzy, python-format
+msgid ""
+"You are trying to use the feature <b>%(feature)s</b> which is <b>not</b> "
+"provided by any plugin.\n"
+"Do you wish to use this feature anyway?"
+msgstr ""
+"Práve sa pokúšate použiť funkciu <b>%s</b> ktorá je poskytovaná <b>%s</b>.\n"
+"Tento plugin je v súčasnosti vypnutý.\n"
+"Prajete si zapnúť <b>%s</b> aby bola funkcia k dispozícii?"
+
+#, fuzzy, python-format
+msgid "Use %(feature)s"
+msgstr "Nezapínajte %s"
+
+#, fuzzy, python-format
+msgid "Don't use %(feature)s"
+msgstr "Nezapínajte %s"
 
 #, fuzzy, python-format
 msgid ""
@@ -257,6 +275,54 @@ msgstr "Zapnite %s"
 msgid "Please press the new key combination"
 msgstr ""
 
+msgid "Window Title"
+msgstr ""
+
+msgid "Window Role"
+msgstr ""
+
+msgid "Window Name"
+msgstr ""
+
+msgid "Window Class"
+msgstr ""
+
+msgid "Window Type"
+msgstr ""
+
+msgid "Window ID"
+msgstr ""
+
+msgid "And"
+msgstr ""
+
+msgid "Or"
+msgstr ""
+
+msgid "Edit match"
+msgstr ""
+
+#. Type
+msgid "Type"
+msgstr ""
+
+#. Value
+#, fuzzy
+msgid "Value"
+msgstr "Hodnota (%s)"
+
+msgid "Grab"
+msgstr ""
+
+#. Relation
+#, fuzzy
+msgid "Relation"
+msgstr "Integrácia"
+
+#. Invert
+msgid "Invert"
+msgstr ""
+
 msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr ""
 
@@ -357,6 +423,9 @@ msgstr "Všetky súbory"
 msgid "Save file.."
 msgstr "Ulož súbor"
 
+msgid "Do you want to skip default option values while exporting your profile?"
+msgstr ""
+
 msgid "Open file.."
 msgstr "Otvor súbor.."
 
@@ -378,6 +447,12 @@ msgstr "Vypnuté pluginy"
 
 msgid "Enabled Plugins"
 msgstr "Zapnuté pluginy"
+
+msgid ""
+"Do you really want to disable automatic plugin sorting? This will also "
+"disable conflict handling. You should only do this if you know what you are "
+"doing."
+msgstr ""
 
 msgid "Add plugin"
 msgstr "Pridaj plugin"

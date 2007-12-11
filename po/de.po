@@ -3,18 +3,18 @@
 # This file is distributed under the same license as the ccsm package.
 # Danny Baumann <dannybaumann@web.de>, 2007
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: ccsm 0.0.1\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-12-07 16:29+0100\n"
-"PO-Revision-Date: 2007-10-18 11:24+0200\n"
-"Last-Translator: Danny Baumann <maniac@opencompositing.org>\n"
+"POT-Creation-Date: 2007-12-12 01:11+0530\n"
+"PO-Revision-Date: 2007-11-25 23:07+0100\n"
+"Last-Translator: David Gräff <david.graeff@web.de>\n"
 "Language-Team: Compiz Fusion translators <i18n@lists.compiz-fusion.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Pootle 1.0.2\n"
 
 #, python-format
 msgid ""
@@ -56,7 +56,7 @@ msgstr ""
 
 #, fuzzy, python-format
 msgid "Use %(feature)s"
-msgstr "%(feature)s nicht aktivieren"
+msgstr "%(feature)s aktivieren"
 
 #, fuzzy, python-format
 msgid "Don't use %(feature)s"
@@ -309,7 +309,7 @@ msgid "Or"
 msgstr "Oder"
 
 msgid "Edit match"
-msgstr "Match bearbeiten"
+msgstr ""
 
 #. Type
 msgid "Type"
@@ -431,7 +431,8 @@ msgid "Save file.."
 msgstr "Datei speichern"
 
 msgid "Do you want to skip default option values while exporting your profile?"
-msgstr "Wollen sie standart Optionswerte beim Exportieren des Profils überspringen?"
+msgstr ""
+"Möchten Sie voreingestellte Werte beim Exportieren Ihres Profils ignorieren?"
 
 msgid "Open file.."
 msgstr "Datei öffnen"
@@ -460,9 +461,9 @@ msgid ""
 "disable conflict handling. You should only do this if you know what you are "
 "doing."
 msgstr ""
-"Wollen sie wirklich das automatische Sortieren der Plugins deaktivieren? Dies "
-"wird außerdem die Konflikt Behebung außer Kraft setzen. Sie sollten dies "
-"nur tun, wenn sie wissen was sie tun."
+"Soll das automatische Sortieren von Plugins wirklich abgeschaltet werden? In "
+"diesem Fall wird auch die automatische Konfiktlösung abgeschaltet. Sie "
+"sollten dies nur tun, wenn Sie sich ganz sicher sind."
 
 msgid "Add plugin"
 msgstr "Plugin hinzufügen"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm 20070908\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-09-25 11:47+0530\n"
+"POT-Creation-Date: 2007-12-12 01:11+0530\n"
 "PO-Revision-Date: 2007-09-24 23:00+0200\n"
 "Last-Translator: Werner Landgraf <werner@copaya.yi.org>\n"
 "Language-Team: Wolof\n"
@@ -41,6 +41,24 @@ msgstr "Bul ñörĩàl %(action)s !"
 #, python-format
 msgid "Set %(action)s anyway"
 msgstr "Ñörĩàlal %(action)s dê !"
+
+#, fuzzy, python-format
+msgid ""
+"You are trying to use the feature <b>%(feature)s</b> which is <b>not</b> "
+"provided by any plugin.\n"
+"Do you wish to use this feature anyway?"
+msgstr ""
+"Da nga jêem y ñöriñ  <b>%(feature)s</b> li  <b>%(plugin)s</b> indil na ko.\n"
+"Waaye loolu dafa fayal\n"
+"Ndax nga böggë  taxàl <b>%(plugin)s</b>  ngir ko ñöriñ ?"
+
+#, fuzzy, python-format
+msgid "Use %(feature)s"
+msgstr "Bul ñöriñàl %(feature)s !"
+
+#, fuzzy, python-format
+msgid "Don't use %(feature)s"
+msgstr "Bul ñöriñàl %(feature)s !"
 
 #, python-format
 msgid ""
@@ -259,6 +277,55 @@ msgstr "Taxalal %s !"
 msgid "Please press the new key combination"
 msgstr "jänal mbootaay y butão mu taanoo !"
 
+msgid "Window Title"
+msgstr ""
+
+msgid "Window Role"
+msgstr ""
+
+#, fuzzy
+msgid "Window Name"
+msgstr "Gerênciador de Janélas"
+
+msgid "Window Class"
+msgstr ""
+
+msgid "Window Type"
+msgstr ""
+
+msgid "Window ID"
+msgstr ""
+
+msgid "And"
+msgstr ""
+
+msgid "Or"
+msgstr ""
+
+msgid "Edit match"
+msgstr ""
+
+#. Type
+msgid "Type"
+msgstr ""
+
+#. Value
+#, fuzzy
+msgid "Value"
+msgstr "Ñög gi (%s)"
+
+msgid "Grab"
+msgstr ""
+
+#. Relation
+#, fuzzy
+msgid "Relation"
+msgstr "Integração"
+
+#. Invert
+msgid "Invert"
+msgstr ""
+
 msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr "Li dafa programa bu ogosu na CompizConfig bi. "
 
@@ -361,6 +428,9 @@ msgstr "mbinday yöpp"
 msgid "Save file.."
 msgstr "denc binday ..."
 
+msgid "Do you want to skip default option values while exporting your profile?"
+msgstr ""
+
 msgid "Open file.."
 msgstr "hubbi binday ..."
 
@@ -382,6 +452,12 @@ msgstr "defëkaay yu fay nañu:"
 
 msgid "Enabled Plugins"
 msgstr "defëkaay yu tann nañu:"
+
+msgid ""
+"Do you really want to disable automatic plugin sorting? This will also "
+"disable conflict handling. You should only do this if you know what you are "
+"doing."
+msgstr ""
 
 msgid "Add plugin"
 msgstr "yookàl ab defukaay ..."

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-11-14 11:41+0530\n"
+"POT-Creation-Date: 2007-12-12 01:11+0530\n"
 "PO-Revision-Date: 2007-11-09 14:17+0100\n"
 "Last-Translator: Maciej Warnecki <maciekw5@gmail.com>\n"
 "Language-Team: pl_PL <pl@li.org>\n"
@@ -169,49 +169,6 @@ msgstr "Narzędzia"
 msgid "Reset setting to the default value"
 msgstr "Przywróć ustawienia domyślne"
 
-msgid "Window Title"
-msgstr "Tytuł okna"
-
-msgid "Window Role"
-msgstr "Rola okna"
-
-msgid "Window Name"
-msgstr "Nazwa okna"
-
-msgid "Window Class"
-msgstr "Klasa okna"
-
-msgid "Window Type"
-msgstr "Typ okna"
-
-msgid "Window ID"
-msgstr "ID okna"
-
-msgid "And"
-msgstr "I"
-
-msgid "Or"
-msgstr "Lub"
-
-#, python-format
-msgid "Edit %s"
-msgstr "Edycja %s"
-
-msgid "Type"
-msgstr "Typ"
-
-msgid "Value"
-msgstr "Wartość "
-
-msgid "Grab"
-msgstr "Złap"
-
-msgid "Relation"
-msgstr "Relacja"
-
-msgid "Invert"
-msgstr "Odwróć"
-
 msgid "Browse for "
 msgstr "Przeglądaj w poszukiwaniu "
 
@@ -237,6 +194,10 @@ msgstr "Edycja"
 #, python-format
 msgid "Value (%s)"
 msgstr "Wartość (%s)"
+
+#, python-format
+msgid "Edit %s"
+msgstr "Edycja %s"
 
 #, python-format
 msgid "Value (%(value)s) for %(setting)s"
@@ -319,6 +280,52 @@ msgstr "Włącz %s"
 
 msgid "Please press the new key combination"
 msgstr "Proszę wpisać nową kombinację klawiszy"
+
+msgid "Window Title"
+msgstr "Tytuł okna"
+
+msgid "Window Role"
+msgstr "Rola okna"
+
+msgid "Window Name"
+msgstr "Nazwa okna"
+
+msgid "Window Class"
+msgstr "Klasa okna"
+
+msgid "Window Type"
+msgstr "Typ okna"
+
+msgid "Window ID"
+msgstr "ID okna"
+
+msgid "And"
+msgstr "I"
+
+msgid "Or"
+msgstr "Lub"
+
+msgid "Edit match"
+msgstr ""
+
+#. Type
+msgid "Type"
+msgstr "Typ"
+
+#. Value
+msgid "Value"
+msgstr "Wartość "
+
+msgid "Grab"
+msgstr "Złap"
+
+#. Relation
+msgid "Relation"
+msgstr "Relacja"
+
+#. Invert
+msgid "Invert"
+msgstr "Odwróć"
 
 msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr "To jest menedżer ustawień dla systemu konfiguracji CompizConfig."

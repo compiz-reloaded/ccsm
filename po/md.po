@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: md-ccsm\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-09-25 11:46+0530\n"
+"POT-Creation-Date: 2007-12-12 01:11+0530\n"
 "PO-Revision-Date: 2007-09-24 23:00-0300\n"
 "Last-Translator: Werner Landgraf <werner@copaya.yi.org>\n"
 "Language-Team: Mandingo\n"
@@ -45,6 +45,25 @@ msgstr "Kanna %(action)s malãdi !"
 #, python-format
 msgid "Set %(action)s anyway"
 msgstr "%(action)s malãdi jiko-o-jiko !"
+
+#, fuzzy, python-format
+msgid ""
+"You are trying to use the feature <b>%(feature)s</b> which is <b>not</b> "
+"provided by any plugin.\n"
+"Do you wish to use this feature anyway?"
+msgstr ""
+"I ka kitindila dorão <b>%(plugin)s</b> -lu-la kêebaarão <b>%(feature)s</b> "
+"naffala.\n"
+"Ñĩ dorão, a-dubẽta.\n"
+"Fa i lafta <b>%(plugin)s</b> malãdila, fo i a naffa nola?"
+
+#, fuzzy, python-format
+msgid "Use %(feature)s"
+msgstr "Kanna %(feature)s malãdi !"
+
+#, fuzzy, python-format
+msgid "Don't use %(feature)s"
+msgstr "Kanna %(feature)s malãdi !"
 
 #, python-format
 msgid ""
@@ -265,6 +284,55 @@ msgstr " %s malã bã !"
 msgid "Please press the new key combination"
 msgstr "teclado -la butão-lu la kafo mim a-tõbõta,  diki bã !"
 
+msgid "Window Title"
+msgstr ""
+
+msgid "Window Role"
+msgstr ""
+
+#, fuzzy
+msgid "Window Name"
+msgstr "mãçã-parãterolu"
+
+msgid "Window Class"
+msgstr ""
+
+msgid "Window Type"
+msgstr ""
+
+msgid "Window ID"
+msgstr ""
+
+msgid "And"
+msgstr ""
+
+msgid "Or"
+msgstr ""
+
+msgid "Edit match"
+msgstr ""
+
+#. Type
+msgid "Type"
+msgstr ""
+
+#. Value
+#, fuzzy
+msgid "Value"
+msgstr "da (%s)"
+
+msgid "Grab"
+msgstr ""
+
+#. Relation
+#, fuzzy
+msgid "Relation"
+msgstr "mábôko"
+
+#. Invert
+msgid "Invert"
+msgstr ""
+
 msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr "Ñĩ, CompizConfig mu compiz -la tillĩdirão, le ti  :). "
 
@@ -367,6 +435,9 @@ msgstr "kaitalu bê"
 msgid "Save file.."
 msgstr "kaito mabôla ..."
 
+msgid "Do you want to skip default option values while exporting your profile?"
+msgstr ""
+
 msgid "Open file.."
 msgstr "kaito iêlela .."
 
@@ -388,6 +459,12 @@ msgstr "dorão-lu a-dubẽta:"
 
 msgid "Enabled Plugins"
 msgstr "dorão-lu a-malãta:"
+
+msgid ""
+"Do you really want to disable automatic plugin sorting? This will also "
+"disable conflict handling. You should only do this if you know what you are "
+"doing."
+msgstr ""
 
 msgid "Add plugin"
 msgstr "dorão kafũna ..."

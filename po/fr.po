@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fr-ccsm\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-11-09 17:15+0530\n"
+"POT-Creation-Date: 2007-12-12 01:11+0530\n"
 "PO-Revision-Date: 2007-11-06 22:27+0100\n"
 "Last-Translator: Tristan RABLAT <tristan.rablat@gmail.com>\n"
 "Language-Team:  <fr@li.org>\n"
@@ -172,49 +172,6 @@ msgstr "Utilitaire"
 msgid "Reset setting to the default value"
 msgstr "Revenir à la configuration par défaut"
 
-msgid "Window Title"
-msgstr "Titre de la fenêtre"
-
-msgid "Window Role"
-msgstr "Rôle de la fenêtre"
-
-msgid "Window Name"
-msgstr "Nom de la fenêtre"
-
-msgid "Window Class"
-msgstr "Classe de la fenêtre"
-
-msgid "Window Type"
-msgstr "Type de fenêtre"
-
-msgid "Window ID"
-msgstr "ID de la fenêtre"
-
-msgid "And"
-msgstr "Et"
-
-msgid "Or"
-msgstr "Ou"
-
-#, python-format
-msgid "Edit %s"
-msgstr "Éditer %s"
-
-msgid "Type"
-msgstr "Type"
-
-msgid "Value"
-msgstr "Valeur"
-
-msgid "Grab"
-msgstr "Saisir"
-
-msgid "Relation"
-msgstr "Relation"
-
-msgid "Invert"
-msgstr "Inverser"
-
 msgid "Browse for "
 msgstr "Naviguer pour "
 
@@ -241,6 +198,10 @@ msgstr "Editer"
 #, python-format
 msgid "Value (%s)"
 msgstr "Valeur (%s)"
+
+#, python-format
+msgid "Edit %s"
+msgstr "Éditer %s"
 
 #, python-format
 msgid "Value (%(value)s) for %(setting)s"
@@ -323,6 +284,52 @@ msgstr "Activer %s"
 
 msgid "Please press the new key combination"
 msgstr "Veuillez appuyer sur la nouvelle combinaison de touches"
+
+msgid "Window Title"
+msgstr "Titre de la fenêtre"
+
+msgid "Window Role"
+msgstr "Rôle de la fenêtre"
+
+msgid "Window Name"
+msgstr "Nom de la fenêtre"
+
+msgid "Window Class"
+msgstr "Classe de la fenêtre"
+
+msgid "Window Type"
+msgstr "Type de fenêtre"
+
+msgid "Window ID"
+msgstr "ID de la fenêtre"
+
+msgid "And"
+msgstr "Et"
+
+msgid "Or"
+msgstr "Ou"
+
+msgid "Edit match"
+msgstr ""
+
+#. Type
+msgid "Type"
+msgstr "Type"
+
+#. Value
+msgid "Value"
+msgstr "Valeur"
+
+msgid "Grab"
+msgstr "Saisir"
+
+#. Relation
+msgid "Relation"
+msgstr "Relation"
+
+#. Invert
+msgid "Invert"
+msgstr "Inverser"
 
 msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr ""
