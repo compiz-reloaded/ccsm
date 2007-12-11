@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm 0.6.0\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-11-15 16:42+0530\n"
+"POT-Creation-Date: 2007-12-12 01:11+0530\n"
 "PO-Revision-Date: 2007-11-14 23:40+0200\n"
 "Last-Translator:  djdoo <jimdusis@yahoo.gr>\n"
 "Language-Team: Compiz Fusion translators <i18n@lists.compiz-fusion.org>\n"
@@ -42,6 +42,7 @@ msgstr "Μην Θέσεις %(action)s"
 msgid "Set %(action)s anyway"
 msgstr "Θέσε %(action)s οπωσδήποτε"
 
+#, fuzzy, python-format
 msgid ""
 "You are trying to use the feature <b>%(feature)s</b> which is <b>not</b> "
 "provided by any plugin.\n"
@@ -169,49 +170,6 @@ msgstr "Χρήσιμες Εφαρμογές"
 msgid "Reset setting to the default value"
 msgstr "Επαναφορά της ρύθμισης στη προεπιλεγμένη τιμή"
 
-msgid "Window Title"
-msgstr "Τίτλος Παραθύρου"
-
-msgid "Window Role"
-msgstr "Ρόλος Παραθύρου"
-
-msgid "Window Name"
-msgstr "Όνομα Παραθύρου"
-
-msgid "Window Class"
-msgstr "Κλάση Παραθύρου"
-
-msgid "Window Type"
-msgstr "Τύπος Παραθύρου"
-
-msgid "Window ID"
-msgstr "ID Παραθύρου"
-
-msgid "And"
-msgstr "Και"
-
-msgid "Or"
-msgstr "Ή"
-
-#, python-format
-msgid "Edit %s"
-msgstr "Επεξεργασία %s"
-
-msgid "Type"
-msgstr "Τύπος"
-
-msgid "Value"
-msgstr "Τιμή"
-
-msgid "Grab"
-msgstr "Αρπαγή"
-
-msgid "Relation"
-msgstr "Σχέση"
-
-msgid "Invert"
-msgstr "Αντίθετο"
-
 msgid "Browse for "
 msgstr "Περιήγηση για "
 
@@ -238,6 +196,10 @@ msgstr "Επεξεργασία"
 #, python-format
 msgid "Value (%s)"
 msgstr "Τιμή (%s)"
+
+#, python-format
+msgid "Edit %s"
+msgstr "Επεξεργασία %s"
 
 #, python-format
 msgid "Value (%(value)s) for %(setting)s"
@@ -320,6 +282,52 @@ msgstr "Ενεργοποίηση %s"
 
 msgid "Please press the new key combination"
 msgstr "Παρακαλώ χρησιμοποιήστε τον νέο συνδυασμό πλήκτρων"
+
+msgid "Window Title"
+msgstr "Τίτλος Παραθύρου"
+
+msgid "Window Role"
+msgstr "Ρόλος Παραθύρου"
+
+msgid "Window Name"
+msgstr "Όνομα Παραθύρου"
+
+msgid "Window Class"
+msgstr "Κλάση Παραθύρου"
+
+msgid "Window Type"
+msgstr "Τύπος Παραθύρου"
+
+msgid "Window ID"
+msgstr "ID Παραθύρου"
+
+msgid "And"
+msgstr "Και"
+
+msgid "Or"
+msgstr "Ή"
+
+msgid "Edit match"
+msgstr ""
+
+#. Type
+msgid "Type"
+msgstr "Τύπος"
+
+#. Value
+msgid "Value"
+msgstr "Τιμή"
+
+msgid "Grab"
+msgstr "Αρπαγή"
+
+#. Relation
+msgid "Relation"
+msgstr "Σχέση"
+
+#. Invert
+msgid "Invert"
+msgstr "Αντίθετο"
 
 msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr ""

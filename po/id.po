@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Compiz Settings Manager 0.5.2\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-09-21 14:06+0530\n"
+"POT-Creation-Date: 2007-12-12 01:11+0530\n"
 "PO-Revision-Date: 2007-09-16 19:11+0700\n"
 "Last-Translator: Andi Darmawan <belutz@ubuntu.com>\n"
 "Language-Team: Andi Darmawan <belutz@ubuntu.com>\n"
@@ -36,6 +36,26 @@ msgstr "Jangan atur %(action)s"
 #, python-format
 msgid "Set %(action)s anyway"
 msgstr "Tetap atur %(action)s"
+
+#, fuzzy, python-format
+msgid ""
+"You are trying to use the feature <b>%(feature)s</b> which is <b>not</b> "
+"provided by any plugin.\n"
+"Do you wish to use this feature anyway?"
+msgstr ""
+"Anda mencoba untuk menggunakan fitur <b>%(feature)s</b> yang disediakan "
+"oleh<b>%(plugin)s</b>.\n"
+"Plugin tersebut sedang tidak aktif.\n"
+"Apakah anda ingin mengaktifkan <b>%(plugin)s</b> sehingga fitur menjadi "
+"tersedia?"
+
+#, fuzzy, python-format
+msgid "Use %(feature)s"
+msgstr "Jangan aktifkan %(feature)s"
+
+#, fuzzy, python-format
+msgid "Don't use %(feature)s"
+msgstr "Jangan aktifkan %(feature)s"
 
 #, python-format
 msgid ""
@@ -246,6 +266,55 @@ msgstr "Aktifkan %s"
 msgid "Please press the new key combination"
 msgstr "Silahkan tekan kombinasi tombol yang baru"
 
+msgid "Window Title"
+msgstr ""
+
+msgid "Window Role"
+msgstr ""
+
+#, fuzzy
+msgid "Window Name"
+msgstr "Manajemen Jendela"
+
+msgid "Window Class"
+msgstr ""
+
+msgid "Window Type"
+msgstr ""
+
+msgid "Window ID"
+msgstr ""
+
+msgid "And"
+msgstr ""
+
+msgid "Or"
+msgstr ""
+
+msgid "Edit match"
+msgstr ""
+
+#. Type
+msgid "Type"
+msgstr ""
+
+#. Value
+#, fuzzy
+msgid "Value"
+msgstr "Nilai (%s)"
+
+msgid "Grab"
+msgstr ""
+
+#. Relation
+#, fuzzy
+msgid "Relation"
+msgstr "Integrasi"
+
+#. Invert
+msgid "Invert"
+msgstr ""
+
 msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr ""
 
@@ -344,6 +413,9 @@ msgstr "Semua berkas"
 msgid "Save file.."
 msgstr "Simpan berkas.."
 
+msgid "Do you want to skip default option values while exporting your profile?"
+msgstr ""
+
 msgid "Open file.."
 msgstr "Buka berkas.."
 
@@ -365,6 +437,12 @@ msgstr "Plugin Non-aktif"
 
 msgid "Enabled Plugins"
 msgstr "Plugin Aktif"
+
+msgid ""
+"Do you really want to disable automatic plugin sorting? This will also "
+"disable conflict handling. You should only do this if you know what you are "
+"doing."
+msgstr ""
 
 msgid "Add plugin"
 msgstr "Tambah plugin"

@@ -1,22 +1,22 @@
-# translation of zh_CN-ccsm.po to Chinese
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# Thruth <gubotruth@gmail.com>, 2007
+# ccsm hr translation.
+# Copyright (C) 2007 compiz-fusion.org
+# This file is distributed under the same license as the ccsm package.
+# 
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: zh_CN-ccsm\n"
+"Project-Id-Version: ccsm\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-12-12 01:11+0530\n"
-"PO-Revision-Date: 2007-12-11 16:59+0100\n"
-"Last-Translator: Thruth Wang <gubotruth@gmail.com>\n"
-"Language-Team: Chinese\n"
+"POT-Creation-Date: 2007-12-12 01:15+0530\n"
+"PO-Revision-Date: 2007-11-25 22:44+0100\n"
+"Last-Translator: Matija Folnovic <matijafolnovic@gmail.com>\n"
+"Language-Team: Matija Folnovic <matijafolnovic@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Pootle 1.0.2\n"
 
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "The new value for the %(binding)s binding for the action <b>%(action)s</b> "
 "in plugin <b>%(plugin)s</b> conflicts with the action <b>%(action_conflict)"
@@ -24,458 +24,458 @@ msgid ""
 "Do you wish to disable <b>%(action_conflict)s</b> in the <b>%"
 "(plugin_conflict)s</b> plugin?"
 msgstr ""
-" %s 组合 <b>%s</b> 动作的新值在 <b>%s</b> 插件中与动作 <b>%s</b> 相冲突，该动"
-"作在 <b>%s</b> 插件中。\n"
-"您要禁用 <b>%s</b> 么？它在 <b>%s</b> 插件中。"
 
 #, python-format
 msgid "Disable %(action_conflict)s"
-msgstr "禁用 %(action_conflict)s"
+msgstr "Onemoguci %(action_conflict)s"
 
 #, python-format
 msgid "Don't set %(action)s"
-msgstr "不要设置 %(action)s"
+msgstr "Nemoj postaviti %(action)s"
 
 #, python-format
 msgid "Set %(action)s anyway"
-msgstr "强制设置 %(action)s"
+msgstr "Postavi %(action)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "You are trying to use the feature <b>%(feature)s</b> which is <b>not</b> "
 "provided by any plugin.\n"
 "Do you wish to use this feature anyway?"
 msgstr ""
-"您试图使用 <b>%s</b> 功能，该功能由 <b>%s</b> 插件提供。\n"
-"该插件目前被禁用。\n"
-"您仍然希望启用 %s 插件以实现功能么?"
+"Pokusavate koristiti mogucnost <b>%(feature)s</b> koja <b>nije</b> ukljucen "
+"u nijednom dodatku.\n"
+"Zelite li ipak koristi ovu mogucnost?"
 
 #, python-format
 msgid "Use %(feature)s"
-msgstr "使用 %(feature)s"
+msgstr "Koristi %(feature)s"
 
 #, python-format
 msgid "Don't use %(feature)s"
-msgstr "不使用 %(feature)s"
+msgstr "Nemoj koristiti %(feature)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "You are trying to use the feature <b>%(feature)s</b> which is provided by <b>"
 "%(plugin)s</b>.\n"
 "This plugin is currently disabled.\n"
 "Do you wish to enable <b>%(plugin)s</b> so the feature is available?"
 msgstr ""
-"您试图使用 <b>%s</b> 功能，该功能由 <b>%s</b> 插件提供。\n"
-"该插件目前被禁用。\n"
-"您仍然希望启用 %s 插件以实现功能么?"
+"Pokusavate koristiti mogucnost <b>%(feature)s</b> koja je ukljucena u "
+"dodatak <b>%(plugin)s</b>.\n"
+"Ovaj dodatak je iskljucen.\n"
+"Zelite li omoguciti <b>%(plugin)s</b> pa da ova mogucnost bude dostupna?"
 
 #, python-format
 msgid "Enable %(plugin)s"
-msgstr "启用插件 %(plugin)s"
+msgstr "Omoguci %(plugin)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Don't enable %(feature)s"
-msgstr "不要启用 %s"
+msgstr "Nemoj omoguciti %(feature)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Plugin <b>%(plugin_conflict)s</b> provides feature <b>%(feature)s</b> which "
 "is also provided by <b>%(plugin)s</b>"
-msgstr "<b>%s</b> 插件提供 <b>%s</b> 功能，该功能也可以由 <b>%s</b> 提供"
+msgstr ""
+"Dodatak <b>%(plugin_conflict)s</b> nudi mogucnost <b>%(feature)s</b> koju "
+"nudi i dodatak <b>%(plugin)s</b>"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Disable %(plugin_conflict)s"
-msgstr "禁用这些插件"
+msgstr "Onemoguci %(plugin_conflict)s"
 
 #, python-format
 msgid "Don't enable %(plugin)s"
-msgstr "不要启用插件 %(plugin)s"
+msgstr "Nemoj ukljuciti %(plugin)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Plugin <b>%(plugin_conflict)s</b> conflicts with <b>%(plugin)s</b>."
-msgstr "<b>%s</b> 插件与 <b>%s</b>相冲突。"
+msgstr ""
+"Dodatak <b>%(plugin_conflict)s</b> se sukobljava s dodatkom <b>%(plugin)s</b>"
 
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "<b>%(plugin)s</b> requires feature <b>%(feature)s</b> which is provided by "
 "the following plugins:\n"
 "%(plugin_list)s"
 msgstr ""
-"<b>%s</b> 需要 <b>%s</b> 功能，可以由下列插件提供:\n"
-"%s"
+"<b>%(plugin)s</b> zahtjeva mogucnost <b>%(feature)s</b> koju nude ovi "
+"dodaci:\n"
+"%(plugin_list)s"
 
 msgid "Enable these plugins"
-msgstr "启用这些插件"
+msgstr "Omoguci ove dodatke"
 
-#, fuzzy, python-format
+#, python-format
 msgid "<b>%(plugin)s</b> requires the plugin <b>%(require)s</b>."
-msgstr "<b>%s</b> 需要 <b>%s</b> 插件。"
+msgstr "<b>%(plugin)s</b> trazi dodatak <b>%(require)s</b>"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Enable %(require)s"
-msgstr "启用 %s"
+msgstr "Omoguci %(require)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "<b>%(plugin)s</b> provides the feature <b>%(feature)s</b> which is required "
 "by the plugins <b>%(plugin_list)s</b>."
-msgstr "<b>%s</b> 提供 <b>%s</b> 功能，<b>%s</b> 插件需要此功能。"
+msgstr ""
+"<b>%(plugin)s<b/> nudi mogucnost <b>%(feature)s<b/> koju traze dodaci <b>%"
+"(plugin_list)s</b>"
 
 msgid "Disable these plugins"
-msgstr "禁用这些插件"
+msgstr "Onemoguci ove dodatke"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Don't disable %(plugin)s"
-msgstr "不要禁用 %s"
+msgstr "Nemoj onemoguciti %(plugin)s"
 
 #, python-format
 msgid "<b>%(plugin)s</b> is required by the plugins <b>%(plugin_list)s</b>."
-msgstr "插件<b>%(plugin)s</b>被插件<b>%(plugin_list)s</b>需要。"
+msgstr "<b>%(plugin_list)s</b> traze dodatak <b>%(plugin)s</b>"
 
 msgid "General"
-msgstr "一般"
+msgstr "Opcenito"
 
 msgid "Accessibility"
-msgstr "辅助功能"
+msgstr "Pristupacnost"
 
 msgid "Desktop"
-msgstr "桌面"
+msgstr "Radna povrsina"
 
 msgid "Extras"
-msgstr "额外功能"
+msgstr "Dodaci"
 
 msgid "Window Management"
-msgstr "窗口管理"
+msgstr "Upravljanje prozora"
 
 msgid "Effects"
-msgstr "特效"
+msgstr "Efekti"
 
 msgid "Image Loading"
-msgstr "图像载入中"
+msgstr "Ucitavanje slike"
 
 msgid "Utility"
-msgstr "工具"
+msgstr "Pomocni"
 
 msgid "Reset setting to the default value"
-msgstr "重置设置为默认值"
+msgstr "Vrati vrijednost na njezinu pocetnu vrijednost"
 
 msgid "Browse for "
-msgstr "浏览"
+msgstr "Pregled za"
 
 msgid "Images"
-msgstr "图像"
+msgstr "Slike"
 
 msgid "File"
-msgstr "文件"
+msgstr "Datoteka"
 
 msgid "Open directory..."
-msgstr "打开目录.."
+msgstr "Otvori direktorij..."
 
 msgid "Open file..."
-msgstr "打开文件.."
+msgstr "Otvori datoteku..."
 
 msgid "Multi-list settings. You can double-click a row to edit the values."
 msgstr ""
+"Visepopisne postavke. Mozete dvostuko kliknuti na red da promijenite "
+"vrijednost."
 
 msgid "Edit"
-msgstr "编辑"
+msgstr "Promijeni"
 
 #, python-format
 msgid "Value (%s)"
-msgstr "值 (%s)"
+msgstr "Vrijednost (%s)"
 
 #, python-format
 msgid "Edit %s"
-msgstr "编辑 %s"
+msgstr "Promijeni %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Value (%(value)s) for %(setting)s"
-msgstr "值 (%s) 于 %s:"
+msgstr "Vrijednost (%(value)s) za %(setting)s"
 
 #, python-format
 msgid "\"%s\" is not a valid shortcut"
-msgstr "\"%s\"不是一个有效的快捷键"
+msgstr "\"%s\" nije pravilna precica"
 
 msgid "Disabled"
-msgstr "禁用"
+msgstr "Onemoguceno"
 
 msgid "Enabled"
-msgstr "启用"
+msgstr "Omoguceno"
 
 msgid "Grab key combination"
-msgstr "获取按键组合"
+msgstr "Uhvati kombinaciju tipki"
 
 msgid "Computing possible conflicts, please wait"
-msgstr "正在计算可能存在的冲突，请稍候"
+msgstr "Izracunavam moguce sukobe, molim pricekajte"
 
 #, python-format
 msgid "\"%s\" is not a valid button"
-msgstr "\"%s\"不是一个有效的按键"
+msgstr "\"%s\" nije pravilan gumb"
 
 #, python-format
 msgid ""
 "Using Button1 without modifiers can prevent any left click and thus break "
 "your configuration. Do you really want to set \"%s\" button to Button1 ?"
 msgstr ""
+"Koristenjem Gumb1 bez ikakvog dodatka moze sprijeciti bilokoji lijevi klik i "
+"to moze unistiti tvoje opcije. Zelite li zaista staviti \"%s\"gumb u Gumb1?"
 
 #, python-format
 msgid "\"%s\" is not a valid edge mask"
-msgstr ""
+msgstr "\"%s\" nije pravilna maska ruba"
 
 msgid "None"
-msgstr "无"
+msgstr "Nista"
 
 #, python-format
 msgid "Unhandled list type %s for %s"
-msgstr "未处理的列表类型 %s 于 %s"
+msgstr ""
 
 msgid "CompizConfig Settings Manager"
-msgstr "CompizConfig 设置管理器"
+msgstr "CompizConfig Upravitelj Konfiguracija"
 
 msgid "Filter"
-msgstr "关键字"
+msgstr "Filter"
 
 msgid "Filter your Plugin list"
-msgstr "过滤你的插件列表"
+msgstr "Filtiriraj tvoju listu dodataka"
 
 #, python-format
 msgid "Screen %i"
-msgstr "屏幕 %i"
+msgstr "Zaslon %i"
 
 msgid "Screen"
-msgstr "屏幕"
+msgstr "Zaslon"
 
 msgid "All"
-msgstr "全部"
+msgstr "Svi"
 
 msgid "Uncategorized"
-msgstr "未分类"
+msgstr "Bez kategorije"
 
 msgid "Category"
-msgstr "类别"
+msgstr "Kategorija"
 
 msgid "Advanced Search"
-msgstr "高级搜索"
+msgstr "Napredno pretrazivanje"
 
 msgid "Preferences"
-msgstr "首选项"
+msgstr "Postavke"
 
 #, python-format
 msgid "Enable %s"
-msgstr "启用 %s"
+msgstr "Omoguci %s"
 
 msgid "Please press the new key combination"
-msgstr "请按下新按键组合"
+msgstr "Molim pritisnite novu kombinaciju tipki"
 
 msgid "Window Title"
-msgstr "窗口标题"
+msgstr "Naslov prozora"
 
 msgid "Window Role"
-msgstr "窗口角色"
+msgstr "Uloga prozora"
 
 msgid "Window Name"
-msgstr "窗口名称"
+msgstr "Ime prozora"
 
 msgid "Window Class"
-msgstr "窗口类别"
+msgstr "Klasa prozora"
 
 msgid "Window Type"
-msgstr "窗口类型"
+msgstr "Tip prozora"
 
 msgid "Window ID"
-msgstr "窗口 ID"
+msgstr "ID prozora"
 
 msgid "And"
-msgstr "和"
+msgstr "I"
 
 msgid "Or"
-msgstr "或"
+msgstr "Ili"
 
 msgid "Edit match"
 msgstr ""
 
 #. Type
 msgid "Type"
-msgstr "类型"
+msgstr "Tip"
 
 #. Value
 msgid "Value"
-msgstr "值"
+msgstr "Vrijednost"
 
 msgid "Grab"
-msgstr "抓取"
+msgstr "Uhvati"
 
 #. Relation
-#, fuzzy
 msgid "Relation"
-msgstr "整合"
+msgstr "Odnos"
 
 #. Invert
 msgid "Invert"
-msgstr "反向"
+msgstr "Obrni"
 
 msgid "This is a settings manager for the CompizConfig configuration system."
-msgstr "这是一个针对CompizConfig配置系统的设置管理器"
+msgstr "Ovo je upravitelj konfiguracija za CompizConfig konfiguracijski sustav"
 
 msgid "translator-credits"
-msgstr "Thruth Wang <gubotruth@gmail.com>"
+msgstr "O prevodiocima"
 
 msgid "An error has occured"
-msgstr "产生了一个错误"
+msgstr "Dogodila se greska"
 
 msgid "Warning"
-msgstr "警告"
+msgstr "Upozorenje"
 
 #, python-format
 msgid "Search %s Plugin Options"
-msgstr "搜索 %s 插件选项"
+msgstr "Trazi opcije dodatka %s"
 
 msgid "Use This Plugin"
-msgstr "使用此插件"
+msgstr "Koristi ovaj dodatak"
 
 msgid "Search Compiz Core Options"
-msgstr "搜索 Compiz Core 选项"
+msgstr "Pretrazi Opcije Compizove jezgre"
 
 msgid "Actions"
-msgstr "动作"
+msgstr "Radnje"
 
 msgid "Error"
-msgstr "错误"
+msgstr "Greska"
 
 msgid "Search in..."
-msgstr "寻找于..."
+msgstr "Trazi u..."
 
 msgid "Short description and name"
-msgstr "简短描述和名称"
+msgstr "Kratak opis i ime"
 
 msgid "Long description"
-msgstr "具体描述"
+msgstr "Dugacak opis"
 
 msgid "Settings value"
-msgstr "设置值"
+msgstr "Vrijednost postavke"
 
 #. Notebook
 msgid "Settings"
-msgstr "设置"
+msgstr "Postavke"
 
 msgid "Add a New Profile"
-msgstr "添加新存档"
+msgstr "Dodaj novi profil"
 
 msgid "Remove This Profile"
-msgstr "删除此存档"
+msgstr "Pobrisi ovaj profil"
 
 msgid "Default"
-msgstr "默认"
+msgstr "Uobicajen"
 
 msgid "Profile"
-msgstr "存档"
+msgstr "Profil"
 
 msgid "Import"
-msgstr "导入"
+msgstr "Uvesti"
 
 msgid "Import a CompizConfig Profile"
-msgstr "导入一个 CompizConfig 存档"
+msgstr "Uvezi CompizConfig profil"
 
 msgid "Import as..."
-msgstr "做为……导入"
+msgstr "Uvezi kao..."
 
-#, fuzzy
 msgid "Import a CompizConfig Profile as a new profile"
-msgstr "导入一个 CompizConfig 存档"
+msgstr "Uvezi CompizConfig profil kao novi profil"
 
 msgid "Export"
-msgstr "导出"
+msgstr "Izvezi"
 
 msgid "Export your CompizConfig Profile"
-msgstr "导出你的 CompizConfig 存档"
+msgstr "Izvezi svoj CompizConfig profil"
 
 msgid "Reset to defaults"
-msgstr "重置到默认"
+msgstr "Vrati na pocetno"
 
-#, fuzzy
 msgid "Reset your CompizConfig Profile to the global defaults"
-msgstr "导出你的 CompizConfig 存档"
+msgstr "Vrati svoj CompizConfig profil na pocetne vrijednost"
 
 msgid "Backend"
-msgstr "后端"
+msgstr ""
 
+#, fuzzy
 msgid "Integration"
-msgstr "整合"
+msgstr "Integracija"
 
 msgid "Enable integration into the desktop environment"
-msgstr "开启与桌面环境的整合"
+msgstr ""
 
 msgid "Profiles (*.profile)"
-msgstr "存档 (*.profile)"
+msgstr ""
 
 msgid "All files"
-msgstr "所有文件"
+msgstr ""
 
 msgid "Save file.."
-msgstr "保存文件.."
+msgstr ""
 
 msgid "Do you want to skip default option values while exporting your profile?"
-msgstr "您想在导出存档时忽略默认设置么？"
+msgstr ""
 
 msgid "Open file.."
-msgstr "打开文件.."
+msgstr ""
 
 msgid "Enter a profile name"
-msgstr "输入存档名称"
+msgstr ""
 
 msgid "Please enter a name for the new profile:"
-msgstr "请输入一个新存档名称:"
+msgstr ""
 
 msgid "Backend not found."
-msgstr "未找到后端程序。"
+msgstr ""
 
 #. Auto sort
 msgid "Automatic plugin sorting"
-msgstr "插件自动排序"
+msgstr ""
 
-#, fuzzy
 msgid "Disabled Plugins"
-msgstr "禁用这些插件"
+msgstr ""
 
-#, fuzzy
 msgid "Enabled Plugins"
-msgstr "启用这些插件"
+msgstr ""
 
-#, fuzzy
 msgid ""
 "Do you really want to disable automatic plugin sorting? This will also "
 "disable conflict handling. You should only do this if you know what you are "
 "doing."
 msgstr ""
-"您真的想禁用插件自动排序么？这将同时禁用冲突检测。如果您明确知道您将导致的结"
-"果，方可继续。"
 
 msgid "Add plugin"
-msgstr "添加插件"
+msgstr ""
 
 msgid "Plugin name:"
-msgstr "插件名："
+msgstr ""
 
 msgid "Insert plugin name"
-msgstr "插入插件名称"
+msgstr ""
 
-#, fuzzy
 msgid ""
 "Configure the backend, profile and other internal settings used by the "
 "Compiz Configuration System."
-msgstr "配置 Conpiz 配置系统使用的后端和系统。"
+msgstr ""
 
 msgid "About"
-msgstr "关于"
+msgstr ""
 
 msgid "About CCSM..."
-msgstr "关于CCSM……"
+msgstr ""
 
 msgid "Profile & Backend"
-msgstr "存档和后端"
+msgstr ""
 
 msgid "Plugin List"
-msgstr "插件列表"
+msgstr ""
 
 #, python-format
 msgid ""
@@ -483,35 +483,3 @@ msgid ""
 "\n"
 " Your filter \"<b>%s</b>\" does not match any items.</span>"
 msgstr ""
-"<span size=\"large\"><b>未找到匹配项。</b> </span><span>\n"
-" Your filter \"<b>%s</b>\" does not match any items.</span>"
-
-#~ msgid "PyGtk 2.10.0 or later required"
-#~ msgstr "需要 PyGtk 2.10.0或更新版本"
-
-#~ msgid "Multi-list settings"
-#~ msgstr "多列表设置"
-
-#~ msgid "Name"
-#~ msgstr "名称"
-
-#~ msgid "Key"
-#~ msgstr "按键"
-
-#~ msgid "Button"
-#~ msgstr "按钮"
-
-#~ msgid "Screen Edge"
-#~ msgstr "屏幕边缘"
-
-#~ msgid "On System Bell"
-#~ msgstr "基于系统铃声"
-
-#~ msgid "Edit Action: %s"
-#~ msgstr "编辑动作: %s"
-
-#~ msgid "Screen Edges"
-#~ msgstr "屏幕边缘"
-
-#~ msgid "Backend &amp; Profile"
-#~ msgstr "后端 &amp; 存档"

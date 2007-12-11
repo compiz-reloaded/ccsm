@@ -8,13 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.2\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-09-05 00:53+0530\n"
-"PO-Revision-Date: 2007-09-04 10:00+0200\n"
-"Last-Translator: মাহদী জামীল <mahdee.jameel@gmail.com>,\n"
+"POT-Creation-Date: 2007-12-12 01:11+0530\n"
+"PO-Revision-Date: 2007-12-04 16:57+0100\n"
+"Last-Translator: Mahdee Jameel <mahdee.jameel@yahoo.com>\n"
 "Language-Team: BANGLA <bn@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Pootle 1.0.2\n"
 
 #, python-format
 msgid ""
@@ -42,6 +43,25 @@ msgstr "%(action)s কে বহাল করো না"
 #, python-format
 msgid "Set %(action)s anyway"
 msgstr "যেভাবে হোক %(action)s কে বহাল করো"
+
+#, python-format
+msgid ""
+"You are trying to use the feature <b>%(feature)s</b> which is <b>not</b> "
+"provided by any plugin.\n"
+"Do you wish to use this feature anyway?"
+msgstr ""
+"আপনি <b>%(feature)s</b> ব্যব‌হার ক‌রতে চাচ্ছেন।এটির জন্য <b>%(plugin)s</b> "
+"প্রয়োজন.\n"
+"যা বর্তমানে নিষ্ক্রীয় আছে.\n"
+"আপনি কি <b>%(plugin)s</b> কে সক্রিয় করতে চান?"
+
+#, python-format
+msgid "Use %(feature)s"
+msgstr "%(feature)s কে সক্রিয় করো"
+
+#, python-format
+msgid "Don't use %(feature)s"
+msgstr "%(feature)s কে সক্রিয় করো না"
 
 #, python-format
 msgid ""
@@ -122,6 +142,30 @@ msgstr "%(plugin)s কে নিষ্ক্রীয় করো না"
 #, python-format
 msgid "<b>%(plugin)s</b> is required by the plugins <b>%(plugin_list)s</b>."
 msgstr "<b>%(plugin_list)s</b> এর জন্য <b>%(plugin)s</b> দরকার হবে"
+
+msgid "General"
+msgstr "সাধারন"
+
+msgid "Accessibility"
+msgstr ""
+
+msgid "Desktop"
+msgstr ""
+
+msgid "Extras"
+msgstr ""
+
+msgid "Window Management"
+msgstr ""
+
+msgid "Effects"
+msgstr ""
+
+msgid "Image Loading"
+msgstr ""
+
+msgid "Utility"
+msgstr ""
 
 msgid "Reset setting to the default value"
 msgstr "মূল মানে ফিরে যাও"
@@ -233,11 +277,56 @@ msgstr "আনুকূল্য"
 msgid "Enable %s"
 msgstr "%s কে সক্রিয় করো"
 
-msgid "General"
-msgstr "সাধারন"
-
 msgid "Please press the new key combination"
 msgstr "নতুন কীগুলো চাপুন"
+
+msgid "Window Title"
+msgstr ""
+
+msgid "Window Role"
+msgstr ""
+
+msgid "Window Name"
+msgstr ""
+
+msgid "Window Class"
+msgstr ""
+
+msgid "Window Type"
+msgstr ""
+
+msgid "Window ID"
+msgstr ""
+
+msgid "And"
+msgstr ""
+
+msgid "Or"
+msgstr ""
+
+msgid "Edit match"
+msgstr ""
+
+#. Type
+msgid "Type"
+msgstr ""
+
+#. Value
+#, fuzzy
+msgid "Value"
+msgstr "মান (%s)"
+
+msgid "Grab"
+msgstr ""
+
+#. Relation
+#, fuzzy
+msgid "Relation"
+msgstr "মিশে যাওয়া"
+
+#. Invert
+msgid "Invert"
+msgstr ""
 
 msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr "এটি হলো কমপিজ এর পছন্দ ঠিক করার জায়গা"
@@ -337,6 +426,9 @@ msgstr "সব ফাইল"
 msgid "Save file.."
 msgstr "ফাইল সংরক্ষণ করুন"
 
+msgid "Do you want to skip default option values while exporting your profile?"
+msgstr ""
+
 msgid "Open file.."
 msgstr "ফাইল খুলুন"
 
@@ -358,6 +450,12 @@ msgstr "নিষ্ক্রিয় প্লাগইন"
 
 msgid "Enabled Plugins"
 msgstr "সক্রিয় প্লাগইন"
+
+msgid ""
+"Do you really want to disable automatic plugin sorting? This will also "
+"disable conflict handling. You should only do this if you know what you are "
+"doing."
+msgstr ""
 
 msgid "Add plugin"
 msgstr "প্লাগইন যোগ করুন"
