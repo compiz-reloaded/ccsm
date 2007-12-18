@@ -1109,7 +1109,7 @@ class KeySetting (EditableActionSetting):
         self.BindingEdited (accel)
 
     def GetLabelText (self, text):
-        if not len (text):
+        if not len (text) or text.lower() == "disabled":
             text = _("Disabled")
         return text
 
@@ -1299,7 +1299,7 @@ class ButtonSetting (EditableActionSetting):
 
     def SetButtonLabel (self):
         label = self.current
-        if not len (self.current):
+        if not len (self.current) or self.current.lower() == "disabled":
             label = _("Disabled")
         self.Button.set_label (label)
 
