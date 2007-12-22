@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm 0.6\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-12-12 01:11+0530\n"
-"PO-Revision-Date: 2007-12-04 13:51+0100\n"
+"POT-Creation-Date: 2007-12-22 16:10+0530\n"
+"PO-Revision-Date: 2007-12-12 10:51+0100\n"
 "Last-Translator: Jeong Seungwon <jeongseungwon@hanmail.net>\n"
 "Language-Team: Korean <happyhackinglife@gmail>\n"
 "MIME-Version: 1.0\n"
@@ -53,11 +53,11 @@ msgstr ""
 "이 플러그인은 현재 비활성화되어 있습니다.\n"
 "<b>%(plugin)s</b> 플러그인을 활성화시키시겠습니까?"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Use %(feature)s"
 msgstr "%(feature)s을(를) 사용하지 않음"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Don't use %(feature)s"
 msgstr "%(feature)s을(를) 사용하지 않음"
 
@@ -288,7 +288,6 @@ msgstr "창 제목"
 msgid "Window Role"
 msgstr "창 역할"
 
-#, fuzzy
 msgid "Window Name"
 msgstr "창 이름"
 
@@ -308,14 +307,13 @@ msgid "Or"
 msgstr "또는"
 
 msgid "Edit match"
-msgstr ""
+msgstr "편집"
 
 #. Type
 msgid "Type"
 msgstr "종류"
 
 #. Value
-#, fuzzy
 msgid "Value"
 msgstr "값 (%s)"
 
@@ -323,7 +321,6 @@ msgid "Grab"
 msgstr "붙잡기"
 
 #. Relation
-#, fuzzy
 msgid "Relation"
 msgstr "관계"
 
