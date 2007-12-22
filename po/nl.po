@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.5.2\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-12-12 01:11+0530\n"
-"PO-Revision-Date: 2007-11-26 11:11+0100\n"
+"POT-Creation-Date: 2007-12-22 16:10+0530\n"
+"PO-Revision-Date: 2007-12-21 10:16+0100\n"
 "Last-Translator: Rick <mailmelist@gmail.com>\n"
 "Language-Team: Dutch <mailmelist@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -307,8 +307,10 @@ msgstr "En"
 msgid "Or"
 msgstr "Of"
 
+# In deze context is "match" waarschijnlijk "resultaat" van een zoekopdracht. Het betekent eigenlijk "gelijke" of "overeenkomstig", maar dit past volgens mij niet hier.
+#, fuzzy
 msgid "Edit match"
-msgstr ""
+msgstr "Wijzigen resultaat"
 
 #. Type
 msgid "Type"

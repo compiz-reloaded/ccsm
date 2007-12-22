@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm 0.6\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-12-12 01:11+0530\n"
-"PO-Revision-Date: 2007-12-11 16:23+0100\n"
+"POT-Creation-Date: 2007-12-22 16:10+0530\n"
+"PO-Revision-Date: 2007-12-19 14:32+0100\n"
 "Last-Translator: jiro kawada <jiro.kawada@gmail.com>\n"
 "Language-Team: Japanese <masaaki.kanemoto@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -25,7 +25,7 @@ msgid ""
 "(plugin_conflict)s</b> plugin?"
 msgstr ""
 "<b>%(plugin)s</b> プラグインの <b>%(action)s</b> アクションに割り当てられた %"
-"(binding)s の新しい設定は <b>%(plugin_conflict)s</b> プラグインの <b>%"
+"(binding)s の新しい設定は、 <b>%(plugin_conflict)s</b> プラグインの <b>%"
 "(action_conflict)s</b> アクションと干渉します。\n"
 "<b>%(plugin_conflict)s</b> プラグインの <b>%(action_conflict)s</b> を無効にし"
 "ますか？"
@@ -85,7 +85,7 @@ msgid ""
 "Plugin <b>%(plugin_conflict)s</b> provides feature <b>%(feature)s</b> which "
 "is also provided by <b>%(plugin)s</b>"
 msgstr ""
-"<b>%(plugin_conflict)s</b> プラグインが <b>%(plugin)s</b> からも提供される "
+"<b>%(plugin_conflict)s</b> プラグインが、<b>%(plugin)s</b> からも提供される "
 "<b>%(feature)s</b> 機能を提供しています。"
 
 #, python-format
@@ -107,8 +107,8 @@ msgid ""
 "the following plugins:\n"
 "%(plugin_list)s"
 msgstr ""
-"<b>%(plugin)s</b> の動作には以下のプラグインで提供される機能 <b>%(feature)s</"
-"b> が必要です:\n"
+"<b>%(plugin)s</b> の動作には、以下のプラグインで提供される <b>%(feature)s</"
+"b> 機能が必要です:\n"
 "%(plugin_list)s"
 
 msgid "Enable these plugins"
@@ -128,7 +128,7 @@ msgid ""
 "<b>%(plugin)s</b> provides the feature <b>%(feature)s</b> which is required "
 "by the plugins <b>%(plugin_list)s</b>."
 msgstr ""
-"<b>%(plugin)s</b> は <b>%(plugin_list)s</b> プラグインの動作に必要な <b>%"
+"<b>%(plugin)s</b> は、 <b>%(plugin_list)s</b> プラグインの動作に必要な <b>%"
 "(feature)s</b> 機能を提供します。"
 
 msgid "Disable these plugins"
@@ -144,7 +144,7 @@ msgstr ""
 "<b>%(plugin)s</b> は <b>%(plugin_list)s</b> プラグインの動作に必要です。"
 
 msgid "General"
-msgstr "基本"
+msgstr "一般"
 
 msgid "Accessibility"
 msgstr "アクセシビリティ"
@@ -170,8 +170,9 @@ msgstr "ユーティリティ"
 msgid "Reset setting to the default value"
 msgstr "設定をデフォルト値に戻す"
 
+# スカイドーム画像の参照ボタンで表示
 msgid "Browse for "
-msgstr ""
+msgstr "参照:"
 
 msgid "Images"
 msgstr "画像"
@@ -240,7 +241,7 @@ msgstr "なし"
 
 #, python-format
 msgid "Unhandled list type %s for %s"
-msgstr "扱われていないリストタイプ %s for %s です"
+msgstr "扱われていない %s の %s リストタイプです"
 
 msgid "CompizConfig Settings Manager"
 msgstr "CompizConfig 設定マネージャ"
@@ -281,56 +282,61 @@ msgid "Please press the new key combination"
 msgstr "新しいキーの組み合わせを入力してください"
 
 msgid "Window Title"
-msgstr ""
+msgstr "ウィンドウ・タイトル"
 
 msgid "Window Role"
-msgstr ""
+msgstr "ウィンドウ・ロール"
 
 msgid "Window Name"
-msgstr ""
+msgstr "ウィンドウ・ネーム"
 
 msgid "Window Class"
-msgstr ""
+msgstr "ウィンドウ・クラス"
 
 msgid "Window Type"
-msgstr ""
+msgstr "ウィンドウ・タイプ"
 
 msgid "Window ID"
-msgstr ""
+msgstr "ウィンドウ ID"
 
 msgid "And"
-msgstr ""
+msgstr "かつ"
 
 msgid "Or"
-msgstr ""
+msgstr "または"
 
 msgid "Edit match"
-msgstr ""
+msgstr "照合条件の編集"
 
 #. Type
 msgid "Type"
-msgstr ""
+msgstr "種類"
 
 #. Value
 msgid "Value"
-msgstr ""
+msgstr "値"
 
 msgid "Grab"
-msgstr ""
+msgstr "取得"
 
 #. Relation
 msgid "Relation"
-msgstr ""
+msgstr "論理演算子"
 
 #. Invert
 msgid "Invert"
-msgstr ""
+msgstr "否定"
 
 msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr "これは CompizConfig 設定システム用の設定マネージャです。"
 
 msgid "translator-credits"
-msgstr "翻訳者のクレジット"
+msgstr ""
+"Nishio Futoshi <futoshi@momonga-linux.org>\n"
+"Yohsuke Ooi <meke@momonga-linux.org>\n"
+"TABUCHI Takaaki <tab@momonga-linux.org>\n"
+"Masaaki Kanemoto <masaaki.kanemoto@gmail.com>\n"
+"Jiro Kawada <jiro.kawada@gmail.com>"
 
 msgid "An error has occured"
 msgstr "エラーが発生しました"
@@ -358,7 +364,7 @@ msgid "Search in..."
 msgstr "検索対象..."
 
 msgid "Short description and name"
-msgstr "オプション名や簡単な説明"
+msgstr "名前や簡単な説明"
 
 msgid "Long description"
 msgstr "詳細な説明"
@@ -455,7 +461,8 @@ msgid ""
 "doing."
 msgstr ""
 "本当にプラグインの自動分類を無効にしますか？この操作で干渉の処理も無効になり"
-"ます。何をしようとしているか理解できない場合は，無効にすべきではありません。"
+"ます。何をしようとしているか理解されていない場合は、無効にすべきではありませ"
+"ん。"
 
 msgid "Add plugin"
 msgstr "プラグインを追加"
