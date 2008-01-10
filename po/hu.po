@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-12-22 16:10+0530\n"
-"PO-Revision-Date: 2007-12-18 12:04+0100\n"
+"POT-Creation-Date: 2008-01-10 16:13+0530\n"
+"PO-Revision-Date: 2007-12-23 17:03+0100\n"
 "Last-Translator: KAMI <kamihir@freemail.hu>\n"
 "Language-Team: hungarian <hu@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -98,20 +98,20 @@ msgstr "%(plugin_conflict)s letiltása"
 msgid "Don't enable %(plugin)s"
 msgstr "%(plugin)s mellőzése"
 
-#, python-format
+#, fuzzy, python-format
 msgid "Plugin <b>%(plugin_conflict)s</b> conflicts with <b>%(plugin)s</b>."
 msgstr ""
-"A(z) <b>%(plugin_conflict)s</b> bővítmény ütközik a(z) <b>%(plugin)s</b> "
-"bővítménnyel."
+"A(z) <b>%(plugin)s</b> bővítmény szükséges a(z) <b>%(plugin_list)s</b> "
+"bővítmények számára."
 
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "<b>%(plugin)s</b> requires feature <b>%(feature)s</b> which is provided by "
 "the following plugins:\n"
 "%(plugin_list)s"
 msgstr ""
-"A(z) <b>%(plugin)s</b> bővítmény igényli a(z) <b>%(feature)s</b> funkciót. "
-"Ezt a funkciót az alábbi bővítmények biztosítják:\n"
+"A(z) <b>%(plugin)s</b> bővítmény biztosítja a(z) <b>%(feature)s</b> "
+"funkciót. Ezt a funkciót az alábbi bővítmények igénylelik:\n"
 "%(plugin_list)s"
 
 msgid "Enable these plugins"
