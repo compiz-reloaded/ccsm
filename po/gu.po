@@ -1,25 +1,23 @@
-# translation of ccsm.gu.po to Gujarati
-# Copyright (C) 2007 opencompositing.org
+# translation of ccsm.po to Gujarati
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 #
-# Ankit Patel <ankit644@yahoo.com>, 2007.
-# Ankit Patel <ankit@redhat.com>, 2007.
+# Krunaliben Patel <krunaliben.patel@gmail.com>, 2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: ccsm.gu\n"
+"Project-Id-Version: ccsm\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2007-12-22 16:10+0530\n"
-"PO-Revision-Date: 2007-08-07 16:00+0530\n"
-"Last-Translator: Ankit Patel <ankit644@yahoo.com>\n"
-"Language-Team: IndianOSS Gujarati <indianoss-gujarati@lists.sourceforge."
-"net>\n"
+"POT-Creation-Date: 2008-01-10 16:13+0530\n"
+"PO-Revision-Date: 2007-12-17 12:25+0530\n"
+"Last-Translator: \n"
+"Language-Team: gist Gujarati team <info.gist@cdac.in>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.4\n"
-"Plural-Forms:  nplurals=2; plural=(n!=1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Pootle 1.0.2\n"
 
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "The new value for the %(binding)s binding for the action <b>%(action)s</b> "
 "in plugin <b>%(plugin)s</b> conflicts with the action <b>%(action_conflict)"
@@ -27,21 +25,18 @@ msgid ""
 "Do you wish to disable <b>%(action_conflict)s</b> in the <b>%"
 "(plugin_conflict)s</b> plugin?"
 msgstr ""
-"%s બાઈન્ડીંગ માટેની નવી કિંમત ક્રિયા <b>%s</b> માટે પ્લગઈન <b>%s</b> માં <b>%s</b> "
-"સાથે તકરાય છે કે જે <b>%s</b> પ્લગઈનનું છે.\n"
-"શું તમે <b>%s</b> ને <b>%s</b> પ્લગઈનમાં નિષ્ક્રિય કરવા ઈચ્છો છો?"
 
 #, python-format
 msgid "Disable %(action_conflict)s"
-msgstr ""
+msgstr "%(action_conflict)s  ને િનશકૃીય કરો"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Don't set %(action)s"
-msgstr "%s સુયોજીત કરશો નહિં"
+msgstr "%(action)s સુયોજીત કરશો નહિં"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Set %(action)s anyway"
-msgstr "%s ને ગમે તે રીતે સુયોજીત કરો"
+msgstr "%(action)s ને ગમે તે રીતે સુયોજીત કરો"
 
 #, fuzzy, python-format
 msgid ""
@@ -56,7 +51,7 @@ msgstr ""
 
 #, python-format
 msgid "Use %(feature)s"
-msgstr ""
+msgstr "%(feature)s વાપરો"
 
 #, fuzzy, python-format
 msgid "Don't use %(feature)s"
@@ -144,25 +139,25 @@ msgid "General"
 msgstr "સામાન્ય"
 
 msgid "Accessibility"
-msgstr ""
+msgstr "સુલભતા"
 
 msgid "Desktop"
-msgstr ""
+msgstr "ડેસ્કટોપ"
 
 msgid "Extras"
-msgstr ""
+msgstr "વધારાનું"
 
 msgid "Window Management"
-msgstr ""
+msgstr "વિન્ડો વ્યવસ્થાપન"
 
 msgid "Effects"
-msgstr ""
+msgstr "અસરો"
 
 msgid "Image Loading"
-msgstr ""
+msgstr "ચિત્ર લાવવાનું"
 
 msgid "Utility"
-msgstr ""
+msgstr "ઉપયોગીતા"
 
 msgid "Reset setting to the default value"
 msgstr "સુયોજનને મૂળભૂત કિંમતમાં પુનઃસુયોજીત કરો"
@@ -205,7 +200,7 @@ msgstr "કિંમત (%s) એ %s માટે:"
 
 #, python-format
 msgid "\"%s\" is not a valid shortcut"
-msgstr ""
+msgstr "\"%s\" એ માન્ય ટૂંકાણ નથી"
 
 #, fuzzy
 msgid "Disabled"
@@ -216,24 +211,26 @@ msgid "Enabled"
 msgstr "%s સક્રિય કરો"
 
 msgid "Grab key combination"
-msgstr ""
+msgstr "કી જોડાણ મેળવો"
 
 msgid "Computing possible conflicts, please wait"
-msgstr ""
+msgstr "શક્ય તકરારો ગણી રહ્યા છીએ, મહેરબાની કરીને રાહ જુઓ"
 
 #, python-format
 msgid "\"%s\" is not a valid button"
-msgstr ""
+msgstr "\"%s\" એ માન્ય બટન નથી"
 
 #, python-format
 msgid ""
 "Using Button1 without modifiers can prevent any left click and thus break "
 "your configuration. Do you really want to set \"%s\" button to Button1 ?"
 msgstr ""
+"Button1 ને સુધારકો સાથે વાપરવાનું કોઈપણ ડાબા ક્લિકને અટકાવી શકે છે અને તેથી તમારું "
+"રૂપરેખાંકન ભાંગી જશે. શું તમે ખરેખર \"%s\" બટનને Button1 માં સુયોજીત કરવા માંગો છો?"
 
 #, python-format
 msgid "\"%s\" is not a valid edge mask"
-msgstr ""
+msgstr "\"%s\" એ માન્ય બાજુ માસ્ક નથી"
 
 msgid "None"
 msgstr "કંઈ નહિં"
@@ -259,7 +256,7 @@ msgid "Screen"
 msgstr "સ્ક્રીન"
 
 msgid "All"
-msgstr ""
+msgstr "બધું"
 
 msgid "Uncategorized"
 msgstr "બિનવર્ગીકૃત"
@@ -271,45 +268,45 @@ msgid "Advanced Search"
 msgstr "અદ્યતન શોધ"
 
 msgid "Preferences"
-msgstr ""
+msgstr "પસંદગીઓ"
 
 #, python-format
 msgid "Enable %s"
 msgstr "%s સક્રિય કરો"
 
 msgid "Please press the new key combination"
-msgstr ""
+msgstr "મહેરબાની કરીને નવું કી જોડાણ દબાવો"
 
 msgid "Window Title"
-msgstr ""
+msgstr "વિન્ડો શીર્ષક"
 
 msgid "Window Role"
-msgstr ""
+msgstr "વિન્ડો ભૂમિકા"
 
 msgid "Window Name"
-msgstr ""
+msgstr "વિન્ડો નામ"
 
 msgid "Window Class"
-msgstr ""
+msgstr "વિન્ડો વર્ગ"
 
 msgid "Window Type"
-msgstr ""
+msgstr "વિન્ડો પ્રકાર"
 
 msgid "Window ID"
-msgstr ""
+msgstr "વિન્ડો ID"
 
 msgid "And"
-msgstr ""
+msgstr "અને"
 
 msgid "Or"
-msgstr ""
+msgstr "અથવા"
 
 msgid "Edit match"
-msgstr ""
+msgstr "ફેરફાર જોડણી"
 
 #. Type
 msgid "Type"
-msgstr ""
+msgstr "પ્રકાર"
 
 #. Value
 #, fuzzy
@@ -317,7 +314,7 @@ msgid "Value"
 msgstr "કિંમત (%s)"
 
 msgid "Grab"
-msgstr ""
+msgstr "મેળવો"
 
 #. Relation
 #, fuzzy
@@ -326,7 +323,7 @@ msgstr "સંકલન"
 
 #. Invert
 msgid "Invert"
-msgstr ""
+msgstr "ઊંધુ"
 
 msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr "આ CompizConfig રૂપરેખાંકન સિસ્ટમ માટે સુયોજનો વ્યવસ્થાપક છે."
@@ -335,10 +332,10 @@ msgid "translator-credits"
 msgstr "અંકિત પટેલ <ankit644@yahoo.com>"
 
 msgid "An error has occured"
-msgstr ""
+msgstr "ભૂલ ઉદ્ભવી"
 
 msgid "Warning"
-msgstr ""
+msgstr "ચેતવણી"
 
 #, python-format
 msgid "Search %s Plugin Options"
@@ -354,7 +351,7 @@ msgid "Actions"
 msgstr "ક્રિયાઓ"
 
 msgid "Error"
-msgstr ""
+msgstr "ક્ષતિ"
 
 msgid "Search in..."
 msgstr "માં શોધો..."
@@ -432,6 +429,8 @@ msgstr "ફાઈલ સંગ્રહો..."
 
 msgid "Do you want to skip default option values while exporting your profile?"
 msgstr ""
+"જ્યારે તમે તમારી રૂપરેખાની નિકાસ કરી રહ્યા હોય ત્યારે શું તમે મૂળભૂત વિકલ્પ કિંમતો અવગણવા "
+"માંગો છો?"
 
 msgid "Open file.."
 msgstr "ફાઈલ ખોલો..."
@@ -447,7 +446,7 @@ msgstr "પાશ્વભાગ મળ્યું નહિં."
 
 #. Auto sort
 msgid "Automatic plugin sorting"
-msgstr ""
+msgstr "આપોઆપ પ્લગઈન ક્રમમાં ગોઠવવાનું"
 
 #, fuzzy
 msgid "Disabled Plugins"
@@ -462,15 +461,18 @@ msgid ""
 "disable conflict handling. You should only do this if you know what you are "
 "doing."
 msgstr ""
+"શું તમે ખરેખર આપોઆપ પ્લગઈન ક્રમમાં ગોઠવવાનું નિષ્ક્રિય કરવા માંગો છો? આ તકરાર નિયંત્રિત "
+"કરવાનું પણ નિષ્ક્રિય કરશે. તમારે આવું માત્ર ત્યારે જ કરવું જોઈએ જો તમને ખબર હોય કે તમે શું કરી "
+"રહ્યા છો."
 
 msgid "Add plugin"
-msgstr ""
+msgstr "પ્લગઈન ઉમેરો"
 
 msgid "Plugin name:"
-msgstr ""
+msgstr "પ્લગઈન નામ:"
 
 msgid "Insert plugin name"
-msgstr ""
+msgstr "પ્લગઈન નામ દાખલ કરો"
 
 #, fuzzy
 msgid ""
@@ -483,13 +485,13 @@ msgid "About"
 msgstr "વિશે"
 
 msgid "About CCSM..."
-msgstr ""
+msgstr "CCSM વિશે..."
 
 msgid "Profile & Backend"
 msgstr "રૂપરેખા & પાશ્વભાગ"
 
 msgid "Plugin List"
-msgstr ""
+msgstr "પ્લગઈન યાદી"
 
 #, python-format
 msgid ""
@@ -497,6 +499,9 @@ msgid ""
 "\n"
 " Your filter \"<b>%s</b>\" does not match any items.</span>"
 msgstr ""
+"<span size=\"large\"><b>કંઈ બંધબેસતું મળ્યું નહિં.</b> </span><span>\n"
+"\n"
+" તમારા ગાળક \"<b>%s</b>\" એ કોઈ જોડણી વસ્તુ શોધી નહિં.</span>"
 
 #~ msgid "Name"
 #~ msgstr "નામ"
