@@ -40,7 +40,7 @@ class MainWin(gtk.Window):
 
     currentCategory = None
 
-    def __init__(self, Context, pluginPage=None):
+    def __init__(self, Context, pluginPage=None, categoryName=None):
         gtk.Window.__init__(self)
         self.ShowingPlugin = None
         self.Context = Context
@@ -95,6 +95,8 @@ class MainWin(gtk.Window):
 
         if pluginPage and self.Context.Plugins.has_key(pluginPage):
             self.ShowPlugin(None, self.Context.Plugins[pluginPage])
+        if categoryName and self.Context.Categories.has_key(categoryName):
+            self.ToggleCategory(None, categoryName)
 
     def Quit(self, *args):
         gtk.main_quit()
