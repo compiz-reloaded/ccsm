@@ -40,7 +40,7 @@ class MainWin(gtk.Window):
 
     currentCategory = None
 
-    def __init__(self, Context):
+    def __init__(self, Context, pluginPage=None):
         gtk.Window.__init__(self)
         self.ShowingPlugin = None
         self.Context = Context
@@ -92,6 +92,9 @@ class MainWin(gtk.Window):
         
         self.BlockEnablePlugin = 0
         self.ResetMainWidgets()
+
+        if pluginPage and self.Context.Plugins.has_key(pluginPage):
+            self.ShowPlugin(None, self.Context.Plugins[pluginPage])
 
     def Quit(self, *args):
         gtk.main_quit()
