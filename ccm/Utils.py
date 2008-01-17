@@ -342,6 +342,8 @@ def FilterSettings(settings, filter, run=0, singleRun=False):
     if filter == None:
         return settings
 
+    filter = filter.lower()
+
     filteredSettings = []
 
     for setting in settings:
