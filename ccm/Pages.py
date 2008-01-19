@@ -278,31 +278,41 @@ class FilterPage:
 
         singleGroup = None
         singleSubGroup = None
-        
+
+        self.PluginBox.add_item(_("All"), self.PluginChanged, "<i>%s</i>")
+
         # Plugins
         for plugin, groups in self.FilteredPlugins:
             if plugin.Enabled:
                 self.PluginBox.add_item(plugin.ShortDesc, self.PluginChanged, "<b>%s</b>")
             else:
                 self.PluginBox.add_item(plugin.ShortDesc, self.PluginChanged)
+
             # Groups
-            if self.CurrentPlugin == plugin.ShortDesc:
+            if self.CurrentPlugin in (_("All"), plugin.ShortDesc):
                 if len(groups) == 1:
                     singleGroup = groups[0][0]
+                else:
+                    self.GroupBox.add_item(_("All"), self.GroupChanged, "<i>%s</i>")
 
                 groupsSorted = sorted(groups, FirstItemSortCompare)
                 for group, subGroups in groupsSorted:
-                    self.GroupBox.add_item(group, self.GroupChanged)
+                    if self.CurrentPlugin != _("All"):
+                        self.GroupBox.add_item(group, self.GroupChanged)
+
                     # SubGroups
-                    if self.CurrentGroup == group or singleGroup == group:
+                    if self.CurrentGroup in (_("All"), group) or singleGroup == group:
                         if len(subGroups) == 1:
                             singleSubGroup = subGroups[0][0]
+                        else:
+                            self.SubGroupBox.add_item(_("All"), self.SubGroupChanged, "<i>%s</i>")
 
                         subGroupsSorted = sorted(subGroups, FirstItemSortCompare)
                         for name, subGroup, settings in subGroupsSorted:
                             self.SubGroupBox.add_item(name, self.SubGroupChanged)
+
                             # Settings
-                            if self.CurrentSubGroup == name:
+                            if self.CurrentSubGroup in (_("All"), name):
                                 sga = SubGroupArea('', subGroup, self.Filter)
                                 self.SettingsBox.pack_start(sga.Widget, False, False)
                             elif self.CurrentSubGroup == None:
