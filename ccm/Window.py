@@ -108,7 +108,7 @@ class MainWin(gtk.Window):
         
         # Filter
         filterLabel = Label()
-        filterLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>" % (self.Style.BrightColor, _("Filter")))
+        filterLabel.set_markup(HeaderMarkup % (self.Style.BrightColor, _("Filter")))
         filterLabel.props.xalign = 0.1
         if has_sexy:
             filterEntry = sexy.IconEntry()
@@ -130,7 +130,7 @@ class MainWin(gtk.Window):
             screenBox.set_active(CurrentScreenNum)
             screenBox.connect("changed", self.ScreenChanged)
             screenLabel = Label()
-            screenLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>" % (self.Style.BrightColor, _("Screen")))
+            screenLabel.set_markup(HeaderMarkup % (self.Style.BrightColor, _("Screen")))
             leftChild.pack_start(screenLabel, False, False)
             leftChild.pack_start(screenBox, False, False)
 
@@ -167,7 +167,7 @@ class MainWin(gtk.Window):
             categoryBox.pack_start(categoryToggle, False, False)
         categoryLabel = Label()
         categoryLabel.props.xalign = 0.1
-        categoryLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>" % (self.Style.BrightColor, _("Category")))
+        categoryLabel.set_markup(HeaderMarkup % (self.Style.BrightColor, _("Category")))
         leftChild.pack_start(categoryLabel, False, False)
         leftChild.pack_start(categoryBox, False, False)
 
@@ -179,7 +179,7 @@ class MainWin(gtk.Window):
 
         # Advanced Search
         searchLabel = Label()
-        searchLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>" % (self.Style.BrightColor, _("Advanced Search")))
+        searchLabel.set_markup(HeaderMarkup % (self.Style.BrightColor, _("Advanced Search")))
         searchImage = gtk.Image()
         searchImage.set_from_stock(gtk.STOCK_GO_FORWARD, gtk.ICON_SIZE_BUTTON)
         searchButton = gtk.Button()
@@ -193,7 +193,7 @@ class MainWin(gtk.Window):
 
         # Preferences
         prefLabel = Label()
-        prefLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>" % (self.Style.BrightColor, _("Preferences")))
+        prefLabel.set_markup(HeaderMarkup % (self.Style.BrightColor, _("Preferences")))
         prefImage = gtk.Image()
         prefImage.set_from_stock(gtk.STOCK_GO_FORWARD, gtk.ICON_SIZE_BUTTON)
         prefButton = gtk.Button()
