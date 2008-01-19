@@ -306,15 +306,20 @@ class IntFloatSetting(Setting):
         self.Adj = gtk.Adjustment(self.Setting.Value, self.Setting.Info[0], self.Setting.Info[1], inc, inc*10)
         self.Spin = gtk.SpinButton(self.Adj)
         Tooltips.set_tip(self.Spin, self.Setting.LongDesc)
-        
-        if self.Setting.Type == 'Float':
-            self.Spin.set_digits(4)
-        
+
         self.Scale = gtk.HScale(self.Adj)
+        
+        if self.Setting.Type == 'Int':
+            self.Spin.set_digits(0)
+            self.Scale.set_digits(0)
+        elif self.Setting.Type == 'Float':
+            self.Spin.set_digits(4)
+            self.Scale.set_digits(4)
+
+        self.Scale.set_update_policy(gtk.UPDATE_DISCONTINUOUS)
         Tooltips.set_tip(self.Scale, self.Setting.LongDesc)
-        self.Scale.props.draw_value = False
-        BufferedHandler (self.Scale, "value-changed", self.Changed)
-        BufferedHandler (self.Spin, "value-changed", self.Changed)
+        self.Scale.connect("value-changed", self.Changed)
+        self.Spin.connect("value-changed", self.Changed)
         self.Widget = self.Scale
 
     def Attach(self, Table, row):
