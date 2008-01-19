@@ -50,17 +50,19 @@ class PluginPage:
         self.Main = main
         self.LeftWidget = gtk.VBox(False, 10)
         self.LeftWidget.set_border_width(15)
+
         pluginLabel = Label()
-        pluginLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>" % (self.Main.Style.BrightColor, plugin.ShortDesc))
+        pluginLabel.set_markup(HeaderMarkup % (self.Main.Style.BrightColor, plugin.ShortDesc))
         pluginImg = Image(plugin.Name, ImagePlugin, 64)
         filterLabel = Label()
-        filterLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>" % (self.Main.Style.BrightColor, _("Filter")))
+        filterLabel.set_markup(HeaderMarkup % (self.Main.Style.BrightColor, _("Filter")))
         if has_sexy:
             self.FilterEntry = sexy.IconEntry()
             self.FilterEntry.add_clear_button()
         else:
             self.FilterEntry = gtk.Entry()
         self.FilterEntry.connect("changed", self.FilterChanged)
+
         self.LeftWidget.pack_start(pluginImg, False, False)
         self.LeftWidget.pack_start(filterLabel, False, False)
         self.LeftWidget.pack_start(self.FilterEntry, False, False)
@@ -76,7 +78,7 @@ class PluginPage:
         if plugin.Name != 'core':
             Tooltips.set_tip(self.FilterEntry, _("Search %s Plugin Options") % plugin.ShortDesc)
             enableLabel = Label()
-            enableLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>" % (self.Main.Style.BrightColor, _("Use This Plugin")))
+            enableLabel.set_markup(HeaderMarkup % (self.Main.Style.BrightColor, _("Use This Plugin")))
             self.LeftWidget.pack_start(enableLabel, False, False)
             enableCheckCont = gtk.HBox()
             enableCheckCont.set_border_width(10)
@@ -131,7 +133,7 @@ class PluginPage:
 
         for page in self.RightWidget.get_children():
             label = self.RightWidget.get_tab_label(page).get_label()
-            if label != _("Actions") and label != _("Error"):
+            if label != _("Error"):
                 self.RightWidget.remove_page(self.RightWidget.page_num(page))
                 page.destroy()
 
@@ -180,7 +182,7 @@ class FilterPage:
 
         # Image + Label
         filterLabel = Label()
-        filterLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>" % (self.Main.Style.BrightColor, _("Filter")))
+        filterLabel.set_markup(HeaderMarkup % (self.Main.Style.BrightColor, _("Filter")))
         filterImg = Image("search", ImageCategory, 64)
         self.LeftWidget.pack_start(filterImg, False, False)
         self.LeftWidget.pack_start(filterLabel, False, False)
@@ -196,7 +198,7 @@ class FilterPage:
 
         # Search in...
         filterSearchLabel = Label()
-        filterSearchLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>" % (self.Main.Style.BrightColor, _("Search in...")))
+        filterSearchLabel.set_markup(HeaderMarkup % (self.Main.Style.BrightColor, _("Search in...")))
         self.LeftWidget.pack_start(filterSearchLabel, False, False)
 
         # Options
@@ -451,7 +453,7 @@ class ProfileBackendPage:
         profileBox.pack_start(profileAdd, False, False)
         profileBox.pack_start(profileRemove, False, False)
         profileLabel = Label()
-        profileLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>" % (self.Main.Style.BrightColor, _("Profile")))
+        profileLabel.set_markup(HeaderMarkup % (self.Main.Style.BrightColor, _("Profile")))
         self.ProfileImportExportBox = gtk.HBox()
         self.ProfileImportExportBox.set_spacing(5)
         profileImportButton = gtk.Button(_("Import"))
@@ -487,13 +489,13 @@ class ProfileBackendPage:
         backendBox.set_active(index)
         backendBox.connect("changed", self.BackendChanged)
         backendLabel = Label()
-        backendLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>" % (self.Main.Style.BrightColor, _("Backend")))
+        backendLabel.set_markup(HeaderMarkup % (self.Main.Style.BrightColor, _("Backend")))
         rightChild.pack_start(backendLabel, False, False, 5)
         rightChild.pack_start(backendBox, False, False, 5)
 
         # Integration
         integrationLabel = Label()
-        integrationLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>" % (self.Main.Style.BrightColor, _("Integration")))
+        integrationLabel.set_markup(HeaderMarkup % (self.Main.Style.BrightColor, _("Integration")))
         self.IntegrationButton = gtk.CheckButton(_("Enable integration into the desktop environment"))
         self.IntegrationButton.set_active(self.Context.Integration)
         self.IntegrationButton.set_sensitive(self.Context.CurrentBackend.IntegrationSupport)
@@ -837,7 +839,7 @@ class PreferencesPage:
 
         # Left Pane
         self.DescLabel = Label()
-        self.DescLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>" % (self.Main.Style.BrightColor, _("Preferences")))
+        self.DescLabel.set_markup(HeaderMarkup % (self.Main.Style.BrightColor, _("Preferences")))
         self.DescImg = Image("profiles",ImageCategory, 64)
         self.LeftWidget.pack_start(self.DescImg, False, False)
         self.LeftWidget.pack_start(self.DescLabel, False, False)
@@ -849,7 +851,7 @@ class PreferencesPage:
 
         # About Button
         aboutLabel = Label()
-        aboutLabel.set_markup("<span color='%s' size='large' weight='800'>%s</span>" % (self.Main.Style.BrightColor, _("About")))
+        aboutLabel.set_markup(HeaderMarkup % (self.Main.Style.BrightColor, _("About")))
         aboutButton = gtk.Button()
         aboutButton.set_relief(gtk.RELIEF_NONE)
         aboutImage = Image(gtk.STOCK_ABOUT, ImageStock, gtk.ICON_SIZE_BUTTON)

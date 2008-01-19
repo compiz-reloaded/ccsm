@@ -42,6 +42,9 @@ TableDef = gtk.FILL | gtk.EXPAND
 TableX   = 4
 TableY   = 2
 
+# Label Styles
+HeaderMarkup = "<span color='%s' size='large' weight='800'>%s</span>"
+
 # Image Types
 #
 ImageNone     = 0
