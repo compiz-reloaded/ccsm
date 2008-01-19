@@ -380,6 +380,18 @@ class FilterPage:
 
     def FilterChanged(self, widget):
         self.Filter = widget.get_text()
+
+        if self.Filter == "":
+            if self.CurrentSubGroup != None:
+                self.SelectorButtons.remove_button(2)
+                self.CurrentSubGroup = None
+            if self.CurrentGroup != None:
+                self.SelectorButtons.remove_button(1)
+                self.CurrentGroup = None
+            if self.CurrentPlugin != None:
+                self.SelectorButtons.remove_button(0)
+                self.CurrentPlugin = None
+
         runLevels = []
         if self.FilterName.get_active():
             runLevels.append(0)
