@@ -238,6 +238,9 @@ class FilterPage:
         self.PluginBox = SelectorBox(main.Style.BackgroundColor)
         self.GroupBox = SelectorBox(main.Style.BackgroundColor)
         self.SubGroupBox = SelectorBox(main.Style.BackgroundColor)
+        self.PluginBox.set_size_request(250, 180)
+        self.GroupBox.set_size_request(220, 180)
+        self.SubGroupBox.set_size_request(220, 180)
         self.SelectorBoxes = gtk.HBox()
         self.SelectorBoxes.set_border_width(5)
         self.SelectorBoxes.set_spacing(5)
@@ -283,10 +286,9 @@ class FilterPage:
 
         # Plugins
         for plugin, groups in self.FilteredPlugins:
-            if plugin.Enabled:
-                self.PluginBox.add_item(plugin.ShortDesc, self.PluginChanged, "<b>%s</b>")
-            else:
-                self.PluginBox.add_item(plugin.ShortDesc, self.PluginChanged)
+            image = Image(plugin.Name, ImagePlugin)
+            info = plugin.Enabled and _("Enabled") or _("Disabled")
+            self.PluginBox.add_item(plugin.ShortDesc, self.PluginChanged, image=image, info=info)
 
             # Groups
             if self.CurrentPlugin in (_("All"), plugin.ShortDesc):

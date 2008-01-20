@@ -91,7 +91,6 @@ class SelectorBox(gtk.ScrolledWindow):
         self.viewport.modify_bg(gtk.STATE_NORMAL, gtk.gdk.color_parse(backgroundColor))
         self.props.hscrollbar_policy = gtk.POLICY_NEVER
         self.props.vscrollbar_policy = gtk.POLICY_AUTOMATIC
-        self.set_size_request(210, 150)
         self.box = gtk.VBox()
         self.box.set_spacing(5)
         self.viewport.add(self.box)
@@ -104,12 +103,24 @@ class SelectorBox(gtk.ScrolledWindow):
             button.destroy()
         self.box.destroy()
 
-    def add_item(self, item, callback, markup="%s"):
+    def add_item(self, item, callback, markup="%s", image=None, info=None):
         button = gtk.Button()
-        label = Label()
+        label = Label(wrap=170)
         item = item.replace("&", "&amp;")
         label.set_markup(markup % item or _("General"))
-        button.add(label)
+        labelBox = gtk.VBox()
+        labelBox.set_spacing(5)
+        labelBox.pack_start(label)
+        if info:
+            infoLabel = Label()
+            infoLabel.set_markup("<span size='small'>%s</span>" % info)
+            labelBox.pack_start(infoLabel)
+        box = gtk.HBox()
+        box.set_spacing(5)
+        if image:
+            box.pack_start(image, False, False)
+        box.pack_start(labelBox)
+        button.add(box)
         button.connect("clicked", callback, item)
         button.set_relief(gtk.RELIEF_NONE)
         self.box.pack_start(button, False, False)
