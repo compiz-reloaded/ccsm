@@ -272,127 +272,145 @@ class FilterPage:
 
         self.FilterChanged(filterEntry)
 
-    def UpdateBoxes(self):
+    def UpdatePluginBox(self):
         self.PluginBox.clear_list()
-        self.GroupBox.clear_list()
-        self.SubGroupBox.clear_list()
-        for child in self.SettingsBox.get_children():
-            child.destroy()
 
-        singleGroup = None
-        singleSubGroup = None
+        self.PluginBox.hide()
+        self.PluginBox.set_no_show_all(len(self.FilteredPlugins) == 0)
 
         self.PluginBox.add_item(_("All"), self.PluginChanged, "<i>%s</i>")
 
-        # Plugins
-        for plugin, groups in self.FilteredPlugins:
+        sortedPlugins = map(lambda x: x[0], self.FilteredPlugins.values())
+        sortedPlugins = sorted(sortedPlugins, PluginSortCompare)
+        for plugin in sortedPlugins:
             image = Image(plugin.Name, ImagePlugin)
             info = plugin.Enabled and _("Enabled") or _("Disabled")
             self.PluginBox.add_item(plugin.ShortDesc, self.PluginChanged, image=image, info=info)
 
-            # Groups
-            if self.CurrentPlugin in (_("All"), plugin.ShortDesc):
-                if len(groups) == 1:
-                    singleGroup = groups[0][0]
-                else:
-                    self.GroupBox.add_item(_("All"), self.GroupChanged, "<i>%s</i>")
+        self.UpdateGroupBox()
 
-                groupsSorted = sorted(groups, FirstItemSortCompare)
-                for group, subGroups in groupsSorted:
-                    if self.CurrentPlugin != _("All"):
-                        self.GroupBox.add_item(group, self.GroupChanged)
+    def UpdateGroupBox(self):
+        self.GroupBox.clear_list()
 
-                    # SubGroups
-                    if self.CurrentGroup in (_("All"), group) or singleGroup == group:
-                        if len(subGroups) == 1:
-                            singleSubGroup = subGroups[0][0]
-                        else:
-                            self.SubGroupBox.add_item(_("All"), self.SubGroupChanged, "<i>%s</i>")
-
-                        subGroupsSorted = sorted(subGroups, FirstItemSortCompare)
-                        for name, subGroup, settings in subGroupsSorted:
-                            self.SubGroupBox.add_item(name, self.SubGroupChanged)
-
-                            # Settings
-                            if self.CurrentSubGroup in (_("All"), name):
-                                sga = SubGroupArea('', subGroup, self.Filter)
-                                self.SettingsBox.pack_start(sga.Widget, False, False)
-                            elif self.CurrentSubGroup == None:
-                                sga = SubGroupArea(name, subGroup, self.Filter)
-                                self.SettingsBox.pack_start(sga.Widget, False, False)
-
-        if len(self.FilteredPlugins) == 0:
-            self.SelectorButtons.clear_buttons()
-            self.CurrentPlugin = None
-            self.CurrentGroup = None
-            self.CurrentSubGroup = None
-
-        self.PluginBox.hide()
-        self.PluginBox.set_no_show_all(len(self.FilteredPlugins) == 0)
         self.GroupBox.hide()
-        self.GroupBox.set_no_show_all(self.CurrentPlugin == None or singleGroup != None)
+        if not self.CurrentPlugin:
+            self.GroupBox.set_no_show_all(True)
+            self.UpdateSubGroupBox()
+            return
+        elif self.CurrentPlugin == _("All"):
+            self.CurrentGroup = _("All")
+            self.GroupBox.set_no_show_all(True)
+            self.UpdateSubGroupBox()
+            return
+        else:
+            self.GroupBox.set_no_show_all(False)
+
+        groups = self.FilteredPlugins[self.CurrentPlugin][1]
+
+        if len(groups) == 0:
+            self.CurrentGroup = None
+        elif len(groups) == 1:
+            self.CurrentGroup = groups.keys()[0]
+            self.GroupBox.set_no_show_all(True)
+        else:
+            self.GroupBox.add_item(_("All"), self.GroupChanged, "<i>%s</i>")
+
+        groupsSorted = sorted(groups.items(), FirstItemSortCompare)
+        for group, subGroups in groupsSorted:
+            self.GroupBox.add_item(group, self.GroupChanged)
+
+        self.UpdateSubGroupBox()
+
+    def UpdateSubGroupBox(self):
+        self.SubGroupBox.clear_list()
+        for child in self.SettingsBox.get_children():
+            child.destroy()
+
+        # Show or hide box
         self.SubGroupBox.hide()
-        self.SubGroupBox.set_no_show_all(self.CurrentGroup == None or singleSubGroup != None)
         self.SettingsArea.hide()
+        if not self.CurrentGroup:
+            self.SubGroupBox.set_no_show_all(True)
+            self.SettingsArea.set_no_show_all(True)
+            return
+        elif self.CurrentGroup == _("All"):
+            self.CurrentSubGroup = _("All")
+            self.SubGroupBox.set_no_show_all(True)
+        else:
+            self.SubGroupBox.set_no_show_all(False)
+
+        # Get all groups/subgroups
+        subGroups = {}
+        if self.CurrentPlugin == _("All"):
+            for plugin, group in self.FilteredPlugins.values():
+                for sub in group.values():
+                    for name, sg in sub.items():
+                        subGroups[name] = sg
+        elif self.CurrentGroup == _("All"):
+            group = self.FilteredPlugins[self.CurrentPlugin][1]
+            for sub in group.values():
+                for name, sg in sub.items():
+                    subGroups[name] = sg
+        else:
+            subGroups = self.FilteredPlugins[self.CurrentPlugin][1][self.CurrentGroup]
+
+        if len(subGroups) == 0:
+            self.CurrentSubGroup = None
+        elif len(subGroups) == 1:
+            self.CurrentSubGroup = subGroups.keys()[0]
+            self.SubGroupBox.set_no_show_all(True)
+        else:
+            self.SubGroupBox.add_item(_("All"), self.SubGroupChanged, "<i>%s</i>")
+
+        subGroupsSorted = sorted(subGroups.items(), FirstItemSortCompare)
+        for name, subGroup in subGroupsSorted:
+            self.SubGroupBox.add_item(name, self.SubGroupChanged)
+
+            # Settings
+            if self.CurrentSubGroup in (_("All"), name):
+                sga = SubGroupArea('', subGroup, self.Filter)
+                self.SettingsBox.pack_start(sga.Widget, False, False)
+            elif self.CurrentSubGroup == None:
+                sga = SubGroupArea(name, subGroup, self.Filter)
+                self.SettingsBox.pack_start(sga.Widget, False, False)
+
         self.SettingsArea.set_no_show_all(len(self.SettingsBox.get_children()) == 0)
 
-        self.RightChild.show_all()
-
-        if self.CurrentPlugin != None and singleGroup != None:
-            self.CurrentGroup = singleGroup
-
-        if self.CurrentGroup != None and singleSubGroup != None:
-            self.CurrentSubGroup = singleSubGroup
+    def UpdateSelectorButtons(self):
+        self.SelectorButtons.clear_buttons()
+        if self.CurrentPlugin:
+            self.SelectorButtons.add_button(self.CurrentPlugin, self.PluginChanged)
+            if self.CurrentGroup:
+                self.SelectorButtons.add_button(self.CurrentGroup or _("General"), self.GroupChanged)
+                if self.CurrentSubGroup:
+                    self.SelectorButtons.add_button(self.CurrentSubGroup or _("General"), self.SubGroupChanged)
 
     def PluginChanged(self, widget, plugin):
-        if self.CurrentSubGroup != None:
-            self.SelectorButtons.remove_button(2)
-        if self.CurrentGroup != None:
-            self.SelectorButtons.remove_button(1)
-        if self.CurrentPlugin != None:
-            self.SelectorButtons.remove_button(0)
-
         self.CurrentPlugin = plugin
         self.CurrentGroup = None
         self.CurrentSubGroup = None
 
-        self.SelectorButtons.add_button(plugin, self.PluginChanged)
-        self.UpdateBoxes()
+        self.UpdateSelectorButtons()
+        self.UpdateGroupBox()
+        self.RightChild.show_all()
 
     def GroupChanged(self, widget, group):
-        if self.CurrentSubGroup != None:
-            self.SelectorButtons.remove_button(2)
-        if self.CurrentGroup != None:
-            self.SelectorButtons.remove_button(1)
-
         self.CurrentGroup = group
         self.CurrentSubGroup = None
 
-        self.SelectorButtons.add_button(group or _("General"), self.GroupChanged)
-        self.UpdateBoxes()
+        self.UpdateSelectorButtons()
+        self.UpdateSubGroupBox()
+        self.RightChild.show_all()
 
     def SubGroupChanged(self, widget, subGroup):
-        if self.CurrentGroup != None:
-            self.SelectorButtons.remove_button(2)
-
         self.CurrentSubGroup = subGroup
 
-        self.SelectorButtons.add_button(subGroup or _("General"), self.SubGroupChanged)
-        self.UpdateBoxes()
+        self.UpdateSelectorButtons()
+        self.UpdateSubGroupBox()
+        self.RightChild.show_all()
 
     def FilterChanged(self, widget):
         self.Filter = widget.get_text()
-
-        if self.Filter == "":
-            if self.CurrentSubGroup != None:
-                self.SelectorButtons.remove_button(2)
-                self.CurrentSubGroup = None
-            if self.CurrentGroup != None:
-                self.SelectorButtons.remove_button(1)
-                self.CurrentGroup = None
-            if self.CurrentPlugin != None:
-                self.SelectorButtons.remove_button(0)
-                self.CurrentPlugin = None
 
         runLevels = []
         if self.FilterName.get_active():
@@ -401,24 +419,45 @@ class FilterPage:
             runLevels.append(1)
         if self.FilterValue.get_active():
             runLevels.append(2)
-        plugins = []
-        for plugin in sorted(self.Context.Plugins.values(), PluginSortCompare):
-            groups = []
+
+        plugins = {}
+        foundCurrentPlugin = False
+        foundCurrentGroup = False
+        foundCurrentSubGroup = False
+        for plugin in self.Context.Plugins.values():
+            groups = {}
             for group in plugin.Groups:
-                subGroups = []
+                subGroups = {}
                 for name, subGroup in plugin.Groups[group].items():
                     settings = sum((v.values() for v in [subGroup.Display]+[subGroup.Screens[CurrentScreenNum]]), [])
-                    settings = sorted(settings, SettingSortCompare)
                     settings = FilterSettings(settings, self.Filter, run=runLevels, singleRun=True)
                     if len(settings) > 0:
-                        subGroups.append((name, subGroup, settings))
+                        subGroups[name] = subGroup
+                        isCurrentPlugin = plugin.ShortDesc == self.CurrentPlugin
+                        isCurrentGroup = group == self.CurrentGroup
+                        isCurrentSubGroup = name == self.CurrentSubGroup
+                        if isCurrentPlugin:
+                            foundCurrentPlugin = True
+                            if isCurrentGroup:
+                                foundCurrentGroup = True
+                                if isCurrentSubGroup:
+                                    foundCurrentSubGroup = True
                 if len(subGroups) > 0:
-                    groups.append((group, subGroups))
+                    groups[group] = subGroups
             if len(groups) > 0:
-                plugins.append((plugin, groups))
-
+                plugins[plugin.ShortDesc] = (plugin, groups)
         self.FilteredPlugins = plugins
-        self.UpdateBoxes()
+
+        if not foundCurrentPlugin and self.CurrentPlugin:
+            self.CurrentPlugin = None
+        if not foundCurrentGroup and self.CurrentGroup:
+            self.CurrentGroup = None
+        if not foundCurrentSubGroup and self.CurrentSubGroup:
+            self.CurrentSubGroup = None
+
+        self.UpdateSelectorButtons()
+        self.UpdatePluginBox()
+        self.RightChild.show_all()
 
         # No settings found, remove page
         if len(self.FilteredPlugins) == 0 and self.RightChild.get_parent():
