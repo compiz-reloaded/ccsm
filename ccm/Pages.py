@@ -189,12 +189,16 @@ class FilterPage:
         
         # Entry
         if has_sexy:
-            filterEntry = sexy.IconEntry()
-            filterEntry.add_clear_button()
+            self.FilterEntry = sexy.IconEntry()
+            self.FilterEntry.add_clear_button()
+            keyboardImage = Image("input-keyboard", ImageThemed, 16)
+            self.FilterEntry.set_icon(sexy.ICON_ENTRY_PRIMARY, keyboardImage)
+            self.FilterEntry.set_icon_highlight(sexy.ICON_ENTRY_PRIMARY, True)
+            self.FilterEntry.connect('icon-pressed', self.GrabKey)
         else:
-            filterEntry = gtk.Entry()
-        filterEntry.connect("changed", self.FilterChanged)
-        self.LeftWidget.pack_start(filterEntry, False, False)
+            self.FilterEntry = gtk.Entry()
+        self.FilterEntry.connect("changed", self.FilterChanged)
+        self.LeftWidget.pack_start(self.FilterEntry, False, False)
 
         # Search in...
         filterSearchLabel = Label()
@@ -270,7 +274,28 @@ class FilterPage:
         # Notebook
         self.RightWidget.append_page(self.RightChild, gtk.Label(_("Settings")))
 
-        self.FilterChanged(filterEntry)
+        self.FilterChanged()
+
+    def GotKey(self, widget, key, mods):
+        new = gtk.accelerator_name (key, mods)
+        for mod in KeyModifier:
+            if "%s_L" % mod in new:
+                new = new.replace ("%s_L" % mod, "<%s>" % mod)
+            if "%s_R" % mod in new:
+                new = new.replace ("%s_R" % mod, "<%s>" % mod)
+
+        widget.destroy()
+        self.FilterEntry.set_text(new)
+
+    def GrabKey(self, widget, pos, button):
+        if not has_sexy or pos != sexy.ICON_ENTRY_PRIMARY:
+            return
+        grabber = KeyGrabber(label = _("Grab key combination"))
+        self.LeftWidget.pack_start(grabber, False, False)
+        grabber.hide()
+        grabber.set_no_show_all(True)
+        grabber.connect('changed', self.GotKey)
+        grabber.begin_key_grab(None)
 
     def UpdatePluginBox(self):
         self.PluginBox.clear_list()
@@ -409,8 +434,8 @@ class FilterPage:
         self.UpdateSubGroupBox()
         self.RightChild.show_all()
 
-    def FilterChanged(self, widget):
-        self.Filter = widget.get_text()
+    def FilterChanged(self, widget=None):
+        self.Filter = self.FilterEntry.get_text()
 
         runLevels = []
         if self.FilterName.get_active():

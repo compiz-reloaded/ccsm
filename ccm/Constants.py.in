@@ -42,7 +42,15 @@ TableDef = gtk.FILL | gtk.EXPAND
 TableX   = 4
 TableY   = 2
 
+# Action Constants
+#
+KeyModifier = ["Shift", "Control", "Mod1", "Mod2", "Mod3", "Mod4",
+               "Mod5", "Alt", "Meta", "Super", "Hyper", "ModeSwitch"]
+Edges       = ["Left", "Right", "Top", "Bottom",
+               "TopLeft", "TopRight", "BottomLeft", "BottomRight"]
+
 # Label Styles
+#
 HeaderMarkup = "<span color='%s' size='large' weight='800'>%s</span>"
 
 # Image Types

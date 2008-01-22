@@ -1085,9 +1085,6 @@ class KeySetting (EditableActionSetting):
 
     current = ""
 
-    mods = ["Shift", "Control", "Mod1", "Mod2", "Mod3", "Mod4", "Mod5", "Alt",
-            "Meta", "Super", "Hyper", "ModeSwitch"]
-
     def _Init (self):
 
         self.Button = SizedButton (minWidth = 100)
@@ -1133,7 +1130,7 @@ class KeySetting (EditableActionSetting):
         def HandleGrabberChanged (grabber, key, mods, label, selector):
             new = gtk.accelerator_name (key, mods)
             mods = ""
-            for mod in self.mods:
+            for mod in KeyModifier:
                 if "%s_L" % mod in new:
                     new = new.replace ("%s_L" % mod, "<%s>" % mod)
                 if "%s_R" % mod in new:
@@ -1189,7 +1186,7 @@ class KeySetting (EditableActionSetting):
         mainBox.pack_start (box)
 
         currentMods = ""
-        for mod in self.mods:
+        for mod in KeyModifier:
             if "<%s>" % mod in self.current:
                 currentMods += "%s|" % mod
         currentMods.rstrip ("|")
@@ -1259,10 +1256,6 @@ class KeySetting (EditableActionSetting):
 class ButtonSetting (EditableActionSetting):
 
     current = ""
-    edges = ["Left", "Right", "Top", "Bottom",
-             "TopLeft", "TopRight", "BottomLeft", "BottomRight"]
-    mods = ["Shift", "Control", "Mod1", "Mod2", "Mod3", "Mod4", "Mod5", "Alt",
-            "Meta", "Super", "Hyper", "ModeSwitch"]
 
     def _Init (self):
 
@@ -1275,8 +1268,8 @@ class ButtonSetting (EditableActionSetting):
 
     def ReorderButtonString (self, old):
         new = ""
-        edges = map (lambda e: "%sEdge" % e, self.edges)
-        for s in edges + self.mods:
+        edges = map (lambda e: "%sEdge" % e, Edges)
+        for s in edges + KeyModifier:
             if "<%s>" % s in old:
                 new += "<%s>" % s
         for i in range (99, 0, -1):
@@ -1341,7 +1334,7 @@ class ButtonSetting (EditableActionSetting):
         mainBox.pack_start (box)
 
         currentEdges = ""
-        for edge in self.edges:
+        for edge in Edges:
             if "<%sEdge>" % edge in self.current:
                 currentEdges += "%s|" % edge
         currentEdges.rstrip ("|")
@@ -1350,7 +1343,7 @@ class ButtonSetting (EditableActionSetting):
         box.pack_start (edgeSelector)
 
         currentMods = ""
-        for mod in self.mods:
+        for mod in KeyModifier:
             if "<%s>" % mod in self.current:
                 currentMods += "%s|" % mod
         currentMods.rstrip ("|")
@@ -1436,8 +1429,6 @@ to set \"%s\" button to Button1 ?") % self.Setting.ShortDesc)
 class EdgeSetting (EditableActionSetting):
 
     current = ""
-    edges = ["Left", "Right", "Top", "Bottom",
-             "TopLeft", "TopRight", "BottomLeft", "BottomRight"]
 
     def _Init (self):
         self.Custom = True
@@ -1456,7 +1447,7 @@ class EdgeSetting (EditableActionSetting):
         edges = mask.split ("|")
         valid = True
         for edge in edges:
-            if edge not in self.edges:
+            if edge not in Edges:
                 valid = False
                 break
         if not valid:
