@@ -28,6 +28,7 @@ import gtk.gdk
 import gobject
 
 from ccm.Constants import *
+from cgi import escape as protect_pango_markup
 
 import locale
 import gettext
@@ -43,10 +44,6 @@ if not IconDir in IconTheme.get_search_path():
 def gtk_process_events ():
     while gtk.events_pending ():
         gtk.main_iteration ()
-
-def protect_pango_markup (string):
-    string = string.replace ("&", "&amp;")
-    return string.replace ("<", "&lt;").replace (">", "&gt;")
 
 def makeCustomSetting (desc, integrated, widget, reset):
     box = gtk.HBox ()
