@@ -106,7 +106,7 @@ class SelectorBox(gtk.ScrolledWindow):
     def add_item(self, item, callback, markup="%s", image=None, info=None):
         button = gtk.Button()
         label = Label(wrap=170)
-        text = item.replace("&", "&amp;")
+        text = protect_pango_markup(item)
         label.set_markup(markup % text or _("General"))
         labelBox = gtk.VBox()
         labelBox.set_spacing(5)
