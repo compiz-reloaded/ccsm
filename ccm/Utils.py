@@ -209,6 +209,7 @@ class NotFoundBox(gtk.Alignment):
         box = gtk.HBox()
         self.Warning = gtk.Label()
         self.Markup = _("<span size=\"large\"><b>No matches found.</b> </span><span>\n\n Your filter \"<b>%s</b>\" does not match any items.</span>")
+        value = protect_pango_markup(value)
         self.Warning.set_markup(self.Markup % value)
         image = Image("face-surprise", ImageThemed, 48)
             
