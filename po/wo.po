@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm 20070908\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-01-10 16:13+0530\n"
+"POT-Creation-Date: 2008-01-29 17:04+0530\n"
 "PO-Revision-Date: 2007-09-24 23:00+0200\n"
 "Last-Translator: Werner Landgraf <werner@copaya.yi.org>\n"
 "Language-Team: Wolof\n"
@@ -255,6 +255,7 @@ msgstr "Telha %i"
 msgid "Screen"
 msgstr "Telha"
 
+#. Settings
 msgid "All"
 msgstr "löppë"
 
@@ -347,9 +348,6 @@ msgstr "Ñöriñal defëkaay bii !"
 
 msgid "Search Compiz Core Options"
 msgstr "Wuut na ngir Compiz Core  mënnéel yi ..."
-
-msgid "Actions"
-msgstr "defaay yi"
 
 msgid "Error"
 msgstr "njuumte !"
@@ -495,6 +493,9 @@ msgstr ""
 "<span size=\"large\"><b>Hamul du dara melo.</b> </span><span>\n"
 " \n"
 " Sa wuute ngir \"<b>%s</b>\" hamulhoon ndamm.</span>"
+
+#~ msgid "Actions"
+#~ msgstr "defaay yi"
 
 #~ msgid "Disable %s"
 #~ msgstr "Fay ... "

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm 0.6\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-01-10 16:13+0530\n"
+"POT-Creation-Date: 2008-01-29 17:04+0530\n"
 "PO-Revision-Date: 2007-12-28 06:28+0100\n"
 "Last-Translator: Namhyung Kim <namhyung@gmail.com>\n"
 "Language-Team: Korean <happyhackinglife@gmail>\n"
@@ -259,6 +259,7 @@ msgstr "화면 %i"
 msgid "Screen"
 msgstr "화면"
 
+#. Settings
 msgid "All"
 msgstr "모두"
 
@@ -348,9 +349,6 @@ msgstr "이 플러그인을 사용"
 
 msgid "Search Compiz Core Options"
 msgstr "컴피즈 코어 옵션 검색"
-
-msgid "Actions"
-msgstr "동작"
 
 msgid "Error"
 msgstr "에러"
@@ -495,3 +493,6 @@ msgstr ""
 "<span size=\"large\"><b>일치하는 항목이 없습니다.</b> </span><span>\n"
 "\n"
 " \"<b>%s</b>\"은(는) 어느 항목과도 일치하지 않습니다.</span>"
+
+#~ msgid "Actions"
+#~ msgstr "동작"
