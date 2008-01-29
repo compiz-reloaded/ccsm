@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Compiz Settings Manager 0.5.2\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-01-10 16:13+0530\n"
+"POT-Creation-Date: 2008-01-29 17:04+0530\n"
 "PO-Revision-Date: 2007-09-09 01:49+0100\n"
 "Last-Translator: Gustau L. Castells (Karasu) <gustaucastells@gmail.com>\n"
 "Language-Team: Catalan <gustaucastells@gmail.com>\n"
@@ -261,6 +261,7 @@ msgstr "Pantalla %i"
 msgid "Screen"
 msgstr "Pantalla"
 
+#. Settings
 msgid "All"
 msgstr "Tot"
 
@@ -354,9 +355,6 @@ msgstr "Usa aquest connector"
 
 msgid "Search Compiz Core Options"
 msgstr "Cerca opcions del nucli del Compiz"
-
-msgid "Actions"
-msgstr "Accions"
 
 msgid "Error"
 msgstr "Error"
@@ -499,3 +497,6 @@ msgstr ""
 "<span size=\"large\"><b>No s'han trobat coincidències.</b> </span><span>\n"
 "\n"
 " El teu filtre \"<b>%s</b>\" no concorda amb cap element.</span>"
+
+#~ msgid "Actions"
+#~ msgstr "Accions"
