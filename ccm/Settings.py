@@ -501,9 +501,13 @@ class MultiListSetting(Setting):
                 types.append(gobject.TYPE_INT)
             elif setting.Info[0] == "Float":
                 types.append(gobject.TYPE_FLOAT)
-            
+            elif setting.Info[0] == "Color":
+                types.append(gobject.TYPE_STRING)
+
             renderer = gtk.CellRendererText()
-            renderer.connect("edited", self.ColChanged, col)
+            if setting.Info[0] == "Color":
+                renderer = CellRendererColor()
+
             cols.append((setting.ShortDesc, renderer, {'text':col}))
             col += 1
 
@@ -523,18 +527,27 @@ class MultiListSetting(Setting):
             for j in range(len(self.Settings)):
                 setting = self.Settings[j]
                 value = None
-                if len(setting.Info) > 0 and setting.Info[0] == 'Int' and len(setting.Info[1][2]) > 0:
-                    pos = setting.Value[row]
-                    sortedItems = sorted(setting.Info[1][2].items(), EnumSettingSortCompare)
-                    value = sortedItems[pos][0]
-                else:
-                    if row < len(setting.Value):
-                        value = setting.Value[row]
+                if row < len(setting.Value):
+                    # Int Desc Setting
+                    if len(setting.Info) > 0 and setting.Info[0] == 'Int' and len(setting.Info[1][2]) > 0:
+                        pos = setting.Value[row]
+                        sortedItems = sorted(setting.Info[1][2].items(), EnumSettingSortCompare)
+                        value = sortedItems[pos][0]
+
+                    # Color Setting
+                    elif len(setting.Info) > 0 and setting.Info[0] == 'Color':
+                        r, g, b, a = setting.Value[row]
+                        value = "#%.4x%.4x%.4x%.4x" % (r, g, b, a)
+
                     else:
-                        if setting.Info[0] == 'Int':
-                            value = 0
-                        elif setting.Info[0] == 'String' or setting.Info[0] == 'Match':
-                            value = ""
+                        value = setting.Value[row]
+                else:
+                    if setting.Info[0] == 'Int':
+                        value = 0
+                    elif setting.Info[0] == 'Color':
+                        value = "#%.4x%.4x%.4x%.4x" % (0, 0, 0, 0)
+                    elif setting.Info[0] == 'String' or setting.Info[0] == 'Match':
+                        value = ""
                 self.Store.set(iter, j, value)
             row += 1
 
@@ -587,6 +600,21 @@ class MultiListSetting(Setting):
                 table.attach(button, 3, 4, row, row+1, xpadding=5, xoptions=gtk.FILL)
                 widgets.append(entry)
 
+            # Color settings
+            elif type == gobject.TYPE_STRING and setting.Info[0] == 'Color':
+                button = gtk.ColorButton()
+                button.set_use_alpha(True)
+                Tooltips.set_tip(ebox, setting.LongDesc)
+                Tooltips.set_tip(button, setting.LongDesc)
+                if values != None:
+                    color = gtk.gdk.color_parse(values[row][:-4])
+                    alpha = int("0x%s" % values[row][-4:], base=16)
+                    button.set_color(color)
+                    button.set_alpha(alpha)
+                table.attach(ebox, 0, 1, row, row+1, xpadding=5, xoptions=gtk.FILL)
+                table.attach(button, 2, 3, row, row+1, xpadding=5, xoptions=gtk.FILL)
+                widgets.append(button)
+
             # String settings
             elif type == gobject.TYPE_STRING:
                 Tooltips.set_tip(ebox, setting.LongDesc)
@@ -630,18 +658,23 @@ class MultiListSetting(Setting):
             values = []
             row = 0
             for type in self.Types:
+                widget = widgets[row]
                 if type == gobject.TYPE_STRING:
                     value = None
-                    if widgets[row].__class__ == gtk.Entry:
-                        value = widgets[row].get_text()
-                    elif widgets[row].__class__ == gtk.ComboBox:
-                        value = widgets[row].get_active_text()
+                    if widget.__class__ == gtk.Entry:
+                        value = widget.get_text()
+                    elif widget.__class__ == gtk.ComboBox:
+                        value = widget.get_active_text()
+                    elif widget.__class__ == gtk.ColorButton:
+                        color = widget.get_color()
+                        alpha = widget.get_alpha()
+                        value = "#%.4x%.4x%.4x%.4x" % (color.red, color.green, color.blue, alpha)
                     values.append(value)
                 elif type == gobject.TYPE_INT:
-                    value = int(widgets[row].get_value())
+                    value = int(widget.get_value())
                     values.append(value)
                 elif type == gobject.TYPE_FLOAT:
-                    value = widgets[row].get_value()
+                    value = widget.get_value()
                     values.append(value)
                 row += 1
             return values
@@ -656,11 +689,6 @@ class MultiListSetting(Setting):
         elif self.Types[col] == gobject.TYPE_FLOAT:
             self.Store.set(iter, col, float(value))
 
-    def _ColChanged(self, obj, path, value, col):
-        iter = self.Store.get_iter_from_string(path)
-        self.SetIterValue(iter, col, value)
-        self._Changed()
-
     def _Changed(self):
         col = 0
         for setting in self.Settings:
@@ -671,6 +699,11 @@ class MultiListSetting(Setting):
                 if setting.Info[0] == 'Int' and len(setting.Info[1][2]) > 0:
                     pos = self.Store.get(iter, col)[0]
                     value = setting.Info[1][2][pos]
+                elif setting.Info[0] == 'Color':
+                    text = self.Store.get(iter, col)[0]
+                    color = gtk.gdk.color_parse(text[:-4])
+                    alpha = int("0x%s" % text[-4:], base=16)
+                    value = [color.red, color.green, color.blue, alpha]
                 else:
                     value = self.Store.get(iter, col)[0]
                 values.append(value)
