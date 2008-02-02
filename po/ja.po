@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm 0.6\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-01-10 16:13+0530\n"
+"POT-Creation-Date: 2008-01-29 17:04+0530\n"
 "PO-Revision-Date: 2008-01-05 07:52+0100\n"
 "Last-Translator: Masaaki KANEMOTO <masaaki.kanemoto@gmail.com>\n"
 "Language-Team: Japanese <masaaki.kanemoto@gmail.com>\n"
@@ -259,6 +259,7 @@ msgstr "スクリーン %i"
 msgid "Screen"
 msgstr "スクリーン"
 
+#. Settings
 msgid "All"
 msgstr "すべて"
 
@@ -353,9 +354,6 @@ msgstr "このプラグインの使用"
 
 msgid "Search Compiz Core Options"
 msgstr "Compiz Core のオプションを検索"
-
-msgid "Actions"
-msgstr "アクション"
 
 msgid "Error"
 msgstr "エラー"
@@ -501,3 +499,6 @@ msgid ""
 msgstr ""
 "<span size=\"large\"><b>何も見つかりませんでした。</b> </span><span>\n"
 "フィルタ \"<b>%s</b>\" はどのアイテムにも一致しません。"
+
+#~ msgid "Actions"
+#~ msgstr "アクション"

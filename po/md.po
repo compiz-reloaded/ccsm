@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: md-ccsm\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-01-10 16:13+0530\n"
+"POT-Creation-Date: 2008-01-29 17:04+0530\n"
 "PO-Revision-Date: 2007-09-24 23:00-0300\n"
 "Last-Translator: Werner Landgraf <werner@copaya.yi.org>\n"
 "Language-Team: Mandingo\n"
@@ -262,6 +262,7 @@ msgstr "Telha %i"
 msgid "Screen"
 msgstr "Telha"
 
+#. Settings
 msgid "All"
 msgstr "bê"
 
@@ -354,9 +355,6 @@ msgstr "Dorão ñĩ naffa bã !"
 
 msgid "Search Compiz Core Options"
 msgstr "CompizCore -la tõbõdãolu ñinnĩla ... "
-
-msgid "Actions"
-msgstr "kêebaarolu"
 
 msgid "Error"
 msgstr "tano !"
@@ -503,6 +501,9 @@ msgstr ""
 "<span size=\"large\"><b>Hanni fẽ a-ñinnĩta.</b> </span><span>\n"
 " \n"
 " Feñ kommko \"<b>%s</b>\" mã çotto.</span>"
+
+#~ msgid "Actions"
+#~ msgstr "kêebaarolu"
 
 #~ msgid "Disable %s"
 #~ msgstr " dubẽna ... "

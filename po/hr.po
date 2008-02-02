@@ -1,13 +1,13 @@
 # ccsm hr translation.
 # Copyright (C) 2007 compiz-fusion.org
 # This file is distributed under the same license as the ccsm package.
-# 
+#
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: ccsm\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-01-10 16:13+0530\n"
+"POT-Creation-Date: 2008-01-29 17:04+0530\n"
 "PO-Revision-Date: 2007-11-25 22:44+0100\n"
 "Last-Translator: Matija Folnovic <matijafolnovic@gmail.com>\n"
 "Language-Team: Matija Folnovic <matijafolnovic@gmail.com>\n"
@@ -253,6 +253,7 @@ msgstr "Zaslon %i"
 msgid "Screen"
 msgstr "Zaslon"
 
+#. Settings
 msgid "All"
 msgstr "Svi"
 
@@ -342,9 +343,6 @@ msgstr "Koristi ovaj dodatak"
 
 msgid "Search Compiz Core Options"
 msgstr "Pretrazi Opcije Compizove jezgre"
-
-msgid "Actions"
-msgstr "Radnje"
 
 msgid "Error"
 msgstr "Greska"
@@ -483,3 +481,6 @@ msgid ""
 "\n"
 " Your filter \"<b>%s</b>\" does not match any items.</span>"
 msgstr ""
+
+#~ msgid "Actions"
+#~ msgstr "Radnje"

@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-01-10 16:13+0530\n"
-"PO-Revision-Date: 2007-12-16 11:20+0100\n"
+"POT-Creation-Date: 2008-01-29 17:04+0530\n"
+"PO-Revision-Date: 2008-01-15 15:55+0100\n"
 "Last-Translator: Nicolau Gonçalves <excentriko@gmail.com>\n"
 "Language-Team: Portuguese (Portugal) <pt@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -234,7 +234,7 @@ msgid ""
 msgstr ""
 "Utilizar o Botão1 sem modificadores pode impedir o uso de qualquer clique da "
 "tecla esquerda, impedindo assim o correcto funcionamento da sua "
-"configuração. De certeza que deseja definir o botão \"%s\" para o Botão1?"
+"configuração. De certeza que deseja definir o botão \"%s\" para o Botão1 ?"
 
 #, python-format
 msgid "\"%s\" is not a valid edge mask"
@@ -248,7 +248,7 @@ msgid "Unhandled list type %s for %s"
 msgstr "Tipo de lista não gerido %s para %s"
 
 msgid "CompizConfig Settings Manager"
-msgstr "Sistema de Configuração do Compiz (CCSM)"
+msgstr "Sistema de Configuração do Compiz"
 
 msgid "Filter"
 msgstr "Filtro"
@@ -263,6 +263,7 @@ msgstr "Ecrã %i"
 msgid "Screen"
 msgstr "Ecrã"
 
+#. Settings
 msgid "All"
 msgstr "Todas"
 
@@ -333,7 +334,7 @@ msgstr "Inverter"
 
 msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr ""
-"Este é o gestor de definições para o sistema de configuração do CompizConfig"
+"Este é o gestor de definições para o sistema de configuração do CompizConfig."
 
 msgid "translator-credits"
 msgstr "Nicolau Gonçalves"
@@ -353,9 +354,6 @@ msgstr "Usar este plugin"
 
 msgid "Search Compiz Core Options"
 msgstr "Pesquisar opções do Compiz Core"
-
-msgid "Actions"
-msgstr "Acções"
 
 msgid "Error"
 msgstr "Erro"
@@ -429,13 +427,13 @@ msgid "All files"
 msgstr "Todos os ficheiros"
 
 msgid "Save file.."
-msgstr "Guardar ficheiro..."
+msgstr "Guardar ficheiro.."
 
 msgid "Do you want to skip default option values while exporting your profile?"
 msgstr "Deseja exportar o seu perfil sem guardar os valores por omissão?"
 
 msgid "Open file.."
-msgstr "Abrir ficheiro."
+msgstr "Abrir ficheiro.."
 
 msgid "Enter a profile name"
 msgstr "Introduza um nome de perfil"
@@ -444,7 +442,7 @@ msgid "Please enter a name for the new profile:"
 msgstr "Introduza um nome para o novo perfil:"
 
 msgid "Backend not found."
-msgstr "Backend não foi encontrado"
+msgstr "Backend não foi encontrado."
 
 #. Auto sort
 msgid "Automatic plugin sorting"
@@ -502,3 +500,6 @@ msgstr ""
 "<span size=\"large\"><b>Nenhuma ocorrência encontrada.</b> </span><span>\n"
 "\n"
 " O filtro \"<b>%s</b>\" não coincide com nenhum item.</span>"
+
+#~ msgid "Actions"
+#~ msgstr "Acções"
