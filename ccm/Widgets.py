@@ -57,6 +57,8 @@ class CellRendererColor(gtk.GenericCellRenderer):
 
     _text  = '#0000000000000000'
     _color = [0, 0, 0, 0]
+    _surface = None
+    _surface_size = (-1, -1)
 
     def __init__(self):
         gtk.GenericCellRenderer.__init__(self)
@@ -78,24 +80,25 @@ class CellRendererColor(gtk.GenericCellRenderer):
     def on_get_size(self, widget, cell_area):
         return (0, 0, 0, 0) # FIXME
 
-    def on_render(self, window, widget, background_area, cell_area, expose_area, flags):
+    def redraw(self, width, height):
         # found in gtk-color-button.c
         CHECK_SIZE  = 4
         CHECK_DARK  = 21845 # 65535 / 3
         CHECK_LIGHT = 43690
 
-        cr = window.cairo_create()
+        width += 10
+        height += 10
+        self._surface_size = (width, height)
+        self._surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
+        cr = cairo.Context(self._surface)
 
-        cr.rectangle(cell_area.x, cell_area.y, cell_area.width, cell_area.height)
-        cr.clip()
-
-        x = cell_area.x
-        y = cell_area.y
+        x = 0
+        y = 0
         colors = [CHECK_DARK, CHECK_LIGHT]
         state = 0
         begin_state = 0
-        while y < cell_area.height+cell_area.y:
-            while x < cell_area.width+cell_area.x:
+        while y < height:
+            while x < width:
                 cr.rectangle(x, y, CHECK_SIZE, CHECK_SIZE)
                 c = colors[state] / 65535.0
                 cr.set_source_rgb(c, c, c)
@@ -104,8 +107,24 @@ class CellRendererColor(gtk.GenericCellRenderer):
                 state = not state
             state = not begin_state
             begin_state = state
-            x = cell_area.x
+            x = 0
             y += CHECK_SIZE
+
+        self._surface.write_to_png("/home/patrick/test.png")
+
+    def on_render(self, window, widget, background_area, cell_area, expose_area, flags):
+        cr = window.cairo_create()
+
+        height, width = (cell_area.height, cell_area.width)
+        sheight, swidth = self._surface_size
+        if height > sheight or width > swidth:
+            self.redraw(width, height)
+
+        cr.rectangle(cell_area.x, cell_area.y, width, height)
+        cr.clip()
+
+        cr.set_source_surface(self._surface, cell_area.x, cell_area.y)
+        cr.paint()
 
         r, g, b, a = self._color
         cr.set_source_rgba(r, g, b, a)
