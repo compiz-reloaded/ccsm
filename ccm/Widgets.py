@@ -44,6 +44,73 @@ _ = gettext.gettext
 # Try to use gtk like coding style for consistency
 #
 
+# Cell Renderer for MultiList
+
+class CellRendererColor(gtk.GenericCellRenderer):
+    __gproperties__ = {
+        'text': (gobject.TYPE_STRING,
+                'color markup text',
+                'The color as markup like this: #rrrrggggbbbbaaaa',
+                '#0000000000000000',
+                gobject.PARAM_READWRITE)
+    }
+
+    _text  = '#0000000000000000'
+    _color = [0, 0, 0, 0]
+
+    def __init__(self):
+        gtk.GenericCellRenderer.__init__(self)
+
+    def _parse_color(self):
+        color = gtk.gdk.color_parse(self._text[:-4])
+        alpha = int("0x%s" % self._text[-4:], base=16)
+        self._color = [color.red/65535.0, color.green/65535.0, color.blue/65535.0, alpha/65535.0]
+
+    def do_set_property(self, property, value):
+        if property.name == 'text':
+            self._text = value
+            self._parse_color()
+
+    def do_get_property(self, property):
+        if property.name == 'text':
+            return self._text
+
+    def on_get_size(self, widget, cell_area):
+        return (0, 0, 0, 0) # FIXME
+
+    def on_render(self, window, widget, background_area, cell_area, expose_area, flags):
+        # found in gtk-color-button.c
+        CHECK_SIZE  = 4
+        CHECK_DARK  = 21845 # 65535 / 3
+        CHECK_LIGHT = 43690
+
+        cr = window.cairo_create()
+
+        cr.rectangle(cell_area.x, cell_area.y, cell_area.width, cell_area.height)
+        cr.clip()
+
+        x = cell_area.x
+        y = cell_area.y
+        colors = [CHECK_DARK, CHECK_LIGHT]
+        state = 0
+        begin_state = 0
+        while y < cell_area.height+cell_area.y:
+            while x < cell_area.width+cell_area.x:
+                cr.rectangle(x, y, CHECK_SIZE, CHECK_SIZE)
+                c = colors[state] / 65535.0
+                cr.set_source_rgb(c, c, c)
+                cr.fill()
+                x += CHECK_SIZE
+                state = not state
+            state = not begin_state
+            begin_state = state
+            x = cell_area.x
+            y += CHECK_SIZE
+
+        r, g, b, a = self._color
+        cr.set_source_rgba(r, g, b, a)
+        cr.paint()
+
 # Selector Buttons
 #
 class SelectorButtons(gtk.HBox):
