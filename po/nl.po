@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.5.2\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-01-10 16:13+0530\n"
+"POT-Creation-Date: 2008-01-29 17:04+0530\n"
 "PO-Revision-Date: 2007-12-21 10:16+0100\n"
 "Last-Translator: Rick <mailmelist@gmail.com>\n"
 "Language-Team: Dutch <mailmelist@gmail.com>\n"
@@ -261,6 +261,7 @@ msgstr "Scherm %i"
 msgid "Screen"
 msgstr "Scherm"
 
+#. Settings
 msgid "All"
 msgstr "Alle"
 
@@ -353,9 +354,6 @@ msgstr "Gebruik deze plugin"
 
 msgid "Search Compiz Core Options"
 msgstr "Doorzoek de Compiz Core opties"
-
-msgid "Actions"
-msgstr "Acties"
 
 msgid "Error"
 msgstr "Fout"
@@ -503,6 +501,9 @@ msgstr ""
 "<span size=\"large\"><b>Geen overeenkomsten gevonden.</b> </span><span>\n"
 "\n"
 " Uw filter \"<b>%s</b>\" komt op geen enkel punt overeen.</span>"
+
+#~ msgid "Actions"
+#~ msgstr "Acties"
 
 #~ msgid "Name"
 #~ msgstr "Naam"

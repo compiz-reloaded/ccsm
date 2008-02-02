@@ -1,14 +1,13 @@
 # Czech translation of ccsm.
-# Copyright (c) compiz-fusion.org
 # Copyright (C) 2007 Petr Vlašic
 # This file is distributed under the same license as the ccsm package.
 # Petr Vlašic <petrvlasic@atlas.cz>, 2007.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: ccsm 0.6.0\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-01-10 16:13+0530\n"
+"POT-Creation-Date: 2008-01-29 17:04+0530\n"
 "PO-Revision-Date: 2007-12-15 23:19+0100\n"
 "Last-Translator: Petr Vlašic <petrvlasic@atlas.cz>\n"
 "Language-Team: Czech <dev@lists.compiz-fusion.org>\n"
@@ -253,6 +252,7 @@ msgstr "Obrazovka %i"
 msgid "Screen"
 msgstr "Obrazovka"
 
+#. Settings
 msgid "All"
 msgstr "Vše"
 
@@ -344,9 +344,6 @@ msgstr "Použít tento modul"
 
 msgid "Search Compiz Core Options"
 msgstr "Hledat nastavení jádra Compizu"
-
-msgid "Actions"
-msgstr "Akce"
 
 msgid "Error"
 msgstr "Chyba"
@@ -493,3 +490,6 @@ msgstr ""
 "<span size=\"large\"><b>Nenalezena žádná shoda.</b> </span><span>\n"
 "\n"
 "Váš filtr \"<b>%s</b>\"nevyhovuje žádné položce.</span>"
+
+#~ msgid "Actions"
+#~ msgstr "Akce"

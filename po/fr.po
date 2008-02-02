@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fr-ccsm\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-01-10 16:13+0530\n"
+"POT-Creation-Date: 2008-01-29 17:04+0530\n"
 "PO-Revision-Date: 2007-12-29 01:19+0100\n"
 "Last-Translator: Pierre YVes <pyluyten@laposte.net>\n"
 "Language-Team: <fr@li.org>\n"
@@ -263,6 +263,7 @@ msgstr "Écran %i"
 msgid "Screen"
 msgstr "Écran"
 
+#. Settings
 msgid "All"
 msgstr "Tous"
 
@@ -354,9 +355,6 @@ msgstr "Utiliser cette Extension"
 
 msgid "Search Compiz Core Options"
 msgstr "Chercher les options du Noyau de Compiz (compiz-core)"
-
-msgid "Actions"
-msgstr "Actions"
 
 msgid "Error"
 msgstr "Erreur"
@@ -503,3 +501,6 @@ msgid ""
 msgstr ""
 "<span size=\"large\"><b>Pas de concordance trouvée.</b> </span><br><br> "
 "Votre filtre \"<b>%s</b>\" ne correspond à aucun objet."
+
+#~ msgid "Actions"
+#~ msgstr "Actions"

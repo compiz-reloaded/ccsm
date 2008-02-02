@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: compiz-fusion-plugins 0.0.1\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-01-10 16:13+0530\n"
-"PO-Revision-Date: 2007-12-03 11:47+0100\n"
-"Last-Translator: Martin Karlsson <fist_of_heaven@hotmail.com>\n"
+"POT-Creation-Date: 2008-01-29 17:04+0530\n"
+"PO-Revision-Date: 2008-01-25 14:16+0100\n"
+"Last-Translator: Eric Brandt <eric@e-tech.se>\n"
 "Language-Team: Compiz Fusion Translators <i18n@lists.compiz-fusion.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -268,6 +268,7 @@ msgstr "Skärm %i"
 msgid "Screen"
 msgstr "Skärm"
 
+#. Settings
 msgid "All"
 msgstr "Alla"
 
@@ -319,7 +320,7 @@ msgid "Or"
 msgstr "Eller"
 
 msgid "Edit match"
-msgstr ""
+msgstr "Redigera träff"
 
 #. Type
 msgid "Type"
@@ -366,9 +367,6 @@ msgstr "Använd denna insticksmodul"
 
 msgid "Search Compiz Core Options"
 msgstr "Sök Compiz Core-alternativ"
-
-msgid "Actions"
-msgstr "Åtgärder"
 
 msgid "Error"
 msgstr "Fel"
@@ -479,7 +477,7 @@ msgid ""
 "doing."
 msgstr ""
 "Vill du verkligen avaktivera den automatiska sorteringen av "
-"instickningsmoduler?Detta kommer också att avaktivera konflikthantering. Du "
+"instickningsmoduler? Detta kommer också att avaktivera konflikthantering. Du "
 "borde bara göra detta om du vet vad du gör."
 
 msgid "Add plugin"
@@ -521,3 +519,6 @@ msgstr ""
 "<span size=\"large\"><b>Inga matchingar hittades.</b> </span><span>\n"
 "\n"
 " Ditt filter \"<b>%s</b>\" matchar inga objekt.</span>"
+
+#~ msgid "Actions"
+#~ msgstr "Åtgärder"

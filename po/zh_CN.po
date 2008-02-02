@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zh_CN-ccsm\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-01-10 16:13+0530\n"
+"POT-Creation-Date: 2008-01-29 17:04+0530\n"
 "PO-Revision-Date: 2007-12-11 16:59+0100\n"
 "Last-Translator: Thruth Wang <gubotruth@gmail.com>\n"
 "Language-Team: Chinese\n"
@@ -245,6 +245,7 @@ msgstr "屏幕 %i"
 msgid "Screen"
 msgstr "屏幕"
 
+#. Settings
 msgid "All"
 msgstr "全部"
 
@@ -335,9 +336,6 @@ msgstr "使用此插件"
 
 msgid "Search Compiz Core Options"
 msgstr "搜索 Compiz Core 选项"
-
-msgid "Actions"
-msgstr "动作"
 
 msgid "Error"
 msgstr "错误"
@@ -485,6 +483,9 @@ msgid ""
 msgstr ""
 "<span size=\"large\"><b>未找到匹配项。</b> </span><span>\n"
 " Your filter \"<b>%s</b>\" does not match any items.</span>"
+
+#~ msgid "Actions"
+#~ msgstr "动作"
 
 #~ msgid "PyGtk 2.10.0 or later required"
 #~ msgstr "需要 PyGtk 2.10.0或更新版本"
