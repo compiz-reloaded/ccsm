@@ -110,8 +110,6 @@ class CellRendererColor(gtk.GenericCellRenderer):
             x = 0
             y += CHECK_SIZE
 
-        self._surface.write_to_png("/home/patrick/test.png")
-
     def on_render(self, window, widget, background_area, cell_area, expose_area, flags):
         cr = window.cairo_create()
 
