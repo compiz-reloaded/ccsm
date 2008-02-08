@@ -197,6 +197,8 @@ class FilterPage:
             self.FilterEntry.connect('icon-pressed', self.GrabKey)
         else:
             self.FilterEntry = gtk.Entry()
+
+        Tooltips.set_tip(self.FilterEntry, _("Enter a filter. Click the keyboard image to grab a key."))
         self.FilterEntry.connect("changed", self.FilterChanged)
         self.LeftWidget.pack_start(self.FilterEntry, False, False)
 
