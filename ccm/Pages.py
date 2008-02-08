@@ -286,6 +286,7 @@ class FilterPage:
 
         widget.destroy()
         self.FilterEntry.set_text(new)
+        self.FilterValue.set_active(True)
 
     def GrabKey(self, widget, pos, button):
         if not has_sexy or pos != sexy.ICON_ENTRY_PRIMARY:
