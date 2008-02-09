@@ -425,19 +425,7 @@ class MultiListSetting(Setting):
         pass
     
     def Add(self, widget):
-        values = []
-        for setting in self.Settings:
-            if len(setting.Info) > 0 and setting.Info[0] == 'Int' and len(setting.Info[1][2]) > 0:
-                sortedItems = sorted(setting.Info[1][2].items(), EnumSettingSortCompare)
-                # select first item by default
-                pos = 0
-                value = sortedItems[pos][0]
-            elif setting.Info[0] == "Int" or setting.Info[0] == "Float":
-                value = 0
-            else:
-                value = ""
-            values.append(value)
-        values = self._Edit(values)
+        values = self._Edit()
         if values is not None:
             self.Block()
             iter = self.Store.append()
@@ -577,10 +565,12 @@ class MultiListSetting(Setting):
                 sortedItems = sorted(setting.Info[1][2].items(), EnumSettingSortCompare)
                 for item in sortedItems:
                     comboBox.append_text(item[0])
+
                 if values != None:
                     pos = values[row]
                     value = setting.Info[1][2][pos]
                     comboBox.set_active(value)
+
                 table.attach(ebox, 0, 1, row, row+1, xpadding=5, xoptions=gtk.FILL)
                 table.attach(comboBox, 2, 3, row, row+1, xpadding=5)
                 widgets.append(comboBox)
@@ -592,9 +582,13 @@ class MultiListSetting(Setting):
                 button.connect('changed', MatchChanged, entry)
                 Tooltips.set_tip(ebox, setting.LongDesc)
                 Tooltips.set_tip(entry, setting.LongDesc)
+
                 if values != None:
                     entry.set_text(values[row])
                     button.set_match(values[row])
+                else:
+                    entry.set_text("")
+
                 table.attach(ebox, 0, 1, row, row+1, xpadding=5, xoptions=gtk.FILL)
                 table.attach(entry, 2, 3, row, row+1, xpadding=5)
                 table.attach(button, 3, 4, row, row+1, xpadding=5, xoptions=gtk.FILL)
@@ -606,11 +600,15 @@ class MultiListSetting(Setting):
                 button.set_use_alpha(True)
                 Tooltips.set_tip(ebox, setting.LongDesc)
                 Tooltips.set_tip(button, setting.LongDesc)
+
+                value = "#0000000000000000"
                 if values != None:
-                    color = gtk.gdk.color_parse(values[row][:-4])
-                    alpha = int("0x%s" % values[row][-4:], base=16)
-                    button.set_color(color)
-                    button.set_alpha(alpha)
+                    value = values[row]
+                color = gtk.gdk.color_parse(value[:-4])
+                alpha = int("0x%s" % value[-4:], base=16)
+                button.set_color(color)
+                button.set_alpha(alpha)
+
                 table.attach(ebox, 0, 1, row, row+1, xpadding=5, xoptions=gtk.FILL)
                 table.attach(button, 2, 3, row, row+1, xpadding=5, xoptions=gtk.FILL)
                 widgets.append(button)
@@ -620,8 +618,12 @@ class MultiListSetting(Setting):
                 Tooltips.set_tip(ebox, setting.LongDesc)
                 entry = gtk.Entry()
                 Tooltips.set_tip(entry, setting.LongDesc)
+
                 if values != None:
                     entry.set_text(values[row])
+                else:
+                    entry.set_text("")
+
                 table.attach(ebox, 0, 1, row, row+1, xpadding=5, xoptions=gtk.FILL)
                 table.attach(entry, 2, 3, row, row+1, xpadding=5)
                 widgets.append(entry)
@@ -633,9 +635,11 @@ class MultiListSetting(Setting):
                     inc = 1
                 else:
                     inc = setting.Info[1][2]
+
                 value = 0
                 if values != None:
                     value = values[row]
+
                 adjustment = gtk.Adjustment(value, setting.Info[1][0], setting.Info[1][1], inc, inc*10)
                 spin = gtk.SpinButton(adjustment)
                 Tooltips.set_tip(spin, setting.LongDesc)
@@ -644,6 +648,7 @@ class MultiListSetting(Setting):
                 scale = gtk.HScale(adjustment)
                 Tooltips.set_tip(scale, setting.LongDesc)
                 scale.props.draw_value = False
+
                 table.attach(ebox, 0, 1, row, row+1, xpadding=5, xoptions=gtk.FILL)
                 table.attach(scale, 2, 3, row, row+1, xpadding=5)
                 table.attach(spin, 3, 4, row, row+1, xpadding=5, xoptions=gtk.FILL)
