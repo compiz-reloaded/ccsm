@@ -566,10 +566,8 @@ class MultiListSetting(Setting):
                 for item in sortedItems:
                     comboBox.append_text(item[0])
 
-                if values != None:
-                    pos = values[row]
-                    value = setting.Info[1][2][pos]
-                    comboBox.set_active(value)
+                value = values and setting.Info[1][2][values[row]] or 0
+                comboBox.set_active(value)
 
                 table.attach(ebox, 0, 1, row, row+1, xpadding=5, xoptions=gtk.FILL)
                 table.attach(comboBox, 2, 3, row, row+1, xpadding=5)
@@ -583,11 +581,9 @@ class MultiListSetting(Setting):
                 Tooltips.set_tip(ebox, setting.LongDesc)
                 Tooltips.set_tip(entry, setting.LongDesc)
 
-                if values != None:
-                    entry.set_text(values[row])
-                    button.set_match(values[row])
-                else:
-                    entry.set_text("")
+                value = values and values[row] or ""
+                entry.set_text(value)
+                button.set_match(value)
 
                 table.attach(ebox, 0, 1, row, row+1, xpadding=5, xoptions=gtk.FILL)
                 table.attach(entry, 2, 3, row, row+1, xpadding=5)
@@ -601,9 +597,7 @@ class MultiListSetting(Setting):
                 Tooltips.set_tip(ebox, setting.LongDesc)
                 Tooltips.set_tip(button, setting.LongDesc)
 
-                value = "#0000000000000000"
-                if values != None:
-                    value = values[row]
+                value = values and values[row] or "#0000000000000000"
                 color = gtk.gdk.color_parse(value[:-4])
                 alpha = int("0x%s" % value[-4:], base=16)
                 button.set_color(color)
@@ -619,10 +613,8 @@ class MultiListSetting(Setting):
                 entry = gtk.Entry()
                 Tooltips.set_tip(entry, setting.LongDesc)
 
-                if values != None:
-                    entry.set_text(values[row])
-                else:
-                    entry.set_text("")
+                value = values and values[row] or ""
+                entry.set_text(value)
 
                 table.attach(ebox, 0, 1, row, row+1, xpadding=5, xoptions=gtk.FILL)
                 table.attach(entry, 2, 3, row, row+1, xpadding=5)
@@ -636,9 +628,7 @@ class MultiListSetting(Setting):
                 else:
                     inc = setting.Info[1][2]
 
-                value = 0
-                if values != None:
-                    value = values[row]
+                value = values and values[row] or 0
 
                 adjustment = gtk.Adjustment(value, setting.Info[1][0], setting.Info[1][1], inc, inc*10)
                 spin = gtk.SpinButton(adjustment)
