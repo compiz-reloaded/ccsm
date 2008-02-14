@@ -265,7 +265,7 @@ class EnumSetting(Setting):
         Tooltips.set_tip(self.Widget, self.Setting.LongDesc)
         self.Combo = gtk.combo_box_new_text()
         self.Widget.add(self.Combo)
-        sortedItems = sorted(self.Setting.Info[2].items(), EnumSettingSortCompare)
+        sortedItems = sorted(self.Setting.Info[2].items(), key=EnumSettingKeyFunc)
         for name, value in sortedItems:
             self.Combo.append_text(name)
         self.Combo.connect('changed', self.Changed)
@@ -519,7 +519,7 @@ class MultiListSetting(Setting):
                     # Int Desc Setting
                     if len(setting.Info) > 0 and setting.Info[0] == 'Int' and len(setting.Info[1][2]) > 0:
                         pos = setting.Value[row]
-                        sortedItems = sorted(setting.Info[1][2].items(), EnumSettingSortCompare)
+                        sortedItems = sorted(setting.Info[1][2].items(), key=EnumSettingKeyFunc)
                         value = sortedItems[pos][0]
 
                     # Color Setting
@@ -562,7 +562,7 @@ class MultiListSetting(Setting):
             # Int description setting
             if type == gobject.TYPE_STRING and setting.Info[0] == 'Int' and len(setting.Info[1][2]) > 0:
                 comboBox = gtk.combo_box_new_text()
-                sortedItems = sorted(setting.Info[1][2].items(), EnumSettingSortCompare)
+                sortedItems = sorted(setting.Info[1][2].items(), key=EnumSettingKeyFunc)
                 for item in sortedItems:
                     comboBox.append_text(item[0])
 
@@ -947,7 +947,7 @@ class IntDescListSetting(Setting):
         row = 0
         col = 0
         self.Checks = []
-        sortedItems = sorted(self.Setting.Info[1][2].items(), EnumSettingSortCompare)
+        sortedItems = sorted(self.Setting.Info[1][2].items(), key=EnumSettingKeyFunc)
         self.minVal = sortedItems[0][1]
         for key, value in sortedItems:
             box = gtk.CheckButton(key)
@@ -1603,7 +1603,7 @@ def MakeSetting (setting):
 class SubGroupArea:
     def __init__(self, name, subGroup, filter=None):
         self.MySettings = []
-        settings = FilterSettings(sorted(sum((v.values() for v in [subGroup.Display]+[subGroup.Screens[CurrentScreenNum]]), []), SettingSortCompare), filter)
+        settings = FilterSettings(sorted(sum((v.values() for v in [subGroup.Display]+[subGroup.Screens[CurrentScreenNum]]), []), key=SettingKeyFunc), filter)
         if name == '':
             self.Widget = gtk.Table()
             self.Child = self.Widget

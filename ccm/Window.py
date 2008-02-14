@@ -84,7 +84,7 @@ class MainWin(gtk.Window):
         for pluginName, plugin in self.Context.Plugins.items():
             self.PluginImages[pluginName] = Image(plugin.Name, ImagePlugin)
         
-        for category in sorted(self.Context.Categories, self.CatSortCompare):
+        for category in sorted(self.Context.Categories, key=self.CatKeyFunc):
             self.Categories[category] = []
             for pluginName, plugin in self.Context.Plugins.items():
                 if plugin.Category == category:
@@ -137,7 +137,7 @@ class MainWin(gtk.Window):
         # Categories
         categoryBox = gtk.VBox()
         categoryBox.set_border_width(10)
-        categories = [_("All")] + sorted(self.Categories, self.CatSortCompare)
+        categories = [_("All")] + sorted(self.Categories, key=self.CatKeyFunc)
         for category in categories:
             name = category or _("Uncategorized")
             if category == "":
@@ -225,7 +225,7 @@ class MainWin(gtk.Window):
         self.TableAttached = False
         self.LastCols = -1
         currentCategory = None
-        for category in sorted(self.Categories, self.CatSortCompare):
+        for category in sorted(self.Categories, key=self.CatKeyFunc):
             if currentCategory:
                 alignment = gtk.Alignment (0, 0, 1, 1)
                 alignment.set_padding (0, 20, 0, 0)
@@ -234,7 +234,7 @@ class MainWin(gtk.Window):
                 categoryBox.separatorAlignment = alignment
             currentCategory = category
 
-            pluginList = sorted(self.Categories[category], PluginSortCompare)
+            pluginList = sorted(self.Categories[category], key=PluginKeyFunc)
 
             categoryBox = gtk.VBox()
             categoryHeader = gtk.HBox()
@@ -426,14 +426,11 @@ class MainWin(gtk.Window):
         self.RightPane.add(rightWidget)
         self.show_all()
 
-    def CatSortCompare(self, v1, v2):
-        if v1 == v2:
-            return cmp(v1, v2)
-        if self.Context.Plugins['core'].Category == v1:
-            return cmp('', v2 or 'zzzzzzzz')
-        if self.Context.Plugins['core'].Category == v2:
-            return cmp(v1 or 'zzzzzzz', '')
-        return cmp(v1 or 'zzzzzzzz', v2 or 'zzzzzzzz')
+    def CatKeyFunc(self, cat):
+        if self.Context.Plugins['core'].Category == cat:
+            return ''
+        else:
+            return cat or 'zzzzzzzz'
 
     def ShowPlugin(self, obj, select):
         self.RightVadj = self.RightPane.get_child().get_vadjustment().get_value()

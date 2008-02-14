@@ -710,7 +710,7 @@ class GlobalEdgeSelector(EdgeSelector):
 
         def filter_settings(plugin):
             if plugin.Enabled:
-                settings = sorted (sum ( (v.values() for v in [plugin.Display]+[plugin.Screens[CurrentScreenNum]]), []), SettingSortCompare)
+                settings = sorted (sum ( (v.values() for v in [plugin.Display]+[plugin.Screens[CurrentScreenNum]]), []), key=SettingKeyFunc)
                 settings = filter (lambda s: s.Type == 'Edge', settings)
                 return settings
             return []

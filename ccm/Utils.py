@@ -29,6 +29,7 @@ import gobject
 
 from ccm.Constants import *
 from cgi import escape as protect_pango_markup
+import operator
 
 import locale
 import gettext
@@ -322,17 +323,14 @@ class PluginSetting:
 class PureVirtualError(Exception):
     pass
 
-def SettingSortCompare(v1, v2):
-    return cmp(v1.Plugin.Ranking[v1.Name], v2.Plugin.Ranking[v2.Name])
+def SettingKeyFunc(value):
+    return value.Plugin.Ranking[value.Name]
 
-def FirstItemSortCompare(sg1, sg2):
-    return cmp(sg1[0], sg2[0])
+FirstItemKeyFunc = operator.itemgetter(0)
 
-def EnumSettingSortCompare(v1, v2):
-    return cmp(v1[1], v2[1])
+EnumSettingKeyFunc = operator.itemgetter(1)
 
-def PluginSortCompare(p1, p2):
-    return cmp(p1.ShortDesc, p2.ShortDesc)
+PluginKeyFunc = operator.attrgetter('ShortDesc')
 
 # singleRun is used to combine the run stages, in this case run is a list
 # containing the run levels which should be used to filter the settings
@@ -366,7 +364,7 @@ def FilterSettings(settings, filter, run=0, singleRun=False):
             value = ""
             # make sure enum settings work too
             if setting.Type == 'Int' and len(setting.Info[2].keys()) > 0:
-                    value = sorted(setting.Info[2].items(), EnumSettingSortCompare)[setting.Value][0]
+                    value = sorted(setting.Info[2].items(), key=EnumSettingKeyFunc)[setting.Value][0]
                     value = value.lower()
             # also make sure intDesc settings work right
             elif setting.Type == 'List' and setting.Info[0] == 'Int' and len(setting.Info[1][2]) > 0:
