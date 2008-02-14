@@ -517,6 +517,7 @@ class MainWin(gtk.Window):
     def BackToMain(self, widget, run=0):
         if run == 1:
             self.filterEntry.set_text(self.FilterValue)
+            self.FilterTable(widget = self.filterEntry)
             return
 
         self.VisibleSettings = []
