@@ -101,7 +101,7 @@ class PluginPage:
         self.RightWidget.set_scrollable(True)
         self.Pages = []
 
-        groupsSorted = sorted(plugin.Groups.items(), FirstItemSortCompare)
+        groupsSorted = sorted(plugin.Groups.items(), key=FirstItemKeyFunc)
         for name, group in groupsSorted:
             name = name or _("General")
             groupPage = GroupPage(name, group)
@@ -309,7 +309,7 @@ class FilterPage:
         self.PluginBox.add_item(_("All"), self.PluginChanged, "<i>%s</i>")
 
         sortedPlugins = map(lambda x: x[0], self.FilteredPlugins.values())
-        sortedPlugins = sorted(sortedPlugins, PluginSortCompare)
+        sortedPlugins = sorted(sortedPlugins, key=PluginKeyFunc)
         for plugin in sortedPlugins:
             image = Image(plugin.Name, ImagePlugin)
             info = plugin.Enabled and _("Enabled") or _("Disabled")
@@ -343,7 +343,7 @@ class FilterPage:
         else:
             self.GroupBox.add_item(_("All"), self.GroupChanged, "<i>%s</i>")
 
-        groupsSorted = sorted(groups.items(), FirstItemSortCompare)
+        groupsSorted = sorted(groups.items(), key=FirstItemKeyFunc)
         for group, subGroups in groupsSorted:
             self.GroupBox.add_item(group, self.GroupChanged)
 
@@ -390,7 +390,7 @@ class FilterPage:
         else:
             self.SubGroupBox.add_item(_("All"), self.SubGroupChanged, "<i>%s</i>")
 
-        subGroupsSorted = sorted(subGroups.items(), FirstItemSortCompare)
+        subGroupsSorted = sorted(subGroups.items(), key=FirstItemKeyFunc)
         for name, subGroup in subGroupsSorted:
             self.SubGroupBox.add_item(name, self.SubGroupChanged)
 
@@ -869,7 +869,7 @@ class PluginListPage:
 
         self.DisabledPluginsList.clear()
 
-        for plugin in sorted(self.Context.Plugins.values(), PluginSortCompare):
+        for plugin in sorted(self.Context.Plugins.values(), key=PluginKeyFunc):
             if not plugin.Name in activePlugins and plugin.Name != "core":
                 self.DisabledPluginsList.append(plugin.Name)
 
