@@ -1122,6 +1122,13 @@ class KeySetting (EditableActionSetting):
         
         EditableActionSetting._Init (self, self.Button, "keyboard")
 
+    def DoReset (self, widget):
+        conflict = ActionConflict (setting = self.Setting, key=self.Setting.DefaultValue)
+        if conflict.Resolve (GlobalUpdater):
+            self.Setting.Reset ()
+            self.Setting.Plugin.Context.Write ()
+            self.Read ()
+
     def ReorderKeyString (self, accel):
         key, mods = gtk.accelerator_parse (accel)
         return gtk.accelerator_name (key, mods)
@@ -1293,6 +1300,13 @@ class ButtonSetting (EditableActionSetting):
         self.SetButtonLabel ()
         
         EditableActionSetting._Init (self, self.Button, "button")
+
+    def DoReset (self, widget):
+        conflict = ActionConflict (setting = self.Setting, button=self.Setting.DefaultValue)
+        if conflict.Resolve (GlobalUpdater):
+            self.Setting.Reset ()
+            self.Setting.Plugin.Context.Write ()
+            self.Read ()
 
     def ReorderButtonString (self, old):
         new = ""
@@ -1467,6 +1481,13 @@ class EdgeSetting (EditableActionSetting):
         self.SetButtonLabel ()
 
         EditableActionSetting._Init (self, self.Button, "edges")
+
+    def DoReset (self, widget):
+        conflict = ActionConflict (setting = self.Setting, edges=self.Setting.DefaultValue)
+        if conflict.Resolve (GlobalUpdater):
+            self.Setting.Reset ()
+            self.Setting.Plugin.Context.Write ()
+            self.Read ()
 
     def GetDialogText (self):
         return self.current
