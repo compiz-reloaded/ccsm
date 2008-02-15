@@ -82,7 +82,7 @@ class MainWin(gtk.Window):
         self.FilterValue = ""
         
         for pluginName, plugin in self.Context.Plugins.items():
-            self.PluginImages[pluginName] = Image(plugin.Name, ImagePlugin)
+            self.PluginImages[pluginName] = Image(plugin.Name, ImagePlugin, size=32)
         
         for category in sorted(self.Context.Categories, key=self.CatKeyFunc):
             self.Categories[category] = []
