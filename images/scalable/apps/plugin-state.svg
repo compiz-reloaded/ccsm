@@ -2,7 +2,7 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
@@ -16,7 +16,7 @@
    height="48px"
    id="svg11300"
    sodipodi:version="0.32"
-   inkscape:version="0.45"
+   inkscape:version="0.45+devel"
    sodipodi:docbase="/home/patrick/Projects/Fusion/config/ccsm-new-icons/images"
    sodipodi:docname="plugin-state.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape"
@@ -141,7 +141,7 @@
        xlink:href="#linearGradient3690"
        id="linearGradient2289"
        gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(1.2508259,0,0,1.2088379,-7.1725052,-5.0295208)"
+       gradientTransform="matrix(1.2560169,0,0,1.207221,-7.3827424,-4.9672704)"
        x1="9.5"
        y1="16.26436"
        x2="9.5"
@@ -151,7 +151,7 @@
        xlink:href="#linearGradient3674"
        id="linearGradient2292"
        gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(1.2373761,0,0,1.2789545,-6.8640061,-5.4162454)"
+       gradientTransform="matrix(1.24147,0,0,1.2676531,-7.033902,-5.257684)"
        x1="23.069359"
        y1="6.7993021"
        x2="23.069359"
@@ -161,7 +161,7 @@
        xlink:href="#linearGradient2781"
        id="linearGradient2295"
        gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(1.2373761,0,0,1.1767765,-6.8640061,-3.982654)"
+       gradientTransform="matrix(1.2423407,0,0,1.1767765,-7.0544128,-3.982654)"
        x1="24.925514"
        y1="40.000107"
        x2="24.925514"
@@ -177,19 +177,23 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.99999999"
-     inkscape:cx="5.5272164"
-     inkscape:cy="8.3756912"
+     inkscape:cx="45.294199"
+     inkscape:cy="8.2684581"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:grid-bbox="true"
      inkscape:document-units="px"
      inkscape:showpageshadow="false"
      inkscape:window-width="1280"
-     inkscape:window-height="724"
+     inkscape:window-height="710"
      inkscape:window-x="0"
      inkscape:window-y="49"
      showguides="true"
-     inkscape:guide-bbox="true" />
+     inkscape:guide-bbox="true">
+    <inkscape:grid
+       type="xygrid"
+       id="grid7886" />
+  </sodipodi:namedview>
   <metadata
      id="metadata4">
     <rdf:RDF>
@@ -254,26 +258,26 @@
     <rect
        style="fill:url(#linearGradient2295);fill-opacity:1;stroke:#888a85;stroke-width:1.00000024;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect1915"
-       width="40.833458"
+       width="40.997292"
        height="35.891666"
-       x="3.6536906"
+       x="3.5054832"
        y="6.6083345"
        rx="1.9999998"
        ry="2" />
     <path
        style="fill:url(#linearGradient2292);fill-opacity:1;stroke:#204a87;stroke-width:1.00000048;stroke-miterlimit:4;stroke-opacity:1"
-       d="M 3.6536894,12.527912 L 3.6536894,8.0127833 C 3.6536894,6.5957019 4.7574289,5.4548744 6.1284415,5.4548744 L 42.012348,5.4548744 C 43.38336,5.4548744 44.4871,6.5957019 44.4871,8.0127833 L 44.4871,12.527912"
+       d="M 3.5185917,12.527912 L 3.5185917,8.0526804 C 3.5185917,6.6481209 4.6259829,5.5173742 6.0015317,5.5173742 L 42.004161,5.5173742 C 43.37971,5.5173742 44.487102,6.6481209 44.487102,8.0526804 L 44.487102,12.527912"
        id="path1917"
        sodipodi:nodetypes="cccccc" />
     <rect
        style="opacity:0.8;fill:none;fill-opacity:1;stroke:url(#linearGradient2289);stroke-width:1.00000083;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect1919"
-       width="38.830849"
-       height="35.045258"
-       x="4.655098"
-       y="6.465497"
+       width="38.992001"
+       height="34.998383"
+       x="4.4939466"
+       y="6.5123715"
        rx="1.4641409"
-       ry="1.5578908" />
+       ry="1.5578907" />
     <path
        style="opacity:1;fill:url(#radialGradient6152);fill-opacity:1;fill-rule:evenodd;stroke:#173767;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        d="M 27.349125,21.557189 L 27.349125,26.876518 L 21.559812,26.876518 L 21.559812,32.755777 L 27.349125,32.755777 L 27.349125,38.195092 L 33.606689,38.195092 L 33.606689,32.755777 L 39.438571,32.755777 L 39.438571,26.876518 L 33.606689,26.876518 L 33.606689,21.557189 L 27.349125,21.557189 z "
