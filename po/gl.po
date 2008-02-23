@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-01-29 17:04+0530\n"
-"PO-Revision-Date: 2007-12-20 01:13+0100\n"
+"POT-Creation-Date: 2008-02-23 22:26+0530\n"
+"PO-Revision-Date: 2008-02-09 20:04+0100\n"
 "Last-Translator: Fran Diéguez (GLUG) <fran.dieguez@glug.es>\n"
 "Language-Team: Galician <en@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -357,24 +357,29 @@ msgstr "Procurar opcións Compiz Core"
 msgid "Error"
 msgstr "Erro"
 
+msgid ""
+"Enter a filter.\n"
+"Click the keyboard image to grab a key for which to search."
+msgstr ""
+
 msgid "Search in..."
 msgstr "Procurar en..."
 
 msgid "Short description and name"
-msgstr "descripción curta e nome"
+msgstr "Descrición curta e nome"
 
 msgid "Long description"
-msgstr "descripción longa"
+msgstr "Descrición longa"
 
 msgid "Settings value"
-msgstr "valor das opcións"
+msgstr "Valor das opcións"
 
 #. Notebook
 msgid "Settings"
 msgstr "Opcións"
 
 msgid "Add a New Profile"
-msgstr "Engadir novoperfil"
+msgstr "Engadir novo perfil"
 
 msgid "Remove This Profile"
 msgstr "Eliminar este perfil"
@@ -389,7 +394,7 @@ msgid "Import"
 msgstr "Importar"
 
 msgid "Import a CompizConfig Profile"
-msgstr "Importar o teu perfil CompizConfig"
+msgstr "Importar perfil CompizConfig"
 
 msgid "Import as..."
 msgstr "Importar como..."
@@ -429,7 +434,7 @@ msgstr "Gardar ficheiro..."
 
 msgid "Do you want to skip default option values while exporting your profile?"
 msgstr ""
-"¿Quere omitir os valor das opcións por defecto mentras se exporta o perfil? "
+"¿Quere omitir os valor das opcións por defecto mentras se exporta o perfil?"
 
 msgid "Open file.."
 msgstr "Abrir ficheiro.."
@@ -445,7 +450,7 @@ msgstr "Backend non atopado."
 
 #. Auto sort
 msgid "Automatic plugin sorting"
-msgstr "Ordeálos plugins automáticamente"
+msgstr "Ordealos plugins automáticamente"
 
 msgid "Disabled Plugins"
 msgstr "Plugins deshabilitados"
@@ -496,9 +501,9 @@ msgid ""
 "\n"
 " Your filter \"<b>%s</b>\" does not match any items.</span>"
 msgstr ""
-"<span size=\"large\"><b>Ningunha coincidencia.</b> </span><span>\n"
+"<span size=\"large\"><b>Ningunha coincidencia atopada.</b> </span><span>\n"
 "\n"
-" Tu filtro \"<b>%s</b>\" non retornou ningún resultado.</span>"
+" O teu filtro \"<b>%s</b>\" non devolveu nengún resultado.</span>"
 
 #~ msgid "Actions"
 #~ msgstr "Accións"
