@@ -1,16 +1,16 @@
-# ccsm hr translation.
-# Copyright (C) 2007 compiz-fusion.org
+# ccsm fi translation.
+# Copyright (C) 2008 compiz-fusion.org
 # This file is distributed under the same license as the ccsm package.
-#
+# Birunthan Mohanathas <biru@inbox.com>.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: ccsm\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
 "POT-Creation-Date: 2008-02-23 22:26+0530\n"
-"PO-Revision-Date: 2007-11-25 22:44+0100\n"
-"Last-Translator: Matija Folnovic <matijafolnovic@gmail.com>\n"
-"Language-Team: Matija Folnovic <matijafolnovic@gmail.com>\n"
+"PO-Revision-Date: 2008-02-14 16:19+0100\n"
+"Last-Translator: Birunthan Mohanathas <biru@inbox.com>\n"
+"Language-Team: Birunthan Mohanathas <biru@inbox.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -27,15 +27,15 @@ msgstr ""
 
 #, python-format
 msgid "Disable %(action_conflict)s"
-msgstr "Onemoguci %(action_conflict)s"
+msgstr "Poista %(action_conflict)s kytst"
 
 #, python-format
 msgid "Don't set %(action)s"
-msgstr "Nemoj postaviti %(action)s"
+msgstr "l aseta %(action)s"
 
 #, python-format
 msgid "Set %(action)s anyway"
-msgstr "Postavi %(action)s"
+msgstr "Aseta %(action)s joka tapauksessa"
 
 #, python-format
 msgid ""
@@ -43,17 +43,17 @@ msgid ""
 "provided by any plugin.\n"
 "Do you wish to use this feature anyway?"
 msgstr ""
-"Pokusavate koristiti mogucnost <b>%(feature)s</b> koja <b>nije</b> ukljucen "
-"u nijednom dodatku.\n"
-"Zelite li ipak koristi ovu mogucnost?"
+"Yritt kytt <b>%(feature)s</b> ominaisuutta, jota nykyiset lisosat <b>eivt "
+"tue</b>.\n"
+"Haluatko kytt tt ominaisuutta joka tapauksessa?"
 
 #, python-format
 msgid "Use %(feature)s"
-msgstr "Koristi %(feature)s"
+msgstr "Kyt %(feature)s"
 
 #, python-format
 msgid "Don't use %(feature)s"
-msgstr "Nemoj koristiti %(feature)s"
+msgstr "l kyt %(feature)s"
 
 #, python-format
 msgid ""
@@ -62,39 +62,40 @@ msgid ""
 "This plugin is currently disabled.\n"
 "Do you wish to enable <b>%(plugin)s</b> so the feature is available?"
 msgstr ""
-"Pokusavate koristiti mogucnost <b>%(feature)s</b> koja je ukljucena u "
-"dodatak <b>%(plugin)s</b>.\n"
-"Ovaj dodatak je iskljucen.\n"
-"Zelite li omoguciti <b>%(plugin)s</b> pa da ova mogucnost bude dostupna?"
+"Yritt kytt <b>%(feature)s</b> ominaisuutta, jota <b>%(plugin)s</b> lisosa "
+"tarjoaa.\n"
+"Tm lisosa on poistettu kytst.\n"
+"Haluatko ottaa <b>%(plugin)s</b> lisosan kyttn?"
 
 #, python-format
 msgid "Enable %(plugin)s"
-msgstr "Omoguci %(plugin)s"
+msgstr "Kynnist %(plugin)s"
 
 #, python-format
 msgid "Don't enable %(feature)s"
-msgstr "Nemoj omoguciti %(feature)s"
+msgstr "l kynnist %(feature)s"
 
 #, python-format
 msgid ""
 "Plugin <b>%(plugin_conflict)s</b> provides feature <b>%(feature)s</b> which "
 "is also provided by <b>%(plugin)s</b>"
 msgstr ""
-"Dodatak <b>%(plugin_conflict)s</b> nudi mogucnost <b>%(feature)s</b> koju "
-"nudi i dodatak <b>%(plugin)s</b>"
+"<b>%(plugin_conflict)s</b> lisosa tarjoaa <b>%(feature)s</b> ominaisuuden, "
+"jota mys <b>%(plugin)s</b> tarjoaa."
 
 #, python-format
 msgid "Disable %(plugin_conflict)s"
-msgstr "Onemoguci %(plugin_conflict)s"
+msgstr "Poista %(plugin_conflict)s kytst"
 
 #, python-format
 msgid "Don't enable %(plugin)s"
-msgstr "Nemoj ukljuciti %(plugin)s"
+msgstr "l kynnist %(plugin)s"
 
 #, python-format
 msgid "Plugin <b>%(plugin_conflict)s</b> conflicts with <b>%(plugin)s</b>."
 msgstr ""
-"Dodatak <b>%(plugin_conflict)s</b> se sukobljava s dodatkom <b>%(plugin)s</b>"
+"<b>%(plugin_conflict)s</b> lisosalla on ristiriitoja <b>%(plugin)s</b> "
+"lisosan kanssa."
 
 #, python-format
 msgid ""
@@ -102,250 +103,251 @@ msgid ""
 "the following plugins:\n"
 "%(plugin_list)s"
 msgstr ""
-"<b>%(plugin)s</b> zahtjeva mogucnost <b>%(feature)s</b> koju nude ovi "
-"dodaci:\n"
+"<b>%(plugin)s</b> tarvitsee <b>%(feature)s</b> ominaisuuden, jota seuraavat "
+"lisosat tarjoavat:\n"
 "%(plugin_list)s"
 
 msgid "Enable these plugins"
-msgstr "Omoguci ove dodatke"
+msgstr "Kyt nit lisosia"
 
 #, python-format
 msgid "<b>%(plugin)s</b> requires the plugin <b>%(require)s</b>."
-msgstr "<b>%(plugin)s</b> trazi dodatak <b>%(require)s</b>"
+msgstr "<b>%(plugin)s</b> tarvitsee <b>%(require)s</b> lisosan."
 
 #, python-format
 msgid "Enable %(require)s"
-msgstr "Omoguci %(require)s"
+msgstr "Kynnist %(require)s"
 
 #, python-format
 msgid ""
 "<b>%(plugin)s</b> provides the feature <b>%(feature)s</b> which is required "
 "by the plugins <b>%(plugin_list)s</b>."
 msgstr ""
-"<b>%(plugin)s<b/> nudi mogucnost <b>%(feature)s<b/> koju traze dodaci <b>%"
-"(plugin_list)s</b>"
+"<b>%(plugin)s</b> tarjoaa <b>%(feature)s</b> ominaisuuden, jota seuraavat "
+"lisosat tarvitsevat: <b>%(plugin_list)s</b>."
 
 msgid "Disable these plugins"
-msgstr "Onemoguci ove dodatke"
+msgstr "Poista lisosat kytst"
 
 #, python-format
 msgid "Don't disable %(plugin)s"
-msgstr "Nemoj onemoguciti %(plugin)s"
+msgstr "l poista %(plugin)s kytst"
 
 #, python-format
 msgid "<b>%(plugin)s</b> is required by the plugins <b>%(plugin_list)s</b>."
-msgstr "<b>%(plugin_list)s</b> traze dodatak <b>%(plugin)s</b>"
+msgstr ""
+"<b>%(plugin)s</b> lisosaa tarvitsevat seuraavat lisosat: <b>%(plugin_list)s</"
+"b>."
 
 msgid "General"
-msgstr "Opcenito"
+msgstr "Yleiset"
 
 msgid "Accessibility"
-msgstr "Pristupacnost"
+msgstr "Esteettmyys"
 
 msgid "Desktop"
-msgstr "Radna povrsina"
+msgstr "Typyt"
 
 msgid "Extras"
-msgstr "Dodaci"
+msgstr "Ekstrat"
 
 msgid "Window Management"
-msgstr "Upravljanje prozora"
+msgstr "Ikkunan hallinta"
 
 msgid "Effects"
-msgstr "Efekti"
+msgstr "Efektit"
 
 msgid "Image Loading"
-msgstr "Ucitavanje slike"
+msgstr "Kuvien lataus"
 
 msgid "Utility"
-msgstr "Pomocni"
+msgstr "Hytytykalut"
 
 msgid "Reset setting to the default value"
-msgstr "Vrati vrijednost na njezinu pocetnu vrijednost"
+msgstr "Palauta alkuperiseen arvoon"
 
 msgid "Browse for "
-msgstr "Pregled za"
+msgstr "Selaa"
 
 msgid "Images"
-msgstr "Slike"
+msgstr "Kuvat"
 
 msgid "File"
-msgstr "Datoteka"
+msgstr "Tiedosto"
 
 msgid "Open directory..."
-msgstr "Otvori direktorij..."
+msgstr "Avaa hakemisto..."
 
 msgid "Open file..."
-msgstr "Otvori datoteku..."
+msgstr "Avaa tiedosto..."
 
 msgid "Multi-list settings. You can double-click a row to edit the values."
-msgstr ""
-"Visepopisne postavke. Mozete dvostuko kliknuti na red da promijenite "
-"vrijednost."
+msgstr "Monirivi asetukset. Arvoja voi muuttaa tuplaklikkaamalla rivi."
 
 msgid "Edit"
-msgstr "Promijeni"
+msgstr "Muokkaa"
 
 #, python-format
 msgid "Value (%s)"
-msgstr "Vrijednost (%s)"
+msgstr "Arvo (%s)"
 
 #, python-format
 msgid "Edit %s"
-msgstr "Promijeni %s"
+msgstr "Muokkaa %s"
 
 #, python-format
 msgid "Value (%(value)s) for %(setting)s"
-msgstr "Vrijednost (%(value)s) za %(setting)s"
+msgstr "Arvo (%(value)s) %(setting)slle"
 
 #, python-format
 msgid "\"%s\" is not a valid shortcut"
-msgstr "\"%s\" nije pravilna precica"
+msgstr "\"%s\" on kelvoton pikakuvake"
 
 msgid "Disabled"
-msgstr "Onemoguceno"
+msgstr "Poistettu kytst"
 
 msgid "Enabled"
-msgstr "Omoguceno"
+msgstr "Kytss"
 
 msgid "Grab key combination"
-msgstr "Uhvati kombinaciju tipki"
+msgstr "Tarttumisen nppinyhdistelm"
 
 msgid "Computing possible conflicts, please wait"
-msgstr "Izracunavam moguce sukobe, molim pricekajte"
+msgstr "Ksittelln mahdollisten virheiden varalta, odota hetki"
 
 #, python-format
 msgid "\"%s\" is not a valid button"
-msgstr "\"%s\" nije pravilan gumb"
+msgstr "\"%s\" on kelvoton painike"
 
 #, python-format
 msgid ""
 "Using Button1 without modifiers can prevent any left click and thus break "
 "your configuration. Do you really want to set \"%s\" button to Button1 ?"
 msgstr ""
-"Koristenjem Gumb1 bez ikakvog dodatka moze sprijeciti bilokoji lijevi klik i "
-"to moze unistiti tvoje opcije. Zelite li zaista staviti \"%s\"gumb u Gumb1?"
+"Kyttmll Button1 arvoa ilman mrrett voi est hiiren vasemman painikkeen "
+"toimintaa ja siten rikkoa konfigurotiotasi. Haluatko todella asettaa \"%s\" "
+"nppint Button1:iksi."
 
 #, python-format
 msgid "\"%s\" is not a valid edge mask"
-msgstr "\"%s\" nije pravilna maska ruba"
+msgstr "\"%s\" on kelvoton reunamaski"
 
 msgid "None"
-msgstr "Nista"
+msgstr "Ei mikn"
 
 #, python-format
 msgid "Unhandled list type %s for %s"
 msgstr ""
 
 msgid "CompizConfig Settings Manager"
-msgstr "CompizConfig Upravitelj Konfiguracija"
+msgstr "Compizin configuroinnin hallinta"
 
 msgid "Filter"
-msgstr "Filter"
+msgstr "Suodata"
 
 msgid "Filter your Plugin list"
-msgstr "Filtiriraj tvoju listu dodataka"
+msgstr "Suodata lisosien lista"
 
 #, python-format
 msgid "Screen %i"
-msgstr "Zaslon %i"
+msgstr "Nytt %i"
 
 msgid "Screen"
-msgstr "Zaslon"
+msgstr "Nytt"
 
 #. Settings
 msgid "All"
-msgstr "Svi"
+msgstr "Kaikki"
 
 msgid "Uncategorized"
-msgstr "Bez kategorije"
+msgstr "Luokittelematon"
 
 msgid "Category"
-msgstr "Kategorija"
+msgstr "Kategoria"
 
 msgid "Advanced Search"
-msgstr "Napredno pretrazivanje"
+msgstr "Tarkenettu haku"
 
 msgid "Preferences"
-msgstr "Postavke"
+msgstr "Asetukset"
 
 #, python-format
 msgid "Enable %s"
-msgstr "Omoguci %s"
+msgstr "Kyt %s"
 
 msgid "Please press the new key combination"
-msgstr "Molim pritisnite novu kombinaciju tipki"
+msgstr "Kirjoita uusi nppinyhdistelm"
 
 msgid "Window Title"
-msgstr "Naslov prozora"
+msgstr "Ikkunan otsikko"
 
 msgid "Window Role"
-msgstr "Uloga prozora"
+msgstr "Ikkunan rooli"
 
 msgid "Window Name"
-msgstr "Ime prozora"
+msgstr "Ikkunan nimi"
 
 msgid "Window Class"
-msgstr "Klasa prozora"
+msgstr "Ikkunan luokka"
 
 msgid "Window Type"
-msgstr "Tip prozora"
+msgstr "Ikkunan tyyppi"
 
 msgid "Window ID"
-msgstr "ID prozora"
+msgstr "Ikkunan ID"
 
 msgid "And"
-msgstr "I"
+msgstr "ja"
 
 msgid "Or"
-msgstr "Ili"
+msgstr "tai"
 
 msgid "Edit match"
-msgstr ""
+msgstr "Muokkaa tuloksia"
 
 #. Type
 msgid "Type"
-msgstr "Tip"
+msgstr "Tyyppi"
 
 #. Value
 msgid "Value"
-msgstr "Vrijednost"
+msgstr "Arvo"
 
 msgid "Grab"
-msgstr "Uhvati"
+msgstr "Tartu"
 
 #. Relation
 msgid "Relation"
-msgstr "Odnos"
+msgstr "Suhde"
 
 #. Invert
 msgid "Invert"
-msgstr "Obrni"
+msgstr "Knn"
 
 msgid "This is a settings manager for the CompizConfig configuration system."
-msgstr "Ovo je upravitelj konfiguracija za CompizConfig konfiguracijski sustav"
+msgstr "Tm on CompizConfig configuroinnin hallinta manageri"
 
 msgid "translator-credits"
-msgstr "O prevodiocima"
+msgstr "Kntjien kiitokset"
 
 msgid "An error has occured"
-msgstr "Dogodila se greska"
+msgstr "Virhe on tapahtunut"
 
 msgid "Warning"
-msgstr "Upozorenje"
+msgstr "Varoitus"
 
 #, python-format
 msgid "Search %s Plugin Options"
-msgstr "Trazi opcije dodatka %s"
+msgstr "Etsi %s lisosan asetuksia"
 
 msgid "Use This Plugin"
-msgstr "Koristi ovaj dodatak"
+msgstr "Kyt tt lisosaa"
 
 msgid "Search Compiz Core Options"
-msgstr "Pretrazi Opcije Compizove jezgre"
+msgstr "Etsi Compiz Core asetuksia"
 
 msgid "Error"
-msgstr "Greska"
+msgstr "Virhe"
 
 msgid ""
 "Enter a filter.\n"
@@ -353,132 +355,135 @@ msgid ""
 msgstr ""
 
 msgid "Search in..."
-msgstr "Trazi u..."
+msgstr "Etsi kohteesta..."
 
 msgid "Short description and name"
-msgstr "Kratak opis i ime"
+msgstr "Lyhyt kuvaus ja nimi"
 
 msgid "Long description"
-msgstr "Dugacak opis"
+msgstr "Pitk kuvaus"
 
 msgid "Settings value"
-msgstr "Vrijednost postavke"
+msgstr "Asetusten arvo"
 
 #. Notebook
 msgid "Settings"
-msgstr "Postavke"
+msgstr "Asetukset"
 
 msgid "Add a New Profile"
-msgstr "Dodaj novi profil"
+msgstr "Lis uusi profiili"
 
 msgid "Remove This Profile"
-msgstr "Pobrisi ovaj profil"
+msgstr "Poista tm profiili"
 
 msgid "Default"
-msgstr "Uobicajen"
+msgstr "Oletus"
 
 msgid "Profile"
-msgstr "Profil"
+msgstr "Profiili"
 
 msgid "Import"
-msgstr "Uvesti"
+msgstr "Tuo"
 
 msgid "Import a CompizConfig Profile"
-msgstr "Uvezi CompizConfig profil"
+msgstr "Tuo CompizConfig profiili"
 
 msgid "Import as..."
-msgstr "Uvezi kao..."
+msgstr "Tuo nimell..."
 
 msgid "Import a CompizConfig Profile as a new profile"
-msgstr "Uvezi CompizConfig profil kao novi profil"
+msgstr "Tuo CompizConfig profiili uutena profiilina"
 
 msgid "Export"
-msgstr "Izvezi"
+msgstr "Vie"
 
 msgid "Export your CompizConfig Profile"
-msgstr "Izvezi svoj CompizConfig profil"
+msgstr "Vie CompizConfig profiili"
 
 msgid "Reset to defaults"
-msgstr "Vrati na pocetno"
+msgstr "Palauta alkuperisasetukset"
 
 msgid "Reset your CompizConfig Profile to the global defaults"
-msgstr "Vrati svoj CompizConfig profil na pocetne vrijednost"
+msgstr "Palauta CompizConfig profiili alkuperisasetuksiin"
 
 msgid "Backend"
-msgstr ""
+msgstr "Tietokanta"
 
-#, fuzzy
 msgid "Integration"
-msgstr "Integracija"
+msgstr "Integrointi"
 
 msgid "Enable integration into the desktop environment"
-msgstr ""
+msgstr "Salli typyt ympristn integroiminen"
 
 msgid "Profiles (*.profile)"
-msgstr ""
+msgstr "Profiilit (*.profile)"
 
 msgid "All files"
-msgstr ""
+msgstr "Kaikki tiedostot"
 
 msgid "Save file.."
-msgstr ""
+msgstr "Tallenna tiedosto..."
 
 msgid "Do you want to skip default option values while exporting your profile?"
-msgstr ""
+msgstr "Haluatko sivuuttaa oletusarvoja profiilia viedess?"
 
 msgid "Open file.."
-msgstr ""
+msgstr "Avaa tiedosto..."
 
 msgid "Enter a profile name"
-msgstr ""
+msgstr "Anna profiilille nimi"
 
 msgid "Please enter a name for the new profile:"
-msgstr ""
+msgstr "Ole hyv ja anna nimi uudelle profiilille:"
 
 msgid "Backend not found."
-msgstr ""
+msgstr "Tietokantaa ei lydetty."
 
 #. Auto sort
 msgid "Automatic plugin sorting"
-msgstr ""
+msgstr "Lisosien automaattinen lajittelu"
 
 msgid "Disabled Plugins"
-msgstr ""
+msgstr "Kytst poistetut lisosat"
 
 msgid "Enabled Plugins"
-msgstr ""
+msgstr "Kytss olevat lisosat"
 
 msgid ""
 "Do you really want to disable automatic plugin sorting? This will also "
 "disable conflict handling. You should only do this if you know what you are "
 "doing."
 msgstr ""
+"Haluatko oikeasti poistaa lisosien automaattisen lajittelun kytst? Tm poista "
+"mys virheiden ksittelyn pois kytst. Sinun pitisi tehd tm vain jos tiedt mit "
+"olet tekemss."
 
 msgid "Add plugin"
-msgstr ""
+msgstr "Lis lisosa"
 
 msgid "Plugin name:"
-msgstr ""
+msgstr "Lisosan nimi:"
 
 msgid "Insert plugin name"
-msgstr ""
+msgstr "Anna lisosan nimi"
 
 msgid ""
 "Configure the backend, profile and other internal settings used by the "
 "Compiz Configuration System."
 msgstr ""
+"Configuroi tietokantaa, profiili ja muita CompizConfigin sisisi asetuksia."
 
 msgid "About"
-msgstr ""
+msgstr "Tietoa"
 
 msgid "About CCSM..."
-msgstr ""
+msgstr "Tietoa CCSM:sta..."
 
 msgid "Profile & Backend"
-msgstr ""
+msgstr "Profiili & tietokanta"
 
 msgid "Plugin List"
-msgstr ""
+msgstr "Lisosien lista"
 
 #, python-format
 msgid ""
@@ -486,6 +491,9 @@ msgid ""
 "\n"
 " Your filter \"<b>%s</b>\" does not match any items.</span>"
 msgstr ""
+"<span size=\"large\"><b>Haku ei tuottanut tulosta</b> </span><span>\n"
+"\n"
+"\"<b>%s</b>\" ei tsm mihinkn.</span>"
 
 #~ msgid "Actions"
-#~ msgstr "Radnje"
+#~ msgstr "Toimenpiteet"

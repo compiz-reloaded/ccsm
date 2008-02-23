@@ -11,9 +11,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-01-29 17:04+0530\n"
-"PO-Revision-Date: 2007-12-21 18:10+0100\n"
-"Last-Translator: Leonard Camacho <leonard.camacho@gmail.com>\n"
+"POT-Creation-Date: 2008-02-23 22:26+0530\n"
+"PO-Revision-Date: 2008-02-03 01:59+0100\n"
+"Last-Translator: XaniloM Winkler <xanilom@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -33,7 +33,7 @@ msgstr ""
 "El nuevo valor para la opción %(binding)s de la acción<b>%(action)s</b> en "
 "el plugin <b>%(plugin)s</b> está en conflicto con la acción <b>%"
 "(action_conflict)s</b> del plugin <b>%(plugin_conflict)s</b> .\n"
-"¿Desea deshabilitar <b>%(action_conflict)s</b> in el plugin <b>%"
+"¿Desea deshabilitar <b>%(action_conflict)s</b> en el plugin <b>%"
 "(plugin_conflict)s</b>?"
 
 #, python-format
@@ -54,17 +54,17 @@ msgid ""
 "provided by any plugin.\n"
 "Do you wish to use this feature anyway?"
 msgstr ""
-"Está intentando usar la característica <b>%(feature)s</b> la cual <b>no</b> "
+"Estás intentando usar la característica <b>%(feature)s</b> la cual <b>no</b> "
 "es proporcionada por alguno de los plugins. ¿Desea habilitar esta "
 "característica de todas formas?"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Use %(feature)s"
-msgstr "Habilitar %(feature)s"
+msgstr "Usar %(feature)s"
 
 #, python-format
 msgid "Don't use %(feature)s"
-msgstr "No habilitar %(feature)s"
+msgstr "No usar %(feature)s"
 
 #, python-format
 msgid ""
@@ -134,7 +134,7 @@ msgid ""
 "<b>%(plugin)s</b> provides the feature <b>%(feature)s</b> which is required "
 "by the plugins <b>%(plugin_list)s</b>."
 msgstr ""
-"<b>%(plugin)s</b> proporciona la caracteristica <b>%(feature)s</b> la cual "
+"<b>%(plugin)s</b> proporciona la característica <b>%(feature)s</b> la cual "
 "es requerida por los plugins <b>%(plugin_list)s</b>."
 
 msgid "Disable these plugins"
@@ -147,7 +147,7 @@ msgstr "No deshabilitar %(plugin)s"
 #, python-format
 msgid "<b>%(plugin)s</b> is required by the plugins <b>%(plugin_list)s</b>."
 msgstr ""
-"<b>%(plugin)s</b> es requerido por  los siguientes plugins <b>%(plugin_list)"
+"<b>%(plugin)s</b> es requerido por los siguientes plugins <b>%(plugin_list)"
 "s</b>."
 
 msgid "General"
@@ -194,7 +194,7 @@ msgstr "Abrir archivo..."
 
 msgid "Multi-list settings. You can double-click a row to edit the values."
 msgstr ""
-"Opciones de la Multi-lista. Puede hacer doble-click  en un fila para editar "
+"Opciones de la Multi-lista. Puedes hacer doble-click en un fila para editar "
 "los valores."
 
 msgid "Edit"
@@ -222,8 +222,9 @@ msgstr "Deshabilitado"
 msgid "Enabled"
 msgstr "Habilitado"
 
+# Solucionando ortografía.
 msgid "Grab key combination"
-msgstr "Escojer combinacion de teclas"
+msgstr "Escoger combinación de teclas"
 
 msgid "Computing possible conflicts, please wait"
 msgstr "Verificando posibles conflictos, por favor espere"
@@ -249,7 +250,7 @@ msgstr "Ninguno"
 
 #, python-format
 msgid "Unhandled list type %s for %s"
-msgstr "Tipo de lista inusual  %s para %s"
+msgstr "Tipo de lista inusual %s para %s"
 
 msgid "CompizConfig Settings Manager"
 msgstr "Administrador de Opciones CompizConfig"
@@ -315,7 +316,7 @@ msgid "Or"
 msgstr "O"
 
 msgid "Edit match"
-msgstr ""
+msgstr "Editar coincidencia"
 
 #. Type
 msgid "Type"
@@ -338,14 +339,16 @@ msgstr "Inverso"
 
 msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr ""
-"Este es el administrador de opciones del sistema de configuración "
+"Este es un administrador de opciones para el sistema de configuración "
 "CompizConfig"
 
 msgid "translator-credits"
 msgstr ""
+"Traducción al Español:\n"
 "Festor Wailon Dacoba,<festor90@gmail.com>\n"
 "CarvaX,\n"
-"Spanish translation"
+"\n"
+"Nacho Molina <xanilom@gmail.com> correcciones y aportes."
 
 msgid "An error has occured"
 msgstr "Se ha producido un error"
@@ -365,6 +368,11 @@ msgstr "Buscar opciones Compiz Core"
 
 msgid "Error"
 msgstr "Error"
+
+msgid ""
+"Enter a filter.\n"
+"Click the keyboard image to grab a key for which to search."
+msgstr ""
 
 msgid "Search in..."
 msgstr "Buscar en..."

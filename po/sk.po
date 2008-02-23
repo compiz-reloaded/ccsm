@@ -7,13 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm 0.5.2\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-01-29 17:04+0530\n"
-"PO-Revision-Date: 2007-10-07 10:08+0200\n"
-"Last-Translator: Peter Pepino <sk.cfteam@gmail.com>\n"
+"POT-Creation-Date: 2008-02-23 22:26+0530\n"
+"PO-Revision-Date: 2008-02-14 20:35+0100\n"
+"Last-Translator: michal <ceecko@gmail.com>\n"
 "Language-Team: SLOVAK <sk.cfteam@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Pootle 1.0.2\n"
 
 #, fuzzy, python-format
 msgid ""
@@ -29,15 +30,15 @@ msgstr ""
 
 #, python-format
 msgid "Disable %(action_conflict)s"
-msgstr ""
+msgstr "Vypnúť %(action_conflict)s"
 
 #, fuzzy, python-format
 msgid "Don't set %(action)s"
-msgstr "Nenastavuj %s"
+msgstr "Nenastavuj %(action)s"
 
 #, fuzzy, python-format
 msgid "Set %(action)s anyway"
-msgstr "Nastav %s aj tak"
+msgstr "Nastav %(action)s aj tak"
 
 #, fuzzy, python-format
 msgid ""
@@ -51,11 +52,11 @@ msgstr ""
 
 #, fuzzy, python-format
 msgid "Use %(feature)s"
-msgstr "Nezapínajte %s"
+msgstr "Použiť %(feature)s"
 
 #, fuzzy, python-format
 msgid "Don't use %(feature)s"
-msgstr "Nezapínajte %s"
+msgstr "Nepoužiť %(feature)s"
 
 #, fuzzy, python-format
 msgid ""
@@ -68,13 +69,13 @@ msgstr ""
 "Tento plugin je v súčasnosti vypnutý.\n"
 "Prajete si zapnúť <b>%s</b> aby bola funkcia k dispozícii?"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Enable %(plugin)s"
-msgstr "Zapnuté pluginy"
+msgstr "Zapnúť %(plugin)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Don't enable %(feature)s"
-msgstr "Nezapínajte %s"
+msgstr "Nezapínať %(feature)s"
 
 #, fuzzy, python-format
 msgid ""
@@ -85,11 +86,11 @@ msgstr ""
 
 #, fuzzy, python-format
 msgid "Disable %(plugin_conflict)s"
-msgstr "Vypnuté pluginy"
+msgstr "Vypnúť %(plugin_conflict)s"
 
 #, fuzzy, python-format
 msgid "Don't enable %(plugin)s"
-msgstr "Nezapínajte %s"
+msgstr "Nezapínať %s"
 
 #, fuzzy, python-format
 msgid "Plugin <b>%(plugin_conflict)s</b> conflicts with <b>%(plugin)s</b>."
@@ -106,7 +107,7 @@ msgstr ""
 "%s"
 
 msgid "Enable these plugins"
-msgstr "Zapnite tieto pluginy"
+msgstr "Zapnúť tieto pluginy"
 
 #, fuzzy, python-format
 msgid "<b>%(plugin)s</b> requires the plugin <b>%(require)s</b>."
@@ -114,7 +115,7 @@ msgstr "<b>%s</b> vyžaduje plugin <b>%s</b>."
 
 #, fuzzy, python-format
 msgid "Enable %(require)s"
-msgstr "Zapnite %s"
+msgstr "Zapnúť %s"
 
 #, fuzzy, python-format
 msgid ""
@@ -138,22 +139,22 @@ msgid "General"
 msgstr "Hlavný"
 
 msgid "Accessibility"
-msgstr ""
+msgstr "Prístupnosť"
 
 msgid "Desktop"
-msgstr ""
+msgstr "Plocha"
 
 msgid "Extras"
 msgstr ""
 
 msgid "Window Management"
-msgstr ""
+msgstr "Manažment Okien"
 
 msgid "Effects"
-msgstr ""
+msgstr "Efekty"
 
 msgid "Image Loading"
-msgstr ""
+msgstr "Načítavanie obrázku"
 
 msgid "Utility"
 msgstr ""
@@ -200,7 +201,7 @@ msgstr "Hodnota (%s) pre %s"
 
 #, python-format
 msgid "\"%s\" is not a valid shortcut"
-msgstr ""
+msgstr "\"%s\" nie je platná skratka"
 
 #, fuzzy
 msgid "Disabled"
@@ -214,11 +215,11 @@ msgid "Grab key combination"
 msgstr ""
 
 msgid "Computing possible conflicts, please wait"
-msgstr ""
+msgstr "Hľadanie možných konfliktov, prosím počkajte"
 
 #, python-format
 msgid "\"%s\" is not a valid button"
-msgstr ""
+msgstr "\"%s\" nie je platné tlačítko"
 
 #, python-format
 msgid ""
@@ -274,38 +275,38 @@ msgid "Enable %s"
 msgstr "Zapnite %s"
 
 msgid "Please press the new key combination"
-msgstr ""
+msgstr "Prosím stlačte novú klavesovú kombináciu"
 
 msgid "Window Title"
-msgstr ""
+msgstr "Nadpis Okna"
 
 msgid "Window Role"
-msgstr ""
+msgstr "Rola Okna"
 
 msgid "Window Name"
-msgstr ""
+msgstr "Meno Okna"
 
 msgid "Window Class"
-msgstr ""
+msgstr "Trieda Okna"
 
 msgid "Window Type"
-msgstr ""
+msgstr "Typ Okna"
 
 msgid "Window ID"
-msgstr ""
+msgstr "ID okna"
 
 msgid "And"
-msgstr ""
+msgstr "a"
 
 msgid "Or"
-msgstr ""
+msgstr "Alebo"
 
 msgid "Edit match"
 msgstr ""
 
 #. Type
 msgid "Type"
-msgstr ""
+msgstr "Typ"
 
 #. Value
 #, fuzzy
@@ -313,7 +314,7 @@ msgid "Value"
 msgstr "Hodnota (%s)"
 
 msgid "Grab"
-msgstr ""
+msgstr "Chyť"
 
 #. Relation
 #, fuzzy
@@ -322,19 +323,19 @@ msgstr "Integrácia"
 
 #. Invert
 msgid "Invert"
-msgstr ""
+msgstr "Invertovať"
 
 msgid "This is a settings manager for the CompizConfig configuration system."
-msgstr ""
+msgstr "Toto je manažér nastavení pre CompizConfig konfiguračný systém."
 
 msgid "translator-credits"
 msgstr ""
 
 msgid "An error has occured"
-msgstr ""
+msgstr "Nastala chyba"
 
 msgid "Warning"
-msgstr ""
+msgstr "Varovanie"
 
 #, python-format
 msgid "Search %s Plugin Options"
@@ -348,6 +349,11 @@ msgstr "Hľadaj Nastavenia Compiz Core"
 
 msgid "Error"
 msgstr "Chyba"
+
+msgid ""
+"Enter a filter.\n"
+"Click the keyboard image to grab a key for which to search."
+msgstr ""
 
 msgid "Search in..."
 msgstr "Hľadaj v..."
@@ -422,7 +428,7 @@ msgid "Save file.."
 msgstr "Ulož súbor"
 
 msgid "Do you want to skip default option values while exporting your profile?"
-msgstr ""
+msgstr "Prajete si preskočiť štandartné nastavenia pri exporte profilu?"
 
 msgid "Open file.."
 msgstr "Otvor súbor.."
@@ -451,6 +457,8 @@ msgid ""
 "disable conflict handling. You should only do this if you know what you are "
 "doing."
 msgstr ""
+"Naozaj si prajete vypnúť automatické zoraďovanie pluginov? Taktiež vypnete "
+"kontrolu konfliktov. Mali by ste to urobiť, iba ak ste si istí, čo robíte."
 
 msgid "Add plugin"
 msgstr "Pridaj plugin"
@@ -475,7 +483,7 @@ msgid "About CCSM..."
 msgstr "O CCSM"
 
 msgid "Profile & Backend"
-msgstr "Profil & backend"
+msgstr "Profil & Backend"
 
 msgid "Plugin List"
 msgstr "Zoznam pluginov"

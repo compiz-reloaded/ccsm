@@ -10,16 +10,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: compiz-fusion-plugins 0.0.1\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-01-29 17:04+0530\n"
-"PO-Revision-Date: 2008-01-25 14:16+0100\n"
-"Last-Translator: Eric Brandt <eric@e-tech.se>\n"
+"POT-Creation-Date: 2008-02-23 22:26+0530\n"
+"PO-Revision-Date: 2008-02-17 11:18+0100\n"
+"Last-Translator: Sebastian Parborg <zedDB@hotmail.com>\n"
 "Language-Team: Compiz Fusion Translators <i18n@lists.compiz-fusion.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Pootle 1.0.2\n"
 
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "The new value for the %(binding)s binding for the action <b>%(action)s</b> "
 "in plugin <b>%(plugin)s</b> conflicts with the action <b>%(action_conflict)"
@@ -37,77 +37,76 @@ msgstr ""
 msgid "Disable %(action_conflict)s"
 msgstr "Inaktivera %(action_conflict)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Don't set %(action)s"
 msgstr "Ställ inte in %(action)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Set %(action)s anyway"
 msgstr "Ställ in %(action)s ändå"
 
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "You are trying to use the feature <b>%(feature)s</b> which is <b>not</b> "
 "provided by any plugin.\n"
 "Do you wish to use this feature anyway?"
 msgstr ""
-"Du försöker använda funktionen <b>%(feature)s</b> som tillhandahålls av<b>%"
-"(plugin)s</b>.\n"
-"Den här insticksmodulen är för närvarande inaktiverad.\n"
-"Vill du aktivera <b>%(plugin)s</b> så att funktionen blir tillgänglig?"
+"Du försöker använda funktionen <b>%(feature)s</b> som <b>inte</b> "
+"tillhandahålls av någon insticksmodul.\n"
+"Vill du använda den här funktionen ändå? "
 
 # Två "Aktivera inte" måste bli förvirrande
-#, fuzzy, python-format
+#, python-format
 msgid "Use %(feature)s"
-msgstr "Aktivera %(feature)s"
+msgstr "Använd %(feature)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Don't use %(feature)s"
-msgstr "Aktivera inte %(feature)s"
+msgstr "Använd inte %(feature)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "You are trying to use the feature <b>%(feature)s</b> which is provided by <b>"
 "%(plugin)s</b>.\n"
 "This plugin is currently disabled.\n"
 "Do you wish to enable <b>%(plugin)s</b> so the feature is available?"
 msgstr ""
-"Du försöker använda funktionen <b>%(feature)s</b> som tillhandahålls av<b>%"
+"Du försöker använda funktionen <b>%(feature)s</b> som tillhandahålls av <b>%"
 "(plugin)s</b>.\n"
 "Den här insticksmodulen är för närvarande inaktiverad.\n"
 "Vill du aktivera <b>%(plugin)s</b> så att funktionen blir tillgänglig?"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Enable %(plugin)s"
-msgstr "Aktivera dessa %(plugin)s"
+msgstr "Aktivera %(plugin)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Don't enable %(feature)s"
 msgstr "Aktivera inte %(feature)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Plugin <b>%(plugin_conflict)s</b> provides feature <b>%(feature)s</b> which "
 "is also provided by <b>%(plugin)s</b>"
 msgstr ""
-"Insticksmodulen <b>%(plugin_conflict)s</b> tillhandahåller funktionen<b>%"
+"Insticksmodulen <b>%(plugin_conflict)s</b> tillhandahåller funktionen <b>%"
 "(feature)s</b>, som även finns i <b>%(plugin)s</b>"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Disable %(plugin_conflict)s"
-msgstr "Inaktivera dessa %(plugin_conflict)s"
+msgstr "Inaktivera %(plugin_conflict)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Don't enable %(plugin)s"
 msgstr "Aktivera inte %(plugin)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Plugin <b>%(plugin_conflict)s</b> conflicts with <b>%(plugin)s</b>."
 msgstr ""
-"Insticksmodulen <b>%(plugin_conflict)s</b> står i konflikt med<b>%(plugin)s</"
-"b>"
+"Insticksmodulen <b>%(plugin_conflict)s</b> står i konflikt med <b>%(plugin)"
+"s</b>."
 
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "<b>%(plugin)s</b> requires feature <b>%(feature)s</b> which is provided by "
 "the following plugins:\n"
@@ -120,15 +119,15 @@ msgstr ""
 msgid "Enable these plugins"
 msgstr "Aktivera dessa insticksmoduler"
 
-#, fuzzy, python-format
+#, python-format
 msgid "<b>%(plugin)s</b> requires the plugin <b>%(require)s</b>."
 msgstr "<b>%(plugin)s</b> kräver insticksmodulen <b>%(require)s</b>."
 
-#, fuzzy, python-format
+#, python-format
 msgid "Enable %(require)s"
 msgstr "Aktivera %(require)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "<b>%(plugin)s</b> provides the feature <b>%(feature)s</b> which is required "
 "by the plugins <b>%(plugin_list)s</b>."
@@ -139,20 +138,20 @@ msgstr ""
 msgid "Disable these plugins"
 msgstr "Inaktivera dessa insticksmoduler"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Don't disable %(plugin)s"
-msgstr "Inaktivera inte %(plugins)s"
+msgstr "Inaktivera inte %(plugin)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "<b>%(plugin)s</b> is required by the plugins <b>%(plugin_list)s</b>."
-msgstr "<b>%(plugin)s</b> krävs av insticksmodulerna <b>%(plugin_list)s</b>"
+msgstr "<b>%(plugin)s</b> krävs av insticksmodulerna <b>%(plugin_list)s</b>."
 
 msgid "General"
 msgstr "Allmänt"
 
-#, fuzzy
+# This is what gnomes translation looks like...
 msgid "Accessibility"
-msgstr "Tillgänglighet"
+msgstr "Allmän åtkomst"
 
 msgid "Desktop"
 msgstr "Skrivbord"
@@ -190,10 +189,9 @@ msgstr "Öppna mapp..."
 msgid "Open file..."
 msgstr "Öppna fil..."
 
-#, fuzzy
 msgid "Multi-list settings. You can double-click a row to edit the values."
 msgstr ""
-"Multilist-inställningar. Du kan dubbelklicka en rad för att ändra värdena"
+"Multilist-inställningar. Du kan dubbelklicka i en rad för att ändra värdena."
 
 msgid "Edit"
 msgstr "Redigera"
@@ -206,9 +204,9 @@ msgstr "Värde (%s)"
 msgid "Edit %s"
 msgstr "Redigera %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Value (%(value)s) for %(setting)s"
-msgstr "Värde (%(value)s) för  %(settings)s"
+msgstr "Värde (%(value)s) för  %(setting)s"
 
 #, python-format
 msgid "\"%s\" is not a valid shortcut"
@@ -220,11 +218,9 @@ msgstr "Inaktiverad"
 msgid "Enabled"
 msgstr "Aktiverad"
 
-#, fuzzy
 msgid "Grab key combination"
 msgstr "Fånga tangentkombination"
 
-#, fuzzy
 msgid "Computing possible conflicts, please wait"
 msgstr "Beräknar eventuella konflikter, var snäll vänta"
 
@@ -232,14 +228,14 @@ msgstr "Beräknar eventuella konflikter, var snäll vänta"
 msgid "\"%s\" is not a valid button"
 msgstr "\"%s\" är inte en giltig knapp"
 
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Using Button1 without modifiers can prevent any left click and thus break "
 "your configuration. Do you really want to set \"%s\" button to Button1 ?"
 msgstr ""
 "Användandet av Knapp1 utan modifierare kan förhindra vänsterklickande och på "
-"så sätt ha sönder din konfiguration. Vill du verkligen binda \"%s\" "
-"knappentill Knapp1 ?"
+"så sätt ha sönder din konfiguration. Vill du verkligen binda \"%s\" knappen "
+"till Knapp1 ?"
 
 #, python-format
 msgid "\"%s\" is not a valid edge mask"
@@ -253,7 +249,7 @@ msgid "Unhandled list type %s for %s"
 msgstr "Ohanterad listtyp %s för %s"
 
 msgid "CompizConfig Settings Manager"
-msgstr "Inställningshanterare för CompizConfig"
+msgstr "CompizConfig inställningshanterare"
 
 msgid "Filter"
 msgstr "Filtrera"
@@ -295,12 +291,10 @@ msgid "Window Title"
 msgstr "Fönstertitel"
 
 # Särskrivning
-#, fuzzy
 msgid "Window Role"
 msgstr "Fönsterroll"
 
 # Ersatte "Fönsterhantering" med "Fönsternamn"
-#, fuzzy
 msgid "Window Name"
 msgstr "Fönsternamn"
 
@@ -328,7 +322,6 @@ msgstr "Typ"
 
 # Ersatte "Värde (%s)" med "Värde"
 #. Value
-#, fuzzy
 msgid "Value"
 msgstr "Värde"
 
@@ -336,7 +329,6 @@ msgid "Grab"
 msgstr "Greppa"
 
 #. Relation
-#, fuzzy
 msgid "Relation"
 msgstr "Relation"
 
@@ -348,7 +340,6 @@ msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr ""
 "Det här är en inställningshanterare för CompizConfig konfigurations-system"
 
-#, fuzzy
 msgid "translator-credits"
 msgstr "översättare"
 
@@ -370,6 +361,11 @@ msgstr "Sök Compiz Core-alternativ"
 
 msgid "Error"
 msgstr "Fel"
+
+msgid ""
+"Enter a filter.\n"
+"Click the keyboard image to grab a key for which to search."
+msgstr ""
 
 msgid "Search in..."
 msgstr "Sök i..."
@@ -408,22 +404,20 @@ msgstr "Importera en CompizConfig-profil"
 msgid "Import as..."
 msgstr "Importera som..."
 
-#, fuzzy
 msgid "Import a CompizConfig Profile as a new profile"
-msgstr "Importera en CompizConfig-profil som ny profil"
+msgstr "Importera en CompizConfig profil som ny profil"
 
 msgid "Export"
 msgstr "Exportera"
 
 msgid "Export your CompizConfig Profile"
-msgstr "Exportera en CompizConfig-profil"
+msgstr "Exportera en CompizConfig profil"
 
 msgid "Reset to defaults"
 msgstr "Återställ till standardvärden"
 
-#, fuzzy
 msgid "Reset your CompizConfig Profile to the global defaults"
-msgstr "Återställ din Compizconfig-profil till de globala standardvärdena"
+msgstr "Återställ din CompizConfig profil till de globala standardvärdena"
 
 msgid "Backend"
 msgstr "Bakände"
@@ -463,7 +457,7 @@ msgstr "Bakände hittades inte."
 
 #. Auto sort
 msgid "Automatic plugin sorting"
-msgstr "Automatisk sortering av instickningsmoduler"
+msgstr "Automatisk sortering av insticksmoduler"
 
 msgid "Disabled Plugins"
 msgstr "Inaktiverade insticksmoduler"
@@ -476,33 +470,31 @@ msgid ""
 "disable conflict handling. You should only do this if you know what you are "
 "doing."
 msgstr ""
-"Vill du verkligen avaktivera den automatiska sorteringen av "
-"instickningsmoduler? Detta kommer också att avaktivera konflikthantering. Du "
-"borde bara göra detta om du vet vad du gör."
+"Vill du verkligen avaktivera den automatiska sorteringen av insticksmoduler? "
+"Detta kommer också att avaktivera konflikthantering. Du borde bara göra "
+"detta om du vet vad du gör."
 
 msgid "Add plugin"
 msgstr "Lägg till instickmodul"
 
-#, fuzzy
 msgid "Plugin name:"
-msgstr "Instickningsmodulens namn:"
+msgstr "Insticksmodulens namn:"
 
 msgid "Insert plugin name"
-msgstr "Skriv instickningsmodulens namn"
+msgstr "Skriv insticksmodulens namn"
 
-#, fuzzy
 msgid ""
 "Configure the backend, profile and other internal settings used by the "
 "Compiz Configuration System."
 msgstr ""
-"Konfigurera bakände, profil och andra interna inställningar  som används av "
+"Konfigurera bakände, profil och andra interna inställningar som används av "
 "Compiz konfigurationssystem."
 
 msgid "About"
 msgstr "Om"
 
 msgid "About CCSM..."
-msgstr "Om CCSM"
+msgstr "Om CCSM..."
 
 msgid "Profile & Backend"
 msgstr "Profil och bakände"
