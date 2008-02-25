@@ -271,7 +271,7 @@ class MainWin(gtk.Window):
                 pluginButton.connect('clicked', self.ShowPlugin, plugin)
                 pluginButton.set_size_request(200, -1)
                 pluginButtonBox = gtk.HBox(False, 10)
-                pluginButtonBox.set_border_width(10)
+                pluginButtonBox.set_border_width(5)
                 pluginImage = self.PluginImages[plugin.Name]
                 pluginLabel = Label(plugin.ShortDesc, 120)
                 pluginButtonBox.pack_start(pluginImage, False, False)
