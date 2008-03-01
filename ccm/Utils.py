@@ -216,6 +216,7 @@ class NotFoundBox(gtk.Alignment):
         self.add(box)
 
     def update(self, value):
+        value = protect_pango_markup(value)
         self.Warning.set_markup(self.Markup % value)
 
 class IdleSettingsParser:
