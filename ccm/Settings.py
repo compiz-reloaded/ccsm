@@ -124,6 +124,7 @@ class MatchSetting(Setting):
         self.Widget.set_spacing(5)
 
         self.Entry = gtk.Entry()
+        Tooltips.set_tip(self.Entry, self.Setting.LongDesc)
         self.Entry.connect('activate', self.Changed)
         self.Entry.connect('focus-out-event', self.Changed)
 
