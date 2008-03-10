@@ -444,17 +444,17 @@ class EdgeSelector (gtk.DrawingArea):
         self.add_events (gtk.gdk.BUTTON_PRESS_MASK)
         self.connect ("expose_event", self.expose)
         self.connect ("button_press_event", self.button_press)
-        self.set_size_request (200, 200)
+        self.set_size_request (196, 196)
 
         # Useful vars
-        x0 = 25
-        y0 = 33
-        x1 = 175
-        y1 = 125
-        x2 = x0 + 40
-        y2 = y0 + 27
-        x3 = x1 - 40
-        y3 = y1 - 27
+        x0 = 16
+        y0 = 24
+        x1 = 181
+        y1 = 133
+        x2 = x0 + 39
+        y2 = y0 + 26
+        x3 = x1 - 39
+        y3 = y1 - 26
         self._coords = (x0, y0, x1, y1, x2, y2, x3, y3)
 
     def draw (self, cr, width, height):
@@ -464,38 +464,52 @@ class EdgeSelector (gtk.DrawingArea):
         cradius = self._cradius
         radius  = self._radius
 
+        cr.set_line_width(1.0)
+
         # Top left edge
         cr.new_path ()
-        cr.move_to (x0, y0 - cradius)
+        cr.move_to (x0, y0 + cradius)
         cr.line_to (x0, y0)
         cr.line_to (x0 + cradius, y0)
         cr.arc (x0, y0, cradius, 0, pi / 2)
-        self.set_color (cr, "TopLeft")
-        cr.fill ()
+        cr.close_path ()
+        self.set_fill_color (cr, "TopLeft")
+        cr.fill_preserve ()
+        self.set_stroke_color (cr, "TopLeft")
+        cr.stroke ()
         # Top right edge
         cr.new_path ()
         cr.move_to (x1, y0 + cradius)
         cr.line_to (x1, y0)
         cr.line_to (x1 - cradius, y0)
-        cr.arc (x1, y0, cradius, pi / 2, pi)
-        self.set_color (cr, "TopRight")
-        cr.fill ()
+        cr.arc_negative (x1, y0, cradius, pi, pi/2)
+        cr.close_path ()
+        self.set_fill_color (cr, "TopRight")
+        cr.fill_preserve ()
+        self.set_stroke_color (cr, "TopRight")
+        cr.stroke ()
         # Bottom left edge
         cr.new_path ()
         cr.move_to (x0, y1 - cradius)
         cr.line_to (x0, y1)
         cr.line_to (x0 + cradius, y1)
-        cr.arc (x0, y1, cradius, 3 * pi / 2, 2 * pi)
-        self.set_color (cr, "BottomLeft")
-        cr.fill ()
+        cr.arc_negative (x0, y1, cradius, 2 * pi, 3 * pi / 2)
+        cr.close_path ()
+        self.set_fill_color (cr, "BottomLeft")
+        cr.fill_preserve ()
+        self.set_stroke_color (cr, "BottomLeft")
+        cr.stroke ()
         # Bottom right edge
         cr.new_path ()
         cr.move_to (x1, y1 - cradius)
         cr.line_to (x1, y1)
         cr.line_to (x1 - cradius, y1)
         cr.arc (x1, y1, cradius, pi, 3 * pi / 2)
-        self.set_color (cr, "BottomRight")
-        cr.fill ()
+        cr.close_path ()
+        self.set_fill_color (cr, "BottomRight")
+        cr.fill_preserve ()
+        self.set_stroke_color (cr, "BottomRight")
+        cr.stroke ()
         # Top edge
         cr.new_path ()
         cr.move_to (x2 + radius, y0)
@@ -503,8 +517,11 @@ class EdgeSelector (gtk.DrawingArea):
         cr.arc (x3 - radius, y0, radius, 0, pi / 2)
         cr.line_to (x2 + radius, y0 + radius)
         cr.arc (x2 + radius, y0, radius, pi / 2, pi)
-        self.set_color (cr, "Top")
-        cr.fill ()
+        cr.close_path ()
+        self.set_fill_color (cr, "Top")
+        cr.fill_preserve ()
+        self.set_stroke_color (cr, "Top")
+        cr.stroke ()
         # Bottom edge
         cr.new_path ()
         cr.move_to (x2 + radius, y1)
@@ -512,8 +529,11 @@ class EdgeSelector (gtk.DrawingArea):
         cr.arc_negative (x3 - radius, y1, radius, 0, - pi / 2)
         cr.line_to (x2 + radius, y1 - radius)
         cr.arc_negative (x2 + radius, y1, radius, - pi / 2, pi)
-        self.set_color (cr, "Bottom")
-        cr.fill ()
+        cr.close_path ()
+        self.set_fill_color (cr, "Bottom")
+        cr.fill_preserve ()
+        self.set_stroke_color (cr, "Bottom")
+        cr.stroke ()
         # Left edge
         cr.new_path ()
         cr.move_to (x0, y2 + radius)
@@ -521,8 +541,11 @@ class EdgeSelector (gtk.DrawingArea):
         cr.arc_negative (x0, y3 - radius, radius, pi / 2, 0)
         cr.line_to (x0 + radius, y2 + radius)
         cr.arc_negative (x0, y2 + radius, radius, 0, 3 * pi / 2)
-        self.set_color (cr, "Left")
-        cr.fill ()
+        cr.close_path ()
+        self.set_fill_color (cr, "Left")
+        cr.fill_preserve ()
+        self.set_stroke_color (cr, "Left")
+        cr.stroke ()
         # Right edge
         cr.new_path ()
         cr.move_to (x1, y2 + radius)
@@ -530,12 +553,19 @@ class EdgeSelector (gtk.DrawingArea):
         cr.arc (x1, y3 - radius, radius, pi / 2, pi)
         cr.line_to (x1 - radius, y2 + radius)
         cr.arc (x1, y2 + radius, radius, pi, 3 * pi / 2)
-        self.set_color (cr, "Right")
-        cr.fill ()
+        cr.close_path ()
+        self.set_fill_color (cr, "Right")
+        cr.fill_preserve ()
+        self.set_stroke_color (cr, "Right")
+        cr.stroke ()
 
-    def set_color (self, cr, edge):
+    def set_fill_color (self, cr, edge):
         '''Set painting color for edge'''
         cr.set_source_rgb (0.9, 0.9, 0.9)
+
+    def set_stroke_color (self, cr, edge):
+        '''Set stroke color for edge'''
+        cr.set_source_rgb (0.45, 0.45, 0.45)
 
     def redraw (self, queue = False):
         '''Redraw internal surface'''
@@ -655,12 +685,19 @@ class SingleEdgeSelector (EdgeSelector):
         return "|".join (filter (lambda s: len (s) > 0, self._current))
     current = property (get_current, set_current)
 
-    def set_color (self, cr, edge):
+    def set_fill_color (self, cr, edge):
         '''Set painting color for edge'''
         if edge in self._current:
-            cr.set_source_rgb (0, 1, 0)
+            cr.set_source_rgb (0.64, 1.0, 0.09)
         else:
-            cr.set_source_rgb (0.90, 0, 0)
+            cr.set_source_rgb (0.80, 0.00, 0.00)
+
+    def set_stroke_color (self, cr, edge):
+        '''Set stroke color for edge'''
+        if edge in self._current:
+            cr.set_source_rgb (0.31, 0.60, 0.02)
+        else:
+            cr.set_source_rgb (0.64, 0.00, 0.00)
 
     def edge_clicked (self, widget, edge, event):
         if not len (edge):
@@ -691,12 +728,19 @@ class GlobalEdgeSelector(EdgeSelector):
         if len (settings) <= 0:
             self.generate_setting_list ()
 
-    def set_color (self, cr, edge):
+    def set_fill_color (self, cr, edge):
         '''Set painting color for edge'''
         if self._edges.has_key(edge):
-            cr.set_source_rgb (0, 1, 0)
+            cr.set_source_rgb (0.64, 1.0, 0.09)
         else:
-            cr.set_source_rgb (0.90, 0, 0)
+            cr.set_source_rgb (0.80, 0.00, 0.00)
+
+    def set_stroke_color (self, cr, edge):
+        '''Set stroke color for edge'''
+        if self._edges.has_key(edge):
+            cr.set_source_rgb (0.31, 0.60, 0.02)
+        else:
+            cr.set_source_rgb (0.64, 0.00, 0.00)
 
     def set_settings (self, value):
         self._settings = value
