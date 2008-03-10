@@ -715,6 +715,7 @@ class GlobalEdgeSelector(EdgeSelector):
 
     _settings = []
     _edges = {}
+    _text  = {}
     _context = None
 
     def __init__ (self, context, settings=[]):
@@ -767,7 +768,7 @@ class GlobalEdgeSelector(EdgeSelector):
             for edge in edges:
                 self._edges[edge] = setting
 
-    def set_edge_settings (self, widget, setting, edge):
+    def set_edge_setting (self, setting, edge):
         if not setting:
             if self._edges.has_key(edge):
                 self._edges.pop(edge)
@@ -792,35 +793,59 @@ class GlobalEdgeSelector(EdgeSelector):
         self.redraw (queue = True)
 
     def show_popup (self, widget, edge, event):
-        menu = gtk.Menu ()
+        self._text = {}
+        comboBox = gtk.combo_box_new_text ()
 
-        item = gtk.MenuItem (_("None"))
-        item.connect ('activate', self.set_edge_settings, None, edge)
-        menu.append (item)
+        i = 0
         for setting in self._settings:
-            item = gtk.MenuItem ("%s: %s" % (setting.Plugin.ShortDesc, setting.ShortDesc))
-            item.connect ('activate', self.set_edge_settings, setting, edge)
-            menu.append (item)
+            text = "%s: %s" % (setting.Plugin.ShortDesc, setting.ShortDesc)
+            comboBox.append_text (text)
+            self._text[text] = setting
 
-        menu.show_all ()
-        menu.popup (None, None, None, event.button, event.time)
+            if edge in setting.Value.split ("|"):
+                comboBox.set_active (i)
+            i += 1
+
+        comboBox.set_size_request (200, -1)
+        comboBox.connect ('changed', self.combo_changed, edge)
+
+        popup = Popup (self, child=comboBox, decorated=False, mouse=True, modal=False)
+        popup.connect ('focus-out-event', self.focus_out)
+
+    def focus_out (self, widget, event):
+        combo = widget.get_child ()
+        if combo.props.popup_shown:
+            return
+        gtk_process_events ()
+        widget.destroy ()
+
+    def combo_changed (self, widget, edge):
+        text = widget.get_active_text ()
+        setting = self._text[text]
+        self.set_edge_setting (setting, edge)
+        popup = widget.get_parent ()
+        popup.destroy ()
 
 # Popup
 #
 class Popup (gtk.Window):
 
-    def __init__ (self, parent, text):
+    def __init__ (self, parent, text=None, child=None, decorated=True, mouse=False, modal=True):
         gtk.Window.__init__ (self, gtk.WINDOW_TOPLEVEL)
         self.set_type_hint (gtk.gdk.WINDOW_TYPE_HINT_UTILITY)
-        self.set_position (gtk.WIN_POS_CENTER_ALWAYS)
+        self.set_position (mouse and gtk.WIN_POS_MOUSE or gtk.WIN_POS_CENTER_ALWAYS)
         self.set_transient_for (parent.get_toplevel ())
         self.set_icon (parent.get_toplevel ().get_icon ())
-        self.set_modal (True)
-        label = gtk.Label (text)
-        align = gtk.Alignment ()
-        align.set_padding (20, 20, 20, 20)
-        align.add (label)
-        self.add (align)
+        self.set_modal (modal)
+        self.set_decorated (decorated)
+        if text:
+            label = gtk.Label (text)
+            align = gtk.Alignment ()
+            align.set_padding (20, 20, 20, 20)
+            align.add (label)
+            self.add (align)
+        elif child:
+            self.add (child)
         self.show_all ()
         gtk_process_events ()
 
