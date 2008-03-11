@@ -797,6 +797,8 @@ class GlobalEdgeSelector(EdgeSelector):
         comboBox = gtk.combo_box_new_text ()
 
         i = 0
+        comboBox.append_text (_("None"))
+        comboBox.set_active (0)
         for setting in self._settings:
             text = "%s: %s" % (setting.Plugin.ShortDesc, setting.ShortDesc)
             comboBox.append_text (text)
@@ -821,7 +823,9 @@ class GlobalEdgeSelector(EdgeSelector):
 
     def combo_changed (self, widget, edge):
         text = widget.get_active_text ()
-        setting = self._text[text]
+        setting = None
+        if text != _("None"):
+            setting = self._text[text]
         self.set_edge_setting (setting, edge)
         popup = widget.get_parent ()
         popup.destroy ()
