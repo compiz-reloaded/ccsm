@@ -796,9 +796,9 @@ class GlobalEdgeSelector(EdgeSelector):
         self._text = {}
         comboBox = gtk.combo_box_new_text ()
 
-        i = 0
         comboBox.append_text (_("None"))
         comboBox.set_active (0)
+        i = 1
         for setting in self._settings:
             text = "%s: %s" % (setting.Plugin.ShortDesc, setting.ShortDesc)
             comboBox.append_text (text)
