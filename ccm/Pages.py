@@ -523,7 +523,7 @@ class ProfileBackendPage:
         profileAdd = gtk.Button()
         Tooltips.set_tip(profileAdd, _("Add a New Profile"))
         profileAdd.set_image(gtk.image_new_from_stock(gtk.STOCK_ADD, gtk.ICON_SIZE_BUTTON))
-        profileRemove = gtk.Button()
+        self.ProfileRemoveButton = profileRemove = gtk.Button()
         Tooltips.set_tip(profileRemove, _("Remove This Profile"))
         profileRemove.set_image(gtk.image_new_from_stock(gtk.STOCK_REMOVE, gtk.ICON_SIZE_BUTTON))
         self.ProfileComboBox = gtk.combo_box_new_text()
@@ -531,7 +531,8 @@ class ProfileBackendPage:
         self.ProfileComboBox.append_text(_("Default"))
         for profile in self.Context.Profiles.values():
             self.ProfileComboBox.append_text(profile.Name)
-        self.ProfileComboBox.connect("changed", self.ProfileChanged)
+        self.ProfileHandler = self.ProfileComboBox.connect("changed",
+            self.ProfileChangedAddTimeout)
         name = self.Context.CurrentProfile.Name
         if name in self.Context.Profiles: 
             index = self.Context.Profiles.values().index(self.Context.Profiles[name])
@@ -578,7 +579,7 @@ class ProfileBackendPage:
         name = self.Context.CurrentBackend.Name
         index = self.Context.Backends.values().index(self.Context.Backends[name])
         backendBox.set_active(index)
-        backendBox.connect("changed", self.BackendChanged)
+        backendBox.connect("changed", self.BackendChangedAddTimeout)
         backendLabel = Label()
         backendLabel.set_markup(HeaderMarkup % (self.Main.Style.BrightColor, _("Backend")))
         rightChild.pack_start(backendLabel, False, False, 5)
@@ -596,19 +597,23 @@ class ProfileBackendPage:
 
         self.Widget = rightChild
     
-    def UpdateProfiles (self, default = _("Default")):
+    def UpdateProfiles (self, current=_("Default")):
+
+        self.ProfileComboBox.handler_block (self.ProfileHandler)
+
         self.Context.Read ()
         self.Context.UpdateProfiles ()
 
         self.ProfileComboBox.get_model ().clear ()
-        index = 0
         set = False
-        for profile in [default] + self.Context.Profiles.keys ():
+        for index, profile in enumerate ([_("Default")] + list (self.Context.Profiles)):
             self.ProfileComboBox.append_text (profile)
-            if profile == default and not set:
+            if profile == current and not set:
                 self.ProfileComboBox.set_active (index)
                 set = True
-            index += 1
+        self.ProfileRemoveButton.set_sensitive (self.ProfileComboBox.get_active() != 0)
+
+        self.ProfileComboBox.handler_unblock (self.ProfileHandler)
 
     def IntegrationChanged(self, widget):
         value = widget.get_active()
@@ -624,8 +629,15 @@ class ProfileBackendPage:
             self.ProfileComboBox.set_active (0)
             return
 
+        self.ProfileRemoveButton.set_sensitive (self.ProfileComboBox.get_active() != 0)
+
         self.Context.Read()
         self.Context.Write()
+
+        return False
+
+    def ProfileChangedAddTimeout(self, widget):
+        gobject.timeout_add (500, self.ProfileChanged, widget)
 
     def CreateFilter(self, chooser):
         filter = gtk.FileFilter()
@@ -679,13 +691,13 @@ class ProfileBackendPage:
         chooser.destroy ()
         if ret == gtk.RESPONSE_OK:
             return path
-        return False
+        return None
 
     def ProfileNameDialog (self):
         dlg = gtk.Dialog (_("Enter a profile name"), self.Main,
                           gtk.DIALOG_MODAL)
         dlg.add_button (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
-        dlg.add_button (gtk.STOCK_OK, gtk.RESPONSE_OK)
+        dlg.add_button (gtk.STOCK_ADD, gtk.RESPONSE_OK)
         
         entry = gtk.Entry ()
         label = gtk.Label (_("Please enter a name for the new profile:"))
@@ -699,7 +711,7 @@ class ProfileBackendPage:
         dlg.destroy()
         if ret == gtk.RESPONSE_OK:
             return text
-        return False
+        return None
 
     def ImportProfile (self, widget):
         path = self.ImportProfileDialog ()
@@ -747,6 +759,11 @@ class ProfileBackendPage:
 
         self.ProfileComboBox.set_sensitive(self.Context.CurrentBackend.ProfileSupport)
         self.IntegrationButton.set_sensitive(self.Context.CurrentBackend.IntegrationSupport)
+
+        return False
+
+    def BackendChangedAddTimeout(self, widget):
+        gobject.timeout_add (500, self.BackendChanged, widget)
 
 # Plugin List Page
 #
