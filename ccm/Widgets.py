@@ -230,8 +230,6 @@ class ScrolledList(gtk.ScrolledWindow):
         self.props.vscrollbar_policy = gtk.POLICY_AUTOMATIC
 
         self.store = gtk.ListStore(gobject.TYPE_STRING)
-
-        self.custom_style = Style()
     
         self.view = gtk.TreeView(self.store)
         self.view.set_headers_visible(True)
