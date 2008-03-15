@@ -787,7 +787,7 @@ class PluginListPage:
         self.EnabledPluginsList = ScrolledList(_("Enabled Plugins"))
 
         # Left/Right buttons
-        buttonBox = gtk.VBox()
+        self.MiddleButtonBox = buttonBox = gtk.VBox()
         buttonBox.set_spacing(5)
         boxAlignment = gtk.Alignment(0.0, 0.5, 0.0, 0.0)
         boxAlignment.add(buttonBox)
@@ -810,7 +810,7 @@ class PluginListPage:
         enabledBox.set_spacing(10)
 
         enabledAlignment = gtk.Alignment(0.5, 0.0, 0.0, 0.0)
-        enabledButtonBox = gtk.HBox()
+        self.EnabledButtonBox = enabledButtonBox = gtk.HBox()
         enabledButtonBox.set_spacing(5)
         enabledAlignment.add(enabledButtonBox)
 
@@ -870,8 +870,10 @@ class PluginListPage:
                 return
 
         self.Context.AutoSort = autoSort
-        self.EnabledPluginsList.set_sensitive(not self.Context.AutoSort)
-        self.DisabledPluginsList.set_sensitive(not self.Context.AutoSort)
+
+        for widget in (self.EnabledPluginsList.view, self.DisabledPluginsList.view,
+                self.MiddleButtonBox, self.EnabledButtonBox):
+            widget.set_sensitive(not self.Context.AutoSort)
 
     def UpdateEnabledPluginsList(self):
         activePlugins = self.Context.Plugins['core'].Display['active_plugins'].Value
