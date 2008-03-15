@@ -232,9 +232,6 @@ class ScrolledList(gtk.ScrolledWindow):
         self.store = gtk.ListStore(gobject.TYPE_STRING)
 
         self.custom_style = Style()
-
-        viewport = gtk.Viewport()
-        viewport.modify_bg(gtk.STATE_NORMAL, gtk.gdk.color_parse(self.custom_style.BackgroundColor))
     
         self.view = gtk.TreeView(self.store)
         self.view.set_headers_visible(True)
@@ -242,8 +239,7 @@ class ScrolledList(gtk.ScrolledWindow):
         
         self.set_size_request(300, 300)
         
-        viewport.add(self.view)
-        self.add(viewport)
+        self.add(self.view)
         
         self.select = self.view.get_selection()
         self.select.set_mode(gtk.SELECTION_SINGLE)
@@ -1111,7 +1107,7 @@ class MatchButton(gtk.Button):
 class AboutDialog (gtk.AboutDialog):
     def __init__ (self, parent):
         gtk.AboutDialog.__init__ (self)
-        self.set_parent (parent)
+        self.set_transient_for (parent)
 
         self.set_name (_("CompizConfig Settings Manager"))
         self.set_version (Version)
