@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-02-23 22:26+0530\n"
-"PO-Revision-Date: 2007-12-08 14:25+0100\n"
+"POT-Creation-Date: 2008-03-15 19:56+0530\n"
+"PO-Revision-Date: 2008-03-06 21:03+0100\n"
 "Last-Translator: Milo Casagrande <milo_casagrande@yahoo.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "MIME-Version: 1.0\n"
@@ -224,7 +224,7 @@ msgid "Grab key combination"
 msgstr "Ottieni combinazione tasti"
 
 msgid "Computing possible conflicts, please wait"
-msgstr "Calcolo dei possibile conflitti, attendere"
+msgstr "Calcolo dei possibili conflitti, attendere"
 
 #, python-format
 msgid "\"%s\" is not a valid button"
@@ -373,6 +373,8 @@ msgid ""
 "Enter a filter.\n"
 "Click the keyboard image to grab a key for which to search."
 msgstr ""
+"Inserire un filtro.\n"
+"Fare clic sull'immagine della tastiera per ottenere una lettera da cercare."
 
 msgid "Search in..."
 msgstr "Cerca in..."
@@ -462,7 +464,7 @@ msgstr "Apri file..."
 
 # (NdT) titolo finestra di dialogo
 msgid "Enter a profile name"
-msgstr "Inserisci nome profilo"
+msgstr "Inserimento nome profilo"
 
 # (NdT) stringa al di sopra di una casella di testo
 msgid "Please enter a name for the new profile:"
@@ -541,6 +543,3 @@ msgstr ""
 "<span size=\"large\"><b>Nessuna corrispondenza trovata.</b> </span><span>\n"
 "\n"
 " Il filtro «<b>%s</b>» non corrisponde ad alcuna voce.</span>"
-
-#~ msgid "Actions"
-#~ msgstr "Azioni"
