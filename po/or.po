@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Oriya\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-02-23 22:26+0530\n"
+"POT-Creation-Date: 2008-03-15 19:56+0530\n"
 "PO-Revision-Date: 2007-12-17 15:45+0530\n"
 "Last-Translator: \n"
 "Language-Team: gist oriya team <info.gist@cdac.in>\n"
@@ -18,12 +18,32 @@ msgstr ""
 "X-Poedit-Country: India\n"
 
 #, python-format
+msgid ""
+"The new value for the %(binding)s binding for the action <b>%(action)s</b> "
+"in plugin <b>%(plugin)s</b> conflicts with the action <b>%(action_conflict)"
+"s</b> of the <b>%(plugin_conflict)s</b> plugin.\n"
+"Do you wish to disable <b>%(action_conflict)s</b> in the <b>%"
+"(plugin_conflict)s</b> plugin?"
+msgstr ""
+
+#, python-format
 msgid "Disable %(action_conflict)s"
 msgstr "ଅକ୍ଷମକର %(action_conflict)s"
 
 #, python-format
 msgid "Don't set %(action)s"
 msgstr " %(action)sଗୁଡିକୁ ସ୍ଥିର କରନାହିଁ"
+
+#, fuzzy, python-format
+msgid "Set %(action)s anyway"
+msgstr " %(action)sଗୁଡିକୁ ସ୍ଥିର କରନାହିଁ"
+
+#, python-format
+msgid ""
+"You are trying to use the feature <b>%(feature)s</b> which is <b>not</b> "
+"provided by any plugin.\n"
+"Do you wish to use this feature anyway?"
+msgstr ""
 
 #, python-format
 msgid "Use %(feature)s"
@@ -34,6 +54,14 @@ msgid "Don't use %(feature)s"
 msgstr "%(feature)s ଉପୟୋଗ କର ନାହିଁ"
 
 #, python-format
+msgid ""
+"You are trying to use the feature <b>%(feature)s</b> which is provided by <b>"
+"%(plugin)s</b>.\n"
+"This plugin is currently disabled.\n"
+"Do you wish to enable <b>%(plugin)s</b> so the feature is available?"
+msgstr ""
+
+#, python-format
 msgid "Enable %(plugin)s"
 msgstr " %(plugin)s କୁ ସକ୍ଷମକର"
 
@@ -41,12 +69,59 @@ msgstr " %(plugin)s କୁ ସକ୍ଷମକର"
 msgid "Don't enable %(feature)s"
 msgstr "%(feature)s ସକ୍ଷମ କରନାହିଁ"
 
+#, python-format
+msgid ""
+"Plugin <b>%(plugin_conflict)s</b> provides feature <b>%(feature)s</b> which "
+"is also provided by <b>%(plugin)s</b>"
+msgstr ""
+
+#, fuzzy, python-format
+msgid "Disable %(plugin_conflict)s"
+msgstr "ଅକ୍ଷମକର %(action_conflict)s"
+
+#, fuzzy, python-format
+msgid "Don't enable %(plugin)s"
+msgstr " %(plugin)s କୁ ଅକ୍ଷମକର ନାହିଁ"
+
+#, python-format
+msgid "Plugin <b>%(plugin_conflict)s</b> conflicts with <b>%(plugin)s</b>."
+msgstr ""
+
+#, python-format
+msgid ""
+"<b>%(plugin)s</b> requires feature <b>%(feature)s</b> which is provided by "
+"the following plugins:\n"
+"%(plugin_list)s"
+msgstr ""
+
+#, fuzzy
+msgid "Enable these plugins"
+msgstr "ଏହି ପ୍ଲଗଇନଗୁଡିକୁ ଅକ୍ଷମକର"
+
+#, python-format
+msgid "<b>%(plugin)s</b> requires the plugin <b>%(require)s</b>."
+msgstr ""
+
+#, fuzzy, python-format
+msgid "Enable %(require)s"
+msgstr " %(plugin)s କୁ ସକ୍ଷମକର"
+
+#, python-format
+msgid ""
+"<b>%(plugin)s</b> provides the feature <b>%(feature)s</b> which is required "
+"by the plugins <b>%(plugin_list)s</b>."
+msgstr ""
+
 msgid "Disable these plugins"
 msgstr "ଏହି ପ୍ଲଗଇନଗୁଡିକୁ ଅକ୍ଷମକର"
 
 #, python-format
 msgid "Don't disable %(plugin)s"
 msgstr " %(plugin)s କୁ ଅକ୍ଷମକର ନାହିଁ"
+
+#, python-format
+msgid "<b>%(plugin)s</b> is required by the plugins <b>%(plugin_list)s</b>."
+msgstr ""
 
 msgid "General"
 msgstr "ସାଧାରଣ"
@@ -104,6 +179,10 @@ msgstr "ମୂଲ୍ଯ (%s)"
 #, python-format
 msgid "Edit %s"
 msgstr "ସଂପାଦନକର %s"
+
+#, python-format
+msgid "Value (%(value)s) for %(setting)s"
+msgstr ""
 
 #, python-format
 msgid "\"%s\" is not a valid shortcut"

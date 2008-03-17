@@ -1,22 +1,22 @@
 # translation of zh_CN-ccsm.po to Chinese
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# Copyright (C) 2008 compiz-fusion.org 
+# This file is distributed under the same license as the ccsm package.
 # Thruth <gubotruth@gmail.com>, 2007
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: zh_CN-ccsm\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-02-23 22:26+0530\n"
-"PO-Revision-Date: 2007-12-11 16:59+0100\n"
-"Last-Translator: Thruth Wang <gubotruth@gmail.com>\n"
+"POT-Creation-Date: 2008-03-15 19:56+0530\n"
+"PO-Revision-Date: 2008-02-29 03:18+0100\n"
+"Last-Translator: Gao Dexiang <biaji.cn@gmail.com>\n"
 "Language-Team: Chinese\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Pootle 1.0.2\n"
 
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "The new value for the %(binding)s binding for the action <b>%(action)s</b> "
 "in plugin <b>%(plugin)s</b> conflicts with the action <b>%(action_conflict)"
@@ -24,9 +24,11 @@ msgid ""
 "Do you wish to disable <b>%(action_conflict)s</b> in the <b>%"
 "(plugin_conflict)s</b> plugin?"
 msgstr ""
-" %s 组合 <b>%s</b> 动作的新值在 <b>%s</b> 插件中与动作 <b>%s</b> 相冲突，该动"
-"作在 <b>%s</b> 插件中。\n"
-"您要禁用 <b>%s</b> 么？它在 <b>%s</b> 插件中。"
+"%(binding)s 组合 <b>%(action)s</b> 动作的新值在 <b>%(plugin)s</b> 插件中与动"
+"作 <b>%(action_conflict)s</b> 相冲突，该动作在 <b>%(plugin_conflict)s</b> 插"
+"件中。\n"
+"您要禁用 <b>%(action_conflict)s</b> 么？它在 <b>%(plugin_conflict)s</b> 插件"
+"中。"
 
 #, python-format
 msgid "Disable %(action_conflict)s"
@@ -40,15 +42,14 @@ msgstr "不要设置 %(action)s"
 msgid "Set %(action)s anyway"
 msgstr "强制设置 %(action)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "You are trying to use the feature <b>%(feature)s</b> which is <b>not</b> "
 "provided by any plugin.\n"
 "Do you wish to use this feature anyway?"
 msgstr ""
-"您试图使用 <b>%s</b> 功能，该功能由 <b>%s</b> 插件提供。\n"
-"该插件目前被禁用。\n"
-"您仍然希望启用 %s 插件以实现功能么?"
+"您试图使用 <b>%(feature)s</b> 功能，该功能<b>不</b>由任何插件提供。\n"
+"您仍然希望启用 此功能么?"
 
 #, python-format
 msgid "Use %(feature)s"
@@ -58,75 +59,79 @@ msgstr "使用 %(feature)s"
 msgid "Don't use %(feature)s"
 msgstr "不使用 %(feature)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "You are trying to use the feature <b>%(feature)s</b> which is provided by <b>"
 "%(plugin)s</b>.\n"
 "This plugin is currently disabled.\n"
 "Do you wish to enable <b>%(plugin)s</b> so the feature is available?"
 msgstr ""
-"您试图使用 <b>%s</b> 功能，该功能由 <b>%s</b> 插件提供。\n"
+"您试图使用 <b>%(feature)s</b> 功能，该功能由 <b>%(plugin)s</b> 插件提供。\n"
 "该插件目前被禁用。\n"
-"您仍然希望启用 %s 插件以实现功能么?"
+"您仍然希望启用%(plugin)s插件以实现功能么?"
 
 #, python-format
 msgid "Enable %(plugin)s"
 msgstr "启用插件 %(plugin)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Don't enable %(feature)s"
-msgstr "不要启用 %s"
+msgstr "不要启用%(feature)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Plugin <b>%(plugin_conflict)s</b> provides feature <b>%(feature)s</b> which "
 "is also provided by <b>%(plugin)s</b>"
-msgstr "<b>%s</b> 插件提供 <b>%s</b> 功能，该功能也可以由 <b>%s</b> 提供"
+msgstr ""
+"<b>%(plugin_conflict)s</b> 插件提供 <b>%(feature)s</b> 功能，该功能也可以由 "
+"<b>%(plugin)s</b> 提供"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Disable %(plugin_conflict)s"
-msgstr "禁用这些插件"
+msgstr "禁用%(plugin_conflict)s"
 
 #, python-format
 msgid "Don't enable %(plugin)s"
 msgstr "不要启用插件 %(plugin)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Plugin <b>%(plugin_conflict)s</b> conflicts with <b>%(plugin)s</b>."
-msgstr "<b>%s</b> 插件与 <b>%s</b>相冲突。"
+msgstr "<b>%(plugin_conflict)s</b> 插件与 <b>%(plugin)s</b>插件相冲突。"
 
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "<b>%(plugin)s</b> requires feature <b>%(feature)s</b> which is provided by "
 "the following plugins:\n"
 "%(plugin_list)s"
 msgstr ""
-"<b>%s</b> 需要 <b>%s</b> 功能，可以由下列插件提供:\n"
-"%s"
+"<b>%(plugin)s</b> 插件需要 <b>%(feature)s</b>功能，可以由下列插件提供:\n"
+"%(plugin_list)s"
 
 msgid "Enable these plugins"
 msgstr "启用这些插件"
 
-#, fuzzy, python-format
+#, python-format
 msgid "<b>%(plugin)s</b> requires the plugin <b>%(require)s</b>."
-msgstr "<b>%s</b> 需要 <b>%s</b> 插件。"
+msgstr "<b>%(plugin)s</b> 需要<b>%(require)s</b> 插件。"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Enable %(require)s"
-msgstr "启用 %s"
+msgstr "启用%(require)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "<b>%(plugin)s</b> provides the feature <b>%(feature)s</b> which is required "
 "by the plugins <b>%(plugin_list)s</b>."
-msgstr "<b>%s</b> 提供 <b>%s</b> 功能，<b>%s</b> 插件需要此功能。"
+msgstr ""
+"<b>%(plugin)s</b>提供<b>%(feature)s</b>功能，<b>%(plugin_list)s</b> 插件需要"
+"此功能。"
 
 msgid "Disable these plugins"
 msgstr "禁用这些插件"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Don't disable %(plugin)s"
-msgstr "不要禁用 %s"
+msgstr "不要禁用 %(plugin)s"
 
 #, python-format
 msgid "<b>%(plugin)s</b> is required by the plugins <b>%(plugin_list)s</b>."
@@ -175,7 +180,7 @@ msgid "Open file..."
 msgstr "打开文件.."
 
 msgid "Multi-list settings. You can double-click a row to edit the values."
-msgstr ""
+msgstr "多列设定。您可以双击一行进行编辑"
 
 msgid "Edit"
 msgstr "编辑"
@@ -188,9 +193,9 @@ msgstr "值 (%s)"
 msgid "Edit %s"
 msgstr "编辑 %s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Value (%(value)s) for %(setting)s"
-msgstr "值 (%s) 于 %s:"
+msgstr "值 (%(value)s) 于 %(setting)s"
 
 #, python-format
 msgid "\"%s\" is not a valid shortcut"
@@ -217,10 +222,12 @@ msgid ""
 "Using Button1 without modifiers can prevent any left click and thus break "
 "your configuration. Do you really want to set \"%s\" button to Button1 ?"
 msgstr ""
+"不加修正键定义鼠标左键将会破坏您的配置，导致无法正常使用鼠标左键功能。您真的"
+"打算将 \"%s\" 定义到鼠标左键么？"
 
-#, python-format
+#, fuzzy, python-format
 msgid "\"%s\" is not a valid edge mask"
-msgstr ""
+msgstr "\"%s\" 不是一个有效的边界遮蔽"
 
 msgid "None"
 msgstr "无"
@@ -292,8 +299,9 @@ msgstr "和"
 msgid "Or"
 msgstr "或"
 
+#, fuzzy
 msgid "Edit match"
-msgstr ""
+msgstr "编辑配对"
 
 #. Type
 msgid "Type"
@@ -307,9 +315,8 @@ msgid "Grab"
 msgstr "抓取"
 
 #. Relation
-#, fuzzy
 msgid "Relation"
-msgstr "整合"
+msgstr "关联"
 
 #. Invert
 msgid "Invert"
@@ -382,7 +389,6 @@ msgstr "导入一个 CompizConfig 存档"
 msgid "Import as..."
 msgstr "做为……导入"
 
-#, fuzzy
 msgid "Import a CompizConfig Profile as a new profile"
 msgstr "导入一个 CompizConfig 存档"
 
@@ -395,9 +401,8 @@ msgstr "导出你的 CompizConfig 存档"
 msgid "Reset to defaults"
 msgstr "重置到默认"
 
-#, fuzzy
 msgid "Reset your CompizConfig Profile to the global defaults"
-msgstr "导出你的 CompizConfig 存档"
+msgstr "重置你的Compiz设置为默认的全局设置"
 
 msgid "Backend"
 msgstr "后端"
@@ -436,15 +441,12 @@ msgstr "未找到后端程序。"
 msgid "Automatic plugin sorting"
 msgstr "插件自动排序"
 
-#, fuzzy
 msgid "Disabled Plugins"
-msgstr "禁用这些插件"
+msgstr "禁用的插件"
 
-#, fuzzy
 msgid "Enabled Plugins"
-msgstr "启用这些插件"
+msgstr "启用的插件"
 
-#, fuzzy
 msgid ""
 "Do you really want to disable automatic plugin sorting? This will also "
 "disable conflict handling. You should only do this if you know what you are "
@@ -462,11 +464,10 @@ msgstr "插件名："
 msgid "Insert plugin name"
 msgstr "插入插件名称"
 
-#, fuzzy
 msgid ""
 "Configure the backend, profile and other internal settings used by the "
 "Compiz Configuration System."
-msgstr "配置 Conpiz 配置系统使用的后端和系统。"
+msgstr "配置 Compiz 配置系统使用的后端、概要以及其它内部设置"
 
 msgid "About"
 msgstr "关于"
