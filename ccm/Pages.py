@@ -101,8 +101,7 @@ class PluginPage:
         self.RightWidget.set_scrollable(True)
         self.Pages = []
 
-        groupsSorted = sorted(plugin.Groups.items(), key=FirstItemKeyFunc)
-        for name, group in groupsSorted:
+        for name, group in sorted(plugin.Groups.items()):
             name = name or _("General")
             groupPage = GroupPage(name, group)
             if not groupPage.Empty:
@@ -308,7 +307,7 @@ class FilterPage:
 
         self.PluginBox.add_item(_("All"), self.PluginChanged, "<i>%s</i>")
 
-        sortedPlugins = map(lambda x: x[0], self.FilteredPlugins.values())
+        sortedPlugins = map(operator.itemgetter(0), self.FilteredPlugins.values())
         sortedPlugins = sorted(sortedPlugins, key=PluginKeyFunc)
         for plugin in sortedPlugins:
             image = Image(plugin.Name, ImagePlugin)
@@ -1014,7 +1013,9 @@ class Page:
         view.set_shadow_type(gtk.SHADOW_NONE)
         
         scroll.add(view)
-        view.add(self.SetContainer)
+        ebox = gtk.EventBox()
+        view.add(ebox)
+        ebox.add(self.SetContainer)
         self.Widget.pack_start(scroll, True, True)
         
         self.Empty = True
@@ -1027,18 +1028,17 @@ class GroupPage(Page):
 
         self.subGroupAreas = []
 
-        if (group.has_key('')):
+        if '' in group:
             sga = SubGroupArea('', group[''], filter)
             if not sga.Empty:
                 self.SetContainer.pack_start(sga.Widget, False, False)
                 self.Empty = False
-                self.subGroupAreas = self.subGroupAreas + [sga]
+                self.subGroupAreas.append(sga)
 
-        subGroupsSorted = sorted(group.keys(), cmp)
-        for subGroup in subGroupsSorted:
+        for subGroup in sorted(group):
             if not subGroup == '':
                 sga = SubGroupArea(subGroup, group[subGroup], filter)
                 if not sga.Empty:
                     self.SetContainer.pack_start(sga.Widget, False, False)
                     self.Empty = False
-                    self.subGroupAreas = self.subGroupAreas + [sga]
+                    self.subGroupAreas.append(sga)
