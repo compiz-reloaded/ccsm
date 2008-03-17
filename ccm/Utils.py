@@ -46,21 +46,6 @@ def gtk_process_events ():
     while gtk.events_pending ():
         gtk.main_iteration ()
 
-def makeCustomSetting (desc, integrated, widget, reset):
-    box = gtk.HBox ()
-    label = gtk.Label (desc)
-    if integrated:
-        label.set_markup ("<span foreground=\"blue\">%s</span>" % desc)
-    align = gtk.Alignment (0, 0.5)
-    align.add (label)
-    widgetAlign = gtk.Alignment (0, 0.5)
-    widgetAlign.set_padding (0, 0, 0, 10)
-    widgetAlign.add (widget)
-    box.pack_start (align, True, True)
-    box.pack_start (widgetAlign, False, False)
-    box.pack_start (reset, False, False)
-    return box
-
 def getScreens():
     screens = []
     display = gtk.gdk.display_get_default()
@@ -225,13 +210,12 @@ class IdleSettingsParser:
             return not p.Initialized and p.Enabled
 
         self.Context = context
-        self.PluginList = filter (lambda p: FilterPlugin (p[1]),
-                                  self.Context.Plugins.items ())
+        self.PluginList = [p for p in self.Context.Plugins.items() if FilterPlugin(p[1])]
         
         gobject.timeout_add (200, self.Wait)
 
     def Wait(self):
-        if len (self.PluginList) == 0:
+        if not self.PluginList:
             return False
         
         gobject.idle_add (self.ParseSettings)
@@ -276,36 +260,37 @@ class Updater:
                 break
 
     def Update(self):
-        changed = self.Context.ProcessEvents()
-        if changed:
-            changedSettings = self.Context.ChangedSettings
-            if len (filter (lambda s :  s.Plugin.Name == "core" and \
-                                        s.Name == "active_plugins",
-                            changedSettings)):
-                map (lambda plugin: plugin.Read (), self.Plugins)
+        if self.Context.ProcessEvents():
+            changed = self.Context.ChangedSettings
+            if [s for s in changed if s.Plugin.Name == "core" and s.Name == "active_plugins"]:
+                for plugin in self.Plugins:
+                    plugin.Read ()
+
             for settingWidget in self.VisibleSettings:
                 # Remove already destroyed widgets
-                if not settingWidget.Widget.get_parent():
+                if not settingWidget.EBox.get_parent():
                     self.VisibleSettings.remove(settingWidget)
                 
-                # Exception for multi settings widgets (multi list widget, action page, etc.)
-                if settingWidget.Setting.__class__ != list:
-                    if settingWidget.Setting in changedSettings:
+                if settingWidget.Setting:
+                    if settingWidget.Setting in changed:
                         settingWidget.Read()
-                        changedSettings.remove(settingWidget.Setting)
-                else:
+                        changed.remove(settingWidget.Setting)
+                # Exception for multi settings widgets (multi list widget, action page, etc.)
+                elif settingWidget.Settings:
                     read = False
-                    for setting in settingWidget.Setting:
-                        if setting in changedSettings:
+                    for setting in settingWidget.Settings:
+                        if setting in changed:
                             read = True
-                            changedSettings.remove(setting)
+                            changed.remove(setting)
                     if read:
                         settingWidget.Read()
             # For removing non-visible settings
-            map (lambda s: changedSettings.remove (s),
-                 filter (lambda s: s in changedSettings, self.NotRemoved))
-            self.NotRemoved = changedSettings
-            self.Context.ChangedSettings = changedSettings
+            for setting in list(changed):
+                if setting in self.NotRemoved:
+                    changed.remove (setting)
+
+            self.NotRemoved = changed
+            self.Context.ChangedSettings = changed
 
         return True
 
@@ -345,26 +330,26 @@ def FilterSettings(settings, filter, run=0, singleRun=False):
 
     for setting in settings:
         # First run, only search in shortDesc and name
-        if run == 0 or (singleRun and run.count(0) != 0):
+        if run == 0 or (singleRun and 0 in run):
             shortDesc = setting.ShortDesc.lower()
             name = setting.Name.lower()
-            if shortDesc.find(filter) != -1:
+            if filter in shortDesc:
                 filteredSettings.append(setting)
                 continue
-            elif name.find(filter) != -1:
+            elif filter in name:
                 filteredSettings.append(setting)
                 continue
         # Then in longDesc
-        if run == 1 or (singleRun and run.count(1) != 0):
+        if run == 1 or (singleRun and 1 in run):
             longDesc = setting.LongDesc.lower()
-            if longDesc.find(filter) != -1:
+            if filter in longDesc:
                 filteredSettings.append(setting)
                 continue
         # Finally search in the option value
-        if run == 2 or (singleRun and run.count(2) != 0):
+        if run == 2 or (singleRun and 2 in run):
             value = ""
             # make sure enum settings work too
-            if setting.Type == 'Int' and len(setting.Info[2].keys()) > 0:
+            if setting.Type == 'Int' and setting.Info[2]:
                     value = sorted(setting.Info[2].items(), key=EnumSettingKeyFunc)[setting.Value][0]
                     value = value.lower()
             # also make sure intDesc settings work right
@@ -376,15 +361,15 @@ def FilterSettings(settings, filter, run=0, singleRun=False):
                 value = value.lower()
             else:
                 value = str(setting.Value).lower()
-            if value.find(filter) != -1:
+            if filter in value:
                 filteredSettings.append(setting)
 
     # Nothing was found, search also in the longDesc/value
-    if len(filteredSettings) == 0 and run < 2 and not singleRun:
+    if not filteredSettings and run < 2 and not singleRun:
         return FilterSettings(settings, filter, run+1, False)
 
     return filteredSettings
 
-def HasOnlyType (settings, type):
-    f = filter (lambda s: s.Type != type, settings)
-    return len (settings) > 0 and len (f) == 0
+def HasOnlyType (settings, stype):
+    return settings and not [s for s in settings if s.Type != stype]
+
