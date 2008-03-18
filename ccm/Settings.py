@@ -949,7 +949,7 @@ class FileListSetting(StringMatchListSetting, FileSetting):
 
 class IntDescListSetting(Setting):
     def _Init(self):
-        self.Frame = gtk.Frame(self.Setting.ShortDesc)
+        self.Widget = gtk.Frame(self.Setting.ShortDesc)
         self.Table = gtk.Table()
         self.Custom = True
         
@@ -975,7 +975,7 @@ class IntDescListSetting(Setting):
         self.HBox.pack_start(self.Table, True, True)
         self.VBox.pack_start(self.Reset, False, False)
         self.Widget.add(self.HBox)
-        self.Box.pack_start(self.Frame)
+        self.Box.pack_start(self.Widget)
 
     def _Read(self):
         for key, box in self.Checks:
