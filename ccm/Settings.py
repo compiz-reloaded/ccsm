@@ -171,102 +171,14 @@ class StringSetting(Setting):
     def _Changed(self):
         self.Setting.Value = self.Entry.get_text()
 
-class FileSetting(object):
-    def __init__(self, setting, isDirectory=False):
-        self.Setting = setting
-        self.IsDirectory = isDirectory 
-        self.Open = gtk.Button()
-        Tooltips.set_tip(self.Open, _("Browse for ") + self.Setting.LongDesc)
-        self.Open.set_image(gtk.image_new_from_stock(
-            gtk.STOCK_OPEN, gtk.ICON_SIZE_BUTTON))
-        self.Open.connect('clicked', self.OpenFileChooser)
-    
-    def CreateFilter(self):
-        filter = gtk.FileFilter()
-        if "image" in self.Setting.Hints:
-            filter.set_name(_("Images"))
-            filter.add_pattern("*.png")
-            filter.add_pattern("*.jpg")
-            filter.add_pattern("*.jpeg")
-            filter.add_pattern("*.svg")
-        else:
-            filter.add_pattern("*")
-            filter.set_name(_("File"))
+class FileStringSetting(StringSetting):
+    def __init__(self, setting, isImage=False, isDirectory=False):
+        StringSetting.__init__(self, setting)
+        fileButton = FileButton(setting.Plugin.Context, isDirectory, isImage)
+        fileButton.connect('changed', self.SetFileName)
+        self.Box.pack_start(fileButton, False, False)
 
-        return filter
-
-    def CheckFileType(self, filename):
-        if filename.find(".") == -1:
-            return True
-            
-        ext = filename.split(".")[-1]
-        try:
-            mime = mimetypes.types_map["." + ext]
-        except:
-            return True
-        if len(self.Setting.Hints) > 1:
-            if self.Setting.Hints[1] == 'image':
-                require = FeatureRequirement(self.Setting.Plugin.Context, 'imagemime:' + mime)
-                return require.Resolve()
-        
-        return True
-
-    def UpdatePreview (self, widget):
-        path = widget.get_preview_filename ()
-        if path is None or os.path.isdir (path):
-            widget.get_preview_widget ().set_from_file (None)
-            return
-        try:
-            pixbuf = gtk.gdk.pixbuf_new_from_file_at_size (path, 128, 128)
-        except gobject.GError:
-            return
-        widget.get_preview_widget ().set_from_pixbuf (pixbuf)
-
-    def OpenFileChooser(self, widget, custom_value=None):
-        value = self.Setting.Value
-        if custom_value != None:
-            value = custom_value
-        b = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_OPEN, gtk.RESPONSE_OK)
-        if self.IsDirectory:
-            title = _("Open directory...")
-        else:
-            title = _("Open file...")
-
-        chooser = gtk.FileChooserDialog(title = title, buttons = b)
-        if self.IsDirectory:
-            chooser.set_action(gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER)
-
-        if os.path.exists(value):
-            chooser.set_filename(value)
-        else:
-            chooser.set_current_folder(os.environ.get("HOME"))
-        
-        if not self.IsDirectory:
-            chooser.set_filter(self.CreateFilter())
-
-        if "image" in self.Setting.Hints:
-            chooser.set_use_preview_label (False)
-            chooser.set_preview_widget (gtk.Image ())
-            chooser.connect ("selection-changed", self.UpdatePreview)
- 
-        ret = chooser.run()
-        
-        filename = chooser.get_filename()
-        chooser.destroy()
-        if ret == gtk.RESPONSE_OK:
-            if self.IsDirectory or self.CheckFileType(filename):
-                self.SetFileName(filename)
-    
-    def SetFileName(self, text):
-        self.PureVirtual('SetFileName')
-
-class FileStringSetting(StringSetting, FileSetting):
-    def __init__(self, Setting, isDirectory=False):
-        StringSetting.__init__(self, Setting)
-        FileSetting.__init__(self, Setting, isDirectory)
-        self.Box.pack_start(self.Open, False, False)
-
-    def SetFileName(self, filename):
+    def SetFileName(self, widget, filename):
         self.Entry.set_text(filename)
         self.Changed()
 
@@ -889,10 +801,11 @@ class StringMatchListSetting(ListSetting):
             return entry.get_text()
         return None
 
-class FileListSetting(StringMatchListSetting, FileSetting):
-    def __init__(self, Setting, isDirectory=False):
+class FileListSetting(StringMatchListSetting):
+    def __init__(self, Setting, isImage=False, isDirectory=False):
         StringMatchListSetting.__init__(self, Setting)
-        FileSetting.__init__(self, Setting, isDirectory)
+        self.IsImage = isImage
+        self.IsDirectory = isDirectory
     
     def _Edit(self, value=""):
         dlg = gtk.Dialog(_("Edit %s") % self.Setting.ShortDesc)
@@ -926,10 +839,9 @@ class FileListSetting(StringMatchListSetting, FileSetting):
 
         self.Entry = entry
 
-        open = gtk.Button()
-        open.set_image(gtk.image_new_from_stock(gtk.STOCK_OPEN, gtk.ICON_SIZE_BUTTON))
-        open.connect('clicked', self.OpenFileChooser, value)
-        hbox.pack_start(open, False, False)
+        fileButton = FileButton(self.Setting.Plugin.Context, self.IsDirectory, self.IsImage, value)
+        fileButton.connect('changed', self.SetFileName)
+        hbox.pack_start(fileButton, False, False)
 
         dlg.vbox.pack_start(hbox)
         
@@ -943,7 +855,7 @@ class FileListSetting(StringMatchListSetting, FileSetting):
             return entry.get_text()
         return None
 
-    def SetFileName(self, filename):
+    def SetFileName(self, widget, filename):
         if self.Entry != None:
             self.Entry.set_text(filename)
 
@@ -1578,7 +1490,10 @@ def MakeStringSetting (setting):
 
     if setting.Hints:
         if "file" in setting.Hints:
-            return FileStringSetting (setting)
+            if "image" in setting.Hints:
+                return FileStringSetting (setting, isImage=True)
+            else:
+                return FileStringSetting (setting)
         elif "directory" in setting.Hints:
             return FileStringSetting (setting, isDirectory=True)
         else:

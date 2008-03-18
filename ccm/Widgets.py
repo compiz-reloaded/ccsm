@@ -1100,6 +1100,100 @@ class MatchButton(gtk.Button):
             invert   = check.get_active ()
             self.generate_match (type, value, relation, invert)
 
+class FileButton (gtk.Button):
+    __gsignals__    = {"changed" : (gobject.SIGNAL_RUN_FIRST,
+                                    gobject.TYPE_NONE,
+                                    [gobject.TYPE_STRING])}
+    _directory = False
+    _context   = None
+    _image     = False
+    _path      = ""
+
+    def __init__ (self, context, directory=False, image=False, path=""):
+        gtk.Button.__init__ (self)
+
+        self._directory = directory
+        self._context = context
+        self._image = image
+        self._path = path
+
+        Tooltips.set_tip(self, _("Browse..."))
+        self.set_image(gtk.image_new_from_stock(
+            gtk.STOCK_OPEN, gtk.ICON_SIZE_BUTTON))
+        self.connect('clicked', self.open_dialog)
+
+    def create_filter(self):
+        filter = gtk.FileFilter ()
+        if self._image:
+            filter.set_name (_("Images"))
+            filter.add_pattern ("*.png")
+            filter.add_pattern ("*.jpg")
+            filter.add_pattern ("*.jpeg")
+            filter.add_pattern ("*.svg")
+        else:
+            filter.add_pattern ("*")
+            filter.set_name (_("File"))
+
+        return filter
+
+    def check_type (self, filename):
+        if filename.find (".") == -1:
+            return True
+        ext = filename.split (".") [-1]
+
+        try:
+            mime = mimetypes.types_map ["." + ext]
+        except:
+            return True
+
+        if self.self._image:
+            require = FeatureRequirement (self._context, 'imagemime:' + mime)
+            return require.Resolve ()
+
+        return True
+
+    def update_preview (self, widget):
+        path = widget.get_preview_filename ()
+        if path is None or os.path.isdir (path):
+            widget.get_preview_widget ().set_from_file (None)
+            return
+        try:
+            pixbuf = gtk.gdk.pixbuf_new_from_file_at_size (path, 128, 128)
+        except gobject.GError:
+            return
+        widget.get_preview_widget ().set_from_pixbuf (pixbuf)
+
+    def open_dialog (self, widget):
+        b = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_OPEN, gtk.RESPONSE_OK)
+        if self._directory:
+            title = _("Open directory...")
+        else:
+            title = _("Open file...")
+
+        chooser = gtk.FileChooserDialog (title = title, buttons = b)
+        if self._directory:
+            chooser.set_action (gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER)
+        else:
+            chooser.set_filter (self.create_filter ())
+
+        if self._path and os.path.exists (self._path):
+            chooser.set_filename (self._path)
+        else:
+            chooser.set_current_folder (os.environ.get("HOME"))
+
+        if self._image:
+            chooser.set_use_preview_label (False)
+            chooser.set_preview_widget (gtk.Image ())
+            chooser.connect ("selection-changed", self.update_preview)
+
+        ret = chooser.run ()
+
+        filename = chooser.get_filename ()
+        chooser.destroy ()
+        if ret == gtk.RESPONSE_OK:
+            if self._directory or self.check_type (filename):
+                self.emit ('changed', filename)
+
 # About Dialog
 #
 class AboutDialog (gtk.AboutDialog):
