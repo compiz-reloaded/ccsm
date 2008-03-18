@@ -1122,6 +1122,10 @@ class FileButton (gtk.Button):
             gtk.STOCK_OPEN, gtk.ICON_SIZE_BUTTON))
         self.connect('clicked', self.open_dialog)
 
+    def set_path (self, value):
+        self._path = value
+        self.emit ("changed", self._path)
+
     def create_filter(self):
         filter = gtk.FileFilter ()
         if self._image:
@@ -1192,7 +1196,7 @@ class FileButton (gtk.Button):
         chooser.destroy ()
         if ret == gtk.RESPONSE_OK:
             if self._directory or self.check_type (filename):
-                self.emit ('changed', filename)
+                self.set_path (filename)
 
 # About Dialog
 #
