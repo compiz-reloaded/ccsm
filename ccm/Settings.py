@@ -472,6 +472,8 @@ class MultiListSetting(Setting):
         for setting in self.Settings:
             def MatchChanged(widget, match, entry):
                 entry.set_text(match)
+            def PathChanged(widget, path, entry):
+                entry.set_text(path)
 
             ebox = gtk.EventBox()
             label = gtk.Label(setting.ShortDesc)
@@ -504,6 +506,25 @@ class MultiListSetting(Setting):
                 value = values and values[row] or ""
                 entry.set_text(value)
                 button.set_match(value)
+
+                table.attach(ebox, 0, 1, row, row+1, xpadding=5, xoptions=gtk.FILL)
+                table.attach(entry, 2, 3, row, row+1, xpadding=5)
+                table.attach(button, 3, 4, row, row+1, xpadding=5, xoptions=gtk.FILL)
+                widgets.append(entry)
+
+            # File settings
+            elif type == gobject.TYPE_STRING and "file" in setting.Hints or "directory" in setting.Hints:
+                entry = gtk.Entry()
+                isDirectory = "directory" in settings.Hints
+                isImage = "image" in settings.Hints
+                button = FileButton(setting.Plugin.Context, isDirectory=isDirectory, isImage=isImage)
+                button.connect('changed', PathChanged, entry)
+                Tooltips.set_tip(ebox, setting.LongDesc)
+                Tooltips.set_tip(entry, setting.LongDesc)
+
+                value = values and values[row] or ""
+                entry.set_text(value)
+                button.set_path(value)
 
                 table.attach(ebox, 0, 1, row, row+1, xpadding=5, xoptions=gtk.FILL)
                 table.attach(entry, 2, 3, row, row+1, xpadding=5)
