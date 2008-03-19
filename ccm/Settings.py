@@ -515,9 +515,9 @@ class MultiListSetting(Setting):
             # File settings
             elif type == gobject.TYPE_STRING and "file" in setting.Hints or "directory" in setting.Hints:
                 entry = gtk.Entry()
-                isDirectory = "directory" in settings.Hints
-                isImage = "image" in settings.Hints
-                button = FileButton(setting.Plugin.Context, isDirectory=isDirectory, isImage=isImage)
+                button = FileButton(setting.Plugin.Context,
+                    directory="directory" in setting.Hints,
+                    image="image" in setting.Hints)
                 button.connect('changed', PathChanged, entry)
                 Tooltips.set_tip(ebox, setting.LongDesc)
                 Tooltips.set_tip(entry, setting.LongDesc)
