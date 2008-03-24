@@ -538,7 +538,7 @@ class MultiListSetting(Setting):
                 Tooltips.set_tip(ebox, setting.LongDesc)
                 Tooltips.set_tip(button, setting.LongDesc)
 
-                value = values and values[row] or "#0000000000000000"
+                value = values and values[row] or "#000000000000FFFF"
                 color = gtk.gdk.color_parse(value[:-4])
                 alpha = int("0x%s" % value[-4:], base=16)
                 button.set_color(color)
