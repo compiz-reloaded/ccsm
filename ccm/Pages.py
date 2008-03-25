@@ -53,7 +53,7 @@ class PluginPage:
 
         pluginLabel = Label()
         pluginLabel.set_markup(HeaderMarkup % (self.Main.Style.BrightColor, plugin.ShortDesc))
-        pluginImg = Image(plugin.Name, ImagePlugin, 48)
+        pluginImg = Image(plugin.Name, ImagePlugin, 64)
         filterLabel = Label()
         filterLabel.set_markup(HeaderMarkup % (self.Main.Style.BrightColor, _("Filter")))
         if has_sexy:
@@ -182,7 +182,7 @@ class FilterPage:
         # Image + Label
         filterLabel = Label()
         filterLabel.set_markup(HeaderMarkup % (self.Main.Style.BrightColor, _("Filter")))
-        filterImg = Image("search", ImageCategory, 48)
+        filterImg = Image("search", ImageCategory, 64)
         self.LeftWidget.pack_start(filterImg, False, False)
         self.LeftWidget.pack_start(filterLabel, False, False)
         
@@ -949,7 +949,7 @@ class PreferencesPage:
         # Left Pane
         self.DescLabel = Label()
         self.DescLabel.set_markup(HeaderMarkup % (self.Main.Style.BrightColor, _("Preferences")))
-        self.DescImg = Image("profiles",ImageCategory, 48)
+        self.DescImg = Image("profiles",ImageCategory, 64)
         self.LeftWidget.pack_start(self.DescImg, False, False)
         self.LeftWidget.pack_start(self.DescLabel, False, False)
         self.InfoLabelCont = gtk.HBox()
