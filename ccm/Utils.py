@@ -270,20 +270,21 @@ class Updater:
                 # Remove already destroyed widgets
                 if not settingWidget.EBox.get_parent():
                     self.VisibleSettings.remove(settingWidget)
-                
-                if settingWidget.Setting:
-                    if settingWidget.Setting in changed:
-                        settingWidget.Read()
-                        changed.remove(settingWidget.Setting)
+       
                 # Exception for multi settings widgets (multi list widget, action page, etc.)
-                elif settingWidget.Settings:
+                if settingWidget.Settings:
                     read = False
                     for setting in settingWidget.Settings:
                         if setting in changed:
                             read = True
                             changed.remove(setting)
                     if read:
+                        settingWidget.Read()         
+                elif settingWidget.Setting:
+                    if settingWidget.Setting in changed:
                         settingWidget.Read()
+                        changed.remove(settingWidget.Setting)
+
             # For removing non-visible settings
             for setting in list(changed):
                 if setting in self.NotRemoved:

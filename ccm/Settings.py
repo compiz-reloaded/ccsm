@@ -40,13 +40,17 @@ gettext.textdomain("ccsm")
 _ = gettext.gettext
 
 class Setting(object):
-    def __init__(self, Setting=None, Settings=None):
-        if not (Setting or Settings) or (Setting and Settings):
-            raise TypeError("Exactly one argument must be provided")
 
+    NoneValue = ''
+
+    def __init__(self, Setting=None, Settings=None, List=False):
         self.Custom = False
         self.Setting = Setting
         self.Settings = Settings # for multi-list settings
+        self.List = List
+        if List:
+            self.CurrentRow = None
+
         self.Blocked = 0
         self.EBox = gtk.EventBox()
         self.Box = gtk.HBox()
@@ -64,8 +68,10 @@ class Setting(object):
 
         GlobalUpdater.Append(self)
 
-    def Attach(self, table, row):
+    def GetColumn(self, num):
+        return (str, gtk.TreeViewColumn(self.Setting.ShortDesc, gtk.CellRendererText(), text=num))
 
+    def Attach(self, table, row):
         if self.Custom:
             self.EBox.set_sensitive(not self.Setting.ReadOnly)
             table.attach(self.EBox, 0, 2, row, row+1, TableDef, TableDef, TableX, TableX)
@@ -73,7 +79,8 @@ class Setting(object):
             self.EBox.set_sensitive(not self.Setting.ReadOnly)
             table.attach(self.EBox, 0, 1, row, row+1, TableDef, TableDef, TableX, TableX)
             self.Reset.set_sensitive(not self.Setting.ReadOnly)
-            table.attach(self.Reset, 1, 2, row, row+1, 0, TableDef, TableX, TableX)
+            table.attach(self.Reset, 1, 2, row, row+1, 0, 0, TableX, TableX)
+
     def PureVirtual (self, func):
         message = "Missing %(function)s function for %(name)s setting (%(class)s)"
 
@@ -102,17 +109,18 @@ class Setting(object):
         style = ""
         if self.Setting.Integrated: style = ''' foreground="blue"'''
         label.set_markup("<span%s>%s</span>" % (style, desc))
-        label.props.xalign = 0
+        if not self.List:
+            label.props.xalign = 0
+            label.set_size_request(160, -1)
         label.props.wrap_mode = gtk.WRAP_WORD
-        label.set_size_request(160, -1)
         label.set_line_wrap(True)
         self.Label = label
 
     def Block(self):
-        self.Blocked = self.Blocked+1
+        self.Blocked += 1
     
     def UnBlock(self):
-        self.Blocked = self.Blocked-1
+        self.Blocked -= 1
 
     def Read(self):
         self.Block()
@@ -130,31 +138,31 @@ class Setting(object):
     def _Changed(self):
         self.PureVirtual('_Changed')
 
-class MatchSetting(Setting):
-    def _Init(self):
-        self.Widget = gtk.HBox()
-        self.Widget.set_spacing(5)
+    def Get(self):
+        if self.List:
+            if self.CurrentRow is not None:
+                return self.Setting.Value[self.CurrentRow]
+            else:
+                return self.NoneValue
+        else:
+            return self.Setting.Value
+    
+    def GetForRenderer(self):
+        return self.Setting.Value
 
-        self.Entry = gtk.Entry()
-        self.Entry.connect('activate', self.Changed)
-        self.Entry.connect('focus-out-event', self.Changed)
+    def Set(self, value):
+        if self.List:
+            if self.CurrentRow is not None:
+                vlist = self.Setting.Value
+                vlist[self.CurrentRow] = value
+                self.Setting.Value = vlist
+        else:
+            self.Setting.Value = value
 
-        self.MatchButton = MatchButton(self.Setting.Value)
-        self.MatchButton.connect('changed', self.MatchChanged)
-
-        self.Box.pack_start(self.Label, False, False)
-        self.Box.pack_start(self.Entry, True, True)
-        self.Box.pack_start(self.MatchButton, False, False)
-
-    def _Read(self):
-        self.Entry.set_text(self.Setting.Value)
-
-    def MatchChanged(self, widget, match):
-        self.Entry.set_text(match)
-
-    def _Changed(self):
-        self.Setting.Value = self.Entry.get_text()
-        self.MatchButton.set_match(self.Setting.Value)
+    def Swap(self, a, b):
+        vlist = self.Setting.Value
+        vlist.insert(b, vlist.pop(a))
+        self.Setting.Value = vlist
 
 class StringSetting(Setting):
     def _Init(self):
@@ -166,14 +174,34 @@ class StringSetting(Setting):
         self.Box.pack_start(self.Widget, True, True)
 
     def _Read(self):
-        self.Entry.set_text(self.Setting.Value)
+        self.Entry.set_text(self.Get())
 
     def _Changed(self):
-        self.Setting.Value = self.Entry.get_text()
+        self.Set(self.Entry.get_text())
+
+class MatchSetting(StringSetting):
+    def _Init(self):
+        StringSetting._Init(self)
+        self.MatchButton = MatchButton(self.Get)
+        self.MatchButton.connect('changed', self.MatchChanged)
+
+        self.Box.pack_start(self.MatchButton, False, False)
+
+    def _Read(self):
+        self.Entry.set_text(self.Get())
+        self.MatchButton.set_match(self.Get())
+
+    def MatchChanged(self, widget, match):
+        self.Entry.set_text(match)
+        self.Setting.Plugin.Context.Write()
+
+    def _Changed(self):
+        StringSetting._Changed(self)
+        self.MatchButton.set_match(self.Get())
 
 class FileStringSetting(StringSetting):
-    def __init__(self, setting, isImage=False, isDirectory=False):
-        StringSetting.__init__(self, setting)
+    def __init__(self, setting, List=False, isImage=False, isDirectory=False):
+        StringSetting.__init__(self, setting, List=List)
         fileButton = FileButton(setting.Plugin.Context, isDirectory, isImage)
         fileButton.connect('changed', self.SetFileName)
         self.Box.pack_start(fileButton, False, False)
@@ -183,10 +211,17 @@ class FileStringSetting(StringSetting):
         self.Changed()
 
 class EnumSetting(Setting):
+
+    NoneValue = 0
+
     def _Init(self):
         self.Combo = gtk.combo_box_new_text()
-        sortedItems = sorted(self.Setting.Info[2].items(), key=EnumSettingKeyFunc)
-        for name, value in sortedItems:
+        if self.List:
+            self.Info = self.Setting.Info[1][2]
+        else:
+            self.Info = self.Setting.Info[2]
+        self.SortedItems = sorted(self.Info.items(), key=EnumSettingKeyFunc)
+        for name, value in self.SortedItems:
             self.Combo.append_text(name)
         self.Combo.connect('changed', self.Changed)
 
@@ -194,50 +229,87 @@ class EnumSetting(Setting):
         self.Box.pack_start(self.Label, False, False)
         self.Box.pack_start(self.Combo, True, True)
 
+    def _CellEdited(self, cell, path, new_text):
+        self.CurrentRow = int(path[0])
+        value = self.Info[new_text]
+        self.Store[path][self.Num] = new_text
+        self.Set(value)
+        self.Setting.Plugin.Context.Write()
+
+    def GetColumn(self, num):
+        self.Num = num
+        cell = gtk.CellRendererCombo()
+        column = gtk.TreeViewColumn(self.Setting.ShortDesc, cell, text=num)
+        model = gtk.ListStore(str)
+        cell.set_properties(model=model, text_column=0, editable=True, has_entry=False)
+        cell.connect("edited", self._CellEdited)
+        for item, i in self.SortedItems:
+            model.append([item])
+
+        return (str, column)
+
+    def GetForRenderer(self):
+        return [self.SortedItems[pos][0] for pos in self.Setting.Value]
+
     def _Read(self):
-        self.Combo.set_active(self.Setting.Value)
+        self.Combo.set_active(self.Get())
 
     def _Changed(self):
         active = self.Combo.get_active_text()
-        self.Setting.Value = self.Setting.Info[2][active]
+        
+        self.Set(self.Info[active])
 
 class BoolSetting (Setting):
+
+    NoneValue = False
 
     def _Init (self):
         self.Label.set_size_request(-1, -1)
         self.Label.set_line_wrap(False)
         self.CheckButton = gtk.CheckButton ()
-        self.Box.pack_start(self.Label, True, True)
-        self.Box.pack_start(self.CheckButton, False, False)
+        self.Box.pack_start(self.Label, False, False)
+        align = gtk.Alignment(yalign=0.5)
+        align.add(self.CheckButton)
+        self.Box.pack_end(align, False, False)
         self.CheckButton.connect ('toggled', self.Changed)
 
-        self.Widget = self.CheckButton
-
     def _Read (self):
-        self.CheckButton.set_active (self.Setting.Value)
+        self.CheckButton.set_active (self.Get())
 
     def _Changed (self):
-        self.Setting.Value = self.CheckButton.get_active ()
+        self.Set(self.CheckButton.get_active ())
 
-class IntFloatSetting(Setting):
+    def CellToggled (self, cell, path):
+        self.CurrentRow = int(path)
+        self.Set(not cell.props.active)
+        self.Store[path][self.Num] = self.Get()
+        self.Setting.Plugin.Context.Write()
+
+    def GetColumn (self, num):
+        self.Num = num
+        cell = gtk.CellRendererToggle()
+        cell.set_properties(activatable=True)
+        cell.connect('toggled', self.CellToggled)
+        return (bool, gtk.TreeViewColumn(self.Setting.ShortDesc, cell, active=num))
+
+class NumberSetting(Setting):
+
+    NoneValue = 0
+
     def _Init(self):
-        inc = 1
-        if self.Setting.Type == 'Int':
-            inc = 1
-        else:
-            inc = self.Setting.Info[2]
 
-        self.Adj = gtk.Adjustment(self.Setting.Value, self.Setting.Info[0], self.Setting.Info[1], inc, inc*10)
+        if self.List:
+            self.Info = info = self.Setting.Info[1]
+        else:
+            self.Info = info = self.Setting.Info
+
+        if self.Inc is None:
+            self.Inc = info[2]
+        inc = self.Inc
+        self.Adj = gtk.Adjustment(self.Get(), info[0], info[1], inc, inc*10)
         self.Spin = gtk.SpinButton(self.Adj)
 
         self.Scale = gtk.HScale(self.Adj)
-        
-        if self.Setting.Type == 'Int':
-            self.Spin.set_digits(0)
-            self.Scale.set_digits(0)
-        elif self.Setting.Type == 'Float':
-            self.Spin.set_digits(4)
-            self.Scale.set_digits(4)
 
         self.Scale.set_update_policy(gtk.UPDATE_DISCONTINUOUS)
         self.Scale.connect("value-changed", self.Changed)
@@ -249,12 +321,34 @@ class IntFloatSetting(Setting):
         self.Box.pack_start(self.Spin, False, False)
 
     def _Read(self):
-        self.Adj.set_value(self.Setting.Value)
+        self.Adj.set_value(self.Get())
 
     def _Changed(self):
-        self.Setting.Value = self.Adj.get_value()
+        self.Set(self.Adj.get_value())
+
+class IntSetting(NumberSetting):
+
+    def _Init(self):
+        self.Inc = 1
+        NumberSetting._Init(self)
+        self.Spin.set_digits(0)
+        self.Scale.set_digits(0)
+
+class FloatSetting(NumberSetting):
+
+    NoneValue = 0.0
+
+    def _Init(self):
+        self.Inc = None
+        NumberSetting._Init(self)
+        self.Spin.set_digits(4)
+        self.Scale.set_digits(4)
+
 
 class ColorSetting(Setting):
+
+    NoneValue = (0, 0, 0, 65535) # opaque black
+
     def _Init(self):
         self.Button = gtk.ColorButton()
         self.Button.set_size_request (100, -1)
@@ -266,74 +360,97 @@ class ColorSetting(Setting):
         self.Box.pack_start(self.Label, False, False)
         self.Box.pack_start(self.Widget, True, True)
 
+    def GetForRenderer(self):
+        return ["#%.4x%.4x%.4x%.4x" %tuple(seq) for seq in self.Setting.Value]
+
+    def GetColumn(self, num):
+        return (str, gtk.TreeViewColumn(self.Setting.ShortDesc, CellRendererColor(), text=num))
+
     def _Read(self):
         col = gtk.gdk.Color()
-        col.red = self.Setting.Value[0]
-        col.green = self.Setting.Value[1]
-        col.blue = self.Setting.Value[2]
+        value = self.Get()
+        col.red, col.green, col.blue = value[:3]
         self.Button.set_color(col)
-        self.Button.set_alpha(self.Setting.Value[3])
+        self.Button.set_alpha(value[3])
 
     def _Changed(self):
         col = self.Button.get_color()
         alpha = self.Button.get_alpha()
-        self.Setting.Value = [col.red, col.green, col.blue, alpha]
+        self.Set([col.red, col.green, col.blue, alpha])
 
-class MultiListSetting(Setting):
+class BaseListSetting(Setting):
     def _Init(self):
         self.Widget = gtk.VBox()
         self.Custom = True
         self.Setting = None
-        
+        self.EditDialog = None        
+
+        self.Widgets = []
+        for i, setting in enumerate(self.Settings):
+            self.Widgets.append(MakeSetting(setting, List=True))
+
         types, cols = self.ListInfo()
         self.Types = types
         self.Store = gtk.ListStore(*types)
         self.View = gtk.TreeView(self.Store)
-        Tooltips.set_tip(self.View, _("Multi-list settings. You can double-click a row to edit the values."))
         self.View.set_headers_visible(True)
-        for col in cols:
-            self.View.insert_column_with_attributes(-1, col[0], col[1], **col[2])
-        self.Store.connect('row-deleted', self.Changed)
-        self.Store.connect('rows-reordered', self.Changed)
-        self.View.connect('row-activated', self.Activated)
-        self.Select = self.View.get_selection()
-        self.Select.set_mode(gtk.SELECTION_MULTIPLE)
 
-        self.Widget.set_border_width(5)
+        for widget in self.Widgets:
+            widget.Store = self.Store
+
+        for col in cols:
+            self.View.append_column(col)
+
+        self.View.connect('row-activated', self.Activated)
+        self.View.connect('button-press-event', self.ButtonPressEvent)
+        self.Select = self.View.get_selection()
+        self.Select.set_mode(gtk.SELECTION_SINGLE)
+        self.Select.connect('changed', self.SelectionChanged)
         self.Widget.set_spacing(5)
-        self.Widget.set_size_request(-1, 170)
         self.Scroll = gtk.ScrolledWindow()
-        self.Scroll.props.hscrollbar_policy = gtk.POLICY_NEVER
         self.Scroll.props.hscrollbar_policy = gtk.POLICY_AUTOMATIC
+        self.Scroll.props.vscrollbar_policy = gtk.POLICY_NEVER
         self.Scroll.add(self.View)
         self.Widget.pack_start(self.Scroll, True, True)
-        
+        self.Widget.set_child_packing(self.Scroll, True, True, 0, gtk.PACK_START)
         buttonBox = gtk.HBox(False)
         buttonBox.set_spacing(5)
+        buttonBox.set_border_width(5)
         self.Widget.pack_start(buttonBox, False, False)
-        buttonTypes = ((gtk.STOCK_ADD, self.Add),
-                 (gtk.STOCK_DELETE, self.Delete), 
-                 (gtk.STOCK_EDIT, self.Edit),
-                 (gtk.STOCK_GO_UP, self.MoveUp), 
-                 (gtk.STOCK_GO_DOWN, self.MoveDown),)
-        for type in buttonTypes:
-            b = gtk.Button(type[0])
+        buttonTypes = ((gtk.STOCK_NEW, self.Add, None, True),
+                 (gtk.STOCK_DELETE, self.Delete, None, False), 
+                 (gtk.STOCK_EDIT, self.Edit, None, False),
+                 (gtk.STOCK_GO_UP, self.Move, 'up', False), 
+                 (gtk.STOCK_GO_DOWN, self.Move, 'down', False),)
+        self.Buttons = {}
+        for stock, callback, data, sensitive in buttonTypes:
+            b = gtk.Button(stock)
             b.set_use_stock(True)
             buttonBox.pack_start(b, False, False)
-            b.connect('clicked', type[1])
+            if data is not None:
+                b.connect('clicked', callback, data)
+            else:
+                b.connect('clicked', callback)
+            b.set_sensitive(sensitive)
+            self.Buttons[stock] = b
+
+        self.Popup = gtk.Menu()
+        self.PopupItems = {}
+        edit = gtk.ImageMenuItem(stock_id=gtk.STOCK_EDIT)
+        edit.connect('activate', self.Edit)
+        edit.set_sensitive(False)
+        self.Popup.append(edit)
+        self.PopupItems[gtk.STOCK_EDIT] = edit
+        delete = gtk.ImageMenuItem(stock_id=gtk.STOCK_DELETE)
+        delete.connect('activate', self.Delete)
+        delete.set_sensitive(False)
+        self.Popup.append(delete)
+        self.PopupItems[gtk.STOCK_DELETE] = delete
+        self.Popup.show_all()
+
         buttonBox.pack_end(self.Reset, False, False)
 
         self.Box.pack_start(self.Widget)
-
-    def ColChanged(self, *args, **kwargs):
-        if self.Blocked <= 0:
-            self._ColChanged(*args, **kwargs)
-            self.Settings[0].Plugin.Context.Write()
-
-    def Changed(self, *args, **kwargs):
-        if self.Blocked <= 0:
-            self._Changed()
-            self.Settings[0].Plugin.Context.Write()
 
     def DoReset(self, widget):
         for setting in self.Settings:
@@ -344,571 +461,183 @@ class MultiListSetting(Setting):
     def MakeLabel(self):
         pass
     
-    def Add(self, widget):
-        values = self._Edit()
-        if values is not None:
-            self.Block()
-            iter = self.Store.append()
-            self.UnBlock()
-            col = 0
-            for value in values:
-                self.SetIterValue(iter, col, value)
-                col += 1
-            self.Changed()
+    def Add(self, *args):
+        for widget, setting in zip(self.Widgets, self.Settings):
+            vlist = setting.Value
+            vlist.append(widget.NoneValue)
+            setting.Value = vlist
+        self.Settings[0].Plugin.Context.Write()
+        self.Read()
+        self._Edit(len(self.Store)-1)
 
-    def Delete(self, widget):
-        selectedRows = self.Select.get_selected_rows()[1]
-        for path in selectedRows:
-            iter = self.Store.get_iter(path)
-            self.Store.remove(iter)
+    def Delete(self, *args):
+        model, iter = self.Select.get_selected()
+        if iter is not None:
+            path = model.get_path(iter)
+            if path is not None:
+                row = path[0]
+            else:
+                return
+
+            model.remove(iter)
+
+            for setting in self.Settings:
+                vlist = setting.Value
+                del vlist[row]
+                setting.Value = vlist
+            self.Settings[0].Plugin.Context.Write()
+
+    def _MakeEditDialog(self):
+        dlg = gtk.Dialog(_("Edit"))
+        dlg.vbox.set_spacing(TableX)
+        dlg.set_default_size(400, -1)
+        dlg.add_button(gtk.STOCK_CLOSE, gtk.RESPONSE_CLOSE)
+        dlg.set_default_response(gtk.RESPONSE_CLOSE)
+
+        group = gtk.SizeGroup(gtk.SIZE_GROUP_HORIZONTAL)
+        for widget in self.Widgets:
+            dlg.vbox.pack_start(widget.EBox, False, False)
+            group.add_widget(widget.Label)
+        return dlg
 
     def Edit(self, widget):
-        selectedRows = self.Select.get_selected_rows()[1]
-        if len(selectedRows) == 1:
-            iter = self.Store.get_iter(selectedRows[0])
-            values = []
-            for col in range(len(self.Settings)):
-                value = self.Store.get(iter, col)[0]
-                values.append(value)
-            values = self._Edit(values)
-            if values != None:
-                col = 0
-                for value in values:
-                    self.SetIterValue(iter, col, value)
-                    col += 1
-                self.Changed()
+        model, iter = self.Select.get_selected()
+        if iter:
+            path = model.get_path(iter)
+            if path is not None:
+                row = path[0]
+            else:
+                return
 
-    def MoveUp(self, widget):
-        selectedRows = self.Select.get_selected_rows()[1]
-        if len(selectedRows) == 1:
-            iter = self.Store.get_iter(selectedRows[0])
-            prev = self.Store.get_iter_first()
-            if not self.Store.get_path(prev) == self.Store.get_path(iter):
-                while prev is not None and not self.Store.get_path(self.Store.iter_next(prev)) == self.Store.get_path(iter):
-                    prev = self.Store.iter_next(prev)
-                self.Store.swap(iter, prev)
+            self._Edit(row)
 
-    def MoveDown(self, widget):
-        selectedRows = self.Select.get_selected_rows()[1]
-        if len(selectedRows) == 1:
-            iter = self.Store.get_iter(selectedRows[0])
-            next = self.Store.iter_next(iter)
-            if next is not None:
-                self.Store.swap(iter, next)
+    def _Edit(self, row):
+        if not self.EditDialog:
+            self.EditDialog = self._MakeEditDialog()
+
+        for widget in self.Widgets:
+            widget.CurrentRow = row
+            widget.Read()
+
+        self.EditDialog.show_all()
+        response = self.EditDialog.run()
+        self.EditDialog.hide_all()
+
+        self.Read()
+
+    def Move(self, widget, direction):
+        model, iter = self.Select.get_selected()
+        if iter is not None:
+            path = model.get_path(iter)
+            if path is not None:
+                row = path[0]
+            else:
+                return
+            if direction == 'up':
+                dest = row - 1
+            elif direction == 'down':
+                dest = row + 1
+            for widget in self.Widgets:
+                widget.Swap(row, dest)
+
+            self.Settings[0].Plugin.Context.Write()
+
+            order = range(len(model))
+            order.insert(dest, order.pop(row))
+            model.reorder(order)
+
+            self.SelectionChanged(self.Select)
+
+    def SelectionChanged(self, selection):
+
+        model, iter = selection.get_selected()
+        for widget in (self.Buttons[gtk.STOCK_EDIT], self.Buttons[gtk.STOCK_DELETE],
+                       self.PopupItems[gtk.STOCK_EDIT], self.PopupItems[gtk.STOCK_DELETE]):
+            widget.set_sensitive(iter is not None)
+            
+        if iter is not None:
+            path = model.get_path(iter)
+            if path is not None:
+                row = path[0]
+                self.Buttons[gtk.STOCK_GO_UP].set_sensitive(row > 0)
+                self.Buttons[gtk.STOCK_GO_DOWN].set_sensitive(row < (len(model) - 1))
+        else:
+            self.Buttons[gtk.STOCK_GO_UP].set_sensitive(False)
+            self.Buttons[gtk.STOCK_GO_DOWN].set_sensitive(False)
+
+    def ButtonPressEvent(self, treeview, event):
+        if event.button == 3:
+            pthinfo = treeview.get_path_at_pos(int(event.x), int(event.y))
+            if pthinfo is not None:
+                path, col, cellx, celly = pthinfo
+                treeview.grab_focus()
+                treeview.set_cursor(path, col, 0)
+                self.Popup.popup(None, None, None, event.button, event.time)
+            return 1
 
     def ListInfo(self):
         types = []
         cols = []
-        col = 0
-        for setting in self.Settings:
-            if setting.Info[0] == "String" or setting.Info[0] == "Match":
-                types.append(gobject.TYPE_STRING)
-            elif setting.Info[0] == "Int" and len(setting.Info[1][2]) > 0:
-                types.append(gobject.TYPE_STRING)
-            elif setting.Info[0] == "Int":
-                types.append(gobject.TYPE_INT)
-            elif setting.Info[0] == "Float":
-                types.append(gobject.TYPE_FLOAT)
-            elif setting.Info[0] == "Color":
-                types.append(gobject.TYPE_STRING)
-
-            renderer = gtk.CellRendererText()
-            if setting.Info[0] == "Color":
-                renderer = CellRendererColor()
-
-            cols.append((setting.ShortDesc, renderer, {'text':col}))
-            col += 1
-
+        for i, (setting, widget) in enumerate(zip(self.Settings, self.Widgets)):   
+            type, col = widget.GetColumn(i)
+            types.append(type)
+            cols.append(col)
         return types, cols
 
     def Activated(self, object, path, col):
-        self.Edit(None)
+        self._Edit(path[0])
 
-    def _Read(self):
+    def _Read(self):        
         self.Store.clear()
-        iters = []
-        for values in self.Settings[0].Value:
-            iters.append(self.Store.append())
+        for values in zip(*[w.GetForRenderer() for w in self.Widgets]):
+            self.Store.append(values)
 
-        row = 0
-        for iter in iters:
-            for j in range(len(self.Settings)):
-                setting = self.Settings[j]
-                value = None
-                if row < len(setting.Value):
-                    # Int Desc Setting
-                    if len(setting.Info) > 0 and setting.Info[0] == 'Int' and len(setting.Info[1][2]) > 0:
-                        pos = setting.Value[row]
-                        sortedItems = sorted(setting.Info[1][2].items(), key=EnumSettingKeyFunc)
-                        value = sortedItems[pos][0]
+    def Attach(self, table, row):
+        table.attach(self.EBox, 0, 2, row, row+1, xpadding=5)
 
-                    # Color Setting
-                    elif len(setting.Info) > 0 and setting.Info[0] == 'Color':
-                        r, g, b, a = setting.Value[row]
-                        value = "#%.4x%.4x%.4x%.4x" % (r, g, b, a)
+class ListSetting(BaseListSetting):
 
-                    else:
-                        value = setting.Value[row]
-                else:
-                    if setting.Info[0] == 'Int':
-                        value = 0
-                    elif setting.Info[0] == 'Color':
-                        value = "#%.4x%.4x%.4x%.4x" % (0, 0, 0, 0)
-                    elif setting.Info[0] == 'String' or setting.Info[0] == 'Match':
-                        value = ""
-                self.Store.set(iter, j, value)
-            row += 1
+    def _Init(self):
+        self.Settings = [self.Setting]
+        BaseListSetting._Init(self)
 
-    def _Edit(self, values=None):
-        dlg = gtk.Dialog(_("Edit"))
-        dlg.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
-        dlg.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK).grab_default()
-        dlg.set_default_response(gtk.RESPONSE_OK)
+class MultiListSetting(BaseListSetting):
+
+    def _Init(self):
+        Tooltips.set_tip(self.EBox, _("Multi-list settings. You can double-click a row to edit the values."))
+        BaseListSetting._Init(self)
+
+class EnumFlagsSetting(Setting):
+
+    def _Init(self):
+        self.Custom = True
+
+        frame = gtk.Frame(self.Setting.ShortDesc)
         table = gtk.Table()
-        dlg.vbox.pack_start(table)
-
-        row = 0
-        widgets = []
-        for setting in self.Settings:
-            def MatchChanged(widget, match, entry):
-                entry.set_text(match)
-            def PathChanged(widget, path, entry):
-                entry.set_text(path)
-
-            ebox = gtk.EventBox()
-            label = gtk.Label(setting.ShortDesc)
-            ebox.add(label)
-            Tooltips.set_tip(ebox, setting.LongDesc)
-            type = self.Types[row]
-
-            # Int description setting
-            if type == gobject.TYPE_STRING and setting.Info[0] == 'Int' and len(setting.Info[1][2]) > 0:
-                comboBox = gtk.combo_box_new_text()
-                sortedItems = sorted(setting.Info[1][2].items(), key=EnumSettingKeyFunc)
-                for item in sortedItems:
-                    comboBox.append_text(item[0])
-
-                value = values and setting.Info[1][2][values[row]] or 0
-                comboBox.set_active(value)
-
-                table.attach(ebox, 0, 1, row, row+1, xpadding=5, xoptions=gtk.FILL)
-                table.attach(comboBox, 2, 3, row, row+1, xpadding=5)
-                widgets.append(comboBox)
-
-            # Match settings
-            elif type == gobject.TYPE_STRING and setting.Info[0] == 'Match':
-                entry = gtk.Entry()
-                button = MatchButton()
-                button.connect('changed', MatchChanged, entry)
-                Tooltips.set_tip(ebox, setting.LongDesc)
-                Tooltips.set_tip(entry, setting.LongDesc)
-
-                value = values and values[row] or ""
-                entry.set_text(value)
-                button.set_match(value)
-
-                table.attach(ebox, 0, 1, row, row+1, xpadding=5, xoptions=gtk.FILL)
-                table.attach(entry, 2, 3, row, row+1, xpadding=5)
-                table.attach(button, 3, 4, row, row+1, xpadding=5, xoptions=gtk.FILL)
-                widgets.append(entry)
-
-            # File settings
-            elif type == gobject.TYPE_STRING and "file" in setting.Hints or "directory" in setting.Hints:
-                entry = gtk.Entry()
-                button = FileButton(setting.Plugin.Context,
-                    directory="directory" in setting.Hints,
-                    image="image" in setting.Hints)
-                button.connect('changed', PathChanged, entry)
-                Tooltips.set_tip(ebox, setting.LongDesc)
-                Tooltips.set_tip(entry, setting.LongDesc)
-
-                value = values and values[row] or ""
-                entry.set_text(value)
-                button.set_path(value)
-
-                table.attach(ebox, 0, 1, row, row+1, xpadding=5, xoptions=gtk.FILL)
-                table.attach(entry, 2, 3, row, row+1, xpadding=5)
-                table.attach(button, 3, 4, row, row+1, xpadding=5, xoptions=gtk.FILL)
-                widgets.append(entry)
-
-            # Color settings
-            elif type == gobject.TYPE_STRING and setting.Info[0] == 'Color':
-                button = gtk.ColorButton()
-                button.set_use_alpha(True)
-                Tooltips.set_tip(ebox, setting.LongDesc)
-                Tooltips.set_tip(button, setting.LongDesc)
-
-                value = values and values[row] or "#000000000000FFFF"
-                color = gtk.gdk.color_parse(value[:-4])
-                alpha = int("0x%s" % value[-4:], base=16)
-                button.set_color(color)
-                button.set_alpha(alpha)
-
-                table.attach(ebox, 0, 1, row, row+1, xpadding=5, xoptions=gtk.FILL)
-                table.attach(button, 2, 3, row, row+1, xpadding=5, xoptions=gtk.FILL)
-                widgets.append(button)
-
-            # String settings
-            elif type == gobject.TYPE_STRING:
-                Tooltips.set_tip(ebox, setting.LongDesc)
-                entry = gtk.Entry()
-                Tooltips.set_tip(entry, setting.LongDesc)
-
-                value = values and values[row] or ""
-                entry.set_text(value)
-
-                table.attach(ebox, 0, 1, row, row+1, xpadding=5, xoptions=gtk.FILL)
-                table.attach(entry, 2, 3, row, row+1, xpadding=5)
-                widgets.append(entry)
-
-            # Int and float settings
-            elif type == gobject.TYPE_INT or type == gobject.TYPE_FLOAT:
-                inc = 0
-                if setting.Info[0] == 'Int':
-                    inc = 1
-                else:
-                    inc = setting.Info[1][2]
-
-                value = values and values[row] or 0
-
-                adjustment = gtk.Adjustment(value, setting.Info[1][0], setting.Info[1][1], inc, inc*10)
-                spin = gtk.SpinButton(adjustment)
-                Tooltips.set_tip(spin, setting.LongDesc)
-                if setting.Info[0] == 'Float':
-                    spin.set_digits(4)
-                scale = gtk.HScale(adjustment)
-                Tooltips.set_tip(scale, setting.LongDesc)
-                scale.props.draw_value = False
-
-                table.attach(ebox, 0, 1, row, row+1, xpadding=5, xoptions=gtk.FILL)
-                table.attach(scale, 2, 3, row, row+1, xpadding=5)
-                table.attach(spin, 3, 4, row, row+1, xpadding=5, xoptions=gtk.FILL)
-                widgets.append(adjustment)
-            row += 1
-
-        dlg.vbox.show_all()
-        ret = dlg.run()
-        dlg.destroy()
-
-        if ret == gtk.RESPONSE_OK:
-            values = []
-            row = 0
-            for type in self.Types:
-                widget = widgets[row]
-                if type == gobject.TYPE_STRING:
-                    value = None
-                    if widget.__class__ == gtk.Entry:
-                        value = widget.get_text()
-                    elif widget.__class__ == gtk.ComboBox:
-                        value = widget.get_active_text()
-                    elif widget.__class__ == gtk.ColorButton:
-                        color = widget.get_color()
-                        alpha = widget.get_alpha()
-                        value = "#%.4x%.4x%.4x%.4x" % (color.red, color.green, color.blue, alpha)
-                    values.append(value)
-                elif type == gobject.TYPE_INT:
-                    value = int(widget.get_value())
-                    values.append(value)
-                elif type == gobject.TYPE_FLOAT:
-                    value = widget.get_value()
-                    values.append(value)
-                row += 1
-            return values
-
-        return None
-
-    def SetIterValue(self, iter, col, value):
-        if self.Types[col] == gobject.TYPE_STRING:
-            self.Store.set(iter, col, value)
-        elif self.Types[col] == gobject.TYPE_INT:
-            self.Store.set(iter, col, int(value))
-        elif self.Types[col] == gobject.TYPE_FLOAT:
-            self.Store.set(iter, col, float(value))
-
-    def _Changed(self):
-        col = 0
-        for setting in self.Settings:
-            iter = self.Store.get_iter_first()
-            values = []
-            while iter:
-                value = None
-                if setting.Info[0] == 'Int' and len(setting.Info[1][2]) > 0:
-                    pos = self.Store.get(iter, col)[0]
-                    value = setting.Info[1][2][pos]
-                elif setting.Info[0] == 'Color':
-                    text = self.Store.get(iter, col)[0]
-                    color = gtk.gdk.color_parse(text[:-4])
-                    alpha = int("0x%s" % text[-4:], base=16)
-                    value = [color.red, color.green, color.blue, alpha]
-                else:
-                    value = self.Store.get(iter, col)[0]
-                values.append(value)
-                iter = self.Store.iter_next(iter)
-            setting.Value = values
-            col += 1
-
-    def Attach(self, table, row):
-        table.attach(self.EBox, 0, 2, row, row+1, xpadding=5)
-
-class ListSetting(Setting):
-    def _Init(self):
-        self.Widget = gtk.Frame(self.Setting.ShortDesc)
-        label = self.Widget.get_label_widget()
-        if self.Setting.Integrated:
-            label.set_markup("<span foreground=\"blue\">%s</span>" % \
-                             protect_pango_markup (self.Setting.ShortDesc))
-        self.Custom = True
         
-        info = self._ListInfo()
-        self.Store = gtk.ListStore(*info[0])
-        self.View = gtk.TreeView(self.Store)
-        if len(info[0]) == 1:
-            self.View.set_headers_visible(False)
-        for i in info[1]:
-            self.View.insert_column_with_attributes(-1, i[1], i[0], **i[2])
-        self.Store.connect('row-changed', self.Changed)
-        self.Store.connect('row-deleted', self.Changed)
-        self.Store.connect('row-inserted', self.Changed)
-        self.Store.connect('rows-reordered', self.Changed)
-        self.View.connect('row-activated', self.Activated)
-        self.Select = self.View.get_selection()
-        self.Select.set_mode(gtk.SELECTION_MULTIPLE)
-
-        box = gtk.VBox()
-        box.set_border_width(5)
-        box.set_spacing(5)
-        self.Widget.add(box)
-        self.Scroll = gtk.ScrolledWindow()
-        self.Scroll.props.hscrollbar_policy = gtk.POLICY_NEVER
-        self.Scroll.props.hscrollbar_policy = gtk.POLICY_AUTOMATIC
-        self.Scroll.add(self.View)
-        box.pack_start(self.Scroll, True, True)
-        
-        buttonBox = gtk.HBox(False)
-        buttonBox.set_spacing(5)
-        box.pack_start(buttonBox, False, False)
-        buttonTypes = ((gtk.STOCK_ADD, self.Add),
-                 (gtk.STOCK_DELETE, self.Delete), 
-                 (gtk.STOCK_EDIT, self.Edit),
-                 (gtk.STOCK_GO_UP, self.MoveUp), 
-                 (gtk.STOCK_GO_DOWN, self.MoveDown),)
-        for type in buttonTypes:
-            b = gtk.Button(type[0])
-            b.set_use_stock(True)
-            buttonBox.pack_start(b, False, False)
-            b.connect('clicked', type[1])
-        buttonBox.pack_end(self.Reset, False, False)
-
-        self.Box.add(self.Widget)
-
-    def Add(self, b):
-        value = self._Edit()
-        if value is not None:
-            self.Block()
-            Iter = self.Store.append()
-            self.UnBlock()
-            self._ListSet(Iter, value)
-
-    def Delete(self, b):
-        selectedRows = self.Select.get_selected_rows()[1]
-        for path in selectedRows:
-            iter = self.Store.get_iter(path)
-            self.Store.remove(iter)
-
-    def Activated(self, object, path, col):
-        self.Edit(None)
-
-    def Edit(self, b):
-        selectedRows = self.Select.get_selected_rows()[1]
-        if len(selectedRows) == 1:
-            iter = self.Store.get_iter(selectedRows[0])
-            value = self._Edit(self._ListGet(iter))
-            if value is not None:
-                self._ListSet(iter, value)
-
-    def MoveUp(self, b):
-        selectedRows = self.Select.get_selected_rows()[1]
-        if len(selectedRows) == 1:
-            iter = self.Store.get_iter(selectedRows[0])
-            prev = self.Store.get_iter_first()
-            if not self.Store.get_path(prev) == self.Store.get_path(iter):
-                while prev is not None and not self.Store.get_path(self.Store.iter_next(prev)) == self.Store.get_path(iter):
-                    prev = self.Store.iter_next(prev)
-                self.Store.swap(iter, prev)
-
-    def MoveDown(self, b):
-        selectedRows = self.Select.get_selected_rows()[1]
-        if len(selectedRows) == 1:
-            iter = self.Store.get_iter(selectedRows[0])
-            next = self.Store.iter_next(iter)
-            if next is not None:
-                self.Store.swap(iter, next)
-
-    def _ListInfo(self):
-        self.PureVirtual('_ListInfo')
-
-    def _Read(self):
-        self.Store.clear()
-        for value in self.Setting.Value:
-            iter = self.Store.append()
-            self._ListSet(iter, value)
-
-    def _ListSet(self, iter, value):
-        self.PureVirtual('_ListRead')
-
-    def _ListGet(self, iter):
-        self.PureVirtual('_ListGet')
-
-    def _Edit(self, d, value = None):
-        self.PureVirtual('_Edit')
-
-    def _Changed(self):
-        values = []
-        iter = self.Store.get_iter_first()
-        while iter:
-            value = self._ListGet(iter)
-            if value != "":
-                values.append(value)
-            iter = self.Store.iter_next(iter)
-        self.Setting.Value = values
-
-    def Attach(self, table, row):
-        self.Widget.set_sensitive(not self.Setting.ReadOnly)
-        self.Reset.set_sensitive(not self.Setting.ReadOnly)
-        table.attach(self.EBox, 0, 2, row, row+1, xpadding=5)
-
-class StringMatchListSetting(ListSetting):
-    def _ListInfo(self):
-        return (gobject.TYPE_STRING, ), [(gtk.CellRendererText(), _("Value (%s)") % self.Setting.Info[0], {'text':0})]
-
-    def _ListSet(self, iter, value):
-        self.Store.set(iter, 0, value)
-
-    def _ListGet(self, iter):
-        return self.Store.get(iter, 0)[0]
-
-    def _Edit(self, value=""):
-        dlg = gtk.Dialog(_("Edit %s") % self.Setting.ShortDesc)
-        dlg.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
-        dlg.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK).grab_default()
-        dlg.set_default_response(gtk.RESPONSE_OK)
-        
-        ebox = gtk.EventBox()
-        
-        msg = _("Value (%(value)s) for %(setting)s")
-
-        msg_dict = {'value': self.Setting.Info[0],
-                    'setting': self.Setting.ShortDesc}
-        
-        msg = msg % msg_dict
-
-        label = gtk.Label(msg)
-        ebox.add(label)
-        
-        Tooltips.set_tip(ebox, self.Setting.LongDesc)
-        dlg.vbox.pack_start(ebox)
-        
-        entry = gtk.Entry()
-        Tooltips.set_tip(entry, self.Setting.LongDesc)
-        entry.props.activates_default = True
-        entry.set_text(value)
-        dlg.vbox.pack_start(entry)
-        
-        dlg.vbox.show_all()
-        ret = dlg.run()
-        dlg.destroy()
-
-        if ret == gtk.RESPONSE_OK:
-            return entry.get_text()
-        return None
-
-class FileListSetting(StringMatchListSetting):
-    def __init__(self, Setting, isImage=False, isDirectory=False):
-        StringMatchListSetting.__init__(self, Setting)
-        self.IsImage = isImage
-        self.IsDirectory = isDirectory
-    
-    def _Edit(self, value=""):
-        dlg = gtk.Dialog(_("Edit %s") % self.Setting.ShortDesc)
-        dlg.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
-        dlg.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK).grab_default()
-        dlg.set_default_response(gtk.RESPONSE_OK)
-        
-        ebox = gtk.EventBox()
-        
-        msg = _("Value (%(value)s) for %(setting)s")
-
-        msg_dict = {'value': self.Setting.Info[0],
-                    'setting': self.Setting.ShortDesc}
-        
-        msg = msg % msg_dict
-        
-        label = gtk.Label(msg)
-        ebox.add(label)
-        
-        Tooltips.set_tip(ebox, self.Setting.LongDesc)
-        dlg.vbox.pack_start(ebox)
-
-        hbox = gtk.HBox()
-        hbox.set_spacing(5)
-        
-        entry = gtk.Entry()
-        Tooltips.set_tip(entry, self.Setting.LongDesc)
-        entry.props.activates_default = True
-        entry.set_text(value)
-        hbox.pack_start(entry)
-
-        self.Entry = entry
-
-        fileButton = FileButton(self.Setting.Plugin.Context, self.IsDirectory, self.IsImage, value)
-        fileButton.connect('changed', self.SetFileName)
-        hbox.pack_start(fileButton, False, False)
-
-        dlg.vbox.pack_start(hbox)
-        
-        dlg.vbox.show_all()
-        ret = dlg.run()
-        dlg.destroy()
-
-        self.Entry = None
-
-        if ret == gtk.RESPONSE_OK:
-            return entry.get_text()
-        return None
-
-    def SetFileName(self, widget, filename):
-        if self.Entry != None:
-            self.Entry.set_text(filename)
-
-class IntDescListSetting(Setting):
-    def _Init(self):
-        self.Widget = gtk.Frame(self.Setting.ShortDesc)
-        self.Table = gtk.Table()
-        self.Custom = True
-        
-        row = 0
-        col = 0
+        row = col = 0
         self.Checks = []
         sortedItems = sorted(self.Setting.Info[1][2].items(), key=EnumSettingKeyFunc)
         self.minVal = sortedItems[0][1]
         for key, value in sortedItems:
             box = gtk.CheckButton(key)
-            Tooltips.set_tip(box, self.Setting.LongDesc)
             self.Checks.append((key, box))
-            self.Table.attach(box, col, col+1, row, row+1, TableDef, TableDef, TableX, TableX)
+            table.attach(box, col, col+1, row, row+1, TableDef, TableDef, TableX, TableX)
             box.connect('toggled', self.Changed)
-            col += 1
-            if (col >= 3):
+            col = col+1
+            if col >= 3:
                 col = 0
                 row += 1
-        
-        self.HBox = gtk.HBox()
-        self.VBox = gtk.VBox()
-        self.HBox.pack_start(self.VBox, False, False)
-        self.HBox.pack_start(self.Table, True, True)
-        self.VBox.pack_start(self.Reset, False, False)
-        self.Widget.add(self.HBox)
-        self.Box.pack_start(self.Widget)
+
+        vbox = gtk.VBox()
+        vbox.pack_start(self.Reset, False, False)
+
+        hbox = gtk.HBox()
+        hbox.pack_start(table, True, True)
+        hbox.pack_start(vbox, False, False)
+
+        frame.add(hbox)
+        self.Box.pack_start(frame, True, True)
 
     def _Read(self):
         for key, box in self.Checks:
@@ -922,74 +651,6 @@ class IntDescListSetting(Setting):
             if box.get_active():
                 values.append(self.Setting.Info[1][2][key])
         self.Setting.Value = values
-    
-    def Attach(self, table, row):
-        self.Widget.set_sensitive(not self.Setting.ReadOnly)
-        self.Reset.set_sensitive(not self.Setting.ReadOnly)
-        table.attach(self.EBox, 0, 2, row, row+1, xpadding = 5)
-
-class IntFloatListSetting(ListSetting):
-    def _ListInfo(self):
-        return (gobject.TYPE_STRING, ), [(gtk.CellRendererText(), 
-            _("Value (%s)") % self.Setting.Info[0], {'text':0})]
-
-    def _ListSet(self, Iter, v):
-        self.Store.set(Iter, 0, str(v))
-
-    def _ListGet(self, Iter):
-        return eval(self.Store.get(Iter, 0)[0])
-
-    def _Edit(self, value = None):
-        dlg = gtk.Dialog(_("Edit %s") % self.Setting.ShortDesc)
-        dlg.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
-        dlg.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK).grab_default()
-        dlg.set_default_response(gtk.RESPONSE_OK)
-
-        msg = _("Value (%(value)s) for %(setting)s")
-
-        msg_dict = {'value': self.Setting.Info[0],
-                    'setting': self.Setting.ShortDesc}
-
-        msg = msg % msg_dict
-
-        label = gtk.Label(msg)
-        ebox = gtk.EventBox()
-        ebox.add(label)
-        Tooltips.set_tip(ebox, self.Setting.LongDesc)
-        dlg.vbox.pack_start(ebox)
-        box = gtk.HBox()
-        dlg.vbox.pack_start(box)
-        
-        val = self.Setting.Info[1][0]
-        if value is not None:
-            val = value
-        
-        if self.Setting.Info[0] == 'Int':
-            inc = 1
-        else:
-            inc = self.Setting.Info[1][2]
-        
-        adj = gtk.Adjustment(val, 
-                self.Setting.Info[1][0], self.Setting.Info[1][1], 
-                inc, inc*10)
-        spin = gtk.SpinButton(adj)
-        Tooltips.set_tip(spin, setting.LongDesc)
-        if self.Setting.Info[0] == 'Float':
-            spin.set_digits(4)
-        scale = gtk.HScale(adj)
-        Tooltips.set_tip(scale, setting.LongDesc)
-        scale.props.draw_value = False
-        
-        box.pack_start(scale, True, True)
-        box.pack_start(spin, False, False)
-        
-        dlg.vbox.show_all()
-        ret = dlg.run()
-        dlg.destroy()
-
-        if ret == gtk.RESPONSE_OK:
-            return adj.get_value()
-        return None
 
 class EditableActionSetting (Setting):
 
@@ -1004,6 +665,7 @@ class EditableActionSetting (Setting):
         editButton = gtk.Button ()
         editButton.add (Image (name = gtk.STOCK_EDIT, type = ImageStock,
                                size = gtk.ICON_SIZE_BUTTON))
+        Tooltips.set_tip(editButton, _("Edit %s" % self.Setting.ShortDesc))
         editButton.connect ("clicked", self.RunEditDialog)
 
         action = ActionImage (action)
@@ -1221,11 +883,11 @@ class KeySetting (EditableActionSetting):
         self.SetButtonLabel ()
 
     def _Read (self):
-        self.current = self.Setting.Value
+        self.current = self.Get()
         self.SetButtonLabel ()
 
     def _Changed (self):
-        self.Setting.Value = self.current
+        self.Set(self.current)
 
 class ButtonSetting (EditableActionSetting):
 
@@ -1401,11 +1063,11 @@ to set \"%s\" button to Button1 ?") % self.Setting.ShortDesc)
         self.SetButtonLabel ()
 
     def _Read (self):
-        self.current = self.Setting.Value
+        self.current = self.Get()
         self.SetButtonLabel ()
 
     def _Changed (self):
-        self.Setting.Value = self.current
+        self.Set(self.current)
 
 class EdgeSetting (EditableActionSetting):
 
@@ -1492,11 +1154,11 @@ class EdgeSetting (EditableActionSetting):
         self.SetButtonLabel ()
 
     def _Read (self):
-        self.current = self.Setting.Value
+        self.current = self.Get()
         self.SetButtonLabel ()
 
     def _Changed (self):
-        self.Setting.Value = self.current
+        self.Set(self.current)
         self.SetButtonLabel ()
 
 class BellSetting (BoolSetting):
@@ -1507,57 +1169,49 @@ class BellSetting (BoolSetting):
         self.Box.pack_start (bell, False, False)
         self.Box.reorder_child (bell, 0)
 
-def MakeStringSetting (setting):
+def MakeStringSetting (setting, List=False):
 
     if setting.Hints:
         if "file" in setting.Hints:
             if "image" in setting.Hints:
-                return FileStringSetting (setting, isImage=True)
+                return FileStringSetting (setting, isImage=True, List=List)
             else:
-                return FileStringSetting (setting)
+                return FileStringSetting (setting, List=List)
         elif "directory" in setting.Hints:
-            return FileStringSetting (setting, isDirectory=True)
+            return FileStringSetting (setting, isDirectory=True, List=List)
         else:
-            return StringSetting (setting)
+            return StringSetting (setting, List=List)
     else:
-        return StringSetting (setting)
+        return StringSetting (setting, List=List)
 
-def MakeIntFloatSetting (setting):
+def MakeIntSetting (setting, List=False):
 
-    if setting.Type == "Int" and setting.Info[2]:
-        return EnumSetting (setting)
+    if List:
+        info = setting.Info[1][2]
     else:
-        return IntFloatSetting (setting)
+        info = setting.Info[2]
+
+    if info:
+        return EnumSetting (setting, List=List)
+    else:
+        return IntSetting (setting, List=List)
+
+def MakeListSetting (setting, List=False):
+
+    if List:
+        raise TypeError ("Lists of lists are not supported")
+
+    if setting.Info[0] == "Int" and setting.Info[1][2]:
+        return EnumFlagsSetting (setting)
+    else:
+        return ListSetting (setting)
       
-def MakeListSetting (setting):
-
-    if setting.Info[0] == "String" or setting.Info[0] == "Match":
-        if setting.Hints:
-            if "file" in setting.Hints:
-                return FileListSetting (setting)
-            elif "directory" in setting.Hints:
-                return FileListSetting (setting, isDirectory=True)
-            else:
-                return StringMatchListSetting (setting)
-        else:
-            return StringMatchListSetting (setting)
-    elif setting.Info[0] == "Int":
-        if setting.Info[1][2]:
-            return IntDescListSetting (setting)
-        else:
-            return IntFloatListSetting (setting)
-    elif setting.Info[0] == "Float":
-        return IntFloatListSetting (setting)
-    else:
-        raise TypeError, _("Unhandled list type %s for %s") % \
-                          (setting.Info[0], setting.Name)
-  
 SettingTypeDict = {
     "Match": MatchSetting,
     "String": MakeStringSetting,
     "Bool": BoolSetting,
-    "Float": MakeIntFloatSetting,
-    "Int": MakeIntFloatSetting,
+    "Float": FloatSetting,
+    "Int": MakeIntSetting,
     "Color": ColorSetting,
     "List": MakeListSetting,
     "Key": KeySetting,
@@ -1566,13 +1220,18 @@ SettingTypeDict = {
     "Bell": BellSetting,
 }
 
-def MakeSetting(setting):
+def MakeSetting(setting, List=False):
 
-    stype = SettingTypeDict.get(setting.Type, None)
+    if List:
+        type = setting.Info[0]
+    else:
+        type = setting.Type
+
+    stype = SettingTypeDict.get(type, None)
     if not stype:
         return
 
-    return stype(setting)
+    return stype(setting, List=List)
 
 class SubGroupArea:
     def __init__(self, name, subGroup, filter=None):
