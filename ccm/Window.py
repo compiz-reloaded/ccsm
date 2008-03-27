@@ -93,9 +93,9 @@ class MainWin(gtk.Window):
         self.BlockEnablePlugin = 0
         self.ResetMainWidgets()
 
-        if pluginPage and self.Context.Plugins.has_key(pluginPage):
+        if pluginPage and pluginPage in self.Context.Plugins:
             self.ShowPlugin(None, self.Context.Plugins[pluginPage])
-        if categoryName and self.Context.Categories.has_key(categoryName):
+        if categoryName and categoryName in self.Context.Categories:
             self.ToggleCategory(None, categoryName)
 
     def Quit(self, *args):

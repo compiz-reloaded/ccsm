@@ -725,14 +725,14 @@ class GlobalEdgeSelector(EdgeSelector):
 
     def set_fill_color (self, cr, edge):
         '''Set painting color for edge'''
-        if self._edges.has_key(edge):
+        if edge in self._edges:
             cr.set_source_rgb (0.64, 1.0, 0.09)
         else:
             cr.set_source_rgb (0.80, 0.00, 0.00)
 
     def set_stroke_color (self, cr, edge):
         '''Set stroke color for edge'''
-        if self._edges.has_key(edge):
+        if edge in self._edges:
             cr.set_source_rgb (0.31, 0.60, 0.02)
         else:
             cr.set_source_rgb (0.64, 0.00, 0.00)
@@ -764,7 +764,7 @@ class GlobalEdgeSelector(EdgeSelector):
 
     def set_edge_setting (self, setting, edge):
         if not setting:
-            if self._edges.has_key(edge):
+            if edge in self._edges:
                 self._edges.pop(edge)
             for setting in self._settings:
               value = setting.Value.split ("|")
