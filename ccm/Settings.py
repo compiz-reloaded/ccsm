@@ -24,8 +24,6 @@ import pygtk
 import gtk
 import gobject
 import os
-import mimetypes
-mimetypes.init()
 
 from ccm.Constants import *
 from ccm.Conflicts import *

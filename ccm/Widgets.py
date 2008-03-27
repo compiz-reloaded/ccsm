@@ -28,6 +28,8 @@ import cairo, pangocairo
 from math import pi, sqrt
 import time
 import re
+import mimetypes
+mimetypes.init()
 
 from ccm.Utils import *
 from ccm.Constants import *
@@ -1152,11 +1154,11 @@ class FileButton (gtk.Button):
         ext = filename.split (".") [-1]
 
         try:
-            mime = mimetypes.types_map ["." + ext]
-        except:
+            mime = mimetypes.types_map [".%s" %ext]
+        except KeyError:
             return True
 
-        if self.self._image:
+        if self._image:
             require = FeatureRequirement (self._context, 'imagemime:' + mime)
             return require.Resolve ()
 
