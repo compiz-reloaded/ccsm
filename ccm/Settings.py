@@ -228,7 +228,9 @@ class EnumSetting(Setting):
         cell = gtk.CellRendererCombo()
         column = gtk.TreeViewColumn(self.Setting.ShortDesc, cell, text=num)
         model = gtk.ListStore(str)
-        cell.set_properties(model=model, text_column=0, editable=False, has_entry=False)
+        for property, value in [("model", model), ("text_column", 0),
+                                ("editable", False, "has_entry", False)]:
+            cell.set_property (property, value)
         cell.connect("edited", self._CellEdited)
         for item, i in self.SortedItems:
             model.append([item])
@@ -275,7 +277,7 @@ class BoolSetting (Setting):
     def GetColumn (self, num):
         self.Num = num
         cell = gtk.CellRendererToggle()
-        cell.set_properties(activatable=True)
+        cell.set_property("activatable", True)
         cell.connect('toggled', self.CellToggled)
         return (bool, gtk.TreeViewColumn(self.Setting.ShortDesc, cell, active=num))
 
