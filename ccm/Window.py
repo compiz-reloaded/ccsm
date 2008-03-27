@@ -93,9 +93,9 @@ class MainWin(gtk.Window):
         self.BlockEnablePlugin = 0
         self.ResetMainWidgets()
 
-        if pluginPage and pluginPage in self.Context.Plugins:
+        if pluginPage in self.Context.Plugins:
             self.ShowPlugin(None, self.Context.Plugins[pluginPage])
-        if categoryName and categoryName in self.Context.Categories:
+        if categoryName in self.Context.Categories:
             self.ToggleCategory(None, categoryName)
 
     def Quit(self, *args):
@@ -137,21 +137,13 @@ class MainWin(gtk.Window):
         # Categories
         categoryBox = gtk.VBox()
         categoryBox.set_border_width(10)
-        categories = [_("All")] + sorted(self.Categories, key=self.CatKeyFunc)
+        categories = ['All'] + sorted(self.Categories, key=self.CatKeyFunc)
         for category in categories:
-            name = category or _("Uncategorized")
-            if category == "":
-                label = _("Uncategorized")
-            else:
-                label = _(category)
-
-            if category == "":
-                iconName = "uncategorized"
-            elif name == _("All"):
-                iconName = "all"
-            else:
-                iconName = name.lower ().replace (" ", "_")
-
+            # name: untranslated name/interal identifier
+            # label: translated name
+            name = category or 'Uncategorized'
+            label = _(name)
+            iconName = name.lower ().replace (" ", "_")
             categoryToggleIcon = Image (name = iconName, type = ImageCategory,
                                         size = 22)
             categoryToggleLabel = Label (label)
@@ -242,11 +234,8 @@ class MainWin(gtk.Window):
             categoryLabel = Label('', -1)
             pluginWindow.pack_start(categoryBox, False, False)
 
-            name = category or _("Uncategorized")
-            if category == "":
-                label = _("Uncategorized")
-            else:
-                label = _(category)
+            name = category or 'Uncategorized'
+            label = _(name)
 
             categoryLabel.set_markup("<span color='#aaa' size='x-large' weight='800'>%s</span>" % label)
 
@@ -501,9 +490,7 @@ class MainWin(gtk.Window):
         self.BlockEnablePlugin -= 1
 
     def ToggleCategory(self, widget, category):
-        if category == _("All"):
-            category = None
-        self.currentCategory = category
+        self.currentCategory = category is not 'All' and category or None
         self.FilterTable (widget = self.filterEntry) 
 
     def ScreenChanged(self, widget):
