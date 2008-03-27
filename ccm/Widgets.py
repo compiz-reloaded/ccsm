@@ -958,11 +958,12 @@ class MatchButton(gtk.Button):
 
     match   = None
 
-    def __init__ (self, match = None):
+    def __init__ (self, entry = None):
         '''Prepare widget'''
         super (MatchButton, self).__init__ ()
 
-        self.match = match
+        self.entry = entry
+        self.match = entry.get_text()
 
         self.add (Image (name = gtk.STOCK_ADD, type = ImageStock,
                          size = gtk.ICON_SIZE_BUTTON))
@@ -970,7 +971,8 @@ class MatchButton(gtk.Button):
 
     def set_match (self, value):
         self.match = value
-        self.emit ("changed", self.match)
+        self.entry.set_text(value)
+        self.entry.activate()
 
     def get_xprop (self, regexp, proc = "xprop"):
         proc = os.popen (proc)
@@ -1037,6 +1039,8 @@ class MatchButton(gtk.Button):
 
     def run_edit_dialog (self, widget):
         '''Run dialog to generate a match'''
+
+        self.match = self.entry.get_text ()
 
         dlg = gtk.Dialog (_("Edit match"))
         dlg.set_position (gtk.WIN_POS_CENTER_ON_PARENT)
@@ -1109,9 +1113,10 @@ class FileButton (gtk.Button):
     _image     = False
     _path      = ""
 
-    def __init__ (self, context, directory=False, image=False, path=""):
+    def __init__ (self, context, entry, directory=False, image=False, path=""):
         gtk.Button.__init__ (self)
 
+        self._entry = entry
         self._directory = directory
         self._context = context
         self._image = image
@@ -1124,7 +1129,8 @@ class FileButton (gtk.Button):
 
     def set_path (self, value):
         self._path = value
-        self.emit ("changed", self._path)
+        self._entry.set_text (value)
+        self._entry.activate ()
 
     def create_filter(self):
         filter = gtk.FileFilter ()
