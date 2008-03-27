@@ -228,7 +228,7 @@ class EnumSetting(Setting):
         cell = gtk.CellRendererCombo()
         column = gtk.TreeViewColumn(self.Setting.ShortDesc, cell, text=num)
         model = gtk.ListStore(str)
-        cell.set_properties(model=model, text_column=0, editable=True, has_entry=False)
+        cell.set_properties(model=model, text_column=0, editable=False, has_entry=False)
         cell.connect("edited", self._CellEdited)
         for item, i in self.SortedItems:
             model.append([item])
