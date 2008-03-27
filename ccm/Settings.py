@@ -182,33 +182,21 @@ class StringSetting(Setting):
 class MatchSetting(StringSetting):
     def _Init(self):
         StringSetting._Init(self)
-        self.MatchButton = MatchButton(self.Get)
-        self.MatchButton.connect('changed', self.MatchChanged)
-
+        self.MatchButton = MatchButton(self.Entry)
         self.Box.pack_start(self.MatchButton, False, False)
 
-    def _Read(self):
-        self.Entry.set_text(self.Get())
-        self.MatchButton.set_match(self.Get())
-
-    def MatchChanged(self, widget, match):
-        self.Entry.set_text(match)
-        self.Setting.Plugin.Context.Write()
-
-    def _Changed(self):
-        StringSetting._Changed(self)
-        self.MatchButton.set_match(self.Get())
-
 class FileStringSetting(StringSetting):
-    def __init__(self, setting, List=False, isImage=False, isDirectory=False):
-        StringSetting.__init__(self, setting, List=List)
-        fileButton = FileButton(setting.Plugin.Context, isDirectory, isImage)
-        fileButton.connect('changed', self.SetFileName)
-        self.Box.pack_start(fileButton, False, False)
 
-    def SetFileName(self, widget, filename):
-        self.Entry.set_text(filename)
-        self.Changed()
+    def __init__(self, setting, List=False, isImage=False, isDirectory=False):
+        self.isImage = isImage
+        self.isDirectory = isDirectory
+        StringSetting.__init__(self, setting, List=List)
+
+    def _Init(self):
+        StringSetting._Init(self)
+        self.FileButton = FileButton(self.Setting.Plugin.Context, self.Entry,
+            self.isDirectory, self.isImage)
+        self.Box.pack_start(self.FileButton, False, False)
 
 class EnumSetting(Setting):
 
