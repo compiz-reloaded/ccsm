@@ -109,9 +109,8 @@ class Setting(object):
         style = ""
         if self.Setting.Integrated: style = ''' foreground="blue"'''
         label.set_markup("<span%s>%s</span>" % (style, desc))
-        if not self.List:
-            label.props.xalign = 0
-            label.set_size_request(160, -1)
+        label.props.xalign = 0
+        label.set_size_request(160, -1)
         label.props.wrap_mode = gtk.WRAP_WORD
         label.set_line_wrap(True)
         self.Label = label
