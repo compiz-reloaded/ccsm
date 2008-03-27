@@ -252,7 +252,6 @@ class BoolSetting (Setting):
 
     def _Init (self):
         self.Label.set_size_request(-1, -1)
-        self.Label.set_line_wrap(False)
         self.CheckButton = gtk.CheckButton ()
         self.Box.pack_start(self.Label, False, False)
         align = gtk.Alignment(yalign=0.5)
@@ -647,7 +646,6 @@ class EditableActionSetting (Setting):
         alignment.add (widget)
 
         self.Label.set_size_request(-1, -1)
-        self.Label.set_line_wrap(False)
 
         editButton = gtk.Button ()
         editButton.add (Image (name = gtk.STOCK_EDIT, type = ImageStock,
