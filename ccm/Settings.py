@@ -475,14 +475,16 @@ class BaseListSetting(Setting):
 
     def _MakeEditDialog(self):
         dlg = gtk.Dialog(_("Edit"))
-        dlg.vbox.set_spacing(TableX)
-        dlg.set_default_size(400, -1)
+        vbox = gtk.VBox(spacing=TableX)
+        vbox.props.border_width = 6
+        dlg.vbox.pack_start(vbox, True, True)
+        dlg.set_default_size(500, -1)
         dlg.add_button(gtk.STOCK_CLOSE, gtk.RESPONSE_CLOSE)
         dlg.set_default_response(gtk.RESPONSE_CLOSE)
 
         group = gtk.SizeGroup(gtk.SIZE_GROUP_HORIZONTAL)
         for widget in self.Widgets:
-            dlg.vbox.pack_start(widget.EBox, False, False)
+            vbox.pack_start(widget.EBox, False, False)
             group.add_widget(widget.Label)
         return dlg
 
