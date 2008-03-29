@@ -47,17 +47,9 @@ class MainWin(gtk.Window):
         self.connect("destroy", self.Quit)
         self.set_default_size(990, 580)
         self.set_title(_("CompizConfig Settings Manager"))
-        try:
-            list = (\
-                IconTheme.load_icon("ccsm", 16, 0),
-                IconTheme.load_icon("ccsm", 32, 0),
-                IconTheme.load_icon("ccsm", 48, 0),
-                IconTheme.load_icon("ccsm", 128, 0)
-            )
-            self.set_icon_list (*list)
-        except:
-            pass
-        
+
+        self.set_icon_name('ccsm')
+
         self.Style = Style()
         
         # build the panes
@@ -81,6 +73,8 @@ class MainWin(gtk.Window):
         self.RightVadj = 0.0
         self.FilterValue = ""
         
+        self.PressedButton = None
+
         for pluginName, plugin in self.Context.Plugins.items():
             self.PluginImages[pluginName] = Image(plugin.Name, ImagePlugin, size=32)
         
@@ -104,7 +98,7 @@ class MainWin(gtk.Window):
     def ResetMainWidgets(self):
         pluginsVPort = gtk.Viewport()
         leftChild = gtk.VBox(False, 10)
-        leftChild.set_border_width(15)
+        leftChild.set_border_width(10)
         
         # Filter
         filterLabel = Label()
@@ -136,7 +130,7 @@ class MainWin(gtk.Window):
 
         # Categories
         categoryBox = gtk.VBox()
-        categoryBox.set_border_width(10)
+        categoryBox.set_border_width(5)
         categories = ['All'] + sorted(self.Categories, key=self.CatKeyFunc)
         for category in categories:
             # name: untranslated name/interal identifier
@@ -206,7 +200,8 @@ class MainWin(gtk.Window):
         rightChild.add(pluginsVPort)
         self.BuildTable(pluginsVPort)
         rightChild.connect('size-allocate', self.RebuildTable)
-        self.SetMainWidgets(leftChild, rightChild)
+        self.SetMainWidgets(leftChild, rightChild, setsize=True)
+        self.MainWidgets = (leftChild, rightChild)
 
     def BuildTable(self, viewPort):
         pluginWindow = gtk.VBox()
@@ -404,16 +399,19 @@ class MainWin(gtk.Window):
         self.show_all()
         self.RightPane.get_child().props.vadjustment.value = self.RightVadj
 
-    def SetMainWidgets(self, leftWidget, rightWidget):
+    def SetMainWidgets(self, leftWidget, rightWidget, setsize=False):
         pane = self.LeftPane.get_child()
         if pane:
-            pane.destroy()
+            self.LeftPane.remove(pane)
         pane = self.RightPane.get_child()
-        if (pane):
-            pane.destroy()
+        if pane:
+            self.RightPane.remove(pane)
         self.LeftPane.add(leftWidget)
         self.RightPane.add(rightWidget)
         self.show_all()
+
+        if setsize:
+            self.LeftPane.set_size_request(leftWidget.get_allocation().width, -1)
 
     def CatKeyFunc(self, cat):
         if self.Context.Plugins['core'].Category == cat:
@@ -422,27 +420,19 @@ class MainWin(gtk.Window):
             return cat or 'zzzzzzzz'
 
     def ShowPlugin(self, obj, select):
-        self.RightVadj = self.RightPane.get_child().get_vadjustment().get_value()
-        self.FilterValue = self.filterEntry.get_text()
-        for name, value in self.PluginImages.items():
-            widget = value.get_parent()
-            if widget:
-                widget.remove(value)
+        if obj is not None:
+            self.PressedButton = obj
         pluginPage = PluginPage(select, self)
         self.ShowingPlugin = pluginPage
         self.SetMainWidgets(pluginPage.LeftWidget, pluginPage.RightWidget)
     
     def ShowAdvancedFilter(self, widget):
+        self.PressedButton = widget
         self.TitleBuffer = self.get_title()
         self.set_title(self.TitleBuffer + " - Loading...")
         gtk_process_events()
 
-        self.RightVadj = self.RightPane.get_child().get_vadjustment().get_value()
         self.FilterValue = self.filterEntry.get_text()
-        for name, value in self.PluginImages.items():
-            widget = value.get_parent()
-            if widget:
-                widget.remove(value)
         filterPage = FilterPage(self, self.Context)
         self.SetMainWidgets(filterPage.LeftWidget, filterPage.RightWidget)
     
@@ -452,12 +442,7 @@ class MainWin(gtk.Window):
         return False
     
     def ShowPreferences(self, widget):
-        self.RightVadj = self.RightPane.get_child().get_vadjustment().get_value()
-        self.FilterValue = self.filterEntry.get_text()
-        for name, value in self.PluginImages.items():
-            widget = value.get_parent()
-            if widget:
-                widget.remove(value)
+        self.PressedButton = widget
         preferencesPage = PreferencesPage(self, self.Context)
         self.SetMainWidgets(preferencesPage.LeftWidget, preferencesPage.RightWidget)
 
@@ -497,11 +482,13 @@ class MainWin(gtk.Window):
         self.Context.Read()
 
     def BackToMain(self, widget, run=0):
-        self.VisibleSettings = []
-        self.ResetMainWidgets()
-        del self.ShowingPlugin
         # make sure its cleaned up here, since this is a nice safe place to do so
+        self.LeftPane.get_child().destroy()
+        self.RightPane.get_child().destroy()
+        if self.PressedButton:
+            self.PressedButton.set_state(gtk.STATE_PRELIGHT)
+            self.PressedButton.set_state(gtk.STATE_NORMAL)
+            self.PressedButton = None
+
         self.ShowingPlugin = None
-        gtk_process_events()
-        self.filterEntry.set_text(self.FilterValue)
-        self.FilterTable(widget = self.filterEntry)
+        self.SetMainWidgets(*self.MainWidgets)

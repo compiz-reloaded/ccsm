@@ -49,7 +49,7 @@ class PluginPage:
         self.Plugin = plugin
         self.Main = main
         self.LeftWidget = gtk.VBox(False, 10)
-        self.LeftWidget.set_border_width(15)
+        self.LeftWidget.set_border_width(10)
 
         pluginLabel = Label()
         pluginLabel.set_markup(HeaderMarkup % (self.Main.Style.BrightColor, plugin.ShortDesc))
@@ -194,7 +194,7 @@ class FilterPage(object):
         self.Context = context
         self.Main = main
         self.LeftWidget = gtk.VBox(False, 10)
-        self.LeftWidget.set_border_width(15)
+        self.LeftWidget.set_border_width(10)
         self.RightWidget = gtk.Notebook()
         self.RightChild = gtk.VBox()
 
@@ -965,7 +965,7 @@ class PreferencesPage(object):
         self.Context = context
         self.Main = main
         self.LeftWidget = gtk.VBox(False, 10)
-        self.LeftWidget.set_border_width(15)
+        self.LeftWidget.set_border_width(10)
         self.RightWidget = gtk.Notebook()
 
         # Left Pane
