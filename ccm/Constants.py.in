@@ -61,6 +61,12 @@ ImageCategory = 2
 ImageThemed   = 3
 ImageStock    = 4
 
+# Filter Levels
+#
+FilterName = 1 << 0
+FilterLongDesc = 1 << 1
+FilterValue = 1 << 2
+FilterAll = FilterName | FilterLongDesc | FilterValue
 # Paths
 #
 DataDir = "@prefix@/share"

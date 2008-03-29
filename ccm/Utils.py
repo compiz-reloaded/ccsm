@@ -321,7 +321,7 @@ PluginKeyFunc = operator.attrgetter('ShortDesc')
 
 # singleRun is used to combine the run stages, in this case run is a list
 # containing the run levels which should be used to filter the settings
-def FilterSettings(settings, filter, run=0, singleRun=False):
+def FilterSettings(settings, filter, level=FilterAll):
     if filter == None:
         return settings
 
@@ -331,7 +331,7 @@ def FilterSettings(settings, filter, run=0, singleRun=False):
 
     for setting in settings:
         # First run, only search in shortDesc and name
-        if run == 0 or (singleRun and 0 in run):
+        if level & FilterName:
             shortDesc = setting.ShortDesc.lower()
             name = setting.Name.lower()
             if filter in shortDesc:
@@ -341,13 +341,13 @@ def FilterSettings(settings, filter, run=0, singleRun=False):
                 filteredSettings.append(setting)
                 continue
         # Then in longDesc
-        if run == 1 or (singleRun and 1 in run):
+        if level & FilterLongDesc:
             longDesc = setting.LongDesc.lower()
             if filter in longDesc:
                 filteredSettings.append(setting)
                 continue
         # Finally search in the option value
-        if run == 2 or (singleRun and 2 in run):
+        if level & FilterValue:
             value = ""
             # make sure enum settings work too
             if setting.Type == 'Int' and setting.Info[2]:
@@ -364,10 +364,6 @@ def FilterSettings(settings, filter, run=0, singleRun=False):
                 value = str(setting.Value).lower()
             if filter in value:
                 filteredSettings.append(setting)
-
-    # Nothing was found, search also in the longDesc/value
-    if not filteredSettings and run < 2 and not singleRun:
-        return FilterSettings(settings, filter, run+1, False)
 
     return filteredSettings
 
