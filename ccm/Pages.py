@@ -106,7 +106,7 @@ class PluginPage:
             groupPage = GroupPage(name, group)
             if not groupPage.Empty:
                 self.RightWidget.append_page(groupPage.Widget, gtk.Label(name))
-                self.Pages = self.Pages + [groupPage]
+                self.Pages.append(groupPage)
         
         self.RightWidget.connect('size-allocate', self.ResetFocus)
 
@@ -117,42 +117,61 @@ class PluginPage:
         self.FilterEntry.grab_focus()
         self.FilterEntry.set_position(pos)
 
-    def FilterChanged(self, widget):
-        filter = widget.get_text().lower()
-        if filter == "":
-            filter = None
+    def GetPageSpot(self, new):
+        vpos = 0 #visible position
+        for page in self.Pages:
+            if page is new:
+                break
+            if page.Visible:
+                vpos += 1
+        return vpos
 
-        groups = []
+    def ShowFilterError(self, text):
 
-        for name, group in self.Plugin.Groups.items():
-            name = name or _("General")
-            groupPage = GroupPage(name, group, filter)
-            if not groupPage.Empty:
-                groups.append((name, groupPage))
-
-        for page in self.RightWidget.get_children():
-            label = self.RightWidget.get_tab_label(page).get_label()
-            if label != _("Error"):
-                self.RightWidget.remove_page(self.RightWidget.page_num(page))
-                page.destroy()
-
-        for name, groupPage in groups:
-            self.RightWidget.append_page(groupPage.Widget, gtk.Label(name))
-
-        # Add
-        if len(self.RightWidget.get_children()) == 0 and not self.NotFoundBox:
-            self.NotFoundBox = NotFoundBox(filter)
+        if self.NotFoundBox is None:
+            self.NotFoundBox = NotFoundBox(text)
             self.RightWidget.append_page(self.NotFoundBox, gtk.Label(_("Error")))
-        # Update
-        elif len(self.RightWidget.get_children()) == 1 and self.NotFoundBox:
-            self.NotFoundBox.update(filter)
-        # Cleanup
-        elif len(self.RightWidget.get_children()) > 1 and self.NotFoundBox:
-            self.RightWidget.remove_page(self.RightWidget.page_num(self.NotFoundBox))
-            self.NotFoundBox.destroy()
-            self.NotFoundBox = None
+        else:
+            self.NotFoundBox.update(text)
+
+    def HideFilterError(self):
+        if self.NotFoundBox is None:
+            return
+        num = self.RightWidget.page_num(self.NotFoundBox)
+        if num >= 0:
+            self.RightWidget.remove_page(num)
+        self.NotFoundBox.destroy()
+        self.NotFoundBox = None
+
+        self.RightWidget.set_current_page(0)
+
+    def FilterChanged(self, widget):
+        text = widget.get_text().lower()
+        if text == "":
+            text = None
+
+        empty = True
+        for page in self.Pages:
+            num = self.RightWidget.page_num(page.Widget)
+            if page.Filter(text):
+                empty = False
+                if num < 0:
+                    self.RightWidget.insert_page(page.Widget, gtk.Label(page.Name), self.GetPageSpot(page))
+            else:
+                if num >= 0:
+                    self.RightWidget.remove_page(num)
+
+        if empty:
+            self.ShowFilterError(text)
+        else:
+            self.HideFilterError()
 
         self.RightWidget.show_all()
+
+        # This seems to be necessary to ensure all gaps from hidden settings are removed on all tabs
+        for page in self.Pages:
+            page.Widget.queue_resize_no_redraw()
+
 
     def EnablePlugin(self, widget):
         if self.Block > 0:
@@ -170,7 +189,7 @@ class PluginPage:
 
 # Filter Page
 #
-class FilterPage:
+class FilterPage(object):
     def __init__(self, main, context):
         self.Context = context
         self.Main = main
@@ -258,15 +277,15 @@ class FilterPage:
         self.RightChild.pack_start(self.SelectorButtons, False, False)
         self.RightChild.pack_start(self.SelectorBoxes, False, False)
         self.SettingsArea = gtk.ScrolledWindow()
-        viewport = gtk.Viewport()
+        ebox = gtk.EventBox()
         self.SettingsBox = gtk.VBox()
         self.SettingsBox.set_border_width(5)
         self.SettingsBox.set_spacing(5)
-        viewport.add(self.SettingsBox)
+        ebox.add(self.SettingsBox)
         self.SettingsArea.props.hscrollbar_policy = gtk.POLICY_NEVER
         self.SettingsArea.props.vscrollbar_policy = gtk.POLICY_AUTOMATIC
         self.SettingsArea.set_border_width(5)
-        self.SettingsArea.add(viewport)
+        self.SettingsArea.add_with_viewport(ebox)
         self.SettingsArea.set_no_show_all(True)
         self.RightChild.pack_start(self.SettingsArea, True, True)
 
@@ -394,11 +413,14 @@ class FilterPage:
             self.SubGroupBox.add_item(name, self.SubGroupChanged)
 
             # Settings
+            # FIXME: optimise this later
             if self.CurrentSubGroup in (_("All"), name):
-                sga = SubGroupArea('', subGroup, self.Filter)
+                sga = SubGroupArea('', subGroup)
+                sga.Filter(self.Filter)
                 self.SettingsBox.pack_start(sga.Widget, False, False)
             elif self.CurrentSubGroup == None:
-                sga = SubGroupArea(name, subGroup, self.Filter)
+                sga = SubGroupArea(name, subGroup)
+                sga.Filter(self.Filter)
                 self.SettingsBox.pack_start(sga.Widget, False, False)
 
         self.SettingsArea.set_no_show_all(len(self.SettingsBox.get_children()) == 0)
@@ -439,13 +461,13 @@ class FilterPage:
     def FilterChanged(self, widget=None):
         self.Filter = self.FilterEntry.get_text()
 
-        runLevels = []
+        level = 0
         if self.FilterName.get_active():
-            runLevels.append(0)
+            level |= FilterName
         if self.FilterLongDesc.get_active():
-            runLevels.append(1)
+            level |= FilterLongDesc
         if self.FilterValue.get_active():
-            runLevels.append(2)
+            level |= FilterValue
 
         plugins = {}
         foundCurrentPlugin = False
@@ -457,7 +479,7 @@ class FilterPage:
                 subGroups = {}
                 for name, subGroup in plugin.Groups[group].items():
                     settings = sum((v.values() for v in [subGroup.Display]+[subGroup.Screens[CurrentScreenNum]]), [])
-                    settings = FilterSettings(settings, self.Filter, run=runLevels, singleRun=True)
+                    settings = FilterSettings(settings, self.Filter, level=level)
                     if len(settings) > 0:
                         subGroups[name] = subGroup
                         isCurrentPlugin = plugin.ShortDesc == self.CurrentPlugin
@@ -509,7 +531,7 @@ class FilterPage:
 
 # Profile and Backend Page
 #
-class ProfileBackendPage:
+class ProfileBackendPage(object):
     def __init__(self, main, context):
         self.Context = context
         self.Main = main
@@ -766,7 +788,7 @@ class ProfileBackendPage:
 
 # Plugin List Page
 #
-class PluginListPage:
+class PluginListPage(object):
     def __init__(self, main, context):
         self.Context = context
         self.Main = main
@@ -938,7 +960,7 @@ class PluginListPage:
 
 # Preferences Page
 #
-class PreferencesPage:
+class PreferencesPage(object):
     def __init__(self, main, context):
         self.Context = context
         self.Main = main
@@ -999,12 +1021,10 @@ class PreferencesPage:
 
 # Page
 #
-class Page:
+class Page(object):
     def __init__(self):
-        self.Widget = gtk.VBox()
         self.SetContainer = gtk.VBox()
-        
-        scroll = gtk.ScrolledWindow()
+        self.Widget = scroll = gtk.ScrolledWindow()
         scroll.props.hscrollbar_policy = gtk.POLICY_NEVER
         scroll.props.vscrollbar_policy = gtk.POLICY_AUTOMATIC
         
@@ -1016,20 +1036,20 @@ class Page:
         ebox = gtk.EventBox()
         view.add(ebox)
         ebox.add(self.SetContainer)
-        self.Widget.pack_start(scroll, True, True)
         
         self.Empty = True
 
 # Group Page
 #
 class GroupPage(Page):
-    def __init__(self, name, group, filter=None):
+    def __init__(self, name, group):
         Page.__init__(self)
 
+        self.Name = name
         self.subGroupAreas = []
 
         if '' in group:
-            sga = SubGroupArea('', group[''], filter)
+            sga = SubGroupArea('', group[''])
             if not sga.Empty:
                 self.SetContainer.pack_start(sga.Widget, False, False)
                 self.Empty = False
@@ -1037,8 +1057,22 @@ class GroupPage(Page):
 
         for subGroup in sorted(group):
             if not subGroup == '':
-                sga = SubGroupArea(subGroup, group[subGroup], filter)
+                sga = SubGroupArea(subGroup, group[subGroup])
                 if not sga.Empty:
                     self.SetContainer.pack_start(sga.Widget, False, False)
                     self.Empty = False
                     self.subGroupAreas.append(sga)
+
+        self.Visible = not self.Empty
+
+    def Filter(self, text):
+        empty = True
+        for area in self.subGroupAreas:
+            if area.Filter(text):
+                empty = False
+
+        self.Visible = not empty
+
+        return not empty
+
+

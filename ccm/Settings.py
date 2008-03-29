@@ -42,7 +42,6 @@ class Setting(object):
     NoneValue = ''
 
     def __init__(self, Setting=None, Settings=None, List=False):
-        self.Custom = False
         self.Setting = Setting
         self.Settings = Settings # for multi-list settings
         self.List = List
@@ -52,6 +51,7 @@ class Setting(object):
         self.Blocked = 0
         self.EBox = gtk.EventBox()
         self.Box = gtk.HBox()
+        self.EBox.set_visible_window(False)
         self.Box.set_spacing(5)
         self.EBox.add(self.Box)
         self.Reset = gtk.Button()
@@ -68,16 +68,6 @@ class Setting(object):
 
     def GetColumn(self, num):
         return (str, gtk.TreeViewColumn(self.Setting.ShortDesc, gtk.CellRendererText(), text=num))
-
-    def Attach(self, table, row):
-        if self.Custom:
-            self.EBox.set_sensitive(not self.Setting.ReadOnly)
-            table.attach(self.EBox, 0, 2, row, row+1, TableDef, TableDef, TableX, TableX)
-        else:
-            self.EBox.set_sensitive(not self.Setting.ReadOnly)
-            table.attach(self.EBox, 0, 1, row, row+1, TableDef, TableDef, TableX, TableX)
-            self.Reset.set_sensitive(not self.Setting.ReadOnly)
-            table.attach(self.Reset, 1, 2, row, row+1, 0, 0, TableX, TableX)
 
     def PureVirtual (self, func):
         message = "Missing %(function)s function for %(name)s setting (%(class)s)"
@@ -161,13 +151,47 @@ class Setting(object):
         vlist.insert(b, vlist.pop(a))
         self.Setting.Value = vlist
 
-class StringSetting(Setting):
+    def _SetHidden(self, visible):
+
+        self.EBox.props.no_show_all = not visible
+
+        if visible:
+            self.EBox.show()
+        else:
+            self.EBox.hide()
+
+    def _Filter(self, text, level):
+        visible = False
+        if text is not None:
+            if level & FilterName:
+                visible = (text in self.Setting.Name.lower()
+                    or text in self.Setting.ShortDesc.lower())
+            if not visible and level & FilterLongDesc:
+                visible = text in self.Setting.LongDesc.lower()
+            if not visible and level & FilterValue:
+                visible = text in str(self.Setting.Value).lower()
+        else:
+            visible = True
+        return visible
+
+    def Filter(self, text, level=FilterAll):
+        visible = self._Filter(text, level=level)
+        self._SetHidden(visible)
+        return visible
+
+class StockSetting(Setting):
+
     def _Init(self):
+        self.Box.pack_start(self.Label, False, False)
+        self.Box.pack_end(self.Reset, False, False)
+
+class StringSetting(StockSetting):
+    def _Init(self):
+        StockSetting._Init(self)
         self.Entry = gtk.Entry()
         self.Entry.connect('activate', self.Changed)
         self.Entry.connect('focus-out-event', self.Changed)
         self.Widget = self.Entry
-        self.Box.pack_start(self.Label, False, False)
         self.Box.pack_start(self.Widget, True, True)
 
     def _Read(self):
@@ -195,11 +219,12 @@ class FileStringSetting(StringSetting):
             self.isDirectory, self.isImage)
         self.Box.pack_start(self.FileButton, False, False)
 
-class EnumSetting(Setting):
+class EnumSetting(StockSetting):
 
     NoneValue = 0
 
     def _Init(self):
+        StockSetting._Init(self)
         self.Combo = gtk.combo_box_new_text()
         if self.List:
             self.Info = self.Setting.Info[1][2]
@@ -211,7 +236,6 @@ class EnumSetting(Setting):
         self.Combo.connect('changed', self.Changed)
 
         self.Widget = self.Combo
-        self.Box.pack_start(self.Label, False, False)
         self.Box.pack_start(self.Combo, True, True)
 
     def _CellEdited(self, cell, path, new_text):
@@ -246,14 +270,20 @@ class EnumSetting(Setting):
         
         self.Set(self.Info[active])
 
-class BoolSetting (Setting):
+    def _Filter(self, text, level):
+        visible = Setting._Filter(self, text, level=level)
+        if text is not None and not visible and level & FilterValue:
+            visible = any(text in s.lower() for s in self.Info)
+        return visible
+
+class BoolSetting (StockSetting):
 
     NoneValue = False
 
     def _Init (self):
+        StockSetting._Init(self)
         self.Label.set_size_request(-1, -1)
         self.CheckButton = gtk.CheckButton ()
-        self.Box.pack_start(self.Label, False, False)
         align = gtk.Alignment(yalign=0.5)
         align.add(self.CheckButton)
         self.Box.pack_end(align, False, False)
@@ -278,12 +308,12 @@ class BoolSetting (Setting):
         cell.connect('toggled', self.CellToggled)
         return (bool, gtk.TreeViewColumn(self.Setting.ShortDesc, cell, active=num))
 
-class NumberSetting(Setting):
+class NumberSetting(StockSetting):
 
     NoneValue = 0
 
     def _Init(self):
-
+        StockSetting._Init(self)
         if self.List:
             self.Info = info = self.Setting.Info[1]
         else:
@@ -302,7 +332,6 @@ class NumberSetting(Setting):
         self.Spin.connect("value-changed", self.Changed)
         self.Widget = self.Scale
 
-        self.Box.pack_start(self.Label, False, False)
         self.Box.pack_start(self.Scale, True, True)
         self.Box.pack_start(self.Spin, False, False)
 
@@ -331,11 +360,12 @@ class FloatSetting(NumberSetting):
         self.Scale.set_digits(4)
 
 
-class ColorSetting(Setting):
+class ColorSetting(StockSetting):
 
     NoneValue = (0, 0, 0, 65535) # opaque black
 
     def _Init(self):
+        StockSetting._Init(self)
         self.Button = gtk.ColorButton()
         self.Button.set_size_request (100, -1)
         self.Button.set_use_alpha(True)
@@ -343,7 +373,6 @@ class ColorSetting(Setting):
 
         self.Widget = gtk.Alignment (1, 0.5)
         self.Widget.add (self.Button)
-        self.Box.pack_start(self.Label, False, False)
         self.Box.pack_start(self.Widget, True, True)
 
     def GetForRenderer(self):
@@ -367,8 +396,6 @@ class ColorSetting(Setting):
 class BaseListSetting(Setting):
     def _Init(self):
         self.Widget = gtk.VBox()
-        self.Custom = True
-        self.Setting = None
         self.EditDialog = None        
 
         self.Widgets = []
@@ -383,6 +410,7 @@ class BaseListSetting(Setting):
 
         for widget in self.Widgets:
             widget.Store = self.Store
+            widget.Box.remove(widget.Reset)
 
         for col in cols:
             self.View.append_column(col)
@@ -580,9 +608,6 @@ class BaseListSetting(Setting):
         for values in zip(*[w.GetForRenderer() for w in self.Widgets]):
             self.Store.append(values)
 
-    def Attach(self, table, row):
-        table.attach(self.EBox, 0, 2, row, row+1, xpadding=5)
-
 class ListSetting(BaseListSetting):
 
     def _Init(self):
@@ -595,11 +620,17 @@ class MultiListSetting(BaseListSetting):
         Tooltips.set_tip(self.EBox, _("Multi-list settings. You can double-click a row to edit the values."))
         BaseListSetting._Init(self)
 
+    def Filter(self, text, level=FilterAll):
+        visible = False
+        for setting in self.Widgets:
+            if setting._Filter(text, level=level):
+                visible = True
+        self._SetHidden(visible)
+        return visible
+
 class EnumFlagsSetting(Setting):
 
     def _Init(self):
-        self.Custom = True
-
         frame = gtk.Frame(self.Setting.ShortDesc)
         table = gtk.Table()
         
@@ -640,10 +671,16 @@ class EnumFlagsSetting(Setting):
                 values.append(self.Setting.Info[1][2][key])
         self.Setting.Value = values
 
-class EditableActionSetting (Setting):
+    def _Filter(self, text, level=FilterAll):
+        visible = Setting._Filter(self, text, level=level)
+        if text is not None and not visible and level & FilterValue:
+            visible = any(text in s.lower() for s in self.Setting.Info[1][2])
+        return visible
+
+class EditableActionSetting (StockSetting):
 
     def _Init (self, widget, action):
-
+        StockSetting._Init(self)
         alignment = gtk.Alignment (0, 0.5)
         alignment.add (widget)
 
@@ -657,11 +694,9 @@ class EditableActionSetting (Setting):
 
         action = ActionImage (action)
         self.Box.pack_start (action, False, False)
-        self.Box.pack_start(self.Label, True, True)
+        self.Box.reorder_child (action, 0)
         self.Box.pack_end (editButton, False, False)
         self.Box.pack_end(alignment, False, False)
-
-
         self.Widget = widget
 
 
@@ -1220,42 +1255,66 @@ def MakeSetting(setting, List=False):
 
     return stype(setting, List=List)
 
-class SubGroupArea:
-    def __init__(self, name, subGroup, filter=None):
+class SubGroupArea(object):
+    def __init__(self, name, subGroup):
         self.MySettings = []
-        settings = FilterSettings(sorted(sum((v.values() for v in [subGroup.Display]+[subGroup.Screens[CurrentScreenNum]]), []), key=SettingKeyFunc), filter)
+        self.Name = name
+        settings = sorted(sum((v.values() for v in [subGroup.Display]+[subGroup.Screens[CurrentScreenNum]]), []), key=SettingKeyFunc)
         if not name:
-            self.Widget = gtk.Table()
-            self.Child = self.Widget
+            self.Child = self.Widget = gtk.VBox()
         else:
             self.Widget = gtk.Frame()
             self.Expander = gtk.Expander(name)
             self.Widget.add(self.Expander)
             self.Expander.set_expanded(False)
-            self.Child = gtk.Table()
+            self.Child = gtk.VBox()
             self.Expander.add(self.Child)
 
-            # create a special widget for list subGroups
-            if len(settings) > 1 and HasOnlyType(settings, 'List'):
-                multiList = MultiListSetting(Settings=settings)
-                multiList.Read()
-                multiList.Attach(self.Child, 0)
-                self.Empty = False
+        self.Child.set_spacing(TableX)
+        self.Child.set_border_width(TableX)
+
+        # create a special widget for list subGroups
+        if len(settings) > 1 and HasOnlyType(settings, 'List'):
+            multiList = MultiListSetting(Settings=settings)
+            multiList.Read()
+            self.Child.pack_start(multiList.EBox, True, True)
+            self.MySettings.append(multiList)
+            self.Empty = False
+            if name:
                 self.Expander.set_expanded(True)
 
-                return # exit earlier to avoid unneeded logic's
+            return # exit earlier to avoid unneeded logic's
         
         self.Empty = True
-        row = 0
         for setting in settings:
             if not (setting.Plugin.Name == 'core' and setting.Name == 'active_plugins'):
-                set = MakeSetting(setting)
-                if set is not None:
-                    set.Read()
-                    set.Attach(self.Child, row)
-                    self.MySettings.append(set)
-                    row = row+1
+                setting = MakeSetting(setting)
+                if setting is not None:
+                    setting.Read()
+                    self.Child.pack_start(setting.EBox, True, True)
+                    self.MySettings.append(setting)
                     self.Empty = False
 
-        if name and row < 4: # ahi hay magic numbers!
+        if name and len(settings) < 4: # ahi hay magic numbers!
             self.Expander.set_expanded(True)
+
+    def Filter(self, text, level=FilterAll):
+        empty = True
+        count = 0
+        for setting in self.MySettings:
+            if setting.Filter(text, level=level):
+                empty = False
+                count += 1
+
+        if self.Name:
+            self.Expander.set_expanded(count < 4)
+
+        self.Widget.props.no_show_all = empty
+
+        if empty:
+            self.Widget.hide()
+        else:
+            self.Widget.show()
+
+        return not empty
+
