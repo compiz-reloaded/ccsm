@@ -346,13 +346,13 @@ class MainWin(gtk.Window):
 
             # Already created only update message
             if not self.TableAttached:
-                notFound = self.RightPane.get_child().get_child().get_child().get_children()[-1]
+                notFound = self.MainWidgets[1].get_child().get_child().get_children()[-1]
                 notFound.update(text)
                 return
             
             self.TableAttached = False
             
-            box = self.RightPane.get_child().get_child().get_child()
+            box = self.MainWidgets[1].get_child().get_child()
             notFound = NotFoundBox(text)
             box.pack_start(notFound, True, False)
             
@@ -361,7 +361,7 @@ class MainWin(gtk.Window):
         elif foundPlugin:
             # Clean up not found Message
             if not self.TableAttached:
-                self.RightPane.get_child().get_child().get_child().get_children()[-1].destroy()
+                self.MainWidgets[1].get_child().get_child().get_children()[-1].destroy()
             
             self.TableAttached = True
             self.show_all()
