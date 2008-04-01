@@ -48,32 +48,18 @@ class MainWin(gtk.Window):
         self.set_default_size(990, 580)
         self.set_title(_("CompizConfig Settings Manager"))
 
-        self.set_icon_name('ccsm')
-
         self.Style = Style()
         
         # build the panes
         self.MainBox = gtk.HBox()
         self.add(self.MainBox)
-        self.LeftPane = gtk.Alignment()
-        self.RightPane = gtk.Alignment()
+        self.LeftPane = gtk.VBox()
+        self.RightPane = gtk.VBox()
         self.RightPane.set_border_width(5)
-        self.RightPane.props.yscale = 1
-        self.RightPane.props.xscale = 1
-        self.RightPane.props.xalign = 0
-        self.RightPane.props.yalign = 0
-        self.LeftPane.props.yscale = 1
-        self.LeftPane.props.xscale = 1
-        self.LeftPane.props.xalign = 0
-        self.LeftPane.props.yalign = 0
         self.MainBox.pack_start(self.LeftPane, False, False)
         self.MainBox.pack_start(self.RightPane, True, True)
         self.Categories = {}
         self.PluginImages = {}
-        self.RightVadj = 0.0
-        self.FilterValue = ""
-        
-        self.PressedButton = None
 
         for pluginName, plugin in self.Context.Plugins.items():
             self.PluginImages[pluginName] = Image(plugin.Name, ImagePlugin, size=32)
@@ -200,8 +186,14 @@ class MainWin(gtk.Window):
         rightChild.add(pluginsVPort)
         self.BuildTable(pluginsVPort)
         rightChild.connect('size-allocate', self.RebuildTable)
-        self.SetMainWidgets(leftChild, rightChild, setsize=True)
+
+        self.LeftPane.pack_start(leftChild, True, True)
+        self.RightPane.pack_start(rightChild, True, True)
         self.MainWidgets = (leftChild, rightChild)
+
+        self.LeftPane.show_all()
+        self.RightPane.show_all()
+        self.LeftPane.set_size_request(self.LeftPane.size_request()[0], -1)
 
     def BuildTable(self, viewPort):
         pluginWindow = gtk.VBox()
@@ -397,21 +389,18 @@ class MainWin(gtk.Window):
             categoryContainer[0].attach(gtk.Label(), cols+5, cols+6, 0, 1, gtk.EXPAND)
         self.TableAttached = True
         self.show_all()
-        self.RightPane.get_child().props.vadjustment.value = self.RightVadj
 
-    def SetMainWidgets(self, leftWidget, rightWidget, setsize=False):
-        pane = self.LeftPane.get_child()
-        if pane:
-            self.LeftPane.remove(pane)
-        pane = self.RightPane.get_child()
-        if pane:
-            self.RightPane.remove(pane)
-        self.LeftPane.add(leftWidget)
-        self.RightPane.add(rightWidget)
+    def SetMainWidgets(self, leftWidget, rightWidget):
+
+        for widget in self.MainWidgets:
+            widget.hide_all()
+            widget.props.no_show_all = True
+
+        self.LeftPane.pack_start(leftWidget, True, True)
+        self.RightPane.pack_start(rightWidget, True, True)
         self.show_all()
 
-        if setsize:
-            self.LeftPane.set_size_request(leftWidget.get_allocation().width, -1)
+        self.NonMainWidgets = leftWidget, rightWidget
 
     def CatKeyFunc(self, cat):
         if self.Context.Plugins['core'].Category == cat:
@@ -420,14 +409,11 @@ class MainWin(gtk.Window):
             return cat or 'zzzzzzzz'
 
     def ShowPlugin(self, obj, select):
-        if obj is not None:
-            self.PressedButton = obj
         pluginPage = PluginPage(select, self)
         self.ShowingPlugin = pluginPage
         self.SetMainWidgets(pluginPage.LeftWidget, pluginPage.RightWidget)
     
     def ShowAdvancedFilter(self, widget):
-        self.PressedButton = widget
         self.TitleBuffer = self.get_title()
         self.set_title(self.TitleBuffer + " - Loading...")
         gtk_process_events()
@@ -442,7 +428,6 @@ class MainWin(gtk.Window):
         return False
     
     def ShowPreferences(self, widget):
-        self.PressedButton = widget
         preferencesPage = PreferencesPage(self, self.Context)
         self.SetMainWidgets(preferencesPage.LeftWidget, preferencesPage.RightWidget)
 
@@ -483,12 +468,14 @@ class MainWin(gtk.Window):
 
     def BackToMain(self, widget, run=0):
         # make sure its cleaned up here, since this is a nice safe place to do so
-        self.LeftPane.get_child().destroy()
-        self.RightPane.get_child().destroy()
-        if self.PressedButton:
-            self.PressedButton.set_state(gtk.STATE_PRELIGHT)
-            self.PressedButton.set_state(gtk.STATE_NORMAL)
-            self.PressedButton = None
+        for widget in self.NonMainWidgets:
+            widget.get_parent().remove(widget)
+            widget.destroy()
+        
+        for widget in self.MainWidgets:
+            widget.props.no_show_all = False
+            widget.show_all()
 
         self.ShowingPlugin = None
-        self.SetMainWidgets(*self.MainWidgets)
+
+gtk.window_set_default_icon_name('ccsm')
