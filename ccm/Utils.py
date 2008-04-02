@@ -56,19 +56,6 @@ def getScreens():
         screens.append(i)
     return screens
 
-class Style:
-    def __init__(self):
-        fakeWindow = gtk.Window()
-        styleWidget = gtk.Entry()
-        fakeWindow.add(styleWidget)
-        styleWidget.realize()
-        bc = styleWidget.style.bg[gtk.STATE_SELECTED]
-        self.BrightColor = "#%.4x%.4x%.4x" % (bc.red, bc.green, bc.blue)
-        bc = styleWidget.style.light[gtk.STATE_NORMAL]
-        self.BackgroundColor = "#%.4x%.4x%.4x" % (bc.red, bc.green, bc.blue)
-        styleWidget.destroy()
-        fakeWindow.destroy()
-
 class Image (gtk.Image):
 
     def __init__ (self, name = None, type = ImageNone, size = 32):

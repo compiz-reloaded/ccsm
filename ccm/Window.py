@@ -47,8 +47,6 @@ class MainWin(gtk.Window):
         self.connect("destroy", self.Quit)
         self.set_default_size(990, 580)
         self.set_title(_("CompizConfig Settings Manager"))
-
-        self.Style = Style()
         
         # build the panes
         self.MainBox = gtk.HBox()
@@ -83,12 +81,14 @@ class MainWin(gtk.Window):
 
     def ResetMainWidgets(self):
         pluginsVPort = gtk.Viewport()
+        pluginsVPort.connect("style-set", self.ViewportStyleSet)
         leftChild = gtk.VBox(False, 10)
         leftChild.set_border_width(10)
         
         # Filter
         filterLabel = Label()
-        filterLabel.set_markup(HeaderMarkup % (self.Style.BrightColor, _("Filter")))
+        filterLabel.set_markup(HeaderMarkup % (_("Filter")))
+        filterLabel.connect("style-set", self.HeaderStyleSet)
         filterLabel.props.xalign = 0.1
         if has_sexy:
             filterEntry = sexy.IconEntry()
@@ -110,7 +110,8 @@ class MainWin(gtk.Window):
             screenBox.set_active(CurrentScreenNum)
             screenBox.connect("changed", self.ScreenChanged)
             screenLabel = Label()
-            screenLabel.set_markup(HeaderMarkup % (self.Style.BrightColor, _("Screen")))
+            screenLabel.set_markup(HeaderMarkup % (_("Screen")))
+            screenLabel.connect("style-set", self.HeaderStyleSet)
             leftChild.pack_start(screenLabel, False, False)
             leftChild.pack_start(screenBox, False, False)
 
@@ -139,7 +140,8 @@ class MainWin(gtk.Window):
             categoryBox.pack_start(categoryToggle, False, False)
         categoryLabel = Label()
         categoryLabel.props.xalign = 0.1
-        categoryLabel.set_markup(HeaderMarkup % (self.Style.BrightColor, _("Category")))
+        categoryLabel.set_markup(HeaderMarkup % (_("Category")))
+        categoryLabel.connect("style-set", self.HeaderStyleSet)
         leftChild.pack_start(categoryLabel, False, False)
         leftChild.pack_start(categoryBox, False, False)
 
@@ -151,7 +153,8 @@ class MainWin(gtk.Window):
 
         # Advanced Search
         searchLabel = Label()
-        searchLabel.set_markup(HeaderMarkup % (self.Style.BrightColor, _("Advanced Search")))
+        searchLabel.set_markup(HeaderMarkup % (_("Advanced Search")))
+        searchLabel.connect("style-set", self.HeaderStyleSet)
         searchImage = gtk.Image()
         searchImage.set_from_stock(gtk.STOCK_GO_FORWARD, gtk.ICON_SIZE_BUTTON)
         searchButton = gtk.Button()
@@ -165,7 +168,8 @@ class MainWin(gtk.Window):
 
         # Preferences
         prefLabel = Label()
-        prefLabel.set_markup(HeaderMarkup % (self.Style.BrightColor, _("Preferences")))
+        prefLabel.set_markup(HeaderMarkup % (_("Preferences")))
+        prefLabel.connect("style-set", self.HeaderStyleSet)
         prefImage = gtk.Image()
         prefImage.set_from_stock(gtk.STOCK_GO_FORWARD, gtk.ICON_SIZE_BUTTON)
         prefButton = gtk.Button()
@@ -177,7 +181,6 @@ class MainWin(gtk.Window):
         prefButton.add(prefFrame)
         leftChild.pack_end(prefButton, False, False)
 
-        pluginsVPort.modify_bg(gtk.STATE_NORMAL, gtk.gdk.color_parse(self.Style.BackgroundColor))
         rightChild = gtk.ScrolledWindow()
         rightChild.props.hscrollbar_policy = gtk.POLICY_NEVER
         rightChild.props.vscrollbar_policy = gtk.POLICY_AUTOMATIC
@@ -194,6 +197,23 @@ class MainWin(gtk.Window):
         self.LeftPane.show_all()
         self.RightPane.show_all()
         self.LeftPane.set_size_request(self.LeftPane.size_request()[0], -1)
+
+    StyleBlock = 0
+
+    def HeaderStyleSet(self, widget, previous):
+        if self.StyleBlock > 0:
+            return
+        self.StyleBlock += 1
+        for state in (gtk.STATE_NORMAL, gtk.STATE_PRELIGHT, gtk.STATE_ACTIVE):
+            widget.modify_fg(state, widget.style.bg[gtk.STATE_SELECTED])
+        self.StyleBlock -= 1
+
+    def ViewportStyleSet(self, widget, previous):
+        if self.StyleBlock > 0:
+            return
+        self.StyleBlock += 1
+        widget.modify_bg(gtk.STATE_NORMAL, widget.style.base[gtk.STATE_NORMAL])
+        self.StyleBlock -= 1
 
     def BuildTable(self, viewPort):
         pluginWindow = gtk.VBox()

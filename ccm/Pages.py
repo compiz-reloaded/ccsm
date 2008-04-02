@@ -52,10 +52,12 @@ class PluginPage:
         self.LeftWidget.set_border_width(10)
 
         pluginLabel = Label()
-        pluginLabel.set_markup(HeaderMarkup % (self.Main.Style.BrightColor, plugin.ShortDesc))
+        pluginLabel.set_markup(HeaderMarkup % (plugin.ShortDesc))
+        pluginLabel.connect("style-set", self.HeaderStyleSet)
         pluginImg = Image(plugin.Name, ImagePlugin, 64)
         filterLabel = Label()
-        filterLabel.set_markup(HeaderMarkup % (self.Main.Style.BrightColor, _("Filter")))
+        filterLabel.set_markup(HeaderMarkup % (_("Filter")))
+        filterLabel.connect("style-set", self.HeaderStyleSet)
         if has_sexy:
             self.FilterEntry = sexy.IconEntry()
             self.FilterEntry.add_clear_button()
@@ -78,7 +80,8 @@ class PluginPage:
         if plugin.Name != 'core':
             Tooltips.set_tip(self.FilterEntry, _("Search %s Plugin Options") % plugin.ShortDesc)
             enableLabel = Label()
-            enableLabel.set_markup(HeaderMarkup % (self.Main.Style.BrightColor, _("Use This Plugin")))
+            enableLabel.set_markup(HeaderMarkup % (_("Use This Plugin")))
+            enableLabel.connect("style-set", self.HeaderStyleSet)
             self.LeftWidget.pack_start(enableLabel, False, False)
             enableCheckCont = gtk.HBox()
             enableCheckCont.set_border_width(10)
@@ -112,6 +115,16 @@ class PluginPage:
         self.RightWidget.connect('size-allocate', self.ResetFocus)
 
         self.Block = 0
+
+    StyleBlock = 0
+
+    def HeaderStyleSet(self, widget, previous):
+        if self.StyleBlock > 0:
+            return
+        self.StyleBlock += 1
+        for state in (gtk.STATE_NORMAL, gtk.STATE_PRELIGHT, gtk.STATE_ACTIVE):
+            widget.modify_fg(state, widget.style.bg[gtk.STATE_SELECTED])
+        self.StyleBlock -= 1
 
     def ResetFocus(self, widget, data):
         pos = self.FilterEntry.get_position() 
@@ -201,7 +214,8 @@ class FilterPage(object):
 
         # Image + Label
         filterLabel = Label()
-        filterLabel.set_markup(HeaderMarkup % (self.Main.Style.BrightColor, _("Filter")))
+        filterLabel.set_markup(HeaderMarkup % (_("Filter")))
+        filterLabel.connect("style-set", self.HeaderStyleSet)
         filterImg = Image("search", ImageCategory, 64)
         self.LeftWidget.pack_start(filterImg, False, False)
         self.LeftWidget.pack_start(filterLabel, False, False)
@@ -223,7 +237,8 @@ class FilterPage(object):
 
         # Search in...
         filterSearchLabel = Label()
-        filterSearchLabel.set_markup(HeaderMarkup % (self.Main.Style.BrightColor, _("Search in...")))
+        filterSearchLabel.set_markup(HeaderMarkup % (_("Search in...")))
+        filterSearchLabel.connect("style-set", self.HeaderStyleSet)
         self.LeftWidget.pack_start(filterSearchLabel, False, False)
 
         # Options
@@ -352,6 +367,16 @@ class FilterPage(object):
         gtk_process_events()
 
         GlobalUpdater.Block -= 1
+
+    StyleBlock = 0
+
+    def HeaderStyleSet(self, widget, previous):
+        if self.StyleBlock > 0:
+            return
+        self.StyleBlock += 1
+        for state in (gtk.STATE_NORMAL, gtk.STATE_PRELIGHT, gtk.STATE_ACTIVE):
+            widget.modify_fg(state, widget.style.bg[gtk.STATE_SELECTED])
+        self.StyleBlock -= 1
 
     def Filter(self, text, level=FilterAll):
         text = text.lower()
@@ -625,7 +650,8 @@ class ProfileBackendPage(object):
         profileBox.pack_start(profileAdd, False, False)
         profileBox.pack_start(profileRemove, False, False)
         profileLabel = Label()
-        profileLabel.set_markup(HeaderMarkup % (self.Main.Style.BrightColor, _("Profile")))
+        profileLabel.set_markup(HeaderMarkup % (_("Profile")))
+        profileLabel.connect("style-set", self.HeaderStyleSet)
         self.ProfileImportExportBox = gtk.HBox()
         self.ProfileImportExportBox.set_spacing(5)
         profileImportButton = gtk.Button(_("Import"))
@@ -661,13 +687,15 @@ class ProfileBackendPage(object):
         backendBox.set_active(index)
         backendBox.connect("changed", self.BackendChangedAddTimeout)
         backendLabel = Label()
-        backendLabel.set_markup(HeaderMarkup % (self.Main.Style.BrightColor, _("Backend")))
+        backendLabel.set_markup(HeaderMarkup % (_("Backend")))
+        backendLabel.connect("style-set", self.HeaderStyleSet)
         rightChild.pack_start(backendLabel, False, False, 5)
         rightChild.pack_start(backendBox, False, False, 5)
 
         # Integration
         integrationLabel = Label()
-        integrationLabel.set_markup(HeaderMarkup % (self.Main.Style.BrightColor, _("Integration")))
+        integrationLabel.set_markup(HeaderMarkup % (_("Integration")))
+        integrationLabel.connect("style-set", self.HeaderStyleSet)
         self.IntegrationButton = gtk.CheckButton(_("Enable integration into the desktop environment"))
         self.IntegrationButton.set_active(self.Context.Integration)
         self.IntegrationButton.set_sensitive(self.Context.CurrentBackend.IntegrationSupport)
@@ -677,6 +705,16 @@ class ProfileBackendPage(object):
 
         self.Widget = rightChild
     
+    StyleBlock = 0
+
+    def HeaderStyleSet(self, widget, previous):
+        if self.StyleBlock > 0:
+            return
+        self.StyleBlock += 1
+        for state in (gtk.STATE_NORMAL, gtk.STATE_PRELIGHT, gtk.STATE_ACTIVE):
+            widget.modify_fg(state, widget.style.bg[gtk.STATE_SELECTED])
+        self.StyleBlock -= 1
+
     def UpdateProfiles (self, current=_("Default")):
 
         self.ProfileComboBox.handler_block (self.ProfileHandler)
@@ -1035,7 +1073,8 @@ class PreferencesPage(object):
 
         # Left Pane
         self.DescLabel = Label()
-        self.DescLabel.set_markup(HeaderMarkup % (self.Main.Style.BrightColor, _("Preferences")))
+        self.DescLabel.set_markup(HeaderMarkup % (_("Preferences")))
+        self.DescLabel.connect("style-set", self.HeaderStyleSet)
         self.DescImg = Image("profiles",ImageCategory, 64)
         self.LeftWidget.pack_start(self.DescImg, False, False)
         self.LeftWidget.pack_start(self.DescLabel, False, False)
@@ -1047,7 +1086,8 @@ class PreferencesPage(object):
 
         # About Button
         aboutLabel = Label()
-        aboutLabel.set_markup(HeaderMarkup % (self.Main.Style.BrightColor, _("About")))
+        aboutLabel.set_markup(HeaderMarkup % (_("About")))
+        aboutLabel.connect("style-set", self.HeaderStyleSet)
         aboutButton = gtk.Button()
         aboutButton.set_relief(gtk.RELIEF_NONE)
         aboutImage = Image(gtk.STOCK_ABOUT, ImageStock, gtk.ICON_SIZE_BUTTON)
@@ -1077,6 +1117,16 @@ class PreferencesPage(object):
         # Plugin List
         self.PluginListPage = PluginListPage(main, context)
         self.RightWidget.append_page(self.PluginListPage.Widget, gtk.Label(_("Plugin List")))
+
+    StyleBlock = 0
+
+    def HeaderStyleSet(self, widget, previous):
+        if self.StyleBlock > 0:
+            return
+        self.StyleBlock += 1
+        for state in (gtk.STATE_NORMAL, gtk.STATE_PRELIGHT, gtk.STATE_ACTIVE):
+            widget.modify_fg(state, widget.style.bg[gtk.STATE_SELECTED])
+        self.StyleBlock -= 1
 
     def ShowAboutDialog(self, widget):
         about = AboutDialog(widget.get_toplevel())
