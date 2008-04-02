@@ -27,7 +27,6 @@ import gtk
 import gtk.gdk
 import gobject
 import weakref
-import collections
 
 from ccm.Constants import *
 from cgi import escape as protect_pango_markup
@@ -227,7 +226,7 @@ class IdleSettingsParser:
 class Updater:
 
     def __init__ (self):
-        self.VisibleSettings = collections.defaultdict(list)
+        self.VisibleSettings = {}
         self.Plugins = []
         self.Block = 0
 
@@ -239,14 +238,16 @@ class Updater:
     def Append (self, widget):
         reference = weakref.ref(widget)
         setting = widget.Setting
-        self.VisibleSettings[(setting.Plugin.Name, setting.Name)].append(reference)
+        self.VisibleSettings.setdefault((setting.Plugin.Name, setting.Name), []).append(reference)
 
     def AppendPlugin (self, plugin):
         self.Plugins.append (plugin)
 
     def Remove (self, widget):
         setting = widget.Setting
-        l = self.VisibleSettings[(setting.Plugin.Name, setting.Name)]
+        l = self.VisibleSettings.get((setting.Plugin.Name, setting.Name))
+        if not l:
+            return
         for i, ref in enumerate(list(l)):
             if ref() is widget:
                 l.remove(ref)
