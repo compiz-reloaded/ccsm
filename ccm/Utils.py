@@ -26,6 +26,8 @@ import pygtk
 import gtk
 import gtk.gdk
 import gobject
+import weakref
+import collections
 
 from ccm.Constants import *
 from cgi import escape as protect_pango_markup
@@ -238,20 +240,30 @@ class IdleSettingsParser:
 class Updater:
 
     def __init__ (self):
-        self.VisibleSettings = []
+        self.VisibleSettings = collections.defaultdict(list)
         self.Plugins = []
-        self.NotRemoved = []
+        self.Block = 0
 
     def SetContext (self, context):
         self.Context = context
 
         gobject.timeout_add (2000, self.Update)
 
-    def Append(self, setting):
-        self.VisibleSettings.append(setting)
+    def Append (self, widget):
+        reference = weakref.ref(widget)
+        setting = widget.Setting
+        self.VisibleSettings[(setting.Plugin.Name, setting.Name)].append(reference)
 
     def AppendPlugin (self, plugin):
         self.Plugins.append (plugin)
+
+    def Remove (self, widget):
+        setting = widget.Setting
+        l = self.VisibleSettings[(setting.Plugin.Name, setting.Name)]
+        for i, ref in enumerate(list(l)):
+            if ref() is widget:
+                l.remove(ref)
+                break
 
     def UpdateSetting (self, setting):
         for widget in self.VisibleSettings:
@@ -259,38 +271,27 @@ class Updater:
                 widget.Read ()
                 break
 
-    def Update(self):
+    def Update (self):
+        if self.Block > 0:
+            return True
+
         if self.Context.ProcessEvents():
             changed = self.Context.ChangedSettings
             if [s for s in changed if s.Plugin.Name == "core" and s.Name == "active_plugins"]:
                 for plugin in self.Plugins:
                     plugin.Read ()
 
-            for settingWidget in self.VisibleSettings:
-                # Remove already destroyed widgets
-                if not settingWidget.EBox.get_parent():
-                    self.VisibleSettings.remove(settingWidget)
-       
-                # Exception for multi settings widgets (multi list widget, action page, etc.)
-                if settingWidget.Settings:
-                    read = False
-                    for setting in settingWidget.Settings:
-                        if setting in changed:
-                            read = True
-                            changed.remove(setting)
-                    if read:
-                        settingWidget.Read()         
-                elif settingWidget.Setting:
-                    if settingWidget.Setting in changed:
-                        settingWidget.Read()
-                        changed.remove(settingWidget.Setting)
-
-            # For removing non-visible settings
             for setting in list(changed):
-                if setting in self.NotRemoved:
-                    changed.remove (setting)
+                widgets = self.VisibleSettings.get((setting.Plugin.Name, setting.Name))
+                if widgets: 
+                    for reference in widgets:
+                        widget = reference()
+                        if widget is not None:
+                            widget.Read()
+                            if widget.List:
+                                widget.ListWidget.Read()
+                changed.remove(setting)
 
-            self.NotRemoved = changed
             self.Context.ChangedSettings = changed
 
         return True
@@ -319,54 +320,23 @@ EnumSettingKeyFunc = operator.itemgetter(1)
 
 PluginKeyFunc = operator.attrgetter('ShortDesc')
 
-# singleRun is used to combine the run stages, in this case run is a list
-# containing the run levels which should be used to filter the settings
-def FilterSettings(settings, filter, level=FilterAll):
-    if filter == None:
-        return settings
-
-    filter = filter.lower()
-
-    filteredSettings = []
-
-    for setting in settings:
-        # First run, only search in shortDesc and name
-        if level & FilterName:
-            shortDesc = setting.ShortDesc.lower()
-            name = setting.Name.lower()
-            if filter in shortDesc:
-                filteredSettings.append(setting)
-                continue
-            elif filter in name:
-                filteredSettings.append(setting)
-                continue
-        # Then in longDesc
-        if level & FilterLongDesc:
-            longDesc = setting.LongDesc.lower()
-            if filter in longDesc:
-                filteredSettings.append(setting)
-                continue
-        # Finally search in the option value
-        if level & FilterValue:
-            value = ""
-            # make sure enum settings work too
-            if setting.Type == 'Int' and setting.Info[2]:
-                    value = sorted(setting.Info[2].items(), key=EnumSettingKeyFunc)[setting.Value][0]
-                    value = value.lower()
-            # also make sure intDesc settings work right
-            elif setting.Type == 'List' and setting.Info[0] == 'Int' and len(setting.Info[1][2]) > 0:
-                for int in setting.Value:
-                    for item in setting.Info[1][2].items():
-                        if item[1] == int:
-                            value += item[0]
-                value = value.lower()
-            else:
-                value = str(setting.Value).lower()
-            if filter in value:
-                filteredSettings.append(setting)
-
-    return filteredSettings
-
 def HasOnlyType (settings, stype):
     return settings and not [s for s in settings if s.Type != stype]
+
+# Support python 2.4
+try:
+    any
+    all
+except NameError:
+    def any(iterable):
+        for element in iterable:
+            if element:
+                return True
+        return False
+
+    def all(iterable):
+        for element in iterable:
+            if not element:
+                return False
+        return True
 
