@@ -38,6 +38,7 @@ if gtk.pygtk_version < (2,10,0):
 import compizconfig
 import ccm
 from ccm.Utils import GlobalUpdater
+from ccm.Constants import Version
 
 plugin   = None
 category = None
@@ -48,7 +49,13 @@ parser.add_option("-p", "--plugin", dest = "plugin",
 parser.add_option("-c", "--category", dest = "category",
                   help = "Directly jump to CATEGORY",
                   metavar = "CATEGORY")
+parser.add_option("-v", "--version", dest = "version",
+                  action = "store_true",
+                  help = "Version")
 (options, args) = parser.parse_args()
+if options.version:
+    print "CCSM %s" % Version
+    raise SystemExit
 if options.plugin:
     plugin = options.plugin
 if options.category:
