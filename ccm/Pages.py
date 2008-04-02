@@ -695,6 +695,8 @@ class ProfileBackendPage(object):
 
         self.ProfileComboBox.handler_unblock (self.ProfileHandler)
 
+        GlobalUpdater.UpdatePlugins()
+
     def IntegrationChanged(self, widget):
         value = widget.get_active()
         self.Context.Integration = value
@@ -713,7 +715,7 @@ class ProfileBackendPage(object):
 
         self.Context.Read()
         self.Context.Write()
-
+        GlobalUpdater.UpdatePlugins()
         return False
 
     def ProfileChangedAddTimeout(self, widget):
@@ -741,6 +743,7 @@ class ProfileBackendPage(object):
         for plugin in self.Context.Plugins.values():
             plugin.Enabled = plugin.Name in activePlugins
         self.Context.Write()
+        GlobalUpdater.UpdatePlugins()
     
     def ExportProfile(self, widget):
         b = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_SAVE, gtk.RESPONSE_OK)
@@ -797,6 +800,7 @@ class ProfileBackendPage(object):
         path = self.ImportProfileDialog ()
         if path:
             self.Context.Import (path)
+        GlobalUpdater.UpdatePlugins()
 
     def ImportProfileAs (self, widget):
         path = self.ImportProfileDialog ()
@@ -839,7 +843,7 @@ class ProfileBackendPage(object):
 
         self.ProfileComboBox.set_sensitive(self.Context.CurrentBackend.ProfileSupport)
         self.IntegrationButton.set_sensitive(self.Context.CurrentBackend.IntegrationSupport)
-
+        GlobalUpdater.UpdatePlugins()
         return False
 
     def BackendChangedAddTimeout(self, widget):
@@ -954,6 +958,8 @@ class PluginListPage(object):
         for widget in (self.EnabledPluginsList.view, self.DisabledPluginsList.view,
                 self.MiddleButtonBox, self.EnabledButtonBox):
             widget.set_sensitive(not self.Context.AutoSort)
+
+        GlobalUpdater.UpdatePlugins()
 
     def UpdateEnabledPluginsList(self):
         activePlugins = self.Context.Plugins['core'].Display['active_plugins'].Value

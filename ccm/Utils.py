@@ -265,11 +265,9 @@ class Updater:
                 l.remove(ref)
                 break
 
-    def UpdateSetting (self, setting):
-        for widget in self.VisibleSettings:
-            if widget.Setting == setting:
-                widget.Read ()
-                break
+    def UpdatePlugins(self):
+        for plugin in self.Plugins:
+            plugin.Read()
 
     def Update (self):
         if self.Block > 0:
@@ -278,8 +276,7 @@ class Updater:
         if self.Context.ProcessEvents():
             changed = self.Context.ChangedSettings
             if [s for s in changed if s.Plugin.Name == "core" and s.Name == "active_plugins"]:
-                for plugin in self.Plugins:
-                    plugin.Read ()
+                self.UpdatePlugins()
 
             for setting in list(changed):
                 widgets = self.VisibleSettings.get((setting.Plugin.Name, setting.Name))
@@ -307,6 +304,7 @@ class PluginSetting:
 
     def Read (self):
         self.Widget.set_active (self.Plugin.Enabled)
+        self.Widget.set_sensitive (self.Plugin.Context.AutoSort)
 
 class PureVirtualError(Exception):
     pass
