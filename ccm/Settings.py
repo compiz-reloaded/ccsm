@@ -434,6 +434,7 @@ class BaseListSetting(Setting):
 
         self.View.connect('row-activated', self.Activated)
         self.View.connect('button-press-event', self.ButtonPressEvent)
+        self.View.connect('key-press-event', self.KeyPressEvent)
         self.Select = self.View.get_selection()
         self.Select.set_mode(gtk.SELECTION_SINGLE)
         self.Select.connect('changed', self.SelectionChanged)
@@ -509,6 +510,14 @@ class BaseListSetting(Setting):
         self.Read()
         self._Edit(len(self.Store)-1)
 
+    def _Delete(self, row):
+
+        for setting in self.Settings:
+            vlist = setting.Value
+            del vlist[row]
+            setting.Value = vlist
+        self.Settings[0].Plugin.Context.Write()        
+
     def Delete(self, *args):
         model, iter = self.Select.get_selected()
         if iter is not None:
@@ -520,11 +529,7 @@ class BaseListSetting(Setting):
 
             model.remove(iter)
 
-            for setting in self.Settings:
-                vlist = setting.Value
-                del vlist[row]
-                setting.Value = vlist
-            self.Settings[0].Plugin.Context.Write()
+            self._Delete(row)
 
     def _MakeEditDialog(self):
         dlg = gtk.Dialog(_("Edit"))
@@ -614,7 +619,18 @@ class BaseListSetting(Setting):
                 treeview.grab_focus()
                 treeview.set_cursor(path, col, 0)
                 self.Popup.popup(None, None, None, event.button, event.time)
-            return 1
+            return True
+
+    def KeyPressEvent(self, treeview, event):
+        if gtk.gdk.keyval_name(event.keyval) == "Delete":
+            model, iter = treeview.get_selection().get_selected()
+            if iter is not None:
+                path = model.get_path(iter)
+                if path is not None:
+                    row = path[0]
+                    model.remove(iter)
+                    self._Delete(row)
+                    return True
 
     def ListInfo(self):
         types = []
