@@ -42,8 +42,12 @@ from ccm.Utils import GlobalUpdater
 plugin   = None
 category = None
 parser   = OptionParser()
-parser.add_option("-p", "--plugin", dest = "plugin", help = "Directly jump to the page of PLUGIN", metavar = "PLUGIN")
-parser.add_option("-c", "--category", dest = "category", help = "Directly jump to CATEGORY", metavar = "CATEGORY")
+parser.add_option("-p", "--plugin", dest = "plugin",
+                  help = "Directly jump to the page of PLUGIN",
+                  metavar = "PLUGIN")
+parser.add_option("-c", "--category", dest = "category",
+                  help = "Directly jump to CATEGORY",
+                  metavar = "CATEGORY")
 (options, args) = parser.parse_args()
 if options.plugin:
     plugin = options.plugin
