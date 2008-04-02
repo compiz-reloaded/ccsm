@@ -104,8 +104,9 @@ class PluginPage:
         for name, group in sorted(plugin.Groups.items()):
             name = name or _("General")
             groupPage = GroupPage(name, group)
+            groupPage.Wrap()
             if not groupPage.Empty:
-                self.RightWidget.append_page(groupPage.Widget, gtk.Label(name))
+                self.RightWidget.append_page(groupPage.Scroll, gtk.Label(name))
                 self.Pages.append(groupPage)
         
         self.RightWidget.connect('size-allocate', self.ResetFocus)
@@ -152,11 +153,11 @@ class PluginPage:
 
         empty = True
         for page in self.Pages:
-            num = self.RightWidget.page_num(page.Widget)
+            num = self.RightWidget.page_num(page.Scroll)
             if page.Filter(text):
                 empty = False
                 if num < 0:
-                    self.RightWidget.insert_page(page.Widget, gtk.Label(page.Name), self.GetPageSpot(page))
+                    self.RightWidget.insert_page(page.Scroll, gtk.Label(page.Name), self.GetPageSpot(page))
             else:
                 if num >= 0:
                     self.RightWidget.remove_page(num)
@@ -170,7 +171,7 @@ class PluginPage:
 
         # This seems to be necessary to ensure all gaps from hidden settings are removed on all tabs
         for page in self.Pages:
-            page.Widget.queue_resize_no_redraw()
+            page.Scroll.queue_resize_no_redraw()
 
 
     def EnablePlugin(self, widget):
@@ -226,75 +227,138 @@ class FilterPage(object):
         self.LeftWidget.pack_start(filterSearchLabel, False, False)
 
         # Options
-        self.FilterName = gtk.CheckButton()
-        filterLabel = Label(_("Short description and name"))
-        self.FilterName.add(filterLabel)
-        self.FilterName.set_active(True)
-        
-        self.FilterLongDesc = gtk.CheckButton()
-        filterLabel = Label(_("Long description"))
-        self.FilterLongDesc.add(filterLabel)
-        self.FilterLongDesc.set_active(True)
-        
-        self.FilterValue = gtk.CheckButton()
-        filterLabel = Label(_("Settings value"))
-        self.FilterValue.add(filterLabel)
-        self.FilterValue.set_active(False)
+        self.FilterNameCheck = check = gtk.CheckButton(_("Short description and name"))
+        check.set_active(True)
+        check.connect("toggled", self.LevelChanged, FilterName)
+        self.LeftWidget.pack_start(check, False, False)
 
-        self.LeftWidget.pack_start(self.FilterName, False, False)
-        self.LeftWidget.pack_start(self.FilterLongDesc, False, False)
-        self.LeftWidget.pack_start(self.FilterValue, False, False)
+        self.FilterLongDescCheck = check = gtk.CheckButton(_("Long description"))
+        check.set_active(True)
+        check.connect("toggled", self.LevelChanged, FilterLongDesc)
+        self.LeftWidget.pack_start(check, False, False)
+        
+        self.FilterValueCheck = check = gtk.CheckButton(_("Settings value"))
+        check.set_active(False)
+        check.connect("toggled", self.LevelChanged, FilterValue)
+        self.LeftWidget.pack_start(check, False, False)
 
         # Back Button
         self.BackButton = gtk.Button(gtk.STOCK_GO_BACK)
         self.BackButton.set_use_stock(True)
-        self.BackButton.connect('clicked', self.Main.BackToMain)
+        self.BackButton.connect('clicked', self.BackToMain)
         self.LeftWidget.pack_end(self.BackButton, False, False)
 
-        self.FilteredPlugins = []
-        self.Filter = None
+        self.NotFoundBox = None
 
         # Selector
         self.CurrentPlugin = None
         self.CurrentGroup = None
         self.CurrentSubGroup = None
+
+        self.PackedPlugins = ()
+        self.PackedGroups = ()
+        self.PackedSubGroups = ()
+
         self.SelectorButtons = SelectorButtons()
-        self.PluginBox = SelectorBox(main.Style.BackgroundColor)
-        self.GroupBox = SelectorBox(main.Style.BackgroundColor)
-        self.SubGroupBox = SelectorBox(main.Style.BackgroundColor)
+        self.PluginBox = PluginView(context.Plugins)
+        self.PluginBox.SelectionHandler = self.PluginChanged
+        self.GroupBox = GroupView(_("Group"))
+        self.GroupBox.SelectionHandler = self.GroupChanged
+        self.SubGroupBox = GroupView(_("Subgroup"))
+        self.SubGroupBox.SelectionHandler = self.SubGroupChanged
+
         self.PluginBox.set_size_request(250, 180)
         self.GroupBox.set_size_request(220, 180)
         self.SubGroupBox.set_size_request(220, 180)
+
+        self.SelectorButtons.set_size_request(-1, 50)
+
         self.SelectorBoxes = gtk.HBox()
         self.SelectorBoxes.set_border_width(5)
         self.SelectorBoxes.set_spacing(5)
-        self.PluginBox.set_no_show_all(True)
-        self.GroupBox.set_no_show_all(True)
-        self.SubGroupBox.set_no_show_all(True)
-        self.SelectorBoxes.pack_start(self.PluginBox, False, False)
-        self.SelectorBoxes.pack_start(self.GroupBox, False, False)
-        self.SelectorBoxes.pack_start(self.SubGroupBox, False, False)
+
+        scroll = gtk.ScrolledWindow()
+        scroll.props.hscrollbar_policy = gtk.POLICY_AUTOMATIC
+        scroll.props.vscrollbar_policy = gtk.POLICY_AUTOMATIC
+        scroll.add(self.PluginBox)
+        self.SelectorBoxes.pack_start(scroll, False, False)
+        scroll = gtk.ScrolledWindow()
+        scroll.props.hscrollbar_policy = gtk.POLICY_AUTOMATIC
+        scroll.props.vscrollbar_policy = gtk.POLICY_AUTOMATIC
+        scroll.add(self.GroupBox)
+        self.SelectorBoxes.pack_start(scroll, False, False)
+        scroll = gtk.ScrolledWindow()
+        scroll.add(self.SubGroupBox)
+        scroll.props.hscrollbar_policy = gtk.POLICY_AUTOMATIC
+        scroll.props.vscrollbar_policy = gtk.POLICY_AUTOMATIC
+        self.SelectorBoxes.pack_start(scroll, False, False)
         self.RightChild.pack_start(self.SelectorButtons, False, False)
         self.RightChild.pack_start(self.SelectorBoxes, False, False)
         self.SettingsArea = gtk.ScrolledWindow()
         ebox = gtk.EventBox()
         self.SettingsBox = gtk.VBox()
-        self.SettingsBox.set_border_width(5)
-        self.SettingsBox.set_spacing(5)
         ebox.add(self.SettingsBox)
-        self.SettingsArea.props.hscrollbar_policy = gtk.POLICY_NEVER
-        self.SettingsArea.props.vscrollbar_policy = gtk.POLICY_AUTOMATIC
+        self.SettingsBox.set_border_width(5)
+        self.SettingsArea.props.hscrollbar_policy = gtk.POLICY_AUTOMATIC
+        self.SettingsArea.props.vscrollbar_policy = gtk.POLICY_ALWAYS
         self.SettingsArea.set_border_width(5)
         self.SettingsArea.add_with_viewport(ebox)
-        self.SettingsArea.set_no_show_all(True)
         self.RightChild.pack_start(self.SettingsArea, True, True)
 
-        self.NotFoundBox = None
+        GlobalUpdater.Block += 1
 
         # Notebook
-        self.RightWidget.append_page(self.RightChild, gtk.Label(_("Settings")))
+        self.NotebookLabel = gtk.Label(_("Settings"))
+        self.NotebookChild = gtk.EventBox()
+        self.NotebookChild.add(self.RightChild)
+        self.RightWidget.append_page(self.NotebookChild, self.NotebookLabel)
+
+        box = gtk.VBox()
+        box.set_border_width(5)
+        progress = Popup(parent=main, child=box)
+        progress.connect("delete-event", lambda *a: True)
+        progress.set_title(_("Loading Advanced Search"))
+        bar = gtk.ProgressBar()
+        box.pack_start(bar, False, False)
+
+        label = gtk.Label()
+        box.pack_start(label, False, False)
+
+        progress.set_size_request(300, -1)
+
+        progress.show_all()
+
+        self.GroupPages = {}
+
+        length = len(context.Plugins)
+
+        for index, (plugin, Plugin) in enumerate(context.Plugins.items()):
+
+            bar.set_fraction((index+1)/float(length))
+            label.set_markup("<i>%s</i>" %protect_pango_markup(Plugin.ShortDesc))
+            gtk_process_events()
+
+            groups = {}
+            for name, group in Plugin.Groups.items():
+                groups[name] = GroupPage(name or _('General'), group)
+            self.GroupPages[plugin] = groups
+
+        self.Level = FilterName | FilterLongDesc
 
         self.FilterChanged()
+
+        progress.destroy()
+
+        gtk_process_events()
+
+        GlobalUpdater.Block -= 1
+
+    def Filter(self, text, level=FilterAll):
+        text = text.lower()
+        for plugin, groups in self.GroupPages.items():
+            results = dict((n, sg) for (n, sg) in groups.items() if sg.Filter(text, level=level))
+            if results:
+                yield plugin, results
 
     def GotKey(self, widget, key, mods):
         new = gtk.accelerator_name (key, mods)
@@ -305,7 +369,7 @@ class FilterPage(object):
                 new = new.replace ("%s_R" % mod, "<%s>" % mod)
 
         widget.destroy()
-        self.FilterValue.set_active(True)
+        self.FilterValueCheck.set_active(True)
         self.FilterEntry.set_text(new)
 
     def GrabKey(self, widget, pos, button):
@@ -318,216 +382,211 @@ class FilterPage(object):
         grabber.connect('changed', self.GotKey)
         grabber.begin_key_grab(None)
 
+    def ShowFilterError(self, text):
+
+        if self.NotFoundBox is None:
+            self.NotFoundBox = NotFoundBox(text)
+            self.NotebookChild.remove(self.RightChild)
+            self.NotebookChild.add(self.NotFoundBox)
+            self.NotebookLabel.set_text(_("Error"))
+            self.NotebookChild.show_all()
+        else:
+            self.NotFoundBox.update(text)
+
+    def HideFilterError(self):
+        if self.NotFoundBox is None:
+            return
+        num = self.RightWidget.page_num(self.NotFoundBox)
+        if num >= 0:
+            self.RightWidget.remove_page(num)
+
+        self.NotebookChild.remove(self.NotFoundBox)
+        self.NotebookChild.add(self.RightChild)
+
+        self.NotFoundBox.destroy()
+        self.NotFoundBox = None
+
+        self.NotebookLabel.set_text(_("Settings"))
+
+        self.NotebookChild.show_all()
+
     def UpdatePluginBox(self):
-        self.PluginBox.clear_list()
-
-        self.PluginBox.hide()
-        self.PluginBox.set_no_show_all(len(self.FilteredPlugins) == 0)
-
-        self.PluginBox.add_item(_("All"), self.PluginChanged, "<i>%s</i>")
-
-        sortedPlugins = map(operator.itemgetter(0), self.FilteredPlugins.values())
-        sortedPlugins = sorted(sortedPlugins, key=PluginKeyFunc)
-        for plugin in sortedPlugins:
-            image = Image(plugin.Name, ImagePlugin)
-            info = plugin.Enabled and _("Enabled") or _("Disabled")
-            self.PluginBox.add_item(plugin.ShortDesc, self.PluginChanged, image=image, info=info)
-
+        self.PluginBox.Filter(self.Results)
+    
         self.UpdateGroupBox()
 
     def UpdateGroupBox(self):
-        self.GroupBox.clear_list()
-
-        self.GroupBox.hide()
-        if not self.CurrentPlugin:
-            self.GroupBox.set_no_show_all(True)
-            self.UpdateSubGroupBox()
-            return
-        elif self.CurrentPlugin == _("All"):
-            self.CurrentGroup = _("All")
-            self.GroupBox.set_no_show_all(True)
-            self.UpdateSubGroupBox()
-            return
+        if self.CurrentPlugin is None:
+            self.GroupBox.Update(())
         else:
-            self.GroupBox.set_no_show_all(False)
-
-        groups = self.FilteredPlugins[self.CurrentPlugin][1]
-
-        if len(groups) == 0:
-            self.CurrentGroup = None
-        elif len(groups) == 1:
-            self.CurrentGroup = groups.keys()[0]
-            self.GroupBox.set_no_show_all(True)
-        else:
-            self.GroupBox.add_item(_("All"), self.GroupChanged, "<i>%s</i>")
-
-        groupsSorted = sorted(groups.items(), key=FirstItemKeyFunc)
-        for group, subGroups in groupsSorted:
-            self.GroupBox.add_item(group, self.GroupChanged)
-
+            self.GroupBox.Update(self.Results[self.CurrentPlugin.Name])
         self.UpdateSubGroupBox()
 
     def UpdateSubGroupBox(self):
-        self.SubGroupBox.clear_list()
-        for child in self.SettingsBox.get_children():
-            child.destroy()
-
-        # Show or hide box
-        self.SubGroupBox.hide()
-        self.SettingsArea.hide()
-        if not self.CurrentGroup:
-            self.SubGroupBox.set_no_show_all(True)
-            self.SettingsArea.set_no_show_all(True)
-            return
-        elif self.CurrentGroup == _("All"):
-            self.CurrentSubGroup = _("All")
-            self.SubGroupBox.set_no_show_all(True)
+        if self.CurrentPlugin is not None and self.CurrentGroup in self.Results[self.CurrentPlugin.Name]:
+            grouppage = self.Results[self.CurrentPlugin.Name][self.CurrentGroup]
+            self.SubGroupBox.Update(sga.Name for sga in grouppage.VisibleAreas)
         else:
-            self.SubGroupBox.set_no_show_all(False)
-
-        # Get all groups/subgroups
-        subGroups = {}
-        if self.CurrentPlugin == _("All"):
-            for plugin, group in self.FilteredPlugins.values():
-                for sub in group.values():
-                    for name, sg in sub.items():
-                        subGroups[name] = sg
-        elif self.CurrentGroup == _("All"):
-            group = self.FilteredPlugins[self.CurrentPlugin][1]
-            for sub in group.values():
-                for name, sg in sub.items():
-                    subGroups[name] = sg
-        else:
-            subGroups = self.FilteredPlugins[self.CurrentPlugin][1][self.CurrentGroup]
-
-        if len(subGroups) == 0:
-            self.CurrentSubGroup = None
-        elif len(subGroups) == 1:
-            self.CurrentSubGroup = subGroups.keys()[0]
-            self.SubGroupBox.set_no_show_all(True)
-        else:
-            self.SubGroupBox.add_item(_("All"), self.SubGroupChanged, "<i>%s</i>")
-
-        subGroupsSorted = sorted(subGroups.items(), key=FirstItemKeyFunc)
-        for name, subGroup in subGroupsSorted:
-            self.SubGroupBox.add_item(name, self.SubGroupChanged)
-
-            # Settings
-            # FIXME: optimise this later
-            if self.CurrentSubGroup in (_("All"), name):
-                sga = SubGroupArea('', subGroup)
-                sga.Filter(self.Filter)
-                self.SettingsBox.pack_start(sga.Widget, False, False)
-            elif self.CurrentSubGroup == None:
-                sga = SubGroupArea(name, subGroup)
-                sga.Filter(self.Filter)
-                self.SettingsBox.pack_start(sga.Widget, False, False)
-
-        self.SettingsArea.set_no_show_all(len(self.SettingsBox.get_children()) == 0)
+            self.SubGroupBox.Update(())
 
     def UpdateSelectorButtons(self):
         self.SelectorButtons.clear_buttons()
-        if self.CurrentPlugin:
-            self.SelectorButtons.add_button(self.CurrentPlugin, self.PluginChanged)
-            if self.CurrentGroup:
+        if self.CurrentPlugin is not None:
+            self.SelectorButtons.add_button(self.CurrentPlugin.ShortDesc, self.PluginChanged)
+            if self.CurrentGroup is not None:
                 self.SelectorButtons.add_button(self.CurrentGroup or _("General"), self.GroupChanged)
-                if self.CurrentSubGroup:
+                if self.CurrentSubGroup is not None:
                     self.SelectorButtons.add_button(self.CurrentSubGroup or _("General"), self.SubGroupChanged)
 
-    def PluginChanged(self, widget, plugin):
-        self.CurrentPlugin = plugin
+    def PluginChanged(self, plugin=None, selector=False):
+        if not selector:
+            self.CurrentPlugin = plugin
         self.CurrentGroup = None
         self.CurrentSubGroup = None
 
         self.UpdateSelectorButtons()
-        self.UpdateGroupBox()
+        if not selector:
+            self.UpdateGroupBox()
+        else:
+            self.UpdateSubGroupBox()
+
+        if self.CurrentPlugin is not None:
+            self.PackSettingsBox(plugins=[self.CurrentPlugin])
+        else:
+            self.PackSettingsBox()
+
         self.RightChild.show_all()
 
-    def GroupChanged(self, widget, group):
-        self.CurrentGroup = group
+    def GroupChanged(self, group=None, selector=False):
+
+        if group == 'All':
+            self.PluginChanged(selector=True)
+            return
+
+        if not selector:
+            self.CurrentGroup = group
         self.CurrentSubGroup = None
 
         self.UpdateSelectorButtons()
-        self.UpdateSubGroupBox()
+
+        if not selector:
+            self.UpdateSubGroupBox()
+
+        if self.CurrentGroup is not None:
+            page = self.Results[self.CurrentPlugin.Name][self.CurrentGroup]
+            self.PackSettingsBox(groups=[page])
+        else:
+            self.PackSettingsBox()
+
         self.RightChild.show_all()
 
-    def SubGroupChanged(self, widget, subGroup):
-        self.CurrentSubGroup = subGroup
+    def SubGroupChanged(self, subGroup=None, selector=False):
+
+        if subGroup == 'All':
+            self.GroupChanged(selector=True)
+            return
+
+        if not selector:
+            self.CurrentSubGroup = subGroup
 
         self.UpdateSelectorButtons()
-        self.UpdateSubGroupBox()
+
+        if self.CurrentSubGroup is not None:
+            sgas = self.Results[self.CurrentPlugin.Name][self.CurrentGroup].VisibleAreas
+            sga = [sga for sga in sgas if sga.Name == self.CurrentSubGroup]
+            self.PackSettingsBox(subgroups=sga)
+        else:
+            self.PackSettingsBox()
         self.RightChild.show_all()
+
+    def LevelChanged(self, widget, level):
+
+        if widget.get_active():
+            if level & self.Level:
+                return
+            self.Level |= level
+        else:
+            if not level & self.Level:
+                return
+            self.Level &= ~level
+
+        self.FilterChanged()
+
+    def PackSettingsBox(self, plugins=None, groups=None, subgroups=None):
+
+        for pluginbox in self.PackedPlugins:
+            for child in pluginbox.get_children():
+                pluginbox.remove(child)
+            pluginbox.destroy()
+        self.PackedPlugins = ()
+        for group in self.PackedGroups:
+            if group.Widget.get_parent():
+                group.Widget.get_parent().remove(group.Widget)
+        self.PackedGroups = ()
+        for subgroup in self.PackedSubGroups:
+            if subgroup.Widget.get_parent():
+                subgroup.Widget.get_parent().remove(subgroup.Widget)
+            subgroup.Widget.destroy()
+        self.PackedSubGroups = ()
+
+        if plugins is not None:
+            self.PackedPlugins = []
+            self.PackedGroups = []
+            for plugin in plugins:
+                box = gtk.VBox()
+                for page in self.GroupPages[plugin.Name].values():
+                    box.pack_start(page.Label, False, False)
+                    box.pack_start(page.Widget, False, False)
+
+                    self.PackedGroups.append(page)
+                self.SettingsBox.pack_start(box, False, False)
+                self.PackedPlugins.append(box)
+
+        if groups is not None:
+            self.PackedGroups = []
+            for page in groups:
+                self.SettingsBox.pack_start(page.Widget, False, False)
+                self.PackedGroups.append(page)
+
+        if subgroups is not None:
+            self.PackedSubGroups = []
+            for area in subgroups:
+                sga = SubGroupArea('', area.SubGroup)
+                sga.Filter(self.FilterEntry.get_text().lower())
+                self.SettingsBox.pack_start(sga.Widget, False, False)     
+                self.PackedSubGroups.append(sga)
+
+        self.SettingsBox.show_all()
 
     def FilterChanged(self, widget=None):
-        self.Filter = self.FilterEntry.get_text()
 
-        level = 0
-        if self.FilterName.get_active():
-            level |= FilterName
-        if self.FilterLongDesc.get_active():
-            level |= FilterLongDesc
-        if self.FilterValue.get_active():
-            level |= FilterValue
+        self.Results = dict(self.Filter(self.FilterEntry.get_text(), level=self.Level))
 
-        plugins = {}
-        foundCurrentPlugin = False
-        foundCurrentGroup = False
-        foundCurrentSubGroup = False
-        for plugin in self.Context.Plugins.values():
-            groups = {}
-            for group in plugin.Groups:
-                subGroups = {}
-                for name, subGroup in plugin.Groups[group].items():
-                    settings = sum((v.values() for v in [subGroup.Display]+[subGroup.Screens[CurrentScreenNum]]), [])
-                    settings = FilterSettings(settings, self.Filter, level=level)
-                    if len(settings) > 0:
-                        subGroups[name] = subGroup
-                        isCurrentPlugin = plugin.ShortDesc == self.CurrentPlugin
-                        isCurrentGroup = group == self.CurrentGroup
-                        isCurrentSubGroup = name == self.CurrentSubGroup
-                        if isCurrentPlugin:
-                            foundCurrentPlugin = True
-                            if isCurrentGroup:
-                                foundCurrentGroup = True
-                                if isCurrentSubGroup:
-                                    foundCurrentSubGroup = True
-                if len(subGroups) > 0:
-                    groups[group] = subGroups
-            if len(groups) > 0:
-                plugins[plugin.ShortDesc] = (plugin, groups)
-        self.FilteredPlugins = plugins
-
-        if not foundCurrentPlugin and self.CurrentPlugin:
-            self.CurrentPlugin = None
-        if not foundCurrentGroup and self.CurrentGroup:
-            self.CurrentGroup = None
-        if not foundCurrentSubGroup and self.CurrentSubGroup:
-            self.CurrentSubGroup = None
+        self.PluginBox.Filter(self.Results)
+        self.UpdateGroupBox()
 
         self.UpdateSelectorButtons()
-        self.UpdatePluginBox()
-        self.RightChild.show_all()
 
-        # No settings found, remove page
-        if len(self.FilteredPlugins) == 0 and self.RightChild.get_parent():
-            self.RightWidget.remove_page(self.RightWidget.page_num(self.RightChild))
-        # Restore page
-        elif len(self.FilteredPlugins) > 0 and not self.RightChild.get_parent():
-            self.RightWidget.append_page(self.RightChild, gtk.Label(_("Settings")))
+        for sga in self.PackedSubGroups:
+            sga.Filter(self.FilterEntry.get_text().lower())
 
-        # Nothing found
-        if not self.RightChild.get_parent():
-            if self.NotFoundBox:
-                self.NotFoundBox.update(self.Filter)
-            else:
-                self.NotFoundBox = NotFoundBox(self.Filter)
-                self.RightWidget.append_page(self.NotFoundBox, gtk.Label(_("Error")))
-        elif self.NotFoundBox:
-            self.RightWidget.remove_page(self.RightWidget.page_num(self.NotFoundBox))
-            self.NotFoundBox.destroy()
-            self.NotFoundBox = None
+        self.SettingsBox.queue_resize_no_redraw()
 
         self.RightWidget.show_all()
+
+        if not self.Results:
+            self.ShowFilterError(self.FilterEntry.get_text())
+        elif self.NotFoundBox:
+            self.HideFilterError()
+
+    def BackToMain(self, widget):
+        self.RightChild.destroy()
+        for groups in self.GroupPages.values():
+            for page in groups.values():
+                page.SetContainer.destroy()
+        self.GroupPages = None
+
+        self.Main.BackToMain(widget)
 
 # Profile and Backend Page
 #
@@ -1024,7 +1083,14 @@ class PreferencesPage(object):
 class Page(object):
     def __init__(self):
         self.SetContainer = gtk.VBox()
-        self.Widget = scroll = gtk.ScrolledWindow()
+
+        self.Widget = gtk.EventBox()
+        self.Widget.add(self.SetContainer)
+        
+        self.Empty = True
+
+    def Wrap(self):
+        scroll = gtk.ScrolledWindow()
         scroll.props.hscrollbar_policy = gtk.POLICY_NEVER
         scroll.props.vscrollbar_policy = gtk.POLICY_AUTOMATIC
         
@@ -1033,11 +1099,10 @@ class Page(object):
         view.set_shadow_type(gtk.SHADOW_NONE)
         
         scroll.add(view)
-        ebox = gtk.EventBox()
-        view.add(ebox)
-        ebox.add(self.SetContainer)
-        
-        self.Empty = True
+        view.add(self.Widget)
+
+        self.Scroll = scroll
+
 
 # Group Page
 #
@@ -1046,8 +1111,12 @@ class GroupPage(Page):
         Page.__init__(self)
 
         self.Name = name
-        self.subGroupAreas = []
-
+        self.VisibleAreas = self.subGroupAreas = []
+        self.Label = gtk.Alignment(xalign=0.0, yalign=0.5)
+        self.Label.set_padding(4, 4, 4, 4)
+        label = gtk.Label("<b>%s</b>" %(protect_pango_markup(name or _('General'))))
+        label.set_use_markup(True)
+        self.Label.add(label)
         if '' in group:
             sga = SubGroupArea('', group[''])
             if not sga.Empty:
@@ -1065,13 +1134,21 @@ class GroupPage(Page):
 
         self.Visible = not self.Empty
 
-    def Filter(self, text):
+    def Filter(self, text, level=FilterAll):
         empty = True
+        self.VisibleAreas = []
         for area in self.subGroupAreas:
-            if area.Filter(text):
+            if area.Filter(text, level=level):
+                self.VisibleAreas.append(area)
                 empty = False
 
         self.Visible = not empty
+
+        self.Label.props.no_show_all = empty
+        if empty:
+            self.Label.hide()
+        else:
+            self.Label.show()
 
         return not empty
 

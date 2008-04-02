@@ -64,7 +64,18 @@ class Setting(object):
         self.Reset.connect('clicked', self.DoReset)
         self._Init()
 
+        self.EBox.connect("destroy", self.OnDestroy)
+
+        self.AddUpdater()
+
+    def AddUpdater(self):
         GlobalUpdater.Append(self)
+
+    def RemoveUpdater(self):
+        GlobalUpdater.Remove(self)
+
+    def OnDestroy(self, widget):
+        self.RemoveUpdater()
 
     def GetColumn(self, num):
         return (str, gtk.TreeViewColumn(self.Setting.ShortDesc, gtk.CellRendererText(), text=num))
@@ -178,6 +189,12 @@ class Setting(object):
         visible = self._Filter(text, level=level)
         self._SetHidden(visible)
         return visible
+
+    def __hash__(self):
+        if self.Setting is not None:
+            return hash(self.Setting)
+        else:
+            raise TypeError
 
 class StockSetting(Setting):
 
@@ -411,7 +428,7 @@ class BaseListSetting(Setting):
         for widget in self.Widgets:
             widget.Store = self.Store
             widget.Box.remove(widget.Reset)
-
+            widget.ListWidget = self
         for col in cols:
             self.View.append_column(col)
 
@@ -465,6 +482,14 @@ class BaseListSetting(Setting):
         buttonBox.pack_end(self.Reset, False, False)
 
         self.Box.pack_start(self.Widget)
+
+    def AddUpdater(self):
+        pass
+
+    def RemoveUpdater(self):
+        if self.Settings:
+            for widget in self.Widgets:
+                widget.EBox.destroy()
 
     def DoReset(self, widget):
         for setting in self.Settings:
@@ -607,6 +632,10 @@ class BaseListSetting(Setting):
         self.Store.clear()
         for values in zip(*[w.GetForRenderer() for w in self.Widgets]):
             self.Store.append(values)
+
+    def OnDestroy(self, widget):
+        for w in self.Widgets:
+            w.EBox.destroy()
 
 class ListSetting(BaseListSetting):
 
@@ -1258,6 +1287,7 @@ def MakeSetting(setting, List=False):
 class SubGroupArea(object):
     def __init__(self, name, subGroup):
         self.MySettings = []
+        self.SubGroup = subGroup
         self.Name = name
         settings = sorted(sum((v.values() for v in [subGroup.Display]+[subGroup.Screens[CurrentScreenNum]]), []), key=SettingKeyFunc)
         if not name:

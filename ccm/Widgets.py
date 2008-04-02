@@ -130,6 +130,86 @@ class CellRendererColor(gtk.GenericCellRenderer):
         cr.set_source_rgba(r, g, b, a)
         cr.paint()
 
+class PluginView(gtk.TreeView):
+    def __init__(self, plugins):
+        liststore = gtk.ListStore(str, gtk.gdk.Pixbuf, bool, object)
+        self.model = liststore.filter_new()
+        gtk.TreeView.__init__(self, self.model)
+
+        self.SelectionHandler = None
+
+        self.Plugins = set(plugins)
+
+        for plugin in sorted(plugins.values(), key=PluginKeyFunc):
+            liststore.append([plugin.ShortDesc, Image(plugin.Name, type=ImagePlugin).props.pixbuf, 
+                plugin.Enabled, plugin])
+        
+        column = self.insert_column_with_attributes(0, _('Plugin'), gtk.CellRendererPixbuf(), pixbuf=1, sensitive=2)
+        cell = gtk.CellRendererText()
+        cell.props.wrap_width = 200
+        column.pack_start(cell)
+        column.set_attributes(cell, text=0)
+        self.model.set_visible_func(self.VisibleFunc)
+        self.get_selection().connect('changed', self.SelectionChanged)
+
+    def VisibleFunc(self, model, iter):
+        return model[iter][3].Name in self.Plugins
+
+    def Filter(self, plugins):
+        self.Plugins = set(plugins)
+        self.model.refilter()
+
+    def SelectionChanged(self, selection):
+        model, iter = selection.get_selected()
+        if iter is None:
+            return self.SelectionHandler(None)
+        
+        return self.SelectionHandler(model[iter][3])
+
+class GroupView(gtk.TreeView):
+    def __init__(self, name):
+        self.model = gtk.ListStore(str, str)
+        gtk.TreeView.__init__(self, self.model)
+
+        self.SelectionHandler = None
+
+        self.Visible = set()
+        
+        cell = gtk.CellRendererText()
+        cell.props.ypad = 5
+        cell.props.wrap_width = 200
+        column = gtk.TreeViewColumn(name, cell, text=0)
+        self.append_column(column)
+
+        self.get_selection().connect('changed', self.SelectionChanged)
+        self.hide_all()
+        self.props.no_show_all = True
+
+    def Update(self, items):
+        self.model.clear()
+
+        self.model.append([_('All'), 'All'])
+
+        length = 0
+        for item in items:
+            self.model.append([item or _("General"), item])
+            if item: # exclude "General" from count
+                length += 1
+
+        if length:
+            self.show_all()
+            self.props.no_show_all = False
+        else:
+            self.hide_all()
+            self.props.no_show_all = True
+
+    def SelectionChanged(self, selection):
+        model, iter = selection.get_selected()
+        if iter is None:
+            return None
+        
+        return self.SelectionHandler(model[iter][1])
+
 # Selector Buttons
 #
 class SelectorButtons(gtk.HBox):
@@ -151,8 +231,8 @@ class SelectorButtons(gtk.HBox):
         arrow = gtk.Arrow(gtk.ARROW_RIGHT, gtk.SHADOW_NONE)
         button = gtk.Button(label)
         button.set_relief(gtk.RELIEF_NONE)
-        button.connect('clicked', callback, label)
-        if len(self.get_children()) > 0:
+        button.connect('clicked', self.on_button_clicked, callback)
+        if self.get_children():
             self.pack_start(arrow, False, False)
             self.arrows.append(arrow)
         self.pack_start(button, False, False)
@@ -167,6 +247,9 @@ class SelectorButtons(gtk.HBox):
         if pos > 0:
             self.arrows[pos-1].destroy()
             self.arrows.remove(self.arrows[pos-1])
+
+    def on_button_clicked(self, widget, callback):
+        callback(selector=True)
 
 # Selector Box
 #
@@ -808,6 +891,7 @@ class GlobalEdgeSelector(EdgeSelector):
         comboBox.connect ('changed', self.combo_changed, edge)
 
         popup = Popup (self, child=comboBox, decorated=False, mouse=True, modal=False)
+        popup.show_all()
         popup.connect ('focus-out-event', self.focus_out)
 
     def focus_out (self, widget, event):
@@ -835,7 +919,6 @@ class Popup (gtk.Window):
         self.set_type_hint (gtk.gdk.WINDOW_TYPE_HINT_UTILITY)
         self.set_position (mouse and gtk.WIN_POS_MOUSE or gtk.WIN_POS_CENTER_ALWAYS)
         self.set_transient_for (parent.get_toplevel ())
-        self.set_icon (parent.get_toplevel ().get_icon ())
         self.set_modal (modal)
         self.set_decorated (decorated)
         if text:
@@ -846,7 +929,6 @@ class Popup (gtk.Window):
             self.add (align)
         elif child:
             self.add (child)
-        self.show_all ()
         gtk_process_events ()
 
     def destroy (self):
@@ -886,6 +968,7 @@ class KeyGrabber (gtk.Button):
     def begin_key_grab (self, widget):
         self.add_events (gtk.gdk.KEY_PRESS_MASK)
         self.popup = Popup (self, _("Please press the new key combination"))
+        self.popup.show_all()
         self.handler = self.popup.connect ("key-press-event",
                                            self.on_key_press_event)
         while gtk.gdk.keyboard_grab (self.popup.window) != gtk.gdk.GRAB_SUCCESS:
@@ -1224,7 +1307,6 @@ class AboutDialog (gtk.AboutDialog):
         self.set_artists (["Andrew Wedderburn <andrew.wedderburn@gmail.com>",
                            "Patrick Niklaus <marex@opencompositing.org>",
                            "Gnome Icon Theme Team"])
-        self.set_icon (parent.get_icon())
         self.set_logo (IconTheme.load_icon("ccsm", 64, gtk.ICON_LOOKUP_FORCE_SVG))
         self.set_website ("http://www.compiz-fusion.org")
 
@@ -1241,7 +1323,6 @@ class ErrorDialog (gtk.MessageDialog):
         self.set_position (gtk.WIN_POS_CENTER)
         self.set_markup (message)
         self.set_title (_("An error has occured"))
-        self.set_icon (parent.get_icon ())
         self.set_transient_for (parent)
         self.set_modal (True)
         self.show_all ()
@@ -1260,7 +1341,6 @@ class WarningDialog (gtk.MessageDialog):
         self.set_position (gtk.WIN_POS_CENTER)
         self.set_markup (message)
         self.set_title (_("Warning"))
-        self.set_icon (parent.get_icon ())
         self.set_transient_for (parent)
         self.connect_after ("response", lambda *args: self.destroy ())
 

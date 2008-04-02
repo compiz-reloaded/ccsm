@@ -414,18 +414,8 @@ class MainWin(gtk.Window):
         self.SetMainWidgets(pluginPage.LeftWidget, pluginPage.RightWidget)
     
     def ShowAdvancedFilter(self, widget):
-        self.TitleBuffer = self.get_title()
-        self.set_title(self.TitleBuffer + " - Loading...")
-        gtk_process_events()
-
-        self.FilterValue = self.filterEntry.get_text()
         filterPage = FilterPage(self, self.Context)
         self.SetMainWidgets(filterPage.LeftWidget, filterPage.RightWidget)
-    
-        self.set_title(self.TitleBuffer)
-        self.TitleBuffer = False
-
-        return False
     
     def ShowPreferences(self, widget):
         preferencesPage = PreferencesPage(self, self.Context)
@@ -471,7 +461,8 @@ class MainWin(gtk.Window):
         for widget in self.NonMainWidgets:
             widget.get_parent().remove(widget)
             widget.destroy()
-        
+        self.NonMainWidgets = None
+
         for widget in self.MainWidgets:
             widget.props.no_show_all = False
             widget.show_all()
