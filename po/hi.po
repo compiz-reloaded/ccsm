@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-03-15 19:56+0530\n"
+"POT-Creation-Date: 2008-04-03 13:46+0530\n"
 "PO-Revision-Date: 2007-12-16 16:36+0530\n"
 "Last-Translator: Sangeeta Kumari\n"
 "Language-Team:  <en@li.org>\n"
@@ -164,41 +164,24 @@ msgstr "चित्र लोडिंग"
 msgid "Utility"
 msgstr "उपयोगिता"
 
+msgid "All"
+msgstr "सभी"
+
+msgid "Uncategorized"
+msgstr "अवर्गीकृत"
+
 msgid "Reset setting to the default value"
 msgstr "मूलभूत मान में सेटिंग फिर सेट करें"
-
-msgid "Browse for "
-msgstr "इसके लिए ब्राउज़"
-
-msgid "Images"
-msgstr "बिंब"
-
-msgid "File"
-msgstr "फाइल"
-
-msgid "Open directory..."
-msgstr "निर्देशिका खोलें..."
-
-msgid "Open file..."
-msgstr "फाइल खोलें..."
-
-msgid "Multi-list settings. You can double-click a row to edit the values."
-msgstr "मल्टी लिस्ट सेटिंग. आप एक पंक्ति पर मानों के संपादन के लिए दो बार क्लिक कर सकते हैं."
 
 msgid "Edit"
 msgstr "संपादन"
 
-#, python-format
-msgid "Value (%s)"
-msgstr "मान (%s)"
+msgid "Multi-list settings. You can double-click a row to edit the values."
+msgstr "मल्टी लिस्ट सेटिंग. आप एक पंक्ति पर मानों के संपादन के लिए दो बार क्लिक कर सकते हैं."
 
 #, python-format
 msgid "Edit %s"
 msgstr "%s संपादित करें"
-
-#, python-format
-msgid "Value (%(value)s) for %(setting)s"
-msgstr "(%(value)s) मान %(setting)s के लिए"
 
 #, python-format
 msgid "\"%s\" is not a valid shortcut"
@@ -235,10 +218,6 @@ msgstr "\"%s\" एक वैध किनारा मास्क नहीं 
 msgid "None"
 msgstr "कोई नहीं"
 
-#, python-format
-msgid "Unhandled list type %s for %s"
-msgstr "%s अनियंत्रित सूची प्रकार %s के लिए"
-
 msgid "CompizConfig Settings Manager"
 msgstr "CompizConfig जमावट प्रबंधक"
 
@@ -255,13 +234,6 @@ msgstr "स्क्रीन %i"
 msgid "Screen"
 msgstr "स्क्रीन"
 
-#. Settings
-msgid "All"
-msgstr "सभी"
-
-msgid "Uncategorized"
-msgstr "अवर्गीकृत"
-
 msgid "Category"
 msgstr "श्रेणी"
 
@@ -274,6 +246,10 @@ msgstr "वरीयताएँ"
 #, python-format
 msgid "Enable %s"
 msgstr "%s सक्रिय करें"
+
+#, fuzzy
+msgid "Plugin"
+msgstr "प्लगिन सूची"
 
 msgid "Please press the new key combination"
 msgstr "कृपया नया कुंजी युग्म दबायें"
@@ -324,6 +300,22 @@ msgstr "संबंध"
 msgid "Invert"
 msgstr "उलटें"
 
+#, fuzzy
+msgid "Browse..."
+msgstr "इसके लिए ब्राउज़"
+
+msgid "Images"
+msgstr "बिंब"
+
+msgid "File"
+msgstr "फाइल"
+
+msgid "Open directory..."
+msgstr "निर्देशिका खोलें..."
+
+msgid "Open file..."
+msgstr "फाइल खोलें..."
+
 msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr "यह CompizConfig विन्यास सिस्टम के लिए सेटिंग मैनेजर है."
 
@@ -357,6 +349,7 @@ msgstr ""
 msgid "Search in..."
 msgstr "इसमें खोजें..."
 
+#. Options
 msgid "Short description and name"
 msgstr "संक्षिप्त वर्णन और नाम"
 
@@ -366,9 +359,19 @@ msgstr "लंबा वर्णन"
 msgid "Settings value"
 msgstr "जमावट मान"
 
+msgid "Group"
+msgstr ""
+
+msgid "Subgroup"
+msgstr ""
+
 #. Notebook
 msgid "Settings"
 msgstr "जमावट"
+
+#, fuzzy
+msgid "Loading Advanced Search"
+msgstr "उन्नत खोज"
 
 msgid "Add a New Profile"
 msgstr "नया प्रोफाइल जोड़ें"
@@ -493,6 +496,15 @@ msgstr ""
 "<span size=\"large\"><b>कोई मेल नहीं मिला.</b> </span><span>\n"
 "\n"
 " आपका फिल्टर \"<b>%s</b>\" किसी मद से नहीं मेल खाता है.</span>"
+
+#~ msgid "Value (%s)"
+#~ msgstr "मान (%s)"
+
+#~ msgid "Value (%(value)s) for %(setting)s"
+#~ msgstr "(%(value)s) मान %(setting)s के लिए"
+
+#~ msgid "Unhandled list type %s for %s"
+#~ msgstr "%s अनियंत्रित सूची प्रकार %s के लिए"
 
 #~ msgid "Actions"
 #~ msgstr "क्रियाएँ"

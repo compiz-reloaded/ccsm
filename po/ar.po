@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm 0.6\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-03-15 19:56+0530\n"
+"POT-Creation-Date: 2008-04-03 13:46+0530\n"
 "PO-Revision-Date: 2007-09-30 23:11+0200\n"
 "Last-Translator: Banxoo <banxoo+compiz@gmail.com>\n"
 "Language-Team: Compiz Fusion Translators <i18n@lists.compiz-fusion.org>\n"
@@ -164,41 +164,24 @@ msgstr "تحميل الصورة"
 msgid "Utility"
 msgstr "فاىٔدة"
 
+msgid "All"
+msgstr "الكلّ"
+
+msgid "Uncategorized"
+msgstr "غير مصنّف"
+
 msgid "Reset setting to the default value"
 msgstr "إعادة الضبط الي القيمة الأصلية"
-
-msgid "Browse for "
-msgstr "تصفح من أجل "
-
-msgid "Images"
-msgstr "صور"
-
-msgid "File"
-msgstr "ملف"
-
-msgid "Open directory..."
-msgstr "...فتح الدليل"
-
-msgid "Open file..."
-msgstr "...فتح الملف"
-
-msgid "Multi-list settings. You can double-click a row to edit the values."
-msgstr "ضبط اللاىٔحة المتعددة. النقر المزدوج يمكنك من تغير القيم."
 
 msgid "Edit"
 msgstr "تحرير"
 
-#, python-format
-msgid "Value (%s)"
-msgstr "قيمة (%s)"
+msgid "Multi-list settings. You can double-click a row to edit the values."
+msgstr "ضبط اللاىٔحة المتعددة. النقر المزدوج يمكنك من تغير القيم."
 
 #, python-format
 msgid "Edit %s"
 msgstr "تحرير %s"
-
-#, python-format
-msgid "Value (%(value)s) for %(setting)s"
-msgstr "قيمة (%(value)s) من أجل %(setting)s"
 
 #, python-format
 msgid "\"%s\" is not a valid shortcut"
@@ -235,10 +218,6 @@ msgstr "قناع الحدود \"%s\" ليس صحيحا"
 msgid "None"
 msgstr "لا شئ"
 
-#, python-format
-msgid "Unhandled list type %s for %s"
-msgstr "نوع اللاىٔحة %s for %s غير معالج "
-
 msgid "CompizConfig Settings Manager"
 msgstr "ضابط الإعدادات"
 
@@ -255,13 +234,6 @@ msgstr "الشاشة %i"
 msgid "Screen"
 msgstr "شاشة"
 
-#. Settings
-msgid "All"
-msgstr "الكلّ"
-
-msgid "Uncategorized"
-msgstr "غير مصنّف"
-
 msgid "Category"
 msgstr "تصنيف"
 
@@ -274,6 +246,10 @@ msgstr "تفضيلات"
 #, python-format
 msgid "Enable %s"
 msgstr "مكّن %s"
+
+#, fuzzy
+msgid "Plugin"
+msgstr "لاىٔحة الإضافات"
 
 msgid "Please press the new key combination"
 msgstr "الرجاﺀ إدخال تركيبة المفاتيح الجديدة"
@@ -327,6 +303,22 @@ msgstr "دمج"
 msgid "Invert"
 msgstr "إقلب"
 
+#, fuzzy
+msgid "Browse..."
+msgstr "تصفح من أجل "
+
+msgid "Images"
+msgstr "صور"
+
+msgid "File"
+msgstr "ملف"
+
+msgid "Open directory..."
+msgstr "...فتح الدليل"
+
+msgid "Open file..."
+msgstr "...فتح الملف"
+
 msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr "ضابط الإعدادات لنظام CompizConfig"
 
@@ -360,6 +352,7 @@ msgstr ""
 msgid "Search in..."
 msgstr "البحث في..."
 
+#. Options
 msgid "Short description and name"
 msgstr "وصف قصير و إسم"
 
@@ -369,9 +362,19 @@ msgstr "وصف طويل"
 msgid "Settings value"
 msgstr "قيمة الإعدادات"
 
+msgid "Group"
+msgstr ""
+
+msgid "Subgroup"
+msgstr ""
+
 #. Notebook
 msgid "Settings"
 msgstr "إعدادات"
+
+#, fuzzy
+msgid "Loading Advanced Search"
+msgstr "بحث متقدّم"
 
 msgid "Add a New Profile"
 msgstr "أضف تشكيل جديد"
@@ -495,6 +498,15 @@ msgstr ""
 "<span size=\"large\"><b>لا وجود لتطابق.</b> </span><span>\n"
 "\n"
 " Your filter \"<b>%s</b>\" لا تطابق مع ايّ من الموجودات.</span>"
+
+#~ msgid "Value (%s)"
+#~ msgstr "قيمة (%s)"
+
+#~ msgid "Value (%(value)s) for %(setting)s"
+#~ msgstr "قيمة (%(value)s) من أجل %(setting)s"
+
+#~ msgid "Unhandled list type %s for %s"
+#~ msgstr "نوع اللاىٔحة %s for %s غير معالج "
 
 #~ msgid "Actions"
 #~ msgstr "أفعال"
