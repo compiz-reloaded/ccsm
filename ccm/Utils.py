@@ -261,8 +261,10 @@ class Updater:
         widgets = self.VisibleSettings.get((setting.Name, setting.Plugin.Name))
         if not widgets:
             return
-        for widget in widgets:
-            widget.Read()
+        for reference in widgets:
+            widget = reference()
+            if widget is not None:
+                widget.Read()
 
     def Update (self):
         if self.Block > 0:
