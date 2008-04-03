@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-03-15 19:56+0530\n"
+"POT-Creation-Date: 2008-04-03 13:46+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -145,40 +145,23 @@ msgstr ""
 msgid "Utility"
 msgstr ""
 
+msgid "All"
+msgstr ""
+
+msgid "Uncategorized"
+msgstr ""
+
 msgid "Reset setting to the default value"
-msgstr ""
-
-msgid "Browse for "
-msgstr ""
-
-msgid "Images"
-msgstr ""
-
-msgid "File"
-msgstr ""
-
-msgid "Open directory..."
-msgstr ""
-
-msgid "Open file..."
-msgstr ""
-
-msgid "Multi-list settings. You can double-click a row to edit the values."
 msgstr ""
 
 msgid "Edit"
 msgstr ""
 
-#, python-format
-msgid "Value (%s)"
+msgid "Multi-list settings. You can double-click a row to edit the values."
 msgstr ""
 
 #, python-format
 msgid "Edit %s"
-msgstr ""
-
-#, python-format
-msgid "Value (%(value)s) for %(setting)s"
 msgstr ""
 
 #, python-format
@@ -214,10 +197,6 @@ msgstr ""
 msgid "None"
 msgstr ""
 
-#, python-format
-msgid "Unhandled list type %s for %s"
-msgstr ""
-
 msgid "CompizConfig Settings Manager"
 msgstr ""
 
@@ -234,13 +213,6 @@ msgstr ""
 msgid "Screen"
 msgstr ""
 
-#. Settings
-msgid "All"
-msgstr ""
-
-msgid "Uncategorized"
-msgstr ""
-
 msgid "Category"
 msgstr ""
 
@@ -252,6 +224,9 @@ msgstr ""
 
 #, python-format
 msgid "Enable %s"
+msgstr ""
+
+msgid "Plugin"
 msgstr ""
 
 msgid "Please press the new key combination"
@@ -303,6 +278,21 @@ msgstr ""
 msgid "Invert"
 msgstr ""
 
+msgid "Browse..."
+msgstr ""
+
+msgid "Images"
+msgstr ""
+
+msgid "File"
+msgstr ""
+
+msgid "Open directory..."
+msgstr ""
+
+msgid "Open file..."
+msgstr ""
+
 msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr ""
 
@@ -336,6 +326,7 @@ msgstr ""
 msgid "Search in..."
 msgstr ""
 
+#. Options
 msgid "Short description and name"
 msgstr ""
 
@@ -345,8 +336,17 @@ msgstr ""
 msgid "Settings value"
 msgstr ""
 
+msgid "Group"
+msgstr ""
+
+msgid "Subgroup"
+msgstr ""
+
 #. Notebook
 msgid "Settings"
+msgstr ""
+
+msgid "Loading Advanced Search"
 msgstr ""
 
 msgid "Add a New Profile"

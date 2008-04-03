@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-03-15 19:56+0530\n"
+"POT-Creation-Date: 2008-04-03 13:46+0530\n"
 "PO-Revision-Date: 2008-01-03 02:28+0100\n"
 "Last-Translator: Mahdee Jameel <mahdee.jameel@gmail.com>\n"
 "Language-Team: gist bengali team <info.gist@cdac.in>\n"
@@ -166,41 +166,24 @@ msgstr "চিত্র লোড করছে"
 msgid "Utility"
 msgstr "উপযোগিতা"
 
+msgid "All"
+msgstr "সব"
+
+msgid "Uncategorized"
+msgstr "সাজানো হয়নি"
+
 msgid "Reset setting to the default value"
 msgstr "মূল মানে ফিরে যাও"
-
-msgid "Browse for "
-msgstr "খুজে দেখুন"
-
-msgid "Images"
-msgstr "ছবি"
-
-msgid "File"
-msgstr "ফাইল"
-
-msgid "Open directory..."
-msgstr "ডিরেক্টরি খুলুন"
-
-msgid "Open file..."
-msgstr "ফাইল খুলুন"
-
-msgid "Multi-list settings. You can double-click a row to edit the values."
-msgstr "অনেক্গুলো পছন্দ।আপনার কোন পছন্দ সম্পাদন করতে হলে ওই সারিতে ক্লিক করুন"
 
 msgid "Edit"
 msgstr "সম্পাদনা"
 
-#, python-format
-msgid "Value (%s)"
-msgstr "মান (%s)"
+msgid "Multi-list settings. You can double-click a row to edit the values."
+msgstr "অনেক্গুলো পছন্দ।আপনার কোন পছন্দ সম্পাদন করতে হলে ওই সারিতে ক্লিক করুন"
 
 #, python-format
 msgid "Edit %s"
 msgstr "%s কে সম্পাদনা"
-
-#, python-format
-msgid "Value (%(value)s) for %(setting)s"
-msgstr "%(setting)s এর জন্য মান (%(value)s)"
 
 #, python-format
 msgid "\"%s\" is not a valid shortcut"
@@ -237,10 +220,6 @@ msgstr "\"%s\" কোনার মাস্ক হিসেবে গ্রহ�
 msgid "None"
 msgstr "কোনটাই না"
 
-#, python-format
-msgid "Unhandled list type %s for %s"
-msgstr "%s হলো %s এর জন্য অপরিচালিত তালিকা"
-
 msgid "CompizConfig Settings Manager"
 msgstr "কমপিজ কনফিগ ব্যবস্থাপক"
 
@@ -257,13 +236,6 @@ msgstr "পর্দার %i"
 msgid "Screen"
 msgstr "পর্দা"
 
-#. Settings
-msgid "All"
-msgstr "সব"
-
-msgid "Uncategorized"
-msgstr "সাজানো হয়নি"
-
 msgid "Category"
 msgstr "শ্রেণী"
 
@@ -276,6 +248,10 @@ msgstr "আনুকূল্য"
 #, python-format
 msgid "Enable %s"
 msgstr "%s কে সক্রিয় করো"
+
+#, fuzzy
+msgid "Plugin"
+msgstr "প্লাগইন এর তালিকা"
 
 msgid "Please press the new key combination"
 msgstr "নতুন কীগুলো চাপুন"
@@ -326,6 +302,22 @@ msgstr "সম্পর্ক"
 msgid "Invert"
 msgstr "উল্টানো"
 
+#, fuzzy
+msgid "Browse..."
+msgstr "খুজে দেখুন"
+
+msgid "Images"
+msgstr "ছবি"
+
+msgid "File"
+msgstr "ফাইল"
+
+msgid "Open directory..."
+msgstr "ডিরেক্টরি খুলুন"
+
+msgid "Open file..."
+msgstr "ফাইল খুলুন"
+
 msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr "এটি হলো কমপিজ এর পছন্দ ঠিক করার জায়গা"
 
@@ -359,6 +351,7 @@ msgstr ""
 msgid "Search in..."
 msgstr "এর মধ্যে খোজো"
 
+#. Options
 msgid "Short description and name"
 msgstr "সংক্ষিপ্ত নাম ও বিবরণ"
 
@@ -368,9 +361,19 @@ msgstr "সম্পূর্ণ বিবরন"
 msgid "Settings value"
 msgstr "পছন্দের মান"
 
+msgid "Group"
+msgstr ""
+
+msgid "Subgroup"
+msgstr ""
+
 #. Notebook
 msgid "Settings"
 msgstr "পছন্দ"
+
+#, fuzzy
+msgid "Loading Advanced Search"
+msgstr "উন্নত অনুসন্ধান"
 
 msgid "Add a New Profile"
 msgstr "নতুন প্রোফাইল যোগ করুন"
@@ -498,6 +501,15 @@ msgstr ""
 "<span size=\"large\"><b>এরকম কিছু পাওয়া যায়নি.</b> </span><span>\n"
 "\n"
 " আপনার ছাকুনি \"<b>%s</b>\" এর সাথে মিলওয়ালা কোন কিছু পাওয়া যায়নি.</span>"
+
+#~ msgid "Value (%s)"
+#~ msgstr "মান (%s)"
+
+#~ msgid "Value (%(value)s) for %(setting)s"
+#~ msgstr "%(setting)s এর জন্য মান (%(value)s)"
+
+#~ msgid "Unhandled list type %s for %s"
+#~ msgstr "%s হলো %s এর জন্য অপরিচালিত তালিকা"
 
 #~ msgid "Actions"
 #~ msgstr "কাজ"

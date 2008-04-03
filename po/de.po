@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm 0.0.1\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-04-03 08:59+0200\n"
-"PO-Revision-Date: 2008-04-03 09:02+0200\n"
+"POT-Creation-Date: 2008-04-03 13:46+0530\n"
+"PO-Revision-Date: 2008-03-07 07:41+0100\n"
 "Last-Translator: Rene Hennig <shifty@my-united.net>\n"
 "Language-Team: Compiz Fusion translators <i18n@lists.compiz-fusion.org>\n"
 "MIME-Version: 1.0\n"
@@ -252,8 +252,9 @@ msgstr "Einstellungen"
 msgid "Enable %s"
 msgstr "%s aktivieren"
 
+#, fuzzy
 msgid "Plugin"
-msgstr "Plugin"
+msgstr "Pluginliste"
 
 msgid "Please press the new key combination"
 msgstr "Bitte drücken Sie die gewünschte Tastenkombination"
@@ -304,8 +305,9 @@ msgstr "Beziehung"
 msgid "Invert"
 msgstr "Umkehren"
 
+#, fuzzy
 msgid "Browse..."
-msgstr "Suchen..."
+msgstr "Suche nach "
 
 msgid "Images"
 msgstr "Bilder"
@@ -367,17 +369,18 @@ msgid "Settings value"
 msgstr "Einstellungswert"
 
 msgid "Group"
-msgstr "Gruppe"
+msgstr ""
 
 msgid "Subgroup"
-msgstr "Untergruppe"
+msgstr ""
 
 #. Notebook
 msgid "Settings"
 msgstr "Einstellungen"
 
+#, fuzzy
 msgid "Loading Advanced Search"
-msgstr "Lade erweiterte Suche"
+msgstr "Erweiterte Suche"
 
 msgid "Add a New Profile"
 msgstr "Neues Profil hinzufügen"

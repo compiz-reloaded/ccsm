@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm 0.6.0\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-03-15 19:56+0530\n"
-"PO-Revision-Date: 2008-03-03 20:47+0100\n"
+"POT-Creation-Date: 2008-04-03 13:46+0530\n"
+"PO-Revision-Date: 2008-02-22 10:00+0100\n"
 "Last-Translator: Jim Dusis <jimdusis@yahoo.gr>\n"
 "Language-Team: Compiz Fusion translators <i18n@lists.compiz-fusion.org>\n"
 "MIME-Version: 1.0\n"
@@ -167,43 +167,26 @@ msgstr "Φόρτωση Εικόνας"
 msgid "Utility"
 msgstr "Χρήσιμες Εφαρμογές"
 
+msgid "All"
+msgstr "Όλα"
+
+msgid "Uncategorized"
+msgstr "Χωρίς Κατηγορία"
+
 msgid "Reset setting to the default value"
 msgstr "Επαναφορά της ρύθμισης στη προεπιλεγμένη τιμή"
 
-msgid "Browse for "
-msgstr "Περιήγηση για "
-
-msgid "Images"
-msgstr "Εικόνες"
-
-msgid "File"
-msgstr "Αρχείο"
-
-msgid "Open directory..."
-msgstr "Άνοιγμα διαδρομής..."
-
-msgid "Open file..."
-msgstr "Άνοιγμα Αρχείου..."
+msgid "Edit"
+msgstr "Επεξεργασία"
 
 msgid "Multi-list settings. You can double-click a row to edit the values."
 msgstr ""
 "Ρυθμίσεις πολλαπλών-λιστών. Κάνωντας διπλό κλικ σε μια σειρά μπορείτε να "
 "επεξεργαστείτε τις τιμές."
 
-msgid "Edit"
-msgstr "Επεξεργασία"
-
-#, python-format
-msgid "Value (%s)"
-msgstr "Τιμή (%s)"
-
 #, python-format
 msgid "Edit %s"
 msgstr "Επεξεργασία %s"
-
-#, python-format
-msgid "Value (%(value)s) for %(setting)s"
-msgstr "Τιμή (%(value)s) για %(setting)s"
 
 #, python-format
 msgid "\"%s\" is not a valid shortcut"
@@ -241,10 +224,6 @@ msgstr "\"%s\" δεν είναι σωστή μάσκα άκρης"
 msgid "None"
 msgstr "Κανένα"
 
-#, python-format
-msgid "Unhandled list type %s for %s"
-msgstr "Μη έγκυρος τύπος λίστας %s για %s"
-
 msgid "CompizConfig Settings Manager"
 msgstr "Διαχειριστής Ρυθμίσεων CompizConfig"
 
@@ -261,13 +240,6 @@ msgstr "Οθόνη %i"
 msgid "Screen"
 msgstr "Οθόνη"
 
-#. Settings
-msgid "All"
-msgstr "Όλα"
-
-msgid "Uncategorized"
-msgstr "Χωρίς Κατηγορία"
-
 msgid "Category"
 msgstr "Κατηγορία"
 
@@ -280,6 +252,10 @@ msgstr "Ιδιότητες"
 #, python-format
 msgid "Enable %s"
 msgstr "Ενεργοποίηση %s"
+
+#, fuzzy
+msgid "Plugin"
+msgstr "Λίστα Προσθέτων"
 
 msgid "Please press the new key combination"
 msgstr "Παρακαλώ χρησιμοποιήστε τον νέο συνδυασμό πλήκτρων"
@@ -330,6 +306,22 @@ msgstr "Σχέση"
 msgid "Invert"
 msgstr "Αντίθετο"
 
+#, fuzzy
+msgid "Browse..."
+msgstr "Περιήγηση για "
+
+msgid "Images"
+msgstr "Εικόνες"
+
+msgid "File"
+msgstr "Αρχείο"
+
+msgid "Open directory..."
+msgstr "Άνοιγμα διαδρομής..."
+
+msgid "Open file..."
+msgstr "Άνοιγμα Αρχείου..."
+
 msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr ""
 "Αυτός είναι ο διαχειριστής ρυθμίσεων του συστήματος ρύθμισης του "
@@ -365,13 +357,11 @@ msgid ""
 "Enter a filter.\n"
 "Click the keyboard image to grab a key for which to search."
 msgstr ""
-"Θέστε ένα φίλτρο.\n"
-"Κάντε κλικ στην εικόνα του πληκτρολόγιου για να πιάσετε ένα κουμπί για το "
-"οποίο θέλετε να ψάξετε"
 
 msgid "Search in..."
 msgstr "Αναζήτηση στο..."
 
+#. Options
 msgid "Short description and name"
 msgstr "Σύντομη περιγραφή και όνομα"
 
@@ -381,9 +371,19 @@ msgstr "Ακριβής περιγραφή"
 msgid "Settings value"
 msgstr "Τιμή ρυθμίσεων"
 
+msgid "Group"
+msgstr ""
+
+msgid "Subgroup"
+msgstr ""
+
 #. Notebook
 msgid "Settings"
 msgstr "Ρυθμίσεις"
+
+#, fuzzy
+msgid "Loading Advanced Search"
+msgstr "Προχωρημένη Αναζήτηση"
 
 msgid "Add a New Profile"
 msgstr "Προσθήκη νέου προφίλ"
@@ -513,6 +513,15 @@ msgstr ""
 "<span size=\"large\"><b>Δεν βρέθηκε ταίριασμα.</b> </span><span>\n"
 "\n"
 "Το φίλτρο σας \"<b>%s</b>\" δεν ταιριάζει με κανένα στοιχείο.</span>"
+
+#~ msgid "Value (%s)"
+#~ msgstr "Τιμή (%s)"
+
+#~ msgid "Value (%(value)s) for %(setting)s"
+#~ msgstr "Τιμή (%(value)s) για %(setting)s"
+
+#~ msgid "Unhandled list type %s for %s"
+#~ msgstr "Μη έγκυρος τύπος λίστας %s για %s"
 
 #~ msgid "Actions"
 #~ msgstr "Ενέργειες"

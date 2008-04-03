@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: md-ccsm\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-03-15 19:56+0530\n"
+"POT-Creation-Date: 2008-04-03 13:46+0530\n"
 "PO-Revision-Date: 2007-09-24 23:00-0300\n"
 "Last-Translator: Werner Landgraf <werner@copaya.yi.org>\n"
 "Language-Team: Mandingo\n"
@@ -169,41 +169,24 @@ msgstr "natalolu çãbala nã ..."
 msgid "Utility"
 msgstr "dorão"
 
+msgid "All"
+msgstr "bê"
+
+msgid "Uncategorized"
+msgstr "çifa-tão"
+
 msgid "Reset setting to the default value"
 msgstr "da-tillĩdĩolu çêĩdila ..."
-
-msgid "Browse for "
-msgstr "ñininna katuko :   ... "
-
-msgid "Images"
-msgstr "natalolu"
-
-msgid "File"
-msgstr "kaito"
-
-msgid "Open directory..."
-msgstr "kaito-lu-la kulũo iêlela ..."
-
-msgid "Open file..."
-msgstr "kaito iêlela ..."
-
-msgid "Multi-list settings. You can double-click a row to edit the values."
-msgstr "Jã, i fẽ tõbonna anĩ çaferola nole"
 
 msgid "Edit"
 msgstr "çaferola ..."
 
-#, python-format
-msgid "Value (%s)"
-msgstr "da (%s)"
+msgid "Multi-list settings. You can double-click a row to edit the values."
+msgstr "Jã, i fẽ tõbonna anĩ çaferola nole"
 
 #, python-format
 msgid "Edit %s"
 msgstr " %s çafe !"
-
-#, python-format
-msgid "Value (%(value)s) for %(setting)s"
-msgstr "%(setting)s -la da,  (%(value)s) le ti."
 
 #, python-format
 msgid "\"%s\" is not a valid shortcut"
@@ -242,10 +225,6 @@ msgstr "\"%s\" koofo mãçotto !"
 msgid "None"
 msgstr "Hanni fẽ"
 
-#, python-format
-msgid "Unhandled list type %s for %s"
-msgstr " %s a mã naffa nole komko %s"
-
 msgid "CompizConfig Settings Manager"
 msgstr "CompizConfig compiz -la tillĩdirão leti"
 
@@ -262,13 +241,6 @@ msgstr "Telha %i"
 msgid "Screen"
 msgstr "Telha"
 
-#. Settings
-msgid "All"
-msgstr "bê"
-
-msgid "Uncategorized"
-msgstr "çifa-tão"
-
 msgid "Category"
 msgstr "çifo"
 
@@ -281,6 +253,10 @@ msgstr "tõbõkelu"
 #, python-format
 msgid "Enable %s"
 msgstr " %s malã bã !"
+
+#, fuzzy
+msgid "Plugin"
+msgstr "dorãolu"
 
 msgid "Please press the new key combination"
 msgstr "teclado -la butão-lu la kafo mim a-tõbõta,  diki bã !"
@@ -334,6 +310,22 @@ msgstr "mábôko"
 msgid "Invert"
 msgstr ""
 
+#, fuzzy
+msgid "Browse..."
+msgstr "ñininna katuko :   ... "
+
+msgid "Images"
+msgstr "natalolu"
+
+msgid "File"
+msgstr "kaito"
+
+msgid "Open directory..."
+msgstr "kaito-lu-la kulũo iêlela ..."
+
+msgid "Open file..."
+msgstr "kaito iêlela ..."
+
 msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr "Ñĩ, CompizConfig mu compiz -la tillĩdirão, le ti  :). "
 
@@ -367,6 +359,7 @@ msgstr ""
 msgid "Search in..."
 msgstr "jubela ... kono : "
 
+#. Options
 msgid "Short description and name"
 msgstr "farãfãço anĩ to:"
 
@@ -376,9 +369,19 @@ msgstr "farãfãço ba:"
 msgid "Settings value"
 msgstr "Da:"
 
+msgid "Group"
+msgstr ""
+
+msgid "Subgroup"
+msgstr ""
+
 #. Notebook
 msgid "Settings"
 msgstr "Dalu"
+
+#, fuzzy
+msgid "Loading Advanced Search"
+msgstr "ñinnĩarla ba ..."
 
 msgid "Add a New Profile"
 msgstr "Dokuo-la kêeña kotoma kefũna ..."
@@ -506,6 +509,15 @@ msgstr ""
 "<span size=\"large\"><b>Hanni fẽ a-ñinnĩta.</b> </span><span>\n"
 " \n"
 " Feñ kommko \"<b>%s</b>\" mã çotto.</span>"
+
+#~ msgid "Value (%s)"
+#~ msgstr "da (%s)"
+
+#~ msgid "Value (%(value)s) for %(setting)s"
+#~ msgstr "%(setting)s -la da,  (%(value)s) le ti."
+
+#~ msgid "Unhandled list type %s for %s"
+#~ msgstr " %s a mã naffa nole komko %s"
 
 #~ msgid "Actions"
 #~ msgstr "kêebaarolu"

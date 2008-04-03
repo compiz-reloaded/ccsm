@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm 20070908\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-03-15 19:56+0530\n"
+"POT-Creation-Date: 2008-04-03 13:46+0530\n"
 "PO-Revision-Date: 2007-09-24 23:00+0200\n"
 "Last-Translator: Werner Landgraf <werner@copaya.yi.org>\n"
 "Language-Team: Wolof\n"
@@ -162,41 +162,24 @@ msgstr "indil natal yi ..."
 msgid "Utility"
 msgstr "defekaay"
 
+msgid "All"
+msgstr "löppë"
+
+msgid "Uncategorized"
+msgstr "ñak xät"
+
 msgid "Reset setting to the default value"
 msgstr "Ñögal ñög gu wees gi"
-
-msgid "Browse for "
-msgstr "Wuutë ngir : ... "
-
-msgid "Images"
-msgstr "Natal yi"
-
-msgid "File"
-msgstr "Binday"
-
-msgid "Open directory..."
-msgstr "hubbi ndaal y bindaay ..."
-
-msgid "Open file..."
-msgstr "Ubbi binday.."
-
-msgid "Multi-list settings. You can double-click a row to edit the values."
-msgstr "Fí, mön nga tann dara ci, ngir nga mbinde ko"
 
 msgid "Edit"
 msgstr "binde ..."
 
-#, python-format
-msgid "Value (%s)"
-msgstr "Ñög gi (%s)"
+msgid "Multi-list settings. You can double-click a row to edit the values."
+msgstr "Fí, mön nga tann dara ci, ngir nga mbinde ko"
 
 #, python-format
 msgid "Edit %s"
 msgstr "bindal %s !"
-
-#, python-format
-msgid "Value (%(value)s) for %(setting)s"
-msgstr "Ñög gi (%(value)s) u %(setting)s:"
 
 #, python-format
 msgid "\"%s\" is not a valid shortcut"
@@ -235,10 +218,6 @@ msgstr " Hamul koĩ \"%s\" !"
 msgid "None"
 msgstr "du dara"
 
-#, python-format
-msgid "Unhandled list type %s for %s"
-msgstr "%s u %s du xamee"
-
 msgid "CompizConfig Settings Manager"
 msgstr "Tannay u  CompizConfig"
 
@@ -255,13 +234,6 @@ msgstr "Telha %i"
 msgid "Screen"
 msgstr "Telha"
 
-#. Settings
-msgid "All"
-msgstr "löppë"
-
-msgid "Uncategorized"
-msgstr "ñak xät"
-
 msgid "Category"
 msgstr "xät"
 
@@ -274,6 +246,10 @@ msgstr "tanne yi"
 #, python-format
 msgid "Enable %s"
 msgstr "Taxalal %s !"
+
+#, fuzzy
+msgid "Plugin"
+msgstr "defëkaay yi"
 
 msgid "Please press the new key combination"
 msgstr "jänal mbootaay y butão mu taanoo !"
@@ -327,6 +303,22 @@ msgstr "Integração"
 msgid "Invert"
 msgstr ""
 
+#, fuzzy
+msgid "Browse..."
+msgstr "Wuutë ngir : ... "
+
+msgid "Images"
+msgstr "Natal yi"
+
+msgid "File"
+msgstr "Binday"
+
+msgid "Open directory..."
+msgstr "hubbi ndaal y bindaay ..."
+
+msgid "Open file..."
+msgstr "Ubbi binday.."
+
 msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr "Li dafa programa bu ogosu na CompizConfig bi. "
 
@@ -360,6 +352,7 @@ msgstr ""
 msgid "Search in..."
 msgstr "wuutë ci biir ... :"
 
+#. Options
 msgid "Short description and name"
 msgstr "Tekke tey tudde:"
 
@@ -369,9 +362,19 @@ msgstr "Tekke bu rey:"
 msgid "Settings value"
 msgstr "Ñeg ñu tegu:"
 
+msgid "Group"
+msgstr ""
+
+msgid "Subgroup"
+msgstr ""
+
 #. Notebook
 msgid "Settings"
 msgstr "Ñeg ñu"
+
+#, fuzzy
+msgid "Loading Advanced Search"
+msgstr "wut wu gönnë baax ..."
 
 msgid "Add a New Profile"
 msgstr "Tegal xät u lüggey bu bees ..."
@@ -498,6 +501,15 @@ msgstr ""
 "<span size=\"large\"><b>Hamul du dara melo.</b> </span><span>\n"
 " \n"
 " Sa wuute ngir \"<b>%s</b>\" hamulhoon ndamm.</span>"
+
+#~ msgid "Value (%s)"
+#~ msgstr "Ñög gi (%s)"
+
+#~ msgid "Value (%(value)s) for %(setting)s"
+#~ msgstr "Ñög gi (%(value)s) u %(setting)s:"
+
+#~ msgid "Unhandled list type %s for %s"
+#~ msgstr "%s u %s du xamee"
 
 #~ msgid "Actions"
 #~ msgstr "defaay yi"

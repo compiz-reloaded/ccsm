@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Compiz Settings Manager 0.5.2\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-03-15 19:56+0530\n"
+"POT-Creation-Date: 2008-04-03 13:46+0530\n"
 "PO-Revision-Date: 2007-09-16 19:11+0700\n"
 "Last-Translator: Andi Darmawan <belutz@ubuntu.com>\n"
 "Language-Team: Andi Darmawan <belutz@ubuntu.com>\n"
@@ -155,41 +155,24 @@ msgstr ""
 msgid "Utility"
 msgstr "Utilitas"
 
+msgid "All"
+msgstr "Semua"
+
+msgid "Uncategorized"
+msgstr "Tidak dikategorikan"
+
 msgid "Reset setting to the default value"
-msgstr ""
-
-msgid "Browse for "
-msgstr ""
-
-msgid "Images"
-msgstr "Gambar"
-
-msgid "File"
-msgstr "Berkas"
-
-msgid "Open directory..."
-msgstr "Buka direktori..."
-
-msgid "Open file..."
-msgstr "Buka berkas..."
-
-msgid "Multi-list settings. You can double-click a row to edit the values."
 msgstr ""
 
 msgid "Edit"
 msgstr "Ubah"
 
-#, python-format
-msgid "Value (%s)"
-msgstr "Nilai (%s)"
+msgid "Multi-list settings. You can double-click a row to edit the values."
+msgstr ""
 
 #, python-format
 msgid "Edit %s"
 msgstr "Ubah %s"
-
-#, python-format
-msgid "Value (%(value)s) for %(setting)s"
-msgstr "Nilai (%(value)s) untuk %(setting)s"
 
 #, python-format
 msgid "\"%s\" is not a valid shortcut"
@@ -224,10 +207,6 @@ msgstr ""
 msgid "None"
 msgstr "Tidak Ada"
 
-#, python-format
-msgid "Unhandled list type %s for %s"
-msgstr ""
-
 msgid "CompizConfig Settings Manager"
 msgstr "CompizConfig Settings Manager"
 
@@ -244,13 +223,6 @@ msgstr ""
 msgid "Screen"
 msgstr ""
 
-#. Settings
-msgid "All"
-msgstr "Semua"
-
-msgid "Uncategorized"
-msgstr "Tidak dikategorikan"
-
 msgid "Category"
 msgstr "Kategori"
 
@@ -263,6 +235,10 @@ msgstr ""
 #, python-format
 msgid "Enable %s"
 msgstr "Aktifkan %s"
+
+#, fuzzy
+msgid "Plugin"
+msgstr "Daftar Plugin"
 
 msgid "Please press the new key combination"
 msgstr "Silahkan tekan kombinasi tombol yang baru"
@@ -316,6 +292,21 @@ msgstr "Integrasi"
 msgid "Invert"
 msgstr ""
 
+msgid "Browse..."
+msgstr ""
+
+msgid "Images"
+msgstr "Gambar"
+
+msgid "File"
+msgstr "Berkas"
+
+msgid "Open directory..."
+msgstr "Buka direktori..."
+
+msgid "Open file..."
+msgstr "Buka berkas..."
+
 msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr ""
 
@@ -349,6 +340,7 @@ msgstr ""
 msgid "Search in..."
 msgstr "Cari di..."
 
+#. Options
 msgid "Short description and name"
 msgstr "Deskripsi pendek dan nama"
 
@@ -358,9 +350,19 @@ msgstr "Deskripsi panjang"
 msgid "Settings value"
 msgstr "Nilai pengaturan"
 
+msgid "Group"
+msgstr ""
+
+msgid "Subgroup"
+msgstr ""
+
 #. Notebook
 msgid "Settings"
 msgstr "Pengaturan"
+
+#, fuzzy
+msgid "Loading Advanced Search"
+msgstr "Pencarian Lanjut"
 
 msgid "Add a New Profile"
 msgstr "Tambah Profil Baru"
@@ -479,6 +481,12 @@ msgid ""
 "\n"
 " Your filter \"<b>%s</b>\" does not match any items.</span>"
 msgstr ""
+
+#~ msgid "Value (%s)"
+#~ msgstr "Nilai (%s)"
+
+#~ msgid "Value (%(value)s) for %(setting)s"
+#~ msgstr "Nilai (%(value)s) untuk %(setting)s"
 
 #~ msgid "Actions"
 #~ msgstr "Aksi"

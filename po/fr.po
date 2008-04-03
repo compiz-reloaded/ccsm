@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fr-ccsm\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-03-15 19:56+0530\n"
-"PO-Revision-Date: 2008-02-06 23:22+0100\n"
+"POT-Creation-Date: 2008-04-03 13:46+0530\n"
+"PO-Revision-Date: 2008-03-16 15:14+0100\n"
 "Last-Translator: Tristan RABLAT <tristan.rablat@gmail.com>\n"
 "Language-Team: <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -169,43 +169,26 @@ msgstr "Chargement d'Image"
 msgid "Utility"
 msgstr "Utilitaire"
 
+msgid "All"
+msgstr "Tous"
+
+msgid "Uncategorized"
+msgstr "Sans catégorie"
+
 msgid "Reset setting to the default value"
 msgstr "Revenir à la configuration par défaut"
 
-msgid "Browse for "
-msgstr "Naviguer pour "
-
-msgid "Images"
-msgstr "Images"
-
-msgid "File"
-msgstr "Fichier"
-
-msgid "Open directory..."
-msgstr "Ouvrir un dossier..."
-
-msgid "Open file..."
-msgstr "Ouvrir un fichier..."
+msgid "Edit"
+msgstr "Éditer"
 
 msgid "Multi-list settings. You can double-click a row to edit the values."
 msgstr ""
 "Configuration multi-liste. Vous pouvez double-cliquer sur une ligne pour "
 "éditer la valeur."
 
-msgid "Edit"
-msgstr "Éditer"
-
-#, python-format
-msgid "Value (%s)"
-msgstr "Valeur (%s)"
-
 #, python-format
 msgid "Edit %s"
 msgstr "Éditer %s"
-
-#, python-format
-msgid "Value (%(value)s) for %(setting)s"
-msgstr "Valeur (%(value)s) pour %(setting)s"
 
 #, python-format
 msgid "\"%s\" is not a valid shortcut"
@@ -243,10 +226,6 @@ msgstr "\"%s\" n'est pas un masque d'arrête valide"
 msgid "None"
 msgstr "Aucun"
 
-#, python-format
-msgid "Unhandled list type %s for %s"
-msgstr "Liste de type %s non supportée pour %s"
-
 msgid "CompizConfig Settings Manager"
 msgstr "Gestionnaire de Configuration CompizConfig"
 
@@ -263,13 +242,6 @@ msgstr "Écran %i"
 msgid "Screen"
 msgstr "Écran"
 
-#. Settings
-msgid "All"
-msgstr "Tous"
-
-msgid "Uncategorized"
-msgstr "Sans catégorie"
-
 msgid "Category"
 msgstr "Catégorie"
 
@@ -282,6 +254,10 @@ msgstr "Préférences"
 #, python-format
 msgid "Enable %s"
 msgstr "Activer %s"
+
+#, fuzzy
+msgid "Plugin"
+msgstr "Liste des Extensions"
 
 msgid "Please press the new key combination"
 msgstr "Veuillez appuyer sur la nouvelle combinaison de touches"
@@ -332,6 +308,22 @@ msgstr "Relation"
 msgid "Invert"
 msgstr "Inverser"
 
+#, fuzzy
+msgid "Browse..."
+msgstr "Naviguer pour "
+
+msgid "Images"
+msgstr "Images"
+
+msgid "File"
+msgstr "Fichier"
+
+msgid "Open directory..."
+msgstr "Ouvrir un dossier..."
+
+msgid "Open file..."
+msgstr "Ouvrir un fichier..."
+
 msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr ""
 "Ceci est un gestionnaire de configuration pour le système de configuration "
@@ -363,10 +355,13 @@ msgid ""
 "Enter a filter.\n"
 "Click the keyboard image to grab a key for which to search."
 msgstr ""
+"Entrez un filtre.\n"
+"Cliquez sur l'image du clavier pour saisir une touche pour laquelle chercher."
 
 msgid "Search in..."
 msgstr "Chercher dans..."
 
+#. Options
 msgid "Short description and name"
 msgstr "Description courte et nom"
 
@@ -376,9 +371,19 @@ msgstr "Description longue"
 msgid "Settings value"
 msgstr "Valeurs de réglage"
 
+msgid "Group"
+msgstr ""
+
+msgid "Subgroup"
+msgstr ""
+
 #. Notebook
 msgid "Settings"
 msgstr "Réglage"
+
+#, fuzzy
+msgid "Loading Advanced Search"
+msgstr "Recherche avancée"
 
 msgid "Add a New Profile"
 msgstr "Ajouter un nouveau profil"
@@ -506,6 +511,15 @@ msgid ""
 msgstr ""
 "<span size=\"large\"><b>Pas de concordance trouvée.</b> </span><br><br> "
 "Votre filtre \"<b>%s</b>\" ne correspond à aucun objet."
+
+#~ msgid "Value (%s)"
+#~ msgstr "Valeur (%s)"
+
+#~ msgid "Value (%(value)s) for %(setting)s"
+#~ msgstr "Valeur (%(value)s) pour %(setting)s"
+
+#~ msgid "Unhandled list type %s for %s"
+#~ msgstr "Liste de type %s non supportée pour %s"
 
 #~ msgid "Actions"
 #~ msgstr "Actions"
