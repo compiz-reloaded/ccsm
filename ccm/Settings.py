@@ -52,6 +52,8 @@ class Setting(object):
         self.EBox = gtk.EventBox()
         self.Box = gtk.HBox()
         self.EBox.set_visible_window(False)
+        if Setting:
+            self.EBox.set_sensitive(not Setting.ReadOnly)
         self.Box.set_spacing(5)
         self.EBox.add(self.Box)
         self.Reset = gtk.Button()
