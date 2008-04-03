@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: CompizConfig Settings Manager\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-03-15 19:56+0530\n"
-"PO-Revision-Date: 2007-10-17 11:30+0100\n"
-"Last-Translator: Ketil W. Aanensen <ketil.w.aanensen@gmail.com>\n"
+"POT-Creation-Date: 2008-04-03 13:46+0530\n"
+"PO-Revision-Date: 2008-03-16 18:14+0100\n"
+"Last-Translator: Ketil Wendelbo Aanensen <ketil.w.aanensen@gmail.com>\n"
 "Language-Team: Norwegian Bokmaal <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -167,43 +167,26 @@ msgstr "Bildelasting"
 msgid "Utility"
 msgstr "Nytte"
 
+msgid "All"
+msgstr "Alle"
+
+msgid "Uncategorized"
+msgstr "Ukategorisert"
+
 msgid "Reset setting to the default value"
 msgstr "Tilbakestill innstillingen til standardverdien"
 
-msgid "Browse for "
-msgstr "Let etter "
-
-msgid "Images"
-msgstr "Bilder"
-
-msgid "File"
-msgstr "Fil"
-
-msgid "Open directory..."
-msgstr "Åpne katalog..."
-
-msgid "Open file..."
-msgstr "Åpne fil..."
+msgid "Edit"
+msgstr "Rediger"
 
 msgid "Multi-list settings. You can double-click a row to edit the values."
 msgstr ""
 "Flerliste-innstillinger. Du kan dobbeltklikke på en rad for å redigere "
 "verdiene."
 
-msgid "Edit"
-msgstr "Rediger"
-
-#, python-format
-msgid "Value (%s)"
-msgstr "Verdi (%s)"
-
 #, python-format
 msgid "Edit %s"
 msgstr "Rediger %s"
-
-#, python-format
-msgid "Value (%(value)s) for %(setting)s"
-msgstr "Verdi (%(value)s) for %(setting)s"
 
 #, python-format
 msgid "\"%s\" is not a valid shortcut"
@@ -240,10 +223,6 @@ msgstr "\"%s\" er ikke en gyldig kantmaske"
 msgid "None"
 msgstr "Ingen"
 
-#, python-format
-msgid "Unhandled list type %s for %s"
-msgstr "Uhåndtert listetype %s for %s"
-
 msgid "CompizConfig Settings Manager"
 msgstr "CompizConfig Innstillingshåndterer"
 
@@ -260,13 +239,6 @@ msgstr "Skjerm %i"
 msgid "Screen"
 msgstr "Skjerm"
 
-#. Settings
-msgid "All"
-msgstr "Alle"
-
-msgid "Uncategorized"
-msgstr "Ukategorisert"
-
 msgid "Category"
 msgstr "Kategori"
 
@@ -279,6 +251,10 @@ msgstr "Preferanser"
 #, python-format
 msgid "Enable %s"
 msgstr "Skru på %s"
+
+#, fuzzy
+msgid "Plugin"
+msgstr "Tilleggsliste"
 
 msgid "Please press the new key combination"
 msgstr "Vennligst trykk den nye tastaturkombinasjonen"
@@ -329,6 +305,22 @@ msgstr "Relasjon"
 msgid "Invert"
 msgstr "Omvendt"
 
+#, fuzzy
+msgid "Browse..."
+msgstr "Let etter "
+
+msgid "Images"
+msgstr "Bilder"
+
+msgid "File"
+msgstr "Fil"
+
+msgid "Open directory..."
+msgstr "Åpne katalog..."
+
+msgid "Open file..."
+msgstr "Åpne fil..."
+
 msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr ""
 "Dette er en innstillingshåndterer for CompizConfig-konfigurasjonssystemet"
@@ -359,12 +351,13 @@ msgid ""
 "Enter a filter.\n"
 "Click the keyboard image to grab a key for which to search."
 msgstr ""
-"Skriv inn et filter.\n"
-"Klikk tastaturbildet for å gripe en tast å søke med."
+"Skriv inn filteret.\n"
+"Klikk tastaturbildet for å gripe en tast å søke etter."
 
 msgid "Search in..."
 msgstr "Søk i..."
 
+#. Options
 msgid "Short description and name"
 msgstr "Kort beskrivelse og navn"
 
@@ -374,9 +367,19 @@ msgstr "Lang beskrivelse"
 msgid "Settings value"
 msgstr "Verdi for innstilling"
 
+msgid "Group"
+msgstr ""
+
+msgid "Subgroup"
+msgstr ""
+
 #. Notebook
 msgid "Settings"
 msgstr "Innstillinger"
+
+#, fuzzy
+msgid "Loading Advanced Search"
+msgstr "Avansert søk"
 
 msgid "Add a New Profile"
 msgstr "Legg til en ny profil"
@@ -503,6 +506,15 @@ msgstr ""
 "<span size=\"large\"><b>Ingen treff.</b> </span><span>\n"
 "\n"
 " Filteret ditt, \"<b>%s</b>\", passer ikke til noen gjenstander.</span>"
+
+#~ msgid "Value (%s)"
+#~ msgstr "Verdi (%s)"
+
+#~ msgid "Value (%(value)s) for %(setting)s"
+#~ msgstr "Verdi (%(value)s) for %(setting)s"
+
+#~ msgid "Unhandled list type %s for %s"
+#~ msgstr "Uhåndtert listetype %s for %s"
 
 #~ msgid "Actions"
 #~ msgstr "Handlingen"

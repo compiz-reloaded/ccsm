@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Oriya\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-03-15 19:56+0530\n"
+"POT-Creation-Date: 2008-04-03 13:46+0530\n"
 "PO-Revision-Date: 2007-12-17 15:45+0530\n"
 "Last-Translator: \n"
 "Language-Team: gist oriya team <info.gist@cdac.in>\n"
@@ -147,42 +147,25 @@ msgstr "ଚିତ୍ର ଲୋଡକରିବା"
 msgid "Utility"
 msgstr "ଉପୟୋଗୀତା"
 
+msgid "All"
+msgstr "ସବୁ"
+
+msgid "Uncategorized"
+msgstr "ଅବିଭାଜିତ"
+
 msgid "Reset setting to the default value"
 msgstr "ଡିଫଲ୍ଟ ମୂଲ୍ଯକୁ ସେଟିଙ୍ଗକୁ ପୁନଃସ୍ଥିରକର"
 
-msgid "Browse for "
-msgstr "ପାଇଁ ବ୍ରାଉଜକର"
-
-msgid "Images"
-msgstr "ଚିତ୍ରଗୁଡିକ"
-
-msgid "File"
-msgstr "ଫାଇଲ"
-
-msgid "Open directory..."
-msgstr "ବିବରଣୀପଞ୍ଜିକା ଖୋଲ..."
-
-msgid "Open file..."
-msgstr "ଫାଇଲ ଖୋଲ..."
+msgid "Edit"
+msgstr "ସଂପାଦନକର"
 
 msgid "Multi-list settings. You can double-click a row to edit the values."
 msgstr ""
 "ବହୁ-ତାଲିକା ସେଟିଙ୍ଗଗୁଡିକ । ମୂଲ୍ଯଗୁଡିକୁ ସଂପାଦନ କରିବା ପାଇଁ ଆପଣ ଗୋଟିଏ ଧାଡିରେ ଦୁଇଥର କ୍ଲିକ କରିପାରିବେ ।"
 
-msgid "Edit"
-msgstr "ସଂପାଦନକର"
-
-#, python-format
-msgid "Value (%s)"
-msgstr "ମୂଲ୍ଯ (%s)"
-
 #, python-format
 msgid "Edit %s"
 msgstr "ସଂପାଦନକର %s"
-
-#, python-format
-msgid "Value (%(value)s) for %(setting)s"
-msgstr ""
 
 #, python-format
 msgid "\"%s\" is not a valid shortcut"
@@ -219,10 +202,6 @@ msgstr "\"%s\" ଏକ ମାନ୍ଯ ଧାର ମାସ୍କ ନୁହେଁ"
 msgid "None"
 msgstr "କିଛି ନୁହେଁ"
 
-#, python-format
-msgid "Unhandled list type %s for %s"
-msgstr "ଅପରିଚାଳିତ ତାଲିକା ପ୍ରକାର %s ପାଇଁ %s"
-
 msgid "CompizConfig Settings Manager"
 msgstr "କମ୍ପିଜକନଫିଗ ସେଟିଙ୍ଗ ପ୍ରବନ୍ଧକ"
 
@@ -239,13 +218,6 @@ msgstr "ସ୍କ୍ରିନ %i"
 msgid "Screen"
 msgstr "ସ୍କ୍ରିନ"
 
-#. Settings
-msgid "All"
-msgstr "ସବୁ"
-
-msgid "Uncategorized"
-msgstr "ଅବିଭାଜିତ"
-
 msgid "Category"
 msgstr "ବିଭାଗ"
 
@@ -258,6 +230,10 @@ msgstr "ପସନ୍ଦଗୁଡିକ"
 #, python-format
 msgid "Enable %s"
 msgstr "%s ସକ୍ଷମକର"
+
+#, fuzzy
+msgid "Plugin"
+msgstr "ପ୍ଲଗଇନ ତାଲିକା"
 
 msgid "Please press the new key combination"
 msgstr "ଦଯାକରି ନୂଆ କି ସଂୟୁକ୍ତିକରଣକୁ ଦବାନ୍ତୁ"
@@ -308,6 +284,22 @@ msgstr "ସମ୍ପର୍କ"
 msgid "Invert"
 msgstr "ଓଲଟାଅ"
 
+#, fuzzy
+msgid "Browse..."
+msgstr "ପାଇଁ ବ୍ରାଉଜକର"
+
+msgid "Images"
+msgstr "ଚିତ୍ରଗୁଡିକ"
+
+msgid "File"
+msgstr "ଫାଇଲ"
+
+msgid "Open directory..."
+msgstr "ବିବରଣୀପଞ୍ଜିକା ଖୋଲ..."
+
+msgid "Open file..."
+msgstr "ଫାଇଲ ଖୋଲ..."
+
 msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr "କମ୍ପିଜକନଫିଗ କନଫିଗରେସନ ସିଷ୍ଟମ ପାଇଁ ଏହା ଗୋଟିଏ ସେଟିଙ୍ଗ ପ୍ରବନ୍ଧକ ଅଟେ ।"
 
@@ -341,6 +333,7 @@ msgstr ""
 msgid "Search in..."
 msgstr "ରେ ତଦନ୍ତକର..."
 
+#. Options
 msgid "Short description and name"
 msgstr "ବର୍ଣ୍ଣନା ଏବଂ ନାମ ଛୋଟକର"
 
@@ -350,9 +343,19 @@ msgstr "ଲମ୍ବା ବର୍ଣ୍ଣନା"
 msgid "Settings value"
 msgstr "ସେଟିଙ୍ଗଗୁଡିକର ମୂଲ୍ଯ"
 
+msgid "Group"
+msgstr ""
+
+msgid "Subgroup"
+msgstr ""
+
 #. Notebook
 msgid "Settings"
 msgstr "ସେଟିଙ୍ଗଗୁଡିକ"
+
+#, fuzzy
+msgid "Loading Advanced Search"
+msgstr "ଉନ୍ନତ ତଦନ୍ତ"
 
 msgid "Add a New Profile"
 msgstr "ଗୋଟିଏ ନୂଆ ପ୍ରୋଫାଇଲ ୟୋଗକର"
@@ -478,6 +481,12 @@ msgstr ""
 "<span size=\"large\"><b>କୌଣସି ମେଳ ମିଳିଲା ନାହିଁ</b> </span><span>\n"
 "\n"
 " ଆପଣଙ୍କର ଫିଲ୍ଟର \"<b>%s</b>\" କୌଣସି ସାମଗ୍ରୀ ସହିତ ମେଳ ଖାଉନି ।</span>"
+
+#~ msgid "Value (%s)"
+#~ msgstr "ମୂଲ୍ଯ (%s)"
+
+#~ msgid "Unhandled list type %s for %s"
+#~ msgstr "ଅପରିଚାଳିତ ତାଲିକା ପ୍ରକାର %s ପାଇଁ %s"
 
 #~ msgid "Actions"
 #~ msgstr "କାର୍ୟ୍ଯଗୁଡିକ"

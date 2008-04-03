@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm 0.5.2\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-03-15 19:56+0530\n"
+"POT-Creation-Date: 2008-04-03 13:46+0530\n"
 "PO-Revision-Date: 2008-02-14 20:35+0100\n"
 "Last-Translator: michal <ceecko@gmail.com>\n"
 "Language-Team: SLOVAK <sk.cfteam@gmail.com>\n"
@@ -159,45 +159,26 @@ msgstr "Načítavanie obrázku"
 msgid "Utility"
 msgstr ""
 
+msgid "All"
+msgstr ""
+
+msgid "Uncategorized"
+msgstr "Nezaradené"
+
 msgid "Reset setting to the default value"
 msgstr "Vynuluj nastavenia na predvolené"
 
-msgid "Browse for "
-msgstr "Prehľadávaj"
-
-msgid "Images"
-msgstr "Obrázky"
-
-msgid "File"
-msgstr "Súbor"
-
-#, fuzzy
-msgid "Open directory..."
-msgstr "Otvor súbor.."
-
-#, fuzzy
-msgid "Open file..."
-msgstr "Otvor súbor.."
+msgid "Edit"
+msgstr "Uprav"
 
 msgid "Multi-list settings. You can double-click a row to edit the values."
 msgstr ""
 "Viac-zoznamové nastavenia. Môžete dva krát kliknúť na riadok pre úpravu "
 "hodnôt."
 
-msgid "Edit"
-msgstr "Uprav"
-
-#, python-format
-msgid "Value (%s)"
-msgstr "Hodnota (%s)"
-
 #, python-format
 msgid "Edit %s"
 msgstr "Uprav %s"
-
-#, fuzzy, python-format
-msgid "Value (%(value)s) for %(setting)s"
-msgstr "Hodnota (%s) pre %s"
 
 #, python-format
 msgid "\"%s\" is not a valid shortcut"
@@ -234,10 +215,6 @@ msgstr ""
 msgid "None"
 msgstr "Žiadne"
 
-#, python-format
-msgid "Unhandled list type %s for %s"
-msgstr "Nezmenený zoznam typ %s pre %s"
-
 msgid "CompizConfig Settings Manager"
 msgstr "Manažér nastavení CompizConfig"
 
@@ -254,13 +231,6 @@ msgstr "Obrazovka %i"
 msgid "Screen"
 msgstr "Obrazovka"
 
-#. Settings
-msgid "All"
-msgstr ""
-
-msgid "Uncategorized"
-msgstr "Nezaradené"
-
 msgid "Category"
 msgstr "Kategória"
 
@@ -273,6 +243,10 @@ msgstr "Predvoľby"
 #, python-format
 msgid "Enable %s"
 msgstr "Zapnite %s"
+
+#, fuzzy
+msgid "Plugin"
+msgstr "Zoznam pluginov"
 
 msgid "Please press the new key combination"
 msgstr "Prosím stlačte novú klavesovú kombináciu"
@@ -325,6 +299,24 @@ msgstr "Integrácia"
 msgid "Invert"
 msgstr "Invertovať"
 
+#, fuzzy
+msgid "Browse..."
+msgstr "Prehľadávaj"
+
+msgid "Images"
+msgstr "Obrázky"
+
+msgid "File"
+msgstr "Súbor"
+
+#, fuzzy
+msgid "Open directory..."
+msgstr "Otvor súbor.."
+
+#, fuzzy
+msgid "Open file..."
+msgstr "Otvor súbor.."
+
 msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr "Toto je manažér nastavení pre CompizConfig konfiguračný systém."
 
@@ -358,6 +350,7 @@ msgstr ""
 msgid "Search in..."
 msgstr "Hľadaj v..."
 
+#. Options
 msgid "Short description and name"
 msgstr "Krátky popis a meno"
 
@@ -367,9 +360,19 @@ msgstr "Dlhý popis"
 msgid "Settings value"
 msgstr "Nastavenie hodnoty"
 
+msgid "Group"
+msgstr ""
+
+msgid "Subgroup"
+msgstr ""
+
 #. Notebook
 msgid "Settings"
 msgstr "Nastavenia"
+
+#, fuzzy
+msgid "Loading Advanced Search"
+msgstr "Rozšírené vyhľadávanie"
 
 msgid "Add a New Profile"
 msgstr "Pridaj nový profil"
@@ -497,6 +500,16 @@ msgstr ""
 "<span size=\"large\"><b>Neboli nájdené žiadne zhody.</b> </span><span>\n"
 "\n"
 " Váš filter \"<b>%s</b>\" nesúhlasí so žiadnou položkou.</span>"
+
+#~ msgid "Value (%s)"
+#~ msgstr "Hodnota (%s)"
+
+#, fuzzy
+#~ msgid "Value (%(value)s) for %(setting)s"
+#~ msgstr "Hodnota (%s) pre %s"
+
+#~ msgid "Unhandled list type %s for %s"
+#~ msgstr "Nezmenený zoznam typ %s pre %s"
 
 #~ msgid "Actions"
 #~ msgstr "Akcie"
