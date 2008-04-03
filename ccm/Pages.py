@@ -473,6 +473,7 @@ class FilterPage(object):
         if not selector:
             self.UpdateGroupBox()
         else:
+            self.GroupBox.get_selection().unselect_all()
             self.UpdateSubGroupBox()
 
         if self.CurrentPlugin is not None:
@@ -496,6 +497,8 @@ class FilterPage(object):
 
         if not selector:
             self.UpdateSubGroupBox()
+        else:
+            self.SubGroupBox.get_selection().unselect_all()
 
         if self.CurrentGroup is not None:
             page = self.Results[self.CurrentPlugin.Name][self.CurrentGroup]
