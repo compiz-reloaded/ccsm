@@ -257,6 +257,13 @@ class Updater:
         for plugin in self.Plugins:
             plugin.Read()
 
+    def UpdateSetting (self, setting):
+        widgets = self.VisibleSettings.get((setting.Name, setting.Plugin.Name))
+        if not widgets:
+            return
+        for widget in widgets:
+            widget.Read()
+
     def Update (self):
         if self.Block > 0:
             return True
