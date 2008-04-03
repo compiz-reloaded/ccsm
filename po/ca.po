@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Compiz Settings Manager 0.5.2\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-03-15 19:56+0530\n"
+"POT-Creation-Date: 2008-04-03 13:46+0530\n"
 "PO-Revision-Date: 2007-09-09 01:49+0100\n"
 "Last-Translator: Gustau L. Castells (Karasu) <gustaucastells@gmail.com>\n"
 "Language-Team: Catalan <gustaucastells@gmail.com>\n"
@@ -168,43 +168,26 @@ msgstr ""
 msgid "Utility"
 msgstr ""
 
+msgid "All"
+msgstr "Tot"
+
+msgid "Uncategorized"
+msgstr "Sense classificar"
+
 msgid "Reset setting to the default value"
 msgstr "Reseteja al seu valor per defecte"
 
-msgid "Browse for "
-msgstr "Examinar per"
-
-msgid "Images"
-msgstr "Imatges"
-
-msgid "File"
-msgstr "Fitxer"
-
-msgid "Open directory..."
-msgstr "Obre directori..."
-
-msgid "Open file..."
-msgstr "Obre fitxer..."
+msgid "Edit"
+msgstr "Editar"
 
 msgid "Multi-list settings. You can double-click a row to edit the values."
 msgstr ""
 "Paràmetres multillista. Pots fer un doble clic a una fila per editar els "
 "valors."
 
-msgid "Edit"
-msgstr "Editar"
-
-#, python-format
-msgid "Value (%s)"
-msgstr "Valor (%s)"
-
 #, python-format
 msgid "Edit %s"
 msgstr "Editar %s"
-
-#, python-format
-msgid "Value (%(value)s) for %(setting)s"
-msgstr "Valor (%(value)s) per %(setting)s"
 
 #, python-format
 msgid "\"%s\" is not a valid shortcut"
@@ -241,10 +224,6 @@ msgstr "\"%s\" no és una màscara de vora vàlida"
 msgid "None"
 msgstr "Cap"
 
-#, python-format
-msgid "Unhandled list type %s for %s"
-msgstr "Tipus de llista %s no suportat per %s"
-
 msgid "CompizConfig Settings Manager"
 msgstr "Editor de la configuració de Compiz"
 
@@ -261,13 +240,6 @@ msgstr "Pantalla %i"
 msgid "Screen"
 msgstr "Pantalla"
 
-#. Settings
-msgid "All"
-msgstr "Tot"
-
-msgid "Uncategorized"
-msgstr "Sense classificar"
-
 msgid "Category"
 msgstr "Categoria"
 
@@ -280,6 +252,10 @@ msgstr "Preferències"
 #, python-format
 msgid "Enable %s"
 msgstr "Activa %s"
+
+#, fuzzy
+msgid "Plugin"
+msgstr "Llista de Connectors"
 
 msgid "Please press the new key combination"
 msgstr "Pressiona la nova combinació de tecles"
@@ -332,6 +308,22 @@ msgstr "Integració"
 msgid "Invert"
 msgstr ""
 
+#, fuzzy
+msgid "Browse..."
+msgstr "Examinar per"
+
+msgid "Images"
+msgstr "Imatges"
+
+msgid "File"
+msgstr "Fitxer"
+
+msgid "Open directory..."
+msgstr "Obre directori..."
+
+msgid "Open file..."
+msgstr "Obre fitxer..."
+
 msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr ""
 "Això es un gestor dels paràmetres pel sistema de configuració del "
@@ -367,6 +359,7 @@ msgstr ""
 msgid "Search in..."
 msgstr "Cerca a..."
 
+#. Options
 msgid "Short description and name"
 msgstr "Descripció curta i nom"
 
@@ -376,9 +369,19 @@ msgstr "Descripció llarga"
 msgid "Settings value"
 msgstr "Valor del paràmetre"
 
+msgid "Group"
+msgstr ""
+
+msgid "Subgroup"
+msgstr ""
+
 #. Notebook
 msgid "Settings"
 msgstr "Paràmetres"
+
+#, fuzzy
+msgid "Loading Advanced Search"
+msgstr "Cerca avançada"
 
 msgid "Add a New Profile"
 msgstr "Afegeix un perfil nou"
@@ -502,6 +505,15 @@ msgstr ""
 "<span size=\"large\"><b>No s'han trobat coincidències.</b> </span><span>\n"
 "\n"
 " El teu filtre \"<b>%s</b>\" no concorda amb cap element.</span>"
+
+#~ msgid "Value (%s)"
+#~ msgstr "Valor (%s)"
+
+#~ msgid "Value (%(value)s) for %(setting)s"
+#~ msgstr "Valor (%(value)s) per %(setting)s"
+
+#~ msgid "Unhandled list type %s for %s"
+#~ msgstr "Tipus de llista %s no suportat per %s"
 
 #~ msgid "Actions"
 #~ msgstr "Accions"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.5.2\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-03-15 19:56+0530\n"
+"POT-Creation-Date: 2008-04-03 13:46+0530\n"
 "PO-Revision-Date: 2007-12-21 10:16+0100\n"
 "Last-Translator: Rick <mailmelist@gmail.com>\n"
 "Language-Team: Dutch <mailmelist@gmail.com>\n"
@@ -166,43 +166,26 @@ msgstr "Afbeelding wordt geladen"
 msgid "Utility"
 msgstr "Gereedschap"
 
+msgid "All"
+msgstr "Alle"
+
+msgid "Uncategorized"
+msgstr "Niet gecategoriseerd"
+
 msgid "Reset setting to the default value"
 msgstr "Instelling naar standaard herstellen"
 
-msgid "Browse for "
-msgstr "Bladeren naar "
-
-msgid "Images"
-msgstr "Afbeeldingen"
-
-msgid "File"
-msgstr "Bestand"
-
-msgid "Open directory..."
-msgstr "Open map..."
-
-msgid "Open file..."
-msgstr "Open bestand..."
+msgid "Edit"
+msgstr "Wijzigen"
 
 msgid "Multi-list settings. You can double-click a row to edit the values."
 msgstr ""
 "Keuzelijst instellingen. U kunt een rij dubbelklikken om de inhoud te "
 "bewerken."
 
-msgid "Edit"
-msgstr "Wijzigen"
-
-#, python-format
-msgid "Value (%s)"
-msgstr "Waarde (%s)"
-
 #, python-format
 msgid "Edit %s"
 msgstr "Wijzigen %s"
-
-#, python-format
-msgid "Value (%(value)s) for %(setting)s"
-msgstr "Waarde (%(value)s) voor %(setting)s:"
 
 #, python-format
 msgid "\"%s\" is not a valid shortcut"
@@ -241,10 +224,6 @@ msgstr "\"%s\" is geen valide rand markering"
 msgid "None"
 msgstr "Geen"
 
-#, python-format
-msgid "Unhandled list type %s for %s"
-msgstr "Niet afgehandelde type lijst %s for %s"
-
 msgid "CompizConfig Settings Manager"
 msgstr "CompizConfig Instellingen Beheerder"
 
@@ -261,13 +240,6 @@ msgstr "Scherm %i"
 msgid "Screen"
 msgstr "Scherm"
 
-#. Settings
-msgid "All"
-msgstr "Alle"
-
-msgid "Uncategorized"
-msgstr "Niet gecategoriseerd"
-
 msgid "Category"
 msgstr "Categorie"
 
@@ -280,6 +252,10 @@ msgstr "Voorkeuren"
 #, python-format
 msgid "Enable %s"
 msgstr "%s inschakelen"
+
+#, fuzzy
+msgid "Plugin"
+msgstr "Lijst plugins"
 
 msgid "Please press the new key combination"
 msgstr "Druk op de nieuwe toetsencombinatie."
@@ -332,6 +308,22 @@ msgstr "Relatie"
 msgid "Invert"
 msgstr "Inverteren"
 
+#, fuzzy
+msgid "Browse..."
+msgstr "Bladeren naar "
+
+msgid "Images"
+msgstr "Afbeeldingen"
+
+msgid "File"
+msgstr "Bestand"
+
+msgid "Open directory..."
+msgstr "Open map..."
+
+msgid "Open file..."
+msgstr "Open bestand..."
+
 msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr ""
 "Dit is een instellingen beheer voor het CompizConfig configuratie syteem."
@@ -366,6 +358,7 @@ msgstr ""
 msgid "Search in..."
 msgstr "Zoeken in..."
 
+#. Options
 msgid "Short description and name"
 msgstr "Korte beschrijving en naam"
 
@@ -375,9 +368,19 @@ msgstr "Lange beschrijving"
 msgid "Settings value"
 msgstr "Instellingswaarde"
 
+msgid "Group"
+msgstr ""
+
+msgid "Subgroup"
+msgstr ""
+
 #. Notebook
 msgid "Settings"
 msgstr "Instellingen"
+
+#, fuzzy
+msgid "Loading Advanced Search"
+msgstr "Geavanceerd zoeken"
 
 msgid "Add a New Profile"
 msgstr "Voeg nieuw profiel toe"
@@ -506,6 +509,15 @@ msgstr ""
 "<span size=\"large\"><b>Geen overeenkomsten gevonden.</b> </span><span>\n"
 "\n"
 " Uw filter \"<b>%s</b>\" komt op geen enkel punt overeen.</span>"
+
+#~ msgid "Value (%s)"
+#~ msgstr "Waarde (%s)"
+
+#~ msgid "Value (%(value)s) for %(setting)s"
+#~ msgstr "Waarde (%(value)s) voor %(setting)s:"
+
+#~ msgid "Unhandled list type %s for %s"
+#~ msgstr "Niet afgehandelde type lijst %s for %s"
 
 #~ msgid "Actions"
 #~ msgstr "Acties"

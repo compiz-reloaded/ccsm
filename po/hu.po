@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-03-15 19:56+0530\n"
-"PO-Revision-Date: 2008-02-24 22:24+0100\n"
+"POT-Creation-Date: 2008-04-03 13:46+0530\n"
+"PO-Revision-Date: 2008-03-18 18:31+0100\n"
 "Last-Translator: KAMI <kamihir@freemail.hu>\n"
 "Language-Team: hungarian <hu@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -172,43 +172,26 @@ msgstr "Képbetöltés"
 msgid "Utility"
 msgstr "Eszközök"
 
+msgid "All"
+msgstr "Összes"
+
+msgid "Uncategorized"
+msgstr "Nem kategorizált"
+
 msgid "Reset setting to the default value"
 msgstr "Alapértelmezett beállítás visszaállítása"
 
-msgid "Browse for "
-msgstr "Tallózás"
-
-msgid "Images"
-msgstr "Képek"
-
-msgid "File"
-msgstr "Fájl"
-
-msgid "Open directory..."
-msgstr "Mappa megnyitása..."
-
-msgid "Open file..."
-msgstr "Fájl megnyitása..."
+msgid "Edit"
+msgstr "Szerkesztés"
 
 msgid "Multi-list settings. You can double-click a row to edit the values."
 msgstr ""
 "Többlistás beállítások. Kattintson duplán a sorokra az értékek "
 "szerkesztéséhez."
 
-msgid "Edit"
-msgstr "Szerkesztés"
-
-#, python-format
-msgid "Value (%s)"
-msgstr "Érték (%s)"
-
 #, python-format
 msgid "Edit %s"
 msgstr "%s szerkesztése"
-
-#, python-format
-msgid "Value (%(value)s) for %(setting)s"
-msgstr "%(setting)s beállítás értéke: %(value)s"
 
 #, python-format
 msgid "\"%s\" is not a valid shortcut"
@@ -246,10 +229,6 @@ msgstr "\"%s\" nem érvényes maszk"
 msgid "None"
 msgstr "Nincs"
 
-#, python-format
-msgid "Unhandled list type %s for %s"
-msgstr "Nem kezelt listatípusok: %s a következőhöz: %s"
-
 msgid "CompizConfig Settings Manager"
 msgstr "CompizConfig beállításkezelő"
 
@@ -266,13 +245,6 @@ msgstr "%i képernyő"
 msgid "Screen"
 msgstr "Képernyő"
 
-#. Settings
-msgid "All"
-msgstr "Összes"
-
-msgid "Uncategorized"
-msgstr "Nem kategorizált"
-
 msgid "Category"
 msgstr "Kategória"
 
@@ -285,6 +257,10 @@ msgstr "Beállítások"
 #, python-format
 msgid "Enable %s"
 msgstr "%s engedélyezése"
+
+#, fuzzy
+msgid "Plugin"
+msgstr "Bővítmény lista"
 
 msgid "Please press the new key combination"
 msgstr "Nyomja le az új billentyűzetkombinációt"
@@ -335,6 +311,22 @@ msgstr "Összefüggés"
 msgid "Invert"
 msgstr "Megfordítás"
 
+#, fuzzy
+msgid "Browse..."
+msgstr "Tallózás"
+
+msgid "Images"
+msgstr "Képek"
+
+msgid "File"
+msgstr "Fájl"
+
+msgid "Open directory..."
+msgstr "Mappa megnyitása..."
+
+msgid "Open file..."
+msgstr "Fájl megnyitása..."
+
 msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr "Ez a beállításkezelő a Compiz beállító rendszeréhez."
 
@@ -364,12 +356,13 @@ msgid ""
 "Enter a filter.\n"
 "Click the keyboard image to grab a key for which to search."
 msgstr ""
-"Adja meg a keresés feltételét.\n"
-"Kattintson a billentyűzet képére, amellyel megadhatja a keresés feltételét."
+"Adja meg a keresési feltételt.\n"
+"Kattintson a billentyűzet képére, hogy megadhassa a keresési feltételt."
 
 msgid "Search in..."
 msgstr "Keresés..."
 
+#. Options
 msgid "Short description and name"
 msgstr "Rövid leírásban és névben"
 
@@ -379,9 +372,19 @@ msgstr "Hosszú leírásban"
 msgid "Settings value"
 msgstr "Beállítások értékeiben"
 
+msgid "Group"
+msgstr ""
+
+msgid "Subgroup"
+msgstr ""
+
 #. Notebook
 msgid "Settings"
 msgstr "Beállítások"
+
+#, fuzzy
+msgid "Loading Advanced Search"
+msgstr "Haladó keresés"
 
 msgid "Add a New Profile"
 msgstr "Új profil hozzáadása"
@@ -510,6 +513,15 @@ msgstr ""
 "<span size=\"large\"><b>Nincs találat.</b> </span><span>\n"
 "\n"
 " A szűrő (\"<b>%s</b>\") nem adott találatot.</span>"
+
+#~ msgid "Value (%s)"
+#~ msgstr "Érték (%s)"
+
+#~ msgid "Value (%(value)s) for %(setting)s"
+#~ msgstr "%(setting)s beállítás értéke: %(value)s"
+
+#~ msgid "Unhandled list type %s for %s"
+#~ msgstr "Nem kezelt listatípusok: %s a következőhöz: %s"
 
 #~ msgid "Actions"
 #~ msgstr "Műveletek"

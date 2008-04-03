@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm 0.6\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-03-15 19:56+0530\n"
+"POT-Creation-Date: 2008-04-03 13:46+0530\n"
 "PO-Revision-Date: 2008-02-09 01:45+0100\n"
 "Last-Translator: jiro kawada <jiro.kawada@gmail.com>\n"
 "Language-Team: Japanese <masaaki.kanemoto@gmail.com>\n"
@@ -167,42 +167,24 @@ msgstr "画像の読み込み"
 msgid "Utility"
 msgstr "ユーティリティ"
 
+msgid "All"
+msgstr "すべて"
+
+msgid "Uncategorized"
+msgstr "未分類"
+
 msgid "Reset setting to the default value"
 msgstr "設定をデフォルト値に戻す"
-
-# スカイドーム画像の参照ボタンで表示
-msgid "Browse for "
-msgstr "参照:"
-
-msgid "Images"
-msgstr "画像"
-
-msgid "File"
-msgstr "ファイル"
-
-msgid "Open directory..."
-msgstr "ディレクトリを開く..."
-
-msgid "Open file..."
-msgstr "ファイルを開く..."
-
-msgid "Multi-list settings. You can double-click a row to edit the values."
-msgstr "複数リストの設定。列をダブルクリックして値を編集することができます。"
 
 msgid "Edit"
 msgstr "編集"
 
-#, python-format
-msgid "Value (%s)"
-msgstr "値 (%s)"
+msgid "Multi-list settings. You can double-click a row to edit the values."
+msgstr "複数リストの設定。列をダブルクリックして値を編集することができます。"
 
 #, python-format
 msgid "Edit %s"
 msgstr "%s を編集"
-
-#, python-format
-msgid "Value (%(value)s) for %(setting)s"
-msgstr "%(setting)s の値（%(value)s）"
 
 #, python-format
 msgid "\"%s\" is not a valid shortcut"
@@ -239,10 +221,6 @@ msgstr "\"%s\" は有効なエッジマスクではありません"
 msgid "None"
 msgstr "なし"
 
-#, python-format
-msgid "Unhandled list type %s for %s"
-msgstr ""
-
 msgid "CompizConfig Settings Manager"
 msgstr "CompizConfig 設定マネージャ"
 
@@ -259,13 +237,6 @@ msgstr "スクリーン %i"
 msgid "Screen"
 msgstr "スクリーン"
 
-#. Settings
-msgid "All"
-msgstr "すべて"
-
-msgid "Uncategorized"
-msgstr "未分類"
-
 msgid "Category"
 msgstr "カテゴリ"
 
@@ -278,6 +249,10 @@ msgstr "設定"
 #, python-format
 msgid "Enable %s"
 msgstr "%s を有効にする"
+
+#, fuzzy
+msgid "Plugin"
+msgstr "プラグイン・リスト"
 
 msgid "Please press the new key combination"
 msgstr "新しいキーの組み合わせを入力してください"
@@ -328,6 +303,23 @@ msgstr "論理演算子"
 msgid "Invert"
 msgstr "否定"
 
+# スカイドーム画像の参照ボタンで表示
+#, fuzzy
+msgid "Browse..."
+msgstr "参照:"
+
+msgid "Images"
+msgstr "画像"
+
+msgid "File"
+msgstr "ファイル"
+
+msgid "Open directory..."
+msgstr "ディレクトリを開く..."
+
+msgid "Open file..."
+msgstr "ファイルを開く..."
+
 msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr "これは CompizConfig 設定システム用の設定マネージャです。"
 
@@ -368,6 +360,7 @@ msgstr ""
 msgid "Search in..."
 msgstr "検索対象..."
 
+#. Options
 msgid "Short description and name"
 msgstr "名前や簡単な説明"
 
@@ -377,9 +370,19 @@ msgstr "詳細な説明"
 msgid "Settings value"
 msgstr "設定値"
 
+msgid "Group"
+msgstr ""
+
+msgid "Subgroup"
+msgstr ""
+
 #. Notebook
 msgid "Settings"
 msgstr "設定"
+
+#, fuzzy
+msgid "Loading Advanced Search"
+msgstr "詳細検索"
 
 msgid "Add a New Profile"
 msgstr "新しいプロファイルを追加"
@@ -506,6 +509,12 @@ msgid ""
 msgstr ""
 "<span size=\"large\"><b>何も見つかりませんでした。</b> </span><span>\n"
 "フィルタ \"<b>%s</b>\" はどのアイテムにも一致しません。"
+
+#~ msgid "Value (%s)"
+#~ msgstr "値 (%s)"
+
+#~ msgid "Value (%(value)s) for %(setting)s"
+#~ msgstr "%(setting)s の値（%(value)s）"
 
 #~ msgid "Actions"
 #~ msgstr "アクション"

@@ -1,16 +1,16 @@
-# ccsm en_GB translation .
+# ccsm GB translation.
 # Copyright (C) 2008 compiz-fusion.org
 # This file is distributed under the same license as the ccsm package.
-#  David Lodge <dave@cirt.net>\n"
+# David Lodge <dave@cirt.net>\n".
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: ccsm 0.7.2\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-03-15 19:56+0530\n"
+"POT-Creation-Date: 2008-04-03 13:46+0530\n"
 "PO-Revision-Date: 2008-02-28 23:36+0100\n"
 "Last-Translator: David Lodge <dave@cirt.net>\n"
-"Language-Team:  David Lodge <dave@cirt.net>\n"
+"Language-Team: gb <dave@cirt.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -164,41 +164,24 @@ msgstr "Image Loading"
 msgid "Utility"
 msgstr "Utility"
 
+msgid "All"
+msgstr "All"
+
+msgid "Uncategorized"
+msgstr "Uncategorised"
+
 msgid "Reset setting to the default value"
 msgstr "Reset setting to the default value"
-
-msgid "Browse for "
-msgstr "Browse for "
-
-msgid "Images"
-msgstr "Images"
-
-msgid "File"
-msgstr "File"
-
-msgid "Open directory..."
-msgstr "Open directory..."
-
-msgid "Open file..."
-msgstr "Open file..."
-
-msgid "Multi-list settings. You can double-click a row to edit the values."
-msgstr "Multi-list settings. You can double-click a row to edit the values."
 
 msgid "Edit"
 msgstr "Edit"
 
-#, python-format
-msgid "Value (%s)"
-msgstr "Value (%s)"
+msgid "Multi-list settings. You can double-click a row to edit the values."
+msgstr "Multi-list settings. You can double-click a row to edit the values."
 
 #, python-format
 msgid "Edit %s"
 msgstr "Edit %s"
-
-#, python-format
-msgid "Value (%(value)s) for %(setting)s"
-msgstr "Value (%(value)s) for %(setting)s"
 
 #, python-format
 msgid "\"%s\" is not a valid shortcut"
@@ -235,10 +218,6 @@ msgstr "\"%s\" is not a valid edge mask"
 msgid "None"
 msgstr "None"
 
-#, python-format
-msgid "Unhandled list type %s for %s"
-msgstr "Unhandled list type %s for %s"
-
 msgid "CompizConfig Settings Manager"
 msgstr "CompizConfig Settings Manager"
 
@@ -255,13 +234,6 @@ msgstr "Screen %i"
 msgid "Screen"
 msgstr "Screen"
 
-#. Settings
-msgid "All"
-msgstr "All"
-
-msgid "Uncategorized"
-msgstr "Uncategorised"
-
 msgid "Category"
 msgstr "Category"
 
@@ -274,6 +246,10 @@ msgstr "Preferences"
 #, python-format
 msgid "Enable %s"
 msgstr "Enable %s"
+
+#, fuzzy
+msgid "Plugin"
+msgstr "Plugin List"
 
 msgid "Please press the new key combination"
 msgstr "Please press the new key combination"
@@ -324,6 +300,22 @@ msgstr "Relation"
 msgid "Invert"
 msgstr "Invert"
 
+#, fuzzy
+msgid "Browse..."
+msgstr "Browse for "
+
+msgid "Images"
+msgstr "Images"
+
+msgid "File"
+msgstr "File"
+
+msgid "Open directory..."
+msgstr "Open directory..."
+
+msgid "Open file..."
+msgstr "Open file..."
+
 msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr "This is a settings manager for the CompizConfig configuration system."
 
@@ -359,6 +351,7 @@ msgstr ""
 msgid "Search in..."
 msgstr "Search in..."
 
+#. Options
 msgid "Short description and name"
 msgstr "Short description and name"
 
@@ -368,9 +361,19 @@ msgstr "Long description"
 msgid "Settings value"
 msgstr "Settings value"
 
+msgid "Group"
+msgstr ""
+
+msgid "Subgroup"
+msgstr ""
+
 #. Notebook
 msgid "Settings"
 msgstr "Settings"
+
+#, fuzzy
+msgid "Loading Advanced Search"
+msgstr "Advanced Search"
 
 msgid "Add a New Profile"
 msgstr "Add a New Profile"
@@ -497,3 +500,12 @@ msgid ""
 msgstr ""
 "<span size=\"large\"><b>No matches found.</b> </span><span>\n"
 " Your filter \"<b>%s</b>\" does not match any items.</span>"
+
+#~ msgid "Value (%s)"
+#~ msgstr "Value (%s)"
+
+#~ msgid "Value (%(value)s) for %(setting)s"
+#~ msgstr "Value (%(value)s) for %(setting)s"
+
+#~ msgid "Unhandled list type %s for %s"
+#~ msgstr "Unhandled list type %s for %s"

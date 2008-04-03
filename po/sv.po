@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: compiz-fusion-plugins 0.0.1\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-03-15 19:56+0530\n"
-"PO-Revision-Date: 2008-03-03 20:52+0100\n"
+"POT-Creation-Date: 2008-04-03 13:46+0530\n"
+"PO-Revision-Date: 2008-02-17 11:18+0100\n"
 "Last-Translator: Sebastian Parborg <zedDB@hotmail.com>\n"
 "Language-Team: Compiz Fusion Translators <i18n@lists.compiz-fusion.org>\n"
 "MIME-Version: 1.0\n"
@@ -171,42 +171,25 @@ msgstr "Bildladdning"
 msgid "Utility"
 msgstr "Verktyg"
 
+msgid "All"
+msgstr "Alla"
+
+msgid "Uncategorized"
+msgstr "Okategoriserat"
+
 msgid "Reset setting to the default value"
 msgstr "Återställ inställning till standardvärde"
 
-msgid "Browse for "
-msgstr "Bläddra efter "
-
-msgid "Images"
-msgstr "Bilder"
-
-msgid "File"
-msgstr "Fil"
-
-msgid "Open directory..."
-msgstr "Öppna mapp..."
-
-msgid "Open file..."
-msgstr "Öppna fil..."
+msgid "Edit"
+msgstr "Redigera"
 
 msgid "Multi-list settings. You can double-click a row to edit the values."
 msgstr ""
 "Multilist-inställningar. Du kan dubbelklicka i en rad för att ändra värdena."
 
-msgid "Edit"
-msgstr "Redigera"
-
-#, python-format
-msgid "Value (%s)"
-msgstr "Värde (%s)"
-
 #, python-format
 msgid "Edit %s"
 msgstr "Redigera %s"
-
-#, python-format
-msgid "Value (%(value)s) for %(setting)s"
-msgstr "Värde (%(value)s) för  %(setting)s"
 
 #, python-format
 msgid "\"%s\" is not a valid shortcut"
@@ -244,10 +227,6 @@ msgstr "\"%s\" är inte en giltig kantmask"
 msgid "None"
 msgstr "Inget"
 
-#, python-format
-msgid "Unhandled list type %s for %s"
-msgstr "Ohanterad listtyp %s för %s"
-
 msgid "CompizConfig Settings Manager"
 msgstr "CompizConfig inställningshanterare"
 
@@ -264,13 +243,6 @@ msgstr "Skärm %i"
 msgid "Screen"
 msgstr "Skärm"
 
-#. Settings
-msgid "All"
-msgstr "Alla"
-
-msgid "Uncategorized"
-msgstr "Okategoriserat"
-
 msgid "Category"
 msgstr "Kategori"
 
@@ -283,6 +255,10 @@ msgstr "Inställningar"
 #, python-format
 msgid "Enable %s"
 msgstr "Aktivera %s"
+
+#, fuzzy
+msgid "Plugin"
+msgstr "Plugin lista"
 
 msgid "Please press the new key combination"
 msgstr "Var snäll och tryck den nya tangenkombinationen"
@@ -336,6 +312,22 @@ msgstr "Relation"
 msgid "Invert"
 msgstr "Invertera"
 
+#, fuzzy
+msgid "Browse..."
+msgstr "Bläddra efter "
+
+msgid "Images"
+msgstr "Bilder"
+
+msgid "File"
+msgstr "Fil"
+
+msgid "Open directory..."
+msgstr "Öppna mapp..."
+
+msgid "Open file..."
+msgstr "Öppna fil..."
+
 msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr ""
 "Det här är en inställningshanterare för CompizConfig konfigurations-system"
@@ -362,17 +354,15 @@ msgstr "Sök Compiz Core-alternativ"
 msgid "Error"
 msgstr "Fel"
 
-#, fuzzy
 msgid ""
 "Enter a filter.\n"
 "Click the keyboard image to grab a key for which to search."
 msgstr ""
-"Skriv in ett filter.\n"
-"Klicka på tangentbordsbilden för att greppa en knapp som ska bli sökt efter."
 
 msgid "Search in..."
 msgstr "Sök i..."
 
+#. Options
 msgid "Short description and name"
 msgstr "Kort beskrivning och namn"
 
@@ -382,9 +372,19 @@ msgstr "Lång beskrivning"
 msgid "Settings value"
 msgstr "Inställningsvärde"
 
+msgid "Group"
+msgstr ""
+
+msgid "Subgroup"
+msgstr ""
+
 #. Notebook
 msgid "Settings"
 msgstr "Inställningar"
+
+#, fuzzy
+msgid "Loading Advanced Search"
+msgstr "Avancerad sökning"
 
 msgid "Add a New Profile"
 msgstr "Lägg till en ny profil"
@@ -514,6 +514,15 @@ msgstr ""
 "<span size=\"large\"><b>Inga matchingar hittades.</b> </span><span>\n"
 "\n"
 " Ditt filter \"<b>%s</b>\" matchar inga objekt.</span>"
+
+#~ msgid "Value (%s)"
+#~ msgstr "Värde (%s)"
+
+#~ msgid "Value (%(value)s) for %(setting)s"
+#~ msgstr "Värde (%(value)s) för  %(setting)s"
+
+#~ msgid "Unhandled list type %s for %s"
+#~ msgstr "Ohanterad listtyp %s för %s"
 
 #~ msgid "Actions"
 #~ msgstr "Åtgärder"

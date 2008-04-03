@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm 0.6\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-03-15 19:56+0530\n"
+"POT-Creation-Date: 2008-04-03 13:46+0530\n"
 "PO-Revision-Date: 2008-02-13 12:41+0100\n"
 "Last-Translator: gclee <gcnation@gmail.com>\n"
 "Language-Team: Korean <happyhackinglife@gmail>\n"
@@ -168,41 +168,24 @@ msgstr "이미지 불러오기"
 msgid "Utility"
 msgstr "유틸리티"
 
+msgid "All"
+msgstr "모두"
+
+msgid "Uncategorized"
+msgstr "분류 없음"
+
 msgid "Reset setting to the default value"
 msgstr "설정을 기본값으로 초기화"
-
-msgid "Browse for "
-msgstr "다음을 찾아보기: "
-
-msgid "Images"
-msgstr "이미지"
-
-msgid "File"
-msgstr "파일"
-
-msgid "Open directory..."
-msgstr "디렉토리 열기..."
-
-msgid "Open file..."
-msgstr "파일 열기..."
-
-msgid "Multi-list settings. You can double-click a row to edit the values."
-msgstr "다중 목록 설정. 행을 더블 클릭하여 값을 바꿀 수 있습니다."
 
 msgid "Edit"
 msgstr "수정"
 
-#, python-format
-msgid "Value (%s)"
-msgstr "값 (%s)"
+msgid "Multi-list settings. You can double-click a row to edit the values."
+msgstr "다중 목록 설정. 행을 더블 클릭하여 값을 바꿀 수 있습니다."
 
 #, python-format
 msgid "Edit %s"
 msgstr "%s 수정"
-
-#, python-format
-msgid "Value (%(value)s) for %(setting)s"
-msgstr "%(setting)s에 대한 값 (%(value)s)"
 
 #, python-format
 msgid "\"%s\" is not a valid shortcut"
@@ -239,10 +222,6 @@ msgstr "\"%s\"은(는) 유효한 가장자리가 아닙니다. "
 msgid "None"
 msgstr "없음"
 
-#, python-format
-msgid "Unhandled list type %s for %s"
-msgstr "처리되지 않은 목록 타입 %s - %s"
-
 msgid "CompizConfig Settings Manager"
 msgstr "컴피즈 설정 관리자"
 
@@ -259,13 +238,6 @@ msgstr "화면 %i"
 msgid "Screen"
 msgstr "화면"
 
-#. Settings
-msgid "All"
-msgstr "모두"
-
-msgid "Uncategorized"
-msgstr "분류 없음"
-
 msgid "Category"
 msgstr "분류"
 
@@ -278,6 +250,10 @@ msgstr "환경 설정"
 #, python-format
 msgid "Enable %s"
 msgstr "%s을(를) 활성화"
+
+#, fuzzy
+msgid "Plugin"
+msgstr "플러그인 목록"
 
 msgid "Please press the new key combination"
 msgstr "새로운 키 조합을 누르세요."
@@ -328,6 +304,22 @@ msgstr "관계"
 msgid "Invert"
 msgstr "반전"
 
+#, fuzzy
+msgid "Browse..."
+msgstr "다음을 찾아보기: "
+
+msgid "Images"
+msgstr "이미지"
+
+msgid "File"
+msgstr "파일"
+
+msgid "Open directory..."
+msgstr "디렉토리 열기..."
+
+msgid "Open file..."
+msgstr "파일 열기..."
+
 msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr "컴피즈 환경 설정 시스템의 설정 관리자입니다."
 
@@ -361,6 +353,7 @@ msgstr ""
 msgid "Search in..."
 msgstr "다음에서 검색..."
 
+#. Options
 msgid "Short description and name"
 msgstr "이름과 짧은 설명"
 
@@ -370,9 +363,19 @@ msgstr "긴 설명"
 msgid "Settings value"
 msgstr "설정 값"
 
+msgid "Group"
+msgstr ""
+
+msgid "Subgroup"
+msgstr ""
+
 #. Notebook
 msgid "Settings"
 msgstr "설정"
+
+#, fuzzy
+msgid "Loading Advanced Search"
+msgstr "고급 검색"
 
 msgid "Add a New Profile"
 msgstr "새로운 프로필 추가"
@@ -498,6 +501,15 @@ msgstr ""
 "<span size=\"large\"><b>일치하는 항목이 없습니다.</b> </span><span>\n"
 "\n"
 " \"<b>%s</b>\"은(는) 어느 항목과도 일치하지 않습니다.</span>"
+
+#~ msgid "Value (%s)"
+#~ msgstr "값 (%s)"
+
+#~ msgid "Value (%(value)s) for %(setting)s"
+#~ msgstr "%(setting)s에 대한 값 (%(value)s)"
+
+#~ msgid "Unhandled list type %s for %s"
+#~ msgstr "처리되지 않은 목록 타입 %s - %s"
 
 #~ msgid "Actions"
 #~ msgstr "동작"
