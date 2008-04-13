@@ -73,13 +73,14 @@ class ActionConflict (Conflict):
                     sets = sum ((z.values () for z in [plugin.Screens[CurrentScreenNum]]+[plugin.Display]), [])
                     settings += sets
 
-    def Resolve (self, updater):
+    def Resolve (self, updater = None):
         if len (self.Conflicts):
             for setting in self.Conflicts:
                 answer = self.AskUser (self.Setting, setting)
                 if answer == gtk.RESPONSE_YES:
                     setting.Value = 'Disabled'
-                    updater.UpdateSetting (setting)
+                    if updater:
+                        updater.UpdateSetting (setting)
                 if answer == gtk.RESPONSE_NO:
                     return False
 
@@ -105,7 +106,7 @@ class ActionConflict (Conflict):
         return self.Ask (msg, (ignoreButton, noButton, yesButton))
 
 class KeyConflict(ActionConflict):
-    def __init__(self, setting, newValue, settings = [], autoResolve = False):
+    def __init__(self, setting, newValue, settings = [], autoResolve = False, ignoreOld = False):
         ActionConflict.__init__(self, setting, settings, autoResolve)
         self.Name = _("key")
 
@@ -114,7 +115,10 @@ class KeyConflict(ActionConflict):
 
         newValue = newValue.lower ()
         oldValue = self.Setting.Value.lower ()
-        if newValue in ("disabled", "none", oldValue):
+        badValues = ["disabled", "none"]
+        if not ignoreOld:
+            badValues.append (oldValue)
+        if newValue in badValues:
             return
 
         for s in self.Settings:
@@ -125,7 +129,7 @@ class KeyConflict(ActionConflict):
                     self.Conflicts.append (s)
 
 class ButtonConflict(ActionConflict):
-    def __init__(self, setting, newValue, settings = [], autoResolve = False):
+    def __init__(self, setting, newValue, settings = [], autoResolve = False, ignoreOld = False):
         ActionConflict.__init__(self, setting, settings, autoResolve)
         self.Name = _("button")
 
@@ -134,31 +138,34 @@ class ButtonConflict(ActionConflict):
 
         newValue = newValue.lower ()
         oldValue = self.Setting.Value.lower ()
-        if newValue in ("disabled", "none", oldValue):
+        badValues = ["disabled", "none"]
+        if not ignoreOld:
+            badValues.append (oldValue)
+        if newValue in badValues:
             return
 
         for s in self.Settings:
             if s == setting:
                 continue
             if s.Type == 'Button':
-                print s.Value.lower()
                 if s.Value.lower() == newValue:
                     self.Conflicts.append (s)
 
 class EdgeConflict(ActionConflict):
-    def __init__(self, setting, newValue, settings = [], autoResolve = False):
+    def __init__(self, setting, newValue, settings = [], autoResolve = False, ignoreOld = False):
         ActionConflict.__init__(self, setting, settings, autoResolve)
         self.Name = _("edge")
 
         if not newValue or len(newValue) < 1:
             return
 
-        newEdges = map (lambda e: e.lower(), newValue.split ("|"))
-        oldEdges = map (lambda e: e.lower(), self.Setting.Value.split ("|"))
-        diff = filter (lambda e: e not in newEdges, oldEdges)
-        diff += filter (lambda e: e not in oldEdges, newEdges)
-        if len (diff) < 1:
-            return
+        if not ignoreOld:
+            newEdges = map (lambda e: e.lower(), newValue.split ("|"))
+            oldEdges = map (lambda e: e.lower(), self.Setting.Value.split ("|"))
+            diff = filter (lambda e: e not in newEdges, oldEdges)
+            diff += filter (lambda e: e not in oldEdges, newEdges)
+            if len (diff) < 1:
+                return
 
         for s in settings:
             if s == setting:
@@ -170,7 +177,7 @@ class EdgeConflict(ActionConflict):
                         self.Conflicts.append ((s, edge))
                         break
 
-    def Resolve (self, updater):
+    def Resolve (self, updater = None):
         if len (self.Conflicts):
             for setting, edge in self.Conflicts:
                 answer = self.AskUser (self.Setting, setting)
@@ -178,7 +185,8 @@ class EdgeConflict(ActionConflict):
                     value = setting.Value.split ("|")
                     value.remove (edge)
                     setting.Value = "|".join (value)
-                    updater.UpdateSetting (setting)
+                    if updater:
+                        updater.UpdateSetting (setting)
                 if answer == gtk.RESPONSE_NO:
                     return False
 
@@ -252,6 +260,8 @@ class PluginConflict(Conflict):
     def __init__(self, plugin, conflicts, autoResolve = False):
         Conflict.__init__(self, autoResolve)
         self.Conflicts = conflicts
+        self.ActionConflicts = []
+        self.ActionTypes = []
         self.Plugin = plugin
 
     def Resolve(self):
@@ -333,6 +343,30 @@ class PluginConflict(Conflict):
                 else:
                     return False
 
+        # Only when enabling a plugin
+        if not self.Plugin.Enabled:
+            for setting in sum ((z.values () for z in [self.Plugin.Screens[CurrentScreenNum]]+[self.Plugin.Display]), []):
+                conflict = None
+                if setting.Type == 'Key':
+                    conflict = KeyConflict(setting, setting.Value, ignoreOld = True)
+                elif setting.Type == 'Button':
+                    conflict = ButtonConflict(setting, setting.Value, ignoreOld = True)
+                elif setting.Type == 'Edge':
+                    conflict = KeyConflict(setting, setting.Value, ignoreOld = True)
+
+                # Conflicts were found
+                if conflict and conflict.Conflicts:
+                    name = conflict.Name
+                    if name not in self.ActionTypes:
+                        self.ActionTypes.append(name)
+                    self.ActionConflicts.append(conflict)
+
+        if len(self.ActionConflicts):
+            answer = self.AskUser(self.Plugin, ('ConflictAction', self.ActionTypes))
+            if answer == gtk.RESPONSE_YES:
+                for conflict in self.ActionConflicts:
+                    conflict.Resolve()
+
         return True
 
     def AskUser(self, plugin, conflict):
@@ -340,7 +374,26 @@ class PluginConflict(Conflict):
         okMsg = ""
         cancelMsg = ""
         widgets = []
-        if conflict[0] == 'ConflictFeature':
+
+        # CCSM custom conflict
+        if conflict[0] == 'ConflictAction':
+            msg = _("Some %(bindings)s bindings of Plugin <b>%(plugin)s</b> conflict with"\
+                "other plugins. Do you want to resolve this conflicts?")
+
+            types = conflict[1]
+            bindings = ", ".join(types[:-1])
+            if len(types) > 1:
+                bindings = "%s and %s" % (bindings, types[-1])
+
+            msg_dict = {'plugin': plugin.ShortDesc,
+                        'bindings': bindings}
+
+            msg = msg % msg_dict
+
+            okMsg     = _("Resolve conflicts") % msg_dict
+            cancelMsg = _("Ignore conflicts") % msg_dict
+
+        elif conflict[0] == 'ConflictFeature':
             msg = _("Plugin <b>%(plugin_conflict)s</b> provides feature <b>%(feature)s</b> which is also "\
                 "provided by <b>%(plugin)s</b>")
             
