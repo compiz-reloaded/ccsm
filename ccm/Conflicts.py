@@ -260,8 +260,6 @@ class PluginConflict(Conflict):
     def __init__(self, plugin, conflicts, autoResolve = False):
         Conflict.__init__(self, autoResolve)
         self.Conflicts = conflicts
-        self.ActionConflicts = []
-        self.ActionTypes = []
         self.Plugin = plugin
 
     def Resolve(self):
@@ -344,6 +342,8 @@ class PluginConflict(Conflict):
                     return False
 
         # Only when enabling a plugin
+        types = []
+        actionConflicts = []
         if not self.Plugin.Enabled:
             for setting in sum ((z.values () for z in [self.Plugin.Screens[CurrentScreenNum]]+[self.Plugin.Display]), []):
                 conflict = None
@@ -357,14 +357,14 @@ class PluginConflict(Conflict):
                 # Conflicts were found
                 if conflict and conflict.Conflicts:
                     name = conflict.Name
-                    if name not in self.ActionTypes:
-                        self.ActionTypes.append(name)
-                    self.ActionConflicts.append(conflict)
+                    if name not in tpes:
+                        types.append(name)
+                    actionConflicts.append(conflict)
 
-        if len(self.ActionConflicts):
-            answer = self.AskUser(self.Plugin, ('ConflictAction', self.ActionTypes))
+        if len(actionConflicts):
+            answer = self.AskUser(self.Plugin, ('ConflictAction', types))
             if answer == gtk.RESPONSE_YES:
-                for conflict in self.ActionConflicts:
+                for conflict in actionConflicts:
                     conflict.Resolve()
 
         return True
