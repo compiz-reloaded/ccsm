@@ -794,7 +794,7 @@ class KeySetting (EditableActionSetting):
         EditableActionSetting._Init (self, self.Button, "keyboard")
 
     def DoReset (self, widget):
-        conflict = ActionConflict (setting = self.Setting, key=self.Setting.DefaultValue)
+        conflict = KeyConflict (self.Setting, self.Setting.DefaultValue)
         if conflict.Resolve (GlobalUpdater):
             self.Setting.Reset ()
             self.Setting.Plugin.Context.Write ()
@@ -945,7 +945,7 @@ class KeySetting (EditableActionSetting):
         # Update & save binding
         popup = Popup (self.Widget, 
                        _("Computing possible conflicts, please wait"))
-        conflict = ActionConflict (self.Setting, key = accel)
+        conflict = KeyConflict (self.Setting, accel)
         popup.destroy ()
         if conflict.Resolve (GlobalUpdater):
             self.current = accel
@@ -973,7 +973,7 @@ class ButtonSetting (EditableActionSetting):
         EditableActionSetting._Init (self, self.Button, "button")
 
     def DoReset (self, widget):
-        conflict = ActionConflict (setting = self.Setting, button=self.Setting.DefaultValue)
+        conflict = ButtonConflict (self.Setting, self.Setting.DefaultValue)
         if conflict.Resolve (GlobalUpdater):
             self.Setting.Reset ()
             self.Setting.Plugin.Context.Write ()
@@ -1125,7 +1125,7 @@ to set \"%s\" button to Button1 ?") % self.Setting.ShortDesc)
                 return
         popup = Popup (self.Widget, 
                        _("Computing possible conflicts, please wait"))
-        conflict = ActionConflict (self.Setting, button = button)
+        conflict = ButtonConflict (self.Setting, button)
         popup.destroy ()
         if conflict.Resolve (GlobalUpdater):
             self.current = button
@@ -1153,7 +1153,7 @@ class EdgeSetting (EditableActionSetting):
         EditableActionSetting._Init (self, self.Button, "edges")
 
     def DoReset (self, widget):
-        conflict = ActionConflict (setting = self.Setting, edges=self.Setting.DefaultValue)
+        conflict = EdgeConflict (self.Setting, self.Setting.DefaultValue)
         if conflict.Resolve (GlobalUpdater):
             self.Setting.Reset ()
             self.Setting.Plugin.Context.Write ()
@@ -1216,7 +1216,7 @@ class EdgeSetting (EditableActionSetting):
         '''Edge edited callback'''
         popup = Popup (self.Widget, 
                        _("Computing possible conflicts, please wait"))
-        conflict = ActionConflict (self.Setting, edges = edge)
+        conflict = EdgeConflict (self.Setting, edge)
         popup.destroy ()
         if conflict.Resolve (GlobalUpdater):
             self.current = edge

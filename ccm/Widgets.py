@@ -863,7 +863,7 @@ class GlobalEdgeSelector(EdgeSelector):
                 value.append (edge)
             value = "|".join (filter (lambda s: len (s) > 0, value))
 
-            conflict = ActionConflict (setting, edges = value, settings = self._settings, autoResolve = True)
+            conflict = EdgeConflict (setting, value, settings = self._settings, autoResolve = True)
             if conflict.Resolve (GlobalUpdater):
                 setting.Value = value
                 self._edges[edge] = setting
