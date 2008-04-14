@@ -377,8 +377,9 @@ class PluginConflict(Conflict):
 
         # CCSM custom conflict
         if conflict[0] == 'ConflictAction':
-            msg = _("Some %(bindings)s bindings of Plugin <b>%(plugin)s</b> conflict with"\
-                "other plugins. Do you want to resolve this conflicts?")
+            msg = _("Some %(bindings)s bindings of Plugin <b>%(plugin)s</b> " \
+					"conflict with other plugins. Do you want to resolve " \
+					"these conflicts?")
 
             types = conflict[1]
             bindings = ", ".join(types[:-1])
@@ -394,8 +395,9 @@ class PluginConflict(Conflict):
             cancelMsg = _("Ignore conflicts") % msg_dict
 
         elif conflict[0] == 'ConflictFeature':
-            msg = _("Plugin <b>%(plugin_conflict)s</b> provides feature <b>%(feature)s</b> which is also "\
-                "provided by <b>%(plugin)s</b>")
+            msg = _("Plugin <b>%(plugin_conflict)s</b> provides feature " \
+					"<b>%(feature)s</b> which is also provided by " \
+					"<b>%(plugin)s</b>")
             
             msg_dict = {'plugin_conflict': conflict[2][0].ShortDesc,
                         'feature': conflict[1],
@@ -407,7 +409,8 @@ class PluginConflict(Conflict):
             cancelMsg = _("Don't enable %(plugin)s") % msg_dict
         
         elif conflict[0] == 'ConflictPlugin':
-            msg = _("Plugin <b>%(plugin_conflict)s</b> conflicts with <b>%(plugin)s</b>.")
+            msg = _("Plugin <b>%(plugin_conflict)s</b> conflicts with " \
+					"<b>%(plugin)s</b>.")
             msg = msg % msg_dict
 
             okMsg = _("Disable %(plugin_conflict)s") % msg_dict
@@ -415,7 +418,9 @@ class PluginConflict(Conflict):
         
         elif conflict[0] == 'RequiresFeature':
             pluginList = ', '.join("\"%s\"" % plugin.ShortDesc for plugin in conflict[2])
-            msg = _("<b>%(plugin)s</b> requires feature <b>%(feature)s</b> which is provided by the following plugins:\n%(plugin_list)s")
+            msg = _("<b>%(plugin)s</b> requires feature <b>%(feature)s</b> " \
+					"which is provided by the following " \
+					"plugins:\n%(plugin_list)s")
             
             msg_dict = {'plugin': plugin.ShortDesc,
                         'feature': conflict[1],
@@ -445,7 +450,9 @@ class PluginConflict(Conflict):
         
         elif conflict[0] == 'FeatureNeeded':
             pluginList = ', '.join("\"%s\"" % plugin.ShortDesc for plugin in conflict[2])
-            msg = _("<b>%(plugin)s</b> provides the feature <b>%(feature)s</b> which is required by the plugins <b>%(plugin_list)s</b>.")
+            msg = _("<b>%(plugin)s</b> provides the feature " \
+					"<b>%(feature)s</b> which is required by the plugins " \
+					"<b>%(plugin_list)s</b>.")
             
             msg_dict = {'plugin': plugin.ShortDesc,
                         'feature': conflict[1],
@@ -458,7 +465,8 @@ class PluginConflict(Conflict):
         
         elif conflict[0] == 'PluginNeeded':
             pluginList = ', '.join("\"%s\"" % plugin.ShortDesc for plugin in conflict[2])
-            msg = _("<b>%(plugin)s</b> is required by the plugins <b>%(plugin_list)s</b>.")
+            msg = _("<b>%(plugin)s</b> is required by the plugins " \
+					"<b>%(plugin_list)s</b>.")
             
             msg_dict = {'plugin': plugin.ShortDesc,
                         'plugin_list': pluginList}
