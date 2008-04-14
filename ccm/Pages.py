@@ -18,6 +18,7 @@
 # Authors: Quinn Storm (quinn@beryl-project.org)
 #          Patrick Niklaus (marex@opencompositing.org)
 #          Guillaume Seguin (guillaume@segu.in)
+#          Christopher Williams (christopherw@verizon.net)
 # Copyright (C) 2007 Quinn Storm
 
 import pygtk
