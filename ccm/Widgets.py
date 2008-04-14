@@ -18,6 +18,7 @@
 # Authors: Quinn Storm (quinn@beryl-project.org)
 #          Patrick Niklaus (marex@opencompositing.org)
 #          Guillaume Seguin (guillaume@segu.in)
+#          Christopher Williams (christopherw@verizon.net)
 # Copyright (C) 2007 Quinn Storm
 
 import pygtk
@@ -1299,9 +1300,10 @@ class AboutDialog (gtk.AboutDialog):
         self.set_name (_("CompizConfig Settings Manager"))
         self.set_version (Version)
         self.set_comments (_("This is a settings manager for the CompizConfig configuration system."))
-        self.set_copyright ("Copyright \xC2\xA9 2007 Patrick Niklaus/Guillaume Seguin/Quinn Storm")
+        self.set_copyright ("Copyright \xC2\xA9 2007-2008 Patrick Niklaus/Christopher Williams/Guillaume Seguin/Quinn Storm")
         self.set_translator_credits (_("translator-credits"))
         self.set_authors (["Patrick Niklaus <marex@opencompositing.org>",
+                           "Christopher Williams <christopherw@verizon.net>",
                            "Guillaume Seguin <guillaume@segu.in>",
                            "Quinn Storm <quinn@beryl-project.org>"])
         self.set_artists (["Andrew Wedderburn <andrew.wedderburn@gmail.com>",
