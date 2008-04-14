@@ -352,12 +352,12 @@ class PluginConflict(Conflict):
                 elif setting.Type == 'Button':
                     conflict = ButtonConflict(setting, setting.Value, ignoreOld = True)
                 elif setting.Type == 'Edge':
-                    conflict = KeyConflict(setting, setting.Value, ignoreOld = True)
+                    conflict = EdgeConflict(setting, setting.Value, ignoreOld = True)
 
                 # Conflicts were found
                 if conflict and conflict.Conflicts:
                     name = conflict.Name
-                    if name not in tpes:
+                    if name not in types:
                         types.append(name)
                     actionConflicts.append(conflict)
 
