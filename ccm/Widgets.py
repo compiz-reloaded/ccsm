@@ -1509,7 +1509,7 @@ class CategoryBox(gtk.VBox):
         col = 0
         for button in self._buttons:
             if button.get_plugin () in self._plugins:
-                self._table.attach (button, col, col+1, row, row+1, 0)
+                self._table.attach (button, col, col+1, row, row+1, 0, xpadding=TableX, ypadding=TableY)
                 col += 1
                 if col == ncols:
                     col = 0
@@ -1617,7 +1617,7 @@ class PluginWindow(gtk.ScrolledWindow):
 
     def rebuild_boxes (self, widget, request):
         ncols = request.width / 220
-        width = ncols * 220 + 40
+        width = ncols * (220 + 2 * TableX) + 40
         if width > request.width:
             ncols -= 1
 
