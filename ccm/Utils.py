@@ -130,6 +130,8 @@ class PrettyButton (gtk.Button):
         'expose-event'      : 'override',
     }
 
+    _old_toplevel = None
+
     def __init__ (self):
         super (PrettyButton, self).__init__ ()
         self.states = {
@@ -140,6 +142,18 @@ class PrettyButton (gtk.Button):
         self.set_relief (gtk.RELIEF_NONE)
         self.connect ("focus-in-event", self.update_state_in, "focus")
         self.connect ("focus-out-event", self.update_state_out, "focus")
+        self.connect ("hierarchy-changed", self.hierarchy_changed)
+
+    def hierarchy_changed (self, widget, old_toplevel):
+        if old_toplevel == self._old_toplevel:
+            return
+
+        if not old_toplevel and self.state != gtk.STATE_NORMAL:
+            self.set_state(gtk.STATE_PRELIGHT)
+            self.set_state(gtk.STATE_NORMAL)
+
+        self._old_toplevel = old_toplevel
+
 
     def update_state_in (self, *args):
         state = args[-1]
@@ -175,7 +189,7 @@ class Label(gtk.Label):
         self.set_size_request(wrap, -1)
 
 class NotFoundBox(gtk.Alignment):
-    def __init__(self, value):
+    def __init__(self, value=""):
         gtk.Alignment.__init__(self, 0.5, 0.5, 0.0, 0.0)
         
         box = gtk.HBox()
@@ -309,6 +323,12 @@ class PureVirtualError(Exception):
 
 def SettingKeyFunc(value):
     return value.Plugin.Ranking[value.Name]
+
+def CategoryKeyFunc(category):
+    if 'General' == category:
+        return ''
+    else:
+        return category or 'zzzzzzzz'
 
 FirstItemKeyFunc = operator.itemgetter(0)
 

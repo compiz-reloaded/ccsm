@@ -66,8 +66,10 @@ ImageStock    = 4
 #
 FilterName = 1 << 0
 FilterLongDesc = 1 << 1
-FilterValue = 1 << 2
-FilterAll = FilterName | FilterLongDesc | FilterValue
+FilterValue = 1 << 2    # Settings Only
+FilterCategory = 1 << 3 # Plugins Only
+FilterAll = FilterName | FilterLongDesc | FilterValue | FilterCategory
+
 # Paths
 #
 DataDir = "@prefix@/share"
