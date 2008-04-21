@@ -23,6 +23,7 @@
 
 import pygtk
 import gtk
+import gobject
 import gtk.gdk
 
 import compizconfig
@@ -43,12 +44,29 @@ _ = gettext.gettext
 
 CurrentUpdater = None
 
+# Generic Page
+#
+class GenericPage(gobject.GObject):
+    __gsignals__    = {"go-back" : (gobject.SIGNAL_RUN_FIRST,
+                                    gobject.TYPE_NONE,
+                                    [])}
+
+    LeftWidget = None
+    RightWidget = None
+
+    def __init__(self):
+        gobject.GObject.__init__(self)
+
+    def GoBack(self, widget):
+        self.emit('go-back')
+
 # Plugin Page
 #
-class PluginPage:
-    def __init__(self, plugin, main):
+class PluginPage(GenericPage):
+
+    def __init__(self, plugin):
+        GenericPage.__init__(self)
         self.Plugin = plugin
-        self.Main = main
         self.LeftWidget = gtk.VBox(False, 10)
         self.LeftWidget.set_border_width(10)
 
@@ -100,7 +118,7 @@ class PluginPage:
         backButton = gtk.Button(gtk.STOCK_GO_BACK)
         backButton.set_use_stock(True)
         self.LeftWidget.pack_end(backButton, False, False)
-        backButton.connect('clicked', main.BackToMain)
+        backButton.connect('clicked', self.GoBack)
         self.RightWidget = gtk.Notebook()
         self.RightWidget.set_scrollable(True)
         self.Pages = []
@@ -204,10 +222,10 @@ class PluginPage:
 
 # Filter Page
 #
-class FilterPage(object):
-    def __init__(self, main, context):
+class FilterPage(GenericPage):
+    def __init__(self, context):
+        GenericPage.__init__(self)
         self.Context = context
-        self.Main = main
         self.LeftWidget = gtk.VBox(False, 10)
         self.LeftWidget.set_border_width(10)
         self.RightWidget = gtk.Notebook()
@@ -261,7 +279,7 @@ class FilterPage(object):
         # Back Button
         self.BackButton = gtk.Button(gtk.STOCK_GO_BACK)
         self.BackButton.set_use_stock(True)
-        self.BackButton.connect('clicked', self.BackToMain)
+        self.BackButton.connect('clicked', self.GoBack)
         self.LeftWidget.pack_end(self.BackButton, False, False)
 
         self.NotFoundBox = None
@@ -331,7 +349,7 @@ class FilterPage(object):
 
         box = gtk.VBox()
         box.set_border_width(5)
-        progress = Popup(parent=main, child=box)
+        progress = Popup(child=box)
         progress.connect("delete-event", lambda *a: True)
         progress.set_title(_("Loading Advanced Search"))
         bar = gtk.ProgressBar()
@@ -608,21 +626,19 @@ class FilterPage(object):
         elif self.NotFoundBox:
             self.HideFilterError()
 
-    def BackToMain(self, widget):
-        self.RightChild.destroy()
+    def GoBack(self, widget):
         for groups in self.GroupPages.values():
             for page in groups.values():
                 page.SetContainer.destroy()
         self.GroupPages = None
 
-        self.Main.BackToMain(widget)
+        self.emit('go-back')
 
 # Profile and Backend Page
 #
 class ProfileBackendPage(object):
-    def __init__(self, main, context):
+    def __init__(self, context):
         self.Context = context
-        self.Main = main
         rightChild = gtk.VBox()
         rightChild.set_border_width(10)
 
@@ -788,8 +804,9 @@ class ProfileBackendPage(object):
         GlobalUpdater.UpdatePlugins()
     
     def ExportProfile(self, widget):
+        main = widget.get_toplevel()
         b = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_SAVE, gtk.RESPONSE_OK)
-        chooser = gtk.FileChooserDialog(title=_("Save file.."), parent=self.Main, buttons=b, action=gtk.FILE_CHOOSER_ACTION_SAVE)
+        chooser = gtk.FileChooserDialog(title=_("Save file.."), parent=main, buttons=b, action=gtk.FILE_CHOOSER_ACTION_SAVE)
         chooser.set_current_folder(os.environ.get("HOME"))
         self.CreateFilter(chooser)
         ret = chooser.run()
@@ -803,11 +820,11 @@ class ProfileBackendPage(object):
             dlg.destroy()
             self.Context.Export(path, ret == gtk.RESPONSE_YES)
 
-    def ImportProfileDialog (self):
+    def ImportProfileDialog (self, main):
         b = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
              gtk.STOCK_OPEN, gtk.RESPONSE_OK)
         chooser = gtk.FileChooserDialog (title = _("Open file.."),
-                                         parent = self.Main, buttons = b)
+                                         parent = main, buttons = b)
         chooser.set_current_folder (os.environ.get ("HOME"))
         self.CreateFilter (chooser)
         ret = chooser.run ()
@@ -818,8 +835,8 @@ class ProfileBackendPage(object):
             return path
         return None
 
-    def ProfileNameDialog (self):
-        dlg = gtk.Dialog (_("Enter a profile name"), self.Main,
+    def ProfileNameDialog (self, main):
+        dlg = gtk.Dialog (_("Enter a profile name"), main,
                           gtk.DIALOG_MODAL)
         dlg.add_button (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
         dlg.add_button (gtk.STOCK_ADD, gtk.RESPONSE_OK)
@@ -839,13 +856,15 @@ class ProfileBackendPage(object):
         return None
 
     def ImportProfile (self, widget):
-        path = self.ImportProfileDialog ()
+        main = widget.get_toplevel ()
+        path = self.ImportProfileDialog (main)
         if path:
             self.Context.Import (path)
         GlobalUpdater.UpdatePlugins()
 
     def ImportProfileAs (self, widget):
-        path = self.ImportProfileDialog ()
+        main = widget.get_toplevel ()
+        path = self.ImportProfileDialog (main)
         if not path:
             return
         name = self.ProfileNameDialog ()
@@ -856,7 +875,8 @@ class ProfileBackendPage(object):
         self.Context.Import (path)
 
     def AddProfile (self, widget):
-        name = self.ProfileNameDialog ()
+        main = widget.get_toplevel ()
+        name = self.ProfileNameDialog (main)
         if name:
             self.Context.CurrentProfile = ccs.Profile (self.Context, name)
             self.UpdateProfiles (name)
@@ -894,9 +914,8 @@ class ProfileBackendPage(object):
 # Plugin List Page
 #
 class PluginListPage(object):
-    def __init__(self, main, context):
+    def __init__(self, context):
         self.Context = context
-        self.Main = main
         self.Block = 0
         rightChild = gtk.VBox()
         rightChild.set_border_width(10)
@@ -1067,10 +1086,10 @@ class PluginListPage(object):
 
 # Preferences Page
 #
-class PreferencesPage(object):
-    def __init__(self, main, context):
+class PreferencesPage(GenericPage):
+    def __init__(self, context):
+        GenericPage.__init__(self)
         self.Context = context
-        self.Main = main
         self.LeftWidget = gtk.VBox(False, 10)
         self.LeftWidget.set_border_width(10)
         self.RightWidget = gtk.Notebook()
@@ -1111,15 +1130,15 @@ class PreferencesPage(object):
         # Back Button
         backButton = gtk.Button(gtk.STOCK_GO_BACK)
         backButton.set_use_stock(True)
-        backButton.connect('clicked', self.Main.BackToMain)
+        backButton.connect('clicked', self.GoBack)
         self.LeftWidget.pack_end(backButton, False, False)
 
         # Profile & Backend Page
-        self.ProfileBackendPage = ProfileBackendPage(main, context)
+        self.ProfileBackendPage = ProfileBackendPage(context)
         self.RightWidget.append_page(self.ProfileBackendPage.Widget, gtk.Label(_("Profile & Backend")))
 
         # Plugin List
-        self.PluginListPage = PluginListPage(main, context)
+        self.PluginListPage = PluginListPage(context)
         self.RightWidget.append_page(self.PluginListPage.Widget, gtk.Label(_("Plugin List")))
 
     StyleBlock = 0
@@ -1138,6 +1157,156 @@ class PreferencesPage(object):
         about.run()
         about.destroy()
 
+# Main Page
+#
+class MainPage(object):
+    def __init__(self, main, context):
+        self.Context = context
+        self.Main    = main
+        sidebar = gtk.VBox(False, 10)
+        sidebar.set_border_width(10)
+        pluginWindow = PluginWindow(self.Context)
+        pluginWindow.connect('show-plugin', self.ShowPlugin)
+
+        # Filter
+        filterLabel = Label()
+        filterLabel.set_markup(HeaderMarkup % (_("Filter")))
+        filterLabel.connect("style-set", self.HeaderStyleSet)
+        filterLabel.props.xalign = 0.1
+        if has_sexy:
+            filterEntry = sexy.IconEntry()
+            filterEntry.add_clear_button()
+        else:
+            filterEntry = gtk.Entry()
+        Tooltips.set_tip(filterEntry, _("Filter your Plugin list"))
+        filterEntry.connect("changed", self.FilterChanged)
+        self.filterEntry = filterEntry
+
+        # Screens
+        if len(getScreens()) > 1:
+            screenBox = gtk.combo_box_new_text()
+            for screen in getScreens():
+                screenBox.append_text(_("Screen %i") % screen)
+            name = self.Context.CurrentBackend.Name
+            screenBox.set_active(CurrentScreenNum)
+            screenBox.connect("changed", self.ScreenChanged)
+            screenLabel = Label()
+            screenLabel.set_markup(HeaderMarkup % (_("Screen")))
+            screenLabel.connect("style-set", self.HeaderStyleSet)
+
+            sidebar.pack_start(screenLabel, False, False)
+            sidebar.pack_start(screenBox, False, False)
+
+        # Categories
+        categoryBox = gtk.VBox()
+        categoryBox.set_border_width(5)
+        categories = ['All'] + sorted(pluginWindow.get_categories(), key=CategoryKeyFunc)
+        for category in categories:
+            # name: untranslated name/interal identifier
+            # label: translated name
+            name = category or 'Uncategorized'
+            label = _(name)
+            iconName = name.lower ().replace (" ", "_")
+            categoryToggleIcon = Image (name = iconName, type = ImageCategory,
+                                        size = 22)
+            categoryToggleLabel = Label (label)
+            align = gtk.Alignment (0, 0.5, 1, 1)
+            align.set_padding (0, 0, 0, 10)
+            align.add (categoryToggleIcon)
+            categoryToggleBox = gtk.HBox ()
+            categoryToggleBox.pack_start (align, False, False)
+            categoryToggleBox.pack_start (categoryToggleLabel, True, True)
+            categoryToggle = PrettyButton ()
+            categoryToggle.add(categoryToggleBox)
+            categoryToggle.connect("clicked", self.ToggleCategory, category)
+            categoryBox.pack_start(categoryToggle, False, False)
+        categoryLabel = Label()
+        categoryLabel.props.xalign = 0.1
+        categoryLabel.set_markup(HeaderMarkup % (_("Category")))
+        categoryLabel.connect("style-set", self.HeaderStyleSet)
+
+        # Exit Button
+        exitButton = gtk.Button(gtk.STOCK_CLOSE)
+        exitButton.set_use_stock(True)
+        exitButton.connect('clicked', self.Main.Quit)
+
+        # Advanced Search
+        searchLabel = Label()
+        searchLabel.set_markup(HeaderMarkup % (_("Advanced Search")))
+        searchLabel.connect("style-set", self.HeaderStyleSet)
+        searchImage = gtk.Image()
+        searchImage.set_from_stock(gtk.STOCK_GO_FORWARD, gtk.ICON_SIZE_BUTTON)
+        searchButton = PrettyButton()
+        searchButton.connect("clicked", self.ShowAdvancedFilter)
+        searchButton.set_relief(gtk.RELIEF_NONE)
+        searchFrame = gtk.HBox()
+        searchFrame.pack_start(searchLabel, False, False)
+        searchFrame.pack_end(searchImage, False, False)
+        searchButton.add(searchFrame)
+
+        # Preferences
+        prefLabel = Label()
+        prefLabel.set_markup(HeaderMarkup % (_("Preferences")))
+        prefLabel.connect("style-set", self.HeaderStyleSet)
+        prefImage = gtk.Image()
+        prefImage.set_from_stock(gtk.STOCK_GO_FORWARD, gtk.ICON_SIZE_BUTTON)
+        prefButton = PrettyButton()
+        prefButton.connect("clicked", self.ShowPreferences)
+        prefButton.set_relief(gtk.RELIEF_NONE)
+        prefFrame = gtk.HBox()
+        prefFrame.pack_start(prefLabel, False, False)
+        prefFrame.pack_end(prefImage, False, False)
+        prefButton.add(prefFrame)
+
+        # Pack widgets into sidebar
+        sidebar.pack_start(filterLabel, False, False)
+        sidebar.pack_start(filterEntry, False, False)
+        sidebar.pack_start(categoryLabel, False, False)
+        sidebar.pack_start(categoryBox, False, False)
+        sidebar.pack_end(exitButton, False, False)
+        sidebar.pack_end(searchButton, False, False)
+        sidebar.pack_end(prefButton, False, False)
+
+        self.LeftWidget = sidebar
+        self.RightWidget = pluginWindow
+
+    StyleBlock = 0
+
+    def HeaderStyleSet(self, widget, previous):
+        if self.StyleBlock > 0:
+            return
+        self.StyleBlock += 1
+        for state in (gtk.STATE_NORMAL, gtk.STATE_PRELIGHT, gtk.STATE_ACTIVE):
+            widget.modify_fg(state, widget.style.bg[gtk.STATE_SELECTED])
+        self.StyleBlock -= 1
+
+    def ShowPlugin(self, widget, plugin):
+        pluginPage = PluginPage(plugin)
+        self.Main.SetPage(pluginPage)
+
+    def ShowAdvancedFilter(self, widget):
+        filterPage = FilterPage(self.Context)
+        self.Main.SetPage(filterPage)
+
+    def ShowPreferences(self, widget):
+        preferencesPage = PreferencesPage(self.Context)
+        self.Main.SetPage(preferencesPage)
+
+    def ToggleCategory(self, widget, category):
+        if category == 'All':
+            category = ''
+        category = category.lower()
+        self.RightWidget.filter_boxes(category, levels=(FilterCategory,))
+
+    def FilterChanged(self, widget):
+        text = widget.get_text().lower()
+        self.RightWidget.filter_boxes(text)
+
+    def ScreenChanged(self, widget):
+        self.Context.Write()
+        self.CurrentScreenNum = widget.get_active()
+        self.Context.Read()
+
 # Page
 #
 class Page(object):
@@ -1146,18 +1315,18 @@ class Page(object):
 
         self.Widget = gtk.EventBox()
         self.Widget.add(self.SetContainer)
-        
+
         self.Empty = True
 
     def Wrap(self):
         scroll = gtk.ScrolledWindow()
         scroll.props.hscrollbar_policy = gtk.POLICY_NEVER
         scroll.props.vscrollbar_policy = gtk.POLICY_AUTOMATIC
-        
+
         view = gtk.Viewport()
         view.set_border_width(5)
         view.set_shadow_type(gtk.SHADOW_NONE)
-        
+
         scroll.add(view)
         view.add(self.Widget)
 

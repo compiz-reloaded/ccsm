@@ -915,11 +915,12 @@ class GlobalEdgeSelector(EdgeSelector):
 #
 class Popup (gtk.Window):
 
-    def __init__ (self, parent, text=None, child=None, decorated=True, mouse=False, modal=True):
+    def __init__ (self, parent=None, text=None, child=None, decorated=True, mouse=False, modal=True):
         gtk.Window.__init__ (self, gtk.WINDOW_TOPLEVEL)
         self.set_type_hint (gtk.gdk.WINDOW_TYPE_HINT_UTILITY)
         self.set_position (mouse and gtk.WIN_POS_MOUSE or gtk.WIN_POS_CENTER_ALWAYS)
-        self.set_transient_for (parent.get_toplevel ())
+        if parent:
+            self.set_transient_for (parent.get_toplevel ())
         self.set_modal (modal)
         self.set_decorated (decorated)
         if text:
@@ -1345,4 +1346,306 @@ class WarningDialog (gtk.MessageDialog):
         self.set_title (_("Warning"))
         self.set_transient_for (parent)
         self.connect_after ("response", lambda *args: self.destroy ())
+
+# Plugin Button
+#
+class PluginButton (gtk.HBox):
+
+    __gsignals__    = {"clicked"   : (gobject.SIGNAL_RUN_FIRST,
+                                      gobject.TYPE_NONE,
+                                      []),
+                       "activated" : (gobject.SIGNAL_RUN_FIRST,
+                                      gobject.TYPE_NONE,
+                                      [])}
+
+    _plugin = None
+
+    def __init__ (self, plugin):
+        gtk.HBox.__init__(self)
+        self._plugin = plugin
+
+        image = Image (plugin.Name, ImagePlugin, size=32)
+        label = Label (plugin.ShortDesc, 120)
+        box = gtk.HBox ()
+        box.set_spacing (5)
+        box.pack_start (image, False, False)
+        box.pack_start (label)
+
+        button = PrettyButton ()
+        button.connect ('clicked', self.show_plugin_page)
+        Tooltips.set_tip (button, plugin.LongDesc)
+        button.add (box)
+
+        if plugin.Name != 'core':
+            enable = gtk.CheckButton ()
+            PluginSetting (plugin, enable)
+            Tooltips.set_tip (enable, _("Enable %s") % plugin.ShortDesc)
+            enable.set_active (plugin.Enabled)
+            enable.set_sensitive (plugin.Context.AutoSort)
+            enable.connect ("toggled", self.enable_plugin)
+
+            self.pack_start (enable, False, False)
+        self.pack_start (button, False, False)
+
+        self.set_size_request (220, -1)
+
+    def enable_plugin (self, widget):
+        plugin = self._plugin
+        conflicts = plugin.Enabled and plugin.DisableConflicts or plugin.EnableConflicts
+        conflict = PluginConflict (plugin, conflicts)
+
+        if conflict.Resolve ():
+            plugin.Enabled = widget.get_active ()
+        else:
+            widget.set_active (plugin.Enabled)
+
+        plugin.Context.Write ()
+        self.emit ('activated')
+
+    def show_plugin_page (self, widget):
+        self.emit ('clicked')
+
+    def filter (self, text, level=FilterAll):
+        found = False
+        if level & FilterName:
+            if text in self._plugin.Name.lower () \
+            or text in self._plugin.ShortDesc.lower ():
+                found = True
+        if level & FilterLongDesc:
+            if text in self._plugin.LongDesc.lower():
+                found = True
+        if level & FilterCategory:
+            if text in self._plugin.Category.lower():
+                found = True
+
+        return found
+
+    def get_plugin (self):
+        return self._plugin
+
+# Category Box
+#
+class CategoryBox(gtk.VBox):
+
+    _plugins = None
+    _buttons = None
+    _context = None
+    _name    = ""
+    _tabel   = None
+    _alignment = None
+    _current_cols = 0
+    _current_plugins = 0
+
+    def __init__ (self, context, name, plugins=[]):
+        gtk.VBox.__init__ (self)
+
+        self.set_spacing (5)
+
+        self._context = context
+        self._plugins = plugins
+        if len (self._plugins) == 0:
+            for plugin in self._context.Plugins.values ():
+                if plugin.Category == name:
+                    self._plugins.append (plugin)
+        self._plugins = sorted(self._plugins, key=PluginKeyFunc)
+        self._name = name
+        text = name or 'Uncategorized'
+
+        header = gtk.HBox ()
+        header.set_spacing (10)
+        label = Label ('', -1)
+        label.set_markup ("<span color='#aaa' size='x-large' weight='800'>%s</span>" % text)
+
+        icon = text.lower ().replace (" ", "_")
+        image = Image (icon, ImageCategory)
+        header.pack_start (image, False, False)
+        header.pack_start (label, False, False)
+
+        self._table = gtk.Table ()
+        self._table.set_border_width (10)
+
+        self._buttons = []
+        for plugin in self._plugins:
+            button = PluginButton(plugin)
+            self._buttons.append(button)
+
+        self._alignment = gtk.Alignment (0, 0, 1, 1)
+        self._alignment.set_padding (0, 20, 0, 0)
+        self._alignment.add (gtk.HSeparator ())
+
+        self.pack_start (header, False, False)
+        self.pack_start (self._table, False, False)
+        self.pack_start (self._alignment)
+
+    def show_separator (self, show):
+        children = self.get_children ()
+        if show:
+            if self._alignment not in children:
+                self.pack_start (self._alignment)
+        else:
+            if self._alignment in children:
+                self.remove(self._alignment)
+
+    def filter_buttons (self, text, level=FilterAll):
+        self._plugins = []
+        for button in self._buttons:
+            if button.filter (text, level=level):
+                self._plugins.append (button.get_plugin())
+        return len (self._plugins) > 0
+
+    def rebuild_table (self, ncols):
+        if ncols == self._current_cols \
+        and len (self._plugins) == self._current_plugins:
+            return
+        self._current_cols = ncols
+        self._current_plugins = len (self._plugins)
+
+        children = self._table.get_children ()
+        if len (children) > 0:
+            for child in children:
+                self._table.remove(child)
+
+        row = 0
+        col = 0
+        for button in self._buttons:
+            if button.get_plugin () in self._plugins:
+                self._table.attach (button, col, col+1, row, row+1, 0)
+                col += 1
+                if col == ncols:
+                    col = 0
+                    row += 1
+        self.show_all ()
+
+    def get_buttons (self):
+        return self._buttons
+
+    def get_plugins (self):
+        return self._plugins
+
+# Plugin Window
+#
+class PluginWindow(gtk.ScrolledWindow):
+    __gsignals__    = {"show-plugin" : (gobject.SIGNAL_RUN_FIRST,
+                                        gobject.TYPE_NONE,
+                                        [gobject.TYPE_PYOBJECT])}
+
+    _not_found_box = None
+    _style_block   = 0
+    _context       = None
+    _categories    = None
+    _viewport      = None
+    _boxes         = None
+    _box           = None
+
+    def __init__ (self, context, categories=[], plugins=[]):
+        gtk.ScrolledWindow.__init__ (self)
+
+        self._categories = {}
+        self._boxes = []
+        self._context = context
+        pool = plugins or self._context.Plugins.values()
+        if len (categories):
+            for plugin in pool:
+                category = plugin.Category
+                if category in categories:
+                    if not category in self._categories:
+                        self._categories[category] = []
+                    self._categories[category].append(plugin)
+        else:
+            for plugin in pool:
+                category = plugin.Category
+                if not category in self._categories:
+                    self._categories[category] = []
+                self._categories[category].append(plugin)
+
+        self.props.hscrollbar_policy = gtk.POLICY_NEVER
+        self.props.vscrollbar_policy = gtk.POLICY_AUTOMATIC
+        self.connect ('size-allocate', self.rebuild_boxes)
+
+        self._box = gtk.VBox ()
+        self._box.set_spacing (5)
+
+        self._not_found_box = NotFoundBox ()
+
+        categories = sorted(self._categories, key=CategoryKeyFunc)
+        for category in categories:
+            plugins = self._categories[category]
+            category_box = CategoryBox(context, category, plugins)
+            buttons = category_box.get_buttons ()
+            for button in buttons:
+                button.connect('clicked', self.show_plugin_page)
+            self._boxes.append (category_box)
+            self._box.pack_start (category_box, False, False)
+
+        viewport = gtk.Viewport ()
+        viewport.connect("style-set", self.set_viewport_style)
+        viewport.set_focus_vadjustment (self.get_vadjustment ())
+        viewport.add (self._box)
+        self.add (viewport)
+
+    def set_viewport_style (self, widget, previous):
+        if self._style_block > 0:
+            return
+        self._style_block += 1
+        widget.modify_bg(gtk.STATE_NORMAL, widget.style.base[gtk.STATE_NORMAL])
+        self._style_block -= 1
+
+    def filter_boxes (self, text, levels=(FilterName, FilterLongDesc, FilterCategory)):
+        found = False
+        for level in levels:
+            found = False
+            for box in self._boxes:
+                found |= box.filter_buttons (text, level)
+            if found:
+                break
+
+        viewport = self.get_child ()
+        child    = viewport.get_child ()
+
+        if not found:
+            if child != self._not_found_box:
+                viewport.remove (self._box)
+                viewport.add (self._not_found_box)
+            self._not_found_box.update (text)
+        else:
+            if child == self._not_found_box:
+                viewport.remove (self._not_found_box)
+                viewport.add (self._box)
+
+        self.queue_resize()
+        self.show_all()
+
+    def rebuild_boxes (self, widget, request):
+        ncols = request.width / 220
+        width = ncols * 220 + 40
+        if width > request.width:
+            ncols -= 1
+
+        pos = 0
+        last_box = None
+        children = self._box.get_children ()
+        for box in self._boxes:
+            plugins = box.get_plugins ()
+            if len (plugins) == 0:
+                if box in children:
+                    self._box.remove(box)
+            else:
+                if last_box:
+                    last_box.show_separator (True)
+
+                if box not in children:
+                    self._box.pack_start (box, False, False)
+                    self._box.reorder_child (box, pos)
+                box.rebuild_table (ncols)
+                box.show_separator (False)
+                pos += 1
+
+                last_box = box
+
+    def get_categories (self):
+        return self._categories.keys ()
+
+    def show_plugin_page (self, widget):
+        plugin = widget.get_plugin ()
+        self.emit ('show-plugin', plugin)
 
