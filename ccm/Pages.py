@@ -218,7 +218,8 @@ class PluginPage(GenericPage):
         else:
             widget.set_active(self.Plugin.Enabled)
         self.Plugin.Context.Write()
-        self.Block = self.Block-1
+        self.Block -= 1
+        GlobalUpdater.UpdatePlugins()
 
 # Filter Page
 #
@@ -793,7 +794,7 @@ class ProfileBackendPage(object):
     def ResetProfile(self, widget):
         
         for plugin in self.Context.Plugins.values():
-            settings = sum((v.values() for v in [plugin.Display]+[plugin.Screens[CurrentScreenNum]]), [])
+            settings = GetSettings(plugin)
             for setting in settings:
                 setting.Reset()
 
@@ -1296,7 +1297,7 @@ class MainPage(object):
         if category == 'All':
             category = ''
         category = category.lower()
-        self.RightWidget.filter_boxes(category, levels=(FilterCategory,))
+        self.RightWidget.filter_boxes(category, level=FilterCategory)
 
     def FilterChanged(self, widget):
         text = widget.get_text().lower()
