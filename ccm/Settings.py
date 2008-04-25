@@ -944,10 +944,7 @@ class KeySetting (EditableActionSetting):
     def BindingEdited (self, accel):
         '''Binding edited callback'''
         # Update & save binding
-        popup = Popup (self.Widget, 
-                       _("Computing possible conflicts, please wait"))
         conflict = KeyConflict (self.Setting, accel)
-        popup.destroy ()
         if conflict.Resolve (GlobalUpdater):
             self.current = accel
             self.Changed ()
@@ -1124,10 +1121,7 @@ to set \"%s\" button to Button1 ?") % self.Setting.ShortDesc)
             response = warning.run ()
             if response != gtk.RESPONSE_YES:
                 return
-        popup = Popup (self.Widget, 
-                       _("Computing possible conflicts, please wait"))
         conflict = ButtonConflict (self.Setting, button)
-        popup.destroy ()
         if conflict.Resolve (GlobalUpdater):
             self.current = button
             self.Changed ()
@@ -1215,10 +1209,7 @@ class EdgeSetting (EditableActionSetting):
 
     def EdgeEdited (self, edge):
         '''Edge edited callback'''
-        popup = Popup (self.Widget, 
-                       _("Computing possible conflicts, please wait"))
         conflict = EdgeConflict (self.Setting, edge)
-        popup.destroy ()
         if conflict.Resolve (GlobalUpdater):
             self.current = edge
             self.Changed ()
