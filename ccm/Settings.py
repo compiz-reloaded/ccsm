@@ -1309,7 +1309,7 @@ class SubGroupArea(object):
         self.MySettings = []
         self.SubGroup = subGroup
         self.Name = name
-        settings = sorted(sum((v.values() for v in [subGroup.Display]+[subGroup.Screens[CurrentScreenNum]]), []), key=SettingKeyFunc)
+        settings = sorted(GetSettings(subGroup), key=SettingKeyFunc)
         if not name:
             self.Child = self.Widget = gtk.VBox()
         else:

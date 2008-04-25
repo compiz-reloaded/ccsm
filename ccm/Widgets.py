@@ -835,7 +835,7 @@ class GlobalEdgeSelector(EdgeSelector):
 
         def filter_settings(plugin):
             if plugin.Enabled:
-                settings = sorted (sum ( (v.values() for v in [plugin.Display]+[plugin.Screens[CurrentScreenNum]]), []), key=SettingKeyFunc)
+                settings = sorted (GetSettings(plugin), key=SettingKeyFunc)
                 settings = filter (lambda s: s.Type == 'Edge', settings)
                 return settings
             return []
@@ -1378,28 +1378,32 @@ class PluginButton (gtk.HBox):
 
         if plugin.Name != 'core':
             enable = gtk.CheckButton ()
-            PluginSetting (plugin, enable)
             Tooltips.set_tip (enable, _("Enable %s") % plugin.ShortDesc)
             enable.set_active (plugin.Enabled)
             enable.set_sensitive (plugin.Context.AutoSort)
-            enable.connect ("toggled", self.enable_plugin)
-
+            self._toggled_handler = enable.connect ("toggled", self.enable_plugin)
+            PluginSetting (plugin, enable, self._toggled_handler)
             self.pack_start (enable, False, False)
         self.pack_start (button, False, False)
 
         self.set_size_request (220, -1)
 
     def enable_plugin (self, widget):
+
         plugin = self._plugin
         conflicts = plugin.Enabled and plugin.DisableConflicts or plugin.EnableConflicts
+
         conflict = PluginConflict (plugin, conflicts)
 
         if conflict.Resolve ():
             plugin.Enabled = widget.get_active ()
         else:
+            widget.handler_block(self._toggled_handler)
             widget.set_active (plugin.Enabled)
+            widget.handler_unblock(self._toggled_handler)
 
         plugin.Context.Write ()
+        GlobalUpdater.UpdatePlugins()
         self.emit ('activated')
 
     def show_plugin_page (self, widget):
@@ -1408,13 +1412,13 @@ class PluginButton (gtk.HBox):
     def filter (self, text, level=FilterAll):
         found = False
         if level & FilterName:
-            if text in self._plugin.Name.lower () \
-            or text in self._plugin.ShortDesc.lower ():
+            if (text in self._plugin.Name.lower ()
+            or text in self._plugin.ShortDesc.lower ()):
                 found = True
-        if level & FilterLongDesc:
+        if not found and level & FilterLongDesc:
             if text in self._plugin.LongDesc.lower():
                 found = True
-        if level & FilterCategory:
+        if not found and level & FilterCategory:
             if text in self._plugin.Category.lower():
                 found = True
 
@@ -1436,18 +1440,23 @@ class CategoryBox(gtk.VBox):
     _current_cols = 0
     _current_plugins = 0
 
-    def __init__ (self, context, name, plugins=[]):
+    def __init__ (self, context, name, plugins=None):
         gtk.VBox.__init__ (self)
 
         self.set_spacing (5)
 
         self._context = context
-        self._plugins = plugins
-        if len (self._plugins) == 0:
-            for plugin in self._context.Plugins.values ():
+        if plugins is not None:
+            self._plugins = plugins
+        else:
+            self._plugins = []
+
+        if not plugins:
+            for plugin in context.Plugins.values ():
                 if plugin.Category == name:
                     self._plugins.append (plugin)
-        self._plugins = sorted(self._plugins, key=PluginKeyFunc)
+
+        self._plugins.sort(key=PluginKeyFunc)
         self._name = name
         text = name or 'Uncategorized'
 
@@ -1491,17 +1500,18 @@ class CategoryBox(gtk.VBox):
         for button in self._buttons:
             if button.filter (text, level=level):
                 self._plugins.append (button.get_plugin())
-        return len (self._plugins) > 0
+
+        return bool(self._plugins)
 
     def rebuild_table (self, ncols):
-        if ncols == self._current_cols \
-        and len (self._plugins) == self._current_plugins:
+        if (ncols == self._current_cols
+        and len (self._plugins) == self._current_plugins):
             return
         self._current_cols = ncols
         self._current_plugins = len (self._plugins)
 
         children = self._table.get_children ()
-        if len (children) > 0:
+        if children:
             for child in children:
                 self._table.remove(child)
 
@@ -1590,25 +1600,22 @@ class PluginWindow(gtk.ScrolledWindow):
         widget.modify_bg(gtk.STATE_NORMAL, widget.style.base[gtk.STATE_NORMAL])
         self._style_block -= 1
 
-    def filter_boxes (self, text, levels=(FilterName, FilterLongDesc, FilterCategory)):
+    def filter_boxes (self, text, level=FilterAll):
         found = False
-        for level in levels:
-            found = False
-            for box in self._boxes:
-                found |= box.filter_buttons (text, level)
-            if found:
-                break
+
+        for box in self._boxes:
+            found |= box.filter_buttons (text, level)
 
         viewport = self.get_child ()
         child    = viewport.get_child ()
 
         if not found:
-            if child != self._not_found_box:
+            if child is not self._not_found_box:
                 viewport.remove (self._box)
                 viewport.add (self._not_found_box)
             self._not_found_box.update (text)
         else:
-            if child == self._not_found_box:
+            if child is self._not_found_box:
                 viewport.remove (self._not_found_box)
                 viewport.add (self._box)
 

@@ -32,6 +32,7 @@ import weakref
 from ccm.Constants import *
 from cgi import escape as protect_pango_markup
 import operator
+import itertools
 
 import locale
 import gettext
@@ -309,14 +310,18 @@ GlobalUpdater = Updater ()
 
 class PluginSetting:
 
-    def __init__ (self, plugin, widget):
+    def __init__ (self, plugin, widget, handler):
         self.Widget = widget
         self.Plugin = plugin
+        self.Handler = handler
         GlobalUpdater.AppendPlugin (self)
 
     def Read (self):
-        self.Widget.set_active (self.Plugin.Enabled)
-        self.Widget.set_sensitive (self.Plugin.Context.AutoSort)
+        widget = self.Widget
+        widget.handler_block(self.Handler)
+        widget.set_active (self.Plugin.Enabled)
+        widget.set_sensitive (self.Plugin.Context.AutoSort)
+        widget.handler_unblock(self.Handler)
 
 class PureVirtualError(Exception):
     pass
@@ -338,6 +343,11 @@ PluginKeyFunc = operator.attrgetter('ShortDesc')
 
 def HasOnlyType (settings, stype):
     return settings and not [s for s in settings if s.Type != stype]
+
+def GetSettings(group):
+    screen = group.Screens[CurrentScreenNum].itervalues()
+    display = group.Display.itervalues()
+    return itertools.chain(screen, display)
 
 # Support python 2.4
 try:
