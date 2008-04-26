@@ -352,7 +352,7 @@ class PluginConflict(Conflict):
         # Only when enabling a plugin
         types = []
         actionConflicts = []
-        if not self.Plugin.Enabled:
+        if not self.Plugin.Enabled and not self.AutoResolve:
             for setting in GetSettings(self.Plugin):
                 conflict = None
                 if setting.Type == 'Key':
