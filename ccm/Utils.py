@@ -344,9 +344,26 @@ PluginKeyFunc = operator.attrgetter('ShortDesc')
 def HasOnlyType (settings, stype):
     return settings and not [s for s in settings if s.Type != stype]
 
-def GetSettings(group):
-    screen = group.Screens[CurrentScreenNum].itervalues()
-    display = group.Display.itervalues()
+def GetSettings(group, displayOnly=False, types=None):
+
+    def TypeFilter (settings, types):
+         for setting in settings:
+            if setting.Type in types:
+                yield setting
+
+    if types:
+        display = TypeFilter(group.Display.itervalues(), types)
+    else:
+        display = group.Display.itervalues()
+
+    if displayOnly:
+        return display
+
+    if types:
+        screen = TypeFilter(group.Screens[CurrentScreenNum].itervalues(), types)
+    else:
+        screen = group.Screens[CurrentScreenNum].itervalues()
+
     return itertools.chain(screen, display)
 
 # Support python 2.4
