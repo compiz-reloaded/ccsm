@@ -62,7 +62,21 @@ class Conflict:
         return answer
 
 class ActionConflict (Conflict):
+
+    ActionTypes = set(('Bell', 'Button', 'Edge', 'Key'))
+
     def __init__ (self, setting, settings, autoResolve):
+
+        def ExcludeGlobal (settings):
+            for setting in settings:
+                if setting.Info[0]:
+                    yield setting
+
+        def ExcludeInternal (settings):
+            for setting in settings:
+                if not setting.Info[0]:
+                    yield setting
+
         Conflict.__init__(self, autoResolve)
         self.Conflicts = []
         self.Name = ""
@@ -74,9 +88,14 @@ class ActionConflict (Conflict):
         self.Settings = settings
 
         if not settings:
+            if setting.Info[0]: # internal action
+                settings.extend(ExcludeGlobal(GetSettings(setting.Plugin,
+                    displayOnly=True, types=self.ActionTypes)))
+
             for plugin in self.Setting.Plugin.Context.Plugins.values ():
                 if plugin.Enabled:
-                    settings.extend(GetSettings(plugin))
+                    settings.extend(ExcludeInternal(GetSettings(plugin,
+                        displayOnly=True, types=self.ActionTypes)))
 
     def Resolve (self, updater = None):
         if len (self.Conflicts):
