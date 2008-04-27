@@ -183,10 +183,10 @@ class EdgeConflict(ActionConflict):
         if not newValue:
             return
 
-        newEdges = set(e.lower() for e in newValue.split("|"))
+        newEdges = set(newValue.split("|"))
 
         if not ignoreOld:
-            oldEdges = set(e.lower() for e in self.Setting.Value.split("|"))
+            oldEdges = set(self.Setting.Value.split("|"))
             diff = newEdges - oldEdges
             if diff:
                newEdges = diff # no need to check edges that were already set
@@ -197,7 +197,7 @@ class EdgeConflict(ActionConflict):
             if s is setting:
                 continue
             elif s.Type == 'Edge':
-                settingEdges = set(e.lower() for e in s.Value.split("|"))
+                settingEdges = set(s.Value.split("|"))
                 union = newEdges & settingEdges
                 if union:
                     for edge in union:
@@ -512,4 +512,4 @@ class PluginConflict(Conflict):
             return answer, choice
         
         return answer
-        
+        e
