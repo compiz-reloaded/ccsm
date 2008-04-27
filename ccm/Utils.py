@@ -274,7 +274,7 @@ class Updater:
             plugin.Read()
 
     def UpdateSetting (self, setting):
-        widgets = self.VisibleSettings.get((setting.Name, setting.Plugin.Name))
+        widgets = self.VisibleSettings.get((setting.Plugin.Name, setting.Name))
         if not widgets:
             return
         for reference in widgets:
