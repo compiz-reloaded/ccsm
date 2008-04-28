@@ -67,11 +67,6 @@ class ActionConflict (Conflict):
 
     def __init__ (self, setting, settings, autoResolve):
 
-        def ExcludeGlobal (settings):
-            for setting in settings:
-                if setting.Info[0]:
-                    yield setting
-
         def ExcludeInternal (settings):
             for setting in settings:
                 if not setting.Info[0]:
@@ -87,15 +82,20 @@ class ActionConflict (Conflict):
 
         self.Settings = settings
 
-        if not settings:
-            if setting.Info[0]: # internal action
-                settings.extend(ExcludeGlobal(GetSettings(setting.Plugin,
-                    displayOnly=True, types=self.ActionTypes)))
+        # if the action is internal, include all global actions plus internal
+        # actions from the same plugin. If it is global, include all actions.
 
+        if not settings:
             for plugin in self.Setting.Plugin.Context.Plugins.values ():
                 if plugin.Enabled:
-                    settings.extend(ExcludeInternal(GetSettings(plugin,
-                        displayOnly=True, types=self.ActionTypes)))
+                    pluginActions = GetSettings(plugin, displayOnly=True,
+                                                types=self.ActionTypes)
+
+                    if setting.Info[0] and plugin is not setting.Plugin:
+                        settings.extend(ExcludeInternal(pluginActions))
+
+                    else:
+                        settings.extend(pluginActions)
 
     def Resolve (self, updater = None):
         if len (self.Conflicts):
