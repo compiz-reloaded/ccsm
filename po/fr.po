@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fr-ccsm\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-04-03 13:46+0530\n"
+"POT-Creation-Date: 2008-05-02 13:46+0530\n"
 "PO-Revision-Date: 2008-03-16 15:14+0100\n"
 "Last-Translator: Tristan RABLAT <tristan.rablat@gmail.com>\n"
 "Language-Team: <fr@li.org>\n"
@@ -44,6 +44,15 @@ msgstr "Ne pas définir %(action)s"
 #, python-format
 msgid "Set %(action)s anyway"
 msgstr "Définir %(action)s malgré tout"
+
+msgid "key"
+msgstr ""
+
+msgid "button"
+msgstr ""
+
+msgid "edge"
+msgstr ""
 
 #, python-format
 msgid ""
@@ -82,6 +91,18 @@ msgstr "Activer \"%(plugin)s\""
 #, python-format
 msgid "Don't enable %(feature)s"
 msgstr "Ne pas activer %(feature)s"
+
+#, python-format
+msgid ""
+"Some %(bindings)s bindings of Plugin <b>%(plugin)s</b> conflict with other "
+"plugins. Do you want to resolve these conflicts?"
+msgstr ""
+
+msgid "Resolve conflicts"
+msgstr ""
+
+msgid "Ignore conflicts"
+msgstr ""
 
 #, python-format
 msgid ""
@@ -203,9 +224,6 @@ msgstr "Activé"
 msgid "Grab key combination"
 msgstr "Saisir une combinaison de touches"
 
-msgid "Computing possible conflicts, please wait"
-msgstr "Recherche d'éventuels conflits, veuillez patienter"
-
 #, python-format
 msgid "\"%s\" is not a valid button"
 msgstr "\"%s\" n'est pas un bouton valide"
@@ -228,32 +246,6 @@ msgstr "Aucun"
 
 msgid "CompizConfig Settings Manager"
 msgstr "Gestionnaire de Configuration CompizConfig"
-
-msgid "Filter"
-msgstr "Filtre"
-
-msgid "Filter your Plugin list"
-msgstr "Filtrer votre liste d'extensions"
-
-#, python-format
-msgid "Screen %i"
-msgstr "Écran %i"
-
-msgid "Screen"
-msgstr "Écran"
-
-msgid "Category"
-msgstr "Catégorie"
-
-msgid "Advanced Search"
-msgstr "Recherche avancée"
-
-msgid "Preferences"
-msgstr "Préférences"
-
-#, python-format
-msgid "Enable %s"
-msgstr "Activer %s"
 
 #, fuzzy
 msgid "Plugin"
@@ -337,6 +329,13 @@ msgstr "Une erreur est survenue"
 
 msgid "Warning"
 msgstr "Attention"
+
+#, python-format
+msgid "Enable %s"
+msgstr "Activer %s"
+
+msgid "Filter"
+msgstr "Filtre"
 
 #, python-format
 msgid "Search %s Plugin Options"
@@ -484,6 +483,9 @@ msgstr "Nom de l'extension:"
 msgid "Insert plugin name"
 msgstr "Insérer le nom de l'extension"
 
+msgid "Preferences"
+msgstr "Préférences"
+
 msgid ""
 "Configure the backend, profile and other internal settings used by the "
 "Compiz Configuration System."
@@ -503,6 +505,22 @@ msgstr "Profil & Backend"
 msgid "Plugin List"
 msgstr "Liste des Extensions"
 
+msgid "Filter your Plugin list"
+msgstr "Filtrer votre liste d'extensions"
+
+#, python-format
+msgid "Screen %i"
+msgstr "Écran %i"
+
+msgid "Screen"
+msgstr "Écran"
+
+msgid "Category"
+msgstr "Catégorie"
+
+msgid "Advanced Search"
+msgstr "Recherche avancée"
+
 #, python-format
 msgid ""
 "<span size=\"large\"><b>No matches found.</b> </span><span>\n"
@@ -511,6 +529,9 @@ msgid ""
 msgstr ""
 "<span size=\"large\"><b>Pas de concordance trouvée.</b> </span><br><br> "
 "Votre filtre \"<b>%s</b>\" ne correspond à aucun objet."
+
+#~ msgid "Computing possible conflicts, please wait"
+#~ msgstr "Recherche d'éventuels conflits, veuillez patienter"
 
 #~ msgid "Value (%s)"
 #~ msgstr "Valeur (%s)"

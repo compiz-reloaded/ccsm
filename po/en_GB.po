@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm 0.7.2\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-04-03 13:46+0530\n"
+"POT-Creation-Date: 2008-05-02 13:46+0530\n"
 "PO-Revision-Date: 2008-02-28 23:36+0100\n"
 "Last-Translator: David Lodge <dave@cirt.net>\n"
 "Language-Team: gb <dave@cirt.net>\n"
@@ -41,6 +41,15 @@ msgstr "Don't set %(action)s"
 #, python-format
 msgid "Set %(action)s anyway"
 msgstr "Set %(action)s anyway"
+
+msgid "key"
+msgstr ""
+
+msgid "button"
+msgstr ""
+
+msgid "edge"
+msgstr ""
 
 #, python-format
 msgid ""
@@ -79,6 +88,18 @@ msgstr "Enable %(plugin)s"
 #, python-format
 msgid "Don't enable %(feature)s"
 msgstr "Don't enable %(feature)s"
+
+#, python-format
+msgid ""
+"Some %(bindings)s bindings of Plugin <b>%(plugin)s</b> conflict with other "
+"plugins. Do you want to resolve these conflicts?"
+msgstr ""
+
+msgid "Resolve conflicts"
+msgstr ""
+
+msgid "Ignore conflicts"
+msgstr ""
 
 #, python-format
 msgid ""
@@ -196,9 +217,6 @@ msgstr "Enabled"
 msgid "Grab key combination"
 msgstr "Grab key combination"
 
-msgid "Computing possible conflicts, please wait"
-msgstr "Computing possible conflicts, please wait"
-
 #, python-format
 msgid "\"%s\" is not a valid button"
 msgstr "\"%s\" is not a valid button"
@@ -220,32 +238,6 @@ msgstr "None"
 
 msgid "CompizConfig Settings Manager"
 msgstr "CompizConfig Settings Manager"
-
-msgid "Filter"
-msgstr "Filter"
-
-msgid "Filter your Plugin list"
-msgstr "Filter your Plugin list"
-
-#, python-format
-msgid "Screen %i"
-msgstr "Screen %i"
-
-msgid "Screen"
-msgstr "Screen"
-
-msgid "Category"
-msgstr "Category"
-
-msgid "Advanced Search"
-msgstr "Advanced Search"
-
-msgid "Preferences"
-msgstr "Preferences"
-
-#, python-format
-msgid "Enable %s"
-msgstr "Enable %s"
 
 #, fuzzy
 msgid "Plugin"
@@ -327,6 +319,13 @@ msgstr "An error has occured"
 
 msgid "Warning"
 msgstr "Warning"
+
+#, python-format
+msgid "Enable %s"
+msgstr "Enable %s"
+
+msgid "Filter"
+msgstr "Filter"
 
 #, python-format
 msgid "Search %s Plugin Options"
@@ -473,6 +472,9 @@ msgstr "Plugin name:"
 msgid "Insert plugin name"
 msgstr "Insert plugin name"
 
+msgid "Preferences"
+msgstr "Preferences"
+
 msgid ""
 "Configure the backend, profile and other internal settings used by the "
 "Compiz Configuration System."
@@ -492,6 +494,22 @@ msgstr "Profile & Backend"
 msgid "Plugin List"
 msgstr "Plugin List"
 
+msgid "Filter your Plugin list"
+msgstr "Filter your Plugin list"
+
+#, python-format
+msgid "Screen %i"
+msgstr "Screen %i"
+
+msgid "Screen"
+msgstr "Screen"
+
+msgid "Category"
+msgstr "Category"
+
+msgid "Advanced Search"
+msgstr "Advanced Search"
+
 #, python-format
 msgid ""
 "<span size=\"large\"><b>No matches found.</b> </span><span>\n"
@@ -500,6 +518,9 @@ msgid ""
 msgstr ""
 "<span size=\"large\"><b>No matches found.</b> </span><span>\n"
 " Your filter \"<b>%s</b>\" does not match any items.</span>"
+
+#~ msgid "Computing possible conflicts, please wait"
+#~ msgstr "Computing possible conflicts, please wait"
 
 #~ msgid "Value (%s)"
 #~ msgstr "Value (%s)"

@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-04-03 13:46+0530\n"
-"PO-Revision-Date: 2008-03-15 18:34+0200\n"
+"POT-Creation-Date: 2008-05-02 13:46+0530\n"
+"PO-Revision-Date: 2008-04-04 08:58+0200\n"
 "Last-Translator: Nicolau Gonçalves <excentriko@gmail.com>\n"
 "Language-Team: Portuguese (Portugal) <pt@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -45,6 +45,15 @@ msgstr "Não activar %(action)s"
 #, python-format
 msgid "Set %(action)s anyway"
 msgstr "Definir %(action)s de qualquer maneira"
+
+msgid "key"
+msgstr ""
+
+msgid "button"
+msgstr ""
+
+msgid "edge"
+msgstr ""
 
 #, python-format
 msgid ""
@@ -83,6 +92,18 @@ msgstr "Activar %(plugin)s"
 #, python-format
 msgid "Don't enable %(feature)s"
 msgstr "Não activar %(feature)s"
+
+#, python-format
+msgid ""
+"Some %(bindings)s bindings of Plugin <b>%(plugin)s</b> conflict with other "
+"plugins. Do you want to resolve these conflicts?"
+msgstr ""
+
+msgid "Resolve conflicts"
+msgstr ""
+
+msgid "Ignore conflicts"
+msgstr ""
 
 #, python-format
 msgid ""
@@ -203,9 +224,6 @@ msgstr "Activado"
 msgid "Grab key combination"
 msgstr "Capturar combinação de teclas"
 
-msgid "Computing possible conflicts, please wait"
-msgstr "A verificar possíveis conflictos, por favor aguarde"
-
 #, python-format
 msgid "\"%s\" is not a valid button"
 msgstr "\"%s\" não é um botão válido"
@@ -229,35 +247,8 @@ msgstr "Nenhum"
 msgid "CompizConfig Settings Manager"
 msgstr "Sistema de Configuração do Compiz"
 
-msgid "Filter"
-msgstr "Filtro"
-
-msgid "Filter your Plugin list"
-msgstr "Filtrar a lista de plugins"
-
-#, python-format
-msgid "Screen %i"
-msgstr "Ecrã %i"
-
-msgid "Screen"
-msgstr "Ecrã"
-
-msgid "Category"
-msgstr "Categoria"
-
-msgid "Advanced Search"
-msgstr "Pesquisa avançada"
-
-msgid "Preferences"
-msgstr "Preferências"
-
-#, python-format
-msgid "Enable %s"
-msgstr "Definir %s"
-
-#, fuzzy
 msgid "Plugin"
-msgstr "Lista de Plugins"
+msgstr "Plugin"
 
 msgid "Please press the new key combination"
 msgstr "Por favor, pressione a nova combinação de teclas"
@@ -308,9 +299,8 @@ msgstr "Relação"
 msgid "Invert"
 msgstr "Inverter"
 
-#, fuzzy
 msgid "Browse..."
-msgstr "Pesquisar por "
+msgstr "Procurar..."
 
 msgid "Images"
 msgstr "Imagens"
@@ -338,6 +328,13 @@ msgid "Warning"
 msgstr "Aviso"
 
 #, python-format
+msgid "Enable %s"
+msgstr "Definir %s"
+
+msgid "Filter"
+msgstr "Filtro"
+
+#, python-format
 msgid "Search %s Plugin Options"
 msgstr "Pesquisar opções do plugin %s"
 
@@ -355,7 +352,7 @@ msgid ""
 "Click the keyboard image to grab a key for which to search."
 msgstr ""
 "Seleccione um filtro.\n"
-"Clique na imagem do teclado para selecionar uma tecla para procurar.."
+"Clique na imagem do teclado para selecionar uma tecla para procurar."
 
 msgid "Search in..."
 msgstr "Pesquisar em..."
@@ -371,18 +368,17 @@ msgid "Settings value"
 msgstr "Valor da definição"
 
 msgid "Group"
-msgstr ""
+msgstr "Grupo"
 
 msgid "Subgroup"
-msgstr ""
+msgstr "Sub-grupo"
 
 #. Notebook
 msgid "Settings"
 msgstr "Definições"
 
-#, fuzzy
 msgid "Loading Advanced Search"
-msgstr "Pesquisa avançada"
+msgstr "A Carregar Pesquisa avançada"
 
 msgid "Add a New Profile"
 msgstr "Adicionar um novo perfil"
@@ -482,6 +478,9 @@ msgstr "Nome do plugin:"
 msgid "Insert plugin name"
 msgstr "Inserir o nome do plugin"
 
+msgid "Preferences"
+msgstr "Preferências"
+
 msgid ""
 "Configure the backend, profile and other internal settings used by the "
 "Compiz Configuration System."
@@ -501,6 +500,22 @@ msgstr "Perfil e Backend"
 msgid "Plugin List"
 msgstr "Lista de Plugins"
 
+msgid "Filter your Plugin list"
+msgstr "Filtrar a lista de plugins"
+
+#, python-format
+msgid "Screen %i"
+msgstr "Ecrã %i"
+
+msgid "Screen"
+msgstr "Ecrã"
+
+msgid "Category"
+msgstr "Categoria"
+
+msgid "Advanced Search"
+msgstr "Pesquisa avançada"
+
 #, python-format
 msgid ""
 "<span size=\"large\"><b>No matches found.</b> </span><span>\n"
@@ -510,6 +525,9 @@ msgstr ""
 "<span size=\"large\"><b>Nenhuma ocorrência encontrada.</b> </span><span>\n"
 "\n"
 " O filtro \"<b>%s</b>\" não coincide com nenhum item.</span>"
+
+#~ msgid "Computing possible conflicts, please wait"
+#~ msgstr "A verificar possíveis conflictos, por favor aguarde"
 
 #~ msgid "Value (%s)"
 #~ msgstr "Valor (%s)"

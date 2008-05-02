@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-04-03 13:58+0530\n"
+"POT-Creation-Date: 2008-05-02 13:46+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,6 +35,15 @@ msgstr ""
 
 #, python-format
 msgid "Set %(action)s anyway"
+msgstr ""
+
+msgid "key"
+msgstr ""
+
+msgid "button"
+msgstr ""
+
+msgid "edge"
 msgstr ""
 
 #, python-format
@@ -66,6 +75,18 @@ msgstr ""
 
 #, python-format
 msgid "Don't enable %(feature)s"
+msgstr ""
+
+#, python-format
+msgid ""
+"Some %(bindings)s bindings of Plugin <b>%(plugin)s</b> conflict with other "
+"plugins. Do you want to resolve these conflicts?"
+msgstr ""
+
+msgid "Resolve conflicts"
+msgstr ""
+
+msgid "Ignore conflicts"
 msgstr ""
 
 #, python-format
@@ -177,9 +198,6 @@ msgstr ""
 msgid "Grab key combination"
 msgstr ""
 
-msgid "Computing possible conflicts, please wait"
-msgstr ""
-
 #, python-format
 msgid "\"%s\" is not a valid button"
 msgstr ""
@@ -198,32 +216,6 @@ msgid "None"
 msgstr ""
 
 msgid "CompizConfig Settings Manager"
-msgstr ""
-
-msgid "Filter"
-msgstr ""
-
-msgid "Filter your Plugin list"
-msgstr ""
-
-#, python-format
-msgid "Screen %i"
-msgstr ""
-
-msgid "Screen"
-msgstr ""
-
-msgid "Category"
-msgstr ""
-
-msgid "Advanced Search"
-msgstr ""
-
-msgid "Preferences"
-msgstr ""
-
-#, python-format
-msgid "Enable %s"
 msgstr ""
 
 msgid "Plugin"
@@ -303,6 +295,13 @@ msgid "An error has occured"
 msgstr ""
 
 msgid "Warning"
+msgstr ""
+
+#, python-format
+msgid "Enable %s"
+msgstr ""
+
+msgid "Filter"
 msgstr ""
 
 #, python-format
@@ -443,6 +442,9 @@ msgstr ""
 msgid "Insert plugin name"
 msgstr ""
 
+msgid "Preferences"
+msgstr ""
+
 msgid ""
 "Configure the backend, profile and other internal settings used by the "
 "Compiz Configuration System."
@@ -458,6 +460,22 @@ msgid "Profile & Backend"
 msgstr ""
 
 msgid "Plugin List"
+msgstr ""
+
+msgid "Filter your Plugin list"
+msgstr ""
+
+#, python-format
+msgid "Screen %i"
+msgstr ""
+
+msgid "Screen"
+msgstr ""
+
+msgid "Category"
+msgstr ""
+
+msgid "Advanced Search"
 msgstr ""
 
 #, python-format

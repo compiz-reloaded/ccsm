@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Oriya\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-04-03 13:46+0530\n"
+"POT-Creation-Date: 2008-05-02 13:46+0530\n"
 "PO-Revision-Date: 2007-12-17 15:45+0530\n"
 "Last-Translator: \n"
 "Language-Team: gist oriya team <info.gist@cdac.in>\n"
@@ -37,6 +37,15 @@ msgstr " %(action)sଗୁଡିକୁ ସ୍ଥିର କରନାହିଁ"
 #, fuzzy, python-format
 msgid "Set %(action)s anyway"
 msgstr " %(action)sଗୁଡିକୁ ସ୍ଥିର କରନାହିଁ"
+
+msgid "key"
+msgstr ""
+
+msgid "button"
+msgstr ""
+
+msgid "edge"
+msgstr ""
 
 #, python-format
 msgid ""
@@ -68,6 +77,18 @@ msgstr " %(plugin)s କୁ ସକ୍ଷମକର"
 #, python-format
 msgid "Don't enable %(feature)s"
 msgstr "%(feature)s ସକ୍ଷମ କରନାହିଁ"
+
+#, python-format
+msgid ""
+"Some %(bindings)s bindings of Plugin <b>%(plugin)s</b> conflict with other "
+"plugins. Do you want to resolve these conflicts?"
+msgstr ""
+
+msgid "Resolve conflicts"
+msgstr ""
+
+msgid "Ignore conflicts"
+msgstr ""
 
 #, python-format
 msgid ""
@@ -180,9 +201,6 @@ msgstr "ସକ୍ଷମହେଲା"
 msgid "Grab key combination"
 msgstr "ଟାଣିନେବା କି ସଂୟୁକ୍ତକରଣ"
 
-msgid "Computing possible conflicts, please wait"
-msgstr "ସମ୍ଭାବିତ ଦ୍ବନ୍ଦଗୁଡିକୁ ଗଣନା କରୁଛି, ଦଯାକରି ଅପେକ୍ଷା କରନ୍ତୁ"
-
 #, python-format
 msgid "\"%s\" is not a valid button"
 msgstr "\"%s\" ଗୋଟିଏ ମାନ୍ଯ ବଟନ ନୁହେଁ"
@@ -204,32 +222,6 @@ msgstr "କିଛି ନୁହେଁ"
 
 msgid "CompizConfig Settings Manager"
 msgstr "କମ୍ପିଜକନଫିଗ ସେଟିଙ୍ଗ ପ୍ରବନ୍ଧକ"
-
-msgid "Filter"
-msgstr "ଫିଲ୍ଟର"
-
-msgid "Filter your Plugin list"
-msgstr "ଆପଣଙ୍କର ପ୍ଲଗଇନ ତାଲିକାକୁ ଫିଲ୍ଟର କରନ୍ତୁ "
-
-#, python-format
-msgid "Screen %i"
-msgstr "ସ୍କ୍ରିନ %i"
-
-msgid "Screen"
-msgstr "ସ୍କ୍ରିନ"
-
-msgid "Category"
-msgstr "ବିଭାଗ"
-
-msgid "Advanced Search"
-msgstr "ଉନ୍ନତ ତଦନ୍ତ"
-
-msgid "Preferences"
-msgstr "ପସନ୍ଦଗୁଡିକ"
-
-#, python-format
-msgid "Enable %s"
-msgstr "%s ସକ୍ଷମକର"
 
 #, fuzzy
 msgid "Plugin"
@@ -311,6 +303,13 @@ msgstr "ଗୋଟିଏ ତ୍ରୁଟି ଘଟିଛି"
 
 msgid "Warning"
 msgstr "ଚେତାବନୀ"
+
+#, python-format
+msgid "Enable %s"
+msgstr "%s ସକ୍ଷମକର"
+
+msgid "Filter"
+msgstr "ଫିଲ୍ଟର"
 
 #, python-format
 msgid "Search %s Plugin Options"
@@ -453,6 +452,9 @@ msgstr "ପ୍ଲଇନ ନାମ:"
 msgid "Insert plugin name"
 msgstr "ପ୍ଲଗଇନ ନାମ ଭର୍ତ୍ତିକର"
 
+msgid "Preferences"
+msgstr "ପସନ୍ଦଗୁଡିକ"
+
 msgid ""
 "Configure the backend, profile and other internal settings used by the "
 "Compiz Configuration System."
@@ -472,6 +474,22 @@ msgstr "ପ୍ରୋଫାଇଲ & ବ୍ଯାକଏଣ୍ଡ"
 msgid "Plugin List"
 msgstr "ପ୍ଲଗଇନ ତାଲିକା"
 
+msgid "Filter your Plugin list"
+msgstr "ଆପଣଙ୍କର ପ୍ଲଗଇନ ତାଲିକାକୁ ଫିଲ୍ଟର କରନ୍ତୁ "
+
+#, python-format
+msgid "Screen %i"
+msgstr "ସ୍କ୍ରିନ %i"
+
+msgid "Screen"
+msgstr "ସ୍କ୍ରିନ"
+
+msgid "Category"
+msgstr "ବିଭାଗ"
+
+msgid "Advanced Search"
+msgstr "ଉନ୍ନତ ତଦନ୍ତ"
+
 #, python-format
 msgid ""
 "<span size=\"large\"><b>No matches found.</b> </span><span>\n"
@@ -481,6 +499,9 @@ msgstr ""
 "<span size=\"large\"><b>କୌଣସି ମେଳ ମିଳିଲା ନାହିଁ</b> </span><span>\n"
 "\n"
 " ଆପଣଙ୍କର ଫିଲ୍ଟର \"<b>%s</b>\" କୌଣସି ସାମଗ୍ରୀ ସହିତ ମେଳ ଖାଉନି ।</span>"
+
+#~ msgid "Computing possible conflicts, please wait"
+#~ msgstr "ସମ୍ଭାବିତ ଦ୍ବନ୍ଦଗୁଡିକୁ ଗଣନା କରୁଛି, ଦଯାକରି ଅପେକ୍ଷା କରନ୍ତୁ"
 
 #~ msgid "Value (%s)"
 #~ msgstr "ମୂଲ୍ଯ (%s)"

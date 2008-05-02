@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Compiz Settings Manager 0.5.2\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-04-03 13:46+0530\n"
+"POT-Creation-Date: 2008-05-02 13:46+0530\n"
 "PO-Revision-Date: 2007-09-09 01:49+0100\n"
 "Last-Translator: Gustau L. Castells (Karasu) <gustaucastells@gmail.com>\n"
 "Language-Team: Catalan <gustaucastells@gmail.com>\n"
@@ -42,6 +42,15 @@ msgstr "No marquis %(action)s"
 #, python-format
 msgid "Set %(action)s anyway"
 msgstr "Marca %(action)s de totes maneres"
+
+msgid "key"
+msgstr ""
+
+msgid "button"
+msgstr ""
+
+msgid "edge"
+msgstr ""
 
 #, fuzzy, python-format
 msgid ""
@@ -81,6 +90,18 @@ msgstr "Activa %(plugin)s"
 #, python-format
 msgid "Don't enable %(feature)s"
 msgstr "No activar %(feature)s"
+
+#, python-format
+msgid ""
+"Some %(bindings)s bindings of Plugin <b>%(plugin)s</b> conflict with other "
+"plugins. Do you want to resolve these conflicts?"
+msgstr ""
+
+msgid "Resolve conflicts"
+msgstr ""
+
+msgid "Ignore conflicts"
+msgstr ""
 
 #, python-format
 msgid ""
@@ -202,9 +223,6 @@ msgstr "Activat"
 msgid "Grab key combination"
 msgstr "Captura combinació de tecles"
 
-msgid "Computing possible conflicts, please wait"
-msgstr "Calculant possibles conflictes, esperi"
-
 #, python-format
 msgid "\"%s\" is not a valid button"
 msgstr "\"%s\" no es un botó vàlid"
@@ -226,32 +244,6 @@ msgstr "Cap"
 
 msgid "CompizConfig Settings Manager"
 msgstr "Editor de la configuració de Compiz"
-
-msgid "Filter"
-msgstr "Filtre"
-
-msgid "Filter your Plugin list"
-msgstr "Filtra la llista de connectors"
-
-#, python-format
-msgid "Screen %i"
-msgstr "Pantalla %i"
-
-msgid "Screen"
-msgstr "Pantalla"
-
-msgid "Category"
-msgstr "Categoria"
-
-msgid "Advanced Search"
-msgstr "Cerca avançada"
-
-msgid "Preferences"
-msgstr "Preferències"
-
-#, python-format
-msgid "Enable %s"
-msgstr "Activa %s"
 
 #, fuzzy
 msgid "Plugin"
@@ -337,6 +329,13 @@ msgstr "S'ha donat un error"
 
 msgid "Warning"
 msgstr "Alerta"
+
+#, python-format
+msgid "Enable %s"
+msgstr "Activa %s"
+
+msgid "Filter"
+msgstr "Filtre"
 
 #, python-format
 msgid "Search %s Plugin Options"
@@ -477,6 +476,9 @@ msgstr "Nom del connector:"
 msgid "Insert plugin name"
 msgstr "Inserta el nom del connector"
 
+msgid "Preferences"
+msgstr "Preferències"
+
 msgid ""
 "Configure the backend, profile and other internal settings used by the "
 "Compiz Configuration System."
@@ -496,6 +498,22 @@ msgstr "Perfils i Rerefons"
 msgid "Plugin List"
 msgstr "Llista de Connectors"
 
+msgid "Filter your Plugin list"
+msgstr "Filtra la llista de connectors"
+
+#, python-format
+msgid "Screen %i"
+msgstr "Pantalla %i"
+
+msgid "Screen"
+msgstr "Pantalla"
+
+msgid "Category"
+msgstr "Categoria"
+
+msgid "Advanced Search"
+msgstr "Cerca avançada"
+
 #, python-format
 msgid ""
 "<span size=\"large\"><b>No matches found.</b> </span><span>\n"
@@ -505,6 +523,9 @@ msgstr ""
 "<span size=\"large\"><b>No s'han trobat coincidències.</b> </span><span>\n"
 "\n"
 " El teu filtre \"<b>%s</b>\" no concorda amb cap element.</span>"
+
+#~ msgid "Computing possible conflicts, please wait"
+#~ msgstr "Calculant possibles conflictes, esperi"
 
 #~ msgid "Value (%s)"
 #~ msgstr "Valor (%s)"

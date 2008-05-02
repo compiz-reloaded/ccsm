@@ -11,14 +11,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-04-03 13:46+0530\n"
-"PO-Revision-Date: 2008-02-03 01:59+0100\n"
-"Last-Translator: XaniloM Winkler <xanilom@gmail.com>\n"
+"POT-Creation-Date: 2008-05-02 13:46+0530\n"
+"PO-Revision-Date: 2008-04-26 15:53+0200\n"
+"Last-Translator: Nuria Fernández Mingo <nuria.fernandezm@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Pootle 1.0.2\n"
+"X-Generator: Pootle 1.1.0\n"
 "X-Poedit-Language: Spanish\n"
 "X-Poedit-Country: SPAIN\n"
 
@@ -47,6 +47,15 @@ msgstr "No aplicar %(action)s"
 #, python-format
 msgid "Set %(action)s anyway"
 msgstr "Ignorar y Aplicar %(action)s"
+
+msgid "key"
+msgstr ""
+
+msgid "button"
+msgstr ""
+
+msgid "edge"
+msgstr ""
 
 #, python-format
 msgid ""
@@ -86,6 +95,18 @@ msgstr "Habilitar %(plugin)s"
 #, python-format
 msgid "Don't enable %(feature)s"
 msgstr "No habilitar %(feature)s"
+
+#, python-format
+msgid ""
+"Some %(bindings)s bindings of Plugin <b>%(plugin)s</b> conflict with other "
+"plugins. Do you want to resolve these conflicts?"
+msgstr ""
+
+msgid "Resolve conflicts"
+msgstr ""
+
+msgid "Ignore conflicts"
+msgstr ""
 
 #, python-format
 msgid ""
@@ -209,9 +230,6 @@ msgstr "Habilitado"
 msgid "Grab key combination"
 msgstr "Escoger combinación de teclas"
 
-msgid "Computing possible conflicts, please wait"
-msgstr "Verificando posibles conflictos, por favor espere"
-
 #, python-format
 msgid "\"%s\" is not a valid button"
 msgstr "\"%s\" no es un botón válido"
@@ -234,35 +252,9 @@ msgstr "Ninguno"
 msgid "CompizConfig Settings Manager"
 msgstr "Administrador de Opciones CompizConfig"
 
-msgid "Filter"
-msgstr "Filtro"
-
-msgid "Filter your Plugin list"
-msgstr "Filtrar tu lista de plugins"
-
-#, python-format
-msgid "Screen %i"
-msgstr "Pantalla %i"
-
-msgid "Screen"
-msgstr "Pantalla"
-
-msgid "Category"
-msgstr "Categoría"
-
-msgid "Advanced Search"
-msgstr "Búsqueda avanzada"
-
-msgid "Preferences"
-msgstr "Preferencias"
-
-#, python-format
-msgid "Enable %s"
-msgstr "Habilitar %s"
-
 #, fuzzy
 msgid "Plugin"
-msgstr "Lista de plugins"
+msgstr "Pugins"
 
 msgid "Please press the new key combination"
 msgstr "Por favor introduzca una nueva combinación de teclas"
@@ -315,7 +307,7 @@ msgstr "Inverso"
 
 #, fuzzy
 msgid "Browse..."
-msgstr "Buscar "
+msgstr "Buscar..."
 
 msgid "Images"
 msgstr "Imágenes"
@@ -349,6 +341,13 @@ msgid "Warning"
 msgstr "Atención"
 
 #, python-format
+msgid "Enable %s"
+msgstr "Habilitar %s"
+
+msgid "Filter"
+msgstr "Filtro"
+
+#, python-format
 msgid "Search %s Plugin Options"
 msgstr "Buscar %s opciones de plugin"
 
@@ -365,6 +364,8 @@ msgid ""
 "Enter a filter.\n"
 "Click the keyboard image to grab a key for which to search."
 msgstr ""
+"Escriba un filtro.Pulse en la imagen del teclado para coger la tecla por la "
+"que quiere buscar."
 
 msgid "Search in..."
 msgstr "Buscar en..."
@@ -380,10 +381,10 @@ msgid "Settings value"
 msgstr "Valor de las opciones"
 
 msgid "Group"
-msgstr ""
+msgstr "Grupo"
 
 msgid "Subgroup"
-msgstr ""
+msgstr "Sub-grupo"
 
 #. Notebook
 msgid "Settings"
@@ -391,7 +392,7 @@ msgstr "Opciones"
 
 #, fuzzy
 msgid "Loading Advanced Search"
-msgstr "Búsqueda avanzada"
+msgstr "Cargando la búsqueda avanzada"
 
 msgid "Add a New Profile"
 msgstr "Añadir un nuevo perfil"
@@ -492,6 +493,9 @@ msgstr "Nombre del plugin"
 msgid "Insert plugin name"
 msgstr "Insertar nombre del plugin"
 
+msgid "Preferences"
+msgstr "Preferencias"
+
 msgid ""
 "Configure the backend, profile and other internal settings used by the "
 "Compiz Configuration System."
@@ -511,6 +515,22 @@ msgstr "Perfil & Backend"
 msgid "Plugin List"
 msgstr "Lista de plugins"
 
+msgid "Filter your Plugin list"
+msgstr "Filtrar tu lista de plugins"
+
+#, python-format
+msgid "Screen %i"
+msgstr "Pantalla %i"
+
+msgid "Screen"
+msgstr "Pantalla"
+
+msgid "Category"
+msgstr "Categoría"
+
+msgid "Advanced Search"
+msgstr "Búsqueda avanzada"
+
 #, python-format
 msgid ""
 "<span size=\"large\"><b>No matches found.</b> </span><span>\n"
@@ -520,6 +540,9 @@ msgstr ""
 "<span size=\"large\"><b>Ninguna coincidencia.</b> </span><span>\n"
 "\n"
 " Tu filtro \"<b>%s</b>\" no ha devuelto ningún resultado.</span>"
+
+#~ msgid "Computing possible conflicts, please wait"
+#~ msgstr "Verificando posibles conflictos, por favor espere"
 
 #~ msgid "Value (%s)"
 #~ msgstr "Valor (%s)"

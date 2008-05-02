@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zh_CN-ccsm\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-04-03 13:46+0530\n"
-"PO-Revision-Date: 2007-12-11 16:59+0100\n"
-"Last-Translator: Thruth Wang <gubotruth@gmail.com>\n"
+"POT-Creation-Date: 2008-05-02 13:46+0530\n"
+"PO-Revision-Date: 2008-04-04 09:04+0200\n"
+"Last-Translator: Tao Wei <weitao1979@gmail.com>\n"
 "Language-Team: Chinese\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -39,6 +39,17 @@ msgstr "不要设置 %(action)s"
 #, python-format
 msgid "Set %(action)s anyway"
 msgstr "强制设置 %(action)s"
+
+#, fuzzy
+msgid "key"
+msgstr "按键"
+
+#, fuzzy
+msgid "button"
+msgstr "按钮"
+
+msgid "edge"
+msgstr ""
 
 #, fuzzy, python-format
 msgid ""
@@ -73,9 +84,21 @@ msgstr ""
 msgid "Enable %(plugin)s"
 msgstr "启用插件 %(plugin)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Don't enable %(feature)s"
-msgstr "不要启用 %s"
+msgstr "不要启用 %(feature)s"
+
+#, python-format
+msgid ""
+"Some %(bindings)s bindings of Plugin <b>%(plugin)s</b> conflict with other "
+"plugins. Do you want to resolve these conflicts?"
+msgstr ""
+
+msgid "Resolve conflicts"
+msgstr ""
+
+msgid "Ignore conflicts"
+msgstr ""
 
 #, fuzzy, python-format
 msgid ""
@@ -83,17 +106,17 @@ msgid ""
 "is also provided by <b>%(plugin)s</b>"
 msgstr "<b>%s</b> 插件提供 <b>%s</b> 功能，该功能也可以由 <b>%s</b> 提供"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Disable %(plugin_conflict)s"
-msgstr "禁用这些插件"
+msgstr "禁用 %(plugin_conflict)s"
 
 #, python-format
 msgid "Don't enable %(plugin)s"
 msgstr "不要启用插件 %(plugin)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Plugin <b>%(plugin_conflict)s</b> conflicts with <b>%(plugin)s</b>."
-msgstr "<b>%s</b> 插件与 <b>%s</b>相冲突。"
+msgstr "插件 <b>%(plugin_conflict)s</b> 和 <b>%(plugin)s</b> 冲突。"
 
 #, fuzzy, python-format
 msgid ""
@@ -111,9 +134,9 @@ msgstr "启用这些插件"
 msgid "<b>%(plugin)s</b> requires the plugin <b>%(require)s</b>."
 msgstr "<b>%s</b> 需要 <b>%s</b> 插件。"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Enable %(require)s"
-msgstr "启用 %s"
+msgstr "启用 %(require)s"
 
 #, fuzzy, python-format
 msgid ""
@@ -124,9 +147,9 @@ msgstr "<b>%s</b> 提供 <b>%s</b> 功能，<b>%s</b> 插件需要此功能。"
 msgid "Disable these plugins"
 msgstr "禁用这些插件"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Don't disable %(plugin)s"
-msgstr "不要禁用 %s"
+msgstr "不要禁用 %(plugin)s"
 
 #, python-format
 msgid "<b>%(plugin)s</b> is required by the plugins <b>%(plugin_list)s</b>."
@@ -188,9 +211,6 @@ msgstr "启用"
 msgid "Grab key combination"
 msgstr "获取按键组合"
 
-msgid "Computing possible conflicts, please wait"
-msgstr "正在计算可能存在的冲突，请稍候"
-
 #, python-format
 msgid "\"%s\" is not a valid button"
 msgstr "\"%s\"不是一个有效的按键"
@@ -211,35 +231,8 @@ msgstr "无"
 msgid "CompizConfig Settings Manager"
 msgstr "CompizConfig 设置管理器"
 
-msgid "Filter"
-msgstr "关键字"
-
-msgid "Filter your Plugin list"
-msgstr "过滤你的插件列表"
-
-#, python-format
-msgid "Screen %i"
-msgstr "屏幕 %i"
-
-msgid "Screen"
-msgstr "屏幕"
-
-msgid "Category"
-msgstr "类别"
-
-msgid "Advanced Search"
-msgstr "高级搜索"
-
-msgid "Preferences"
-msgstr "首选项"
-
-#, python-format
-msgid "Enable %s"
-msgstr "启用 %s"
-
-#, fuzzy
 msgid "Plugin"
-msgstr "插件列表"
+msgstr "插件"
 
 msgid "Please press the new key combination"
 msgstr "请按下新按键组合"
@@ -269,7 +262,7 @@ msgid "Or"
 msgstr "或"
 
 msgid "Edit match"
-msgstr ""
+msgstr "编辑匹配"
 
 #. Type
 msgid "Type"
@@ -283,17 +276,15 @@ msgid "Grab"
 msgstr "抓取"
 
 #. Relation
-#, fuzzy
 msgid "Relation"
-msgstr "整合"
+msgstr "关系"
 
 #. Invert
 msgid "Invert"
 msgstr "反向"
 
-#, fuzzy
 msgid "Browse..."
-msgstr "浏览"
+msgstr "浏览..."
 
 msgid "Images"
 msgstr "图像"
@@ -308,7 +299,7 @@ msgid "Open file..."
 msgstr "打开文件.."
 
 msgid "This is a settings manager for the CompizConfig configuration system."
-msgstr "这是一个针对CompizConfig配置系统的设置管理器"
+msgstr "这是一个针对 CompizConfig 配置系统的设置管理器"
 
 msgid "translator-credits"
 msgstr "Thruth Wang <gubotruth@gmail.com>"
@@ -318,6 +309,13 @@ msgstr "产生了一个错误"
 
 msgid "Warning"
 msgstr "警告"
+
+#, python-format
+msgid "Enable %s"
+msgstr "启用 %s"
+
+msgid "Filter"
+msgstr "关键字"
 
 #, python-format
 msgid "Search %s Plugin Options"
@@ -351,18 +349,17 @@ msgid "Settings value"
 msgstr "设置值"
 
 msgid "Group"
-msgstr ""
+msgstr "组"
 
 msgid "Subgroup"
-msgstr ""
+msgstr "子组"
 
 #. Notebook
 msgid "Settings"
 msgstr "设置"
 
-#, fuzzy
 msgid "Loading Advanced Search"
-msgstr "高级搜索"
+msgstr "加载高级搜索"
 
 msgid "Add a New Profile"
 msgstr "添加新存档"
@@ -385,9 +382,8 @@ msgstr "导入一个 CompizConfig 存档"
 msgid "Import as..."
 msgstr "做为……导入"
 
-#, fuzzy
 msgid "Import a CompizConfig Profile as a new profile"
-msgstr "导入一个 CompizConfig 存档"
+msgstr "导入一个 CompizConfig 存档作为新的存档"
 
 msgid "Export"
 msgstr "导出"
@@ -398,9 +394,8 @@ msgstr "导出你的 CompizConfig 存档"
 msgid "Reset to defaults"
 msgstr "重置到默认"
 
-#, fuzzy
 msgid "Reset your CompizConfig Profile to the global defaults"
-msgstr "导出你的 CompizConfig 存档"
+msgstr "重置你的 CompizConfig 存档到全局默认"
 
 msgid "Backend"
 msgstr "后端"
@@ -439,15 +434,12 @@ msgstr "未找到后端程序。"
 msgid "Automatic plugin sorting"
 msgstr "插件自动排序"
 
-#, fuzzy
 msgid "Disabled Plugins"
-msgstr "禁用这些插件"
+msgstr "禁用的插件"
 
-#, fuzzy
 msgid "Enabled Plugins"
-msgstr "启用这些插件"
+msgstr "启用的插件"
 
-#, fuzzy
 msgid ""
 "Do you really want to disable automatic plugin sorting? This will also "
 "disable conflict handling. You should only do this if you know what you are "
@@ -465,6 +457,9 @@ msgstr "插件名："
 msgid "Insert plugin name"
 msgstr "插入插件名称"
 
+msgid "Preferences"
+msgstr "首选项"
+
 #, fuzzy
 msgid ""
 "Configure the backend, profile and other internal settings used by the "
@@ -475,13 +470,29 @@ msgid "About"
 msgstr "关于"
 
 msgid "About CCSM..."
-msgstr "关于CCSM……"
+msgstr "关于 CCSM……"
 
 msgid "Profile & Backend"
 msgstr "存档和后端"
 
 msgid "Plugin List"
 msgstr "插件列表"
+
+msgid "Filter your Plugin list"
+msgstr "过滤你的插件列表"
+
+#, python-format
+msgid "Screen %i"
+msgstr "屏幕 %i"
+
+msgid "Screen"
+msgstr "屏幕"
+
+msgid "Category"
+msgstr "类别"
+
+msgid "Advanced Search"
+msgstr "高级搜索"
 
 #, python-format
 msgid ""
@@ -491,6 +502,9 @@ msgid ""
 msgstr ""
 "<span size=\"large\"><b>未找到匹配项。</b> </span><span>\n"
 " Your filter \"<b>%s</b>\" does not match any items.</span>"
+
+#~ msgid "Computing possible conflicts, please wait"
+#~ msgstr "正在计算可能存在的冲突，请稍候"
 
 #~ msgid "Value (%s)"
 #~ msgstr "值 (%s)"
@@ -513,12 +527,6 @@ msgstr ""
 
 #~ msgid "Name"
 #~ msgstr "名称"
-
-#~ msgid "Key"
-#~ msgstr "按键"
-
-#~ msgid "Button"
-#~ msgstr "按钮"
 
 #~ msgid "Screen Edge"
 #~ msgstr "屏幕边缘"

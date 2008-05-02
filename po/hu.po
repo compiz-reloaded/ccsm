@@ -8,15 +8,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-04-03 13:46+0530\n"
-"PO-Revision-Date: 2008-03-18 18:31+0100\n"
+"POT-Creation-Date: 2008-05-02 13:46+0530\n"
+"PO-Revision-Date: 2008-04-23 11:14+0200\n"
 "Last-Translator: KAMI <kamihir@freemail.hu>\n"
 "Language-Team: hungarian <hu@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Pootle 1.0.2\n"
+"X-Generator: Pootle 1.1.0\n"
 
 #, python-format
 msgid ""
@@ -43,6 +43,17 @@ msgstr "%(action)s mellőzése"
 #, python-format
 msgid "Set %(action)s anyway"
 msgstr "%(action)s beállítása"
+
+#, fuzzy
+msgid "key"
+msgstr "Billentyű"
+
+#, fuzzy
+msgid "button"
+msgstr "Gomb"
+
+msgid "edge"
+msgstr ""
 
 #, python-format
 msgid ""
@@ -84,11 +95,23 @@ msgstr "%(feature)s mellőzése"
 
 #, python-format
 msgid ""
+"Some %(bindings)s bindings of Plugin <b>%(plugin)s</b> conflict with other "
+"plugins. Do you want to resolve these conflicts?"
+msgstr ""
+
+msgid "Resolve conflicts"
+msgstr ""
+
+msgid "Ignore conflicts"
+msgstr ""
+
+#, python-format
+msgid ""
 "Plugin <b>%(plugin_conflict)s</b> provides feature <b>%(feature)s</b> which "
 "is also provided by <b>%(plugin)s</b>"
 msgstr ""
 "A(z) <b>%(plugin_conflict)s</b> bővítmény biztosítja a(z) <b>%(feature)s</b> "
-"funkciót. Ezt a funkciót a(z) </b>%(plugin)s</b> bővítmény is biztosítja."
+"funkciót. Ezt a funkciót a(z) <b>%(plugin)s</b> bővítmény is biztosítja."
 
 #, python-format
 msgid "Disable %(plugin_conflict)s"
@@ -206,9 +229,6 @@ msgstr "Engedélyezve"
 msgid "Grab key combination"
 msgstr "Billentyűzetkombináció megadása"
 
-msgid "Computing possible conflicts, please wait"
-msgstr "Lehetséges összeférhetetlenségek keresése. Kérem várjon."
-
 #, python-format
 msgid "\"%s\" is not a valid button"
 msgstr "\"%s\" nem érvényes gomb"
@@ -232,35 +252,8 @@ msgstr "Nincs"
 msgid "CompizConfig Settings Manager"
 msgstr "CompizConfig beállításkezelő"
 
-msgid "Filter"
-msgstr "Szűrő"
-
-msgid "Filter your Plugin list"
-msgstr "Bővítménylista szűrése"
-
-#, python-format
-msgid "Screen %i"
-msgstr "%i képernyő"
-
-msgid "Screen"
-msgstr "Képernyő"
-
-msgid "Category"
-msgstr "Kategória"
-
-msgid "Advanced Search"
-msgstr "Haladó keresés"
-
-msgid "Preferences"
-msgstr "Beállítások"
-
-#, python-format
-msgid "Enable %s"
-msgstr "%s engedélyezése"
-
-#, fuzzy
 msgid "Plugin"
-msgstr "Bővítmény lista"
+msgstr "Bővítmények"
 
 msgid "Please press the new key combination"
 msgstr "Nyomja le az új billentyűzetkombinációt"
@@ -311,9 +304,8 @@ msgstr "Összefüggés"
 msgid "Invert"
 msgstr "Megfordítás"
 
-#, fuzzy
 msgid "Browse..."
-msgstr "Tallózás"
+msgstr "Tallózás..."
 
 msgid "Images"
 msgstr "Képek"
@@ -338,6 +330,13 @@ msgstr "Hiba lépett fel"
 
 msgid "Warning"
 msgstr "Figyelmeztetés"
+
+#, python-format
+msgid "Enable %s"
+msgstr "%s engedélyezése"
+
+msgid "Filter"
+msgstr "Szűrő"
 
 #, python-format
 msgid "Search %s Plugin Options"
@@ -373,18 +372,17 @@ msgid "Settings value"
 msgstr "Beállítások értékeiben"
 
 msgid "Group"
-msgstr ""
+msgstr "Csoport"
 
 msgid "Subgroup"
-msgstr ""
+msgstr "Alcsoport"
 
 #. Notebook
 msgid "Settings"
 msgstr "Beállítások"
 
-#, fuzzy
 msgid "Loading Advanced Search"
-msgstr "Haladó keresés"
+msgstr "Haladó keresés betöltése"
 
 msgid "Add a New Profile"
 msgstr "Új profil hozzáadása"
@@ -485,6 +483,9 @@ msgstr "Bővítmény neve:"
 msgid "Insert plugin name"
 msgstr "Adja meg a bővítmény nevét"
 
+msgid "Preferences"
+msgstr "Beállítások"
+
 msgid ""
 "Configure the backend, profile and other internal settings used by the "
 "Compiz Configuration System."
@@ -504,6 +505,22 @@ msgstr "Profilok és kiszolgálók"
 msgid "Plugin List"
 msgstr "Bővítmény lista"
 
+msgid "Filter your Plugin list"
+msgstr "Bővítménylista szűrése"
+
+#, python-format
+msgid "Screen %i"
+msgstr "%i képernyő"
+
+msgid "Screen"
+msgstr "Képernyő"
+
+msgid "Category"
+msgstr "Kategória"
+
+msgid "Advanced Search"
+msgstr "Haladó keresés"
+
 #, python-format
 msgid ""
 "<span size=\"large\"><b>No matches found.</b> </span><span>\n"
@@ -513,6 +530,9 @@ msgstr ""
 "<span size=\"large\"><b>Nincs találat.</b> </span><span>\n"
 "\n"
 " A szűrő (\"<b>%s</b>\") nem adott találatot.</span>"
+
+#~ msgid "Computing possible conflicts, please wait"
+#~ msgstr "Lehetséges összeférhetetlenségek keresése. Kérem várjon."
 
 #~ msgid "Value (%s)"
 #~ msgstr "Érték (%s)"
@@ -528,9 +548,3 @@ msgstr ""
 
 #~ msgid "Name"
 #~ msgstr "Név"
-
-#~ msgid "Key"
-#~ msgstr "Billentyű"
-
-#~ msgid "Button"
-#~ msgstr "Gomb"

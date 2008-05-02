@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm 0.6.0\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-04-03 13:46+0530\n"
+"POT-Creation-Date: 2008-05-02 13:46+0530\n"
 "PO-Revision-Date: 2008-02-22 10:00+0100\n"
 "Last-Translator: Jim Dusis <jimdusis@yahoo.gr>\n"
 "Language-Team: Compiz Fusion translators <i18n@lists.compiz-fusion.org>\n"
@@ -41,6 +41,17 @@ msgstr "Μην Θέσεις %(action)s"
 #, python-format
 msgid "Set %(action)s anyway"
 msgstr "Θέσε %(action)s οπωσδήποτε"
+
+#, fuzzy
+msgid "key"
+msgstr "Πλήκτρο"
+
+#, fuzzy
+msgid "button"
+msgstr "Κουμπί"
+
+msgid "edge"
+msgstr ""
 
 #, python-format
 msgid ""
@@ -80,6 +91,18 @@ msgstr "Ενεργοποίηση %(plugin)s"
 #, python-format
 msgid "Don't enable %(feature)s"
 msgstr "Μην ενεργοποιήσεις %(feature)s"
+
+#, python-format
+msgid ""
+"Some %(bindings)s bindings of Plugin <b>%(plugin)s</b> conflict with other "
+"plugins. Do you want to resolve these conflicts?"
+msgstr ""
+
+msgid "Resolve conflicts"
+msgstr ""
+
+msgid "Ignore conflicts"
+msgstr ""
 
 #, python-format
 msgid ""
@@ -201,9 +224,6 @@ msgstr "Ενεργοποιημένο"
 msgid "Grab key combination"
 msgstr "Πιάσιμο συνδυασμού πλήκτρων"
 
-msgid "Computing possible conflicts, please wait"
-msgstr "Υπολογισμός πιθανών διενέξεων, παρακαλώ περιμένετε"
-
 #, python-format
 msgid "\"%s\" is not a valid button"
 msgstr "\"%s\" δεν είναι σωστό κουμπί"
@@ -226,32 +246,6 @@ msgstr "Κανένα"
 
 msgid "CompizConfig Settings Manager"
 msgstr "Διαχειριστής Ρυθμίσεων CompizConfig"
-
-msgid "Filter"
-msgstr "Φίλτρο"
-
-msgid "Filter your Plugin list"
-msgstr "Φιλτράρισμα λίστας πρόσθετων"
-
-#, python-format
-msgid "Screen %i"
-msgstr "Οθόνη %i"
-
-msgid "Screen"
-msgstr "Οθόνη"
-
-msgid "Category"
-msgstr "Κατηγορία"
-
-msgid "Advanced Search"
-msgstr "Προχωρημένη Αναζήτηση"
-
-msgid "Preferences"
-msgstr "Ιδιότητες"
-
-#, python-format
-msgid "Enable %s"
-msgstr "Ενεργοποίηση %s"
 
 #, fuzzy
 msgid "Plugin"
@@ -339,6 +333,13 @@ msgstr "Ένα σφάλμα προέκυψε"
 
 msgid "Warning"
 msgstr "Προσοχή"
+
+#, python-format
+msgid "Enable %s"
+msgstr "Ενεργοποίηση %s"
+
+msgid "Filter"
+msgstr "Φίλτρο"
 
 #, python-format
 msgid "Search %s Plugin Options"
@@ -485,6 +486,9 @@ msgstr "Όνομα πρόσθετου:"
 msgid "Insert plugin name"
 msgstr "Εισαγωγή ονόματος πρόσθετου"
 
+msgid "Preferences"
+msgstr "Ιδιότητες"
+
 msgid ""
 "Configure the backend, profile and other internal settings used by the "
 "Compiz Configuration System."
@@ -504,6 +508,22 @@ msgstr "Προφίλ & Κύρια Εφαρμογή"
 msgid "Plugin List"
 msgstr "Λίστα Προσθέτων"
 
+msgid "Filter your Plugin list"
+msgstr "Φιλτράρισμα λίστας πρόσθετων"
+
+#, python-format
+msgid "Screen %i"
+msgstr "Οθόνη %i"
+
+msgid "Screen"
+msgstr "Οθόνη"
+
+msgid "Category"
+msgstr "Κατηγορία"
+
+msgid "Advanced Search"
+msgstr "Προχωρημένη Αναζήτηση"
+
 #, python-format
 msgid ""
 "<span size=\"large\"><b>No matches found.</b> </span><span>\n"
@@ -513,6 +533,9 @@ msgstr ""
 "<span size=\"large\"><b>Δεν βρέθηκε ταίριασμα.</b> </span><span>\n"
 "\n"
 "Το φίλτρο σας \"<b>%s</b>\" δεν ταιριάζει με κανένα στοιχείο.</span>"
+
+#~ msgid "Computing possible conflicts, please wait"
+#~ msgstr "Υπολογισμός πιθανών διενέξεων, παρακαλώ περιμένετε"
 
 #~ msgid "Value (%s)"
 #~ msgstr "Τιμή (%s)"
@@ -531,12 +554,6 @@ msgstr ""
 
 #~ msgid "Name"
 #~ msgstr "Όνομα"
-
-#~ msgid "Key"
-#~ msgstr "Πλήκτρο"
-
-#~ msgid "Button"
-#~ msgstr "Κουμπί"
 
 #~ msgid "Screen Edge"
 #~ msgstr "Άκρη Οθόνης"
