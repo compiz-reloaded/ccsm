@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-04-03 13:46+0530\n"
-"PO-Revision-Date: 2008-03-25 22:26+0100\n"
+"POT-Creation-Date: 2008-05-02 13:46+0530\n"
+"PO-Revision-Date: 2008-04-07 21:05+0200\n"
 "Last-Translator: Milo Casagrande <milo_casagrande@yahoo.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "MIME-Version: 1.0\n"
@@ -45,6 +45,15 @@ msgstr "Non impostare %(action)s"
 #, python-format
 msgid "Set %(action)s anyway"
 msgstr "Imposta %(action)s comunque"
+
+msgid "key"
+msgstr ""
+
+msgid "button"
+msgstr ""
+
+msgid "edge"
+msgstr ""
 
 #, python-format
 msgid ""
@@ -83,6 +92,18 @@ msgstr "Abilita %(plugin)s"
 #, python-format
 msgid "Don't enable %(feature)s"
 msgstr "Non abilitare %(feature)s"
+
+#, python-format
+msgid ""
+"Some %(bindings)s bindings of Plugin <b>%(plugin)s</b> conflict with other "
+"plugins. Do you want to resolve these conflicts?"
+msgstr ""
+
+msgid "Resolve conflicts"
+msgstr ""
+
+msgid "Ignore conflicts"
+msgstr ""
 
 #, python-format
 msgid ""
@@ -206,9 +227,6 @@ msgstr "Attivato"
 msgid "Grab key combination"
 msgstr "Ottieni combinazione tasti"
 
-msgid "Computing possible conflicts, please wait"
-msgstr "Calcolo dei possibili conflitti, attendere"
-
 #, python-format
 msgid "\"%s\" is not a valid button"
 msgstr "«%s» non è un pulsante valido"
@@ -234,39 +252,8 @@ msgstr "Nessuno"
 msgid "CompizConfig Settings Manager"
 msgstr "Gestore configurazione CompizConfig"
 
-msgid "Filter"
-msgstr "Filtro"
-
-msgid "Filter your Plugin list"
-msgstr "Filtra l'elenco dei plug-in"
-
-#, python-format
-msgid "Screen %i"
-msgstr "Schermo: %i"
-
-msgid "Screen"
-msgstr "Schermo"
-
-# (NdT) benché l'originale sia al singolare
-# nella UI c'è l'elenco di tutte le categorie sotto...
-msgid "Category"
-msgstr "Categorie"
-
-msgid "Advanced Search"
-msgstr "Ricerca avanzata"
-
-msgid "Preferences"
-msgstr "Preferenze"
-
-# (NdT) opzione
-#, python-format
-msgid "Enable %s"
-msgstr "Abilitare «%s»"
-
-# (NdT) titolo di una scheda
-#, fuzzy
 msgid "Plugin"
-msgstr "Elenco plug-in"
+msgstr "Plug-in"
 
 msgid "Please press the new key combination"
 msgstr "Premere la nuova combinazione di tasti"
@@ -348,6 +335,14 @@ msgstr "Si è verificato un errore"
 msgid "Warning"
 msgstr "Avviso"
 
+# (NdT) opzione
+#, python-format
+msgid "Enable %s"
+msgstr "Abilitare «%s»"
+
+msgid "Filter"
+msgstr "Filtro"
+
 #, python-format
 msgid "Search %s Plugin Options"
 msgstr "Cerca tra le opzioni del plug-in %s"
@@ -382,18 +377,17 @@ msgid "Settings value"
 msgstr "Valore delle impostazioni"
 
 msgid "Group"
-msgstr ""
+msgstr "Gruppo"
 
 msgid "Subgroup"
-msgstr ""
+msgstr "Sottogruppo"
 
 #. Notebook
 msgid "Settings"
 msgstr "Impostazioni"
 
-#, fuzzy
 msgid "Loading Advanced Search"
-msgstr "Ricerca avanzata"
+msgstr "Caricamento ricerca avanzata"
 
 # (NdT) suggerimento
 msgid "Add a New Profile"
@@ -512,6 +506,9 @@ msgstr "Nome del plug-in:"
 msgid "Insert plugin name"
 msgstr "Inserire il nome del plug-in"
 
+msgid "Preferences"
+msgstr "Preferenze"
+
 # (NdT) descrizione di cosa si può fare...
 msgid ""
 "Configure the backend, profile and other internal settings used by the "
@@ -538,6 +535,24 @@ msgstr "Profilo e backend"
 msgid "Plugin List"
 msgstr "Elenco plug-in"
 
+msgid "Filter your Plugin list"
+msgstr "Filtra l'elenco dei plug-in"
+
+#, python-format
+msgid "Screen %i"
+msgstr "Schermo: %i"
+
+msgid "Screen"
+msgstr "Schermo"
+
+# (NdT) benché l'originale sia al singolare
+# nella UI c'è l'elenco di tutte le categorie sotto...
+msgid "Category"
+msgstr "Categorie"
+
+msgid "Advanced Search"
+msgstr "Ricerca avanzata"
+
 #, python-format
 msgid ""
 "<span size=\"large\"><b>No matches found.</b> </span><span>\n"
@@ -547,6 +562,9 @@ msgstr ""
 "<span size=\"large\"><b>Nessuna corrispondenza trovata.</b> </span><span>\n"
 "\n"
 " Il filtro «<b>%s</b>» non corrisponde ad alcuna voce.</span>"
+
+#~ msgid "Computing possible conflicts, please wait"
+#~ msgstr "Calcolo dei possibili conflitti, attendere"
 
 #~ msgid "Value (%s)"
 #~ msgstr "Valore (%s)"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Compiz Settings Manager 0.5.2\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-04-03 13:46+0530\n"
+"POT-Creation-Date: 2008-05-02 13:46+0530\n"
 "PO-Revision-Date: 2007-09-16 19:11+0700\n"
 "Last-Translator: Andi Darmawan <belutz@ubuntu.com>\n"
 "Language-Team: Andi Darmawan <belutz@ubuntu.com>\n"
@@ -36,6 +36,15 @@ msgstr "Jangan atur %(action)s"
 #, python-format
 msgid "Set %(action)s anyway"
 msgstr "Tetap atur %(action)s"
+
+msgid "key"
+msgstr ""
+
+msgid "button"
+msgstr ""
+
+msgid "edge"
+msgstr ""
 
 #, fuzzy, python-format
 msgid ""
@@ -77,6 +86,18 @@ msgstr "Aktifkan %(plugin)s"
 #, python-format
 msgid "Don't enable %(feature)s"
 msgstr "Jangan aktifkan %(feature)s"
+
+#, python-format
+msgid ""
+"Some %(bindings)s bindings of Plugin <b>%(plugin)s</b> conflict with other "
+"plugins. Do you want to resolve these conflicts?"
+msgstr ""
+
+msgid "Resolve conflicts"
+msgstr ""
+
+msgid "Ignore conflicts"
+msgstr ""
 
 #, python-format
 msgid ""
@@ -187,9 +208,6 @@ msgstr "Aktif"
 msgid "Grab key combination"
 msgstr "Ambil kombinasi tombol"
 
-msgid "Computing possible conflicts, please wait"
-msgstr ""
-
 #, python-format
 msgid "\"%s\" is not a valid button"
 msgstr "\"%s\" bukan tombol yang valid"
@@ -209,32 +227,6 @@ msgstr "Tidak Ada"
 
 msgid "CompizConfig Settings Manager"
 msgstr "CompizConfig Settings Manager"
-
-msgid "Filter"
-msgstr ""
-
-msgid "Filter your Plugin list"
-msgstr ""
-
-#, python-format
-msgid "Screen %i"
-msgstr ""
-
-msgid "Screen"
-msgstr ""
-
-msgid "Category"
-msgstr "Kategori"
-
-msgid "Advanced Search"
-msgstr "Pencarian Lanjut"
-
-msgid "Preferences"
-msgstr ""
-
-#, python-format
-msgid "Enable %s"
-msgstr "Aktifkan %s"
 
 #, fuzzy
 msgid "Plugin"
@@ -318,6 +310,13 @@ msgstr "Sebuah kesalahan telah terjadi"
 
 msgid "Warning"
 msgstr "Peringatan"
+
+#, python-format
+msgid "Enable %s"
+msgstr "Aktifkan %s"
+
+msgid "Filter"
+msgstr ""
 
 #, python-format
 msgid "Search %s Plugin Options"
@@ -458,6 +457,9 @@ msgstr "Nama plugin:"
 msgid "Insert plugin name"
 msgstr "Masukkan nama plugin"
 
+msgid "Preferences"
+msgstr ""
+
 msgid ""
 "Configure the backend, profile and other internal settings used by the "
 "Compiz Configuration System."
@@ -474,6 +476,22 @@ msgstr "Profil & Bagian Belakang"
 
 msgid "Plugin List"
 msgstr "Daftar Plugin"
+
+msgid "Filter your Plugin list"
+msgstr ""
+
+#, python-format
+msgid "Screen %i"
+msgstr ""
+
+msgid "Screen"
+msgstr ""
+
+msgid "Category"
+msgstr "Kategori"
+
+msgid "Advanced Search"
+msgstr "Pencarian Lanjut"
 
 #, python-format
 msgid ""

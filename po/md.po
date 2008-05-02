@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: md-ccsm\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-04-03 13:46+0530\n"
+"POT-Creation-Date: 2008-05-02 13:46+0530\n"
 "PO-Revision-Date: 2007-09-24 23:00-0300\n"
 "Last-Translator: Werner Landgraf <werner@copaya.yi.org>\n"
 "Language-Team: Mandingo\n"
@@ -45,6 +45,17 @@ msgstr "Kanna %(action)s malãdi !"
 #, python-format
 msgid "Set %(action)s anyway"
 msgstr "%(action)s malãdi jiko-o-jiko !"
+
+#, fuzzy
+msgid "key"
+msgstr "teclado-la Botão"
+
+#, fuzzy
+msgid "button"
+msgstr "niño-la botão"
+
+msgid "edge"
+msgstr ""
 
 #, fuzzy, python-format
 msgid ""
@@ -84,6 +95,18 @@ msgstr "%(plugin)s malãdi bã !"
 #, python-format
 msgid "Don't enable %(feature)s"
 msgstr "Kanna %(feature)s malãdi !"
+
+#, python-format
+msgid ""
+"Some %(bindings)s bindings of Plugin <b>%(plugin)s</b> conflict with other "
+"plugins. Do you want to resolve these conflicts?"
+msgstr ""
+
+msgid "Resolve conflicts"
+msgstr ""
+
+msgid "Ignore conflicts"
+msgstr ""
 
 #, python-format
 msgid ""
@@ -203,9 +226,6 @@ msgstr "a-malãta"
 msgid "Grab key combination"
 msgstr "teclado -la butão-lu la kafo tõbõ !"
 
-msgid "Computing possible conflicts, please wait"
-msgstr "jubela fa tanolu sotto ... , batu domãdĩ !"
-
 #, python-format
 msgid "\"%s\" is not a valid button"
 msgstr "Mo a mã butão \"%s\" naffa nole !"
@@ -227,32 +247,6 @@ msgstr "Hanni fẽ"
 
 msgid "CompizConfig Settings Manager"
 msgstr "CompizConfig compiz -la tillĩdirão leti"
-
-msgid "Filter"
-msgstr "tombõdão"
-
-msgid "Filter your Plugin list"
-msgstr "I i-la dorão-lu tombõ bã !"
-
-#, python-format
-msgid "Screen %i"
-msgstr "Telha %i"
-
-msgid "Screen"
-msgstr "Telha"
-
-msgid "Category"
-msgstr "çifo"
-
-msgid "Advanced Search"
-msgstr "ñinnĩarla ba ..."
-
-msgid "Preferences"
-msgstr "tõbõkelu"
-
-#, python-format
-msgid "Enable %s"
-msgstr " %s malã bã !"
 
 #, fuzzy
 msgid "Plugin"
@@ -337,6 +331,13 @@ msgstr "tano çoto !"
 
 msgid "Warning"
 msgstr "I hakilto !"
+
+#, python-format
+msgid "Enable %s"
+msgstr " %s malã bã !"
+
+msgid "Filter"
+msgstr "tombõdão"
 
 #, python-format
 msgid "Search %s Plugin Options"
@@ -481,6 +482,9 @@ msgstr "dorão-la to:"
 msgid "Insert plugin name"
 msgstr "dorão-la to çafê !"
 
+msgid "Preferences"
+msgstr "tõbõkelu"
+
 msgid ""
 "Configure the backend, profile and other internal settings used by the "
 "Compiz Configuration System."
@@ -500,6 +504,22 @@ msgstr "programma & dokuola kêeño kono"
 msgid "Plugin List"
 msgstr "dorãolu"
 
+msgid "Filter your Plugin list"
+msgstr "I i-la dorão-lu tombõ bã !"
+
+#, python-format
+msgid "Screen %i"
+msgstr "Telha %i"
+
+msgid "Screen"
+msgstr "Telha"
+
+msgid "Category"
+msgstr "çifo"
+
+msgid "Advanced Search"
+msgstr "ñinnĩarla ba ..."
+
 #, fuzzy, python-format
 msgid ""
 "<span size=\"large\"><b>No matches found.</b> </span><span>\n"
@@ -509,6 +529,9 @@ msgstr ""
 "<span size=\"large\"><b>Hanni fẽ a-ñinnĩta.</b> </span><span>\n"
 " \n"
 " Feñ kommko \"<b>%s</b>\" mã çotto.</span>"
+
+#~ msgid "Computing possible conflicts, please wait"
+#~ msgstr "jubela fa tanolu sotto ... , batu domãdĩ !"
 
 #~ msgid "Value (%s)"
 #~ msgstr "da (%s)"
@@ -527,12 +550,6 @@ msgstr ""
 
 #~ msgid "Name"
 #~ msgstr "To"
-
-#~ msgid "Key"
-#~ msgstr "teclado-la Botão"
-
-#~ msgid "Button"
-#~ msgstr "niño-la botão"
 
 #~ msgid "Screen Edge"
 #~ msgstr "tele-la koofo"

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: CompizConfig Settings Manager\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-04-03 13:46+0530\n"
-"PO-Revision-Date: 2008-03-16 18:14+0100\n"
+"POT-Creation-Date: 2008-05-02 13:46+0530\n"
+"PO-Revision-Date: 2008-04-03 23:11+0200\n"
 "Last-Translator: Ketil Wendelbo Aanensen <ketil.w.aanensen@gmail.com>\n"
 "Language-Team: Norwegian Bokmaal <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -42,6 +42,15 @@ msgstr "Ikke velg %(action)s"
 #, python-format
 msgid "Set %(action)s anyway"
 msgstr "Velg %(action)s uansett"
+
+msgid "key"
+msgstr ""
+
+msgid "button"
+msgstr ""
+
+msgid "edge"
+msgstr ""
 
 #, python-format
 msgid ""
@@ -80,6 +89,18 @@ msgstr "Slå på %(plugin)s"
 #, python-format
 msgid "Don't enable %(feature)s"
 msgstr "Ikke slå på %(feature)s"
+
+#, python-format
+msgid ""
+"Some %(bindings)s bindings of Plugin <b>%(plugin)s</b> conflict with other "
+"plugins. Do you want to resolve these conflicts?"
+msgstr ""
+
+msgid "Resolve conflicts"
+msgstr ""
+
+msgid "Ignore conflicts"
+msgstr ""
 
 #, python-format
 msgid ""
@@ -201,9 +222,6 @@ msgstr "Skrudd på"
 msgid "Grab key combination"
 msgstr "Hent tastekombinasjon"
 
-msgid "Computing possible conflicts, please wait"
-msgstr "Beregner mulige konflikter, vennligst vent"
-
 #, python-format
 msgid "\"%s\" is not a valid button"
 msgstr "\"%s\" er ikke en gyldig knapp"
@@ -226,35 +244,8 @@ msgstr "Ingen"
 msgid "CompizConfig Settings Manager"
 msgstr "CompizConfig Innstillingshåndterer"
 
-msgid "Filter"
-msgstr "Filter"
-
-msgid "Filter your Plugin list"
-msgstr "Filter programtilleggslisten din"
-
-#, python-format
-msgid "Screen %i"
-msgstr "Skjerm %i"
-
-msgid "Screen"
-msgstr "Skjerm"
-
-msgid "Category"
-msgstr "Kategori"
-
-msgid "Advanced Search"
-msgstr "Avansert søk"
-
-msgid "Preferences"
-msgstr "Preferanser"
-
-#, python-format
-msgid "Enable %s"
-msgstr "Skru på %s"
-
-#, fuzzy
 msgid "Plugin"
-msgstr "Tilleggsliste"
+msgstr "Tillegg"
 
 msgid "Please press the new key combination"
 msgstr "Vennligst trykk den nye tastaturkombinasjonen"
@@ -305,9 +296,8 @@ msgstr "Relasjon"
 msgid "Invert"
 msgstr "Omvendt"
 
-#, fuzzy
 msgid "Browse..."
-msgstr "Let etter "
+msgstr "Let etter..."
 
 msgid "Images"
 msgstr "Bilder"
@@ -333,6 +323,13 @@ msgstr "En feil har oppstått"
 
 msgid "Warning"
 msgstr "Advarsel"
+
+#, python-format
+msgid "Enable %s"
+msgstr "Skru på %s"
+
+msgid "Filter"
+msgstr "Filter"
 
 #, python-format
 msgid "Search %s Plugin Options"
@@ -368,18 +365,17 @@ msgid "Settings value"
 msgstr "Verdi for innstilling"
 
 msgid "Group"
-msgstr ""
+msgstr "Grupper"
 
 msgid "Subgroup"
-msgstr ""
+msgstr "Undergruppe"
 
 #. Notebook
 msgid "Settings"
 msgstr "Innstillinger"
 
-#, fuzzy
 msgid "Loading Advanced Search"
-msgstr "Avansert søk"
+msgstr "Laster avansert søk"
 
 msgid "Add a New Profile"
 msgstr "Legg til en ny profil"
@@ -478,6 +474,9 @@ msgstr "Navn på programtillegg:"
 msgid "Insert plugin name"
 msgstr "Sett inn navnet på programtillegget"
 
+msgid "Preferences"
+msgstr "Preferanser"
+
 msgid ""
 "Configure the backend, profile and other internal settings used by the "
 "Compiz Configuration System."
@@ -497,6 +496,22 @@ msgstr "Profil og bakvegg"
 msgid "Plugin List"
 msgstr "Tilleggsliste"
 
+msgid "Filter your Plugin list"
+msgstr "Filter programtilleggslisten din"
+
+#, python-format
+msgid "Screen %i"
+msgstr "Skjerm %i"
+
+msgid "Screen"
+msgstr "Skjerm"
+
+msgid "Category"
+msgstr "Kategori"
+
+msgid "Advanced Search"
+msgstr "Avansert søk"
+
 #, python-format
 msgid ""
 "<span size=\"large\"><b>No matches found.</b> </span><span>\n"
@@ -506,6 +521,9 @@ msgstr ""
 "<span size=\"large\"><b>Ingen treff.</b> </span><span>\n"
 "\n"
 " Filteret ditt, \"<b>%s</b>\", passer ikke til noen gjenstander.</span>"
+
+#~ msgid "Computing possible conflicts, please wait"
+#~ msgstr "Beregner mulige konflikter, vennligst vent"
 
 #~ msgid "Value (%s)"
 #~ msgstr "Verdi (%s)"

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm 0.6\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-04-03 13:46+0530\n"
-"PO-Revision-Date: 2008-02-09 01:45+0100\n"
+"POT-Creation-Date: 2008-05-02 13:46+0530\n"
+"PO-Revision-Date: 2008-04-14 22:02+0900\n"
 "Last-Translator: jiro kawada <jiro.kawada@gmail.com>\n"
 "Language-Team: Japanese <masaaki.kanemoto@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -41,6 +41,15 @@ msgstr "%(action)s の設定中止"
 #, python-format
 msgid "Set %(action)s anyway"
 msgstr "%(action)s をとにかく設定"
+
+msgid "key"
+msgstr "キー"
+
+msgid "button"
+msgstr "ボタン"
+
+msgid "edge"
+msgstr "エッジ"
 
 #, python-format
 msgid ""
@@ -79,6 +88,20 @@ msgstr "%(plugin)s を有効化"
 #, python-format
 msgid "Don't enable %(feature)s"
 msgstr "%(feature)s の有効化中止"
+
+#, python-format
+msgid ""
+"Some %(bindings)s bindings of Plugin <b>%(plugin)s</b> conflict with other "
+"plugins. Do you want to resolve these conflicts?"
+msgstr ""
+"<b>%(plugin)s</b> プラグインに割り当てられた %(bindings)s のいくつかは他のプ"
+"ラグインと干渉します。これらの干渉を解決しますか？"
+
+msgid "Resolve conflicts"
+msgstr "干渉を解決"
+
+msgid "Ignore conflicts"
+msgstr "干渉を無視"
 
 #, python-format
 msgid ""
@@ -199,9 +222,6 @@ msgstr "有効"
 msgid "Grab key combination"
 msgstr "キーの組み合わせをつかむ"
 
-msgid "Computing possible conflicts, please wait"
-msgstr "干渉の可能性を計算していますのでお待ちください"
-
 #, python-format
 msgid "\"%s\" is not a valid button"
 msgstr "\"%s\" は有効なボタンではありません"
@@ -224,35 +244,8 @@ msgstr "なし"
 msgid "CompizConfig Settings Manager"
 msgstr "CompizConfig 設定マネージャ"
 
-msgid "Filter"
-msgstr "フィルタ"
-
-msgid "Filter your Plugin list"
-msgstr "プラグインリストのフィルタ"
-
-#, python-format
-msgid "Screen %i"
-msgstr "スクリーン %i"
-
-msgid "Screen"
-msgstr "スクリーン"
-
-msgid "Category"
-msgstr "カテゴリ"
-
-msgid "Advanced Search"
-msgstr "詳細検索"
-
-msgid "Preferences"
-msgstr "設定"
-
-#, python-format
-msgid "Enable %s"
-msgstr "%s を有効にする"
-
-#, fuzzy
 msgid "Plugin"
-msgstr "プラグイン・リスト"
+msgstr "プラグイン"
 
 msgid "Please press the new key combination"
 msgstr "新しいキーの組み合わせを入力してください"
@@ -304,9 +297,8 @@ msgid "Invert"
 msgstr "否定"
 
 # スカイドーム画像の参照ボタンで表示
-#, fuzzy
 msgid "Browse..."
-msgstr "参照:"
+msgstr "参照..."
 
 msgid "Images"
 msgstr "画像"
@@ -336,6 +328,13 @@ msgstr "エラーが発生しました"
 
 msgid "Warning"
 msgstr "警告"
+
+#, python-format
+msgid "Enable %s"
+msgstr "%s を有効にする"
+
+msgid "Filter"
+msgstr "フィルタ"
 
 #, python-format
 msgid "Search %s Plugin Options"
@@ -371,18 +370,17 @@ msgid "Settings value"
 msgstr "設定値"
 
 msgid "Group"
-msgstr ""
+msgstr "グループ"
 
 msgid "Subgroup"
-msgstr ""
+msgstr "サブグループ"
 
 #. Notebook
 msgid "Settings"
 msgstr "設定"
 
-#, fuzzy
 msgid "Loading Advanced Search"
-msgstr "詳細検索"
+msgstr "詳細検索を読み込み中"
 
 msgid "Add a New Profile"
 msgstr "新しいプロファイルを追加"
@@ -482,6 +480,9 @@ msgstr "プラグインの名前:"
 msgid "Insert plugin name"
 msgstr "プラグイン名を入力"
 
+msgid "Preferences"
+msgstr "設定"
+
 msgid ""
 "Configure the backend, profile and other internal settings used by the "
 "Compiz Configuration System."
@@ -501,6 +502,22 @@ msgstr "プロファイルとバックエンド"
 msgid "Plugin List"
 msgstr "プラグイン・リスト"
 
+msgid "Filter your Plugin list"
+msgstr "プラグインリストのフィルタ"
+
+#, python-format
+msgid "Screen %i"
+msgstr "スクリーン %i"
+
+msgid "Screen"
+msgstr "スクリーン"
+
+msgid "Category"
+msgstr "カテゴリ"
+
+msgid "Advanced Search"
+msgstr "詳細検索"
+
 #, python-format
 msgid ""
 "<span size=\"large\"><b>No matches found.</b> </span><span>\n"
@@ -509,6 +526,9 @@ msgid ""
 msgstr ""
 "<span size=\"large\"><b>何も見つかりませんでした。</b> </span><span>\n"
 "フィルタ \"<b>%s</b>\" はどのアイテムにも一致しません。"
+
+#~ msgid "Computing possible conflicts, please wait"
+#~ msgstr "干渉の可能性を計算していますのでお待ちください"
 
 #~ msgid "Value (%s)"
 #~ msgstr "値 (%s)"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.5.2\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-04-03 13:46+0530\n"
+"POT-Creation-Date: 2008-05-02 13:46+0530\n"
 "PO-Revision-Date: 2007-12-21 10:16+0100\n"
 "Last-Translator: Rick <mailmelist@gmail.com>\n"
 "Language-Team: Dutch <mailmelist@gmail.com>\n"
@@ -42,6 +42,17 @@ msgstr "%(action)s niet instellen"
 #, python-format
 msgid "Set %(action)s anyway"
 msgstr "%(action)s alsnog instellen"
+
+#, fuzzy
+msgid "key"
+msgstr "Sleutel"
+
+#, fuzzy
+msgid "button"
+msgstr "Knop"
+
+msgid "edge"
+msgstr ""
 
 #, python-format
 msgid ""
@@ -80,6 +91,18 @@ msgstr "Inschakelen %(plugin)s"
 #, python-format
 msgid "Don't enable %(feature)s"
 msgstr "%(feature)s niet inschakelen"
+
+#, python-format
+msgid ""
+"Some %(bindings)s bindings of Plugin <b>%(plugin)s</b> conflict with other "
+"plugins. Do you want to resolve these conflicts?"
+msgstr ""
+
+msgid "Resolve conflicts"
+msgstr ""
+
+msgid "Ignore conflicts"
+msgstr ""
 
 #, python-format
 msgid ""
@@ -200,10 +223,6 @@ msgstr "Ingeschakeld"
 msgid "Grab key combination"
 msgstr "vang toets combinatie af"
 
-msgid "Computing possible conflicts, please wait"
-msgstr ""
-"Bezig met berekenen van mogelijke conflicten. Een ogenblik geduld a.u.b."
-
 #, python-format
 msgid "\"%s\" is not a valid button"
 msgstr "\"%s\" is geen valide knop"
@@ -226,32 +245,6 @@ msgstr "Geen"
 
 msgid "CompizConfig Settings Manager"
 msgstr "CompizConfig Instellingen Beheerder"
-
-msgid "Filter"
-msgstr "Filter"
-
-msgid "Filter your Plugin list"
-msgstr "Filter je plugin lijst"
-
-#, python-format
-msgid "Screen %i"
-msgstr "Scherm %i"
-
-msgid "Screen"
-msgstr "Scherm"
-
-msgid "Category"
-msgstr "Categorie"
-
-msgid "Advanced Search"
-msgstr "Geavanceerd zoeken"
-
-msgid "Preferences"
-msgstr "Voorkeuren"
-
-#, python-format
-msgid "Enable %s"
-msgstr "%s inschakelen"
 
 #, fuzzy
 msgid "Plugin"
@@ -336,6 +329,13 @@ msgstr "Er is een fout opgetreden"
 
 msgid "Warning"
 msgstr "Waarschuwing"
+
+#, python-format
+msgid "Enable %s"
+msgstr "%s inschakelen"
+
+msgid "Filter"
+msgstr "Filter"
 
 #, python-format
 msgid "Search %s Plugin Options"
@@ -481,6 +481,9 @@ msgstr "Naam plugin:"
 msgid "Insert plugin name"
 msgstr "Invoeren naam plugin"
 
+msgid "Preferences"
+msgstr "Voorkeuren"
+
 msgid ""
 "Configure the backend, profile and other internal settings used by the "
 "Compiz Configuration System."
@@ -500,6 +503,22 @@ msgstr "Profiel & onderliggend systeem"
 msgid "Plugin List"
 msgstr "Lijst plugins"
 
+msgid "Filter your Plugin list"
+msgstr "Filter je plugin lijst"
+
+#, python-format
+msgid "Screen %i"
+msgstr "Scherm %i"
+
+msgid "Screen"
+msgstr "Scherm"
+
+msgid "Category"
+msgstr "Categorie"
+
+msgid "Advanced Search"
+msgstr "Geavanceerd zoeken"
+
 #, python-format
 msgid ""
 "<span size=\"large\"><b>No matches found.</b> </span><span>\n"
@@ -509,6 +528,10 @@ msgstr ""
 "<span size=\"large\"><b>Geen overeenkomsten gevonden.</b> </span><span>\n"
 "\n"
 " Uw filter \"<b>%s</b>\" komt op geen enkel punt overeen.</span>"
+
+#~ msgid "Computing possible conflicts, please wait"
+#~ msgstr ""
+#~ "Bezig met berekenen van mogelijke conflicten. Een ogenblik geduld a.u.b."
 
 #~ msgid "Value (%s)"
 #~ msgstr "Waarde (%s)"
@@ -524,12 +547,6 @@ msgstr ""
 
 #~ msgid "Name"
 #~ msgstr "Naam"
-
-#~ msgid "Key"
-#~ msgstr "Sleutel"
-
-#~ msgid "Button"
-#~ msgstr "Knop"
 
 #~ msgid "Screen Edge"
 #~ msgstr "Scherm rand"
