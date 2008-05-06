@@ -1419,7 +1419,9 @@ class PluginButton (gtk.HBox):
             if text in self._plugin.LongDesc.lower():
                 found = True
         if not found and level & FilterCategory:
-            if text in self._plugin.Category.lower():
+            if text == None \
+            or (text == "" and self._plugin.Category.lower() == "") \
+            or (text != "" and text in self._plugin.Category.lower()):
                 found = True
 
         return found

@@ -1295,8 +1295,9 @@ class MainPage(object):
 
     def ToggleCategory(self, widget, category):
         if category == 'All':
-            category = ''
-        category = category.lower()
+            category = None
+        else:
+            category = category.lower()
         self.RightWidget.filter_boxes(category, level=FilterCategory)
 
     def FilterChanged(self, widget):
