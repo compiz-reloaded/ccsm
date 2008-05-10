@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import sys, os, glob
+import subprocess
 from stat import *
 from distutils.core import setup
 from distutils.command.install import install as _install
@@ -109,6 +110,10 @@ data = data.replace ("@version@", version)
 f = open (os.path.join ("ccm/Constants.py"), "wt")
 f.write (data)
 f.close ()
+
+cmd = "intltool-merge -d -u po/ ccsm.desktop.in ccsm.desktop".split(" ")
+proc = subprocess.Popen(cmd)
+proc.wait()
 
 custom_images = []
 
