@@ -1599,7 +1599,7 @@ class PluginWindow(gtk.ScrolledWindow):
         if self._style_block > 0:
             return
         self._style_block += 1
-        widget.modify_bg(gtk.STATE_NORMAL, widget.style.bg[gtk.STATE_NORMAL])
+        widget.modify_bg(gtk.STATE_NORMAL, widget.style.base[gtk.STATE_NORMAL])
         self._style_block -= 1
 
     def filter_boxes (self, text, level=FilterAll):
