@@ -91,9 +91,8 @@ class ActionConflict (Conflict):
                     pluginActions = GetSettings(plugin, displayOnly=True,
                                                 types=self.ActionTypes)
 
-                    if setting.Info[0] and plugin is not setting.Plugin:
+                    if len(setting.Info) and setting.Info[0] and plugin is not setting.Plugin:
                         settings.extend(ExcludeInternal(pluginActions))
-
                     else:
                         settings.extend(pluginActions)
 
