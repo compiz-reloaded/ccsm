@@ -2,15 +2,15 @@
 # Copyright (C) 2007 compiz-fusion.org 
 # This file is distributed under the same license as the ccsm package.
 # Treviño (Marco Trevisan) <trevi55@gmail.com>, 2007
-# Milo Casagrande <milo_casagrande@yahoo.it>, 2007
+# Milo Casagrande <milo_casagrande@yahoo.it>, 2007-2008
 #
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: ccsm\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-05-02 13:46+0530\n"
-"PO-Revision-Date: 2008-04-07 21:05+0200\n"
+"POT-Creation-Date: 2008-05-24 22:12+0530\n"
+"PO-Revision-Date: 2008-05-10 19:28+0200\n"
 "Last-Translator: Milo Casagrande <milo_casagrande@yahoo.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "MIME-Version: 1.0\n"
@@ -47,13 +47,13 @@ msgid "Set %(action)s anyway"
 msgstr "Imposta %(action)s comunque"
 
 msgid "key"
-msgstr ""
+msgstr "tasto"
 
 msgid "button"
-msgstr ""
+msgstr "pulsante"
 
 msgid "edge"
-msgstr ""
+msgstr "bordo"
 
 #, python-format
 msgid ""
@@ -98,12 +98,14 @@ msgid ""
 "Some %(bindings)s bindings of Plugin <b>%(plugin)s</b> conflict with other "
 "plugins. Do you want to resolve these conflicts?"
 msgstr ""
+"Alcuni binding %(bindings)s del plug-in <b>%(plugin)s</b> vanno in conflitto "
+"con altri plug-in. Risolvere questi conflitti?"
 
 msgid "Resolve conflicts"
-msgstr ""
+msgstr "Risolvi conflitti"
 
 msgid "Ignore conflicts"
-msgstr ""
+msgstr "Ignora conflitti"
 
 #, python-format
 msgid ""
@@ -563,14 +565,5 @@ msgstr ""
 "\n"
 " Il filtro «<b>%s</b>» non corrisponde ad alcuna voce.</span>"
 
-#~ msgid "Computing possible conflicts, please wait"
-#~ msgstr "Calcolo dei possibili conflitti, attendere"
-
-#~ msgid "Value (%s)"
-#~ msgstr "Valore (%s)"
-
-#~ msgid "Value (%(value)s) for %(setting)s"
-#~ msgstr "Valore (%(value)s) per %(setting)s:"
-
-#~ msgid "Unhandled list type %s for %s"
-#~ msgstr "Tipo di elenco %s non gestito per %s"
+msgid "Configure Compiz with CompizConfig"
+msgstr "Configura Compiz attraverso CompizConfig"

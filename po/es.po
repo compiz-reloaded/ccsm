@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-05-02 13:46+0530\n"
-"PO-Revision-Date: 2008-04-26 15:53+0200\n"
+"POT-Creation-Date: 2008-05-24 22:12+0530\n"
+"PO-Revision-Date: 2008-05-04 18:35+0200\n"
 "Last-Translator: Nuria Fernández Mingo <nuria.fernandezm@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -49,13 +49,13 @@ msgid "Set %(action)s anyway"
 msgstr "Ignorar y Aplicar %(action)s"
 
 msgid "key"
-msgstr ""
+msgstr "clave"
 
 msgid "button"
-msgstr ""
+msgstr "botón"
 
 msgid "edge"
-msgstr ""
+msgstr "borde"
 
 #, python-format
 msgid ""
@@ -540,6 +540,9 @@ msgstr ""
 "<span size=\"large\"><b>Ninguna coincidencia.</b> </span><span>\n"
 "\n"
 " Tu filtro \"<b>%s</b>\" no ha devuelto ningún resultado.</span>"
+
+msgid "Configure Compiz with CompizConfig"
+msgstr ""
 
 #~ msgid "Computing possible conflicts, please wait"
 #~ msgstr "Verificando posibles conflictos, por favor espere"
