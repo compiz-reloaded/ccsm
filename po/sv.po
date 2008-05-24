@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: compiz-fusion-plugins 0.0.1\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-05-02 13:46+0530\n"
-"PO-Revision-Date: 2008-05-01 12:13+0200\n"
+"POT-Creation-Date: 2008-05-24 22:12+0530\n"
+"PO-Revision-Date: 2008-05-15 21:02+0200\n"
 "Last-Translator: Sebastian Parborg <zedDB@hotmail.com>\n"
 "Language-Team: Compiz Fusion Translators <i18n@lists.compiz-fusion.org>\n"
 "MIME-Version: 1.0\n"
@@ -45,14 +45,17 @@ msgstr "Ställ inte in %(action)s"
 msgid "Set %(action)s anyway"
 msgstr "Ställ in %(action)s ändå"
 
+#, fuzzy
 msgid "key"
-msgstr ""
+msgstr "tangent"
 
+#, fuzzy
 msgid "button"
-msgstr ""
+msgstr "knapp"
 
+#, fuzzy
 msgid "edge"
-msgstr ""
+msgstr "kant"
 
 #, python-format
 msgid ""
@@ -98,12 +101,14 @@ msgid ""
 "Some %(bindings)s bindings of Plugin <b>%(plugin)s</b> conflict with other "
 "plugins. Do you want to resolve these conflicts?"
 msgstr ""
+"Några %(bindings)s bindningar för insticksmodulen <b>%(plugin)s</b> är i "
+"konflikt med andra insticksmoduler. Vill du lösa dessa konflikter? "
 
 msgid "Resolve conflicts"
-msgstr ""
+msgstr "Lös konflikter"
 
 msgid "Ignore conflicts"
-msgstr ""
+msgstr "Ignorera konflikter"
 
 #, python-format
 msgid ""
@@ -351,10 +356,13 @@ msgstr "Sök Compiz Core-alternativ"
 msgid "Error"
 msgstr "Fel"
 
+#, fuzzy
 msgid ""
 "Enter a filter.\n"
 "Click the keyboard image to grab a key for which to search."
 msgstr ""
+"Skriv in ett filter.\n"
+"Klicka på tangentbordsbilden för att greppa en tangent att söka efter."
 
 msgid "Search in..."
 msgstr "Sök i..."
@@ -529,6 +537,9 @@ msgstr ""
 "<span size=\"large\"><b>Inga matchingar hittades.</b> </span><span>\n"
 "\n"
 " Ditt filter \"<b>%s</b>\" matchar inga objekt.</span>"
+
+msgid "Configure Compiz with CompizConfig"
+msgstr ""
 
 #~ msgid "Computing possible conflicts, please wait"
 #~ msgstr "Beräknar eventuella konflikter, var snäll vänta"

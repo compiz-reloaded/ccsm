@@ -1,4 +1,4 @@
-# translation of ccsm.po to Russian
+# translation of ccsm_new.po to Russian
 # Denis Rakhmangulov <danfocus@gmail.com>, 2007.
 # Dimitriy Ryazantcev <DJm00n@mail.ru>, 2008.
 # Translation of CCSM to ru
@@ -6,10 +6,10 @@
 # This file is distributed under the same license as the ccsm packages.
 msgid ""
 msgstr ""
-"Project-Id-Version: ccsm\n"
+"Project-Id-Version: ccsm_new\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-05-02 13:46+0530\n"
-"PO-Revision-Date: 2008-04-30 00:09+0300\n"
+"POT-Creation-Date: 2008-05-24 22:12+0530\n"
+"PO-Revision-Date: 2008-05-11 13:34+0300\n"
 "Last-Translator: Dimitriy Ryazantcev <DJm00n@mail.ru>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
 "MIME-Version: 1.0\n"
@@ -48,13 +48,13 @@ msgid "Set %(action)s anyway"
 msgstr "Установить %(action)s все равно"
 
 msgid "key"
-msgstr ""
+msgstr "ключ"
 
 msgid "button"
-msgstr ""
+msgstr "клавиша"
 
 msgid "edge"
-msgstr ""
+msgstr "край"
 
 #, python-format
 msgid ""
@@ -99,12 +99,14 @@ msgid ""
 "Some %(bindings)s bindings of Plugin <b>%(plugin)s</b> conflict with other "
 "plugins. Do you want to resolve these conflicts?"
 msgstr ""
+"Назначения клавиш %(bindings)s модуля <b>%(plugin)s</b> конфликтуют с "
+"другими модулями. Вы хотите разрешить эти конфликты?"
 
 msgid "Resolve conflicts"
-msgstr ""
+msgstr "Разрешить конфликты"
 
 msgid "Ignore conflicts"
-msgstr ""
+msgstr "Игнорировать конфикты"
 
 #, python-format
 msgid ""
@@ -528,5 +530,5 @@ msgstr ""
 "\n"
 " Ваш фильтр \"<b>%s</b>\" не совпал ни с чем.</span>"
 
-#~ msgid "Computing possible conflicts, please wait"
-#~ msgstr "Расчет возможных конфликтов, пожалуйста подождите"
+msgid "Configure Compiz with CompizConfig"
+msgstr ""

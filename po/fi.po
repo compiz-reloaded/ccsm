@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-05-02 13:46+0530\n"
-"PO-Revision-Date: 2008-04-21 01:21+0300\n"
+"POT-Creation-Date: 2008-05-24 22:12+0530\n"
+"PO-Revision-Date: 2008-05-06 15:02+0200\n"
 "Last-Translator: Timo Jyrinki <timo.jyrinki@iki.fi>\n"
 "Language-Team: Finnish <laatu@lokalisointi.org>\n"
 "MIME-Version: 1.0\n"
@@ -45,13 +45,13 @@ msgid "Set %(action)s anyway"
 msgstr "Aseta %(action)s joka tapauksessa"
 
 msgid "key"
-msgstr ""
+msgstr "näppäin"
 
 msgid "button"
-msgstr ""
+msgstr "painike"
 
 msgid "edge"
-msgstr ""
+msgstr "reuna"
 
 #, python-format
 msgid ""
@@ -527,6 +527,9 @@ msgstr ""
 "<span size=\"large\"><b>Ei hakutuloksia</b> </span><span>\n"
 "\n"
 "Suodattimesi <b>%s</b> ei vastaa mitään kohtia.</span>"
+
+msgid "Configure Compiz with CompizConfig"
+msgstr ""
 
 #~ msgid "Computing possible conflicts, please wait"
 #~ msgstr "Käsitellään mahdollisia ristiriitoja, odota hetki"

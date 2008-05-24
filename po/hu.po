@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-05-02 13:46+0530\n"
-"PO-Revision-Date: 2008-04-23 11:14+0200\n"
+"POT-Creation-Date: 2008-05-24 22:12+0530\n"
+"PO-Revision-Date: 2008-05-03 12:06+0200\n"
 "Last-Translator: KAMI <kamihir@freemail.hu>\n"
 "Language-Team: hungarian <hu@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -44,16 +44,14 @@ msgstr "%(action)s mellőzése"
 msgid "Set %(action)s anyway"
 msgstr "%(action)s beállítása"
 
-#, fuzzy
 msgid "key"
 msgstr "Billentyű"
 
-#, fuzzy
 msgid "button"
 msgstr "Gomb"
 
 msgid "edge"
-msgstr ""
+msgstr "Szegély"
 
 #, python-format
 msgid ""
@@ -98,12 +96,15 @@ msgid ""
 "Some %(bindings)s bindings of Plugin <b>%(plugin)s</b> conflict with other "
 "plugins. Do you want to resolve these conflicts?"
 msgstr ""
+"A(z) <b>%(plugin)s</b> bővítmény néhány kötése: %(bindings)s "
+"összeférhetetlen egyéb bővítményekkel. Meg kívánja oldani ezeket az "
+"összeférhetetlenségeket?"
 
 msgid "Resolve conflicts"
-msgstr ""
+msgstr "Összeférhetetlenség megoldása"
 
 msgid "Ignore conflicts"
-msgstr ""
+msgstr "Mellőzés"
 
 #, python-format
 msgid ""
@@ -530,6 +531,9 @@ msgstr ""
 "<span size=\"large\"><b>Nincs találat.</b> </span><span>\n"
 "\n"
 " A szűrő (\"<b>%s</b>\") nem adott találatot.</span>"
+
+msgid "Configure Compiz with CompizConfig"
+msgstr ""
 
 #~ msgid "Computing possible conflicts, please wait"
 #~ msgstr "Lehetséges összeférhetetlenségek keresése. Kérem várjon."

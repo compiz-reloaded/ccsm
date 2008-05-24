@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-05-02 13:46+0530\n"
-"PO-Revision-Date: 2008-04-14 04:38+0200\n"
-"Last-Translator: Jarek Sobolewski <r@sledinmay.com>\n"
+"POT-Creation-Date: 2008-05-24 22:12+0530\n"
+"PO-Revision-Date: 2008-05-09 15:25+0200\n"
+"Last-Translator: Tomasz Kowalski <pootek@gmail.com>\n"
 "Language-Team: pl_PL <pl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -46,14 +46,15 @@ msgstr "Ustaw %(action)s mimo wszystko"
 
 #, fuzzy
 msgid "key"
-msgstr "Klawisz"
+msgstr "klawisz"
 
 #, fuzzy
 msgid "button"
-msgstr "Przycisk"
+msgstr "przycisk"
 
+#, fuzzy
 msgid "edge"
-msgstr ""
+msgstr "krawędź"
 
 #, python-format
 msgid ""
@@ -99,11 +100,13 @@ msgid ""
 "plugins. Do you want to resolve these conflicts?"
 msgstr ""
 
+#, fuzzy
 msgid "Resolve conflicts"
-msgstr ""
+msgstr "Rozwiązuj konflikty"
 
+#, fuzzy
 msgid "Ignore conflicts"
-msgstr ""
+msgstr "Ignoruj konflikty"
 
 #, python-format
 msgid ""
@@ -225,7 +228,7 @@ msgstr "Przechwyć kombinację klawiszy"
 
 #, python-format
 msgid "\"%s\" is not a valid button"
-msgstr "\"%s\" nie jest porawnym przyciskiem"
+msgstr "\"%s\" nie jest poprawnym przyciskiem"
 
 #, python-format
 msgid ""
@@ -521,6 +524,9 @@ msgstr ""
 "<span size=\"large\"><b>Nic nie znaleziono.</b> </span><span>\n"
 "\n"
 " Twój filtr \"<b>%s</b>\" nie pasje do żadnych wyników wyszkiwania.</span>"
+
+msgid "Configure Compiz with CompizConfig"
+msgstr ""
 
 #~ msgid "Computing possible conflicts, please wait"
 #~ msgstr "Obliczanie możliwych konfliktów, proszę czekać"

@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-05-02 13:46+0530\n"
-"PO-Revision-Date: 2008-04-04 08:58+0200\n"
+"POT-Creation-Date: 2008-05-24 22:12+0530\n"
+"PO-Revision-Date: 2008-05-02 23:57+0200\n"
 "Last-Translator: Nicolau Gonçalves <excentriko@gmail.com>\n"
 "Language-Team: Portuguese (Portugal) <pt@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -47,13 +47,13 @@ msgid "Set %(action)s anyway"
 msgstr "Definir %(action)s de qualquer maneira"
 
 msgid "key"
-msgstr ""
+msgstr "tecla"
 
 msgid "button"
-msgstr ""
+msgstr "botão"
 
 msgid "edge"
-msgstr ""
+msgstr "margem"
 
 #, python-format
 msgid ""
@@ -98,12 +98,14 @@ msgid ""
 "Some %(bindings)s bindings of Plugin <b>%(plugin)s</b> conflict with other "
 "plugins. Do you want to resolve these conflicts?"
 msgstr ""
+"Alguns %(bindings)s atalhos do Plugin <b>%(plugin)s</b> entram em conflicto "
+"com outros plugins. Deseja resolver estes conflictos?"
 
 msgid "Resolve conflicts"
-msgstr ""
+msgstr "Resolve conflictos"
 
 msgid "Ignore conflicts"
-msgstr ""
+msgstr "Ignorar conflictos"
 
 #, python-format
 msgid ""
@@ -525,6 +527,9 @@ msgstr ""
 "<span size=\"large\"><b>Nenhuma ocorrência encontrada.</b> </span><span>\n"
 "\n"
 " O filtro \"<b>%s</b>\" não coincide com nenhum item.</span>"
+
+msgid "Configure Compiz with CompizConfig"
+msgstr ""
 
 #~ msgid "Computing possible conflicts, please wait"
 #~ msgstr "A verificar possíveis conflictos, por favor aguarde"
