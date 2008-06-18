@@ -57,6 +57,9 @@ def getScreens():
         screens.append(i)
     return screens
 
+def protect_markup_dict (dict_):
+    return dict((k, protect_pango_markup (v)) for (k, v) in dict_.iteritems())
+
 class Image (gtk.Image):
 
     def __init__ (self, name = None, type = ImageNone, size = 32):
