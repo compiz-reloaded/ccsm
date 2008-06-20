@@ -923,6 +923,7 @@ class Popup (gtk.Window):
             self.set_transient_for (parent.get_toplevel ())
         self.set_modal (modal)
         self.set_decorated (decorated)
+        self.set_property("skip-taskbar-hint", True)
         if text:
             label = gtk.Label (text)
             align = gtk.Alignment ()
