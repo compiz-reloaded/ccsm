@@ -1311,7 +1311,9 @@ class AboutDialog (gtk.AboutDialog):
         self.set_artists (["Andrew Wedderburn <andrew.wedderburn@gmail.com>",
                            "Patrick Niklaus <marex@opencompositing.org>",
                            "Gnome Icon Theme Team"])
-        self.set_logo (IconTheme.load_icon("ccsm", 64, gtk.ICON_LOOKUP_FORCE_SVG))
+        if IconTheme.lookup_icon("ccsm", 64, 0):
+            icon = IconTheme.load_icon("ccsm", 64, 0)
+            self.set_logo (icon)
         self.set_website ("http://www.compiz-fusion.org")
 
 # Error dialog
