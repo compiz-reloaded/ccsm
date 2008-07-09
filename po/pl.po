@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-06-16 16:26+0530\n"
-"PO-Revision-Date: 2008-05-09 15:25+0200\n"
-"Last-Translator: Tomasz Kowalski <pootek@gmail.com>\n"
+"POT-Creation-Date: 2008-07-09 17:22+0530\n"
+"PO-Revision-Date: 2008-06-18 22:42+0200\n"
+"Last-Translator: Michal Kaluzniak <the_hooltay@o2.pl>\n"
 "Language-Team: pl_PL <pl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -44,15 +44,12 @@ msgstr "Nie ustawiaj %(action)s"
 msgid "Set %(action)s anyway"
 msgstr "Ustaw %(action)s mimo wszystko"
 
-#, fuzzy
 msgid "key"
 msgstr "klawisz"
 
-#, fuzzy
 msgid "button"
 msgstr "przycisk"
 
-#, fuzzy
 msgid "edge"
 msgstr "krawędź"
 
@@ -99,12 +96,12 @@ msgid ""
 "Some %(bindings)s bindings of Plugin <b>%(plugin)s</b> conflict with other "
 "plugins. Do you want to resolve these conflicts?"
 msgstr ""
+"Niektóre %(bindings)s skróty pluginu <b>%(plugin)s</b> powodują konflikt z "
+"innymi pluginami. Czy chcesz rozwiązać te konflikty?"
 
-#, fuzzy
 msgid "Resolve conflicts"
-msgstr "Rozwiązuj konflikty"
+msgstr "Rozwiąż konflikty"
 
-#, fuzzy
 msgid "Ignore conflicts"
 msgstr "Ignoruj konflikty"
 
@@ -348,11 +345,12 @@ msgstr "Znajdź opcję Compiz Core"
 msgid "Error"
 msgstr "Błąd"
 
-#, fuzzy
 msgid ""
 "Enter a filter.\n"
 "Click the keyboard image to grab a key for which to search."
-msgstr "Wprowadź filtr. Kliknij w ikonę klawiatury, by wybrać szukany klawisz"
+msgstr ""
+"Wprowadź filtr.\n"
+"Kliknij w ikonę klawiatury, by wybrać szukany klawisz"
 
 msgid "Search in..."
 msgstr "Szukaj w..."
@@ -377,9 +375,8 @@ msgstr "Podgrupa"
 msgid "Settings"
 msgstr "Ustawienia"
 
-#, fuzzy
 msgid "Loading Advanced Search"
-msgstr "Zaawansowane szukanie"
+msgstr "Ładuje zaawansowane szukanie"
 
 msgid "Add a New Profile"
 msgstr "Dodaj nowy profil"
@@ -526,7 +523,7 @@ msgstr ""
 " Twój filtr \"<b>%s</b>\" nie pasje do żadnych wyników wyszkiwania.</span>"
 
 msgid "Configure Compiz with CompizConfig"
-msgstr ""
+msgstr "Konfiguruj Compiz przy pomocy Menadżera Ustawień CompizConfig"
 
 #~ msgid "Computing possible conflicts, please wait"
 #~ msgstr "Obliczanie możliwych konfliktów, proszę czekać"
