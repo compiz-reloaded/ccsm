@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm 0.6\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-07-09 17:22+0530\n"
-"PO-Revision-Date: 2008-02-13 12:41+0100\n"
-"Last-Translator: gclee <gcnation@gmail.com>\n"
+"POT-Creation-Date: 2008-08-07 11:25+0530\n"
+"PO-Revision-Date: 2008-07-22 14:22+0900\n"
+"Last-Translator: Lee June Hee <bugbear5@gmail.com>\n"
 "Language-Team: Korean <happyhackinglife@gmail>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -43,13 +43,13 @@ msgid "Set %(action)s anyway"
 msgstr "무조건 %(action)s을(를) 설정"
 
 msgid "key"
-msgstr ""
+msgstr "키"
 
 msgid "button"
-msgstr ""
+msgstr "버튼"
 
 msgid "edge"
-msgstr ""
+msgstr "모서리"
 
 #, python-format
 msgid ""
@@ -94,12 +94,14 @@ msgid ""
 "Some %(bindings)s bindings of Plugin <b>%(plugin)s</b> conflict with other "
 "plugins. Do you want to resolve these conflicts?"
 msgstr ""
+"<b>%(plugin)s</b> 플러그인의 %(bindings)s 바인딩은 다른 플러그인과 충돌합니"
+"다. 이 충돌을 해결하겠습니까?"
 
 msgid "Resolve conflicts"
-msgstr ""
+msgstr "충돌 해결"
 
 msgid "Ignore conflicts"
-msgstr ""
+msgstr "충돌 무시"
 
 #, python-format
 msgid ""
@@ -243,7 +245,6 @@ msgstr "없음"
 msgid "CompizConfig Settings Manager"
 msgstr "컴피즈 설정 관리자"
 
-#, fuzzy
 msgid "Plugin"
 msgstr "플러그인 목록"
 
@@ -296,7 +297,6 @@ msgstr "관계"
 msgid "Invert"
 msgstr "반전"
 
-#, fuzzy
 msgid "Browse..."
 msgstr "다음을 찾아보기: "
 
@@ -348,6 +348,8 @@ msgid ""
 "Enter a filter.\n"
 "Click the keyboard image to grab a key for which to search."
 msgstr ""
+"필터를 입력하십시오.\n"
+"검색할 키를 붙잡기 위하여 키보드 그림을 클릭하십시오."
 
 msgid "Search in..."
 msgstr "다음에서 검색..."
@@ -363,16 +365,15 @@ msgid "Settings value"
 msgstr "설정 값"
 
 msgid "Group"
-msgstr ""
+msgstr "그룹"
 
 msgid "Subgroup"
-msgstr ""
+msgstr "하위 그룹"
 
 #. Notebook
 msgid "Settings"
 msgstr "설정"
 
-#, fuzzy
 msgid "Loading Advanced Search"
 msgstr "고급 검색"
 
@@ -521,7 +522,7 @@ msgstr ""
 " \"<b>%s</b>\"은(는) 어느 항목과도 일치하지 않습니다.</span>"
 
 msgid "Configure Compiz with CompizConfig"
-msgstr ""
+msgstr "CompizConfig으로 Compiz 설정"
 
 #~ msgid "Computing possible conflicts, please wait"
 #~ msgstr "가능한 충돌을 계산하고 있습니다. 잠시만 기다려주세요."

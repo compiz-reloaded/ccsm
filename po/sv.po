@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: compiz-fusion-plugins 0.0.1\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-07-09 17:22+0530\n"
-"PO-Revision-Date: 2008-05-15 21:02+0200\n"
-"Last-Translator: Sebastian Parborg <zedDB@hotmail.com>\n"
+"POT-Creation-Date: 2008-08-07 11:26+0530\n"
+"PO-Revision-Date: 2008-07-15 20:02+0200\n"
+"Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Compiz Fusion Translators <i18n@lists.compiz-fusion.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -45,15 +45,12 @@ msgstr "Ställ inte in %(action)s"
 msgid "Set %(action)s anyway"
 msgstr "Ställ in %(action)s ändå"
 
-#, fuzzy
 msgid "key"
 msgstr "tangent"
 
-#, fuzzy
 msgid "button"
 msgstr "knapp"
 
-#, fuzzy
 msgid "edge"
 msgstr "kant"
 
@@ -177,13 +174,13 @@ msgstr "Allmänt"
 
 # This is what gnomes translation looks like...
 msgid "Accessibility"
-msgstr "Allmän åtkomst"
+msgstr "Tillgänglighet"
 
 msgid "Desktop"
 msgstr "Skrivbord"
 
 msgid "Extras"
-msgstr "Extras"
+msgstr "Extrafunktioner"
 
 msgid "Window Management"
 msgstr "Fönsterhantering"
@@ -192,7 +189,7 @@ msgid "Effects"
 msgstr "Effekter"
 
 msgid "Image Loading"
-msgstr "Bildladdning"
+msgstr "Bildinläsning"
 
 msgid "Utility"
 msgstr "Verktyg"
@@ -201,7 +198,7 @@ msgid "All"
 msgstr "Alla"
 
 msgid "Uncategorized"
-msgstr "Okategoriserat"
+msgstr "Okategoriserade"
 
 msgid "Reset setting to the default value"
 msgstr "Återställ inställning till standardvärde"
@@ -251,13 +248,13 @@ msgid "None"
 msgstr "Inget"
 
 msgid "CompizConfig Settings Manager"
-msgstr "CompizConfig inställningshanterare"
+msgstr "Inställningshanterare för CompizConfig"
 
 msgid "Plugin"
-msgstr "Plugin"
+msgstr "Insticksmodul"
 
 msgid "Please press the new key combination"
-msgstr "Var snäll och tryck den nya tangenkombinationen"
+msgstr "Tryck den nya tangentkombinationen"
 
 msgid "Window Title"
 msgstr "Fönstertitel"
@@ -298,7 +295,7 @@ msgid "Value"
 msgstr "Värde"
 
 msgid "Grab"
-msgstr "Greppa"
+msgstr "Fånga"
 
 #. Relation
 msgid "Relation"
@@ -318,7 +315,7 @@ msgid "File"
 msgstr "Fil"
 
 msgid "Open directory..."
-msgstr "Öppna mapp..."
+msgstr "Öppna katalog..."
 
 msgid "Open file..."
 msgstr "Öppna fil..."
@@ -328,7 +325,9 @@ msgstr ""
 "Det här är en inställningshanterare för CompizConfig konfigurations-system"
 
 msgid "translator-credits"
-msgstr "översättare"
+msgstr ""
+"Daniel Nylander <po@danielnylander.se>\n"
+"Sebastian Parborg"
 
 msgid "An error has occured"
 msgstr "Ett fel har inträffat"
@@ -356,13 +355,12 @@ msgstr "Sök Compiz Core-alternativ"
 msgid "Error"
 msgstr "Fel"
 
-#, fuzzy
 msgid ""
 "Enter a filter.\n"
 "Click the keyboard image to grab a key for which to search."
 msgstr ""
 "Skriv in ett filter.\n"
-"Klicka på tangentbordsbilden för att greppa en tangent att söka efter."
+"Klicka på tangentbordsbilden för att fånga en tangent att söka efter."
 
 msgid "Search in..."
 msgstr "Sök i..."
@@ -388,7 +386,7 @@ msgid "Settings"
 msgstr "Inställningar"
 
 msgid "Loading Advanced Search"
-msgstr "Laddar avancerad sökning"
+msgstr "Läser in avancerad sökning"
 
 msgid "Add a New Profile"
 msgstr "Lägg till en ny profil"
@@ -412,7 +410,7 @@ msgid "Import as..."
 msgstr "Importera som..."
 
 msgid "Import a CompizConfig Profile as a new profile"
-msgstr "Importera en CompizConfig profil som ny profil"
+msgstr "Importera en CompizConfig-profil som ny profil"
 
 msgid "Export"
 msgstr "Exportera"
@@ -488,7 +486,7 @@ msgid "Plugin name:"
 msgstr "Insticksmodulens namn:"
 
 msgid "Insert plugin name"
-msgstr "Skriv insticksmodulens namn"
+msgstr "Ange insticksmodulens namn"
 
 msgid "Preferences"
 msgstr "Inställningar"
@@ -539,7 +537,7 @@ msgstr ""
 " Ditt filter \"<b>%s</b>\" matchar inga objekt.</span>"
 
 msgid "Configure Compiz with CompizConfig"
-msgstr ""
+msgstr "Konfigurera Compiz med CompizConfig"
 
 #~ msgid "Computing possible conflicts, please wait"
 #~ msgstr "Beräknar eventuella konflikter, var snäll vänta"
