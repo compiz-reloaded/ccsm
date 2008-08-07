@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-07-09 17:22+0530\n"
-"PO-Revision-Date: 2008-05-12 01:48+0200\n"
+"POT-Creation-Date: 2008-08-07 11:25+0530\n"
+"PO-Revision-Date: 2008-07-09 16:00+0200\n"
 "Last-Translator: Yotam Benshalom <benshalom@gmail.com>\n"
 "Language-Team: Yotam Benshalom <benshalom@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -43,13 +43,13 @@ msgid "Set %(action)s anyway"
 msgstr "קבע צירוף ל%(action)s בכל זאת"
 
 msgid "key"
-msgstr ""
+msgstr "מקש"
 
 msgid "button"
-msgstr ""
+msgstr "כפתור"
 
 msgid "edge"
-msgstr ""
+msgstr "קצה מסך"
 
 #, python-format
 msgid ""
@@ -93,12 +93,14 @@ msgid ""
 "Some %(bindings)s bindings of Plugin <b>%(plugin)s</b> conflict with other "
 "plugins. Do you want to resolve these conflicts?"
 msgstr ""
+"כמה צימודי %(bindings)s של ההתקן <b>%(plugin)s</b> מתנגשים עם התקנים אחרים. "
+"האם ברצונך לפתור התנגשויות אלה?"
 
 msgid "Resolve conflicts"
-msgstr ""
+msgstr "פתור התנגשויות"
 
 msgid "Ignore conflicts"
-msgstr ""
+msgstr "התעלם מהתנגשויות"
 
 #, python-format
 msgid ""
@@ -236,7 +238,7 @@ msgid "None"
 msgstr "ללא"
 
 msgid "CompizConfig Settings Manager"
-msgstr "מנהל ההגדרות של קומפיז"
+msgstr "מנהל הגדרות CompizConfig"
 
 msgid "Plugin"
 msgstr "התקן"
@@ -307,7 +309,7 @@ msgid "Open file..."
 msgstr "פתיחת קובץ..."
 
 msgid "This is a settings manager for the CompizConfig configuration system."
-msgstr "זהו מנהל הגדרות עבור מערכת בקרת התצורה CompizConfig."
+msgstr "זהו מנהל הגדרות עבור מערכת בקרת התצורה של CompizConfig."
 
 msgid "translator-credits"
 msgstr "מתרגמים"
@@ -515,7 +517,7 @@ msgstr ""
 " המסנן \"<b>%s</b>\" אינו תואם לאף אחד מהפריטים.</span>"
 
 msgid "Configure Compiz with CompizConfig"
-msgstr ""
+msgstr "ערוך את תצורת קומפיז בעזרת CompizConfig"
 
 #~ msgid "Computing possible conflicts, please wait"
 #~ msgstr "בודק התנגשויות אפשריות, נא להמתין"
