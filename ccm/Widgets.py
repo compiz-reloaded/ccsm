@@ -1466,6 +1466,7 @@ class CategoryBox(gtk.VBox):
         text = name or 'Uncategorized'
 
         header = gtk.HBox ()
+        header.set_border_width (5)
         header.set_spacing (10)
         label = Label ('', -1)
         label.set_markup ("<span color='#aaa' size='x-large' weight='800'>%s</span>" % _(text))
