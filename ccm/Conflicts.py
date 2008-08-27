@@ -294,7 +294,8 @@ class PluginConflict(Conflict):
                 answer = self.AskUser(self.Plugin, conflict)
                 if answer == gtk.RESPONSE_YES:
                     disableConflicts = conflict[2][0].DisableConflicts
-                    con = PluginConflict(conflict[2][0], disableConflicts)
+                    con = PluginConflict(conflict[2][0], disableConflicts,
+                                         self.AutoResolve)
                     if con.Resolve():
                         conflict[2][0].Enabled = False
                     else:
@@ -306,7 +307,8 @@ class PluginConflict(Conflict):
                 answer = self.AskUser(self.Plugin, conflict)
                 if answer == gtk.RESPONSE_YES:
                     disableConflicts = conflict[2][0].DisableConflicts
-                    con = PluginConflict(conflict[2][0], disableConflicts)
+                    con = PluginConflict(conflict[2][0], disableConflicts,
+                                         self.AutoResolve)
                     if con.Resolve():
                         conflict[2][0].Enabled = False
                     else:
@@ -320,7 +322,8 @@ class PluginConflict(Conflict):
                     for plg in conflict[2]:
                         if plg.ShortDesc == choice:
                             enableConflicts = plg.EnableConflicts
-                            con = PluginConflict(plg, enableConflicts)
+                            con = PluginConflict(plg, enableConflicts,
+                                                 self.AutoResolve)
                             if con.Resolve():
                                 plg.Enabled = True
                             else:
@@ -333,7 +336,8 @@ class PluginConflict(Conflict):
                 answer = self.AskUser(self.Plugin, conflict)
                 if answer == gtk.RESPONSE_YES:
                     enableConflicts = conflict[2][0].EnableConflicts
-                    con = PluginConflict(conflict[2][0], enableConflicts)
+                    con = PluginConflict(conflict[2][0], enableConflicts,
+                                         self.AutoResolve)
                     if con.Resolve():
                         conflict[2][0].Enabled = True
                     else:
@@ -346,7 +350,8 @@ class PluginConflict(Conflict):
                 if answer == gtk.RESPONSE_YES:
                     for plg in conflict[2]:
                         disableConflicts = plg.DisableConflicts
-                        con = PluginConflict(plg, disableConflicts)
+                        con = PluginConflict(plg, disableConflicts,
+                                             self.AutoResolve)
                         if con.Resolve():
                             plg.Enabled = False
                         else:
@@ -359,7 +364,8 @@ class PluginConflict(Conflict):
                 if answer == gtk.RESPONSE_YES:
                     for plg in conflict[2]:
                         disableConflicts = plg.DisableConflicts
-                        con = PluginConflict(plg, disableConflicts)
+                        con = PluginConflict(plg, disableConflicts,
+                                             self.AutoResolve)
                         if con.Resolve():
                             plg.Enabled = False
                         else:
