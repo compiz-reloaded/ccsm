@@ -1407,6 +1407,7 @@ class PluginButton (gtk.HBox):
 
         plugin.Context.Write ()
         GlobalUpdater.UpdatePlugins()
+        plugin.Context.UpdateExtensiblePlugins ()
         self.emit ('activated')
 
     def show_plugin_page (self, widget):

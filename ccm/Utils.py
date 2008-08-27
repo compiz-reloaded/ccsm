@@ -212,11 +212,12 @@ class NotFoundBox(gtk.Alignment):
         self.Warning.set_markup(self.Markup % value)
 
 class IdleSettingsParser:
-    def __init__(self, context):
+    def __init__(self, context, main):
         def FilterPlugin (p):
             return not p.Initialized and p.Enabled
 
         self.Context = context
+        self.Main = main
         self.PluginList = [p for p in self.Context.Plugins.items() if FilterPlugin(p[1])]
         
         gobject.timeout_add (200, self.Wait)
@@ -234,6 +235,17 @@ class IdleSettingsParser:
 
         if not plugin.Initialized:
             plugin.Update ()
+            currentPage = self.Main.CurrentPage
+            if currentPage != self.Main.MainPage:
+                for basePlugin in plugin.GetExtensionBasePlugins ():
+                    # If this is an extension plugin and a base plugin of this
+                    # is currently being displayed, then update its current page
+                    if currentPage.Plugin and \
+                            currentPage.Plugin.Name == basePlugin.Name:
+                        curPage = currentPage.RightWidget.get_current_page ()
+                        self.Main.BackToMain (None)
+                        self.Main.MainPage.ShowPlugin (None, basePlugin)
+                        currentPage.RightWidget.set_current_page (curPage)
 
         self.PluginList.remove (self.PluginList[0])
 
