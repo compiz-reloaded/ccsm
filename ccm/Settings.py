@@ -296,6 +296,71 @@ class EnumSetting(StockSetting):
             visible = any(text in s.lower() for s in self.Info)
         return visible
 
+class RestrictedStringSetting(StockSetting):
+
+    NoneValue = 0
+
+    def _Init(self):
+        StockSetting._Init(self)
+        self.Combo = gtk.combo_box_new_text()
+        if self.List:
+            info = self.Setting.Info[1]
+        else:
+            info = self.Setting.Info
+
+        self.ItemsByName = info[0]
+        self.ItemsByValue = info[1]
+        self.SortedItems = info[2]
+
+        for (i, (name, value)) in enumerate(self.SortedItems):
+            self.Combo.append_text(name)
+        self.Combo.connect('changed', self.Changed)
+
+        self.Widget = self.Combo
+        self.Box.pack_start(self.Combo, True, True)
+
+    def _CellEdited(self, cell, path, new_text):
+        self.CurrentRow = int(path[0])
+        value = self.ItemsByName[new_text]
+        self.Store[path][self.Num] = new_text
+        self.Set(value)
+        self.Setting.Plugin.Context.Write()
+
+    def GetColumn(self, num):
+        self.Num = num
+        cell = gtk.CellRendererCombo()
+        column = gtk.TreeViewColumn(self.Setting.ShortDesc, cell, text=num)
+        model = gtk.ListStore(str)
+        for property, value in [("model", model), ("text_column", 0),
+                                ("editable", False), ("has_entry", False)]:
+            cell.set_property (property, value)
+        cell.connect("edited", self._CellEdited)
+        for item, i in self.SortedItems:
+            model.append([item])
+
+        return (str, column)
+
+    def GetForRenderer(self):
+        return [(self.SortedItems[self.ItemsByValue[val][1]][0] \
+                 if self.ItemsByValue.has_key(val) else '') \
+                for val in self.Setting.Value]
+
+    def _Read(self):
+        value = self.Get()
+        if self.ItemsByValue.has_key(value):
+            self.Combo.set_active(self.ItemsByValue[self.Get()][1])
+
+    def _Changed(self):
+        active = self.Combo.get_active_text()
+        
+        self.Set(self.ItemsByName[active])
+
+    def _Filter(self, text, level):
+        visible = Setting._Filter(self, text, level=level)
+        if text is not None and not visible and level & FilterValue:
+            visible = any(text in s.lower() for s in self.ItemsByName)
+        return visible
+
 class BoolSetting (StockSetting):
 
     NoneValue = False
@@ -724,6 +789,57 @@ class EnumFlagsSetting(Setting):
         visible = Setting._Filter(self, text, level=level)
         if text is not None and not visible and level & FilterValue:
             visible = any(text in s.lower() for s in self.Setting.Info[1][2])
+        return visible
+
+class RestrictedStringFlagsSetting(Setting):
+
+    def _Init(self):
+        frame = gtk.Frame(self.Setting.ShortDesc)
+        table = gtk.Table()
+        
+        row = col = 0
+        self.Checks = []
+        info = self.Setting.Info[1]
+        self.ItemsByName = info[0]
+        self.ItemsByValue = info[1]
+        sortedItems = info[2]
+        for key, value in sortedItems:
+            box = gtk.CheckButton(key)
+            self.Checks.append((key, box))
+            table.attach(box, col, col+1, row, row+1, TableDef, TableDef, TableX, TableX)
+            box.connect('toggled', self.Changed)
+            col = col+1
+            if col >= 3:
+                col = 0
+                row += 1
+
+        vbox = gtk.VBox()
+        vbox.pack_start(self.Reset, False, False)
+
+        hbox = gtk.HBox()
+        hbox.pack_start(table, True, True)
+        hbox.pack_start(vbox, False, False)
+
+        frame.add(hbox)
+        self.Box.pack_start(frame, True, True)
+
+    def _Read(self):
+        for key, box in self.Checks:
+            box.set_active(False)
+        for setVal in self.Setting.Value:
+            self.Checks[self.ItemsByValue[setVal][1]][1].set_active(True)
+
+    def _Changed(self):
+        values = []
+        for key, box in self.Checks:
+            if box.get_active():
+                values.append(self.ItemsByName[key])
+        self.Setting.Value = values
+
+    def _Filter(self, text, level=FilterAll):
+        visible = Setting._Filter(self, text, level=level)
+        if text is not None and not visible and level & FilterValue:
+            visible = any(text in s.lower() for s in self.ItemsByName)
         return visible
 
 class EditableActionSetting (StockSetting):
@@ -1243,6 +1359,9 @@ def MakeStringSetting (setting, List=False):
             return FileStringSetting (setting, isDirectory=True, List=List)
         else:
             return StringSetting (setting, List=List)
+    elif (List and setting.Info[1][2]) or \
+        (not List and setting.Info[2]):
+        return RestrictedStringSetting (setting, List=List)
     else:
         return StringSetting (setting, List=List)
 
@@ -1265,6 +1384,8 @@ def MakeListSetting (setting, List=False):
 
     if setting.Info[0] == "Int" and setting.Info[1][2]:
         return EnumFlagsSetting (setting)
+    elif setting.Info[0] == "String" and setting.Info[1][2]:
+        return RestrictedStringFlagsSetting (setting)
     else:
         return ListSetting (setting)
       
