@@ -235,17 +235,7 @@ class IdleSettingsParser:
 
         if not plugin.Initialized:
             plugin.Update ()
-            currentPage = self.Main.CurrentPage
-            if currentPage != self.Main.MainPage:
-                for basePlugin in plugin.GetExtensionBasePlugins ():
-                    # If this is an extension plugin and a base plugin of this
-                    # is currently being displayed, then update its current page
-                    if currentPage.Plugin and \
-                            currentPage.Plugin.Name == basePlugin.Name:
-                        curPage = currentPage.RightWidget.get_current_page ()
-                        self.Main.BackToMain (None)
-                        self.Main.MainPage.ShowPlugin (None, basePlugin)
-                        self.Main.CurrentPage.RightWidget.set_current_page (curPage)
+            self.Main.RefreshPage(plugin)
 
         self.PluginList.remove (self.PluginList[0])
 

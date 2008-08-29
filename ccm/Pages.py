@@ -221,6 +221,15 @@ class PluginPage(GenericPage):
         self.Block -= 1
         GlobalUpdater.UpdatePlugins()
 
+    def DestroyDialogs(self):
+        for groupPage in self.Pages:
+            if isinstance(groupPage, GroupPage):
+                for sga in groupPage.subGroupAreas:
+                    for setting in sga.MySettings:
+                        if isinstance(setting, BaseListSetting) and \
+                        setting.EditDialog:
+                            setting.EditDialog.destroy()
+
 # Filter Page
 #
 class FilterPage(GenericPage):
