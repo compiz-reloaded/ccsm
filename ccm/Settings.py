@@ -849,7 +849,8 @@ class RestrictedStringFlagsSetting(Setting):
         for key, box in self.Checks:
             box.set_active(False)
         for setVal in self.Setting.Value:
-            self.Checks[self.ItemsByValue[setVal][1]][1].set_active(True)
+            if self.ItemsByValue.has_key(setVal):
+                self.Checks[self.ItemsByValue[setVal][1]][1].set_active(True)
 
     def _Changed(self):
         values = []
