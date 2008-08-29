@@ -38,7 +38,7 @@ gettext.bindtextdomain("ccsm", DataDir + "/locale")
 gettext.textdomain("ccsm")
 _ = gettext.gettext
 
-NAItemText = 'N/A'
+NAItemText = _("N/A")
 
 class Setting(object):
 
