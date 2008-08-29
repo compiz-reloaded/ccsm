@@ -245,7 +245,7 @@ class IdleSettingsParser:
                         curPage = currentPage.RightWidget.get_current_page ()
                         self.Main.BackToMain (None)
                         self.Main.MainPage.ShowPlugin (None, basePlugin)
-                        currentPage.RightWidget.set_current_page (curPage)
+                        self.Main.CurrentPage.RightWidget.set_current_page (curPage)
 
         self.PluginList.remove (self.PluginList[0])
 
