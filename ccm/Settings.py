@@ -38,6 +38,8 @@ gettext.bindtextdomain("ccsm", DataDir + "/locale")
 gettext.textdomain("ccsm")
 _ = gettext.gettext
 
+NAItemText = 'N/A'
+
 class Setting(object):
 
     NoneValue = ''
@@ -319,6 +321,9 @@ class RestrictedStringSetting(StockSetting):
         self.Widget = self.Combo
         self.Box.pack_start(self.Combo, True, True)
 
+        self.OriginalValue = None
+        self.NAItemShift = 0
+
     def _CellEdited(self, cell, path, new_text):
         self.CurrentRow = int(path[0])
         value = self.ItemsByName[new_text]
@@ -342,18 +347,35 @@ class RestrictedStringSetting(StockSetting):
 
     def GetForRenderer(self):
         return [(self.SortedItems[self.ItemsByValue[val][1]][0] \
-                 if self.ItemsByValue.has_key(val) else '') \
+                 if self.ItemsByValue.has_key(val) else NAItemText) \
                 for val in self.Setting.Value]
 
     def _Read(self):
         value = self.Get()
+
+        if not self.OriginalValue:
+            self.OriginalValue = value
+
+            # if current value is not provided by any restricted string extension,
+            # insert an N/A item at the beginning
+            if not self.ItemsByValue.has_key(self.OriginalValue):
+                self.NAItemShift = 1
+                self.Combo.insert_text(0, NAItemText)
+
         if self.ItemsByValue.has_key(value):
-            self.Combo.set_active(self.ItemsByValue[self.Get()][1])
+            self.Combo.set_active(self.ItemsByValue[self.Get()][1] + \
+                                  self.NAItemShift)
+        else:
+            self.Combo.set_active(0)
 
     def _Changed(self):
         active = self.Combo.get_active_text()
         
-        self.Set(self.ItemsByName[active])
+        if active == NAItemText:
+            activeValue = self.OriginalValue
+        else:
+            activeValue = self.ItemsByName[active]
+        self.Set(activeValue)
 
     def _Filter(self, text, level):
         visible = Setting._Filter(self, text, level=level)
