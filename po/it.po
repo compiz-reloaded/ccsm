@@ -2,16 +2,16 @@
 # Copyright (C) 2007 compiz-fusion.org 
 # This file is distributed under the same license as the ccsm package.
 # Treviño (Marco Trevisan) <trevi55@gmail.com>, 2007
-# Milo Casagrande <milo_casagrande@yahoo.it>, 2007-2008
+# Milo Casagrande <milo@ubuntu.com>, 2007-2008
 #
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: ccsm\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-08-07 11:25+0530\n"
-"PO-Revision-Date: 2008-05-10 19:28+0200\n"
-"Last-Translator: Milo Casagrande <milo_casagrande@yahoo.it>\n"
+"POT-Creation-Date: 2008-08-30 11:39+0530\n"
+"PO-Revision-Date: 2008-08-11 15:57+0200\n"
+"Last-Translator: Milo Casagrande <milo@ubuntu.com>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -201,6 +201,9 @@ msgstr "Tutti"
 msgid "Uncategorized"
 msgstr "Senza categoria"
 
+msgid "N/A"
+msgstr ""
+
 msgid "Reset setting to the default value"
 msgstr "Ripristina l'impostazione al valore predefinito"
 
@@ -224,7 +227,7 @@ msgid "Disabled"
 msgstr "Disabilitato"
 
 msgid "Enabled"
-msgstr "Attivato"
+msgstr "Abilitato"
 
 msgid "Grab key combination"
 msgstr "Ottieni combinazione tasti"
@@ -329,7 +332,7 @@ msgstr ""
 "Un gestore delle impostazioni per il sistema di configurazione CompizConfig."
 
 msgid "translator-credits"
-msgstr "Milo Casagrande <milo_casagrande@yahoo.it>"
+msgstr "Milo Casagrande <milo@ubuntu.com>"
 
 msgid "An error has occured"
 msgstr "Si è verificato un errore"
@@ -444,7 +447,7 @@ msgstr "Integrazione"
 
 # (NdT) opzione
 msgid "Enable integration into the desktop environment"
-msgstr "Attivare l'integrazione con l'ambiente grafico"
+msgstr "Abilitare l'integrazione con l'ambiente grafico"
 
 msgid "Profiles (*.profile)"
 msgstr "Profili (*.profile)"
@@ -480,11 +483,11 @@ msgstr "Ordinamento plug-in automatico"
 
 # (NdT) intestazione elenco
 msgid "Disabled Plugins"
-msgstr "Plug-in disattivati"
+msgstr "Plug-in disabilitati"
 
 # (NdT) intestazione elenco
 msgid "Enabled Plugins"
-msgstr "Plug-in attivati"
+msgstr "Plug-in abilitati"
 
 msgid ""
 "Do you really want to disable automatic plugin sorting? This will also "
