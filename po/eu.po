@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-08-07 11:25+0530\n"
-"PO-Revision-Date: 2008-08-06 12:58+0200\n"
+"POT-Creation-Date: 2008-08-30 11:39+0530\n"
+"PO-Revision-Date: 2008-08-08 23:55+0200\n"
 "Last-Translator: Ander Elortondo <ander.elor@gmail.com>\n"
 "Language-Team: Euskara <librezale@librezale.org>\n"
 "MIME-Version: 1.0\n"
@@ -199,6 +199,9 @@ msgstr "Denak"
 msgid "Uncategorized"
 msgstr "Kategori gabekoa"
 
+msgid "N/A"
+msgstr ""
+
 msgid "Reset setting to the default value"
 msgstr "Lehenetsitako balioetan jarri ezarpenak"
 
@@ -291,11 +294,11 @@ msgid "Value"
 msgstr "Balioa"
 
 msgid "Grab"
-msgstr ""
+msgstr "Eutsi"
 
 #. Relation
 msgid "Relation"
-msgstr ""
+msgstr "Relazioa"
 
 #. Invert
 msgid "Invert"
