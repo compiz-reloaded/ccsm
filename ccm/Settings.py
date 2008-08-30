@@ -301,7 +301,7 @@ class EnumSetting(StockSetting):
 
 class RestrictedStringSetting(StockSetting):
 
-    NoneValue = 0
+    NoneValue = ''
 
     def _Init(self):
         StockSetting._Init(self)
@@ -314,6 +314,9 @@ class RestrictedStringSetting(StockSetting):
         self.ItemsByName = info[0]
         self.ItemsByValue = info[1]
         self.SortedItems = info[2]
+
+        # Use the first item in the list as the default value
+        self.NoneValue = self.ItemsByName[self.SortedItems[0][0]]
 
         for (i, (name, value)) in enumerate(self.SortedItems):
             self.Combo.append_text(name)
