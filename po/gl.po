@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-08-07 11:25+0530\n"
-"PO-Revision-Date: 2008-05-25 19:52+0200\n"
-"Last-Translator: Fran Diéguez (GLUG) <fran.dieguez@glug.es>\n"
+"POT-Creation-Date: 2008-08-30 11:39+0530\n"
+"PO-Revision-Date: 2008-08-28 16:13+0200\n"
+"Last-Translator: Felipe Gil-Castiñeira <felipexil@gmail.com>\n"
 "Language-Team: Galician <en@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -98,6 +98,8 @@ msgid ""
 "Some %(bindings)s bindings of Plugin <b>%(plugin)s</b> conflict with other "
 "plugins. Do you want to resolve these conflicts?"
 msgstr ""
+"Algún atallo %(bindings)s do plugin <b>%(plugin)s</b> entra en conflito con "
+"outros plugins. ¿Quere resolver eses conflitos?"
 
 msgid "Resolve conflicts"
 msgstr "Solucionar conflictos"
@@ -195,6 +197,9 @@ msgstr "Todo"
 
 msgid "Uncategorized"
 msgstr "Sen categoría"
+
+msgid "N/A"
+msgstr ""
 
 msgid "Reset setting to the default value"
 msgstr "Reiniciar opción ó valor por defecto"
@@ -299,9 +304,8 @@ msgstr "Relación"
 msgid "Invert"
 msgstr "Invertir"
 
-#, fuzzy
 msgid "Browse..."
-msgstr "Examinar por"
+msgstr "Examinar..."
 
 msgid "Images"
 msgstr "Imaxes"
@@ -378,9 +382,8 @@ msgstr "Subgrupo"
 msgid "Settings"
 msgstr "Opcións"
 
-#, fuzzy
 msgid "Loading Advanced Search"
-msgstr "Procura avanzada"
+msgstr "Cargando a procura avanzada"
 
 msgid "Add a New Profile"
 msgstr "Engadir novo perfil"
@@ -482,7 +485,7 @@ msgid "Insert plugin name"
 msgstr "Inserir nome do plugin"
 
 msgid "Preferences"
-msgstr "Preferenzas"
+msgstr "Preferencias"
 
 msgid ""
 "Configure the backend, profile and other internal settings used by the "
@@ -530,7 +533,7 @@ msgstr ""
 " O teu filtro \"<b>%s</b>\" non devolveu nengún resultado.</span>"
 
 msgid "Configure Compiz with CompizConfig"
-msgstr ""
+msgstr "Configurar Compiz con CompizConfig"
 
 #~ msgid "Computing possible conflicts, please wait"
 #~ msgstr "Posibles conflictos de computación, por favor espere"
