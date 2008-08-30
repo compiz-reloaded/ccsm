@@ -221,14 +221,24 @@ class PluginPage(GenericPage):
         self.Block -= 1
         GlobalUpdater.UpdatePlugins()
 
-    def DestroyDialogs(self):
+    # Checks if any edit dialog is open, and if so, makes sure a refresh
+    # happens when it closes.
+    def CheckDialogs(self, basePlugin, main):
         for groupPage in self.Pages:
             if isinstance(groupPage, GroupPage):
                 for sga in groupPage.subGroupAreas:
                     for setting in sga.MySettings:
                         if isinstance(setting, BaseListSetting) and \
-                        setting.EditDialog:
-                            setting.EditDialog.destroy()
+                        setting.EditDialog and setting.EditDialogOpen:
+                            setting.PageToBeRefreshed = (self, basePlugin, main)
+                            return False
+        return True
+
+    def RefreshPage(self, basePlugin, main):
+        curPage = self.RightWidget.get_current_page ()
+        main.BackToMain (None)
+        main.MainPage.ShowPlugin (None, basePlugin)
+        main.CurrentPage.RightWidget.set_current_page (curPage)
 
 # Filter Page
 #

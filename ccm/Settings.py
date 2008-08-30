@@ -30,6 +30,7 @@ from ccm.Constants import *
 from ccm.Conflicts import *
 from ccm.Widgets import *
 from ccm.Utils import *
+from ccm.Pages import *
 
 import locale
 import gettext
@@ -505,6 +506,8 @@ class BaseListSetting(Setting):
     def _Init(self):
         self.Widget = gtk.VBox()
         self.EditDialog = None        
+        self.EditDialogOpen = False
+        self.PageToBeRefreshed = None
 
         self.Widgets = []
         for i, setting in enumerate(self.Settings):
@@ -656,9 +659,16 @@ class BaseListSetting(Setting):
             widget.CurrentRow = row
             widget.Read()
 
+        self.EditDialogOpen = True
         self.EditDialog.show_all()
         response = self.EditDialog.run()
         self.EditDialog.hide_all()
+        self.EditDialogOpen = False
+
+        if self.PageToBeRefreshed:
+            self.PageToBeRefreshed[0].RefreshPage(self.PageToBeRefreshed[1],
+                                                  self.PageToBeRefreshed[2])
+            self.PageToBeRefreshed = None
 
         self.Read()
 
