@@ -106,10 +106,8 @@ class MainWin(gtk.Window):
                 # If updatedPlugin is an extension plugin and a base plugin
                 # is currently being displayed, then update its current page
                 if currentPage.Plugin.Name == basePlugin.Name:
-                    currentPage.DestroyDialogs()
-                    curPage = currentPage.RightWidget.get_current_page ()
-                    self.BackToMain (None)
-                    self.MainPage.ShowPlugin (None, basePlugin)
-                    self.CurrentPage.RightWidget.set_current_page (curPage)
+                    if currentPage.CheckDialogs(basePlugin, self):
+                        currentPage.RefreshPage(basePlugin, self)
+                    break
 
 gtk.window_set_default_icon_name('ccsm')
