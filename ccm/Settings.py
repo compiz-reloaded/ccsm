@@ -63,8 +63,8 @@ class Setting(object):
         self.Reset = gtk.Button()
         if not Settings:
             self.MakeLabel()
-            Tooltips.set_tip(self.EBox, self.Setting.LongDesc)
-            Tooltips.set_tip(self.Reset,_("Reset setting to the default value"))
+            self.EBox.set_tooltip_text(self.Setting.LongDesc)
+            self.Reset.set_tooltip_text(_("Reset setting to the default value"))
         self.Reset.set_image (Image (name = gtk.STOCK_CLEAR, type = ImageStock,
                                      size = gtk.ICON_SIZE_BUTTON))
         self.Reset.connect('clicked', self.DoReset)
@@ -766,7 +766,7 @@ class ListSetting(BaseListSetting):
 class MultiListSetting(BaseListSetting):
 
     def _Init(self):
-        Tooltips.set_tip(self.EBox, _("Multi-list settings. You can double-click a row to edit the values."))
+        self.EBox.set_tooltip_text(_("Multi-list settings. You can double-click a row to edit the values."))
         BaseListSetting._Init(self)
 
     def Filter(self, text, level=FilterAll):
@@ -890,7 +890,7 @@ class EditableActionSetting (StockSetting):
         editButton = gtk.Button ()
         editButton.add (Image (name = gtk.STOCK_EDIT, type = ImageStock,
                                size = gtk.ICON_SIZE_BUTTON))
-        Tooltips.set_tip(editButton, _("Edit %s" % self.Setting.ShortDesc))
+        editButton.set_tooltip_text(_("Edit %s" % self.Setting.ShortDesc))
         editButton.connect ("clicked", self.RunEditDialog)
 
         action = ActionImage (action)
@@ -916,7 +916,7 @@ class EditableActionSetting (StockSetting):
         alignment.set_padding (10, 10, 10, 10)
         alignment.add (entry)
 
-        Tooltips.set_tip (entry, self.Setting.LongDesc)
+        entry.set_tooltip_text(self.Setting.LongDesc)
         dlg.vbox.pack_start (alignment)
         
         dlg.vbox.show_all ()
@@ -1037,7 +1037,7 @@ class KeySetting (EditableActionSetting):
         active = len (self.current) \
                  and self.current.lower () not in ("disabled", "none")
         checkButton.set_active (active)
-        Tooltips.set_tip (checkButton, self.Setting.LongDesc)
+        checkButton.set_tooltip_text(self.Setting.LongDesc)
         mainBox.pack_start (checkButton)
 
         box = gtk.VBox ()
@@ -1050,7 +1050,7 @@ class KeySetting (EditableActionSetting):
                 currentMods += "%s|" % mod
         currentMods.rstrip ("|")
         modifierSelector = ModifierSelector (currentMods)
-        Tooltips.set_tip (modifierSelector, self.Setting.LongDesc)
+        modifierSelector.set_tooltip_text (self.Setting.LongDesc)
         alignment = gtk.Alignment (0.5)
         alignment.add (modifierSelector)
         box.pack_start (alignment)
@@ -1058,11 +1058,11 @@ class KeySetting (EditableActionSetting):
         key, mods = gtk.accelerator_parse (self.current)
         grabber = KeyGrabber (key = key, mods = mods,
                               label = _("Grab key combination"))
-        Tooltips.set_tip (grabber, self.Setting.LongDesc)
+        grabber.set_tooltip_text (self.Setting.LongDesc)
         box.pack_start (grabber)
 
         label = gtk.Label (self.current)
-        Tooltips.set_tip (label, self.Setting.LongDesc)
+        label.set_tooltip_text (self.Setting.LongDesc)
         alignment = gtk.Alignment (0.5, 0.5)
         alignment.set_padding (15, 0, 0, 0)
         alignment.add (label)
@@ -1117,7 +1117,7 @@ class ButtonSetting (EditableActionSetting):
 
         self.Button = SizedButton (minWidth = 100)
         self.Button.connect ("clicked", self.RunButtonSelector)
-        Tooltips.set_tip (self.Button, self.Setting.LongDesc)
+        self.Button.set_tooltip_text(self.Setting.LongDesc)
         self.SetButtonLabel ()
         
         EditableActionSetting._Init (self, self.Button, "button")
@@ -1189,7 +1189,7 @@ class ButtonSetting (EditableActionSetting):
         active = len (self.current) \
                  and self.current.lower () not in ("disabled", "none")
         checkButton.set_active (active)
-        Tooltips.set_tip (checkButton, self.Setting.LongDesc)
+        checkButton.set_tooltip_text (self.Setting.LongDesc)
         mainBox.pack_start (checkButton)
 
         box = gtk.VBox ()
@@ -1202,7 +1202,7 @@ class ButtonSetting (EditableActionSetting):
                 currentEdges += "%s|" % edge
         currentEdges.rstrip ("|")
         edgeSelector = SingleEdgeSelector (currentEdges)
-        Tooltips.set_tip (edgeSelector, self.Setting.LongDesc)
+        edgeSelector.set_tooltip_text(self.Setting.LongDesc)
         box.pack_start (edgeSelector)
 
         currentMods = ""
@@ -1211,7 +1211,7 @@ class ButtonSetting (EditableActionSetting):
                 currentMods += "%s|" % mod
         currentMods.rstrip ("|")
         modifierSelector = ModifierSelector (currentMods)
-        Tooltips.set_tip (modifierSelector, self.Setting.LongDesc)
+        modifierSelector.set_tooltip_text(self.Setting.LongDesc)
         box.pack_start (modifierSelector)
 
         buttonCombo = gtk.combo_box_new_text ()
@@ -1229,7 +1229,7 @@ class ButtonSetting (EditableActionSetting):
             buttonCombo.set_active (maxButton)
         else:
             buttonCombo.set_active (currentButton - 1)
-        Tooltips.set_tip (buttonCombo, self.Setting.LongDesc)
+        buttonCombo.set_tooltip_text(self.Setting.LongDesc)
         box.pack_start (buttonCombo)
 
         dlg.vbox.show_all ()
@@ -1294,7 +1294,7 @@ class EdgeSetting (EditableActionSetting):
 
         self.Button = SizedButton (minWidth = 100)
         self.Button.connect ("clicked", self.RunEdgeSelector)
-        Tooltips.set_tip (self.Button, self.Setting.LongDesc)
+        self.Button.set_tooltip_text(self.Setting.LongDesc)
         self.SetButtonLabel ()
 
         EditableActionSetting._Init (self, self.Button, "edges")
@@ -1347,7 +1347,7 @@ class EdgeSetting (EditableActionSetting):
         alignment.set_padding (10, 10, 10, 10)
         alignment.add (selector)
 
-        Tooltips.set_tip (selector, self.Setting.LongDesc)
+        selector.set_tooltip_text (self.Setting.LongDesc)
         dlg.vbox.pack_start (alignment)
         
         dlg.vbox.show_all ()

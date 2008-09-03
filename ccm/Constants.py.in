@@ -76,10 +76,6 @@ DataDir = "@prefix@/share"
 IconDir = DataDir+"/ccsm/icons"
 PixmapDir = DataDir+"/ccsm/images"
 
-# Tooltips
-#
-Tooltips = gtk.Tooltips()
-
 # Version
 #
 Version = "@version@"
