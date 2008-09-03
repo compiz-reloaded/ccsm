@@ -1125,6 +1125,13 @@ class MatchButton(gtk.Button):
 
         self.set_match (match)
 
+    def _check_entry_value (self, entry, dialog):
+        is_valid = False
+        value = entry.get_text()
+        if value != "":
+            is_valid = True
+        dialog.set_response_sensitive(gtk.RESPONSE_OK, is_valid)
+
     def run_edit_dialog (self, widget):
         '''Run dialog to generate a match'''
 
@@ -1135,6 +1142,7 @@ class MatchButton(gtk.Button):
         dlg.set_transient_for (self.get_parent ().get_toplevel ())
         dlg.add_button (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
         dlg.add_button (gtk.STOCK_ADD, gtk.RESPONSE_OK).grab_default ()
+        dlg.set_response_sensitive(gtk.RESPONSE_OK, False)
         dlg.set_default_response (gtk.RESPONSE_OK)
 
         table = gtk.Table ()
@@ -1154,6 +1162,7 @@ class MatchButton(gtk.Button):
         box = gtk.HBox ()
         box.set_spacing (5)
         entry = gtk.Entry ()
+        entry.connect ('changed', self._check_entry_value, dlg)
         button = gtk.Button (_("Grab"))
         button.connect ('clicked', self.grab_value, entry, type_chooser)
         box.pack_start (entry, True, True)
