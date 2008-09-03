@@ -63,7 +63,8 @@ class Setting(object):
         self.Reset = gtk.Button()
         if not Settings:
             self.MakeLabel()
-            self.EBox.set_tooltip_text(self.Setting.LongDesc)
+            markup = "%s\n<small><i>%s</i></small>" % (self.Setting.LongDesc, self.Setting.Name)
+            self.EBox.set_tooltip_markup(markup)
             self.Reset.set_tooltip_text(_("Reset setting to the default value"))
         self.Reset.set_image (Image (name = gtk.STOCK_CLEAR, type = ImageStock,
                                      size = gtk.ICON_SIZE_BUTTON))
