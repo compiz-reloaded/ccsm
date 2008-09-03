@@ -1219,7 +1219,7 @@ class FileButton (gtk.Button):
         self._image = image
         self._path = path
 
-        Tooltips.set_tip(self, _("Browse..."))
+        self.set_tooltip_text(_("Browse..."))
         self.set_image(gtk.image_new_from_stock(
             gtk.STOCK_OPEN, gtk.ICON_SIZE_BUTTON))
         self.connect('clicked', self.open_dialog)
@@ -1385,12 +1385,12 @@ class PluginButton (gtk.HBox):
 
         button = PrettyButton ()
         button.connect ('clicked', self.show_plugin_page)
-        Tooltips.set_tip (button, plugin.LongDesc)
+        button.set_tooltip_text (plugin.LongDesc)
         button.add (box)
 
         if plugin.Name != 'core':
             enable = gtk.CheckButton ()
-            Tooltips.set_tip (enable, _("Enable %s") % plugin.ShortDesc)
+            enable.set_tooltip_text(_("Enable %s") % plugin.ShortDesc)
             enable.set_active (plugin.Enabled)
             enable.set_sensitive (plugin.Context.AutoSort)
             self._toggled_handler = enable.connect ("toggled", self.enable_plugin)

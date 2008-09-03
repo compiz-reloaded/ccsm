@@ -97,7 +97,7 @@ class PluginPage(GenericPage):
         self.NotFoundBox = None
         
         if plugin.Name != 'core':
-            Tooltips.set_tip(self.FilterEntry, _("Search %s Plugin Options") % plugin.ShortDesc)
+            self.FilterEntry.set_tooltip_text(_("Search %s Plugin Options") % plugin.ShortDesc)
             enableLabel = Label()
             enableLabel.set_markup(HeaderMarkup % (_("Use This Plugin")))
             enableLabel.connect("style-set", self.HeaderStyleSet)
@@ -107,13 +107,13 @@ class PluginPage(GenericPage):
             self.LeftWidget.pack_start(enableCheckCont, False, False)
             enableCheck = gtk.CheckButton()
             enableCheck.add(Label(_("Enable %s") % plugin.ShortDesc, 120))
-            Tooltips.set_tip(enableCheck, plugin.LongDesc)
+            enableCheck.set_tooltip_text(plugin.LongDesc)
             enableCheck.set_active(plugin.Enabled)
             enableCheck.set_sensitive(plugin.Context.AutoSort)
             enableCheckCont.pack_start(enableCheck, True, True)
             enableCheck.connect('toggled', self.EnablePlugin)
         else:
-            Tooltips.set_tip(self.FilterEntry, _("Search Compiz Core Options"))
+            self.FilterEntry.set_tooltip_text(_("Search Compiz Core Options"))
         
         backButton = gtk.Button(gtk.STOCK_GO_BACK)
         backButton.set_use_stock(True)
@@ -270,7 +270,7 @@ class FilterPage(GenericPage):
         else:
             self.FilterEntry = gtk.Entry()
 
-        Tooltips.set_tip(self.FilterEntry, _("Enter a filter.\nClick the keyboard image to grab a key for which to search."))
+        self.FilterEntry.set_tooltip_text(_("Enter a filter.\nClick the keyboard image to grab a key for which to search."))
         self.FilterEntry.connect("changed", self.FilterChanged)
         self.LeftWidget.pack_start(self.FilterEntry, False, False)
 
@@ -666,10 +666,10 @@ class ProfileBackendPage(object):
         profileBox = gtk.HBox()
         profileBox.set_spacing(5)
         profileAdd = gtk.Button()
-        Tooltips.set_tip(profileAdd, _("Add a New Profile"))
+        profileAdd.set_tooltip_text(_("Add a New Profile"))
         profileAdd.set_image(gtk.image_new_from_stock(gtk.STOCK_ADD, gtk.ICON_SIZE_BUTTON))
         self.ProfileRemoveButton = profileRemove = gtk.Button()
-        Tooltips.set_tip(profileRemove, _("Remove This Profile"))
+        profileRemove.set_tooltip_text(_("Remove This Profile"))
         profileRemove.set_image(gtk.image_new_from_stock(gtk.STOCK_REMOVE, gtk.ICON_SIZE_BUTTON))
         self.ProfileComboBox = gtk.combo_box_new_text()
         self.ProfileComboBox.set_sensitive(self.Context.CurrentBackend.ProfileSupport)
@@ -695,13 +695,13 @@ class ProfileBackendPage(object):
         self.ProfileImportExportBox = gtk.HBox()
         self.ProfileImportExportBox.set_spacing(5)
         profileImportButton = gtk.Button(_("Import"))
-        Tooltips.set_tip(profileImportButton, _("Import a CompizConfig Profile"))
+        profileImportButton.set_tooltip_text(_("Import a CompizConfig Profile"))
         profileImportAsButton = gtk.Button(_("Import as..."))
-        Tooltips.set_tip(profileImportAsButton, _("Import a CompizConfig Profile as a new profile"))
+        profileImportAsButton.set_tooltip_text(_("Import a CompizConfig Profile as a new profile"))
         profileExportButton = gtk.Button(_("Export"))
-        Tooltips.set_tip(profileExportButton, _("Export your CompizConfig Profile"))
+        profileExportButton.set_tooltip_text(_("Export your CompizConfig Profile"))
         profileResetButton = gtk.Button(_("Reset to defaults"))
-        Tooltips.set_tip(profileResetButton, _("Reset your CompizConfig Profile to the global defaults"))
+        profileResetButton.set_tooltip_text(_("Reset your CompizConfig Profile to the global defaults"))
         profileResetButton.set_image(gtk.image_new_from_stock(gtk.STOCK_CLEAR, gtk.ICON_SIZE_BUTTON))
         profileImportButton.set_image(gtk.image_new_from_stock(gtk.STOCK_OPEN, gtk.ICON_SIZE_BUTTON))
         profileImportAsButton.set_image(gtk.image_new_from_stock(gtk.STOCK_OPEN, gtk.ICON_SIZE_BUTTON))
@@ -1065,12 +1065,9 @@ class PluginListPage(object):
         dlg.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK).grab_default()
         dlg.set_default_response(gtk.RESPONSE_OK)
         
-        ebox = gtk.EventBox()
         label = gtk.Label(_("Plugin name:"))
-        ebox.add(label)
-        
-        Tooltips.set_tip(ebox, _("Insert plugin name"))
-        dlg.vbox.pack_start(ebox)
+        label.set_tooltip_text(_("Insert plugin name"))
+        dlg.vbox.pack_start(label)
         
         entry = gtk.Entry()
         entry.props.activates_default = True
@@ -1139,7 +1136,7 @@ class PreferencesPage(GenericPage):
         aboutFrame.pack_start(aboutImage, False, False)
         aboutFrame.pack_start(Label(_("About CCSM...")), False, False)
         aboutButton.add(aboutFrame)
-        Tooltips.set_tip(aboutButton, _("About"))
+        aboutButton.set_tooltip_text(_("About"))
         aboutButton.connect('clicked', self.ShowAboutDialog)
         aboutBin = gtk.HBox()
         aboutBin.set_border_width(10)
@@ -1198,7 +1195,7 @@ class MainPage(object):
             filterEntry.add_clear_button()
         else:
             filterEntry = gtk.Entry()
-        Tooltips.set_tip(filterEntry, _("Filter your Plugin list"))
+        filterEntry.set_tooltip_text(_("Filter your Plugin list"))
         filterEntry.connect("changed", self.FilterChanged)
         self.filterEntry = filterEntry
 
