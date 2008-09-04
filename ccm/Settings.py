@@ -117,7 +117,7 @@ class Setting(object):
         label.set_markup("<span%s>%s</span>" % (style, desc))
         label.props.xalign = 0
         label.set_size_request(160, -1)
-        label.props.wrap_mode = gtk.WRAP_WORD
+        label.props.wrap_mode = pango.WRAP_WORD
         label.set_line_wrap(True)
         self.Label = label
 

@@ -27,6 +27,7 @@ import pygtk
 import gtk
 import gtk.gdk
 import gobject
+import pango
 import weakref
 
 from ccm.Constants import *
@@ -188,7 +189,7 @@ class Label(gtk.Label):
     def __init__(self, value = "", wrap = 160):
         gtk.Label.__init__(self, value)
         self.props.xalign = 0
-        self.props.wrap_mode = gtk.WRAP_WORD
+        self.props.wrap_mode = pango.WRAP_WORD
         self.set_line_wrap(True)
         self.set_size_request(wrap, -1)
 
