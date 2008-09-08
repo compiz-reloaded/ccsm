@@ -19,10 +19,64 @@
 #          Patrick Niklaus (marex@opencompositing.org)
 # Copyright (C) 2007 Quinn Storm
 
+DBUS_CCSM_SERVICE = 'org.compiz_fusion.ccsm'
+DBUS_CCSM_PATH = '/org/compiz_fusion/ccsm'
+DBUS_CCSM_INTERFACE = 'org.compiz_fusion.ccsm'
+
 from optparse import OptionParser
 import pygtk
 pygtk.require('2.0')
 import gtk
+import sys
+
+def try_register_dbus ():
+    '''Return instance of dbus control object on success, None on failure'''
+    try:
+        import dbus, dbus.service
+        from dbus.mainloop.glib import DBusGMainLoop
+
+    except ImportError:
+        return
+
+    class CCSMObject(dbus.service.Object):
+        main_window = None
+
+        @dbus.service.method(DBUS_CCSM_INTERFACE, in_signature='si', out_signature='')
+        def present (self, startup_id, timestamp):
+            if startup_id:
+                self.main_window.set_startup_id(startup_id)
+            self.main_window.present_with_time(timestamp)
+
+    DBusGMainLoop(set_as_default=True)
+
+    try:
+        bus = dbus.SessionBus()
+    except dbus.DBusException:
+        return
+
+    try:
+        obj = bus.get_object(DBUS_CCSM_SERVICE, DBUS_CCSM_PATH)
+        obj = dbus.Interface(obj, DBUS_CCSM_INTERFACE)
+    except dbus.DBusException:
+        # no ccsm instance running
+        if (bus.request_name(DBUS_CCSM_SERVICE)
+            == dbus.bus.REQUEST_NAME_REPLY_PRIMARY_OWNER):
+            return CCSMObject(bus, DBUS_CCSM_PATH)
+        else:
+            return
+
+    else:
+        try:
+            display = gtk.gdk.display_get_default()
+            startup_id = gtk.gdk.x11_display_get_startup_notification_id(display)
+            obj.present(startup_id or "", display.get_user_time())
+            print 'Another CCSM instance already running'
+            sys.exit(0)
+        except dbus.DBusException:
+            # error on present call so pretend it doesn't exist and start up normally
+            return
+
+dbusObj = try_register_dbus()
 
 try:
     import sexy
@@ -31,9 +85,8 @@ except ImportError:
     print "Info: No sexy-python package found, don't worry it's optional."
     has_sexy = False
 
-if gtk.pygtk_version < (2,10,0):
-    print "PyGtk 2.10.0 or later required"
-    raise SystemExit
+if gtk.pygtk_version < (2,12,0):
+    raise SystemExit("PyGtk 2.12.0 or later required")
 
 import compizconfig
 import ccm
@@ -55,7 +108,7 @@ parser.add_option("-v", "--version", dest = "version",
 (options, args) = parser.parse_args()
 if options.version:
     print "CCSM %s" % Version
-    raise SystemExit
+    sys.exit(0)
 if options.plugin:
     plugin = options.plugin
 if options.category:
@@ -65,6 +118,9 @@ screens = ccm.getScreens()
 context = compizconfig.Context(screens)
 GlobalUpdater.SetContext (context)
 mainWin = ccm.MainWin(context, plugin, category)
+if dbusObj is not None:
+    dbusObj.main_window = mainWin
+
 idle = ccm.IdleSettingsParser(context, mainWin)
 mainWin.show_all()
 
