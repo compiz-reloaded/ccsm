@@ -123,7 +123,8 @@ class PluginPage(GenericPage):
         self.RightWidget.set_scrollable(True)
         self.Pages = []
 
-        for name, group in sorted(plugin.Groups.items()):
+        sortedGroups = sorted(plugin.Groups.items(), key=GroupIndexKeyFunc)
+        for (name, (groupIndex, group)) in sortedGroups:
             name = name or _("General")
             groupPage = GroupPage(name, group)
             groupPage.Wrap()
@@ -392,9 +393,10 @@ class FilterPage(GenericPage):
             label.set_markup("<i>%s</i>" %protect_pango_markup(Plugin.ShortDesc))
             gtk_process_events()
 
-            groups = {}
-            for name, group in Plugin.Groups.items():
-                groups[name] = GroupPage(name or _('General'), group)
+            groups = []
+            sortedGroups = sorted(Plugin.Groups.items(), key=GroupIndexKeyFunc)
+            for (name, (groupIndex, group)) in sortedGroups:
+                groups.append((name, GroupPage(name or _('General'), group)))
             self.GroupPages[plugin] = groups
 
         self.Level = FilterName | FilterLongDesc
@@ -420,7 +422,7 @@ class FilterPage(GenericPage):
     def Filter(self, text, level=FilterAll):
         text = text.lower()
         for plugin, groups in self.GroupPages.items():
-            results = dict((n, sg) for (n, sg) in groups.items() if sg.Filter(text, level=level))
+            results = dict((n, sg) for (n, sg) in groups if sg.Filter(text, level=level))
             if results:
                 yield plugin, results
 
@@ -601,7 +603,7 @@ class FilterPage(GenericPage):
             self.PackedGroups = []
             for plugin in plugins:
                 box = gtk.VBox()
-                for page in self.GroupPages[plugin.Name].values():
+                for (pageName, page) in self.GroupPages[plugin.Name]:
                     box.pack_start(page.Label, False, False)
                     box.pack_start(page.Widget, False, False)
 
@@ -648,7 +650,7 @@ class FilterPage(GenericPage):
 
     def GoBack(self, widget):
         for groups in self.GroupPages.values():
-            for page in groups.values():
+            for (pageName, page) in groups:
                 page.SetContainer.destroy()
         self.GroupPages = None
 
@@ -1365,15 +1367,16 @@ class GroupPage(Page):
         label.set_use_markup(True)
         self.Label.add(label)
         if '' in group:
-            sga = SubGroupArea('', group[''])
+            sga = SubGroupArea('', group[''][1])
             if not sga.Empty:
                 self.SetContainer.pack_start(sga.Widget, False, False)
                 self.Empty = False
                 self.subGroupAreas.append(sga)
 
-        for subGroup in sorted(group):
-            if not subGroup == '':
-                sga = SubGroupArea(subGroup, group[subGroup])
+        sortedSubGroups = sorted(group.items(), key=GroupIndexKeyFunc)
+        for (subGroupName, (subGroupIndex, subGroup)) in sortedSubGroups:
+            if not subGroupName == '':
+                sga = SubGroupArea(subGroupName, subGroup)
                 if not sga.Empty:
                     self.SetContainer.pack_start(sga.Widget, False, False)
                     self.Empty = False

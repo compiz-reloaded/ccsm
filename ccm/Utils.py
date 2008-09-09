@@ -341,6 +341,9 @@ def CategoryKeyFunc(category):
     else:
         return category or 'zzzzzzzz'
 
+def GroupIndexKeyFunc(item):
+    return item[1][0]
+
 FirstItemKeyFunc = operator.itemgetter(0)
 
 EnumSettingKeyFunc = operator.itemgetter(1)
