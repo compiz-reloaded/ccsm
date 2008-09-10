@@ -41,11 +41,12 @@ def try_register_dbus ():
     class CCSMObject(dbus.service.Object):
         main_window = None
 
-        @dbus.service.method(DBUS_CCSM_INTERFACE, in_signature='si', out_signature='')
-        def present (self, startup_id, timestamp):
+        @dbus.service.method(DBUS_CCSM_INTERFACE, in_signature='s', out_signature='')
+        def present (self, startup_id):
             if startup_id:
                 self.main_window.set_startup_id(startup_id)
-            self.main_window.present_with_time(timestamp)
+            else:
+                self.main_window.present()
 
     DBusGMainLoop(set_as_default=True)
 
@@ -69,7 +70,7 @@ def try_register_dbus ():
         try:
             display = gtk.gdk.display_get_default()
             startup_id = gtk.gdk.x11_display_get_startup_notification_id(display)
-            obj.present(startup_id or "", display.get_user_time())
+            obj.present(startup_id or "")
             print 'Another CCSM instance already running'
             sys.exit(0)
         except dbus.DBusException:
