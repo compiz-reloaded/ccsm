@@ -23,6 +23,9 @@ DBUS_CCSM_SERVICE = 'org.compiz_fusion.ccsm'
 DBUS_CCSM_PATH = '/org/compiz_fusion/ccsm'
 DBUS_CCSM_INTERFACE = 'org.compiz_fusion.ccsm'
 
+# from the D-Bus specification
+DBUS_REQUEST_NAME_REPLY_PRIMARY_OWNER = 1
+
 from optparse import OptionParser
 import pygtk
 pygtk.require('2.0')
@@ -37,6 +40,10 @@ def try_register_dbus ():
 
     except ImportError:
         return
+
+	# rely on a reasonably new dbus-python
+	if dbus.version < (0, 80, 0):
+		return
 
     class CCSMObject(dbus.service.Object):
         main_window = None
@@ -61,7 +68,7 @@ def try_register_dbus ():
     except dbus.DBusException:
         # no ccsm instance running
         if (bus.request_name(DBUS_CCSM_SERVICE)
-            == dbus.bus.REQUEST_NAME_REPLY_PRIMARY_OWNER):
+            == DBUS_REQUEST_NAME_REPLY_PRIMARY_OWNER):
             return CCSMObject(bus, DBUS_CCSM_PATH)
         else:
             return
