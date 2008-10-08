@@ -1378,6 +1378,7 @@ class PluginButton (gtk.HBox):
 
         image = Image (plugin.Name, ImagePlugin, size=32)
         label = Label (plugin.ShortDesc, 120)
+        label.connect ('style-set', self.style_set)
         box = gtk.HBox ()
         box.set_spacing (5)
         box.pack_start (image, False, False)
@@ -1399,6 +1400,15 @@ class PluginButton (gtk.HBox):
         self.pack_start (button, False, False)
 
         self.set_size_request (220, -1)
+
+    StyleBlock = 0
+
+    def style_set (self, widget, previous):
+        if self.StyleBlock > 0:
+            return
+        self.StyleBlock += 1
+        widget.modify_fg(gtk.STATE_NORMAL, widget.style.text[gtk.STATE_NORMAL])
+        self.StyleBlock -= 1
 
     def enable_plugin (self, widget):
 
