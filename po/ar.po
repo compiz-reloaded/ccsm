@@ -2,18 +2,18 @@
 # Copyright (C) 2007 compiz-fusion.org
 # This file is distributed under the same license as the ccsm package.
 # 2007, Banxoo <banxoo+ar@gmail.com>
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: ccsm 0.6\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-09-15 14:44+0530\n"
-"PO-Revision-Date: 2007-09-30 23:11+0200\n"
-"Last-Translator: Banxoo <banxoo+compiz@gmail.com>\n"
+"POT-Creation-Date: 2008-10-14 14:37+0530\n"
+"PO-Revision-Date: 2008-09-29 20:32+0200\n"
+"Last-Translator: maher  <s6r@live.com>\n"
 "Language-Team: Compiz Fusion Translators <i18n@lists.compiz-fusion.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Pootle 1.1.0\n"
 
 #, python-format
 msgid ""
@@ -42,13 +42,13 @@ msgid "Set %(action)s anyway"
 msgstr "حدد بكل %(action)s الاحوال"
 
 msgid "key"
-msgstr ""
+msgstr "مفتاح"
 
 msgid "button"
-msgstr ""
+msgstr "زر"
 
 msgid "edge"
-msgstr ""
+msgstr "حافة"
 
 #, fuzzy, python-format
 msgid ""
@@ -58,16 +58,16 @@ msgid ""
 msgstr ""
 "أنت بصدد استعمال الميزة  <b>%(feature)s</b> اللتي وفّرتها  <b>%(plugin)s</"
 "b>.\n"
-"هذه الإضافة هي حاليا معطلة.\n"
-"هل تريد إعادة تشغيل <b>%(plugin)s</b> لتصبح الميزة متوفرة؟"
+"هذه الإضافة حاليا معطلة.\n"
+"هل تريد استعمال <b>%(plugin)s</b>  هذه الميزة على اية حال؟"
 
 #, fuzzy, python-format
 msgid "Use %(feature)s"
-msgstr "لا تمكّن %(feature)s"
+msgstr "استخدم %(feature)s"
 
 #, fuzzy, python-format
 msgid "Don't use %(feature)s"
-msgstr "لا تمكّن %(feature)s"
+msgstr "لاتستخدم %(feature)s"
 
 #, python-format
 msgid ""
@@ -94,12 +94,14 @@ msgid ""
 "Some %(bindings)s bindings of Plugin <b>%(plugin)s</b> conflict with other "
 "plugins. Do you want to resolve these conflicts?"
 msgstr ""
+"بعض %(bindings)s تثبيتات الإضافات <b>%(plugin)s</b> تتعارض مع إضافات أخرى . "
+"هل تريد حل هذا التعارض؟"
 
 msgid "Resolve conflicts"
-msgstr ""
+msgstr "حل التعارضات"
 
 msgid "Ignore conflicts"
-msgstr ""
+msgstr "تجاهل التعارضات"
 
 #, python-format
 msgid ""
@@ -192,7 +194,7 @@ msgid "Uncategorized"
 msgstr "غير مصنّف"
 
 msgid "N/A"
-msgstr ""
+msgstr "غير متوفر"
 
 msgid "Reset setting to the default value"
 msgstr "إعادة الضبط الي القيمة الأصلية"
@@ -244,7 +246,7 @@ msgstr "ضابط الإعدادات"
 
 #, fuzzy
 msgid "Plugin"
-msgstr "لاىٔحة الإضافات"
+msgstr "لائحة الإضافات"
 
 msgid "Please press the new key combination"
 msgstr "الرجاﺀ إدخال تركيبة المفاتيح الجديدة"
@@ -260,7 +262,7 @@ msgid "Window Name"
 msgstr "إدارة النافذة"
 
 msgid "Window Class"
-msgstr "فىٔة النافذة"
+msgstr "فئة النافذة"
 
 msgid "Window Type"
 msgstr "نوع النافذة"
@@ -275,7 +277,7 @@ msgid "Or"
 msgstr "أو"
 
 msgid "Edit match"
-msgstr ""
+msgstr "تعديل المتطابقات"
 
 #. Type
 msgid "Type"
@@ -350,6 +352,8 @@ msgid ""
 "Enter a filter.\n"
 "Click the keyboard image to grab a key for which to search."
 msgstr ""
+"أدخل فلتر. \n"
+"إضغط على صورة لوحة المفاتيح لإحضار مفتاح لأجل البحث عنه."
 
 msgid "Search in..."
 msgstr "البحث في..."
@@ -365,10 +369,10 @@ msgid "Settings value"
 msgstr "قيمة الإعدادات"
 
 msgid "Group"
-msgstr ""
+msgstr "مجموعه"
 
 msgid "Subgroup"
-msgstr ""
+msgstr "مجموعة فرعيه"
 
 #. Notebook
 msgid "Settings"
@@ -433,7 +437,7 @@ msgid "Save file.."
 msgstr "حفط الملف..."
 
 msgid "Do you want to skip default option values while exporting your profile?"
-msgstr ""
+msgstr "هل تريد تخطي قيم الإختيار الإفتراضي في حين تصدير ملفك الشخصي؟"
 
 msgid "Open file.."
 msgstr "فتح الملف..."
@@ -449,7 +453,7 @@ msgstr "الخلفية غير موجودة."
 
 #. Auto sort
 msgid "Automatic plugin sorting"
-msgstr "ترتيب الإضافات التلقاىٔي"
+msgstr "ترتيب الإضافات التلقائي"
 
 msgid "Disabled Plugins"
 msgstr "الإضافات المعطلة"
@@ -462,9 +466,11 @@ msgid ""
 "disable conflict handling. You should only do this if you know what you are "
 "doing."
 msgstr ""
+"هل حقا تريد تعطيل الفرز التلقائي للإضافات؟ وهذا من شأنه أيضا تعطيل التعامل "
+"مع التعارضات. هل ينبغي أن نفعل ذلك إلا إذا كنت تعرف ما تقومون به."
 
 msgid "Add plugin"
-msgstr "أضف الا٫ضافة "
+msgstr "أضف الإضاافة "
 
 msgid "Plugin name:"
 msgstr "إسم الإضافة:"
@@ -492,10 +498,10 @@ msgid "Profile & Backend"
 msgstr "تشكيل و خلفية"
 
 msgid "Plugin List"
-msgstr "لاىٔحة الإضافات"
+msgstr "لائحة الإضافات"
 
 msgid "Filter your Plugin list"
-msgstr "صفّي لاىٔحة الاضافات"
+msgstr "صفّي لائحة الاضافات"
 
 #, python-format
 msgid "Screen %i"
@@ -521,7 +527,7 @@ msgstr ""
 " Your filter \"<b>%s</b>\" لا تطابق مع ايّ من الموجودات.</span>"
 
 msgid "Configure Compiz with CompizConfig"
-msgstr ""
+msgstr "تكوين Compiz بواسطة CompizConfig"
 
 #~ msgid "Computing possible conflicts, please wait"
 #~ msgstr "تحليل نزاع محتمل، الرجاﺀ الإنتظار"
