@@ -63,10 +63,16 @@ def protect_markup_dict (dict_):
 
 class Image (gtk.Image):
 
-    def __init__ (self, name = None, type = ImageNone, size = 32):
+    def __init__ (self, name = None, type = ImageNone, size = 32,
+                  useMissingImage = False):
         gtk.Image.__init__ (self)
 
         if not name:
+            return
+
+        if useMissingImage:
+            self.set_from_stock (gtk.STOCK_MISSING_IMAGE,
+                                 gtk.ICON_SIZE_LARGE_TOOLBAR)
             return
 
         try:
@@ -220,14 +226,20 @@ class IdleSettingsParser:
         self.Context = context
         self.Main = main
         self.PluginList = [p for p in self.Context.Plugins.items() if FilterPlugin(p[1])]
-        
-        gobject.timeout_add (200, self.Wait)
+        nCategories = len (main.MainPage.RightWidget._boxes)
+        self.CategoryLoadIconsList = range (3, nCategories) # Skip the first 3
+        print 'Loading icons...'
+
+        gobject.timeout_add (150, self.Wait)
 
     def Wait(self):
         if not self.PluginList:
             return False
         
-        gobject.idle_add (self.ParseSettings)
+        if len (self.CategoryLoadIconsList) == 0: # If we're done loading icons
+            gobject.idle_add (self.ParseSettings)
+        else:
+            gobject.idle_add (self.LoadCategoryIcons)
         
         return False
     
@@ -241,6 +253,23 @@ class IdleSettingsParser:
         self.PluginList.remove (self.PluginList[0])
 
         gobject.timeout_add (200, self.Wait)
+
+        return False
+
+    def LoadCategoryIcons(self):
+        from ccm.Widgets import PluginButton
+
+        catIndex = self.CategoryLoadIconsList[0]
+        pluginWindow = self.Main.MainPage.RightWidget
+        categoryBox = pluginWindow._boxes[catIndex]
+        for (pluginIndex, plugin) in enumerate (categoryBox.get_plugins()):
+            categoryBox._buttons[pluginIndex] = PluginButton (plugin)
+        categoryBox.rebuild_table (categoryBox._current_cols, True)
+        pluginWindow.connect_buttons (categoryBox)
+
+        self.CategoryLoadIconsList.remove (self.CategoryLoadIconsList[0])
+
+        gobject.timeout_add (150, self.Wait)
 
         return False
 
