@@ -1372,11 +1372,11 @@ class PluginButton (gtk.HBox):
 
     _plugin = None
 
-    def __init__ (self, plugin):
+    def __init__ (self, plugin, useMissingImage = False):
         gtk.HBox.__init__(self)
         self._plugin = plugin
 
-        image = Image (plugin.Name, ImagePlugin, size=32)
+        image = Image (plugin.Name, ImagePlugin, 32, useMissingImage)
         label = Label (plugin.ShortDesc, 120)
         label.connect ('style-set', self.style_set)
         box = gtk.HBox ()
@@ -1465,7 +1465,7 @@ class CategoryBox(gtk.VBox):
     _current_cols = 0
     _current_plugins = 0
 
-    def __init__ (self, context, name, plugins=None):
+    def __init__ (self, context, name, plugins=None, categoryIndex=0):
         gtk.VBox.__init__ (self)
 
         self.set_spacing (5)
@@ -1499,9 +1499,12 @@ class CategoryBox(gtk.VBox):
         self._table = gtk.Table ()
         self._table.set_border_width (10)
 
+        # load icons now only for the first 3 categories
+        dontLoadIcons = (categoryIndex >= 3);
+
         self._buttons = []
         for plugin in self._plugins:
-            button = PluginButton(plugin)
+            button = PluginButton(plugin, dontLoadIcons)
             self._buttons.append(button)
 
         self._alignment = gtk.Alignment (0, 0, 1, 1)
@@ -1529,8 +1532,8 @@ class CategoryBox(gtk.VBox):
 
         return bool(self._plugins)
 
-    def rebuild_table (self, ncols):
-        if (ncols == self._current_cols
+    def rebuild_table (self, ncols, force = False):
+        if (not force and ncols == self._current_cols
         and len (self._plugins) == self._current_plugins):
             return
         self._current_cols = ncols
@@ -1604,12 +1607,10 @@ class PluginWindow(gtk.ScrolledWindow):
         self._not_found_box = NotFoundBox ()
 
         categories = sorted(self._categories, key=CategoryKeyFunc)
-        for category in categories:
+        for (i, category) in enumerate(categories):
             plugins = self._categories[category]
-            category_box = CategoryBox(context, category, plugins)
-            buttons = category_box.get_buttons ()
-            for button in buttons:
-                button.connect('clicked', self.show_plugin_page)
+            category_box = CategoryBox(context, category, plugins, i)
+            self.connect_buttons (category_box)
             self._boxes.append (category_box)
             self._box.pack_start (category_box, False, False)
 
@@ -1618,6 +1619,11 @@ class PluginWindow(gtk.ScrolledWindow):
         viewport.set_focus_vadjustment (self.get_vadjustment ())
         viewport.add (self._box)
         self.add (viewport)
+
+    def connect_buttons (self, category_box):
+        buttons = category_box.get_buttons ()
+        for button in buttons:
+            button.connect('clicked', self.show_plugin_page)
 
     def set_viewport_style (self, widget, previous):
         if self._style_block > 0:
