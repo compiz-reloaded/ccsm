@@ -350,10 +350,14 @@ class RestrictedStringSetting(StockSetting):
 
         return (str, column)
 
+    def GetItemText (self, val):
+        text = self.ItemsByValue.get(val)
+        if text is None:
+            return NAItemText
+        return self.SortedItems[text[1]][0]
+
     def GetForRenderer(self):
-        return [(self.SortedItems[self.ItemsByValue[val][1]][0] \
-                 if self.ItemsByValue.has_key(val) else NAItemText) \
-                for val in self.Setting.Value]
+        return [self.GetItemText(val) for val in self.Setting.Value]
 
     def _Read(self):
         value = self.Get()
