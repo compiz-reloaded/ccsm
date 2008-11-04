@@ -1,20 +1,20 @@
-# CompizConfig Indonesian Translation
-# Copyright (C) 2007 compiz-fusion.org
-# This file is distributed under the same license as the ccsm package.
-# Andi Darmawan <belutz@ubuntu.com>, 2007.
+# translation of zh_CN-ccsm.po to Chinese
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Thruth <gubotruth@gmail.com>, 2007
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Compiz Settings Manager 0.5.2\n"
+"Project-Id-Version: zh_CN-ccsm\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
 "POT-Creation-Date: 2008-11-04 12:05+0530\n"
-"PO-Revision-Date: 2007-09-16 19:11+0700\n"
-"Last-Translator: Andi Darmawan <belutz@ubuntu.com>\n"
-"Language-Team: Andi Darmawan <belutz@ubuntu.com>\n"
+"PO-Revision-Date: 2008-10-14 03:54+0200\n"
+"Last-Translator: JING Cheng <jingcheng01@gmail.com>\n"
+"Language-Team: Chinese\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Pootle 1.1.0\n"
 
 #, python-format
 msgid ""
@@ -24,47 +24,47 @@ msgid ""
 "Do you wish to disable <b>%(action_conflict)s</b> in the <b>%"
 "(plugin_conflict)s</b> plugin?"
 msgstr ""
+"%(binding)s组合<b>%(action)s</b>动作的新值在<b>%(plugin)s</b>插件中与<b>%"
+"(plugin_conflict)s</b>插件中的动作<b>%(action_conflict)s</b>相冲突。\n"
+"您要禁用<b>%(plugin_conflict)s</b>插件中的<b>%(action_conflict)s</b>吗?"
 
 #, python-format
 msgid "Disable %(action_conflict)s"
-msgstr "Non-aktifkan %(action_conflict)s"
+msgstr "禁用%(action_conflict)s"
 
 #, python-format
 msgid "Don't set %(action)s"
-msgstr "Jangan atur %(action)s"
+msgstr "不要设置%(action)s"
 
 #, python-format
 msgid "Set %(action)s anyway"
-msgstr "Tetap atur %(action)s"
+msgstr "强制设置%(action)s"
 
 msgid "key"
-msgstr ""
+msgstr "按键"
 
 msgid "button"
-msgstr ""
+msgstr "按钮"
 
 msgid "edge"
-msgstr ""
+msgstr "边缘"
 
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "You are trying to use the feature <b>%(feature)s</b> which is <b>not</b> "
 "provided by any plugin.\n"
 "Do you wish to use this feature anyway?"
 msgstr ""
-"Anda mencoba untuk menggunakan fitur <b>%(feature)s</b> yang disediakan "
-"oleh<b>%(plugin)s</b>.\n"
-"Plugin tersebut sedang tidak aktif.\n"
-"Apakah anda ingin mengaktifkan <b>%(plugin)s</b> sehingga fitur menjadi "
-"tersedia?"
+"您试图使用<b>%(feature)s</b>功能，而该功能<b>不</b>被任何插件所支持。\n"
+"您仍然希望尝试使用此功能吗？"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Use %(feature)s"
-msgstr "Jangan aktifkan %(feature)s"
+msgstr "使用%(feature)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Don't use %(feature)s"
-msgstr "Jangan aktifkan %(feature)s"
+msgstr "不使用%(feature)s"
 
 #, python-format
 msgid ""
@@ -73,49 +73,51 @@ msgid ""
 "This plugin is currently disabled.\n"
 "Do you wish to enable <b>%(plugin)s</b> so the feature is available?"
 msgstr ""
-"Anda mencoba untuk menggunakan fitur <b>%(feature)s</b> yang disediakan "
-"oleh<b>%(plugin)s</b>.\n"
-"Plugin tersebut sedang tidak aktif.\n"
-"Apakah anda ingin mengaktifkan <b>%(plugin)s</b> sehingga fitur menjadi "
-"tersedia?"
+"您试图使用<b>%(feature)s</b>功能，该功能由<b>%(plugin)s</b>插件提供。\n"
+"该插件目前被禁用。\n"
+"您仍然希望启用<b>%(plugin)s</b>插件以实现功能吗？"
 
 #, python-format
 msgid "Enable %(plugin)s"
-msgstr "Aktifkan %(plugin)s"
+msgstr "启用插件%(plugin)s"
 
 #, python-format
 msgid "Don't enable %(feature)s"
-msgstr "Jangan aktifkan %(feature)s"
+msgstr "不要启用%(feature)s"
 
 #, python-format
 msgid ""
 "Some %(bindings)s bindings of Plugin <b>%(plugin)s</b> conflict with other "
 "plugins. Do you want to resolve these conflicts?"
 msgstr ""
+"插件<b>%(plugin)s</b>中的一些按键组合%(bindings)s与其它插件产生了冲突。您是否"
+"想要解决这些冲突？"
 
 msgid "Resolve conflicts"
-msgstr ""
+msgstr "解决冲突"
 
 msgid "Ignore conflicts"
-msgstr ""
+msgstr "忽略冲突"
 
 #, python-format
 msgid ""
 "Plugin <b>%(plugin_conflict)s</b> provides feature <b>%(feature)s</b> which "
 "is also provided by <b>%(plugin)s</b>"
 msgstr ""
+"<b>%(plugin_conflict)s</b>插件提供<b>%(feature)s</b>功能，该功能也可以由<b>%"
+"(plugin)s</b>提供"
 
 #, python-format
 msgid "Disable %(plugin_conflict)s"
-msgstr "Non-aktifkan %(plugin_conflict)s"
+msgstr "禁用%(plugin_conflict)s"
 
 #, python-format
 msgid "Don't enable %(plugin)s"
-msgstr "Jangan aktifkan %(plugin)s"
+msgstr "不要启用插件%(plugin)s"
 
 #, python-format
 msgid "Plugin <b>%(plugin_conflict)s</b> conflicts with <b>%(plugin)s</b>."
-msgstr "Plugin <b>%(plugin_conflict)s</b> konflik dengan <b>%(plugin)s</b>."
+msgstr "插件<b>%(plugin_conflict)s</b>和<b>%(plugin)s</b>冲突。"
 
 #, python-format
 msgid ""
@@ -123,378 +125,382 @@ msgid ""
 "the following plugins:\n"
 "%(plugin_list)s"
 msgstr ""
+"<b>%(plugin)s</b>需要<b>%(feature)s</b>功能，可以由下列插件提供:\n"
+"%(plugin_list)s"
 
 msgid "Enable these plugins"
-msgstr "Aktifkan plugin-plugin ini"
+msgstr "启用这些插件"
 
 #, python-format
 msgid "<b>%(plugin)s</b> requires the plugin <b>%(require)s</b>."
-msgstr "<b>%(plugin)s</b> membutuhkan plugin <b>%(require)s</b>."
+msgstr "<b>%(plugin)s</b>需要<b>%(require)s</b>插件。"
 
 #, python-format
 msgid "Enable %(require)s"
-msgstr "Aktifkan %(require)s"
+msgstr "启用%(require)s"
 
 #, python-format
 msgid ""
 "<b>%(plugin)s</b> provides the feature <b>%(feature)s</b> which is required "
 "by the plugins <b>%(plugin_list)s</b>."
 msgstr ""
+"<b>%(plugin_list)s</b>插件需要<b>%(plugin)s</b>提供的<b>%(feature)s</b>功能。"
 
 msgid "Disable these plugins"
-msgstr "Non-aktifkan plugin-plugin ini"
+msgstr "禁用这些插件"
 
 #, python-format
 msgid "Don't disable %(plugin)s"
-msgstr "Jangan non-aktifkan %(plugin)s"
+msgstr "不要禁用%(plugin)s"
 
 #, python-format
 msgid "<b>%(plugin)s</b> is required by the plugins <b>%(plugin_list)s</b>."
-msgstr "<b>%(plugin)s</b> dibutuhkan oleh plugin <b>%(plugin_list)s</b>."
+msgstr "插件<b>%(plugin)s</b>被插件<b>%(plugin_list)s</b>需要。"
 
 msgid "General"
-msgstr "Umum"
+msgstr "常规"
 
 msgid "Accessibility"
-msgstr "Aksesibilitas"
+msgstr "辅助功能"
 
 msgid "Desktop"
-msgstr "Destop"
+msgstr "桌面"
 
 msgid "Extras"
-msgstr "Ekstra"
+msgstr "附加功能"
 
 msgid "Window Management"
-msgstr "Manajemen Jendela"
+msgstr "窗口管理"
 
 msgid "Effects"
-msgstr "Efek"
+msgstr "特效"
 
 msgid "Image Loading"
-msgstr ""
+msgstr "图像加载"
 
 msgid "Utility"
-msgstr "Utilitas"
+msgstr "工具"
 
 msgid "All"
-msgstr "Semua"
+msgstr "全部"
 
 msgid "Uncategorized"
-msgstr "Tidak dikategorikan"
+msgstr "未分类"
 
 msgid "N/A"
 msgstr ""
 
 msgid "Reset setting to the default value"
-msgstr ""
+msgstr "重置为默认值"
 
 msgid "Edit"
-msgstr "Ubah"
+msgstr "编辑"
 
 msgid "Multi-list settings. You can double-click a row to edit the values."
-msgstr ""
+msgstr "多选列表设置。你可以双击一行对该值进行编辑。"
 
 #, python-format
 msgid "Edit %s"
-msgstr "Ubah %s"
+msgstr "编辑%s"
 
 #, python-format
 msgid "\"%s\" is not a valid shortcut"
-msgstr "\"%s\" bukan tombol cepat yang valid"
+msgstr "\"%s\"不是一个有效的快捷键"
 
 msgid "Disabled"
-msgstr "Non-aktif"
+msgstr "已禁用"
 
 msgid "Enabled"
-msgstr "Aktif"
+msgstr "已启用"
 
 msgid "Grab key combination"
-msgstr "Ambil kombinasi tombol"
+msgstr "获取按键组合"
 
 #, python-format
 msgid "\"%s\" is not a valid button"
-msgstr "\"%s\" bukan tombol yang valid"
+msgstr "\"%s\"不是一个有效的按键"
 
 #, python-format
 msgid ""
 "Using Button1 without modifiers can prevent any left click and thus break "
 "your configuration. Do you really want to set \"%s\" button to Button1 ?"
 msgstr ""
+"在不使用修正键的情况下使用按键1会导致所有的左键点击失灵从而中断您的配置。你真"
+"的想要把\"%s\"设置到按键1上吗？"
 
 #, python-format
 msgid "\"%s\" is not a valid edge mask"
-msgstr ""
+msgstr "边缘蒙板\"%s\"无效"
 
 msgid "None"
-msgstr "Tidak Ada"
+msgstr "无"
 
 msgid "CompizConfig Settings Manager"
-msgstr "CompizConfig Settings Manager"
+msgstr "CompizConfig设置管理器"
 
-#, fuzzy
 msgid "Plugin"
-msgstr "Daftar Plugin"
+msgstr "插件"
 
 msgid "Please press the new key combination"
-msgstr "Silahkan tekan kombinasi tombol yang baru"
+msgstr "请按下新按键组合"
 
 msgid "Window Title"
-msgstr ""
+msgstr "窗口标题"
 
 msgid "Window Role"
-msgstr ""
+msgstr "窗口角色"
 
-#, fuzzy
 msgid "Window Name"
-msgstr "Manajemen Jendela"
+msgstr "窗口名称"
 
 msgid "Window Class"
-msgstr ""
+msgstr "窗口类别"
 
 msgid "Window Type"
-msgstr ""
+msgstr "窗口类型"
 
 msgid "Window ID"
-msgstr ""
+msgstr "窗口ID"
 
 msgid "And"
-msgstr ""
+msgstr "和"
 
 msgid "Or"
-msgstr ""
+msgstr "或"
 
 msgid "Edit match"
-msgstr ""
+msgstr "编辑匹配"
 
 #. Type
 msgid "Type"
-msgstr ""
+msgstr "类型"
 
 #. Value
-#, fuzzy
 msgid "Value"
-msgstr "Nilai (%s)"
+msgstr "值"
 
 msgid "Grab"
-msgstr ""
+msgstr "抓取"
 
 #. Relation
-#, fuzzy
 msgid "Relation"
-msgstr "Integrasi"
+msgstr "关系"
 
 #. Invert
 msgid "Invert"
-msgstr ""
+msgstr "反向"
 
 msgid "Browse..."
-msgstr ""
+msgstr "浏览..."
 
 msgid "Images"
-msgstr "Gambar"
+msgstr "图像"
 
 msgid "File"
-msgstr "Berkas"
+msgstr "文件"
 
 msgid "Open directory..."
-msgstr "Buka direktori..."
+msgstr "打开目录..."
 
 msgid "Open file..."
-msgstr "Buka berkas..."
+msgstr "打开文件..."
 
 msgid "This is a settings manager for the CompizConfig configuration system."
-msgstr ""
+msgstr "这是一个针对CompizConfig配置系统的设置管理器"
 
 msgid "translator-credits"
-msgstr ""
+msgstr "译者"
 
 msgid "An error has occured"
-msgstr "Sebuah kesalahan telah terjadi"
+msgstr "产生了一个错误"
 
 msgid "Warning"
-msgstr "Peringatan"
+msgstr "警告"
 
 #, python-format
 msgid "Enable %s"
-msgstr "Aktifkan %s"
+msgstr "启用%s"
 
 msgid "Filter"
-msgstr ""
+msgstr "关键字"
 
 #, python-format
 msgid "Search %s Plugin Options"
-msgstr "Cari Opsi Plugin %s"
+msgstr "搜索%s插件选项"
 
 msgid "Use This Plugin"
-msgstr "Gunakan Plugin Ini"
+msgstr "使用此插件"
 
 msgid "Search Compiz Core Options"
-msgstr "Cari Opsi Compiz Core"
+msgstr "搜索Compiz Core选项"
 
 msgid "Error"
-msgstr "Kesalahan"
+msgstr "错误"
 
 msgid ""
 "Enter a filter.\n"
 "Click the keyboard image to grab a key for which to search."
 msgstr ""
+"输入过滤条件。\n"
+"以按下的键盘上的键进行搜索。"
 
 msgid "Search in..."
-msgstr "Cari di..."
+msgstr "于...中寻找"
 
 #. Options
 msgid "Short description and name"
-msgstr "Deskripsi pendek dan nama"
+msgstr "简短描述和名称"
 
 msgid "Long description"
-msgstr "Deskripsi panjang"
+msgstr "具体描述"
 
 msgid "Settings value"
-msgstr "Nilai pengaturan"
+msgstr "设置值"
 
 msgid "Group"
-msgstr ""
+msgstr "组"
 
 msgid "Subgroup"
-msgstr ""
+msgstr "子组"
 
 #. Notebook
 msgid "Settings"
-msgstr "Pengaturan"
+msgstr "设置"
 
-#, fuzzy
 msgid "Loading Advanced Search"
-msgstr "Pencarian Lanjut"
+msgstr "加载高级搜索"
 
 msgid "Add a New Profile"
-msgstr "Tambah Profil Baru"
+msgstr "添加新存档"
 
 msgid "Remove This Profile"
-msgstr "Hapus Profil Ini"
+msgstr "删除此存档"
 
 msgid "Default"
-msgstr ""
+msgstr "默认"
 
 msgid "Profile"
-msgstr "Profil"
+msgstr "存档"
 
 msgid "Import"
-msgstr "Impor"
+msgstr "导入"
 
 msgid "Import a CompizConfig Profile"
-msgstr "Impor Profil CompizConfig"
+msgstr "导入一个CompizConfig存档"
 
 msgid "Import as..."
-msgstr "Impor sebagai.."
+msgstr "做为…导入"
 
 msgid "Import a CompizConfig Profile as a new profile"
-msgstr ""
+msgstr "导入一个CompizConfig存档作为新的存档"
 
 msgid "Export"
-msgstr "Ekspor"
+msgstr "导出"
 
 msgid "Export your CompizConfig Profile"
-msgstr "Ekspor Profil CompizConfig anda"
+msgstr "导出你的CompizConfig存档"
 
 msgid "Reset to defaults"
-msgstr ""
+msgstr "重置到默认"
 
 msgid "Reset your CompizConfig Profile to the global defaults"
-msgstr ""
+msgstr "重置你的CompizConfig存档到全局默认"
 
 msgid "Backend"
-msgstr "Bagian Belakang"
+msgstr "后端"
 
 msgid "Integration"
-msgstr "Integrasi"
+msgstr "整合"
 
 msgid "Enable integration into the desktop environment"
-msgstr "Aktifkan integrasi dengan lingkungan destop"
+msgstr "开启与桌面环境的整合"
 
 msgid "Profiles (*.profile)"
-msgstr "Profil (*.profile)"
+msgstr "存档 (*.profile)"
 
 msgid "All files"
-msgstr "Semua berkas"
+msgstr "所有文件"
 
 msgid "Save file.."
-msgstr "Simpan berkas.."
+msgstr "保存文件.."
 
 msgid "Do you want to skip default option values while exporting your profile?"
-msgstr ""
+msgstr "您想在导出存档时忽略默认设置吗？"
 
 msgid "Open file.."
-msgstr "Buka berkas.."
+msgstr "打开文件.."
 
 msgid "Enter a profile name"
-msgstr "Masukkan nama profil"
+msgstr "输入存档名称"
 
 msgid "Please enter a name for the new profile:"
-msgstr "Silahkan masukkan nama untuk profil baru:"
+msgstr "请输入一个新存档名称:"
 
 msgid "Backend not found."
-msgstr "Bagian Belakang tidak ditemukan."
+msgstr "未找到后端程序。"
 
 #. Auto sort
 msgid "Automatic plugin sorting"
-msgstr "Pengurutan plugin otomatis"
+msgstr "插件自动排序"
 
 msgid "Disabled Plugins"
-msgstr "Plugin Non-aktif"
+msgstr "已禁用插件"
 
 msgid "Enabled Plugins"
-msgstr "Plugin Aktif"
+msgstr "已启用插件"
 
 msgid ""
 "Do you really want to disable automatic plugin sorting? This will also "
 "disable conflict handling. You should only do this if you know what you are "
 "doing."
 msgstr ""
+"您真的想禁用插件自动排序吗？这将同时禁用冲突检测。如果您明确知道您将导致的结"
+"果，方可继续。"
 
 msgid "Add plugin"
-msgstr "Tambah plugin"
+msgstr "添加插件"
 
 msgid "Plugin name:"
-msgstr "Nama plugin:"
+msgstr "插件名称："
 
 msgid "Insert plugin name"
-msgstr "Masukkan nama plugin"
+msgstr "插入插件名称"
 
 msgid "Preferences"
-msgstr ""
+msgstr "首选项"
 
 msgid ""
 "Configure the backend, profile and other internal settings used by the "
 "Compiz Configuration System."
-msgstr ""
+msgstr "配置Conpiz配置系统使用的后端、存档以及其它内部设定。"
 
 msgid "About"
-msgstr ""
+msgstr "关于"
 
 msgid "About CCSM..."
-msgstr ""
+msgstr "关于CCSM…"
 
 msgid "Profile & Backend"
-msgstr "Profil & Bagian Belakang"
+msgstr "存档和后端"
 
 msgid "Plugin List"
-msgstr "Daftar Plugin"
+msgstr "插件列表"
 
 msgid "Filter your Plugin list"
-msgstr ""
+msgstr "过滤你的插件列表"
 
 #, python-format
 msgid "Screen %i"
-msgstr ""
+msgstr "屏幕%i"
 
 msgid "Screen"
-msgstr ""
+msgstr "屏幕"
 
 msgid "Category"
-msgstr "Kategori"
+msgstr "类别"
 
 msgid "Advanced Search"
-msgstr "Pencarian Lanjut"
+msgstr "高级搜索"
 
 #, python-format
 msgid ""
@@ -502,15 +508,49 @@ msgid ""
 "\n"
 " Your filter \"<b>%s</b>\" does not match any items.</span>"
 msgstr ""
+"<span size=\"large\"><b>未找到匹配项。</b> </span><span>\n"
+"\n"
+"你的过滤条件\"<b>%s</b>\"未匹配任何条目。</span>"
 
 msgid "Configure Compiz with CompizConfig"
-msgstr ""
+msgstr "使用CompizConfig对Compiz进行配置"
+
+#~ msgid "Computing possible conflicts, please wait"
+#~ msgstr "正在计算可能存在的冲突，请稍候"
 
 #~ msgid "Value (%s)"
-#~ msgstr "Nilai (%s)"
+#~ msgstr "值 (%s)"
 
+#, fuzzy
 #~ msgid "Value (%(value)s) for %(setting)s"
-#~ msgstr "Nilai (%(value)s) untuk %(setting)s"
+#~ msgstr "值 (%s) 于 %s:"
+
+#~ msgid "Unhandled list type %s for %s"
+#~ msgstr "未处理的列表类型 %s 于 %s"
 
 #~ msgid "Actions"
-#~ msgstr "Aksi"
+#~ msgstr "动作"
+
+#~ msgid "PyGtk 2.10.0 or later required"
+#~ msgstr "需要 PyGtk 2.10.0或更新版本"
+
+#~ msgid "Multi-list settings"
+#~ msgstr "多列表设置"
+
+#~ msgid "Name"
+#~ msgstr "名称"
+
+#~ msgid "Screen Edge"
+#~ msgstr "屏幕边缘"
+
+#~ msgid "On System Bell"
+#~ msgstr "基于系统铃声"
+
+#~ msgid "Edit Action: %s"
+#~ msgstr "编辑动作: %s"
+
+#~ msgid "Screen Edges"
+#~ msgstr "屏幕边缘"
+
+#~ msgid "Backend &amp; Profile"
+#~ msgstr "后端 &amp; 存档"

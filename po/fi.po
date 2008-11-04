@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-10-14 14:37+0530\n"
-"PO-Revision-Date: 2008-06-08 16:23+0200\n"
+"POT-Creation-Date: 2008-11-04 12:05+0530\n"
+"PO-Revision-Date: 2008-10-24 15:43+0200\n"
 "Last-Translator: Timo Jyrinki <timo.jyrinki@iki.fi>\n"
 "Language-Team: Finnish <laatu@lokalisointi.org>\n"
 "MIME-Version: 1.0\n"
@@ -201,7 +201,7 @@ msgid "Uncategorized"
 msgstr "Luokittelematon"
 
 msgid "N/A"
-msgstr ""
+msgstr "–"
 
 msgid "Reset setting to the default value"
 msgstr "Palauta asetukset oletusarvoihin"
@@ -251,7 +251,7 @@ msgid "None"
 msgstr "Ei mitään"
 
 msgid "CompizConfig Settings Manager"
-msgstr "CompizConfig-asetusten hallinta"
+msgstr "Compiz-asetusten hallinta"
 
 msgid "Plugin"
 msgstr "Lisäosa"
@@ -405,25 +405,25 @@ msgid "Import"
 msgstr "Tuo"
 
 msgid "Import a CompizConfig Profile"
-msgstr "Tuo CompizConfig-profiili"
+msgstr "Tuo Compizin asetusprofiili"
 
 msgid "Import as..."
 msgstr "Tuo nimellä..."
 
 msgid "Import a CompizConfig Profile as a new profile"
-msgstr "Tuo CompizConfig-profiili uutena profiilina"
+msgstr "Tuo Compizin asetusprofiili uutena profiilina"
 
 msgid "Export"
 msgstr "Vie"
 
 msgid "Export your CompizConfig Profile"
-msgstr "Vie CompizConfig-profiili"
+msgstr "Vie Compizin asetusprofiili"
 
 msgid "Reset to defaults"
 msgstr "Palauta oletusasetukset"
 
 msgid "Reset your CompizConfig Profile to the global defaults"
-msgstr "Palauta CompizConfig-profiilin oletusasetukset"
+msgstr "Palauta Compizin asetusprofiilin oletusasetukset"
 
 msgid "Backend"
 msgstr "Taustajärjestelmä"
