@@ -262,7 +262,8 @@ class IdleSettingsParser:
         catIndex = self.CategoryLoadIconsList[0]
         pluginWindow = self.Main.MainPage.RightWidget
         categoryBox = pluginWindow._boxes[catIndex]
-        for (pluginIndex, plugin) in enumerate (categoryBox.get_plugins()):
+        for (pluginIndex, plugin) in \
+            enumerate (categoryBox.get_unfiltered_plugins()):
             categoryBox._buttons[pluginIndex] = PluginButton (plugin)
         categoryBox.rebuild_table (categoryBox._current_cols, True)
         pluginWindow.connect_buttons (categoryBox)

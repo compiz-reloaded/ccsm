@@ -1457,6 +1457,7 @@ class PluginButton (gtk.HBox):
 class CategoryBox(gtk.VBox):
 
     _plugins = None
+    _unfiltered_plugins = None
     _buttons = None
     _context = None
     _name    = ""
@@ -1484,6 +1485,9 @@ class CategoryBox(gtk.VBox):
         self._plugins.sort(key=PluginKeyFunc)
         self._name = name
         text = name or 'Uncategorized'
+
+        # Keep unfiltered list of plugins for correct background icon loading
+        self._unfiltered_plugins = self._plugins
 
         header = gtk.HBox ()
         header.set_border_width (5)
@@ -1560,6 +1564,9 @@ class CategoryBox(gtk.VBox):
 
     def get_plugins (self):
         return self._plugins
+
+    def get_unfiltered_plugins (self):
+        return self._unfiltered_plugins
 
 # Plugin Window
 #
