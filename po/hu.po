@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-11-04 12:05+0530\n"
-"PO-Revision-Date: 2008-09-16 18:19+0200\n"
+"POT-Creation-Date: 2008-12-15 15:32+0530\n"
+"PO-Revision-Date: 2008-11-30 12:24+0100\n"
 "Last-Translator: KAMI <kamihir@freemail.hu>\n"
 "Language-Team: hungarian <hu@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -222,7 +222,7 @@ msgstr "%s szerkesztése"
 
 #, python-format
 msgid "\"%s\" is not a valid shortcut"
-msgstr "\"%s\" nem érvényes gyorsbillentyű"
+msgstr "„%s” nem érvényes gyorsbillentyű"
 
 msgid "Disabled"
 msgstr "Letiltva"
@@ -235,7 +235,7 @@ msgstr "Billentyűzetkombináció megadása"
 
 #, python-format
 msgid "\"%s\" is not a valid button"
-msgstr "\"%s\" nem érvényes gomb"
+msgstr "„%s” nem érvényes gomb"
 
 #, python-format
 msgid ""
@@ -244,11 +244,11 @@ msgid ""
 msgstr ""
 "A Gomb 1 módosítók nélküli használata elérhetetlenné tesz minden bal gombbal "
 "történő műveletet, így használhatatlanok lesznek a jelenlegi beállítások. "
-"Biztos benne, hogy a(z) \"%s\" gombot a Gomb 1 gombra állítja be?"
+"Biztos benne, hogy a(z) „%s” gombot a Gomb 1 gombra állítja be?"
 
 #, python-format
 msgid "\"%s\" is not a valid edge mask"
-msgstr "\"%s\" nem érvényes maszk"
+msgstr "„%s” nem érvényes maszk"
 
 msgid "None"
 msgstr "Nincs"
@@ -308,8 +308,9 @@ msgstr "Összefüggés"
 msgid "Invert"
 msgstr "Megfordítás"
 
+#, fuzzy
 msgid "Browse..."
-msgstr "Tallózás..."
+msgstr "Tallózás…"
 
 msgid "Images"
 msgstr "Képek"
@@ -317,11 +318,13 @@ msgstr "Képek"
 msgid "File"
 msgstr "Fájl"
 
+#, fuzzy
 msgid "Open directory..."
-msgstr "Mappa megnyitása..."
+msgstr "Mappa megnyitása…"
 
+#, fuzzy
 msgid "Open file..."
-msgstr "Fájl megnyitása..."
+msgstr "Fájl megnyitása…"
 
 msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr "Ez a beállításkezelő a Compiz beállító rendszeréhez."
@@ -362,8 +365,9 @@ msgstr ""
 "Adja meg a keresési feltételt.\n"
 "Kattintson a billentyűzet képére, hogy megadhassa a keresési feltételt."
 
+#, fuzzy
 msgid "Search in..."
-msgstr "Keresés..."
+msgstr "Keresés…"
 
 #. Options
 msgid "Short description and name"
@@ -406,8 +410,9 @@ msgstr "Importálás"
 msgid "Import a CompizConfig Profile"
 msgstr "CompizConfig profil importálása"
 
+#, fuzzy
 msgid "Import as..."
-msgstr "Importálás másként..."
+msgstr "Importálás másként…"
 
 msgid "Import a CompizConfig Profile as a new profile"
 msgstr "CompizConfig profil importálása új profilként"
@@ -440,7 +445,7 @@ msgid "All files"
 msgstr "Összes fájl"
 
 msgid "Save file.."
-msgstr "Fájl mentése..."
+msgstr "Fájl mentése…"
 
 msgid "Do you want to skip default option values while exporting your profile?"
 msgstr ""
@@ -448,7 +453,7 @@ msgstr ""
 "profil exportálása során?"
 
 msgid "Open file.."
-msgstr "Fájl megnyitása..."
+msgstr "Fájl megnyitása…"
 
 msgid "Enter a profile name"
 msgstr "Profil név megadása"
@@ -500,8 +505,9 @@ msgstr ""
 msgid "About"
 msgstr "Névjegy"
 
+#, fuzzy
 msgid "About CCSM..."
-msgstr "CCSM névjegye..."
+msgstr "CCSM névjegye…"
 
 msgid "Profile & Backend"
 msgstr "Profilok és kiszolgálók"
@@ -533,10 +539,13 @@ msgid ""
 msgstr ""
 "<span size=\"large\"><b>Nincs találat.</b> </span><span>\n"
 "\n"
-" A szűrő (\"<b>%s</b>\") nem adott találatot.</span>"
+" A szűrő („<b>%s</b>”) nem adott találatot.</span>"
 
 msgid "Configure Compiz with CompizConfig"
 msgstr "Compiz beállítása a CompizCOnfig programmal"
+
+#~ msgid "Open file…"
+#~ msgstr "Fájl megnyitása…"
 
 #~ msgid "Computing possible conflicts, please wait"
 #~ msgstr "Lehetséges összeférhetetlenségek keresése. Kérem várjon."
