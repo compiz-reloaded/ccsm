@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm 0.5.2\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-11-04 12:05+0530\n"
-"PO-Revision-Date: 2008-06-16 21:04+0200\n"
+"POT-Creation-Date: 2008-12-15 15:32+0530\n"
+"PO-Revision-Date: 2008-12-14 10:57+0100\n"
 "Last-Translator: Brusnica P <pepino@pobox.sk>\n"
 "Language-Team: SLOVAK <sk.cfteam@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -29,7 +29,7 @@ msgstr ""
 "module <b>%(plugin)s</b> je v konflikte s operáciou <b>%(action_conflict)s</"
 "b> zásuvného modulu <b>%(plugin_conflict)s</b>.\n"
 "Želáte si vypnúť <b>%(action_conflict)s</b> v zásuvnom module <b>%"
-"(plugin_conflict)s</b> ?"
+"(plugin_conflict)s</b> plugin?"
 
 #, python-format
 msgid "Disable %(action_conflict)s"
@@ -44,10 +44,10 @@ msgid "Set %(action)s anyway"
 msgstr "Nastaviť %(action)s napriek tomu"
 
 msgid "key"
-msgstr "Kľúč"
+msgstr "kľúč"
 
 msgid "button"
-msgstr "Tlačidlo"
+msgstr "tlačidlo"
 
 msgid "edge"
 msgstr "okraj"
@@ -109,7 +109,7 @@ msgid ""
 "Plugin <b>%(plugin_conflict)s</b> provides feature <b>%(feature)s</b> which "
 "is also provided by <b>%(plugin)s</b>"
 msgstr ""
-"zásuvný modul <b>%(plugin_conflict)s</b> poskytuje funkcionalitu <b>%"
+"Zásuvný modul <b>%(plugin_conflict)s</b> poskytuje funkcionalitu <b>%"
 "(feature)s</b>, ktorú poskytuje aj <b>%(plugin)s</b>"
 
 #, python-format
@@ -196,7 +196,7 @@ msgid "Uncategorized"
 msgstr "Nezaradené"
 
 msgid "N/A"
-msgstr ""
+msgstr "N/D"
 
 msgid "Reset setting to the default value"
 msgstr "Vrátiť nastavenia na šatndardné hodnoty"
@@ -215,7 +215,7 @@ msgstr "Upraviť %s"
 
 #, python-format
 msgid "\"%s\" is not a valid shortcut"
-msgstr "„%s“ nie je platná skratka"
+msgstr "\"%s\" nie je platná skratka"
 
 msgid "Disabled"
 msgstr "Vypnutý"
@@ -228,7 +228,7 @@ msgstr "Kombinácia kláves zachytenia"
 
 #, python-format
 msgid "\"%s\" is not a valid button"
-msgstr "„%s“ nie je platné tlačidlo"
+msgstr "\"%s\" nie je platné tlačidlo"
 
 #, python-format
 msgid ""
@@ -237,11 +237,11 @@ msgid ""
 msgstr ""
 "Použitie Tlačidla1 bez modifikátorov môže zabrániť akémukoľvek kliknutiu "
 "ľavým tlačidlom a tak pokaziť vašu konfiguráciu. Skutočne si želáte nastaviť "
-"tlačidlo „%s“ na Talčidlo1?"
+"tlačidlo \"%s\" na Talčidlo1 ?"
 
 #, python-format
 msgid "\"%s\" is not a valid edge mask"
-msgstr "„%s“ nie je platná maska hrany"
+msgstr "\"%s\" nie je platná maska hrany"
 
 msgid "None"
 msgstr "Žiadne"
@@ -274,10 +274,10 @@ msgid "Window ID"
 msgstr "ID okna"
 
 msgid "And"
-msgstr "a"
+msgstr "Aj"
 
 msgid "Or"
-msgstr "alebo"
+msgstr "Alebo"
 
 msgid "Edit match"
 msgstr "Upraviť zhodu"
@@ -314,15 +314,15 @@ msgid "Open directory..."
 msgstr "Otvoriť adresár..."
 
 msgid "Open file..."
-msgstr "Otvoriť súbor.."
+msgstr "Otvoriť súbor..."
 
 msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr "Toto je správca nastavení konfiguračného systému CompizConfig."
 
 msgid "translator-credits"
 msgstr ""
-"Ivan Masár <helix84@centrum.sk>, 2008.\n"
-"PEPINO <sk.cfteam@gmail.com>, 2007."
+"prekladatelia-zásluhy ivan masár &lt; helix84 at centrum.sk &lt; , 2008, "
+"pepino &lt; sk.cfteam at gmail.com &gt; , 2007"
 
 msgid "An error has occured"
 msgstr "Vyskytla sa chyba"
@@ -335,7 +335,7 @@ msgid "Enable %s"
 msgstr "Zapnúť %s"
 
 msgid "Filter"
-msgstr "Filter"
+msgstr "Sito"
 
 #, python-format
 msgid "Search %s Plugin Options"
@@ -420,7 +420,7 @@ msgid "Reset your CompizConfig Profile to the global defaults"
 msgstr "Prestaviť vaše CompizConfig Profil na štandardné globálne hodnoty"
 
 msgid "Backend"
-msgstr "Backend"
+msgstr "Na pozadí"
 
 msgid "Integration"
 msgstr "Integrácia"
@@ -435,7 +435,7 @@ msgid "All files"
 msgstr "Všetky súbory"
 
 msgid "Save file.."
-msgstr "Uložiť súbor"
+msgstr "Uložiť súbor.."
 
 msgid "Do you want to skip default option values while exporting your profile?"
 msgstr "Prajete si preskočiť štandardné hodnoty volieb pri exporte profilu?"
@@ -490,7 +490,7 @@ msgstr ""
 "Systém na konfiguráciu Compiz-u."
 
 msgid "About"
-msgstr "O aplikácii..."
+msgstr "O aplikácii"
 
 msgid "About CCSM..."
 msgstr "O CCSM..."
