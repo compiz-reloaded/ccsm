@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2008-12-26 12:34+0530\n"
-"PO-Revision-Date: 2008-12-07 20:17+0100\n"
-"Last-Translator: Fran Diéguez (GLUG) <fran.dieguez@glug.es>\n"
+"POT-Creation-Date: 2009-02-06 11:24+0530\n"
+"PO-Revision-Date: 2009-02-01 17:02+0100\n"
+"Last-Translator: Fran Diéguez Souto <fran.dieguez@glug.es>\n"
 "Language-Team: Galician <en@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -26,15 +26,15 @@ msgid ""
 "Do you wish to disable <b>%(action_conflict)s</b> in the <b>%"
 "(plugin_conflict)s</b> plugin?"
 msgstr ""
-"O novo valor para o %(binding)s para a acción <b>%(action)s</b> "
-"no plugin <b>%(plugin)s</b> ten un conflicto coa acción <b>%(action_conflict)"
-"s</b> do plugin <b>%(plugin_conflict)s</b>.\n"
-"¿Queres deshabilitar <b>%(action_conflict)s</b> do plugin <b>%"
+"O novo valor para o atallo %(binding)s da acción <b>%(action)s</b> no "
+"complemento <b>%(plugin)s</b> ten un conflito coa acción <b>%"
+"(action_conflict)s</b> do complemento <b>%(plugin_conflict)s</b>.\n"
+"¿Quere desactivar <b>%(action_conflict)s</b> no complemento <b>%"
 "(plugin_conflict)s</b>?"
 
 #, python-format
 msgid "Disable %(action_conflict)s"
-msgstr "Deshabilitar %(action_conflict)s"
+msgstr "Desactivar %(action_conflict)s"
 
 #, python-format
 msgid "Don't set %(action)s"
@@ -59,9 +59,9 @@ msgid ""
 "provided by any plugin.\n"
 "Do you wish to use this feature anyway?"
 msgstr ""
-"Estas tentando empregar <b>%(feature)s</b> a cal <b>non</b> está sendo "
-"proporcionada por nengún plugin.\n"
-"¿Queres empregar esta funcionalidade de todas maneiras?"
+"Esta tentando empregar a característica <b>%(feature)s</b> que <b>non</b> "
+"está sendo proporcionada por ningún complemento.\n"
+"¿Quere empregar esta funcionalidade de tódolos xeitos?"
 
 #, python-format
 msgid "Use %(feature)s"
@@ -80,8 +80,8 @@ msgid ""
 msgstr ""
 "Estas tentando empregar a característica <b>%(feature)s</b> que inclúe <b>%"
 "(plugin)s</b>.\n"
-"E este plugin está deshabilitado neste intre.\n"
-"¿Queres habilitar <b>%(plugin)s</b> para que a característica esté "
+"E este complemento está desactivado neste intre.\n"
+"¿Queres habilitar <b>%(plugin)s</b> para que a característica este "
 "dispoñíbel?"
 
 #, python-format
@@ -97,26 +97,27 @@ msgid ""
 "Some %(bindings)s bindings of Plugin <b>%(plugin)s</b> conflict with other "
 "plugins. Do you want to resolve these conflicts?"
 msgstr ""
-"Algúns atallos de teclado %(bindings)s do plugin <b>%(plugin)s</b> entran en "
-"conflito con outros plugins. ¿Quere resolver eses conflitos?"
+"Algúns atallos de teclado %(bindings)s do Complemento <b>%(plugin)s</b> "
+"entran en conflito con outros complementos. ¿Quere solucionar estes "
+"conflitos?"
 
 msgid "Resolve conflicts"
 msgstr "Solucionar conflictos"
 
 msgid "Ignore conflicts"
-msgstr "Ignorar conflictos"
+msgstr "Ignorar conflitos"
 
 #, python-format
 msgid ""
 "Plugin <b>%(plugin_conflict)s</b> provides feature <b>%(feature)s</b> which "
 "is also provided by <b>%(plugin)s</b>"
 msgstr ""
-"O engdido <b>%(plugin_conflict)s</b> proporciona <b>%(feature)s</b> que "
-"tamén é proporcionada por <b>%(plugin)s</b>"
+"O complemento <b>%(plugin_conflict)s</b> proporciona a funcionalidade <b>%"
+"(feature)s</b> que tamén está proporcionada por <b>%(plugin)s</b>"
 
 #, python-format
 msgid "Disable %(plugin_conflict)s"
-msgstr "Deshabilitar %(plugin_conflict)s"
+msgstr "Desactivar %(plugin_conflict)s"
 
 #, python-format
 msgid "Don't enable %(plugin)s"
@@ -125,7 +126,8 @@ msgstr "Non activar %(plugin)s"
 #, python-format
 msgid "Plugin <b>%(plugin_conflict)s</b> conflicts with <b>%(plugin)s</b>."
 msgstr ""
-"O plugin <b>%(plugin_conflict)s</b> ten un conflicto con <b>%(plugin)s</b>."
+"O complemento <b>%(plugin_conflict)s</b> ten un conflito con <b>%(plugin)s</"
+"b>."
 
 #, python-format
 msgid ""
@@ -133,28 +135,28 @@ msgid ""
 "the following plugins:\n"
 "%(plugin_list)s"
 msgstr ""
-"<b>%(plugin)s</b> require a funcionalidade <b>%(feature)s</b> que "
-"proporcionan os seguintes engadidos:\n"
+"<b>%(plugin)s</b> require a funcionalidade <b>%(feature)s</b> que é "
+"proporcionada polos seguintes engadidos:\n"
 "%(plugin_list)s"
 
 msgid "Enable these plugins"
-msgstr "Activar estos engadidos"
+msgstr "Activar estes engadidos"
 
 #, python-format
 msgid "<b>%(plugin)s</b> requires the plugin <b>%(require)s</b>."
-msgstr "<b>%(plugin)s</b> require o engadido <b>%(require)s</b>."
+msgstr "O <b>%(plugin)s</b> require o complemento <b>%(require)s</b>."
 
 #, python-format
 msgid "Enable %(require)s"
-msgstr "ActivarHabilitar %(require)s"
+msgstr "Activar %(require)s"
 
 #, python-format
 msgid ""
 "<b>%(plugin)s</b> provides the feature <b>%(feature)s</b> which is required "
 "by the plugins <b>%(plugin_list)s</b>."
 msgstr ""
-"<b>%(plugin)s</b>proporciona a característica <b>%(feature)s</b> que é "
-"requerida polos engadidos <b>%(plugin_list)s</b>."
+"<b>%(plugin)s</b>proporciona a funcionalidade <b>%(feature)s</b> que é "
+"requirida polos engadidos <b>%(plugin_list)s</b>."
 
 msgid "Disable these plugins"
 msgstr "Desactivar os seguintes engadidos"
@@ -181,19 +183,19 @@ msgid "Extras"
 msgstr "Extras"
 
 msgid "Window Management"
-msgstr "Administrador de fiestras"
+msgstr "Administración de fiestras"
 
 msgid "Effects"
 msgstr "Efectos"
 
 msgid "Image Loading"
-msgstr "Cargado de Imaxes"
+msgstr "Soporte de formatos de Imaxe"
 
 msgid "Utility"
-msgstr "Utilidade"
+msgstr "Utilidades"
 
 msgid "All"
-msgstr "Todo"
+msgstr "Todas"
 
 msgid "Uncategorized"
 msgstr "Sen categoría"
@@ -202,15 +204,15 @@ msgid "N/A"
 msgstr "N/A"
 
 msgid "Reset setting to the default value"
-msgstr "Reiniciar ó valor por defecto"
+msgstr "Reiniciar configuración ó valor por defecto"
 
 msgid "Edit"
 msgstr "Editar"
 
 msgid "Multi-list settings. You can double-click a row to edit the values."
 msgstr ""
-"Configuracións da Multi-lista. Podes facer dobre clic nunha fila para editar "
-"os valores."
+"Configuracións da lista múltiple. Pode facer dobre clic nunha fila para "
+"editar os valores."
 
 #, python-format
 msgid "Edit %s"
@@ -218,7 +220,7 @@ msgstr "Editar %s"
 
 #, python-format
 msgid "\"%s\" is not a valid shortcut"
-msgstr "\"%s\" non é un acceso directo válido"
+msgstr "\"%s\" non é unha ligazón válida"
 
 msgid "Disabled"
 msgstr "Desactivado"
@@ -227,7 +229,7 @@ msgid "Enabled"
 msgstr "Activado"
 
 msgid "Grab key combination"
-msgstr "Grabar combinación de teclas"
+msgstr "Gravar combinación de teclas"
 
 #, python-format
 msgid "\"%s\" is not a valid button"
@@ -238,9 +240,9 @@ msgid ""
 "Using Button1 without modifiers can prevent any left click and thus break "
 "your configuration. Do you really want to set \"%s\" button to Button1 ?"
 msgstr ""
-"Empregar Botón1 sen modificadores pode previr algún click esquerdo e votar a "
-"perder a túa configuración. ¿Realmente queres configurar o botón \"%s\" ó "
-"Botón1 ?"
+"Empregar Botón1 sen modificadores pode impedir facer clic co botón esquerdo "
+"o que pode votar a perder a súa configuración. ¿Realmente quere configurar o "
+"botón \"%s\" ó Botón1 ?"
 
 #, python-format
 msgid "\"%s\" is not a valid edge mask"
@@ -253,10 +255,10 @@ msgid "CompizConfig Settings Manager"
 msgstr "Administrador de Configuracións CompizConfig"
 
 msgid "Plugin"
-msgstr "Engadido"
+msgstr "Complemento"
 
 msgid "Please press the new key combination"
-msgstr "Preme unha nova combinación de tecras"
+msgstr "Prema unha nova combinación de teclas"
 
 msgid "Window Title"
 msgstr "Título da Fiestra"
@@ -265,16 +267,16 @@ msgid "Window Role"
 msgstr "Rol da Fiestra"
 
 msgid "Window Name"
-msgstr "Nome da Fiestra"
+msgstr "Nome de Fiestra"
 
 msgid "Window Class"
-msgstr "Clase da Fiestra"
+msgstr "Clase de Fiestra"
 
 msgid "Window Type"
-msgstr "Tipo da Fiestra"
+msgstr "Tipo de Fiestra"
 
 msgid "Window ID"
-msgstr "ID da Fiestra"
+msgstr "ID de Fiestra"
 
 msgid "And"
 msgstr "E"
@@ -327,7 +329,7 @@ msgid "translator-credits"
 msgstr "Francisco Diéguez Souto, (GLUG) <fran.dieguez@glug.es>"
 
 msgid "An error has occured"
-msgstr "Producíuse un erro"
+msgstr "Produciuse un erro"
 
 msgid "Warning"
 msgstr "Advertencia"
@@ -341,10 +343,10 @@ msgstr "Filtro"
 
 #, python-format
 msgid "Search %s Plugin Options"
-msgstr "Procurar Opcións de Engadido %s"
+msgstr "Procurar Opcións de Complemento %s"
 
 msgid "Use This Plugin"
-msgstr "Empregar Este Engadido"
+msgstr "Empregar Este Complemento"
 
 msgid "Search Compiz Core Options"
 msgstr "Procurar nas Opcións do Núcleo de Compiz"
@@ -356,8 +358,8 @@ msgid ""
 "Enter a filter.\n"
 "Click the keyboard image to grab a key for which to search."
 msgstr ""
-"Insire un filtro.\n"
-"Fai clic na imaxe do tecrado para gardar unha tecra coa que procurar."
+"Insira un filtro.\n"
+"Faga clic na imaxe do teclado para gardar unha tecla coa que procurar."
 
 msgid "Search in..."
 msgstr "Procurar en..."
@@ -401,28 +403,28 @@ msgid "Import"
 msgstr "Importar"
 
 msgid "Import a CompizConfig Profile"
-msgstr "Importar un Perfil de CompizConfig"
+msgstr "Importa un Perfil de CompizConfig"
 
 msgid "Import as..."
 msgstr "Importar como..."
 
 msgid "Import a CompizConfig Profile as a new profile"
-msgstr "Importar un Perfil de CompizConfig como un novo perfil"
+msgstr "Importa un Perfil de CompizConfig como un novo perfil"
 
 msgid "Export"
 msgstr "Exportar"
 
 msgid "Export your CompizConfig Profile"
-msgstr "Exportar o teu perfil CompizConfig"
+msgstr "Exporta o seu perfil CompizConfig"
 
 msgid "Reset to defaults"
-msgstr "Voltas ás configuracións por defecto"
+msgstr "Volta ás configuracións por defecto"
 
 msgid "Reset your CompizConfig Profile to the global defaults"
-msgstr "Reiniciar o teu perfil CompizConfig ás opcións xerais por defecto."
+msgstr "Reinicia o seu perfil de CompizConfig ás opcións xerais por defecto."
 
 msgid "Backend"
-msgstr "Backend"
+msgstr "Almacenamento de configuración"
 
 msgid "Integration"
 msgstr "Integración"
@@ -437,46 +439,46 @@ msgid "All files"
 msgstr "Tódolos ficheiros"
 
 msgid "Save file.."
-msgstr "Gardar ficheiro..."
+msgstr "Gardar ficheiro.."
 
 msgid "Do you want to skip default option values while exporting your profile?"
 msgstr ""
-"¿Queres omitir os valores das opcións por defecto mentres se exporta o teu "
+"Quere omitir os valores das opcións por defecto mentres se exporta o seu "
 "perfil?"
 
 msgid "Open file.."
 msgstr "Abrir ficheiro.."
 
 msgid "Enter a profile name"
-msgstr "Insire un nome de perfil"
+msgstr "Insira un nome de perfil"
 
 msgid "Please enter a name for the new profile:"
-msgstr "Insire un nombre para o novo perfil:"
+msgstr "Insira un nome para o novo perfil:"
 
 msgid "Backend not found."
-msgstr "Backend non atopado."
+msgstr "Atopouse un novo método de almacenamento de configuración."
 
 #. Auto sort
 msgid "Automatic plugin sorting"
-msgstr "Ordenar os engadidos automáticamente"
+msgstr "Ordenar os complementos automáticamente"
 
 msgid "Disabled Plugins"
-msgstr "Engadidos Desactivados"
+msgstr "Complementos Desactivados"
 
 msgid "Enabled Plugins"
-msgstr "Engadidos Activados"
+msgstr "Complementos Activados"
 
 msgid ""
 "Do you really want to disable automatic plugin sorting? This will also "
 "disable conflict handling. You should only do this if you know what you are "
 "doing."
 msgstr ""
-"¿Queres desactivar a ordenación automática de engadidos? Isto tamén "
-"deshabilita os xestión de conflictos. Só deberías facer isto se sabes o que "
-"estas a facer."
+"Quere desactivar a ordenación automática de engadidos? Isto tamén desactiva "
+"a xestión de conflitos. So se debería facer isto se sabe ben o que esta a "
+"facer."
 
 msgid "Add plugin"
-msgstr "Engadir engadido"
+msgstr "Engadir complemento"
 
 msgid "Plugin name:"
 msgstr "Nome do engadido"
@@ -491,8 +493,8 @@ msgid ""
 "Configure the backend, profile and other internal settings used by the "
 "Compiz Configuration System."
 msgstr ""
-"Configuralo backend, os perfís e outras opcións internas empregadas polo "
-"Sistema de Configuración de Compiz"
+"Configura a almacenaxe de configuración, perfís e outras opcións internas "
+"empregadas polo Sistema de Configuración de Compiz"
 
 msgid "About"
 msgstr "Sobre"
@@ -504,7 +506,7 @@ msgid "Profile & Backend"
 msgstr "Perfil & Backend"
 
 msgid "Plugin List"
-msgstr "Lista de Engadidos"
+msgstr "Lista de Complementos"
 
 msgid "Filter your Plugin list"
 msgstr "Filtra a túa Lista de Engadidos"
@@ -528,10 +530,10 @@ msgid ""
 "\n"
 " Your filter \"<b>%s</b>\" does not match any items.</span>"
 msgstr ""
-"<span size=\"large\"><b>Non se atopou ningúnha coincidencia.</b> </"
+"<span size=\"large\"><b>Non se atopou ningunha coincidencia.</b> </"
 "span><span>\n"
 "\n"
-" O teu filtro \"<b>%s</b>\" non devolveu nengún resultado.</span>"
+" O seu filtro \"<b>%s</b>\" non devolveu ningún resultado.</span>"
 
 msgid "Configure Compiz with CompizConfig"
 msgstr "Configurar Compiz con CompizConfig"
