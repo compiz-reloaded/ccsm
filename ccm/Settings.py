@@ -112,9 +112,10 @@ class Setting(object):
 
         label = gtk.Label()
         desc = protect_pango_markup (self.Setting.ShortDesc)
-        style = ""
-        if self.Setting.Integrated: style = ''' foreground="blue"'''
-        label.set_markup("<span%s>%s</span>" % (style, desc))
+        style = "%s"
+        if self.Setting.Integrated:
+            style = "<i>%s</i>"
+        label.set_markup(style % desc)
         label.props.xalign = 0
         label.set_size_request(160, -1)
         label.props.wrap_mode = pango.WRAP_WORD
