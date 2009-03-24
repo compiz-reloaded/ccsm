@@ -1,16 +1,15 @@
 # CompizConfig Italian translation
-# Copyright (C) 2007 compiz-fusion.org 
+# Copyright (C) 2007, 2008, 2009 The Free Software Foundation, Inc. 
 # This file is distributed under the same license as the ccsm package.
 # Treviño (Marco Trevisan) <trevi55@gmail.com>, 2007
-# Milo Casagrande <milo@ubuntu.com>, 2007-2008
-#
+# Milo Casagrande <milo@ubuntu.com>, 2007-2009
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: ccsm\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2009-02-06 11:24+0530\n"
-"PO-Revision-Date: 2008-09-08 21:26+0200\n"
+"POT-Creation-Date: 2009-03-24 12:33+0530\n"
+"PO-Revision-Date: 2009-02-17 17:52+0100\n"
 "Last-Translator: Milo Casagrande <milo@ubuntu.com>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "MIME-Version: 1.0\n"
@@ -27,9 +26,9 @@ msgid ""
 "(plugin_conflict)s</b> plugin?"
 msgstr ""
 "Il nuovo valore per la scorciatoia %(binding)s dell'azione <b>%(action)s</b> "
-"nel plug-in <b>%(plugin)s</b>, va in conflitto con l'azione <b>%"
-"(action_conflict)s</b> del plug-in <b>%(plugin_conflict)s</b>\n"
-"Disabilitare <b>%(action_conflict)s</b> nel plug-in <b>%(plugin_conflict)s</"
+"nel plugin <b>%(plugin)s</b>, va in conflitto con l'azione <b>%"
+"(action_conflict)s</b> del plugin <b>%(plugin_conflict)s</b>\n"
+"Disabilitare <b>%(action_conflict)s</b> nel plugin <b>%(plugin_conflict)s</"
 "b>?"
 
 #, python-format
@@ -62,7 +61,7 @@ msgid ""
 "Do you wish to use this feature anyway?"
 msgstr ""
 "Si sta cercando di usare la funzionalità <b>%(feature)s</b> che <b>non</b> è "
-"fornita da alcun plug-in.\n"
+"fornita da alcun plugin.\n"
 "Usare ugualmente questa funzionalità?"
 
 #, python-format
@@ -82,7 +81,7 @@ msgid ""
 msgstr ""
 "Si sta cercando di usare la funzionalità <b>%(feature)s</b> che è fornita da "
 "<b>%(plugin)s</b>.\n"
-"Questo plug-in è attualmente disabilitato.\n"
+"Questo plugin è attualmente disabilitato.\n"
 "Abilitare <b>%(plugin)s</b> per rendere la funzionalità disponibile?"
 
 #, python-format
@@ -98,8 +97,8 @@ msgid ""
 "Some %(bindings)s bindings of Plugin <b>%(plugin)s</b> conflict with other "
 "plugins. Do you want to resolve these conflicts?"
 msgstr ""
-"Alcuni binding %(bindings)s del plug-in <b>%(plugin)s</b> vanno in conflitto "
-"con altri plug-in. Risolvere questi conflitti?"
+"Alcuni binding %(bindings)s del plugin <b>%(plugin)s</b> vanno in conflitto "
+"con altri plugin. Risolvere questi conflitti?"
 
 msgid "Resolve conflicts"
 msgstr "Risolvi conflitti"
@@ -112,7 +111,7 @@ msgid ""
 "Plugin <b>%(plugin_conflict)s</b> provides feature <b>%(feature)s</b> which "
 "is also provided by <b>%(plugin)s</b>"
 msgstr ""
-"Il plug-in <b>%(plugin_conflict)s</b> fornisce la funzionalità <b>%(feature)"
+"Il plugin <b>%(plugin_conflict)s</b> fornisce la funzionalità <b>%(feature)"
 "s</b> fornita anche da <b>%(plugin)s</b>"
 
 #, python-format
@@ -126,7 +125,7 @@ msgstr "Non abilitare %(plugin)s"
 #, python-format
 msgid "Plugin <b>%(plugin_conflict)s</b> conflicts with <b>%(plugin)s</b>."
 msgstr ""
-"Il plug-in <b>%(plugin_conflict)s</b> va in conflitto con <b>%(plugin)s</b>."
+"Il plugin <b>%(plugin_conflict)s</b> va in conflitto con <b>%(plugin)s</b>."
 
 #, python-format
 msgid ""
@@ -135,15 +134,15 @@ msgid ""
 "%(plugin_list)s"
 msgstr ""
 "<b>%(plugin)s</b> richiede la funzionalità <b>%(feature)s</b> che viene "
-"fornita dai seguenti plug-in:\n"
+"fornita dai seguenti plugin:\n"
 "%(plugin_list)s"
 
 msgid "Enable these plugins"
-msgstr "Abilita questi plug-in"
+msgstr "Abilita questi plugin"
 
 #, python-format
 msgid "<b>%(plugin)s</b> requires the plugin <b>%(require)s</b>."
-msgstr "<b>%(plugin)s</b> richiede il plug-in <b>%(require)s</b>."
+msgstr "<b>%(plugin)s</b> richiede il plugin <b>%(require)s</b>."
 
 # (NdT) opzione
 #, python-format
@@ -156,11 +155,11 @@ msgid ""
 "by the plugins <b>%(plugin_list)s</b>."
 msgstr ""
 "<b>%(plugin)s</b> fornisce la funzionalità <b>%(feature)s</b> richiesta dai "
-"plug-in <b>%(plugin_list)s</b>."
+"plugin <b>%(plugin_list)s</b>."
 
 # (NdT) pulsante
 msgid "Disable these plugins"
-msgstr "Disabilita questi plug-in"
+msgstr "Disabilita questi plugin"
 
 # (NdT) pulsante
 #, python-format
@@ -169,7 +168,7 @@ msgstr "Non disabilitare %(plugin)s"
 
 #, python-format
 msgid "<b>%(plugin)s</b> is required by the plugins <b>%(plugin_list)s</b>."
-msgstr "<b>%(plugin)s</b> è richiesto dai plug-in <b>%(plugin_list)s</b>."
+msgstr "<b>%(plugin)s</b> è richiesto dai plugin <b>%(plugin_list)s</b>."
 
 msgid "General"
 msgstr "Generale"
@@ -258,7 +257,7 @@ msgid "CompizConfig Settings Manager"
 msgstr "Gestore configurazione CompizConfig"
 
 msgid "Plugin"
-msgstr "Plug-in"
+msgstr "Plugin"
 
 msgid "Please press the new key combination"
 msgstr "Premere la nuova combinazione di tasti"
@@ -350,10 +349,10 @@ msgstr "Filtro"
 
 #, python-format
 msgid "Search %s Plugin Options"
-msgstr "Cerca tra le opzioni del plug-in %s"
+msgstr "Cerca tra le opzioni del plugin %s"
 
 msgid "Use This Plugin"
-msgstr "Usa questo plug-in"
+msgstr "Usa questo plugin"
 
 msgid "Search Compiz Core Options"
 msgstr "Cerca tra le opzioni principali di Compiz"
@@ -479,37 +478,37 @@ msgstr "Backend non trovato. "
 # (NdT) opzione
 #. Auto sort
 msgid "Automatic plugin sorting"
-msgstr "Ordinamento plug-in automatico"
+msgstr "Ordinamento plugin automatico"
 
 # (NdT) intestazione elenco
 msgid "Disabled Plugins"
-msgstr "Plug-in disabilitati"
+msgstr "Plugin disabilitati"
 
 # (NdT) intestazione elenco
 msgid "Enabled Plugins"
-msgstr "Plug-in abilitati"
+msgstr "Plugin abilitati"
 
 msgid ""
 "Do you really want to disable automatic plugin sorting? This will also "
 "disable conflict handling. You should only do this if you know what you are "
 "doing."
 msgstr ""
-"Disabilitare l'ordinamento automatico dei plug-in? Questo disabiliterà anche "
+"Disabilitare l'ordinamento automatico dei plugin? Questo disabiliterà anche "
 "la gestione dei conflitti. Procedere solo se si è certi di cosa si fa."
 
 # (NdT) titolo finestra di dialogo
 msgid "Add plugin"
-msgstr "Aggiungi plug-in"
+msgstr "Aggiungi plugin"
 
 # (NdT) stringa presente prima di una casella di
 # inserimento testo
 msgid "Plugin name:"
-msgstr "Nome del plug-in:"
+msgstr "Nome del plugin:"
 
 # (NdT) questo è il suggerimento che compare
 # sulla stringa sopra...
 msgid "Insert plugin name"
-msgstr "Inserire il nome del plug-in"
+msgstr "Inserire il nome del plugin"
 
 msgid "Preferences"
 msgstr "Preferenze"
@@ -538,10 +537,10 @@ msgstr "Profilo e backend"
 
 # (NdT) titolo di una scheda
 msgid "Plugin List"
-msgstr "Elenco plug-in"
+msgstr "Elenco plugin"
 
 msgid "Filter your Plugin list"
-msgstr "Filtra l'elenco dei plug-in"
+msgstr "Filtra l'elenco dei plugin"
 
 #, python-format
 msgid "Screen %i"
