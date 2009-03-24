@@ -3,18 +3,20 @@
 # This file is distributed under the same license as the ccsm package.
 # Andi Darmawan <belutz@ubuntu.com>, 2007.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Compiz Settings Manager 0.5.2\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2009-02-06 11:24+0530\n"
-"PO-Revision-Date: 2007-09-16 19:11+0700\n"
-"Last-Translator: Andi Darmawan <belutz@ubuntu.com>\n"
-"Language-Team: Andi Darmawan <belutz@ubuntu.com>\n"
+"POT-Creation-Date: 2009-03-24 12:33+0530\n"
+"PO-Revision-Date: 2009-03-09 12:41+0700\n"
+"Last-Translator: Mahyuddin Susanto <udienz@unej.ac.id>\n"
+"Language-Team: Indonesian Translator <id@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Pootle 1.1.0\n"
+"X-Poedit-Language: Indonesian\n"
+"X-Poedit-Country: Indonesia\n"
 
 #, python-format
 msgid ""
@@ -38,31 +40,29 @@ msgid "Set %(action)s anyway"
 msgstr "Tetap atur %(action)s"
 
 msgid "key"
-msgstr ""
+msgstr "kunci"
 
 msgid "button"
-msgstr ""
+msgstr "tombol"
 
 msgid "edge"
-msgstr ""
+msgstr "tepi"
 
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "You are trying to use the feature <b>%(feature)s</b> which is <b>not</b> "
 "provided by any plugin.\n"
 "Do you wish to use this feature anyway?"
 msgstr ""
-"Anda mencoba untuk menggunakan fitur <b>%(feature)s</b> yang disediakan "
-"oleh<b>%(plugin)s</b>.\n"
-"Plugin tersebut sedang tidak aktif.\n"
-"Apakah anda ingin mengaktifkan <b>%(plugin)s</b> sehingga fitur menjadi "
-"tersedia?"
+"Anda mencoba untuk menggunakan fitur <b>%(feature)s</b> yang <b>tidak</b> "
+"disediakan oleh plugin</b>.\n"
+"Apakah anda ingin mengaktifkan fitur ini apa adanya?"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Use %(feature)s"
-msgstr "Jangan aktifkan %(feature)s"
+msgstr "Gunakan %(feature)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Don't use %(feature)s"
 msgstr "Jangan aktifkan %(feature)s"
 
@@ -97,7 +97,7 @@ msgid "Resolve conflicts"
 msgstr ""
 
 msgid "Ignore conflicts"
-msgstr ""
+msgstr "Abaikan konflik"
 
 #, python-format
 msgid ""
@@ -171,7 +171,7 @@ msgid "Effects"
 msgstr "Efek"
 
 msgid "Image Loading"
-msgstr ""
+msgstr "Loading Gambar"
 
 msgid "Utility"
 msgstr "Utilitas"
@@ -183,10 +183,10 @@ msgid "Uncategorized"
 msgstr "Tidak dikategorikan"
 
 msgid "N/A"
-msgstr ""
+msgstr "N/A"
 
 msgid "Reset setting to the default value"
-msgstr ""
+msgstr "Rest nilai pengaturan ke pengaturan default "
 
 msgid "Edit"
 msgstr "Ubah"
@@ -231,64 +231,60 @@ msgstr "Tidak Ada"
 msgid "CompizConfig Settings Manager"
 msgstr "CompizConfig Settings Manager"
 
-#, fuzzy
 msgid "Plugin"
-msgstr "Daftar Plugin"
+msgstr "Plugin"
 
 msgid "Please press the new key combination"
 msgstr "Silahkan tekan kombinasi tombol yang baru"
 
 msgid "Window Title"
-msgstr ""
+msgstr "Judul Window"
 
 msgid "Window Role"
-msgstr ""
+msgstr "Aturan Window"
 
-#, fuzzy
 msgid "Window Name"
-msgstr "Manajemen Jendela"
+msgstr "Nama Window"
 
 msgid "Window Class"
-msgstr ""
+msgstr "Klas Window"
 
 msgid "Window Type"
-msgstr ""
+msgstr "Jenis Window"
 
 msgid "Window ID"
-msgstr ""
+msgstr "ID Window"
 
 msgid "And"
-msgstr ""
+msgstr "Dan"
 
 msgid "Or"
-msgstr ""
+msgstr "Atau"
 
 msgid "Edit match"
 msgstr ""
 
 #. Type
 msgid "Type"
-msgstr ""
+msgstr "Tipe"
 
 #. Value
-#, fuzzy
 msgid "Value"
-msgstr "Nilai (%s)"
+msgstr "Nilai"
 
 msgid "Grab"
-msgstr ""
+msgstr "Grab"
 
 #. Relation
-#, fuzzy
 msgid "Relation"
-msgstr "Integrasi"
+msgstr "Kesamaan"
 
 #. Invert
 msgid "Invert"
-msgstr ""
+msgstr "Kebalikan"
 
 msgid "Browse..."
-msgstr ""
+msgstr "Jelajah..."
 
 msgid "Images"
 msgstr "Gambar"
@@ -306,7 +302,7 @@ msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr ""
 
 msgid "translator-credits"
-msgstr ""
+msgstr "kredit-penerjemah"
 
 msgid "An error has occured"
 msgstr "Sebuah kesalahan telah terjadi"
@@ -319,7 +315,7 @@ msgid "Enable %s"
 msgstr "Aktifkan %s"
 
 msgid "Filter"
-msgstr ""
+msgstr "Penyaring"
 
 #, python-format
 msgid "Search %s Plugin Options"
@@ -338,6 +334,8 @@ msgid ""
 "Enter a filter.\n"
 "Click the keyboard image to grab a key for which to search."
 msgstr ""
+"Masukkan penyaring.\n"
+"Klik pada gambar papan ketik untuk mengambil kunci untuk pencarian"
 
 msgid "Search in..."
 msgstr "Cari di..."
@@ -353,18 +351,17 @@ msgid "Settings value"
 msgstr "Nilai pengaturan"
 
 msgid "Group"
-msgstr ""
+msgstr "Kelompok"
 
 msgid "Subgroup"
-msgstr ""
+msgstr "Sub kelompok"
 
 #. Notebook
 msgid "Settings"
 msgstr "Pengaturan"
 
-#, fuzzy
 msgid "Loading Advanced Search"
-msgstr "Pencarian Lanjut"
+msgstr "Sedang memposes Pencarian Lanjut"
 
 msgid "Add a New Profile"
 msgstr "Tambah Profil Baru"
@@ -373,7 +370,7 @@ msgid "Remove This Profile"
 msgstr "Hapus Profil Ini"
 
 msgid "Default"
-msgstr ""
+msgstr "Default"
 
 msgid "Profile"
 msgstr "Profil"
@@ -388,7 +385,7 @@ msgid "Import as..."
 msgstr "Impor sebagai.."
 
 msgid "Import a CompizConfig Profile as a new profile"
-msgstr ""
+msgstr "Impor OmpizConfig profil sebagai profil baru"
 
 msgid "Export"
 msgstr "Ekspor"
@@ -397,10 +394,10 @@ msgid "Export your CompizConfig Profile"
 msgstr "Ekspor Profil CompizConfig anda"
 
 msgid "Reset to defaults"
-msgstr ""
+msgstr "Reset ke default"
 
 msgid "Reset your CompizConfig Profile to the global defaults"
-msgstr ""
+msgstr "Reset profil CompizConfig ke default umum"
 
 msgid "Backend"
 msgstr "Bagian Belakang"
@@ -422,6 +419,7 @@ msgstr "Simpan berkas.."
 
 msgid "Do you want to skip default option values while exporting your profile?"
 msgstr ""
+"Apakah anda ingin mengabaikan opsi isian default ketika mengekspor profil? "
 
 msgid "Open file.."
 msgstr "Buka berkas.."
@@ -461,18 +459,20 @@ msgid "Insert plugin name"
 msgstr "Masukkan nama plugin"
 
 msgid "Preferences"
-msgstr ""
+msgstr "Pengaturan"
 
 msgid ""
 "Configure the backend, profile and other internal settings used by the "
 "Compiz Configuration System."
 msgstr ""
+"Mengatur backend, profil dan pengaturan internal lainya yang digunakan oleh "
+"System Pengatur Compiz"
 
 msgid "About"
-msgstr ""
+msgstr "Perihal"
 
 msgid "About CCSM..."
-msgstr ""
+msgstr "Perihal CCSM..."
 
 msgid "Profile & Backend"
 msgstr "Profil & Bagian Belakang"
@@ -481,14 +481,14 @@ msgid "Plugin List"
 msgstr "Daftar Plugin"
 
 msgid "Filter your Plugin list"
-msgstr ""
+msgstr "Saring daftar plugin"
 
 #, python-format
 msgid "Screen %i"
-msgstr ""
+msgstr "Screen %i"
 
 msgid "Screen"
-msgstr ""
+msgstr "Screen"
 
 msgid "Category"
 msgstr "Kategori"
@@ -502,9 +502,12 @@ msgid ""
 "\n"
 " Your filter \"<b>%s</b>\" does not match any items.</span>"
 msgstr ""
+"<span size=\"large\"><b>Tidak menemukan.</b> </span><span>\n"
+"\n"
+" Penyaring anda \"<b>%s</b>\" tidak menemukan apapun.</span>"
 
 msgid "Configure Compiz with CompizConfig"
-msgstr ""
+msgstr "Atur Compiz dengan CompizConfig"
 
 #~ msgid "Value (%s)"
 #~ msgstr "Nilai (%s)"

@@ -11,9 +11,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pt_BR-ccsm\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2009-02-06 11:24+0530\n"
-"PO-Revision-Date: 2008-10-30 23:46+0100\n"
-"Last-Translator: Raylton P. Sousa <raylton.sousa@gmail.com>\n"
+"POT-Creation-Date: 2009-03-24 12:33+0530\n"
+"PO-Revision-Date: 2009-02-09 22:11+0100\n"
+"Last-Translator: Richard L. Bomfim Ferreira <rickleoirons@gmail.com>\n"
 "Language-Team: Portuguese/Brazil <gnome-l10n-br@listas.cipsga.org.br>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -34,28 +34,27 @@ msgstr ""
 "Você quer desabilitar <b>%(action_conflict)s</b> no plugin <b>%"
 "(plugin_conflict)s</b> ?"
 
+# Acho que 'Disable' fica melhor traduzido como 'Desativa'
 #, python-format
 msgid "Disable %(action_conflict)s"
-msgstr "Desabilita %(action_conflict)s "
+msgstr "Desabilita %(action_conflict)s"
 
 #, python-format
 msgid "Don't set %(action)s"
-msgstr "Não atribua valor a %(action)s !"
+msgstr "Não atribua um valor a %(action)s"
 
 #, python-format
 msgid "Set %(action)s anyway"
-msgstr "Atribua um valor a %(action)s de qualquer forma !"
+msgstr "Atribua valor a %(action)s de qualquer forma !"
 
-#, fuzzy
 msgid "key"
-msgstr "Butão do Teclado"
+msgstr "Atalho do Teclado"
 
-#, fuzzy
 msgid "button"
-msgstr "Botão do Mouse"
+msgstr "Atalho do Mouse"
 
 msgid "edge"
-msgstr "borda"
+msgstr "Borda"
 
 #, python-format
 msgid ""
@@ -69,7 +68,7 @@ msgstr ""
 
 #, python-format
 msgid "Use %(feature)s"
-msgstr "Habilita %(feature)s"
+msgstr "Habilitar %(feature)s"
 
 #, python-format
 msgid "Don't use %(feature)s"
@@ -82,9 +81,9 @@ msgid ""
 "This plugin is currently disabled.\n"
 "Do you wish to enable <b>%(plugin)s</b> so the feature is available?"
 msgstr ""
-"Você está tentando a usar a função <b>%(feature)s</b> que <b>não</b> é "
-"provida por nenhum plugin.\n"
-"Você quer usar essa função assim mesmo?"
+"Você está tentando usar o recurso <b>%(feature)s</b> que <b>não</b> é "
+"provido por nenhum plugin.\n"
+"Deseja usar a função mesmo assim?"
 
 #, fuzzy, python-format
 msgid "Enable %(plugin)s"
@@ -99,6 +98,8 @@ msgid ""
 "Some %(bindings)s bindings of Plugin <b>%(plugin)s</b> conflict with other "
 "plugins. Do you want to resolve these conflicts?"
 msgstr ""
+"Alguns atalhos do plugin %(bindings)s  <b>%(plugin)s</b> conflitam com os de "
+"outros plugins. Deseja resolver esses conflitos?"
 
 msgid "Resolve conflicts"
 msgstr "Resolver conflitos"
@@ -364,6 +365,8 @@ msgid ""
 "Enter a filter.\n"
 "Click the keyboard image to grab a key for which to search."
 msgstr ""
+"Entre com um filtro.\n"
+"Clique na imagem do teclado para capturar uma tecla para a busca."
 
 msgid "Search in..."
 msgstr "Procurar em..."
@@ -379,10 +382,10 @@ msgid "Settings value"
 msgstr "Valor de configurações"
 
 msgid "Group"
-msgstr ""
+msgstr "Grupo"
 
 msgid "Subgroup"
-msgstr ""
+msgstr "Subgrupo"
 
 #. Notebook
 msgid "Settings"
@@ -538,12 +541,12 @@ msgid ""
 "\n"
 " Your filter \"<b>%s</b>\" does not match any items.</span>"
 msgstr ""
-"<span size=\"large\"><b>Nenhuma comparação encontrada.</b> </span><span>\n"
+"<span size=\"large\"><b>Sem resultados..</b> </span><span>\n"
 "\n"
-" Seu filtro de busca \"<b>%s</b>\" não bate com nenhum item.</span>"
+" Seu filtro de busca \"<b>%s</b>\" não combina com nenhum item.</span>"
 
 msgid "Configure Compiz with CompizConfig"
-msgstr ""
+msgstr "Configurar o Compiz com o CompizConfig"
 
 #~ msgid "Computing possible conflicts, please wait"
 #~ msgstr "Verificando possíveis conflitos, por favor aguarde"
