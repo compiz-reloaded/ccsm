@@ -58,6 +58,10 @@ def getScreens():
         screens.append(i)
     return screens
 
+def getDefaultScreen():
+    display = gtk.gdk.display_get_default()
+    return display.get_default_screen().get_number()
+
 def protect_markup_dict (dict_):
     return dict((k, protect_pango_markup (v)) for (k, v) in dict_.iteritems())
 
@@ -383,7 +387,7 @@ PluginKeyFunc = operator.attrgetter('ShortDesc')
 def HasOnlyType (settings, stype):
     return settings and not [s for s in settings if s.Type != stype]
 
-def GetSettings(group, displayOnly=False, types=None):
+def GetSettings(group, types=None):
 
     def TypeFilter (settings, types):
          for setting in settings:
@@ -391,19 +395,11 @@ def GetSettings(group, displayOnly=False, types=None):
                 yield setting
 
     if types:
-        display = TypeFilter(group.Display.itervalues(), types)
+        screen = TypeFilter(group.Screen.itervalues(), types)
     else:
-        display = group.Display.itervalues()
+        screen = group.Screen.itervalues()
 
-    if displayOnly:
-        return display
-
-    if types:
-        screen = TypeFilter(group.Screens[CurrentScreenNum].itervalues(), types)
-    else:
-        screen = group.Screens[CurrentScreenNum].itervalues()
-
-    return itertools.chain(screen, display)
+    return screen
 
 # Support python 2.4
 try:

@@ -122,8 +122,7 @@ if options.plugin:
 if options.category:
     category = options.category
 
-screens = ccm.getScreens()
-context = compizconfig.Context(screens)
+context = compizconfig.Context(ccm.getDefaultScreen())
 GlobalUpdater.SetContext (context)
 mainWin = ccm.MainWin(context, plugin, category)
 if dbusObj is not None:
