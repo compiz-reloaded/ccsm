@@ -317,7 +317,7 @@ class PluginConflict(Conflict):
             
             elif conflict[0] == 'RequiresFeature':
                 answer, choice = self.AskUser(self.Plugin, conflict)
-                if ret == gtk.RESPONSE_YES:
+                if answer == gtk.RESPONSE_YES:
                     for plg in conflict[2]:
                         if plg.ShortDesc == choice:
                             enableConflicts = plg.EnableConflicts
@@ -466,7 +466,7 @@ class PluginConflict(Conflict):
             widgets.append(cmb)
 
             okMsg = _("Enable these plugins")
-            cancelMsg_("Don't enable %(plugin)s") % msg_dict
+            cancelMsg = _("Don't enable %(plugin)s") % msg_dict
         
         elif conflict[0] == 'RequiresPlugin':
             msg = _("<b>%(plugin)s</b> requires the plugin <b>%(require)s</b>.")
