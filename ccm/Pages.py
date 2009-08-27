@@ -819,7 +819,7 @@ class ProfileBackendPage(object):
             for setting in settings:
                 setting.Reset()
 
-        activePlugins = self.Context.Plugins['core'].Display['active_plugins'].Value
+        activePlugins = self.Context.Plugins['core'].Screen['active_plugins'].Value
         for plugin in self.Context.Plugins.values():
             plugin.Enabled = plugin.Name in activePlugins
         self.Context.Write()
@@ -1045,7 +1045,7 @@ class PluginListPage(object):
         GlobalUpdater.UpdatePlugins()
 
     def UpdateEnabledPluginsList(self):
-        activePlugins = self.Context.Plugins['core'].Display['active_plugins'].Value
+        activePlugins = self.Context.Plugins['core'].Screen['active_plugins'].Value
         
         self.EnabledPluginsList.clear()
 
@@ -1053,7 +1053,7 @@ class PluginListPage(object):
             self.EnabledPluginsList.append(name)
 
     def UpdateDisabledPluginsList(self):
-        activePlugins = self.Context.Plugins['core'].Display['active_plugins'].Value
+        activePlugins = self.Context.Plugins['core'].Screen['active_plugins'].Value
 
         self.DisabledPluginsList.clear()
 
@@ -1098,7 +1098,7 @@ class PluginListPage(object):
         self.Block += 1
         plugins = self.EnabledPluginsList.get_list()
 
-        self.Context.Plugins['core'].Display['active_plugins'].Value = plugins
+        self.Context.Plugins['core'].Screen['active_plugins'].Value = plugins
         self.Context.Write()
         self.UpdateDisabledPluginsList()
         self.Block -= 1
