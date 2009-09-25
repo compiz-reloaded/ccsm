@@ -889,7 +889,7 @@ class ProfileBackendPage(object):
         path = self.ImportProfileDialog (main)
         if not path:
             return
-        name = self.ProfileNameDialog ()
+        name = self.ProfileNameDialog (main)
         if not name:
             return
         self.Context.CurrentProfile = ccs.Profile (self.Context, name)
