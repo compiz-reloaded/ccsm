@@ -1226,7 +1226,7 @@ class ButtonSetting (EditableActionSetting):
             if "Button%d" % i in self.current:
                 currentButton = i
                 break
-        maxButton = 9
+        maxButton = 20
         for i in range (1, maxButton + 1):
             button = "Button%d" % i
             buttonCombo.append_text (button)
