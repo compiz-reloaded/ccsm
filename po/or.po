@@ -1,16 +1,16 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Translate into Ukrainian
+# by
+# Roman Luchak <marszcziwski@gmail.com>, 2009.
 #
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Oriya\n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://bugs.opencompositing.org\n"
-"POT-Creation-Date: 2009-03-24 12:33+0530\n"
-"PO-Revision-Date: 2007-12-17 15:45+0530\n"
-"Last-Translator: \n"
-"Language-Team: gist oriya team <info.gist@cdac.in>\n"
+"POT-Creation-Date: 2009-03-24 08:12+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -34,9 +34,10 @@ msgstr "ଅକ୍ଷମକର %(action_conflict)s"
 msgid "Don't set %(action)s"
 msgstr " %(action)sଗୁଡିକୁ ସ୍ଥିର କରନାହିଁ"
 
-#, fuzzy, python-format
+#, python-format
+#, python-format
 msgid "Set %(action)s anyway"
-msgstr " %(action)sଗୁଡିକୁ ସ୍ଥିର କରନାହିଁ"
+msgstr ""
 
 msgid "key"
 msgstr ""
@@ -96,13 +97,15 @@ msgid ""
 "is also provided by <b>%(plugin)s</b>"
 msgstr ""
 
-#, fuzzy, python-format
+#, python-format
+#, python-format
 msgid "Disable %(plugin_conflict)s"
-msgstr "ଅକ୍ଷମକର %(action_conflict)s"
+msgstr ""
 
-#, fuzzy, python-format
+#, python-format
+#, python-format
 msgid "Don't enable %(plugin)s"
-msgstr " %(plugin)s କୁ ଅକ୍ଷମକର ନାହିଁ"
+msgstr ""
 
 #, python-format
 msgid "Plugin <b>%(plugin_conflict)s</b> conflicts with <b>%(plugin)s</b>."
@@ -115,17 +118,17 @@ msgid ""
 "%(plugin_list)s"
 msgstr ""
 
-#, fuzzy
 msgid "Enable these plugins"
-msgstr "ଏହି ପ୍ଲଗଇନଗୁଡିକୁ ଅକ୍ଷମକର"
+msgstr ""
 
 #, python-format
 msgid "<b>%(plugin)s</b> requires the plugin <b>%(require)s</b>."
 msgstr ""
 
-#, fuzzy, python-format
+#, python-format
+#, python-format
 msgid "Enable %(require)s"
-msgstr " %(plugin)s କୁ ସକ୍ଷମକର"
+msgstr ""
 
 #, python-format
 msgid ""
@@ -226,9 +229,8 @@ msgstr "କିଛି ନୁହେଁ"
 msgid "CompizConfig Settings Manager"
 msgstr "କମ୍ପିଜକନଫିଗ ସେଟିଙ୍ଗ ପ୍ରବନ୍ଧକ"
 
-#, fuzzy
 msgid "Plugin"
-msgstr "ପ୍ଲଗଇନ ତାଲିକା"
+msgstr ""
 
 msgid "Please press the new key combination"
 msgstr "ଦଯାକରି ନୂଆ କି ସଂୟୁକ୍ତିକରଣକୁ ଦବାନ୍ତୁ"
@@ -279,9 +281,8 @@ msgstr "ସମ୍ପର୍କ"
 msgid "Invert"
 msgstr "ଓଲଟାଅ"
 
-#, fuzzy
 msgid "Browse..."
-msgstr "ପାଇଁ ବ୍ରାଉଜକର"
+msgstr ""
 
 msgid "Images"
 msgstr "ଚିତ୍ରଗୁଡିକ"
@@ -355,9 +356,8 @@ msgstr ""
 msgid "Settings"
 msgstr "ସେଟିଙ୍ଗଗୁଡିକ"
 
-#, fuzzy
 msgid "Loading Advanced Search"
-msgstr "ଉନ୍ନତ ତଦନ୍ତ"
+msgstr ""
 
 msgid "Add a New Profile"
 msgstr "ଗୋଟିଏ ନୂଆ ପ୍ରୋଫାଇଲ ୟୋଗକର"
