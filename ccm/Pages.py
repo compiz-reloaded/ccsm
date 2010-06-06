@@ -839,6 +839,8 @@ class ProfileBackendPage(object):
             dlg.set_markup(_("Do you want to skip default option values while exporting your profile?"))
             ret = dlg.run()
             dlg.destroy()
+            if not path.endswith(".profile"):
+                path = "%s.profile" % path
             self.Context.Export(path, ret == gtk.RESPONSE_YES)
 
     def ImportProfileDialog (self, main):
