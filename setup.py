@@ -172,7 +172,7 @@ setup (
         description      = "CompizConfig Settings Manager",
         author           = "Patrick Niklaus",
         author_email     = "marex@opencompositing.org",
-        url              = "http://opencompositing.org/",
+        url              = "http://www.compiz.org/",
         license          = "GPL",
         data_files       = data_files,
         packages         = ["ccm"],
