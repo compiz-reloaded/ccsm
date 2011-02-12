@@ -24,14 +24,6 @@ import pygtk
 import gtk
 import gtk.gdk
 
-# Optional Imports
-#
-try:
-    import sexy
-    has_sexy = True
-except ImportError:
-    has_sexy = False
-
 # Current Screen
 #
 CurrentScreenNum = gtk.gdk.display_get_default().get_default_screen().get_number()
