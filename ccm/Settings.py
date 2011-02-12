@@ -94,7 +94,7 @@ class Setting(object):
                     'class': self}
 
         value = message % msg_dict
-        raise PureVirtualError, value
+        raise PureVirtualError(value)
 
     def _Init(self):
         self.PureVirtual('_Init')
@@ -442,11 +442,11 @@ class RestrictedStringSetting(StockSetting):
 
             # if current value is not provided by any restricted string extension,
             # insert an N/A item at the beginning
-            if not self.ItemsByValue.has_key(self.OriginalValue):
+            if self.OriginalValue not in self.ItemsByValue:
                 self.NAItemShift = 1
                 self.Combo.insert_text(0, NAItemText)
 
-        if self.ItemsByValue.has_key(value):
+        if value in self.ItemsByValue:
             self.Combo.set_active(self.ItemsByValue[self.Get()][1] + \
                                   self.NAItemShift)
         else:
@@ -700,9 +700,9 @@ class BaseListSetting(Setting):
         self.Settings[0].Plugin.Context.Write()
 
     def Delete(self, *args):
-        model, iter = self.Select.get_selected()
-        if iter is not None:
-            path = model.get_path(iter)
+        model, it = self.Select.get_selected()
+        if it is not None:
+            path = model.get_path(it)
             if path is not None:
                 try:
                     row = path.get_indices()[0]
@@ -712,7 +712,7 @@ class BaseListSetting(Setting):
             else:
                 return
 
-            model.remove(iter)
+            model.remove(it)
 
             self._Delete(row)
 
@@ -732,9 +732,9 @@ class BaseListSetting(Setting):
         return dlg
 
     def Edit(self, widget):
-        model, iter = self.Select.get_selected()
-        if iter:
-            path = model.get_path(iter)
+        model, it = self.Select.get_selected()
+        if it:
+            path = model.get_path(it)
             if path is not None:
                 try:
                     row = path.get_indices()[0]
@@ -768,9 +768,9 @@ class BaseListSetting(Setting):
         self.Read()
 
     def Move(self, widget, direction):
-        model, iter = self.Select.get_selected()
-        if iter is not None:
-            path = model.get_path(iter)
+        model, it = self.Select.get_selected()
+        if it is not None:
+            path = model.get_path(it)
             if path is not None:
                 try:
                     row = path.get_indices()[0]
@@ -789,15 +789,15 @@ class BaseListSetting(Setting):
                 widget.Swap(row, dest)
 
             try:
-                iter2 = model.iter_different(iter.copy())
-                model.swap(iter, iter2)
+                it2 = model.iter_different(it.copy())
+                model.swap(it, it2)
             except (AttributeError, TypeError):
                 try:
-                    iter2 = iter.copy()
-                    model.iter_different(iter2)
-                    model.swap(iter, iter2)
+                    it2 = it.copy()
+                    model.iter_different(it2)
+                    model.swap(it, it2)
                 except (AttributeError, TypeError):
-                    order = range(len(model))
+                    order = list(range(len(model)))
                     order.insert(dest, order.pop(row))
                     model.reorder(order)
 
@@ -807,13 +807,13 @@ class BaseListSetting(Setting):
 
     def SelectionChanged(self, selection):
 
-        model, iter = selection.get_selected()
+        model, it = selection.get_selected()
         for widget in (self.Buttons[Gtk.STOCK_EDIT], self.Buttons[Gtk.STOCK_DELETE],
                        self.PopupItems[Gtk.STOCK_EDIT], self.PopupItems[Gtk.STOCK_DELETE]):
-            widget.set_sensitive(iter is not None)
+            widget.set_sensitive(it is not None)
 
-        if iter is not None:
-            path = model.get_path(iter)
+        if it is not None:
+            path = model.get_path(it)
             if path is not None:
                 try:
                     row = path.get_indices()[0]
@@ -841,29 +841,29 @@ class BaseListSetting(Setting):
 
     def KeyPressEvent(self, treeview, event):
         if Gdk.keyval_name(event.keyval) == "Delete":
-            model, iter = treeview.get_selection().get_selected()
-            if iter is not None:
-                path = model.get_path(iter)
+            model, it = treeview.get_selection().get_selected()
+            if it is not None:
+                path = model.get_path(it)
                 if path is not None:
                     try:
                         row = path.get_indices()[0]
                     except (AttributeError, TypeError):
                         from ctypes import c_int
                         row = c_int.from_address(path.get_indices()).value
-                    model.remove(iter)
+                    model.remove(it)
                     self._Delete(row)
                     return True
 
     def ListInfo(self):
         types = []
         cols = []
-        for i, (setting, widget) in enumerate(zip(self.Settings, self.Widgets)):
-            type, col = widget.GetColumn(i)
-            types.append(type)
+        for i, widget in enumerate(self.Widgets):
+            t, col = widget.GetColumn(i)
+            types.append(t)
             cols.append(col)
         return types, cols
 
-    def Activated(self, object, path, col):
+    def Activated(self, obj, path, col):
         try:
             self._Edit(path.get_indices()[0])
         except (AttributeError, TypeError):
@@ -993,7 +993,7 @@ class RestrictedStringFlagsSetting(Setting):
         for key, box in self.Checks:
             box.set_active(False)
         for setVal in self.Setting.Value:
-            if self.ItemsByValue.has_key(setVal):
+            if setVal in self.ItemsByValue:
                 self.Checks[self.ItemsByValue[setVal][1]][1].set_active(True)
 
     def _Changed(self):
@@ -1263,7 +1263,7 @@ class ButtonSetting (EditableActionSetting):
 
     def ReorderButtonString (self, old):
         new = ""
-        edges = map (lambda e: "%sEdge" % e, Edges)
+        edges = ["%sEdge" % e for e in Edges]
         for s in edges + KeyModifier:
             if "<%s>" % s in old:
                 new += "<%s>" % s
@@ -1462,7 +1462,7 @@ class EdgeSetting (EditableActionSetting):
         label = self.current
         if len (self.current):
             edges = self.current.split ("|")
-            edges = map (lambda s: _(s), edges)
+            edges = [_(s) for s in edges]
             label = ", ".join (edges)
         else:
             label = _("None")
@@ -1579,11 +1579,11 @@ SettingTypeDict = {
 def MakeSetting(setting, List=False):
 
     if List:
-        type = setting.Info[0]
+        t = setting.Info[0]
     else:
-        type = setting.Type
+        t = setting.Type
 
-    stype = SettingTypeDict.get(type, None)
+    stype = SettingTypeDict.get(t, None)
     if not stype:
         return
 

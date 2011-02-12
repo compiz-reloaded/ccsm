@@ -402,17 +402,17 @@ class FilterPage(GenericPage):
 
         length = len(context.Plugins)
 
-        for index, (plugin, Plugin) in enumerate(context.Plugins.items()):
-
+        for index, n in enumerate(context.Plugins):
+            plugin = context.Plugins[n]
             bar.set_fraction((index+1)/float(length))
-            label.set_markup("<i>%s</i>" %protect_pango_markup(Plugin.ShortDesc))
+            label.set_markup("<i>%s</i>" %protect_pango_markup(plugin.ShortDesc))
             gtk_process_events()
 
             groups = []
-            sortedGroups = sorted(Plugin.Groups.items(), key=GroupIndexKeyFunc)
+            sortedGroups = sorted(plugin.Groups.items(), key=GroupIndexKeyFunc)
             for (name, (groupIndex, group)) in sortedGroups:
                 groups.append((name, GroupPage(name or _('General'), group)))
-            self.GroupPages[plugin] = groups
+            self.GroupPages[n] = groups
 
         self.Level = FilterName | FilterLongDesc
 
@@ -451,7 +451,8 @@ class FilterPage(GenericPage):
 
     def Filter(self, text, level=FilterAll):
         text = text.lower()
-        for plugin, groups in self.GroupPages.items():
+        for plugin in self.GroupPages:
+            groups = self.GroupPages[plugin]
             results = dict((n, sg) for (n, sg) in groups if sg.Filter(text, level=level))
             if results:
                 yield plugin, results
@@ -707,16 +708,15 @@ class ProfileBackendPage(object):
         self.ProfileComboBox.set_entry_text_column(0)
         self.ProfileComboBox.set_sensitive(self.Context.CurrentBackend.ProfileSupport)
         self.ProfileComboBox.append_text(_("Default"))
-        for profile in self.Context.Profiles.values():
+        active = -1
+        for i, name in enumerate(self.Context.Profiles):
+            profile = self.Context.Profiles[name]
             self.ProfileComboBox.append_text(profile.Name)
+            if name == self.Context.CurrentProfile.Name:
+                active = i
         self.ProfileHandler = self.ProfileComboBox.connect("changed",
             self.ProfileChangedAddTimeout)
-        name = self.Context.CurrentProfile.Name
-        if name in self.Context.Profiles:
-            index = self.Context.Profiles.values().index(self.Context.Profiles[name])
-            self.ProfileComboBox.set_active(index+1)
-        else:
-            self.ProfileComboBox.set_active(0)
+        self.ProfileComboBox.set_active(active+1)
         profileAdd.connect("clicked", self.AddProfile)
         profileRemove.connect("clicked", self.RemoveProfile)
         profileBox.pack_start(self.ProfileComboBox, True, True, 0)
@@ -756,11 +756,13 @@ class ProfileBackendPage(object):
 
         # Backends
         backendBox = Gtk.ComboBoxText.new()
-        for backend in self.Context.Backends.values():
+        active = 0
+        for i, name in enumerate(self.Context.Backends):
+            backend = self.Context.Backends[name]
             backendBox.append_text(backend.ShortDesc)
-        name = self.Context.CurrentBackend.Name
-        index = self.Context.Backends.values().index(self.Context.Backends[name])
-        backendBox.set_active(index)
+            if name == self.Context.CurrentBackend.Name:
+                active = i
+        backendBox.set_active(active)
         backendBox.connect("changed", self.BackendChangedAddTimeout)
         backendLabel = Label()
         backendLabel.set_markup(HeaderMarkup % (_("Backend")))
@@ -989,7 +991,7 @@ class ProfileBackendPage(object):
             self.Context.CurrentBackend = self.Context.Backends[name]
             self.UpdateProfiles()
         else:
-            raise Exception, _("Backend not found.")
+            raise Exception(_("Backend not found."))
 
         self.ProfileComboBox.set_sensitive(self.Context.CurrentBackend.ProfileSupport)
         self.IntegrationButton.set_sensitive(self.Context.CurrentBackend.IntegrationSupport)

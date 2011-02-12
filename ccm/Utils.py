@@ -59,7 +59,7 @@ def getScreens():
     return screens
 
 def protect_markup_dict (dict_):
-    return dict((k, protect_pango_markup (v)) for (k, v) in dict_.iteritems())
+    return dict((k, protect_pango_markup (v)) for (k, v) in dict_.items())
 
 class Image (Gtk.Image):
 
@@ -100,7 +100,7 @@ class Image (Gtk.Image):
 
             elif type == ImageStock:
                 self.set_from_stock (name, size)
-        except GObject.GError, e:
+        except GObject.GError(e):
             self.set_from_stock (Gtk.STOCK_MISSING_IMAGE, Gtk.IconSize.BUTTON)
 
 class ActionImage (Gtk.Alignment):
@@ -232,7 +232,7 @@ class IdleSettingsParser:
         self.Main = main
         self.PluginList = [p for p in self.Context.Plugins.items() if FilterPlugin(p[1])]
         nCategories = len (main.MainPage.RightWidget._boxes)
-        self.CategoryLoadIconsList = range (3, nCategories) # Skip the first 3
+        self.CategoryLoadIconsList = list(range(3, nCategories)) # Skip the first 3
         print("Loading icons...")
 
         GObject.timeout_add (150, self.Wait)
@@ -404,9 +404,9 @@ def GetSettings(group, displayOnly=False, types=None):
         return display
 
     if types:
-        screen = TypeFilter(group.Screens[CurrentScreenNum].itervalues(), types)
+        screen = TypeFilter(iter(group.Screens[CurrentScreenNum].values()), types)
     else:
-        screen = group.Screens[CurrentScreenNum].itervalues()
+        screen = iter(group.Screens[CurrentScreenNum].values())
 
     return itertools.chain(screen, display)
 
