@@ -76,11 +76,7 @@ class PluginPage(GenericPage):
         filterLabel = Label()
         filterLabel.set_markup(HeaderMarkup % (_("Filter")))
         filterLabel.connect("style-set", self.HeaderStyleSet)
-        if has_sexy:
-            self.FilterEntry = sexy.IconEntry()
-            self.FilterEntry.add_clear_button()
-        else:
-            self.FilterEntry = gtk.Entry()
+        self.FilterEntry = ClearEntry()
         self.FilterEntry.connect("changed", self.FilterChanged)
 
         self.LeftWidget.pack_start(pluginImg, False, False)
@@ -258,17 +254,12 @@ class FilterPage(GenericPage):
         filterImg = Image("search", ImageCategory, 64)
         self.LeftWidget.pack_start(filterImg, False, False)
         self.LeftWidget.pack_start(filterLabel, False, False)
-        
-        # Entry
-        if has_sexy:
-            self.FilterEntry = sexy.IconEntry()
-            self.FilterEntry.add_clear_button()
-            keyboardImage = Image("input-keyboard", ImageThemed, 16)
-            self.FilterEntry.set_icon(sexy.ICON_ENTRY_PRIMARY, keyboardImage)
-            self.FilterEntry.set_icon_highlight(sexy.ICON_ENTRY_PRIMARY, True)
-            self.FilterEntry.connect('icon-pressed', self.GrabKey)
-        else:
-            self.FilterEntry = gtk.Entry()
+
+        # Entry FIXME find a solution with std gtk
+        self.FilterEntry = ClearEntry()
+        self.FilterEntry.set_icon_from_icon_name(gtk.ENTRY_ICON_PRIMARY, "input-keyboard")
+        self.FilterEntry.set_icon_tooltip_text(gtk.ENTRY_ICON_PRIMARY, _("Grab Keys"))
+        self.FilterEntry.connect('icon-press', self.GrabKey)
 
         self.FilterEntry.set_tooltip_text(_("Enter a filter.\nClick the keyboard image to grab a key for which to search."))
         self.FilterEntry.connect("changed", self.FilterChanged)
@@ -437,8 +428,8 @@ class FilterPage(GenericPage):
         self.FilterValueCheck.set_active(True)
         self.FilterEntry.set_text(new)
 
-    def GrabKey(self, widget, pos, button):
-        if not has_sexy or pos != sexy.ICON_ENTRY_PRIMARY:
+    def GrabKey(self, widget, pos, event):
+        if pos != gtk.ENTRY_ICON_PRIMARY:
             return
         grabber = KeyGrabber(label = _("Grab key combination"))
         self.LeftWidget.pack_start(grabber, False, False)
@@ -1193,11 +1184,7 @@ class MainPage(object):
         filterLabel.set_markup(HeaderMarkup % (_("Filter")))
         filterLabel.connect("style-set", self.HeaderStyleSet)
         filterLabel.props.xalign = 0.1
-        if has_sexy:
-            filterEntry = sexy.IconEntry()
-            filterEntry.add_clear_button()
-        else:
-            filterEntry = gtk.Entry()
+        filterEntry = ClearEntry()
         filterEntry.set_tooltip_text(_("Filter your Plugin list"))
         filterEntry.connect("changed", self.FilterChanged)
         self.filterEntry = filterEntry

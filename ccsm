@@ -86,13 +86,6 @@ def try_register_dbus ():
 
 dbusObj = try_register_dbus()
 
-try:
-    import sexy
-    has_sexy = True
-except ImportError:
-    print "Info: No sexy-python package found, don't worry it's optional."
-    has_sexy = False
-
 if gtk.pygtk_version < (2,12,0):
     raise SystemExit("PyGtk 2.12.0 or later required")
 
