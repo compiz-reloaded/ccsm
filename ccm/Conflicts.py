@@ -85,7 +85,8 @@ class ActionConflict (Conflict):
         # actions from the same plugin. If it is global, include all actions.
 
         if not settings:
-            for plugin in self.Setting.Plugin.Context.Plugins.values ():
+            for n in self.Setting.Plugin.Context.Plugins:
+                plugin = self.Setting.Plugin.Context.Plugins[n]
                 if plugin.Enabled:
                     pluginActions = GetSettings(plugin, types=self.ActionTypes)
 

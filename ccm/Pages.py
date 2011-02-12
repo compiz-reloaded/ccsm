@@ -76,11 +76,7 @@ class PluginPage(GenericPage):
         filterLabel = Label()
         filterLabel.set_markup(HeaderMarkup % (_("Filter")))
         filterLabel.connect("style-set", self.HeaderStyleSet)
-        if has_sexy:
-            self.FilterEntry = sexy.IconEntry()
-            self.FilterEntry.add_clear_button()
-        else:
-            self.FilterEntry = gtk.Entry()
+        self.FilterEntry = gtk.Entry()
         self.FilterEntry.connect("changed", self.FilterChanged)
 
         self.LeftWidget.pack_start(pluginImg, False, False)
@@ -259,16 +255,16 @@ class FilterPage(GenericPage):
         self.LeftWidget.pack_start(filterImg, False, False)
         self.LeftWidget.pack_start(filterLabel, False, False)
         
-        # Entry
-        if has_sexy:
-            self.FilterEntry = sexy.IconEntry()
-            self.FilterEntry.add_clear_button()
-            keyboardImage = Image("input-keyboard", ImageThemed, 16)
-            self.FilterEntry.set_icon(sexy.ICON_ENTRY_PRIMARY, keyboardImage)
-            self.FilterEntry.set_icon_highlight(sexy.ICON_ENTRY_PRIMARY, True)
-            self.FilterEntry.connect('icon-pressed', self.GrabKey)
-        else:
-            self.FilterEntry = gtk.Entry()
+        # Entry FIXME find a solution with std gtk
+        """
+        self.FilterEntry = sexy.IconEntry()
+        self.FilterEntry.add_clear_button()
+        keyboardImage = Image("input-keyboard", ImageThemed, 16)
+        self.FilterEntry.set_icon(sexy.ICON_ENTRY_PRIMARY, keyboardImage)
+        self.FilterEntry.set_icon_highlight(sexy.ICON_ENTRY_PRIMARY, True)
+        self.FilterEntry.connect('icon-pressed', self.GrabKey)
+        """
+        self.FilterEntry = gtk.Entry()
 
         self.FilterEntry.set_tooltip_text(_("Enter a filter.\nClick the keyboard image to grab a key for which to search."))
         self.FilterEntry.connect("changed", self.FilterChanged)
@@ -386,17 +382,17 @@ class FilterPage(GenericPage):
 
         length = len(context.Plugins)
 
-        for index, (plugin, Plugin) in enumerate(context.Plugins.items()):
-
+        for index, n in enumerate(context.Plugins):
+            plugin = context.Plugins[n]
             bar.set_fraction((index+1)/float(length))
-            label.set_markup("<i>%s</i>" %protect_pango_markup(Plugin.ShortDesc))
+            label.set_markup("<i>%s</i>" %protect_pango_markup(plugin.ShortDesc))
             gtk_process_events()
 
             groups = []
-            sortedGroups = sorted(Plugin.Groups.items(), key=GroupIndexKeyFunc)
+            sortedGroups = sorted(plugin.Groups.items(), key=GroupIndexKeyFunc)
             for (name, (groupIndex, group)) in sortedGroups:
                 groups.append((name, GroupPage(name or _('General'), group)))
-            self.GroupPages[plugin] = groups
+            self.GroupPages[n] = groups
 
         self.Level = FilterName | FilterLongDesc
 
@@ -420,7 +416,8 @@ class FilterPage(GenericPage):
 
     def Filter(self, text, level=FilterAll):
         text = text.lower()
-        for plugin, groups in self.GroupPages.items():
+        for plugin in self.GroupPages:
+            groups = self.GroupPages[plugin]
             results = dict((n, sg) for (n, sg) in groups if sg.Filter(text, level=level))
             if results:
                 yield plugin, results
@@ -437,15 +434,16 @@ class FilterPage(GenericPage):
         self.FilterValueCheck.set_active(True)
         self.FilterEntry.set_text(new)
 
+    # FIXME find a way to reuse this function
+    """
     def GrabKey(self, widget, pos, button):
-        if not has_sexy or pos != sexy.ICON_ENTRY_PRIMARY:
-            return
         grabber = KeyGrabber(label = _("Grab key combination"))
         self.LeftWidget.pack_start(grabber, False, False)
         grabber.hide()
         grabber.set_no_show_all(True)
         grabber.connect('changed', self.GotKey)
         grabber.begin_key_grab(None)
+    """
 
     def ShowFilterError(self, text):
 
@@ -675,16 +673,15 @@ class ProfileBackendPage(object):
         self.ProfileComboBox = gtk.combo_box_new_text()
         self.ProfileComboBox.set_sensitive(self.Context.CurrentBackend.ProfileSupport)
         self.ProfileComboBox.append_text(_("Default"))
-        for profile in self.Context.Profiles.values():
+        active = -1
+        for i, name in enumerate(self.Context.Profiles):
+            profile = self.Context.Profiles[name]
             self.ProfileComboBox.append_text(profile.Name)
+            if name == self.Context.CurrentProfile.Name:
+                active = i
         self.ProfileHandler = self.ProfileComboBox.connect("changed",
             self.ProfileChangedAddTimeout)
-        name = self.Context.CurrentProfile.Name
-        if name in self.Context.Profiles: 
-            index = self.Context.Profiles.values().index(self.Context.Profiles[name])
-            self.ProfileComboBox.set_active(index+1)
-        else:
-            self.ProfileComboBox.set_active(0) 
+        self.ProfileComboBox.set_active(active+1)
         profileAdd.connect("clicked", self.AddProfile)
         profileRemove.connect("clicked", self.RemoveProfile)
         profileBox.pack_start(self.ProfileComboBox, True, True)
@@ -721,11 +718,13 @@ class ProfileBackendPage(object):
 
         # Backends
         backendBox = gtk.combo_box_new_text()
-        for backend in self.Context.Backends.values():
+        active = 0
+        for i, name in enumerate(self.Context.Backends):
+            backend = self.Context.Backends[name]
             backendBox.append_text(backend.ShortDesc)
-        name = self.Context.CurrentBackend.Name
-        index = self.Context.Backends.values().index(self.Context.Backends[name])
-        backendBox.set_active(index)
+            if name == self.CurrentBackend.Name:
+                active = i
+        backendBox.set_active(active)
         backendBox.connect("changed", self.BackendChangedAddTimeout)
         backendLabel = Label()
         backendLabel.set_markup(HeaderMarkup % (_("Backend")))
@@ -812,7 +811,6 @@ class ProfileBackendPage(object):
         chooser.add_filter(filter)
 
     def ResetProfile(self, widget):
-        
         for plugin in self.Context.Plugins.values():
             settings = GetSettings(plugin)
             for setting in settings:
@@ -924,7 +922,7 @@ class ProfileBackendPage(object):
             self.Context.CurrentBackend = self.Context.Backends[name]
             self.UpdateProfiles()
         else:
-            raise Exception, _("Backend not found.")
+            raise Exception(_("Backend not found."))
 
         self.ProfileComboBox.set_sensitive(self.Context.CurrentBackend.ProfileSupport)
         self.IntegrationButton.set_sensitive(self.Context.CurrentBackend.IntegrationSupport)
@@ -1193,11 +1191,7 @@ class MainPage(object):
         filterLabel.set_markup(HeaderMarkup % (_("Filter")))
         filterLabel.connect("style-set", self.HeaderStyleSet)
         filterLabel.props.xalign = 0.1
-        if has_sexy:
-            filterEntry = sexy.IconEntry()
-            filterEntry.add_clear_button()
-        else:
-            filterEntry = gtk.Entry()
+        filterEntry = gtk.Entry()
         filterEntry.set_tooltip_text(_("Filter your Plugin list"))
         filterEntry.connect("changed", self.FilterChanged)
         self.filterEntry = filterEntry

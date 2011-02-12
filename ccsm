@@ -41,9 +41,9 @@ def try_register_dbus ():
     except ImportError:
         return
 
-	# rely on a reasonably new dbus-python
-	if dbus.version < (0, 80, 0):
-		return
+    # rely on a reasonably new dbus-python
+    if dbus.version < (0, 80, 0):
+        return
 
     class CCSMObject(dbus.service.Object):
         main_window = None
@@ -78,20 +78,13 @@ def try_register_dbus ():
             display = gtk.gdk.display_get_default()
             startup_id = gtk.gdk.x11_display_get_startup_notification_id(display)
             obj.present(startup_id or "")
-            print 'Another CCSM instance already running'
+            print('Another CCSM instance already running')
             sys.exit(0)
         except dbus.DBusException:
             # error on present call so pretend it doesn't exist and start up normally
             return
 
 dbusObj = try_register_dbus()
-
-try:
-    import sexy
-    has_sexy = True
-except ImportError:
-    print "Info: No sexy-python package found, don't worry it's optional."
-    has_sexy = False
 
 if gtk.pygtk_version < (2,12,0):
     raise SystemExit("PyGtk 2.12.0 or later required")
@@ -115,7 +108,7 @@ parser.add_option("-v", "--version", dest = "version",
                   help = "Version")
 (options, args) = parser.parse_args()
 if options.version:
-    print "CCSM %s" % Version
+    print("CCSM %s" % Version)
     sys.exit(0)
 if options.plugin:
     plugin = options.plugin

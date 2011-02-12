@@ -421,7 +421,7 @@ class ModifierSelector (gtk.DrawingArea):
         self.redraw (queue = True)
 
     def get_current (self):
-        return "|".join (filter (lambda s: len (s) > 0, self._current))
+        return "|".join ([s for s in self._current if len (s) > 0])
     current = property (get_current, set_current)
 
     def draw (self, cr, width, height):
@@ -761,7 +761,7 @@ class SingleEdgeSelector (EdgeSelector):
         self.redraw (queue = True)
 
     def get_current (self):
-        return "|".join (filter (lambda s: len (s) > 0, self._current))
+        return "|".join ([s for s in self._current if len (s) > 0])
     current = property (get_current, set_current)
 
     def set_fill_color (self, cr, edge):
@@ -835,7 +835,7 @@ class GlobalEdgeSelector(EdgeSelector):
         def filter_settings(plugin):
             if plugin.Enabled:
                 settings = sorted (GetSettings(plugin), key=SettingKeyFunc)
-                settings = filter (lambda s: s.Type == 'Edge', settings)
+                settings = [s for s in settings if s.Type == 'Edge']
                 return settings
             return []
 
@@ -855,13 +855,13 @@ class GlobalEdgeSelector(EdgeSelector):
               value = setting.Value.split ("|")
               if edge in value:
                 value.remove(edge)
-                value = "|".join (filter (lambda s: len (s) > 0, value))
+                value = "|".join ([s for s in value if len (s) > 0])
                 setting.Value = value
         else:
             value = setting.Value.split ("|")
             if not edge in value:
                 value.append (edge)
-            value = "|".join (filter (lambda s: len (s) > 0, value))
+            value = "|".join ([s for s in value if len (s) > 0])
 
             conflict = EdgeConflict (setting, value, settings = self._settings, autoResolve = True)
             if conflict.Resolve (GlobalUpdater):
@@ -1102,11 +1102,11 @@ class MatchButton(gtk.Button):
 
         value_widget.set_text(value)
 
-    def generate_match (self, type, value, relation, invert):
+    def generate_match (self, t, value, relation, invert):
         match = ""
         text = self.match
 
-        prefix = self.prefix[type]
+        prefix = self.prefix[t]
         symbol = self.symbols[relation]
 
         # check if the current match needs some brackets
@@ -1151,8 +1151,8 @@ class MatchButton(gtk.Button):
         # Type
         label = Label (_("Type"))
         type_chooser = gtk.combo_box_new_text ()
-        for type in self.prefix.keys ():
-            type_chooser.append_text (type)
+        for t in self.prefix:
+            type_chooser.append_text (t)
         type_chooser.set_active (0)
         rows.append ((label, type_chooser))
 
@@ -1171,7 +1171,7 @@ class MatchButton(gtk.Button):
         # Relation
         label = Label (_("Relation"))
         relation_chooser = gtk.combo_box_new_text ()
-        for relation in self.symbols.keys ():
+        for relation in self.symbols:
             relation_chooser.append_text (relation)
         relation_chooser.set_active (0)
         rows.append ((label, relation_chooser))
@@ -1194,11 +1194,11 @@ class MatchButton(gtk.Button):
         response = dlg.run ()
         dlg.hide ()
         if response == gtk.RESPONSE_OK:
-            type     = type_chooser.get_active_text ()
+            t        = type_chooser.get_active_text ()
             value    = entry.get_text ()
             relation = relation_chooser.get_active_text ()
             invert   = check.get_active ()
-            self.generate_match (type, value, relation, invert)
+            self.generate_match (t, value, relation, invert)
 
         dlg.destroy ()
 
@@ -1590,7 +1590,7 @@ class PluginWindow(gtk.ScrolledWindow):
         self._categories = {}
         self._boxes = []
         self._context = context
-        pool = plugins or self._context.Plugins.values()
+        pool = plugins or list(self._context.Plugins.values())
         if len (categories):
             for plugin in pool:
                 category = plugin.Category
@@ -1690,7 +1690,7 @@ class PluginWindow(gtk.ScrolledWindow):
                 last_box = box
 
     def get_categories (self):
-        return self._categories.keys ()
+        return list(self._categories)
 
     def show_plugin_page (self, widget):
         plugin = widget.get_plugin ()

@@ -62,7 +62,7 @@ def getDefaultScreen():
     return display.get_default_screen().get_number()
 
 def protect_markup_dict (dict_):
-    return dict((k, protect_pango_markup (v)) for (k, v) in dict_.iteritems())
+    return dict((k, protect_pango_markup (v)) for (k, v) in dict_.items())
 
 class Image (gtk.Image):
 
@@ -103,7 +103,7 @@ class Image (gtk.Image):
             
             elif type == ImageStock:
                 self.set_from_stock (name, size)
-        except gobject.GError, e:
+        except gobject.GError as e:
             self.set_from_stock (gtk.STOCK_MISSING_IMAGE, gtk.ICON_SIZE_BUTTON)
 
 class ActionImage (gtk.Alignment):
@@ -230,8 +230,8 @@ class IdleSettingsParser:
         self.Main = main
         self.PluginList = [p for p in self.Context.Plugins.items() if FilterPlugin(p[1])]
         nCategories = len (main.MainPage.RightWidget._boxes)
-        self.CategoryLoadIconsList = range (3, nCategories) # Skip the first 3
-        print 'Loading icons...'
+        self.CategoryLoadIconsList = list(range(3, nCategories)) # Skip the first 3
+        print('Loading icons...')
 
         gobject.timeout_add (150, self.Wait)
 
@@ -394,9 +394,9 @@ def GetSettings(group, types=None):
                 yield setting
 
     if types:
-        screen = TypeFilter(group.Screen.itervalues(), types)
+        screen = TypeFilter(iter(group.Screen.values()), types)
     else:
-        screen = group.Screen.itervalues()
+        screen = iter(group.Screen.values())
 
     return screen
 
