@@ -46,6 +46,17 @@ _ = gettext.gettext
 # Try to use gtk like coding style for consistency
 #
 
+class ClearEntry(gtk.Entry):
+    def __init__(self):
+        gtk.Entry.__init__(self)
+        self.set_icon_from_stock(gtk.ENTRY_ICON_SECONDARY, gtk.STOCK_CLEAR)
+        self.set_icon_tooltip_text(gtk.ENTRY_ICON_SECONDARY, _("Clear"))
+        self.connect('icon-press', self._clear_pressed)
+
+    def _clear_pressed(self, widget, pos, event):
+        if pos == gtk.ENTRY_ICON_SECONDARY:
+            self.set_text("")
+
 # Cell Renderer for MultiList
 
 class CellRendererColor(gtk.GenericCellRenderer):
