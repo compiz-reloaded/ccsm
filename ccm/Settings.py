@@ -755,8 +755,13 @@ class BaseListSetting(Setting):
 
     def _Read(self):        
         self.Store.clear()
+	# FIXME: The list types are being defined as all str
+	# in self.Widgets (which goes to self.Store) - this
+	# is a problem since values can be of other types,
+	# however explicitly converting to a string seems to
+	# work here
         for values in zip(*[w.GetForRenderer() for w in self.Widgets]):
-            self.Store.append(values)
+            self.Store.append([str (x) for x in values])
 
     def OnDestroy(self, widget):
         for w in self.Widgets:
@@ -1452,6 +1457,7 @@ def MakeSetting(setting, List=False):
         t = setting.Type
 
     stype = SettingTypeDict.get(t, None)
+
     if not stype:
         return
 
