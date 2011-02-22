@@ -716,7 +716,7 @@ class ProfileBackendPage(object):
         for i, name in enumerate(self.Context.Backends):
             backend = self.Context.Backends[name]
             backendBox.append_text(backend.ShortDesc)
-            if name == self.CurrentBackend.Name:
+            if name == self.Context.CurrentBackend.Name:
                 active = i
         backendBox.set_active(active)
         backendBox.connect("changed", self.BackendChangedAddTimeout)
