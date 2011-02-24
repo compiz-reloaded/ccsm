@@ -96,6 +96,7 @@ class MainWin(gtk.Window):
 
     def BackToMain(self, widget):
         self.SetPage(self.MainPage)
+        self.MainPage.filterEntry.grab_focus()
 
     def RefreshPage(self, updatedPlugin):
         currentPage = self.CurrentPage
