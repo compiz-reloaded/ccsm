@@ -64,9 +64,9 @@ class MainWin(gtk.Window):
         self.show_all()
 
         if pluginPage in self.Context.Plugins:
-            self.ShowPlugin(None, self.Context.Plugins[pluginPage])
+            self.MainPage.ShowPlugin(None, self.Context.Plugins[pluginPage])
         if categoryName in self.Context.Categories:
-            self.ToggleCategory(None, categoryName)
+            self.MainPage.ToggleCategory(None, categoryName)
 
     def Quit(self, *args):
         gtk.main_quit()
