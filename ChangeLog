@@ -1,0 +1,4088 @@
+Sam Spilsbury <sam.spilsbury@canonical.com>	2011-07-08
+
+    Add hack to make distcheck work, project () only works on C/CXX projects
+    but not for python ones
+
+Sam Spilsbury <sam.spilsbury@canonical.com>	2011-07-07
+
+    Add CMake wrapper buildsystem
+
+Scott Moreau <oreaus@gmail.com>	2011-05-13
+
+    * Bump version to 0.9.5
+
+Didier Roche <didrocks@ubuntu.com>	2011-03-17
+
+    Fix a crash with the -p and -C options
+
+Sam Spilsbury <sam.spilsbury@canonical.com>	2011-03-07
+
+    "Bump VERSION to 0.9.4"
+
+Sam Spilsbury <sam.spilsbury@canonical.com>	2011-03-07
+
+    "Update news for 0.9.4 release"
+
+Silvia Dobrota <silvia.dobrota09@imperial.ac.uk>	2011-02-24
+
+    [PATCH] Focus filter entry on return to main page
+
+Sam Spilsbury <sam.spilsbury@canonical.com>	2011-02-23
+
+    Explcitly convert list items to str for now
+
+Joe Rusbasan <joe@rbasn.us>	2011-02-22
+
+    Fix typo
+
+Patrick Niklaus <marex@compiz-fusion.org>	2011-02-12
+
+    Replaced libsexy code with gtk entry
+
+Patrick Niklaus <marex@compiz-fusion.org>	2011-02-12
+
+    Removed the libsexy import
+
+Patrick Niklaus <marex@compiz-fusion.org>	2011-02-12
+
+    Python 3 syntax and minor cleanup
+    
+    Removed functions that are deprecated in python 3.x,
+    renamed variables to not overwrite buildin functions,
+    removed libsexy code and some other minor cleanups.
+
+Sam Spilsbury <smspillaz@gmail.com>	2010-11-06
+
+    Update NEWS for 0.9.2.1 Release
+
+Sam Spilsbury <smspillaz@gmail.com>	2010-11-06
+
+    Update to 0.9.2.1
+
+Sam Spilsbury <smspillaz@gmail.com>	2010-10-24
+
+    Fix date on NEWS
+
+Sam Spilsbury <smspillaz@gmail.com>	2010-10-24
+
+    Update NEWS for 0.9.2
+
+Sam Spilsbury <smspillaz@gmail.com>	2010-10-24
+
+    0.9.2 icons refresh
+
+Sam Spilsbury <smspillaz@gmail.com>	2010-07-04
+
+    Update NEWS for a 0.9.0 release
+
+Sam Spilsbury <smspillaz@gmail.com>	2010-07-04
+
+    Update package info
+
+Sam Spilsbury <smspillaz@gmail.com>	2010-07-04
+
+    Bump version
+
+Sam Spilsbury <smspillaz@gmail.com>	2010-07-04
+
+    Icon refresh for tango icon set
+
+Merge: 0365dd8 d251e44
+Sam Spilsbury <SmSpillaz@gmail.com>	2010-06-06
+
+    Merge branch 'master' of git+ssh://git.compiz.org/git/compiz/compizconfig/ccsm
+
+Dominique Leuenberger <dominique@messiah.leuenberger.net>	2010-06-06
+
+    Force a .profile extension
+
+Dominique Leuenberger <dominique@leuenberger.net>	2010-06-02
+
+    A shebang is confusing in those files: they are a) installed -x, and as such the shebang is useless b) installed in a folder that is out of $PATH c) not meant to be started on their own. They are import(ed) by others.
+
+Christopher Williams <crdlb@compiz-fusion.org>	2010-05-06
+
+    Don't destroy match dialog before reading contents
+    
+    That was never correct, but it worked in previous versions of gtk+ because a
+    reference to the Entry was held. Gtk+-2.20 stores the text in an EntryBuffer
+    object, which was getting unreffed and collected before ccsm could read the
+    text.
+
+Sam Spilsbury <smspillaz@XPS-FEDORA.(none)>	2010-05-06
+
+    Added 0.9.0's copytex plugin icon
+
+Merge: 7178dce 241e687
+Sam Spilsbury <smspillaz@XPS-FEDORA.(none)>	2010-05-05
+
+    Merge branch 'master' of git+ssh://git.compiz.org/git/compiz/compizconfig/ccsm
+
+Sam Spilsbury <smspillaz@XPS-FEDORA.(none)>	2010-05-05
+
+    Add icons for new plugins in the 0.9.x series
+
+Scott Moreau <oreaus@gmail.com>	2010-04-02
+
+    Rename icons to reflect plugin changes.
+
+Scott Moreau <oreaus@gmail.com>	2010-02-14
+
+    Increase max buttons to 20.
+
+Guillaume Seguin <guillaume@segu.in>	2009-10-14
+
+    Fix charsets
+    (cherry picked from commit 0ff1b0a890ec9b817beaaad23d66b85a892a0bf3)
+
+Guillaume Seguin <guillaume@segu.in>	2009-10-13
+
+    Update translations
+
+Erkin Bahceci <erkinbah@gmail.com>	2009-09-24
+
+    Fix missing parameter in ImportProfileAs.
+
+Sam Spilsbury <smspillaz@XPS-FEDORA.(none)>	2009-08-29
+
+    Fix decoration plugin icon
+
+Erkin Bahceci <erkinbah@gmail.com>	2009-08-26
+
+    Fix opening preferences page.
+
+Erkin Bahceci <erkinbah@gmail.com>	2009-08-21
+
+    Fix typos.
+
+Erkin Bahceci <erkinbah@gmail.com>	2009-03-29
+
+    Track compizconfig changes.
+
+C-F Language team <i18n@opencompositing.org>	2009-03-24
+
+    l10n updates
+
+Guillaume Seguin <guillaume@segu.in>	2009-03-09
+
+    * Bump version to 0.8.3
+
+Guillaume Seguin <guillaume@segu.in>	2009-03-09
+
+    * Bump version to 0.8.2
+
+Patrick Niklaus <marex@opencompositing.org>	2009-02-24
+
+    Revert "Remove zoom plugin icon"
+    
+    This reverts commit d7b7e5f2fd5c34e110a63a744995a0de3722177c.
+
+Patrick Niklaus <marex@opencompositing.org>	2009-02-24
+
+    Added new plugin icons
+    
+    * Commands plugin
+    * Gnome-Compatibility plugin
+
+Patrick Niklaus <marex@opencompositing.org>	2009-02-23
+
+    Change integrated setting style from blue text color to italic
+
+C-F Language team <i18n@opencompositing.org>	2009-02-06
+
+    l10n updates
+
+C-F Language team <i18n@opencompositing.org>	2008-12-26
+
+    l10n updates
+
+Patrick Niklaus <marex@opencompositing.org>	2008-12-19
+
+    Remove zoom plugin icon
+
+Jigish Gohil <cyberorg@opensuse.org>	2008-12-17
+
+    enable hu in LINGUAS
+
+C-F Language team <i18n@opencompositing.org>	2008-12-15
+
+    l10n updates
+
+Erkin Bahceci <erkinbah@gmail.com>	2008-11-11
+
+    Fix background icon loading when plugins are filtered early.
+    
+    This fixes the background loading of plugin icons when the user
+    types something in the filter box right after launching ccsm
+    before icon loading is finished.
+
+C-F Language team <i18n@opencompositing.org>	2008-11-04
+
+    re-add zh_CN
+
+C-F Language team <i18n@opencompositing.org>	2008-11-04
+
+    l10n updates
+
+Christopher Williams <crdlb@compiz-fusion.org>	2008-10-22
+
+    Remove conditional expression for python 2.4 compatibility
+
+Erkin Bahceci <erkinbah@gmail.com>	2008-10-18
+
+    Speed up startup by loading icons in the background.
+    
+    Plugin icons for all categories except the topmost three
+    will be loaded in the background.
+
+C-F Language team <i18n@opencompositing.org>	2008-10-14
+
+    l10n updates
+
+Patrick Niklaus <marex@opencompositing.org>	2008-10-08
+
+    Fix text color for NewHumanTheme, closes bug 1025.
+
+Patrick Niklaus <marex@opencompositing.org>	2008-10-06
+
+    Right, plane was also removed.
+
+Patrick Niklaus <marex@opencompositing.org>	2008-10-06
+
+    Remove obsolete icons.
+
+Guillaume Seguin <guillaume@segu.in>	2008-09-23
+
+    * Bump version to 0.7.9
+
+Guillaume Seguin <guillaume@segu.in>	2008-09-23
+
+    * Bump version to 0.7.8
+
+Christopher Williams <crdlb@compiz-fusion.org>	2008-09-17
+
+    Attempt to support dbus-python 0.80.0 and up for single-instance support
+
+C-F Language team <i18n@opencompositing.org>	2008-09-15
+
+    l10n updates
+
+Christopher Williams <crdlb@compiz-fusion.org>	2008-09-12
+
+    Use correct boolean value ('true') in desktop file
+
+Christopher Williams <crdlb@compiz-fusion.org>	2008-09-10
+
+    Only use gtk.Window.present() if the new window has no startup
+    notification id
+
+Merge: a48de2b 674e2c0
+Christopher Williams <crdlb@compiz-fusion.org>	2008-09-10
+
+    Merge branch 'master' of git+ssh://crdlb@git.compiz-fusion.org/git/fusion/compizconfig/ccsm
+
+Erkin Bahceci <erkinbah@gmail.com>	2008-09-09
+
+    Use metadata order for groups/subgroups instead of sorting them.
+
+Christopher Williams <crdlb@compiz-fusion.org>	2008-09-08
+
+    Add startup notification and optional dbus single-instance support
+
+Christopher Williams <crdlb@compiz-fusion.org>	2008-09-03
+
+    Use the pango.WrapMode enum instead of gtk.WrapMode for the gtk.Label
+    wrap-mode property.
+    
+    This fixes enumeration type errors with recent pygobject.
+
+Patrick Niklaus <marex@opencompositing.org>	2008-09-03
+
+    Added option name to setting tooltip
+
+Patrick Niklaus <marex@opencompositing.org>	2008-09-03
+
+    Make use of the new tooltip system introduced in GTK 2.12
+
+Patrick Niklaus <marex@opencompositing.org>	2008-09-03
+
+    Do not allow empty values for matches, fixes bug 1043
+
+Patrick Niklaus <marex@opencompositing.org>	2008-09-01
+
+    Added icon for animation addon plugin.
+
+Merge: 4e0f518 84a66c7
+Erkin Bahceci <erkinbah@gmail.com>	2008-08-30
+
+    Merge branch 'master' of git+ssh://cornelius@git.opencompositing.org/git/fusion/compizconfig/ccsm
+
+Erkin Bahceci <erkinbah@gmail.com>	2008-08-30
+
+    Fix crash when New button is pressed in restricted string lists.
+
+C-F Language team <i18n@opencompositing.org>	2008-08-30
+
+    l10n updates
+
+Erkin Bahceci <erkinbah@gmail.com>	2008-08-29
+
+    Postpone page refresh on initializing extension plugin.
+    
+    Postpone refreshing current page on initializing an extension plugin
+    until any open dialog is closed.
+
+Merge: 76399da 0e81d3a
+Erkin Bahceci <erkinbah@gmail.com>	2008-08-29
+
+    Merge branch 'master' of git+ssh://cornelius@git.opencompositing.org/git/fusion/compizconfig/ccsm
+
+Erkin Bahceci <erkinbah@gmail.com>	2008-08-29
+
+    Fix crash when initializing an extension plugin while in prefs page.
+    
+    Also destroy open dialogs when current plugin page is refreshed on initializing
+    an extension plugin.
+
+Danny Baumann <dannybaumann@web.de>	2008-08-29
+
+    Translate N/A string.
+
+Erkin Bahceci <erkinbah@gmail.com>	2008-08-29
+
+    Handle invalid value in restricted string flag options.
+    
+    If a value is selected in restricted string flag option (single list
+    of restr. strings) that is not currently provided by any extension
+    plugin, then ignore those values.
+
+Erkin Bahceci <erkinbah@gmail.com>	2008-08-28
+
+    Show N/A for invalid restricted string value.
+    
+    This might happen when the currently selected value is provided by an
+    extension plugin but that plugin is not currently loaded.
+
+Erkin Bahceci <erkinbah@gmail.com>	2008-08-28
+
+    Fix setting current page when extension plugin is initialized.
+
+Erkin Bahceci <erkinbah@gmail.com>	2008-08-27
+
+    Add support for restricted string options and extensions.
+
+Erkin Bahceci <erkinbah@gmail.com>	2008-08-26
+
+    Pass on AutoResolve during recursion in PluginConflict.
+
+Patrick Niklaus <marex@opencompositing.org>	2008-08-13
+
+    A little bit extra padding for the category header
+
+Patrick Niklaus <marex@opencompositing.org>	2008-08-13
+
+    Translate category names in main view. Fixes bug 1026.
+
+C-F Language team <i18n@opencompositing.org>	2008-08-07
+
+    l10n updates
+
+Patrick Niklaus <marex@opencompositing.org>	2008-07-31
+
+    Added icon for obs, removed icon for bs.
+
+C-F Language team <i18n@opencompositing.org>	2008-07-09
+
+    new translations and updates
+
+Patrick Niklaus <marex@opencompositing.org>	2008-06-24
+
+    Do not crash in the about dialog when no icon for ccsm is present
+
+Patrick Niklaus <marex@opencompositing.org>	2008-06-20
+
+    Do not show popup windows in the taskbar
+
+Patrick Niklaus <marex@opencompositing.org>	2008-06-19
+
+    Added new icon for plugin stackswitch
+
+Christopher Williams <crdlb@compiz-fusion.org>	2008-06-17
+
+    Escape markup in all conflict dialog messages.
+    
+    This fixes broken dialogs when setting or plugin ShortDescs contain
+    ampersands.
+
+C-F Language team <i18n@opencompositing.org>	2008-06-16
+
+    remove zh_CN for now as it has 0 translated strings
+
+C-F Language team <i18n@opencompositing.org>	2008-06-16
+
+    new translations and updates
+
+Patrick Niklaus <marex@opencompositing.org>	2008-06-08
+
+    Added icon for static switcher
+
+Guillaume Seguin <guillaume@segu.in>	2008-05-31
+
+    * Bump version to 0.7.7
+
+Guillaume Seguin <guillaume@segu.in>	2008-05-31
+
+    * Bump version to 0.7.6
+
+C-F Language team <i18n@opencompositing.org>	2008-05-24
+
+    translation updates
+
+Patrick Niklaus <marex@opencompositing.org>	2008-05-22
+
+    Added bicubic filtering icon
+
+Patrick Niklaus <marex@opencompositing.org>	2008-05-12
+
+    Added new cubeaddon icon, removed cubereflex and cubecaps
+
+Patrick Niklaus <marex@opencompositing.org>	2008-05-11
+
+    Check info lenght before trying to access one if its items
+
+Patrick Niklaus <marex@opencompositing.org>	2008-05-10
+
+    New 32x32 category icons
+
+Patrick Niklaus <marex@opencompositing.org>	2008-05-10
+
+    Revert "use background color for viewport background instead of base color, fixes dark themes"
+    
+    This reverts commit 2470bbdb573ab6c896c5cd7fd5b7a02f6e3e3c04, which broke the background color for all themes.
+
+Patrick Niklaus <marex@opencompositing.org>	2008-05-10
+
+    Fixed translation for desktop file, thanks to Milo Casagrande
+
+Travis Watkins <amaranth@ubuntu.com>	2008-05-08
+
+    use background color for viewport background instead of base color, fixes dark themes
+
+Guillaume Seguin <guillaume@segu.in>	2008-05-08
+
+    Fix French translation
+
+Guillaume Seguin <guillaume@segu.in>	2008-05-06
+
+    Correctly filter uncategorized plugins using categories list on the left
+
+C-F Language team <i18n@opencompositing.org>	2008-05-02
+
+    translation updates
+
+Christopher Williams <crdlb@compiz-fusion.org>	2008-04-27
+
+    Improve internal action conflict logic.
+    
+    Conflicts with internal actions are now checked when setting global
+    actions. Only internal actions in different plugins can coexist with the
+    same values.
+
+Christopher Williams <crdlb@compiz-fusion.org>	2008-04-26
+
+    Don't lower edge values in edge conflict handling to unbreak the 'disable conflict' resolution choice
+
+Christopher Williams <crdlb@compiz-fusion.org>	2008-04-26
+
+    Flip plugin and setting names in UpdateSetting so that it will actually find setting widgets
+
+Christopher Williams <crdlb@compiz-fusion.org>	2008-04-26
+
+    Add support for internal actions to action conflict-handling code
+
+Patrick Niklaus <marex@opencompositing.org>	2008-04-26
+
+    Removed dummy and added new icon for 24x24
+
+Patrick Niklaus <marex@opencompositing.org>	2008-04-26
+
+    Disable check for action conflicts when enabling a plugin, if the plugin conflict is auto resolved
+
+Christopher Williams <crdlb@compiz-fusion.org>	2008-04-24
+
+    Remove popup dialogs when checking for action conflicts since conflict
+    checking is fast enough not to need them
+
+Christopher Williams <crdlb@compiz-fusion.org>	2008-04-24
+
+    Clean up Conflict and Plugin filter code and ensure that the main plugin
+    view updates on all plugin changes
+
+Patrick Niklaus <marex@opencompositing.org>	2008-04-21
+
+    Added some table padding to the category boxes
+
+Patrick Niklaus <marex@opencompositing.org>	2008-04-21
+
+    Refactored MainWin code into MainPage, PluginButton, PluginWindow and CategoryBox
+
+Patrick Niklaus <marex@opencompositing.org>	2008-04-14
+
+    Added Christopher Williams to the authors
+
+Danny Baumann <dannybaumann@web.de>	2008-04-14
+
+    Fix typos and keep lines shorter than 80 characters.
+
+Danny Baumann <dannybaumann@web.de>	2008-04-14
+
+    Fix typos.
+
+Patrick Niklaus <marex@opencompositing.org>	2008-04-13
+
+    Minor coding style fix
+
+Patrick Niklaus <marex@opencompositing.org>	2008-04-13
+
+    Check for action conflicts when enabling a plugin
+
+Patrick Niklaus <marex@opencompositing.org>	2008-04-13
+
+    Split ActionConflict code into 3 child classes
+
+Patrick Niklaus <marex@opencompositing.org>	2008-04-06
+
+    Set the none value of number settings always to the minum value
+
+Guillaume Seguin <guillaume@segu.in>	2008-04-04
+
+    * Bump version to 0.7.5
+
+Guillaume Seguin <guillaume@segu.in>	2008-04-04
+
+    * Bump version to 0.7.4
+
+Patrick Niklaus <marex@opencompositing.org>	2008-04-04
+
+    Gray out ReadOnly settings
+
+Christopher Williams <christopherw@verizon.net>	2008-04-03
+
+    Fix UpdateSettings method
+
+Merge: b8ecfc6 e2ce3fa
+Christopher Williams <christopherw@verizon.net>	2008-04-03
+
+    Merge branch 'master' of git+ssh://crdlb@git.compiz-fusion.org/git/fusion/compizconfig/ccsm
+
+Christopher Williams <christopherw@verizon.net>	2008-04-03
+
+    Add accidentally removed UpdateSetting method to Updater
+
+Danny Baumann <dannybaumann@web.de>	2008-04-03
+
+    Fix charset.
+
+Danny Baumann <dannybaumann@web.de>	2008-04-03
+
+    translation updates
+
+C-F Language team <i18n@opencompositing.org>	2008-04-03
+
+    translation updates
+
+Danny Baumann <dannybaumann@web.de>	2008-04-03
+
+    Update German translation.
+
+Christopher Williams <christopherw@verizon.net>	2008-04-02
+
+    Fix going backward with the selector buttons in Advanced Search
+
+Christopher Williams <christopherw@verizon.net>	2008-04-02
+
+    Use a regular dict with the setdefault method to support python 2.4
+
+Christopher Williams <christopherw@verizon.net>	2008-04-02
+
+    Remove List row on Delete key press
+
+Christopher Williams <christopherw@verizon.net>	2008-04-02
+
+    Always call modify_fg and modify_bg in in callbacks to the "style-set" signal so that the color updates on theme changes. Also use base instead of light for the color on the main background so that the right color is used with dark themes.
+
+Merge: d35e3e4 3e68e7a
+Christopher Williams <christopherw@verizon.net>	2008-04-02
+
+    Merge branch 'master' of git+ssh://crdlb@git.compiz-fusion.org/git/fusion/compizconfig/ccsm
+
+Christopher Williams <christopherw@verizon.net>	2008-04-02
+
+    Update plugin buttons whenever a change is made on the Preferences page that could affect them
+
+Christopher Williams <christopherw@verizon.net>	2008-04-02
+
+    Advanced Search rewrite
+
+Guillaume Seguin <guillaume@segu.in>	2008-04-02
+
+    * Add --version/-v command line switch
+
+Guillaume Seguin <guillaume@segu.in>	2008-04-02
+
+    * Coding style (try to avoid going over 80 columns whenever possible)
+
+Christopher Williams <christopherw@verizon.net>	2008-04-01
+
+    Unbreak error box on plugin table
+
+Christopher Williams <christopherw@verizon.net>	2008-04-01
+
+    Hide main widgets when showing a secondary page instead of removing them and set the default icon name
+
+Christopher Williams <christopherw@verizon.net>	2008-03-29
+
+    Reuse main window page when returning from plugin pages, and try to ensure that the left pane's size does not change
+
+Christopher Williams <christopherw@verizon.net>	2008-03-28
+
+    Reorganise and optimise setting filter code
+
+Christopher Williams <christopherw@verizon.net>	2008-03-27
+
+    Increase the default size of the list edit dialog to 500 and add some padding
+
+Christopher Williams <christopherw@verizon.net>	2008-03-27
+
+    Allow line wrapping on the labels for Bool and Action settings
+
+Christopher Williams <christopherw@verizon.net>	2008-03-27
+
+    Fix image mimetype plugin loader in FileButton
+
+Patrick Niklaus <marex@opencompositing.org>	2008-03-27
+
+    Replaced timout hacks with gtk_process_events
+
+Patrick Niklaus <marex@opencompositing.org>	2008-03-27
+
+    Small code cleanups
+
+Patrick Niklaus <marex@opencompositing.org>	2008-03-27
+
+    Replaced has_key with in
+
+Guillaume Seguin <guillaume@segu.in>	2008-03-27
+
+    Typo
+
+Guillaume Seguin <guillaume@segu.in>	2008-03-27
+
+    Support pygobject < 2.13.0: use gobject.set_property instead of .set_properties
+
+Patrick Niklaus <marex@opencompositing.org>	2008-03-27
+
+    Disable combobox cellrenderer for now.
+    
+    This causes a more common behaviour on double click. Other suggestions welcome.
+
+Patrick Niklaus <marex@opencompositing.org>	2008-03-27
+
+    Make settings labels also centered when used in lists
+
+Christopher Williams <christopherw@verizon.net>	2008-03-26
+
+    Make MatchButton and FileButton widgets directly manipulate and activate the StringSetting's Entry
+
+Merge: 8d46409 d117a2c
+Christopher Williams <christopherw@verizon.net>	2008-03-26
+
+    Merge branch 'master' of git+ssh://crdlb@git.compiz-fusion.org/git/fusion/compizconfig/ccsm
+
+Christopher Williams <christopherw@verizon.net>	2008-03-26
+
+    Unify list settings with regular settings
+    
+    All Setting classes now support being used with lists of their setting type, so the normal setting widgets are added to the list edit dialog and told which row is being edited.
+
+Patrick Niklaus <marex@opencompositing.org>	2008-03-25
+
+    Yay! Sharp plugin icons.
+    
+    Changed the native resolution of the svg icons to 32x32 to fit ccsm's needs.
+
+Dennis Kasprzyk <onestone@opencompositing.org>	2008-03-25
+
+    Make opaque black the default color for new multilist settings.
+
+Christopher Williams <christopherw@verizon.net>	2008-03-19
+
+    Fix typo in multilist file hints
+
+Patrick Niklaus <marex@opencompositing.org>	2008-03-18
+
+    Added support for file hints in MultiListSetting
+
+Patrick Niklaus <marex@opencompositing.org>	2008-03-18
+
+    Moved FileSetting code to FileButton
+
+Patrick Niklaus <marex@opencompositing.org>	2008-03-18
+
+    Fixed IntDescList
+
+Merge: ea6d56d a8dc3dc
+Christopher Williams <christopherw@verizon.net>	2008-03-16
+
+    Merge branch 'master' of git+ssh://crdlb@git.compiz-fusion.org/git/fusion/compizconfig/ccsm
+
+Christopher Williams <christopherw@verizon.net>	2008-03-16
+
+    Change the layout of setting widgets to use HBoxes, and minor code cleanup
+    
+    Long Description tooltips now work across the entire area of of the setting, including blank space between the label and the setting widget. Additionally, the background of the setting pages now correctly inherits the background color from the notebook widget (fixing a color mismatch problem with the clearlooks engine).
+
+C-F Language team <i18n@opencompositing.org>	2008-03-15
+
+    emerald translation updates
+
+Christopher Williams <christopherw@verizon.net>	2008-03-15
+
+    Remove unnecessary Style object
+
+Christopher Williams <christopherw@verizon.net>	2008-03-15
+
+    Correct a bug in the about dialog and make some minor internal changes to the plugin lists
+
+Christopher Williams <christopherw@verizon.net>	2008-03-14
+
+    Fix a few bugs in the Profiles page
+
+Patrick Niklaus <marex@opencompositing.org>	2008-03-11
+
+    It should better start couting at 1.
+
+Patrick Niklaus <marex@opencompositing.org>	2008-03-11
+
+    Fixed conflict autoResolve
+
+Patrick Niklaus <marex@opencompositing.org>	2008-03-11
+
+    Added 'None' entry to global edge selector
+
+Patrick Niklaus <marex@opencompositing.org>	2008-03-10
+
+    Replaced the menu of the global edge selector with a 'floating' combobox
+
+Patrick Niklaus <marex@opencompositing.org>	2008-03-10
+
+    Improved look of edge and button selector
+
+Patrick Niklaus <marex@opencompositing.org>	2008-03-07
+
+    Update to showmouse icon
+
+Guillaume Seguin <guillaume@segu.in>	2008-03-06
+
+    * Bump version to 0.7.3
+
+Guillaume Seguin <guillaume@segu.in>	2008-03-06
+
+    * Bump version to 0.7.2
+
+Patrick Niklaus <marex@opencompositing.org>	2008-03-03
+
+    Added longDesc tooltip to match settings
+
+Merge: 83ac00a 947568f
+Patrick Niklaus <marex@opencompositing.org>	2008-03-01
+
+    Merge branch 'master' of git+ssh://marex@git.opencompositing.org/git/fusion/compizconfig/ccsm
+
+Patrick Niklaus <marex@opencompositing.org>	2008-03-01
+
+    Updated extra category icon
+
+Patrick Niklaus <marex@opencompositing.org>	2008-03-01
+
+    Update to debug plugin icon
+
+Christopher Williams <christopherw@verizon.net>	2008-02-27
+
+    Protect pango markup when updating the NotFoundBox too
+
+Patrick Niklaus <marex@opencompositing.org>	2008-02-25
+
+    Changed button border from 10px to 5px
+
+Patrick Niklaus <marex@opencompositing.org>	2008-02-24
+
+    Added 32x32 icon and SVGs for small sizes
+
+C-F Language team <i18n@opencompositing.org>	2008-02-23
+
+    translation update
+
+Patrick Niklaus <marex@opencompositing.org>	2008-02-16
+
+    Added icon for session management. Thanks to Amaranth
+
+Patrick Niklaus <marex@opencompositing.org>	2008-02-16
+
+    Updated decoration icon, mostely just snapping to the grid
+
+Patrick Niklaus <marex@opencompositing.org>	2008-02-16
+
+    Added icon for mousepoll plugin
+
+Patrick Niklaus <marex@opencompositing.org>	2008-02-16
+
+    Added icon for maximumize plugin
+
+Patrick Niklaus <marex@opencompositing.org>	2008-02-16
+
+    Added icon for shelf plugin
+
+Patrick Niklaus <marex@opencompositing.org>	2008-02-16
+
+    Added icon for loginout plugin
+
+Patrick Niklaus <marex@opencompositing.org>	2008-02-16
+
+    Added icon for showmouse plugin
+
+Patrick Niklaus <marex@opencompositing.org>	2008-02-16
+
+    Updated icons: snapped to grid
+
+Patrick Niklaus <marex@opencompositing.org>	2008-02-16
+
+    New icon for ring switcher
+
+Patrick Niklaus <marex@opencompositing.org>	2008-02-16
+
+    Updated thumbnail icon
+
+Patrick Niklaus <marex@opencompositing.org>	2008-02-16
+
+    Updated plane and expo icon
+
+Patrick Niklaus <marex@opencompositing.org>	2008-02-16
+
+    Updated vpswitch icon
+
+Patrick Niklaus <marex@opencompositing.org>	2008-02-16
+
+    Updated cube related icons: snapped outlines to the gird
+
+Patrick Niklaus <marex@opencompositing.org>	2008-02-16
+
+    New icon for fadedesktop plugin
+
+Patrick Niklaus <marex@opencompositing.org>	2008-02-16
+
+    New icon for showdesktop plugin
+
+Patrick Niklaus <marex@opencompositing.org>	2008-02-16
+
+    Updated icon for unknown plugins
+
+Patrick Niklaus <marex@opencompositing.org>	2008-02-16
+
+    Updated splash plugin icon
+
+Patrick Niklaus <marex@opencompositing.org>	2008-02-16
+
+    New icon for annotate plugin
+
+Patrick Niklaus <marex@opencompositing.org>	2008-02-16
+
+    New icon for glib plugin
+
+Patrick Niklaus <marex@opencompositing.org>	2008-02-16
+
+    New icon for snap plugin
+
+Patrick Niklaus <marex@opencompositing.org>	2008-02-16
+
+    New icon for wall plugin
+
+Patrick Niklaus <marex@opencompositing.org>	2008-02-16
+
+    Updated category icon for uncategorized plugins
+
+Patrick Niklaus <marex@opencompositing.org>	2008-02-15
+
+    Changed default icon size in Pages to 48
+
+Patrick Niklaus <marex@opencompositing.org>	2008-02-14
+
+    Check for conflicts before resetting action settings
+
+Christopher Williams <christopherw@verizon.net>	2008-02-14
+
+    Use key functions instead of cmp functions for sorting plugins, settings, etc. The key function returns a value for each item in an iterable, then the items are sorted by those values.
+
+Patrick Niklaus <marex@opencompositing.org>	2008-02-14
+
+    Restore category after switching back to main page
+
+Patrick Niklaus <marex@opencompositing.org>	2008-02-10
+
+    Fixed default values for int desc lists when used in a mulitilist, fixes bug 773
+
+Patrick Niklaus <marex@opencompositing.org>	2008-02-09
+
+    Fixed default value in multilist settings
+
+Merge: 3f02dd9 ba0e0c6
+Patrick Niklaus <marex@opencompositing.org>	2008-02-08
+
+    Merge branch 'master' of git+ssh://marex@git.opencompositing.org/git/fusion/compizconfig/ccsm
+
+Patrick Niklaus <marex@opencompositing.org>	2008-02-08
+
+    Swap lines...
+
+Danny Baumann <dannybaumann@web.de>	2008-02-08
+
+    Improve wording.
+
+Danny Baumann <dannybaumann@web.de>	2008-02-08
+
+    Clarify help text.
+
+Patrick Niklaus <marex@opencompositing.org>	2008-02-08
+
+    Added tooltip to the filter entry in advanced search
+
+Patrick Niklaus <marex@opencompositing.org>	2008-02-08
+
+    Search in the setting value when a key was grabbed
+
+Danny Baumann <dannybaumann@web.de>	2008-02-05
+
+    Remove debug code.
+
+Patrick Niklaus <marex@opencompositing.org>	2008-02-02
+
+    Added surface buffer to CellRendererColor
+
+Merge: 8b275d9 c2d1dd6
+Patrick Niklaus <marex@opencompositing.org>	2008-02-02
+
+    Merge branch 'master' of git+ssh://marex@git.opencompositing.org/git/fusion/compizconfig/ccsm
+
+Patrick Niklaus <marex@opencompositing.org>	2008-02-02
+
+    Added color settings to multilist, fixes bug 702
+
+language team <i18n@opencompositing.org>	2008-01-29
+
+    translation update
+
+Patrick Niklaus <marex@opencompositing.org>	2008-01-25
+
+    Moved fisheye plugin icon to mag
+
+Patrick Niklaus <marex@opencompositing.org>	2008-01-22
+
+    Make use of cgi.escape as escape function for pango markup
+
+Patrick Niklaus <marex@opencompositing.org>	2008-01-22
+
+    Protect pango markup
+
+Patrick Niklaus <marex@opencompositing.org>	2008-01-22
+
+    Added grab key button to advanced search
+
+Patrick Niklaus <marex@opencompositing.org>	2008-01-21
+
+    Cleaned up advanced filter code
+
+Patrick Niklaus <marex@opencompositing.org>	2008-01-20
+
+    Added icon and enabled/disabled label to plugin selector box in advanced search
+
+Patrick Niklaus <marex@opencompositing.org>	2008-01-19
+
+    Removed BufferedHandler
+
+Christopher Williams <christopherw@verizon.net>	2008-01-19
+
+    Use gtk.UPDATE_POLICY_DISCONTINUOUS instead of a BufferedHandler for IntFloatSettings
+
+Patrick Niklaus <marex@opencompositing.org>	2008-01-19
+
+    Clear boxes when there is no filter
+
+Patrick Niklaus <marex@opencompositing.org>	2008-01-19
+
+    Added 'All' button to advanced search, so you can display all found settings/groups/subgroups at once
+
+Patrick Niklaus <marex@opencompositing.org>	2008-01-19
+
+    Made the header markup a constant
+
+Patrick Niklaus <marex@opencompositing.org>	2008-01-18
+
+    Added icon for fisheye plugin
+
+Patrick Niklaus <marex@opencompositing.org>	2008-01-17
+
+    Made settings filter case insensitive
+
+Patrick Niklaus <marex@opencompositing.org>	2008-01-12
+
+    Added commandline option to launch ccsm with a category
+
+Patrick Niklaus <marex@opencompositing.org>	2008-01-12
+
+    Added commandline option to launch ccsm with a plugin page
+
+Compiz Fusion l10n team <i18n@opencompositing.org>	2008-01-10
+
+    Translations update
+
+C-F Language team <i18n@opencompositing.org>	2007-12-22
+
+    translation updates
+
+Patrick Niklaus <marex@opencompositing.org>	2007-12-18
+
+    Fixed translation of the key and button setting button. Fixes bug #700
+
+C-F language team <i18n@opencompositing.org>	2007-12-12
+
+    translation updates
+
+Patrick Niklaus <marex@opencompositing.org>	2007-12-07
+
+    Updated German translation
+
+Patrick Niklaus <marex@opencompositing.org>	2007-12-01
+
+    Fixed bug with MultiList and MatchButton when setting.Value was a list
+
+Patrick Niklaus <marex@opencompositing.org>	2007-12-01
+
+    Added match generation for MulitList
+
+Patrick Niklaus <marex@opencompositing.org>	2007-12-01
+
+    * Cleaned up MultiList
+    * Moved most of the match generating code from MatchSetting to MatchButton
+
+Nicolau Gonçalves <excentriko@gmail.com>	2007-11-21
+
+    pt translation update
+
+Masaaki KANEMOTO <masaaki.kanemoto@gmail.com>	2007-11-19
+
+    japanese translation
+
+Δημήτρης (djdoo) <jimdusis@yahoo.gr>	2007-11-15
+
+    el translation update
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-11-14
+
+    pl translation from Maciej Warnecki <maciekw5@gmail.com>
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-11-10
+
+    it translation update from Milo Casagrande <milo_casagrande@yahoo.it>
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-11-09
+
+    pl translation updated from Maciej Warnecki <maciekw5@gmail.com>
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-11-09
+
+    nb translation updated from Ketil W. Aanensen <ketil.w.aanensen@gmail.com>
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-11-09
+
+    fr translation update from Tristan RABLAT <tristan.rablat@gmail.com>
+
+Patrick Niklaus <marex@opencompositing.org>	2007-11-06
+
+    Made it possible to only export custom option values
+
+Patrick Niklaus <marex@opencompositing.org>	2007-11-05
+
+    Added global edge selector widget, will probably be used in simple-ccsm
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-11-05
+
+    tr translation update from Serdar Soytetir <tulliana@gmail.com>
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-11-05
+
+    tr translation update from Serdar Soytetir <tulliana@gmail.com>
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-11-04
+
+    pl translation update from Karol Sikora <elektrrrus@gmail.com>
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-11-03
+
+    fr translation update from Tristan RABLAT <tristan.rablat@gmail.com>
+
+Patrick Niklaus <marex@opencompositing.org>	2007-11-01
+
+    Apply match changes after closing the dialog
+
+Patrick Niklaus <marex@opencompositing.org>	2007-11-01
+
+    Fixed bug when match entry was empty
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-10-31
+
+    nb translation updated from Ketil W. Aanensen <ketil.w.aanensen@gmail.com>
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-10-30
+
+    it translation update from Milo Casagrande <milo_casagrande@yahoo.it>
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-10-29
+
+    pt_BR update from Emerson R. de Mello <ribmello-compiz@yahoo.com.br>
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-10-29
+
+    nb translation updated from Ketil W. Aanensen <ketil.w.aanensen@gmail.com>
+
+Patrick Niklaus <marex@opencompositing.org>	2007-10-26
+
+    Changed match setting edit icon to add icon
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-10-25
+
+    ru translation update from <danfocus@gmail.com>
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-10-25
+
+    nb translation update from <ketil.w.aanensen@gmail.com>
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-10-23
+
+    update fr translation
+
+Patrick Niklaus <marex@opencompositing.org>	2007-10-22
+
+    Install all ccsm.* icons right and don't install them in share/ccsm/icons/...
+
+Michael Monreal <infernux@web.de>	2007-10-22
+
+    Added 24x24 and 48x48 icon and removed 128x128 icon
+
+Patrick Niklaus <marex@opencompositing.org>	2007-10-21
+
+    Set window icon right
+
+Patrick Niklaus <marex@opencompositing.org>	2007-10-21
+
+    Install icons right
+
+Michael Monreal <infernux@web.de>	2007-10-21
+
+    Added 16x16 icon.
+
+Patrick Niklaus <marex@opencompositing.org>	2007-10-21
+
+    Added error dialog when feature was not found
+
+Patrick Niklaus <marex@opencompositing.org>	2007-10-21
+
+    Cleaned up MatchSetting code
+
+Patrick Niklaus <marex@opencompositing.org>	2007-10-21
+
+    Return False if the feature was not found
+
+Patrick Niklaus <marex@opencompositing.org>	2007-10-21
+
+    Added 22x22 ccsm icon and install ccsm icons right
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-10-19
+
+    sv update from Fredrik Karlsson <mjukis@gmail.com>
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-10-19
+
+    pt update from Nicolau Gonçalves <excentriko@gmail.com>
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-10-19
+
+    pt_BR update from Emerson R. de Mello <ribmello-compiz@yahoo.com.br>
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-10-19
+
+    it update from Milo Casagrande <milo_casagrande@yahoo.it>
+
+Danny Baumann <dannybaumann@web.de>	2007-10-18
+
+    Update German translation.
+
+Danny Baumann <dannybaumann@web.de>	2007-10-18
+
+    Make value grabbing work with translated strings.
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-10-18
+
+    sv translation updates from Fredrik Karlsson <mjukis@gmail.com>
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-10-18
+
+    ru updates from Denis Rahmangulov <danfocus@gmail.com>
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-10-18
+
+    pt update from Nicolau Gonçalves <excentriko@gmail.com>
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-10-18
+
+    nb update from ketil.w.aanensen@gmail.com
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-10-18
+
+    new eu translation from Ander Elortondo <ander.elor@gmail.com>
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-10-18
+
+    ar update from Banxoo <banxoo+compiz@gmail.com>
+
+Patrick Niklaus <marex@opencompositing.org>	2007-10-16
+
+    Completed 'Owning Program' removal
+
+Patrick Niklaus <marex@opencompositing.org>	2007-10-16
+
+    Fixed blocking signals
+
+Patrick Niklaus <marex@opencompositing.org>	2007-10-16
+
+    Added warning message when disabling automatic plugin sorting, needs translation updates
+
+Danny Baumann <dannybaumann@web.de>	2007-10-15
+
+    Remove "Owning program" from match editor as such a setting does not exist.
+
+Merge: bdabdf0 e653393
+Patrick Niklaus <marex@opencompositing.org>	2007-10-15
+
+    Merge branch 'master' of git+ssh://marex@git.opencompositing.org/git/fusion/compizconfig/ccsm
+
+Patrick Niklaus <marex@opencompositing.org>	2007-10-15
+
+    Added xid match
+
+Patrick Niklaus <marex@opencompositing.org>	2007-10-15
+
+    Added window name match
+
+Patrick Niklaus <marex@opencompositing.org>	2007-10-15
+
+    Added window role match
+
+Patrick Niklaus <marex@opencompositing.org>	2007-10-15
+
+    Fixed class match
+
+Patrick Niklaus <marex@opencompositing.org>	2007-10-15
+
+    Added unicode support for title match
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-10-14
+
+    nb update from ketil.w.aanensen@gmail.com
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-09-28
+
+    it update from Milo Casagrande <milo_casagrande@yahoo.it>
+
+Patrick Niklaus <marex@opencompositing.org>	2007-10-12
+
+    Renamed class and cleaned up MakeSetting
+
+Patrick Niklaus <marex@opencompositing.org>	2007-10-12
+
+    Fixed match case
+
+Merge: 11c8f4e 72ead02
+Patrick Niklaus <marex@opencompositing.org>	2007-10-12
+
+    Merge branch 'master' of git+ssh://marex@git.opencompositing.org/git/fusion/compizconfig/ccsm
+
+Patrick Niklaus <marex@opencompositing.org>	2007-10-12
+
+    Added dialog to generate match strings
+
+Jigish Gohil <cyberorg@prime.(none)>	2007-10-09
+
+    pt_BR update from Emerson R. de Mello <ribmello-compiz@yahoo.com.br>
+
+Jigish Gohil <cyberorg@prime.(none)>	2007-10-09
+
+    ru updates from # Translation of CCSM to ru
+
+Jigish Gohil <cyberorg@prime.(none)>	2007-10-09
+
+    new es translation from Festor Wailon Dacoba <festor90@gmail.com>
+
+Jigish Gohil <cyberorg@prime.(none)>	2007-10-08
+
+    fr, gl and sk translation updates and new ru translation from Denis Rahmangulov <danfocus@gmail.com>
+
+Jigish Gohil <cyberorg@prime.(none)>	2007-10-08
+
+    pt_BR update from Emerson R. de Mello <ribmello-compiz@yahoo.com.br>
+
+Patrick Niklaus <marex@opencompositing.org>	2007-10-08
+
+    Added note to the install file
+
+Christopher Williams <christopherw@verizon.net>	2007-10-05
+
+    Use gnome HIG button-ordering (Ignore-No-Yes)
+
+Jigish Gohil <cyberorg@prime.(none)>	2007-10-03
+
+    el update from djdoo <jimdusis@yahoo.gr>
+
+Jigish Gohil <cyberorg@prime.(none)>	2007-10-03
+
+    add arabic translations from Banxoo <banxoo+ar@gmail.com>
+
+Jigish Gohil <cyberorg@prime.(none)>	2007-09-29
+
+    new ko translation Jeong Seungwon <happyhackinglife@gmail>
+
+Jigish Gohil <cyberorg@prime.(none)>	2007-09-29
+
+    sv translation updates from Fredrik Karlsson <mjukis@gmail.com>
+
+Merge: 8fdae31 9b58101
+Patrick Niklaus <marex@opencompositing.org>	2007-09-26
+
+    Merge branch 'master' of git+ssh://marex@git.opencompositing.org/git/fusion/compizconfig/ccsm
+
+Patrick Niklaus <marex@opencompositing.org>	2007-09-26
+
+    Fixed conflict dialog appearing twice when enabling 3D while loading settings in the brackground (not sure why that triggered it twice thought)
+
+Jigish Gohil <cyberorg@prime.(none)>	2007-09-25
+
+    Translation updates from werner
+
+Jigish Gohil <cyberorg@prime.(none)>	2007-09-25
+
+    New Turkish translations from Serdar Soytetir <tulliana@gmail.com>
+
+Jigish Gohil <cyberorg@prime.(none)>	2007-09-24
+
+    pt_BR translation update from Werner Landgraf <werner@copaya.yi.org>
+
+Jigish Gohil <cyberorg@prime.(none)>	2007-09-24
+
+    translation updates from Werner Landgraf <werner@copaya.yi.org>
+
+Jigish Gohil <cyberorg@prime.(none)>	2007-09-24
+
+    add missed translation file, thanks maniac
+
+Jigish Gohil <cyberorg@prime.(none)>	2007-09-24
+
+    New Mandinka translation from Werner Landgraf <werner@copaya.yi.org>
+
+Jigish Gohil <cyberorg@prime.(none)>	2007-09-23
+
+    new Norwegian Bokmaal translation from Ketil W. Aanensen <ketil.w.aanensen@gmail.com>
+
+Jigish Gohil <cyberorg@prime.(none)>	2007-09-22
+
+    sv translation update from Sebastian Parborg <zedDB@hotmail.com>
+
+Jigish Gohil <cyberorg@prime.(none)>	2007-09-22
+
+    el translation update from djdoo
+
+Jigish Gohil <cyberorg@prime.(none)>	2007-09-21
+
+    New wolof translation from Werner Landgraf <werner@copaya.yi.org>
+
+Jigish Gohil <cyberorg@prime.(none)>	2007-09-21
+
+    New SLOVAK translation
+
+Jigish Gohil <cyberorg@prime.(none)>	2007-09-21
+
+    Indonesian translation from Andi Darmawan <belutz@ubuntu.com>
+
+Jigish Gohil <cyberorg@prime.(none)>	2007-09-21
+
+    Galician translation from Fran Diéguez (GLUG) <fran.dieguez@glug.es>
+
+Patrick Niklaus <marex@opencompositing.org>	2007-09-20
+
+    Added option to automatically resolve conflicts (for simple-ccsm)
+
+Patrick Niklaus <marex@opencompositing.org>	2007-09-17
+
+    Fixed using missing profiles, closes bug 176
+
+Danny Baumann <dannybaumann@web.de>	2007-09-17
+
+    Fixed display of unknown plugins.
+
+Guillaume Seguin <guillaume@segu.in>	2007-09-16
+
+    * Slighty increase size of the preview
+
+Guillaume Seguin <guillaume@segu.in>	2007-09-16
+
+    * Add preview for images file settings
+
+Guillaume Seguin <guillaume@segu.in>	2007-09-16
+
+    * Cleanup
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-09-12
+
+    new pt_BR translation from Nicolau, salsichad2 and Werner
+
+Danny Baumann <dannybaumann@web.de>	2007-09-11
+
+    Fix typo.
+
+Danny Baumann <dannybaumann@web.de>	2007-09-11
+
+    Update German translation.
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-09-11
+
+    el translation update from Δημήτρης (djdoo) <jimdusis@yahoo.gr>
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-09-11
+
+    pt.po updates from Nicolau Gonçalves
+
+Patrick Niklaus <marex@opencompositing.org>	2007-09-10
+
+    Updated deskop category 22x22 icon
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-09-10
+
+    pt translation updates from Excentrik
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-09-10
+
+    it updates by Milo Casagrande <milo_casagrande@yahoo.it>
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-09-09
+
+    it updates by Milo Casagrande <milo_casagrande@yahoo.it>
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-09-09
+
+    ca translation updates from Gustau L. Castells (Karasu) <gustaucastells@gmail.com>
+
+Patrick Niklaus <marex@opencompositing.org>	2007-09-09
+
+    Fixed typos
+
+Patrick Niklaus <marex@opencompositing.org>	2007-09-09
+
+    Added translation support for categoires. Needs translation update.
+
+Merge: f034eb3 c627988
+Patrick Niklaus <marex@opencompositing.org>	2007-09-09
+
+    Merge with git+ssh://marex@git.opencompositing.org/git/fusion/compizconfig/ccsm
+
+Patrick Niklaus <marex@opencompositing.org>	2007-09-09
+
+    Fixed conflict dialog appearing twice
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-09-08
+
+    el translation from djdoo and pt translation updates from Excentrik
+
+Patrick Niklaus <marex@opencompositing.org>	2007-09-07
+
+    Updated extra category 22x22 icon
+
+Patrick Niklaus <marex@opencompositing.org>	2007-09-07
+
+    Updated desktop category 22x22 icon
+
+Patrick Niklaus <marex@opencompositing.org>	2007-09-07
+
+    Updated winrules icon
+
+Patrick Niklaus <marex@opencompositing.org>	2007-09-07
+
+    New icon for shift plugin.
+
+Guillaume Seguin <guillaume@segu.in>	2007-09-06
+
+    * Fixed width for Color settings buttons
+
+Guillaume Seguin <guillaume@segu.in>	2007-09-06
+
+    * Proper minimum-sized actions buttons
+
+Patrick Niklaus <marex@opencompositing.org>	2007-09-06
+
+    Remove fixed size for action buttons
+
+Patrick Niklaus <marex@opencompositing.org>	2007-09-06
+
+    Readd support for unknown plugin and category icon
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-09-05
+
+    pt.po updates from Nicolau Gonçalves and Jcalado
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-09-05
+
+    pt.po updates from Nicolau Gonçalves <excentriko@gmail.com>
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-09-05
+
+    New Bangla translation from মাহদী জামীল <mahdee.jameel@gmail.com>
+
+Patrick Niklaus <marex@opencompositing.org>	2007-09-03
+
+    Use proper naming
+
+Patrick Niklaus <marex@opencompositing.org>	2007-09-03
+
+    Added fallback icons for action icons
+
+Patrick Niklaus <marex@opencompositing.org>	2007-09-03
+
+    Changed icon dir to /share/ccsm/icons
+
+Guillaume Seguin <guillaume@segu.in>	2007-09-03
+
+    * Mode idiotproof
+
+Guillaume Seguin <guillaume@segu.in>	2007-09-03
+
+    * Fixup UpdateProfiles
+
+Guillaume Seguin <guillaume@segu.in>	2007-09-03
+
+    * Improve consistancy
+
+Guillaume Seguin <guillaume@segu.in>	2007-09-03
+
+    * Beautify and cleanup
+
+Guillaume Seguin <guillaume@segu.in>	2007-09-03
+
+    * Idiotproofize
+
+Guillaume Seguin <guillaume@segu.in>	2007-09-03
+
+    * Reorder Add/Import Profiles code and add "Import Profile As" feature
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-09-03
+
+    pt.po update from Nicolau GonÃ§alves <excentriko@gmail.com>
+
+Guillaume Seguin <guillaume@segu.in>	2007-09-03
+
+    * Track enabled/disabled status of plugins
+
+Guillaume Seguin <guillaume@segu.in>	2007-09-03
+
+    * Cleanup of Updater handling
+
+Guillaume Seguin <guillaume@segu.in>	2007-09-03
+
+    * Cleanup
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-09-03
+
+    little fix for msg from Eren Turkay <turkay.eren@gmail.com
+
+Guillaume Seguin <guillaume@segu.in>	2007-09-03
+
+    * Minimum default size for Key/Button/Edge settings buttons
+
+Guillaume Seguin <guillaume@segu.in>	2007-09-03
+
+    * Cleanup of setup.py
+
+Guillaume Seguin <guillaume@segu.in>	2007-09-03
+
+    * Add icon cache update process to setup.py
+
+Guillaume Seguin <guillaume@segu.in>	2007-09-03
+
+    * Cleanup of actions images
+
+Guillaume Seguin <guillaume@segu.in>	2007-09-02
+
+    * Pythonify
+
+Guillaume Seguin <guillaume@segu.in>	2007-09-02
+
+    * Protect labels markup
+
+Milo Casagrande <milo_casagrande@yahoo.it>	2007-09-02
+
+    * Update Italian translation
+
+Guillaume Seguin <guillaume@segu.in>	2007-09-02
+
+    * My pygtk is wicked
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-09-02
+
+    Update to greek translations from Δημήτρης (djdoo) <jimdusis@yahoo.gr>
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-09-02
+
+    Add ca translation from Gustau L. Castells (Karasu) <gustaucastells@gmail.com>
+
+Patrick Niklaus <marex@opencompositing.org>	2007-09-02
+
+    Fixed category icon for 'all' category button
+
+Merge: 9cec004 d278caf
+Patrick Niklaus <marex@opencompositing.org>	2007-09-02
+
+    Merge with git+ssh://marex@git.opencompositing.org/git/fusion/compizconfig/ccsm
+
+Patrick Niklaus <marex@opencompositing.org>	2007-09-02
+
+    Added 22x22 icons for category buttons
+
+Patrick Niklaus <marex@opencompositing.org>	2007-09-02
+
+    Use G-I-T accessibility icon
+
+Guillaume Seguin <guillaume@segu.in>	2007-09-02
+
+    * Cleanup.
+
+Patrick Niklaus <marex@opencompositing.org>	2007-09-02
+
+    Use 22x22 for category button icons
+
+Guillaume Seguin <guillaume@segu.in>	2007-09-02
+
+    * Fix empty filter usage
+
+Guillaume Seguin <guillaume@segu.in>	2007-09-02
+
+    * Fix Uncategorized plugins category filtering
+
+Guillaume Seguin <guillaume@segu.in>	2007-09-02
+
+    * Checking for focus events only seems to be enough
+
+Guillaume Seguin <guillaume@segu.in>	2007-09-02
+
+    * Fix keyboard navigation scrolling
+
+Guillaume Seguin <guillaume@segu.in>	2007-09-02
+
+    * 220 px should be enough for everyone
+
+Guillaume Seguin <guillaume@segu.in>	2007-09-02
+
+    * Prettier buttons for plugins & categories
+
+Patrick Niklaus <marex@opencompositing.org>	2007-09-02
+
+    40px should be enough for everyone
+
+Patrick Niklaus <marex@opencompositing.org>	2007-09-02
+
+    Simply increase the default width so we have 3 cols again
+
+Guillaume Seguin <guillaume@segu.in>	2007-09-02
+
+    * "foo" doesn't look serious
+
+Guillaume Seguin <guillaume@segu.in>	2007-09-02
+
+    * Don't define a fixed size for Left Pane
+
+Merge: 7f78803 2fa6237
+Patrick Niklaus <marex@opencompositing.org>	2007-09-01
+
+    Merge with git+ssh://marex@git.opencompositing.org/git/fusion/compizconfig/ccsm
+
+Patrick Niklaus <marex@opencompositing.org>	2007-09-01
+
+    Moved images to /usr/shared/icons/hicolor
+
+Patrick Niklaus <marex@opencompositing.org>	2007-09-01
+
+    Delted old category icon
+
+Patrick Niklaus <marex@opencompositing.org>	2007-09-01
+
+    Added screensaver icon
+
+Guillaume Seguin <guillaume@segu.in>	2007-09-01
+
+    * Experimental buffered callback handler for Int/Float options handling
+
+Patrick Niklaus <marex@opencompositing.org>	2007-09-01
+
+    Removed helper directory
+
+Guillaume Seguin <guillaume@segu.in>	2007-09-01
+
+    * Trim hand edited action
+
+Guillaume Seguin <guillaume@segu.in>	2007-09-01
+
+    * Make Edge Settings hand editable ones for more consistancy
+
+Guillaume Seguin <guillaume@segu.in>	2007-09-01
+
+    * More fixes of i18n strings
+
+Guillaume Seguin <guillaume@segu.in>	2007-09-01
+
+    * Make sure the Popup's get the right icon
+
+Guillaume Seguin <guillaume@segu.in>	2007-09-01
+
+    * Reallow the use of backspace key in the key grabber
+
+Guillaume Seguin <guillaume@segu.in>	2007-09-01
+
+    * Always use <Modifier> instead of Modifier_L/R with the graphical key editor
+
+Danny Baumann <dannybaumann@web.de>	2007-09-01
+
+    Update German translation.
+
+Danny Baumann <dannybaumann@web.de>	2007-09-01
+
+    Fix typo.
+
+Guillaume Seguin <guillaume@segu.in>	2007-09-01
+
+    * Use the same intuitive way to disable Key settings than for Buttons
+
+Guillaume Seguin <guillaume@segu.in>	2007-09-01
+
+    * Make popups utility windows to let them have a frame
+
+Patrick Niklaus <marex@opencompositing.org>	2007-09-01
+
+    Remember filter value
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-09-01
+
+    Add missing s behind %(setting)
+
+Eren Türkay <turkay.eren@gmail.com>	2007-09-01
+
+    * Cleanup of i18n strings with multiple parameters
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-09-01
+
+    Add Japanese translation from Yohsuke Ooi <meke@momonga-linux.org>
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-08-31
+
+    Update to greek translations from Δημήτρης (djdoo) <jimdusis@yahoo.gr>
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-29
+
+    * Bump version
+
+Danny Baumann <dannybaumann@web.de>	2007-08-29
+
+    Update German translation.
+
+Danny Baumann <dannybaumann@web.de>	2007-08-27
+
+    Use different titles when picking files and directories.
+
+Patrick Niklaus <marex@opencompositing.org>	2007-08-27
+
+    Added support for directory selection
+
+Merge: db04f12 1f9b467
+Guillaume Seguin <guillaume@segu.in>	2007-08-25
+
+    Merge branch 'master' of git+ssh://guillaume@git.opencompositing.org/git/fusion/compizconfig/ccsm
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-25
+
+    * Add pretty separators between categories in plugins view
+
+Treviño - 3v1n0 <trevi55@gmail.com>	2007-08-25
+
+    Updated Italian Translation
+
+Treviño - 3v1n0 <trevi55@gmail.com>	2007-08-25
+
+    Synced Italian Translation to latest pot
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-25
+
+    * Cleanup & fix preloading of metadata files
+
+Merge: 1dac400 0bc9fc6
+Guillaume Seguin <guillaume@segu.in>	2007-08-25
+
+    Merge branch 'master' of git+ssh://guillaume@git.opencompositing.org/git/fusion/compizconfig/ccsm
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-25
+
+    * Add icons in front of categories name in categories list
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-25
+
+    * Add "All" category icon from Gnome Stock Icon set (originally emblem-web.svg)
+
+Danny Baumann <dannybaumann@web.de>	2007-08-25
+
+    Update German translation.
+
+Danny Baumann <dannybaumann@web.de>	2007-08-25
+
+    Update file list.
+
+Danny Baumann <dannybaumann@web.de>	2007-08-25
+
+    Update German translation.
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-25
+
+    * Minor code cleanup
+
+Merge: 4f19853 a0da1e1
+Guillaume Seguin <guillaume@segu.in>	2007-08-25
+
+    Merge branch 'master' of git+ssh://guillaume@git.opencompositing.org/git/fusion/compizconfig/ccsm
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-25
+
+    * Allow the use of Return, Escape and Backspace with modifiers in key picker
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-25
+
+    * Revert key setting to previous value when pressing Escape
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-25
+
+    * Display warning dialog when setting button1 without modifiers for a button action
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-25
+
+    * Connect "response" signal after it was emitted so that we can get the response
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-25
+
+    * Use Yes/No buttons for WarningDialog and don't immediately show it (we'll run it to get the response)
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-25
+
+    * Make error dialog modal
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-25
+
+    * Add warning dialog
+
+Patrick Niklaus <marex@opencompositing.org>	2007-08-25
+
+    Fixed current button combo box in button selection dialog
+
+Patrick Niklaus <marex@opencompositing.org>	2007-08-25
+
+    Added timeout to idle settings parsing
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-25
+
+    * Add an additionnal button if current button is outside of the default visual editor range
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-25
+
+    * Reverse button's range so that buttons indexes over 10 aren't thought as their first figure
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-25
+
+    * Increase allowed button range to 1-99 for manual editing
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-25
+
+    * Only preload enabled plugins metadata
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-25
+
+    * Fix Key Setting dialog label for disabled settings
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-25
+
+    * Fix disabling of key settings
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-25
+
+    * Typo
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-25
+
+    * Don't directly set current edges in EdgeSelector to avoid total failure
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-24
+
+    * Extand allowed buttons range up to Button9
+
+Merge: 56a445f 93dfcc6
+Guillaume Seguin <guillaume@segu.in>	2007-08-24
+
+    Merge branch 'master' of git+ssh://guillaume@git.opencompositing.org/git/fusion/compizconfig/ccsm
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-24
+
+    * Rework key actions handling
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-24
+
+    * Drop "changed" and add "added" and "removed" signals to ModifierSelector
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-24
+
+    * Add "current-changed" signal to KeyGrabber, sent during grabbing
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-24
+
+    * Don't directly set current edges in ModifierSelector to avoid early drawing
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-24
+
+    * Redraw selectors when current selection is updated
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-24
+
+    * Emit "changed" signal when a modifier is enabled or disabled
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-24
+
+    * Fix typo
+
+Patrick Niklaus <marex@opencompositing.org>	2007-08-24
+
+    Added idle settings parsing
+
+Patrick Niklaus <marex@opencompositing.org>	2007-08-24
+
+    Made plugin tabs scrollable
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-08-24
+
+    Update to greek translations from Δημήτρης (djdoo) <jimdusis@yahoo.gr>
+
+Treviño - 3v1n0 <trevi55@gmail.com>	2007-08-24
+
+    Updated Italian Translation - Thanks to Milo Casagrande
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-24
+
+    * Add label parameter to KeyGrabber to set a fixed label
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-24
+
+    * Update AUTHORS & copyright notices
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-24
+
+    * Accept keyboard shortcuts using Tab key
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-24
+
+    * Add Button Settings support
+    * Drop that stupid get_toplevel_parent and learn to read docs
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Minor cleanup of actions conflicts handling
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Cleanup of KeySetting (avoid doing the same thing twice)
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Minor coding style improvement
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Add popup for conflicts computing for edge settings
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Add Popup class and use it for Key Bindings and conflicts computing handling
+    * Minor coding style improvement
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Fix and improve PureVirtual error raising function
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Add EditableActionSetting class using code from KeySetting for future use
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Remove useless var
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Reformat and improve a bit MakeSetting function
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Improve conflicts handling code
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Make popup window modal and use it to grab the keyboard and retrieve events
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Make Edge Selector dialog modal
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Fix typo that completely broke manual key editing
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Display nice popups while loading metadata files for conflicts handling
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Improve invalid shortcut error dialog
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Add function to protect pango markup strings
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Also force gtk events processing when opening the popup
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Make the gtk iterations bits their own function
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Add manual editing of Keys
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Add ErrorDialog widget
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Add get_parent_toplevel helper function to find a widget's toplevel window
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Mark translatable string
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Minor improvement to KeyGrabber popup handling
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Immediately et KeyGrabber's button label when a valid accelerator is found
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Iterate main loop until popup window is actually closed
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Use an Image for reset button
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Fix using Escape key in key grabber
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Rework of Image and ActionImage classes
+
+Merge: 83e6dca 2b7840a
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    Merge branch 'master' of git+ssh://guillaume@git.opencompositing.org/git/fusion/compizconfig/ccsm
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Open popup when grabbing key
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Use the new key grabber
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Rename KeyGrabber and add emit signel when accelerator changed
+
+Treviño - 3v1n0 <trevi55@gmail.com>	2007-08-23
+
+    Updated Italian Translation - Thanks to Milo Casagrande
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Whitespace
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Add key grabber widget
+
+Merge: 8100b82 5f4f7fa
+Treviño - 3v1n0 <trevi55@gmail.com>	2007-08-23
+
+    Merge branch 'master' of ssh+git://3v1n0@git.opencompositing.org/git/compcomm/compiz-configuration-system/tools/ccsm
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Use custom label for Key settings
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Add a 10px right padding for custom widgets
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Use a custom label for Edge settings
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Add makeCustomSetting helper function and use it for Bool settings
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Fix makeActionImage
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Move makeActionImage to utils
+
+Merge: 56a85f0 57bc70c
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    Merge branch 'master' of git+ssh://guillaume@git.opencompositing.org/git/fusion/compizconfig/ccsm
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Add bell image in front of Bell settings
+    * Cleanup of Bool settings
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Install action images
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Add actions images
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Rework and cleanup of Bool settings
+
+Danny Baumann <dannybaumann@web.de>	2007-08-23
+
+    Update German translation.
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-08-23
+
+    Update to Dutch translations from Rick and Martijn
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Center Edge Selector dialog
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Update buttons conflicts handling
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Add a 10px margin around Edge Selector
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Reduce size of Edge Selector
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Add key conflicts handling and fix edge conficts handling
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Add UpdateSetting function to Updater to update a single setting
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Minor EdgeSelector fix
+
+Merge: eeb5231 27b8a35
+Treviño - 3v1n0 <trevi55@gmail.com>	2007-08-23
+
+    Merge branch 'master' of ssh+git://3v1n0@git.opencompositing.org/git/compcomm/compiz-configuration-system/tools/ccsm
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Improve and update Action conflicts handling
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Add conflict handling for edges
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Add basic support for Key actions
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Add display.png image
+
+Merge: 71cea94 82b1beb
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    Merge branch 'master' of git+ssh://guillaume@git.opencompositing.org/git/fusion/compizconfig/ccsm
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Add support for Edge actions
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-23
+
+    * Add pretty edge selector widget
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-22
+
+    * Minor coding style fix
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-22
+
+    * Finish dropping old actions page
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-22
+
+    * Drop old actions page
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-22
+
+    * Add basic support for bell actions
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-22
+
+    * Remove deprecated action stuff
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-22
+
+    * We don't need to filter out actions anymore
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-22
+
+    * Mark string
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-22
+
+    * Only display plugins in the selected category
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-22
+
+    * Python 4 spaces tabs indent
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-22
+
+    * Update website and coding style
+
+Treviño - 3v1n0 <trevi55@gmail.com>	2007-08-22
+
+    Updated Italian Translation - Thanks to Milo Casagrande
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-22
+
+    * Fix make clean
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-08-22
+
+    Update to greek translations from Δημήτρης (djdoo) <jimdusis@yahoo.gr>
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-08-20
+
+    Update to greek translations from Δημήτρης (djdoo) <jimdusis@yahoo.gr>
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-08-20
+
+    Add Dutch translations from Rick - <mailmelist@gmail.com>
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-08-19
+
+    change back zh to zh_CN.po so it shows up on l10n-stats
+
+Patrick Niklaus <marex@opencompositing.org>	2007-08-18
+
+    Fixed typo in Polish translation
+
+Artur Flina <aflinta@gmail.com>	2007-08-18
+
+    Updated Polish translation
+
+Patrick Niklaus <marex@opencompositing.org>	2007-08-18
+
+    Switched to gtk-like coding style in Widgets.py
+
+Patrick Niklaus <marex@opencompositing.org>	2007-08-18
+
+    Moved some helper widgets into Widgets.py
+
+Patrick Niklaus <marex@opencompositing.org>	2007-08-16
+
+    Removed gotovp icon
+
+Patrick Niklaus <marex@opencompositing.org>	2007-08-16
+
+    Updated vpswitch icon
+
+Danny Baumann <dannybaumann@web.de>	2007-08-16
+
+    Update German translation.
+
+Patrick Niklaus <marex@opencompositing.org>	2007-08-14
+
+    Added global profile reset. Thanks to Michael Vogt
+
+Patrick Niklaus <marex@opencompositing.org>	2007-08-14
+
+    Fixed changedSettings interface and update action settings as well
+
+root <root@prime.cyberorg.info>	2007-08-14
+
+    fix lingua names
+
+Patrick Niklaus <marex@opencompositing.org>	2007-08-12
+
+    Parse version from VERSION file
+
+Patrick Niklaus <marex@opencompositing.org>	2007-08-12
+
+    Fixed version in about dialog
+
+Dennis Kasprzyk <onestone@opencompositing.org>	2007-08-12
+
+    Version update.
+
+Patrick Niklaus <marex@opencompositing.org>	2007-08-10
+
+    Added plugin for gotovp plugin
+
+Patrick Niklaus <marex@opencompositing.org>	2007-08-10
+
+    Added icon for ezoom plugin
+
+Patrick Niklaus <marex@opencompositing.org>	2007-08-10
+
+    Added icon for cubecaps plugin
+
+Patrick Niklaus <marex@opencompositing.org>	2007-08-08
+
+    Fixed profile page
+
+Patrick Niklaus <marex@opencompositing.org>	2007-08-08
+
+    Removed ____plugin_enabled exceptions
+
+Patrick Niklaus <marex@opencompositing.org>	2007-08-08
+
+    Remove core from the disabled plugins list
+
+Patrick Niklaus <marex@opencompositing.org>	2007-08-07
+
+    Put General Options always at first position
+
+Patrick Niklaus <marex@opencompositing.org>	2007-08-07
+
+    Removed active_list option from General Options page
+
+Patrick Niklaus <marex@opencompositing.org>	2007-08-07
+
+    Fixed vertical size adaption
+
+Merge: aef9cfa ffbae58
+Patrick Niklaus <marex@opencompositing.org>	2007-08-07
+
+    Merge with git+ssh://marex@git.opencompositing.org/git/fusion/compizconfig/ccsm
+
+Patrick Niklaus <marex@opencompositing.org>	2007-08-07
+
+    Plugin lists change their size on window resize
+
+Merge: bf93b3a 35fdfbb
+Danny Baumann <dannybaumann@web.de>	2007-08-07
+
+    Merge branch 'master' of git+ssh://maniac@git.opencompositing.org/git/fusion/compizconfig/ccsm
+
+Danny Baumann <dannybaumann@web.de>	2007-08-07
+
+    Another translation update.
+
+Patrick Niklaus <marex@opencompositing.org>	2007-08-07
+
+    Fixed file loading with unknown extensions
+
+Merge: f799e56 9efc5b1
+Patrick Niklaus <marex@opencompositing.org>	2007-08-07
+
+    Merge with git+ssh://marex@git.opencompositing.org/git/fusion/compizconfig/ccsm
+
+Patrick Niklaus <marex@opencompositing.org>	2007-08-07
+
+    Moved about button to preference page
+
+Danny Baumann <dannybaumann@web.de>	2007-08-07
+
+    Update German translation.
+
+Danny Baumann <dannybaumann@web.de>	2007-08-07
+
+    Fix grammar ;-)
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-08-07
+
+    update AUTHORS
+
+Patrick Niklaus <marex@opencompositing.org>	2007-08-07
+
+    Added support for adding plugins to active_plugins without metadata
+
+Patrick Niklaus <marex@opencompositing.org>	2007-08-07
+
+    Fixed bug with files without type extension
+
+Patrick Niklaus <marex@opencompositing.org>	2007-08-07
+
+    Made string translate able
+
+Merge: fa80d74 638ed4a
+Patrick Niklaus <marex@opencompositing.org>	2007-08-07
+
+    Merge with git+ssh://marex@git.opencompositing.org/git/fusion/compizconfig/ccsm
+
+Patrick Niklaus <marex@opencompositing.org>	2007-08-07
+
+    Initial support for custom plugin lists
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-08-07
+
+    Add gujarati translation from Ankit Patel <ankit@redhat.com>
+
+Danny Baumann <dannybaumann@web.de>	2007-08-07
+
+    Make sure build is ready before installing.
+
+Danny Baumann <dannybaumann@web.de>	2007-08-07
+
+    Update German translation.
+
+Danny Baumann <dannybaumann@web.de>	2007-08-07
+
+    Fix file list.
+
+Patrick Niklaus <marex@opencompositing.org>	2007-08-06
+
+    Added support for stock images to Image class
+
+Patrick Niklaus <marex@opencompositing.org>	2007-08-06
+
+    Split backend & profile page into preferences page with several tabs
+
+Patrick Niklaus <marex@opencompositing.org>	2007-08-06
+
+    Clear SelectorBox properly
+
+Patrick Niklaus <marex@opencompositing.org>	2007-08-06
+
+    Added not found message to advanced search
+
+Patrick Niklaus <marex@opencompositing.org>	2007-08-06
+
+    Added NotFoundBox for plugin settings
+
+Patrick Niklaus <marex@opencompositing.org>	2007-08-05
+
+    Added "Not found" message to plugin filter. Simialr to the one in
+    Gnome-Control-Center.
+
+Patrick Niklaus <marex@opencompositing.org>	2007-08-05
+
+    Fixed adding profiles
+
+Merge: 7e9edfe 41f95ed
+Andrew Wedderburn <andrew.wedderburn@gmail.com>	2007-08-04
+
+    Merge with git+ssh://marex@git.opencompositing.org/git/fusion/compizconfig/ccsm
+
+Andrew Wedderburn <andrew.wedderburn@gmail.com>	2007-08-04
+
+    Added icon for workarounds plugin
+
+Patrick Niklaus <marex@opencompositing.org>	2007-08-04
+
+    Small signal adjustment
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-08-04
+
+    missed zh_CN.po
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-08-04
+
+    Add zh_CN from Thruth <gubotruth@gmail.com>
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-08-04
+
+    make sexy-python warning milder
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-03
+
+    * Attempt to not request build before install
+
+Guillaume Seguin <guillaume@segu.in>	2007-08-03
+
+    * Fix i18n mo files install
+
+Michael Vogt <mvogt@acm.org>	2007-08-02
+
+    * Fix source distribution and locales building
+
+Patrick Niklaus <marex@opencompositing.org>	2007-08-01
+
+    Focus-Out event for int/float settings should now work better
+
+Guillaume Seguin <guillaume@segu.in>	2007-07-29
+
+    * Fix data files permissions upon install
+
+Guillaume Seguin <guillaume@segu.in>	2007-07-29
+
+    * Add uninstall operation & Makefile target
+
+Guillaume Seguin <guillaume@segu.in>	2007-07-29
+
+    * Minor improvement to setup script
+
+Guillaume Seguin <guillaume@segu.in>	2007-07-29
+
+    * Add MANIFEST file to specify which files to distribute
+
+Guillaume Seguin <guillaume@segu.in>	2007-07-29
+
+    * Fix setup.py version handling
+
+Guillaume Seguin <guillaume@segu.in>	2007-07-29
+
+    * Fix setup script
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-29
+
+    Fixed incomplete multilists by setting empty columns to default values
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-29
+
+    Added support for double click edit to singlelist widgets
+
+Merge: 7c66e85 02a4b19
+Patrick Niklaus <marex@opencompositing.org>	2007-07-27
+
+    Merge with git+ssh://marex@git.opencompositing.org/git/fusion/compizconfig/ccsm
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-27
+
+    Fixed image feature check
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-07-27
+
+    ccsm: Typo in copy/paste
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-07-27
+
+    ccsm: add el.po translation update
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-26
+
+    Fixed markup warning
+
+Andrew Wedderburn <andrew.wedderburn@gmail.com>	2007-07-26
+
+    Added icon for shift plugin
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-26
+
+    Updated constants
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-26
+
+    Sadly a lot of dialogs did become orphans...
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-26
+
+    Which () ?
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-26
+
+    Fixed typo.. come on..
+
+Guillaume Seguin <guillaume@segu.in>	2007-07-26
+
+    * Which Makefile.am?
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-26
+
+    Fixed crash with multilists
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-26
+
+    Fixed Description
+
+Guillaume Seguin <guillaume@segu.in>	2007-07-26
+
+    * Fix *cough*
+
+Guillaume Seguin <guillaume@segu.in>	2007-07-26
+
+    * Use "/usr/local" as default prefix
+
+Guillaume Seguin <guillaume@segu.in>	2007-07-26
+
+    * Fix install prefix
+
+Guillaume Seguin <guillaume@segu.in>	2007-07-25
+
+    * Add --prefix= support to setup.py build
+    * Quiet Makefile
+
+Guillaume Seguin <guillaume@segu.in>	2007-07-25
+
+    * Properly pass --prefix in Makefile, do not use empty prefixes
+
+Guillaume Seguin <guillaume@segu.in>	2007-07-25
+
+    * Add fake Makefile to keep make/make install working
+
+Guillaume Seguin <guillaume@segu.in>	2007-07-25
+
+    * Add PREFIX environment variable support
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-25
+
+    Removed some l10n things
+
+Guillaume Seguin <guillaume@segu.in>	2007-07-25
+
+    * Update install
+
+Guillaume Seguin <guillaume@segu.in>	2007-07-25
+
+    * Fix prefix handling
+    * Actually remove Constants.in
+
+Merge: 4310eee d1daccc
+Guillaume Seguin <guillaume@segu.in>	2007-07-25
+
+    Merge branch 'master' of git+ssh://guillaume@git.opencompositing.org/git/fusion/compizconfig/ccsm
+
+Guillaume Seguin <guillaume@segu.in>	2007-07-25
+
+    * New buildsystem based on distutils
+
+Guillaume Seguin <guillaume@segu.in>	2007-07-25
+
+    * Rename Constants.in to Constants.py.in
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-25
+
+    Fixed l10n
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-25
+
+    Fixed distclean
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-25
+
+    Splitted CCSM into a modul with serveral files.
+
+Andrew Wedderburn <andrew.wedderburn@gmail.com>	2007-07-23
+
+    Updated fakergba plugin icon
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-07-22
+
+    ccsm: sv.po from Daniel Nylander and Erik Eloff
+
+Dennis Kasprzyk <onestone@opencompositing.org>	2007-07-18
+
+    Fixed ccsm.in directory.
+
+Dennis Kasprzyk <onestone@opencompositing.org>	2007-07-18
+
+    Added polish translation.
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-17
+
+    Added Greek translation
+
+Dennis Kasprzyk <onestone@opencompositing.org>	2007-07-17
+
+    Move ccsm.in into src directory.
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-15
+
+    Updated atlantis plugin icon a bit
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-14
+
+    Apply file name change directly
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-14
+
+    Use row-activated signal instead of tracking double clicks
+
+Erkin Bahceci <erkinbah@gmail.com>	2007-07-14
+
+    Put double-click edit hint in multilist tooltip.
+
+Erkin Bahceci <erkinbah@gmail.com>	2007-07-14
+
+    Auto-select 1st item in multilist Add dialog. Allow "" as value.
+    The first one is necessary to prevent illegal enum values.
+    The second one is necessary to ensure equal number of rows for each column.
+
+Erkin Bahceci <erkinbah@gmail.com>	2007-07-14
+
+    Create multilist only when there are multiple lists in subgroup.
+
+Erkin Bahceci <erkinbah@gmail.com>	2007-07-14
+
+    Edit row in multi-list on double-click.
+
+Erkin Bahceci <erkinbah@gmail.com>	2007-07-14
+
+    Increase multi-list height to show 1 more row.
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-14
+
+    Updated inotify icon
+
+Andrew Wedderburn <andrew.wedderburn@gmail.com>	2007-07-14
+
+    Added icon for widget plugin
+
+Andrew Wedderburn <andrew.wedderburn@gmail.com>	2007-07-13
+
+    Updated wallpaper icon
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-12
+
+    Should work better then my last fix to this
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-12
+
+    Changed int and float settings to just update on button release and
+    spin's changed event
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-12
+
+    Fixed the update-as-you-type issue with string and match setting. It
+    now updates on unfocus and pressing enter. Fixes bug 118
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-12
+
+    Added support for IntDescList to MultiList setting widget
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-12
+
+    Reenabled image type detection and feature checking
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-11
+
+    Set the right categories
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-11
+
+    Enabled plugins are now printed in bold font
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-11
+
+    Alphabetical order for plugins in global actio page
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-11
+
+    Added global action page to Advanced Search
+
+Andrew Wedderburn <andrew.wedderburn@gmail.com>	2007-07-11
+
+    Added icon for notification plugin
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-11
+
+    File filter fix
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-11
+
+    Added file list support
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-11
+
+    Split FileSetting class into FileStringSetting and FileSetting
+    (non-setting parent class)
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-10
+
+    Added edge conflict checking
+
+Merge: 673178f 20ae80b
+Patrick Niklaus <marex@opencompositing.org>	2007-07-10
+
+    Merge with git+ssh://marex@git.opencompositing.org/git/fusion/compizconfig/ccsm
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-10
+
+    Integrated actions are now blue too
+
+Guillaume Seguin <guillaume@segu.in>	2007-07-09
+
+    * pt_PT po update by Nicolau Gonçalves
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-09
+
+    Udpated group icon
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-09
+
+    Fixed another typo, thx Danny
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-09
+
+    Fixed setting bell
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-09
+
+    Fixed problem with button/key conflict checking
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-09
+
+    Fixed bell in action dialog
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-09
+
+    Added about dialog => NEEDS TRANSLATION UPDATE
+
+Erkin Bahceci <erkinbah@gmail.com>	2007-07-09
+
+    Add group and subgroup sorting.
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-08
+
+    Added warning
+
+Guillaume Seguin <guillaume@segu.in>	2007-07-08
+
+    * Erm, remove debug leftover
+
+Guillaume Seguin <guillaume@segu.in>	2007-07-08
+
+    * Use libsexy only if available
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-08
+
+    Added IconEntry's from libsexy to provide a better integrated clear button
+
+Guillaume Seguin <guillaume@segu.in>	2007-07-08
+
+    * Update to latest compizconfig-python API
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-08
+
+    Revert "Added Filter-Reset button next to the filter field" since the reset button looks ugly there and isn't a real improvement to usability.
+    
+    This reverts commit 6947aeaac91c1df1b8906972cde2a43ffc0339ca.
+
+Merge: 6947aea ae78cee
+Treviño - 3v1n0 <trevi55@gmail.com>	2007-07-08
+
+    Merge branch 'master' of ssh+git://3v1n0@git.opencompositing.org/git/compcomm/compiz-configuration-system/tools/ccsm
+
+Treviño - 3v1n0 <trevi55@gmail.com>	2007-07-08
+
+    Added Filter-Reset button next to the filter field
+
+Merge: 3451978 d025366
+Patrick Niklaus <marex@opencompositing.org>	2007-07-08
+
+    Merge with git+ssh://marex@git.opencompositing.org/git/fusion/compizconfig/ccsm
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-08
+
+    Fixed segmentation fault on action conflict
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-07-08
+
+    ccsm: add pt_PT translation from Nicolau Gonçalves <excentriko>
+
+Guillaume Seguin <guillaume@segu.in>	2007-07-08
+
+    * Update French translation
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-07
+
+    Added icon for vpswitch
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-07
+
+    Another small update to debug icon
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-07
+
+    Small update to the fuse icon
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-07
+
+    Small update to the firepaint icon
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-06
+
+    Updated unknown plugin/category icon
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-06
+
+    Update to the extras category icon
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-06
+
+    Update ccsm png icon
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-06
+
+    Updated video/screencasting icon
+
+Andrew Wedderburn <andrew.wedderburn@gmail.com>	2007-07-06
+
+    Added atlantis plugin icon
+
+Andrew Wedderburn <andrew.wedderburn@gmail.com>	2007-07-06
+
+    Update to the water icon
+
+Andrew Wedderburn <andrew.wedderburn@gmail.com>	2007-07-06
+
+    New firepaint icon
+
+Andrew Wedderburn <andrew.wedderburn@gmail.com>	2007-07-06
+
+    Added color filter icon
+
+Andrew Wedderburn <andrew.wedderburn@gmail.com>	2007-07-06
+
+    Added mouse gestures icon
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-06
+
+    Make labels of integrated settings blue
+
+Merge: 3fe7271 4acb09b
+Patrick Niklaus <marex@opencompositing.org>	2007-07-06
+
+    Merge with git+ssh://marex@git.opencompositing.org/git/fusion/compizconfig/ccsm
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-06
+
+    Added a hack to provide a 'Loading...' message in the titlebar
+
+Danny Baumann <dannybaumann@web.de>	2007-07-05
+
+    Slightly improve German translation.
+
+Danny Baumann <dannybaumann@web.de>	2007-07-05
+
+    Swap fadedesktop and showdesktop icons as showdesktop is the plugin which moves windows to screen edges.
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-05
+
+    Translation fix
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-05
+
+    Fixed typo
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-05
+
+    Cleaned up some licensing issues
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-05
+
+    New version of the icon set based on the Gnome Icon Theme. Thanks a lot to
+    its original creators. Keep on good work!
+
+Guillaume Seguin <guillaume@segu.in>	2007-07-04
+
+    * Remove leftover debug print
+
+Guillaume Seguin <guillaume@segu.in>	2007-07-04
+
+    * Update French translation
+
+Guillaume Seguin <guillaume@segu.in>	2007-07-04
+
+    * Fix action treeview handling (edges == None when activating a group/subgroup,
+      which broke the .split and the expansion of the group/subgroup)
+
+Merge: df3e1b4 83c2bca
+Guillaume Seguin <guillaume@segu.in>	2007-07-04
+
+    Merge branch 'master' of git+ssh://git.opencompositing.org/git/compcomm/compiz-configuration-system/tools/ccsm
+
+Guillaume Seguin <guillaume@segu.in>	2007-07-04
+
+    * Fix typo in fr.po that broke binding editing
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-04
+
+    Added egde button support => NEEDS TRANSLATION UPDATE
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-03
+
+    Make use of the new ClearChangedSettings function
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-03
+
+    Fixed freeze when entering an empty string, fixes bug #109
+
+Merge: d1af4a1 d60e585
+Patrick Niklaus <marex@opencompositing.org>	2007-07-02
+
+    Merge with git+ssh://marex@git.opencompositing.org/git/fusion/compizconfig/ccsm
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-02
+
+    Fixed message dialog
+
+Danny Baumann <dannybaumann@web.de>	2007-07-02
+
+    Don't include plugin lists in buttons as the buttons may become very large.
+    Update German translation accordingly.
+
+Danny Baumann <dannybaumann@web.de>	2007-07-02
+
+    Fix a few typos.
+    Update po template.
+
+Treviño - 3v1n0 <trevi55@gmail.com>	2007-07-02
+
+    Updated Italian Translation
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-01
+
+    Made the plugin conflict dialoges more user friendly => NEEDS NEW
+    TRANSLATION
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-01
+
+    Made feature check dialog more user friendly => NEEDS NEW TRANSLATION
+
+Patrick Niklaus <marex@opencompositing.org>	2007-07-01
+
+    Changed action conflict dialog to be more user friendly => NEEDS NEW
+    TRANSLATION
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-30
+
+    Quite a big update to the icons... mostely small changes but also a new
+    icon for cube/3d/rotate/... etc
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-29
+
+    Fixed a crash when calling Read() on destroyed widgets
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-29
+
+    Updated some icons
+
+Merge: 83576e2 d931bc5
+Patrick Niklaus <marex@opencompositing.org>	2007-06-29
+
+    Merge with git+ssh://marex@git.opencompositing.org/git/fusion/compizconfig/ccsm
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-29
+
+    Added a workaround which fixes a not cleared changedSettings list
+
+Merge: c096b2c 87aa878
+Treviño - 3v1n0 <trevi55@gmail.com>	2007-06-29
+
+    Merge branch 'master' of ssh+git://3v1n0@git.opencompositing.org/git/compcomm/compiz-configuration-system/tools/ccsm
+
+Treviño - 3v1n0 <trevi55@gmail.com>	2007-06-29
+
+    Bad (I know...) workaround to make KeyGrabbing work again.
+    Due to the filter Entry focus, if you try to change a
+    binding shortcut, it won't work (filter search will start...)
+    As temporary workaround I've disabled the filter focus if
+    the plugin has an action tab...
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-29
+
+    Restore old cube icon
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-29
+
+    Update settings when they were changed from other applications
+
+Merge: 7a61d79 2c790f6
+Danny Baumann <dannybaumann@web.de>	2007-06-29
+
+    Merge branch 'master' of git+ssh://maniac@git.opencompositing.org/git/fusion/compizconfig/ccsm
+    
+    Resolved conflict in:
+    
+po/LINGUAS           
+
+Sylvain Debray <sylvain.debray@wanadoo.fr>	2007-06-29
+
+    Added french translation.
+
+Treviño - 3v1n0 <trevi55@gmail.com>	2007-06-29
+
+    Improved some Italian Strings
+
+Treviño - 3v1n0 <trevi55@gmail.com>	2007-06-29
+
+    Added Italian Translation
+    First draft by Treviño
+
+Danny Baumann <dannybaumann@web.de>	2007-06-29
+
+    Improved German translation.
+
+Danny Baumann <dannybaumann@web.de>	2007-06-29
+
+    Fixed icon fetching for unknown categories.
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-29
+
+    Added icon for scalefilter and cubegears
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-29
+
+    Update German translation
+
+Danny Baumann <dannybaumann@web.de>	2007-06-28
+
+    Mark all strings as translatable.
+
+Danny Baumann <dannybaumann@web.de>	2007-06-28
+
+    Fix locale path.
+
+Danny Baumann <dannybaumann@web.de>	2007-06-28
+
+    Completed header.
+
+Danny Baumann <dannybaumann@web.de>	2007-06-28
+
+    Fixed charset.
+
+Danny Baumann <dannybaumann@web.de>	2007-06-28
+
+    Added quick'n'dirty German translation for testing purposes.
+
+Danny Baumann <dannybaumann@web.de>	2007-06-28
+
+    We have no de translation yet. Revert accidential change.
+
+Danny Baumann <dannybaumann@web.de>	2007-06-28
+
+    Don't split strings because it confuses gettext.
+
+Danny Baumann <dannybaumann@web.de>	2007-06-28
+
+    Create Makefile in po directory.
+
+Jigish Gohil <cyberorg@prime.cyberorg.info>	2007-06-28
+
+    initial l10n for ccsm
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-28
+
+    Replace advanced search and backend & profile buttons
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-28
+
+    Added exit button
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-28
+
+    Moved Profile & Backend button to the top, made categories always expanded
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-28
+
+    Use tooltips for longDesc in the mainview
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-28
+
+    Onyl display screen section when there is more then one screen
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-28
+
+    Sorted plugins in mainview
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-27
+
+    Only display group/subgroup selector when needed
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-27
+
+    Sort plugins after name
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-27
+
+    Initial support for extented settings search
+
+Treviño - 3v1n0 <trevi55@gmail.com>	2007-06-25
+
+    Interface completely 'Tooltipized'.
+    Added support for tooltips which now show the LongDesc of
+    each plugin setting and some extra informations.
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-25
+
+    Fixed loosing focus while typing in the settings filter entry
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-25
+
+    Search in setting longDesc and value
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-23
+
+    Now search in the setting name as well
+
+Quinn Storm <quinn@darter.myhome.westell.com>	2007-06-22
+
+    remove the cache I added in previous commit, it might cause problems
+    add explicit 'del' in the BackToMain, help the GC along a bit
+
+Quinn Storm <quinn@darter.myhome.westell.com>	2007-06-22
+
+    Make sure all created classes are properly owned!
+    I hope this doesn't leak objects (didn't vet the whole structure), but it fixes animation.
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-21
+
+    Same fix for multi lists
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-21
+
+    This should avoid empty list entries
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-20
+
+    Updated some icons
+
+Dennis Kasprzyk <onestone@opencompositing.org>	2007-06-20
+
+    compizconfig-bindings -> compizconfig-python
+
+Dennis Kasprzyk <onestone@opencompositing.org>	2007-06-20
+
+    Package rename
+
+Dennis Kasprzyk <onestone@opencompositing.org>	2007-06-20
+
+    Package rename
+
+Erkin Bahceci <erkinbah@gmail.com>	2007-06-19
+
+    More efficient int list read.
+
+Erkin Bahceci <erkinbah@gmail.com>	2007-06-19
+
+    Int list integers don't have to start with 0, revert read change.
+
+Erkin Bahceci <erkinbah@gmail.com>	2007-06-19
+
+    Sort integer option choices and integer list option items according to integer value.
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-18
+
+    Fix background color for dark gtk themes
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-17
+
+    Disbale feature check until we have the support in compiz-fdo
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-17
+
+    Added support for profile import and expport
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-16
+
+    Revert "Added support for pyGtk 2.8.0"
+    
+    This reverts commit d00842c844c5fdf7666e42045d368378b9a470a1.
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-16
+
+    Added support for pyGtk 2.8.0
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-15
+
+    Now update profiles properly
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-15
+
+    Made plugin conflicts work
+
+Dennis Kasprzyk <onestone@opencompositing.org>	2007-06-14
+
+    Added ccsm.in to EXTRA_DIST
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-14
+
+    Disable ReadOnly options
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-14
+
+    Update integration/profile support on backend change
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-14
+
+    Gray out profle/integration if not supported by the backend
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-13
+
+    Added support for DE integration
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-13
+
+    Added spacing to the category header. Thx to Griswold
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-13
+
+    Changed prefix for image feature
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-13
+
+    Check whether the plugin which can load this image is available before
+    applying the value
+
+Treviño - 3v1n0 <trevi55@gmail.com>	2007-06-13
+
+    Now ccsm.svg shows correctly as window icon
+
+Treviño - 3v1n0 <trevi55@gmail.com>	2007-06-13
+
+    Set DataDir and IconDir; fixed main icon position
+
+Treviño - 3v1n0 <trevi55@gmail.com>	2007-06-13
+
+    Set main-window icon as ccsm.svg
+
+Treviño - 3v1n0 <trevi55@gmail.com>	2007-06-13
+
+    Added ccsm.png to install system
+
+Treviño - 3v1n0 <trevi55@gmail.com>	2007-06-13
+
+    Removed .svg extension on desktop file
+    (to make the DE use the best file for its tastes)
+
+Treviño - 3v1n0 <trevi55@gmail.com>	2007-06-13
+
+    Added ccsm png image with 128x128 aspect ratio
+    To support legacy desktop...
+
+Treviño - 3v1n0 <trevi55@gmail.com>	2007-06-13
+
+    Renamed both application and .desktop title as
+    CompizConfig Settings Manager
+
+Andrew Riedi <andrewriedi@gmail.com>	2007-06-13
+
+    Combo boxed do not have set_active_text().
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-13
+
+    Added icon for cubereflex and regex
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-13
+
+    Fixed file filter
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-13
+
+    Added icon for unkown plugins
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-12
+
+    Fixed a typo which always made sub groups expanded
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-12
+
+    Fixed typo
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-12
+
+    Added support for file hint
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-12
+
+    Fixed action conflict handling
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-11
+
+    Added new icon for inotify
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-11
+
+    Added ranking for actions
+
+Danny Baumann <dannybaumann@web.de>	2007-06-11
+
+    Added Utility section icon and removed development section icon.
+
+Dennis Kasprzyk <onestone@beryl-project.org>	2007-06-11
+
+    libccs -> libcompizconfig rename
+
+Danny Baumann <dannybaumann@web.de>	2007-06-11
+
+    Show an 'unknown' icon for plugins that don't have a specific icon.
+    For the moment, this is just a copy of the 'Uncategorized' icon - feel free to create a better replacement ;-)
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-11
+
+    Fixed bug with searching in the plugin options.
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-10
+
+    Added icons for winrules and scaleaddon. Updated the wallpaper icon.
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-10
+
+    Added min size for list widgets, added an option filter to the plugin page
+    and did some minor cleanup
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-07
+
+    Use ranking system
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-07
+
+    Added support for 'merged' lists. That means you can now have a subgroup
+    with list and they will be merged to one list with columns.
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-06
+
+    Added icon for wallpaper plugin and updated expo icon
+
+Dennis Kasprzyk <onestone@beryl-project.org>	2007-06-06
+
+    Removed string restrictions
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-05
+
+    Display options in the same order as in metadata
+
+Danny Baumann <dannybaumann@web.de>	2007-06-04
+
+    Fix selection between int lists with and without descriptions.
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-03
+
+    Forgot to modify setting reading ~~
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-03
+
+    Added support for int lists with description
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-03
+
+    Removed some unfinished code I accidentally committed
+
+Patrick Niklaus <marex@opencompositing.org>	2007-06-03
+
+    Just another typo.. ><
+
+Patrick Niklaus <marex@opencompositing.org>	2007-05-30
+
+    Fixed a few typos
+
+marex <marex@beryl-project.org>	2007-05-25
+
+    Updated accessibility icon, added icons for glib and resizeinfo
+
+marex <marex@beryl-project.org>	2007-05-24
+
+    Fixed bug with edges reading
+
+marex <marex@beryl-project.org>	2007-05-22
+
+    Fixed typo's
+
+marex <marex@beryl-project.org>	2007-05-22
+
+    Added proper multiple edges support
+
+marex <marex@beryl-project.org>	2007-05-21
+
+    Added support for IntDesc
+
+marex <marex@beryl-project.org>	2007-05-21
+
+    Fixed category toggling for Uncategorized
+
+marex <marex@beryl-project.org>	2007-05-21
+
+    Fixed typo
+
+marex <marex@beryl-project.org>	2007-05-20
+
+    Added icon for firepaint
+
+marex <marex@beryl-project.org>	2007-05-20
+
+    Accidentally removed a function
+
+marex <marex@beryl-project.org>	2007-05-19
+
+    Add categories in the right order
+
+marex <marex@beryl-project.org>	2007-05-19
+
+    Category buttons are now useable
+
+marex <marex@beryl-project.org>	2007-05-19
+
+    Added an own page for backend and profile.
+
+Dennis Kasprzyk <onestone@beryl-project.org>	2007-05-19
+
+    Typo
+
+Merge: 3ecfff5 eebd000
+Dennis Kasprzyk <onestone@beryl-project.org>	2007-05-19
+
+    Merge branch 'master' of git+ssh://git.opencompositing.org/git/users/quinn/ccsm
+
+Dennis Kasprzyk <onestone@beryl-project.org>	2007-05-19
+
+    Set vertical scrollbar back to old value
+
+marex <marex@beryl-project.org>	2007-05-19
+
+    Added category buttons, just for review, not used yet.
+
+marex <marex@beryl-project.org>	2007-05-19
+
+    Fixed typo
+
+marex <marex@beryl-project.org>	2007-05-19
+
+    Now search in category name too
+
+marex <marex@beryl-project.org>	2007-05-18
+
+    Added multiscreen support for CCSM, please test\!
+
+Merge: f158b7e 465427b
+marex <marex@beryl-project.org>	2007-05-18
+
+    Merge with git+ssh://marex@git.beryl-project.org/git/compcomm/compiz-configuration-system/tools/ccsm
+
+marex <marex@beryl-project.org>	2007-05-18
+
+    Added icon for expo plugin
+
+Dennis Kasprzyk <onestone@beryl-project.org>	2007-05-18
+
+    set minimum size to one column
+
+marex <marex@beryl-project.org>	2007-05-18
+
+    Fixed typo, there might be more of these -.-
+
+marex <marex@beryl-project.org>	2007-05-18
+
+    Cleaned up indention, naming, etc...
+
+marex <marex@beryl-project.org>	2007-05-17
+
+    Added fix for HScroolbar
+
+marex <marex@beryl-project.org>	2007-05-17
+
+    Now search in the name and longDesc too
+
+marex <marex@beryl-project.org>	2007-05-17
+
+    Fixed warning while using filter
+
+marex <marex@beryl-project.org>	2007-05-17
+
+    Added supportfor the filter
+
+marex <marex@beryl-project.org>	2007-05-17
+
+    Some size optimizations
+
+marex <marex@beryl-project.org>	2007-05-16
+
+    Fixed key bindings
+
+marex <marex@beryl-project.org>	2007-05-16
+
+    Updated to the changes in the bindings
+
+marex <marex@beryl-project.org>	2007-05-16
+
+    Added expand and hide buttons for profile and backend to clean up the
+    left pane a bit
+
+marex <marex@beryl-project.org>	2007-05-16
+
+    Fixed/Worked-A-Round edge settings
+
+marex <marex@beryl-project.org>	2007-05-15
+
+    Now update the plugin view properly
+
+marex <marex@beryl-project.org>	2007-05-15
+
+    Added icons for FUSE and ExtraWM
+
+marex <marex@beryl-project.org>	2007-05-15
+
+    ProfileBox gets updated when the backend changed -- not used yet since
+    it sometimes causes problems
+
+marex <marex@beryl-project.org>	2007-05-14
+
+    Little cleanup
+
+marex <marex@beryl-project.org>	2007-05-14
+
+    * Added version check
+    * You can now add and remove profiles
+    * Profile box is now updated properly
+
+Danny Baumann <dannybaumann@web.de>	2007-05-14
+
+    Fixed copy'n'paste error.
+
+marex <marex@beryl-project.org>	2007-05-14
+
+    Add indention to the plugin longDesc and fixed the line wrapping
+
+marex <marex@beryl-project.org>	2007-05-14
+
+    Added plugin longDesc as info text in the left pane
+
+marex <marex@beryl-project.org>	2007-05-14
+
+    Use shortDesc instead of the backend name
+
+Danny Baumann <dannybaumann@web.de>	2007-05-14
+
+    Adjust Makefile for new fakeargb icon name.
+
+Danny Baumann <dannybaumann@web.de>	2007-05-14
+
+    Adapted icon path to new plugin binary name.
+
+marex <marex@beryl-project.org>	2007-05-13
+
+    Added backend support. ATTENTION: It sometimes still seg faults.
+
+Danny Baumann <daba@mobilrechner.localdomain>	2007-05-13
+
+    Fix icon installation for recently added icons.
+
+Alex Heck <nesl247@gmail.com>	2007-05-13
+
+    Ugh, first build system, please excuse the multiple commits
+
+Alex Heck <nesl247@gmail.com>	2007-05-13
+
+    Add .desktop file
+
+Alex Heck <nesl247@gmail.com>	2007-05-13
+
+    Build system fixes
+
+Alex Heck <nesl247@gmail.com>	2007-05-13
+
+    Fix pixmapdir
+
+Alex Heck <nesl247@gmail.com>	2007-05-13
+
+    Updated autogen and configure
+
+Alex Heck <nesl247@gmail.com>	2007-05-13
+
+    Oops, missed makefile
+
+Alex Heck <nesl247@gmail.com>	2007-05-13
+
+    Initial autotools setup
+
+marex <marex@beryl-project.org>	2007-05-13
+
+    Added icon for blur, mblur, schemep and screencasting, also added icon for
+    default category.
+
+marex <marex@beryl-project.org>	2007-05-13
+
+    Use MessageDialog instead of Dialog and adjusted the looks of some
+    dialoges
+
+marex <marex@beryl-project.org>	2007-05-11
+
+    Added profile support
+
+marex <marex@beryl-project.org>	2007-05-11
+
+    Added plugin icon in plugin view
+
+marex <marex@beryl-project.org>	2007-05-11
+
+    Added icons for categories and plugins
+
+marex <marex@beryl-project.org>	2007-05-10
+
+    Use another pixmap directory and update the plugin checkboxes in the
+    overview
+
+marex <marex@beryl-project.org>	2007-05-10
+
+    Debug message...
+
+marex <marex@beryl-project.org>	2007-05-10
+
+    Fixed bug with toggle button
+
+marex <marex@beryl-project.org>	2007-05-10
+
+    * Fixed bool setting indention
+    * Set proper size and title
+    * Connect to the destroy event
+    * Added enable button to plugin overview to quickly enable plugins
+
+Danny Baumann <dannybaumann@web.de>	2007-05-10
+
+    Syntax fix
+
+Quinn Storm <quinn@darter.(none)>	2007-05-10
+
+    add key/mouse conflict binding
+
+Quinn Storm <quinn@darter.(none)>	2007-05-10
+
+    clean up and hook up action option setting
+    still left:
+action conflicts           
+proper icons           
+
+Quinn Storm <quinn@darter.(none)>	2007-05-10
+
+    add dialogs for plugin conflict handling and hook up plugin enable/disable buttons
+
+Quinn Storm <quinn@darter.(none)>	2007-05-10
+
+    cache image loading to make switching near-instant
+
+Merge: fadf374 3a8babf
+Quinn Storm <quinn@darter.(none)>	2007-05-10
+
+    should clean up merge...
+    Merge branch 'master' of git+ssh://git.beryl-project.org/git/users/quinn/ccsm
+    
+    Conflicts:
+    
+ccsm           
+
+Quinn Storm <quinn@darter.(none)>	2007-05-09
+
+    also zap plugin widgets when not visible, faster startup that way & saves ram, and in general is cleaner (less likely to load something wrong)
+    in the process, zap AllWidgets (AllPlugins still exists at the moment because I haven't implemented plugin enabling/disabling yet)
+
+Quinn Storm <quinn@darter.(none)>	2007-05-09
+
+    move EdgeList
+
+Quinn Storm <quinn@darter.(none)>	2007-05-09
+
+    some cleanup
+    add autoreshaping
+    rebuild table on 'back' so it doesn't get 'stuck'
+
+Quinn Storm <quinn@darter.(none)>	2007-05-09
+
+    I should have been committing far more often
+    
+    This is a rather massive change, its an interface change along with a lot of work toward bindings
+
+marex <marex@beryl-project.org>	2007-05-09
+
+    Key bindings have now their own tab
+
+marex <marex@beryl-project.org>	2007-05-09
+
+    All SettingsItems have now an idention of 5 px
+
+marex <marex@beryl-project.org>	2007-05-09
+
+    Added a small and a expanded mode to key bindings
+
+marex <marex@beryl-project.org>	2007-05-08
+
+    Sorry, forgot to remove debug messages
+
+marex <marex@beryl-project.org>	2007-05-08
+
+    Fixed reset button for actions
+
+marex <marex@beryl-project.org>	2007-05-07
+
+    Added reset and bell button
+
+marex <marex@beryl-project.org>	2007-05-07
+
+    Fixed appling action settings
+
+marex <marex@beryl-project.org>	2007-05-07
+
+    Ops, forgot to add the option name...
+
+marex <marex@beryl-project.org>	2007-05-07
+
+    Added experimental layout for actions, somehow doesn't apply the settings
+    yet
+
+marex <marex@beryl-project.org>	2007-05-06
+
+    Made the plugin chooser size static and the plugin name wrapped
+
+Merge: 035fb37 93e8f7d
+marex <marex@beryl-project.org>	2007-05-06
+
+    Merge with git+ssh://marex@git.beryl-project.org/git/users/quinn/ccsm
+
+marex <marex@beryl-project.org>	2007-05-06
+
+    Return to the original usage of window matches
+
+Quinn Storm <quinn@darter.(none)>	2007-05-06
+
+    clean up numeric setting layout mess
+
+Quinn Storm <quinn@darter.(none)>	2007-05-06
+
+    add basic "automatic" handling of plugin conflicts
+    fix up calls to Write() to use a global Write() function that also re-reads settings
+
+Quinn Storm <quinn@darter.(none)>	2007-05-06
+
+    merge in old ccsm stuff
+    move ccsm to root of repo for now
+
+Merge: 069830c a8393dd
+Quinn Storm <quinn@darter.(none)>	2007-05-06
+
+    Merge ../ccs-python
+
+Quinn Storm <quinn@darter.(none)>	2007-05-06
+
+    commit the rename
+
+quinn <quinn@de35.org>	2007-05-06
+
+    Dummy commit
+
+Quinn Storm <quinn@darter.(none)>	2007-05-06
+
+    change GPL to LGPL in ccs.pyx
+
+Merge: 6e2123b f793ddc
+Quinn Storm <quinn@darter.(none)>	2007-05-06
+
+    Merge git+ssh://git.beryl-project.org/git/compcomm/compiz-configuration-system/bindings/ccs-python
+
+marex <marex@beryl-project.org>	2007-05-05
+
+    bset-new: WIndow Matches should now work, at least I hope so.
+
+marex <marex@beryl-project.org>	2007-05-05
+
+    bset-new: Proper size and title
+
+marex <marex@beryl-project.org>	2007-05-05
+
+    bset-new: Added class for window matches, not used yet, because I have no
+    idea how to find out wether its a normal string or a window match..
+
+marex <marex@beryl-project.org>	2007-05-05
+
+    bset-new: Added proper layout for bool settings
+
+Quinn Storm <quinn@darter.(none)>	2007-05-03
+
+    add sorting function to sort classes of settings together, then by ShortDesc
+
+Dennis Kasprzyk <onestone@beryl-project.org>	2007-05-02
+
+    applied name change
+
+Quinn Storm <quinn@darter.(none)>	2007-04-29
+
+    set up and add in some plugin en/disable stuff, not sure yet if as_____plugin_enabled is correct anymore or if I need to handle as_active_plugins myself
+
+Quinn Storm <quinn@darter.(none)>	2007-04-29
+
+    add plugin en/disable conflict readout to pyx
+
+Quinn Storm <quinn@darter.(none)>	2007-04-28
+
+    a little bit of interface cleanup
+
+Quinn Storm <quinn@darter.(none)>	2007-04-28
+
+    yeah, more updates!
+    list settings are pretty much done (but there seems to be a bug in libbs, need to check it out more thoroughly)
+    reworked setting.Hints in pyx to make it more useful
+
+Quinn Storm <quinn@darter.(none)>	2007-04-27
+
+    oops, forgot to save in vim
+
+Quinn Storm <quinn@darter.(none)>	2007-04-27
+
+    more updates, code cleanup
+    there seems to be something wrong in libbs's color option handling, but it could be a bug in my bindings, not sure yet
+
+Quinn Storm <quinn@darter.(none)>	2007-04-27
+
+    a bit more work...not sure how much more I'll be doing tonight
+
+Quinn Storm <quinn@darter.(none)>	2007-04-27
+
+    more work on filling out the interface...
+
+Quinn Storm <quinn@darter.(none)>	2007-04-27
+
+    'bset-new' is an attempt to rewrite the old code I was originally trying
+    to port as 'bset', using better coding practices such as classes, etc.,
+       and in general to make it cleaner and easier to maintain
+
+Quinn Storm <quinn@darter.(none)>	2007-04-26
+
+    add 'bset' - very basic beginning of port of beryl-settings to bsettings
+    it doesn't install or anything, and will probably not work right at all
+    please do not use it unless you are planning on working on it
+
+Quinn Storm <quinn@darter.(none)>	2007-04-26
+
+    just some little things to make bsettings start to come together
+
+Quinn Storm <quinn@darter.(none)>	2007-04-24
+
+    add read, write, few missing bits (setting.Reset(), setting.IsDefault)
+
+Quinn Storm <quinn@darter.(none)>	2007-04-24
+
+    fix a few little bugs with setting values, change Action values to be lists not tuples
+    still a little bug with Action values in that the __get__()'d value can't be immediately
+    reassigned, so it needs to be cached out by the calling app
+
+Quinn Storm <quinn@darter.(none)>	2007-04-24
+
+    fold plugins into categories
+
+Quinn Storm <quinn@darter.(none)>	2007-04-24
+
+    setting value setting implemented completely, cleaned up from previous partial implementation
+    still not tested
+
+Quinn Storm <quinn@darter.(none)>	2007-04-24
+
+    option setting for all but lists is in & compiles, *should* work, not yet tested
+
+Quinn Storm <quinn@darter.(none)>	2007-04-24
+
+    I don't like SSGroup, I'll likely replace it with something better protected,
+      but other than that, settings groups/subgroups are now folded in properly
+
+Quinn Storm <quinn@darter.(none)>	2007-04-24
+
+    finish up settings Value __get__
+    next up: __set__
+
+Quinn Storm <quinn@darter.(none)>	2007-04-24
+
+    getting far closer to being done, still haven't gotten to actual
+    value read/write, but have a lot more of the general structure complete
+
+Quinn Storm <quinn@darter.(none)>	2007-04-24
+
+    getting started...
+
+Quinn Storm <quinn@darter.(none)>	2007-04-24
+
+    fix build system and a few glitches
+
+Quinn Storm <quinn@darter.(none)>	2007-04-24
+
+    fix version in test for bsettings
+    add acinclude.m4 for PYTHON_DIR_VERSION
+
+Quinn Storm <quinn@darter.(none)>	2007-04-24
+
+    adding simple bsettings.pyx file to get started
+
+Quinn Storm <quinn@darter.(none)>	2007-04-24
+
+    remove VERSION file & use of it
+
+Quinn Storm <quinn@darter.(none)>	2007-04-24
+
+    add the rest of the build system
+    update various files for bsettings vs berylsettings
+
+Quinn Storm <quinn@darter.(none)>	2007-04-24
+
+    copy over build system from bsb
+
+Quinn Storm <quinn@darter.(none)>	2007-04-24
+
+    remove dummy
+
+Dennis Kasprzyk <onestone@beryl-project.org>	2007-04-24
+
+    test commit
+
+compiz <compiz@de35.org>	2007-04-24
+
+    Dummy commit
