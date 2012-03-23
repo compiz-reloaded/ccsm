@@ -41,9 +41,9 @@ def try_register_dbus ():
     except ImportError:
         return
 
-	# rely on a reasonably new dbus-python
-	if dbus.version < (0, 80, 0):
-		return
+    # rely on a reasonably new dbus-python
+    if dbus.version < (0, 80, 0):
+        return
 
     class CCSMObject(dbus.service.Object):
         main_window = None
