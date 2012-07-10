@@ -1193,13 +1193,15 @@ class MatchButton(gtk.Button):
         dlg.show_all ()
 
         response = dlg.run ()
-        dlg.destroy ()
+        dlg.hide ()
         if response == gtk.RESPONSE_OK:
             type     = type_chooser.get_active_text ()
             value    = entry.get_text ()
             relation = relation_chooser.get_active_text ()
             invert   = check.get_active ()
             self.generate_match (type, value, relation, invert)
+
+        dlg.destroy ()
 
 class FileButton (gtk.Button):
     __gsignals__    = {"changed" : (gobject.SIGNAL_RUN_FIRST,
