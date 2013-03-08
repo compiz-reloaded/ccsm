@@ -184,7 +184,7 @@ class PrettyButton (gtk.Button):
         if has_focus:
             self.unset_flags (gtk.HAS_FOCUS)
 
-        ret = super (PrettyButton, self).do_expose_event (self, event)
+        ret = gtk.Button.do_expose_event (self, event)
 
         if has_focus:
             self.set_flags (gtk.HAS_FOCUS)
