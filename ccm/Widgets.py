@@ -446,11 +446,11 @@ class ModifierSelector (gtk.DrawingArea):
             cr.fill_preserve ()
             if mod in self._current:
                 cr.set_source_rgb (0.3, 0.3, 0.3)
-                self.write (cr, x + 23, y + 12, text)
+                self.write (cr, x + 23, y + 15, text)
                 cr.set_source_rgb (0.5, 1, 0)
             else:
                 cr.set_source_rgb (0, 0, 0)
-            self.write (cr, x + 22, y + 11, text)
+            self.write (cr, x + 22, y + 14, text)
 
     def write (self, cr, x, y, text):
         cr.move_to (x, y)
