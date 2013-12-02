@@ -1036,7 +1036,7 @@ class KeyGrabber (gtk.Button):
         if key == None and mods == None:
             key = self.key
             mods = self.mods
-        label = gtk.accelerator_name (key, mods)
+        label = GetAcceleratorName (key, mods)
         if not len (label):
             label = _("Disabled")
         gtk.Button.set_label (self, label)

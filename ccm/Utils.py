@@ -404,6 +404,10 @@ def GetSettings(group, displayOnly=False, types=None):
 
     return itertools.chain(screen, display)
 
+def GetAcceleratorName(key, mods):
+    # <Primary> is <Control> everywhere except for Mac OS
+    return gtk.accelerator_name(key, mods).replace('<Primary>', '<Control>')
+
 # Support python 2.4
 try:
     any
