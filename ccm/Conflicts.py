@@ -442,6 +442,10 @@ class PluginConflict(Conflict):
         elif conflict[0] == 'ConflictPlugin':
             msg = _("Plugin <b>%(plugin_conflict)s</b> conflicts with " \
 					"<b>%(plugin)s</b>.")
+
+            msg_dict = {'plugin_conflict': conflict[2][0].ShortDesc,
+                        'plugin': plugin.ShortDesc}
+
             msg = msg % protect_markup_dict (msg_dict)
 
             okMsg = _("Disable %(plugin_conflict)s") % msg_dict
