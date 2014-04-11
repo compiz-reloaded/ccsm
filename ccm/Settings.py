@@ -495,8 +495,9 @@ class NumberSetting(StockSetting):
             self.Inc = info[2]
         inc = self.Inc
         self.NoneValue = info[0]
-        self.Adj = gtk.Adjustment(self.Get(), info[0], info[1], inc, inc*10)
+        self.Adj = gtk.Adjustment(0, info[0], info[1], inc, inc*10)
         self.Spin = gtk.SpinButton(self.Adj)
+        self.Spin.set_value(self.Get())
 
         self.Scale = gtk.HScale(self.Adj)
 
