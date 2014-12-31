@@ -8,3 +8,6 @@ Run the setup.py script to install, e.g.:
 To install it to /usr/local (or any other prefix) use:
     python setup.py install --prefix=/usr/local
 (specify --prefix _after_ install or it won't work)
+
+For debian based distributions, to avoid having ccm module installed
+into an incorrect location, pass --install-layout=deb to setup.py
