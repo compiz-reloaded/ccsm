@@ -498,16 +498,10 @@ class NumberSetting(StockSetting):
         self.Adj = gtk.Adjustment(0, info[0], info[1], inc, inc*10)
         self.Spin = gtk.SpinButton(self.Adj)
         self.Spin.set_value(self.Get())
-
-        self.Scale = gtk.HScale(self.Adj)
-
-        self.Scale.set_update_policy(gtk.UPDATE_DISCONTINUOUS)
-        self.Scale.connect("value-changed", self.Changed)
         self.Spin.connect("value-changed", self.Changed)
-        self.Widget = self.Scale
+        self.Widget = self.Spin
 
-        self.Box.pack_start(self.Scale, True, True)
-        self.Box.pack_start(self.Spin, False, False)
+        self.Box.pack_end(self.Spin, False, False)
 
     def _Read(self):
         self.Adj.set_value(self.Get())
@@ -521,7 +515,6 @@ class IntSetting(NumberSetting):
         self.Inc = 1
         NumberSetting._Init(self)
         self.Spin.set_digits(0)
-        self.Scale.set_digits(0)
 
 class FloatSetting(NumberSetting):
 
@@ -531,7 +524,6 @@ class FloatSetting(NumberSetting):
         self.Inc = None
         NumberSetting._Init(self)
         self.Spin.set_digits(4)
-        self.Scale.set_digits(4)
 
 
 class ColorSetting(StockSetting):
