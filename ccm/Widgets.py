@@ -1234,6 +1234,9 @@ class FileButton (gtk.Button):
         filter = gtk.FileFilter ()
         if self._image:
             filter.set_name (_("Images"))
+            filter.add_mime_type ("image/png")
+            filter.add_mime_type ("image/jpeg")
+            filter.add_mime_type ("image/svg+xml")
             filter.add_pattern ("*.png")
             filter.add_pattern ("*.jpg")
             filter.add_pattern ("*.jpeg")
