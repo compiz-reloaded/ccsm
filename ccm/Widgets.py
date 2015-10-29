@@ -407,13 +407,13 @@ class ModifierSelector (gtk.DrawingArea):
         x0, y0, width, height = self._x0, self._y0, self._width, self._height
         self._modifiers = {
             "Shift"     : (x0, y0),
-            "Control"   : (x0, y0 + height),
+            "Primary"   : (x0, y0 + height),
             "Super"     : (x0 + width, y0),
             "Alt"       : (x0 + width, y0 + height)
         }
 
         self._names = {
-            "Control"   : "Ctrl"
+            "Primary"   : "Ctrl"
         }
 
     def set_current (self, value):

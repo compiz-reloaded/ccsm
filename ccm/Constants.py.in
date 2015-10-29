@@ -44,7 +44,7 @@ TableY   = 2
 
 # Action Constants
 #
-KeyModifier = ["Shift", "Control", "Mod1", "Mod2", "Mod3", "Mod4",
+KeyModifier = ["Shift", "Primary", "Mod1", "Mod2", "Mod3", "Mod4",
                "Mod5", "Alt", "Meta", "Super", "Hyper", "ModeSwitch"]
 Edges       = ["Left", "Right", "Top", "Bottom",
                "TopLeft", "TopRight", "BottomLeft", "BottomRight"]
