@@ -20,6 +20,7 @@
 #          Christopher Williams (christopherw@verizon.net)
 # Copyright (C) 2007 Quinn Storm
 
+import pangocairo
 import pygtk
 import gtk
 import gobject
@@ -229,6 +230,56 @@ class MatchSetting(StringSetting):
         StringSetting._Init(self)
         self.MatchButton = MatchButton(self.Entry)
         self.Box.pack_start(self.MatchButton, False, False)
+
+class FamilyStringSetting(StockSetting):
+    FontModel = None
+
+    @classmethod
+    def _setupFontModel(cls):
+        if FamilyStringSetting.FontModel:
+            FamilyStringSetting.clear()
+        else:
+            FamilyStringSetting.FontModel = gtk.ListStore(gobject.TYPE_STRING)
+        families = pangocairo.cairo_font_map_get_default().list_families()
+        for f in sorted(families, key=lambda x: x.get_name()):
+            FamilyStringSetting.FontModel.append([f.get_name()])
+
+    def _Init(self):
+        StockSetting._Init(self)
+        if not FamilyStringSetting.FontModel:
+            FamilyStringSetting._setupFontModel()
+
+        self.FontModel = FamilyStringSetting.FontModel
+        self.ComboFonts = gtk.ComboBoxEntry(model=FamilyStringSetting.FontModel)
+        self.ComboFonts.set_entry_text_column(0)
+        self.FontCompletion = gtk.EntryCompletion()
+        self.FontCompletion.set_model(model=FamilyStringSetting.FontModel)
+        self.FontCompletion.set_text_column(0)
+
+        self.ComboFonts.child.set_completion(self.FontCompletion)
+        self.PreviewEntry = gtk.Entry()
+        self.PreviewEntry.set_text("ABCDGEFG abcdefg")
+        self.ComboFonts.child.connect('changed', self.updatePreviewEntry, self.PreviewEntry)
+        self.ComboFonts.child.connect('activate', self.Changed)
+        self.ComboFonts.child.connect('focus-out-event', self.Changed)
+        self.Box.pack_start(self.PreviewEntry, True, True)
+        self.Box.pack_start(self.ComboFonts, False, False)
+
+    def _Read(self):
+        self.ComboFonts.child.set_text(self.Get())
+
+    def _Changed(self):
+        self.Set(self.ComboFonts.child.get_text())
+
+    def updatePreviewEntry(self, entry, previewWidget):
+        tmpStyle = previewWidget.get_style().copy()
+        style = gtk.RcStyle()
+
+        fd = tmpStyle.font_desc.copy()
+        fd.set_family(entry.get_text())
+
+        style.font_desc = fd
+        previewWidget.modify_style(style)
 
 class FileStringSetting(StringSetting):
 
@@ -1396,6 +1447,8 @@ def MakeStringSetting (setting, List=False):
                 return FileStringSetting (setting, isImage=True, List=List)
             else:
                 return FileStringSetting (setting, List=List)
+        elif "family" in setting.Hints:
+            return FamilyStringSetting (setting)
         elif "directory" in setting.Hints:
             return FileStringSetting (setting, isDirectory=True, List=List)
         else:
