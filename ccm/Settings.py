@@ -259,6 +259,7 @@ class FamilyStringSetting(StockSetting):
         self.ComboFonts.child.set_completion(self.FontCompletion)
         self.PreviewEntry = gtk.Entry()
         self.PreviewEntry.set_text("ABCDGEFG abcdefg")
+        self.ComboFonts.connect('changed', self.Changed)
         self.ComboFonts.child.connect('changed', self.updatePreviewEntry, self.PreviewEntry)
         self.ComboFonts.child.connect('activate', self.Changed)
         self.ComboFonts.child.connect('focus-out-event', self.Changed)
