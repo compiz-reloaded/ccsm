@@ -265,6 +265,10 @@ class FamilyStringSetting(StockSetting):
         self.Box.pack_start(self.PreviewEntry, True, True)
         self.Box.pack_start(self.ComboFonts, False, False)
 
+    def DoReset(self, foo):
+        StockSetting.DoReset(self, foo)
+        self.PreviewEntry.set_text("ABCDGEFG abcdefg")
+
     def _Read(self):
         self.ComboFonts.child.set_text(self.Get())
 
