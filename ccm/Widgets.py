@@ -996,6 +996,15 @@ class KeyGrabber (gtk.Button):
         if (key == gtk.keysyms.ISO_Left_Tab):
             key = gtk.keysyms.Tab
 
+        if event.keyval == gtk.keysyms.Escape and mods:
+            self.end_key_grab ()
+            self.set_label ()
+            dialog = gtk.MessageDialog(buttons=gtk.BUTTONS_OK)
+            dialog.set_markup(_("Escape is reserved and cannot be used for keybindings."))
+            dialog.run()
+            dialog.destroy()
+            return
+
         if gtk.accelerator_valid (key, mods) \
            or (key == gtk.keysyms.Tab and mods):
             self.set_label (key, mods)
