@@ -1,5 +1,5 @@
 include po/*
-include TODO README INSTALL AUTHORS COPYING LICENSE NEWS VERSION ChangeLog
+include INSTALL AUTHORS COPYING LICENSE VERSION
 include ccsm.desktop.in
 include ccm/Constants.py.in
 include Makefile MANIFEST.in
