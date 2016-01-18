@@ -77,26 +77,26 @@ class Image (gtk.Image):
         try:
             if type in  (ImagePlugin, ImageCategory, ImageThemed):
                 pixbuf = None
-                
+
                 if type == ImagePlugin:
                     name = "plugin-" + name
                     try:
                         pixbuf = IconTheme.load_icon (name, size, 0)
                     except gobject.GError:
                         pixbuf = IconTheme.load_icon ("plugin-unknown", size, 0)
-                
+
                 elif type == ImageCategory:
                     name = "plugins-" + name
                     try:
                         pixbuf = IconTheme.load_icon (name, size, 0)
                     except gobject.GError:
                         pixbuf = IconTheme.load_icon ("plugins-unknown", size, 0)
-                
+
                 else:
                     pixbuf = IconTheme.load_icon (name, size, 0)
 
                 self.set_from_pixbuf (pixbuf)
-            
+
             elif type == ImageStock:
                 self.set_from_stock (name, size)
         except gobject.GError, e:
@@ -201,14 +201,14 @@ class Label(gtk.Label):
 class NotFoundBox(gtk.Alignment):
     def __init__(self, value=""):
         gtk.Alignment.__init__(self, 0.5, 0.5, 0.0, 0.0)
-        
+
         box = gtk.HBox()
         self.Warning = gtk.Label()
         self.Markup = _("<span size=\"large\"><b>No matches found.</b> </span><span>\n\n Your filter \"<b>%s</b>\" does not match any items.</span>")
         value = protect_pango_markup(value)
         self.Warning.set_markup(self.Markup % value)
         image = Image("face-surprise", ImageThemed, 48)
-            
+
         box.pack_start(image, False, False, 0)
         box.pack_start(self.Warning, True, True, 15)
         self.add(box)
@@ -227,21 +227,21 @@ class IdleSettingsParser:
         self.PluginList = [p for p in self.Context.Plugins.items() if FilterPlugin(p[1])]
         nCategories = len (main.MainPage.RightWidget._boxes)
         self.CategoryLoadIconsList = range (3, nCategories) # Skip the first 3
-        print 'Loading icons...'
+        print("Loading icons...")
 
         gobject.timeout_add (150, self.Wait)
 
     def Wait(self):
         if not self.PluginList:
             return False
-        
+
         if len (self.CategoryLoadIconsList) == 0: # If we're done loading icons
             gobject.idle_add (self.ParseSettings)
         else:
             gobject.idle_add (self.LoadCategoryIcons)
-        
+
         return False
-    
+
     def ParseSettings(self):
         name, plugin = self.PluginList[0]
 
@@ -328,7 +328,7 @@ class Updater:
 
             for setting in list(changed):
                 widgets = self.VisibleSettings.get((setting.Plugin.Name, setting.Name))
-                if widgets: 
+                if widgets:
                     for reference in widgets:
                         widget = reference()
                         if widget is not None:
@@ -405,7 +405,7 @@ def GetSettings(group, displayOnly=False, types=None):
     return itertools.chain(screen, display)
 
 def GetAcceleratorName(key, mods):
-    # <Primary> is <Control> everywhere except for Mac OS
+    # <Primary> is <Control> everywhere except for OS X
     return gtk.accelerator_name(key, mods).replace('<Primary>', '<Control>')
 
 # Support python 2.4

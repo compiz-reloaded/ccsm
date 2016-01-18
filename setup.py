@@ -28,7 +28,7 @@ class install (_install):
         except:
             self.warn ("Could not write installed files list %s" % \
                        INSTALLED_FILES)
-            return 
+            return
         file.write (data)
         file.close ()
 
@@ -51,7 +51,7 @@ class uninstall (_install):
         except:
             self.warn ("Could not read installed files list %s" % \
                        INSTALLED_FILES)
-            return 
+            return
         files = file.readlines ()
         file.close ()
         prepend = ""
@@ -63,7 +63,7 @@ class uninstall (_install):
             for counter in xrange (len (files)):
                 files[counter] = prepend + files[counter].rstrip ()
         for file in files:
-            print "Uninstalling %s" % file
+            print("Uninstalling " + file)
             try:
                 os.unlink (file)
             except:
@@ -72,7 +72,7 @@ class uninstall (_install):
 ops = ("install", "build", "sdist", "uninstall", "clean")
 
 if len (sys.argv) < 2 or sys.argv[1] not in ops:
-    print "Please specify operation : %s" % " | ".join (ops)
+    print("Please specify operation : %s" % " | ".join (ops))
     raise SystemExit
 
 prefix = None
@@ -190,8 +190,8 @@ if sys.argv[1] == "install":
     root_specified = len (filter (lambda s: s.startswith ("--root"),
                                   sys.argv)) > 0
     if not root_specified:
-        print "Updating Gtk icon cache."
+        print("Updating Gtk icon cache.")
         os.system (gtk_update_icon_cache)
     else:
-        print '''*** Icon cache not updated. After install, run this:
-***     %s''' % gtk_update_icon_cache
+        print('''*** Icon cache not updated. After install, run this:
+***     %s''' % gtk_update_icon_cache)
