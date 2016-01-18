@@ -207,8 +207,8 @@ class Setting(object):
 class StockSetting(Setting):
 
     def _Init(self):
-        self.Box.pack_start(self.Label, False, False)
-        self.Box.pack_end(self.Reset, False, False)
+        self.Box.pack_start(self.Label, False, False, 0)
+        self.Box.pack_end(self.Reset, False, False, 0)
 
 class StringSetting(StockSetting):
     def _Init(self):
@@ -217,7 +217,7 @@ class StringSetting(StockSetting):
         self.Entry.connect('activate', self.Changed)
         self.Entry.connect('focus-out-event', self.Changed)
         self.Widget = self.Entry
-        self.Box.pack_start(self.Widget, True, True)
+        self.Box.pack_start(self.Widget, True, True, 0)
 
     def _Read(self):
         self.Entry.set_text(self.Get())
@@ -229,7 +229,7 @@ class MatchSetting(StringSetting):
     def _Init(self):
         StringSetting._Init(self)
         self.MatchButton = MatchButton(self.Entry)
-        self.Box.pack_start(self.MatchButton, False, False)
+        self.Box.pack_start(self.MatchButton, False, False, 0)
 
 class FamilyStringSetting(StockSetting):
     FontModel = None
@@ -263,8 +263,8 @@ class FamilyStringSetting(StockSetting):
         self.ComboFonts.child.connect('changed', self.updatePreviewEntry, self.PreviewEntry)
         self.ComboFonts.child.connect('activate', self.Changed)
         self.ComboFonts.child.connect('focus-out-event', self.Changed)
-        self.Box.pack_start(self.PreviewEntry, True, True)
-        self.Box.pack_start(self.ComboFonts, False, False)
+        self.Box.pack_start(self.PreviewEntry, True, True, 0)
+        self.Box.pack_start(self.ComboFonts, False, False, 0)
 
     def DoReset(self, foo):
         StockSetting.DoReset(self, foo)
@@ -297,7 +297,7 @@ class FileStringSetting(StringSetting):
         StringSetting._Init(self)
         self.FileButton = FileButton(self.Setting.Plugin.Context, self.Entry,
             self.isDirectory, self.isImage)
-        self.Box.pack_start(self.FileButton, False, False)
+        self.Box.pack_start(self.FileButton, False, False, 0)
 
 class EnumSetting(StockSetting):
 
@@ -316,7 +316,7 @@ class EnumSetting(StockSetting):
         self.Combo.connect('changed', self.Changed)
 
         self.Widget = self.Combo
-        self.Box.pack_start(self.Combo, True, True)
+        self.Box.pack_start(self.Combo, True, True, 0)
 
     def _CellEdited(self, cell, path, new_text):
         self.CurrentRow = int(path[0])
@@ -380,7 +380,7 @@ class RestrictedStringSetting(StockSetting):
         self.Combo.connect('changed', self.Changed)
 
         self.Widget = self.Combo
-        self.Box.pack_start(self.Combo, True, True)
+        self.Box.pack_start(self.Combo, True, True, 0)
 
         self.OriginalValue = None
         self.NAItemShift = 0
@@ -458,7 +458,7 @@ class BoolSetting (StockSetting):
         self.CheckButton = gtk.CheckButton ()
         align = gtk.Alignment(yalign=0.5)
         align.add(self.CheckButton)
-        self.Box.pack_end(align, False, False)
+        self.Box.pack_end(align, False, False, 0)
         self.CheckButton.connect ('toggled', self.Changed)
 
     def _Read (self):
@@ -501,7 +501,7 @@ class NumberSetting(StockSetting):
         self.Spin.connect("value-changed", self.Changed)
         self.Widget = self.Spin
 
-        self.Box.pack_end(self.Spin, False, False)
+        self.Box.pack_end(self.Spin, False, False, 0)
 
     def _Read(self):
         self.Adj.set_value(self.Get())
@@ -539,7 +539,7 @@ class ColorSetting(StockSetting):
 
         self.Widget = gtk.Alignment (1, 0.5)
         self.Widget.add (self.Button)
-        self.Box.pack_start(self.Widget, True, True)
+        self.Box.pack_start(self.Widget, True, True, 0)
 
     def GetForRenderer(self):
         return ["#%.4x%.4x%.4x%.4x" %tuple(seq) for seq in self.Setting.Value]
@@ -594,12 +594,12 @@ class BaseListSetting(Setting):
         self.Scroll.props.hscrollbar_policy = gtk.POLICY_AUTOMATIC
         self.Scroll.props.vscrollbar_policy = gtk.POLICY_NEVER
         self.Scroll.add(self.View)
-        self.Widget.pack_start(self.Scroll, True, True)
+        self.Widget.pack_start(self.Scroll, True, True, 0)
         self.Widget.set_child_packing(self.Scroll, True, True, 0, gtk.PACK_START)
         buttonBox = gtk.HBox(False)
         buttonBox.set_spacing(5)
         buttonBox.set_border_width(5)
-        self.Widget.pack_start(buttonBox, False, False)
+        self.Widget.pack_start(buttonBox, False, False, 0)
         buttonTypes = ((gtk.STOCK_NEW, self.Add, None, True),
                  (gtk.STOCK_DELETE, self.Delete, None, False), 
                  (gtk.STOCK_EDIT, self.Edit, None, False),
@@ -609,7 +609,7 @@ class BaseListSetting(Setting):
         for stock, callback, data, sensitive in buttonTypes:
             b = gtk.Button(stock)
             b.set_use_stock(True)
-            buttonBox.pack_start(b, False, False)
+            buttonBox.pack_start(b, False, False, 0)
             if data is not None:
                 b.connect('clicked', callback, data)
             else:
@@ -631,9 +631,9 @@ class BaseListSetting(Setting):
         self.PopupItems[gtk.STOCK_DELETE] = delete
         self.Popup.show_all()
 
-        buttonBox.pack_end(self.Reset, False, False)
+        buttonBox.pack_end(self.Reset, False, False, 0)
 
-        self.Box.pack_start(self.Widget)
+        self.Box.pack_start(self.Widget, True, True, 0)
 
     def AddUpdater(self):
         pass
@@ -686,14 +686,14 @@ class BaseListSetting(Setting):
         dlg = gtk.Dialog(_("Edit"))
         vbox = gtk.VBox(spacing=TableX)
         vbox.props.border_width = 6
-        dlg.vbox.pack_start(vbox, True, True)
+        dlg.vbox.pack_start(vbox, True, True, 0)
         dlg.set_default_size(500, -1)
         dlg.add_button(gtk.STOCK_CLOSE, gtk.RESPONSE_CLOSE)
         dlg.set_default_response(gtk.RESPONSE_CLOSE)
 
         group = gtk.SizeGroup(gtk.SIZE_GROUP_HORIZONTAL)
         for widget in self.Widgets:
-            vbox.pack_start(widget.EBox, False, False)
+            vbox.pack_start(widget.EBox, False, False, 0)
             group.add_widget(widget.Label)
         return dlg
 
@@ -852,14 +852,14 @@ class EnumFlagsSetting(Setting):
                 row += 1
 
         vbox = gtk.VBox()
-        vbox.pack_start(self.Reset, False, False)
+        vbox.pack_start(self.Reset, False, False, 0)
 
         hbox = gtk.HBox()
-        hbox.pack_start(table, True, True)
-        hbox.pack_start(vbox, False, False)
+        hbox.pack_start(table, True, True, 0)
+        hbox.pack_start(vbox, False, False, 0)
 
         frame.add(hbox)
-        self.Box.pack_start(frame, True, True)
+        self.Box.pack_start(frame, True, True, 0)
 
     def _Read(self):
         for key, box in self.Checks:
@@ -903,14 +903,14 @@ class RestrictedStringFlagsSetting(Setting):
                 row += 1
 
         vbox = gtk.VBox()
-        vbox.pack_start(self.Reset, False, False)
+        vbox.pack_start(self.Reset, False, False, 0)
 
         hbox = gtk.HBox()
-        hbox.pack_start(table, True, True)
-        hbox.pack_start(vbox, False, False)
+        hbox.pack_start(table, True, True, 0)
+        hbox.pack_start(vbox, False, False, 0)
 
         frame.add(hbox)
-        self.Box.pack_start(frame, True, True)
+        self.Box.pack_start(frame, True, True, 0)
 
     def _Read(self):
         for key, box in self.Checks:
@@ -948,10 +948,10 @@ class EditableActionSetting (StockSetting):
         editButton.connect ("clicked", self.RunEditDialog)
 
         action = ActionImage (action)
-        self.Box.pack_start (action, False, False)
+        self.Box.pack_start (action, False, False, 0)
         self.Box.reorder_child (action, 0)
-        self.Box.pack_end (editButton, False, False)
-        self.Box.pack_end(alignment, False, False)
+        self.Box.pack_end (editButton, False, False, 0)
+        self.Box.pack_end(alignment, False, False, 0)
         self.Widget = widget
 
 
@@ -971,7 +971,7 @@ class EditableActionSetting (StockSetting):
         alignment.add (entry)
 
         entry.set_tooltip_text(self.Setting.LongDesc)
-        dlg.vbox.pack_start (alignment)
+        dlg.vbox.pack_start (alignment, True, True, 0)
         
         dlg.vbox.show_all ()
         ret = dlg.run ()
@@ -1085,18 +1085,18 @@ class KeySetting (EditableActionSetting):
         alignment = gtk.Alignment ()
         alignment.set_padding (10, 10, 10, 10)
         alignment.add (mainBox)
-        dlg.vbox.pack_start (alignment)
+        dlg.vbox.pack_start (alignment, True, True, 0)
 
         checkButton = gtk.CheckButton (_("Enabled"))
         active = len (self.current) \
                  and self.current.lower () not in ("disabled", "none")
         checkButton.set_active (active)
         checkButton.set_tooltip_text(self.Setting.LongDesc)
-        mainBox.pack_start (checkButton)
+        mainBox.pack_start (checkButton, True, True, 0)
 
         box = gtk.VBox ()
         checkButton.connect ("toggled", ShowHideBox, box, dlg)
-        mainBox.pack_start (box)
+        mainBox.pack_start (box, True, True, 0)
 
         currentMods = ""
         for mod in KeyModifier:
@@ -1107,20 +1107,20 @@ class KeySetting (EditableActionSetting):
         modifierSelector.set_tooltip_text (self.Setting.LongDesc)
         alignment = gtk.Alignment (0.5)
         alignment.add (modifierSelector)
-        box.pack_start (alignment)
+        box.pack_start (alignment, True, True, 0)
 
         key, mods = gtk.accelerator_parse (self.current)
         grabber = KeyGrabber (key = key, mods = mods,
                               label = _("Grab key combination"))
         grabber.set_tooltip_text (self.Setting.LongDesc)
-        box.pack_start (grabber)
+        box.pack_start (grabber, True, True, 0)
 
         label = gtk.Label (self.current)
         label.set_tooltip_text (self.Setting.LongDesc)
         alignment = gtk.Alignment (0.5, 0.5)
         alignment.set_padding (15, 0, 0, 0)
         alignment.add (label)
-        box.pack_start (alignment)
+        box.pack_start (alignment, True, True, 0)
 
         modifierSelector.connect ("added", HandleModifierAdded, label)
         modifierSelector.connect ("removed", HandleModifierRemoved, label)
@@ -1237,18 +1237,18 @@ class ButtonSetting (EditableActionSetting):
         alignment = gtk.Alignment ()
         alignment.set_padding (10, 10, 10, 10)
         alignment.add (mainBox)
-        dlg.vbox.pack_start (alignment)
+        dlg.vbox.pack_start (alignment, True, True, 0)
 
         checkButton = gtk.CheckButton (_("Enabled"))
         active = len (self.current) \
                  and self.current.lower () not in ("disabled", "none")
         checkButton.set_active (active)
         checkButton.set_tooltip_text (self.Setting.LongDesc)
-        mainBox.pack_start (checkButton)
+        mainBox.pack_start (checkButton, True, True, 0)
 
         box = gtk.VBox ()
         checkButton.connect ("toggled", ShowHideBox, box, dlg)
-        mainBox.pack_start (box)
+        mainBox.pack_start (box, True, True, 0)
 
         currentEdges = ""
         for edge in Edges:
@@ -1257,7 +1257,7 @@ class ButtonSetting (EditableActionSetting):
         currentEdges.rstrip ("|")
         edgeSelector = SingleEdgeSelector (currentEdges)
         edgeSelector.set_tooltip_text(self.Setting.LongDesc)
-        box.pack_start (edgeSelector)
+        box.pack_start (edgeSelector, True, True, 0)
 
         currentMods = ""
         for mod in KeyModifier:
@@ -1266,7 +1266,7 @@ class ButtonSetting (EditableActionSetting):
         currentMods.rstrip ("|")
         modifierSelector = ModifierSelector (currentMods)
         modifierSelector.set_tooltip_text(self.Setting.LongDesc)
-        box.pack_start (modifierSelector)
+        box.pack_start (modifierSelector, True, True, 0)
 
         buttonCombo = gtk.combo_box_new_text ()
         currentButton = 1
@@ -1284,7 +1284,7 @@ class ButtonSetting (EditableActionSetting):
         else:
             buttonCombo.set_active (currentButton - 1)
         buttonCombo.set_tooltip_text(self.Setting.LongDesc)
-        box.pack_start (buttonCombo)
+        box.pack_start (buttonCombo, True, True, 0)
 
         dlg.vbox.show_all ()
         ShowHideBox (checkButton, box, dlg)
@@ -1402,7 +1402,7 @@ class EdgeSetting (EditableActionSetting):
         alignment.add (selector)
 
         selector.set_tooltip_text (self.Setting.LongDesc)
-        dlg.vbox.pack_start (alignment)
+        dlg.vbox.pack_start (alignment, True, True, 0)
         
         dlg.vbox.show_all ()
         ret = dlg.run ()
@@ -1434,7 +1434,7 @@ class BellSetting (BoolSetting):
     def _Init (self):
         BoolSetting._Init (self)
         bell = ActionImage ("bell")
-        self.Box.pack_start (bell, False, False)
+        self.Box.pack_start (bell, False, False, 0)
         self.Box.reorder_child (bell, 0)
 
 def MakeStringSetting (setting, List=False):
@@ -1531,7 +1531,7 @@ class SubGroupArea(object):
         if len(settings) > 1 and HasOnlyType(settings, 'List'):
             multiList = MultiListSetting(Settings=settings)
             multiList.Read()
-            self.Child.pack_start(multiList.EBox, True, True)
+            self.Child.pack_start(multiList.EBox, True, True, 0)
             self.MySettings.append(multiList)
             self.Empty = False
             if name:
@@ -1545,7 +1545,7 @@ class SubGroupArea(object):
                 setting = MakeSetting(setting)
                 if setting is not None:
                     setting.Read()
-                    self.Child.pack_start(setting.EBox, True, True)
+                    self.Child.pack_start(setting.EBox, True, True, 0)
                     self.MySettings.append(setting)
                     self.Empty = False
 

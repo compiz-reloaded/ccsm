@@ -158,7 +158,7 @@ class PluginView(gtk.TreeView):
         column = self.insert_column_with_attributes(0, _('Plugin'), gtk.CellRendererPixbuf(), pixbuf=1, sensitive=2)
         cell = gtk.CellRendererText()
         cell.props.wrap_width = 200
-        column.pack_start(cell)
+        column.pack_start(cell, True)
         column.set_attributes(cell, text=0)
         self.model.set_visible_func(self.VisibleFunc)
         self.get_selection().connect('changed', self.SelectionChanged)
@@ -244,9 +244,9 @@ class SelectorButtons(gtk.HBox):
         button.set_relief(gtk.RELIEF_NONE)
         button.connect('clicked', self.on_button_clicked, callback)
         if self.get_children():
-            self.pack_start(arrow, False, False)
+            self.pack_start(arrow, False, False, 0)
             self.arrows.append(arrow)
-        self.pack_start(button, False, False)
+        self.pack_start(button, False, False, 0)
         self.buttons.append(button)
         self.show_all()
 
@@ -290,20 +290,20 @@ class SelectorBox(gtk.ScrolledWindow):
         label.set_markup(markup % text or _("General"))
         labelBox = gtk.VBox()
         labelBox.set_spacing(5)
-        labelBox.pack_start(label)
+        labelBox.pack_start(label, True, True, 0)
         if info:
             infoLabel = Label()
             infoLabel.set_markup("<span size='small'>%s</span>" % info)
-            labelBox.pack_start(infoLabel)
+            labelBox.pack_start(infoLabel, True, True, 0)
         box = gtk.HBox()
         box.set_spacing(5)
         if image:
-            box.pack_start(image, False, False)
-        box.pack_start(labelBox)
+            box.pack_start(image, False, False, 0)
+        box.pack_start(labelBox, True, True, 0)
         button.add(box)
         button.connect("clicked", callback, item)
         button.set_relief(gtk.RELIEF_NONE)
-        self.box.pack_start(button, False, False)
+        self.box.pack_start(button, False, False, 0)
 
     def clear_list(self):
         for button in self.box.get_children():
@@ -1184,8 +1184,8 @@ class MatchButton(gtk.Button):
         entry.connect ('changed', self._check_entry_value, dlg)
         button = gtk.Button (_("Grab"))
         button.connect ('clicked', self.grab_value, entry, type_chooser)
-        box.pack_start (entry, True, True)
-        box.pack_start (button, False, False)
+        box.pack_start (entry, True, True, 0)
+        box.pack_start (button, False, False, 0)
         rows.append ((label, box))
 
         # Relation
@@ -1207,7 +1207,7 @@ class MatchButton(gtk.Button):
             table.attach(widget, 1, 2, row, row+1, yoptions=0, xpadding=TableX, ypadding=TableY)
             row += 1
 
-        dlg.vbox.pack_start (table)
+        dlg.vbox.pack_start (table, True, True, 0)
         dlg.vbox.set_spacing (5)
         dlg.show_all ()
 
@@ -1405,8 +1405,8 @@ class PluginButton (gtk.HBox):
         label.connect ('style-set', self.style_set)
         box = gtk.HBox ()
         box.set_spacing (5)
-        box.pack_start (image, False, False)
-        box.pack_start (label)
+        box.pack_start (image, False, False, 0)
+        box.pack_start (label, True, True, 0)
 
         button = PrettyButton ()
         button.connect ('clicked', self.show_plugin_page)
@@ -1420,8 +1420,8 @@ class PluginButton (gtk.HBox):
             enable.set_sensitive (plugin.Context.AutoSort)
             self._toggled_handler = enable.connect ("toggled", self.enable_plugin)
             PluginSetting (plugin, enable, self._toggled_handler)
-            self.pack_start (enable, False, False)
-        self.pack_start (button, False, False)
+            self.pack_start (enable, False, False, 0)
+        self.pack_start (button, False, False, 0)
 
         self.set_size_request (220, -1)
 
@@ -1521,8 +1521,8 @@ class CategoryBox(gtk.VBox):
 
         icon = text.lower ().replace (" ", "_")
         image = Image (icon, ImageCategory)
-        header.pack_start (image, False, False)
-        header.pack_start (label, False, False)
+        header.pack_start (image, False, False, 0)
+        header.pack_start (label, False, False, 0)
 
         self._table = gtk.Table ()
         self._table.set_border_width (10)
@@ -1539,15 +1539,15 @@ class CategoryBox(gtk.VBox):
         self._alignment.set_padding (0, 20, 0, 0)
         self._alignment.add (gtk.HSeparator ())
 
-        self.pack_start (header, False, False)
-        self.pack_start (self._table, False, False)
-        self.pack_start (self._alignment)
+        self.pack_start (header, False, False, 0)
+        self.pack_start (self._table, False, False, 0)
+        self.pack_start (self._alignment, True, True, 0)
 
     def show_separator (self, show):
         children = self.get_children ()
         if show:
             if self._alignment not in children:
-                self.pack_start (self._alignment)
+                self.pack_start (self._alignment, True, True, 0)
         else:
             if self._alignment in children:
                 self.remove(self._alignment)
@@ -1643,7 +1643,7 @@ class PluginWindow(gtk.ScrolledWindow):
             category_box = CategoryBox(context, category, plugins, i)
             self.connect_buttons (category_box)
             self._boxes.append (category_box)
-            self._box.pack_start (category_box, False, False)
+            self._box.pack_start (category_box, False, False, 0)
 
         viewport = gtk.Viewport ()
         viewport.connect("style-set", self.set_viewport_style)
@@ -1704,7 +1704,7 @@ class PluginWindow(gtk.ScrolledWindow):
                     last_box.show_separator (True)
 
                 if box not in children:
-                    self._box.pack_start (box, False, False)
+                    self._box.pack_start (box, False, False, 0)
                     self._box.reorder_child (box, pos)
                 box.rebuild_table (ncols)
                 box.show_separator (False)

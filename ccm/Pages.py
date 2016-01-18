@@ -79,40 +79,40 @@ class PluginPage(GenericPage):
         self.FilterEntry = ClearEntry()
         self.FilterEntry.connect("changed", self.FilterChanged)
 
-        self.LeftWidget.pack_start(pluginImg, False, False)
-        self.LeftWidget.pack_start(filterLabel, False, False)
-        self.LeftWidget.pack_start(self.FilterEntry, False, False)
-        self.LeftWidget.pack_start(pluginLabel, False, False)
+        self.LeftWidget.pack_start(pluginImg, False, False, 0)
+        self.LeftWidget.pack_start(filterLabel, False, False, 0)
+        self.LeftWidget.pack_start(self.FilterEntry, False, False, 0)
+        self.LeftWidget.pack_start(pluginLabel, False, False, 0)
         infoLabelCont = gtk.HBox()
         infoLabelCont.set_border_width(10)
-        self.LeftWidget.pack_start(infoLabelCont, False, False)
+        self.LeftWidget.pack_start(infoLabelCont, False, False, 0)
         infoLabel = Label(plugin.LongDesc, 180)
-        infoLabelCont.pack_start(infoLabel, True, True)
+        infoLabelCont.pack_start(infoLabel, True, True, 0)
 
         self.NotFoundBox = None
-        
+
         if plugin.Name != 'core':
             self.FilterEntry.set_tooltip_text(_("Search %s Plugin Options") % plugin.ShortDesc)
             enableLabel = Label()
             enableLabel.set_markup(HeaderMarkup % (_("Use This Plugin")))
             enableLabel.connect("style-set", self.HeaderStyleSet)
-            self.LeftWidget.pack_start(enableLabel, False, False)
+            self.LeftWidget.pack_start(enableLabel, False, False, 0)
             enableCheckCont = gtk.HBox()
             enableCheckCont.set_border_width(10)
-            self.LeftWidget.pack_start(enableCheckCont, False, False)
+            self.LeftWidget.pack_start(enableCheckCont, False, False, 0)
             enableCheck = gtk.CheckButton()
             enableCheck.add(Label(_("Enable %s") % plugin.ShortDesc, 120))
             enableCheck.set_tooltip_text(plugin.LongDesc)
             enableCheck.set_active(plugin.Enabled)
             enableCheck.set_sensitive(plugin.Context.AutoSort)
-            enableCheckCont.pack_start(enableCheck, True, True)
+            enableCheckCont.pack_start(enableCheck, True, True, 0)
             enableCheck.connect('toggled', self.EnablePlugin)
         else:
             self.FilterEntry.set_tooltip_text(_("Search Compiz Core Options"))
-        
+
         backButton = gtk.Button(gtk.STOCK_GO_BACK)
         backButton.set_use_stock(True)
-        self.LeftWidget.pack_end(backButton, False, False)
+        self.LeftWidget.pack_end(backButton, False, False, 0)
         backButton.connect('clicked', self.GoBack)
         self.RightWidget = gtk.Notebook()
         self.RightWidget.set_scrollable(True)
@@ -126,7 +126,7 @@ class PluginPage(GenericPage):
             if not groupPage.Empty:
                 self.RightWidget.append_page(groupPage.Scroll, gtk.Label(name))
                 self.Pages.append(groupPage)
-        
+
         self.RightWidget.connect('size-allocate', self.ResetFocus)
 
         self.Block = 0
@@ -142,7 +142,7 @@ class PluginPage(GenericPage):
         self.StyleBlock -= 1
 
     def ResetFocus(self, widget, data):
-        pos = self.FilterEntry.get_position() 
+        pos = self.FilterEntry.get_position()
         self.FilterEntry.grab_focus()
         self.FilterEntry.set_position(pos)
 
@@ -252,8 +252,8 @@ class FilterPage(GenericPage):
         filterLabel.set_markup(HeaderMarkup % (_("Filter")))
         filterLabel.connect("style-set", self.HeaderStyleSet)
         filterImg = Image("search", ImageCategory, 64)
-        self.LeftWidget.pack_start(filterImg, False, False)
-        self.LeftWidget.pack_start(filterLabel, False, False)
+        self.LeftWidget.pack_start(filterImg, False, False, 0)
+        self.LeftWidget.pack_start(filterLabel, False, False, 0)
 
         # Entry FIXME find a solution with std gtk
         self.FilterEntry = ClearEntry()
@@ -263,35 +263,35 @@ class FilterPage(GenericPage):
 
         self.FilterEntry.set_tooltip_text(_("Enter a filter.\nClick the keyboard image to grab a key for which to search."))
         self.FilterEntry.connect("changed", self.FilterChanged)
-        self.LeftWidget.pack_start(self.FilterEntry, False, False)
+        self.LeftWidget.pack_start(self.FilterEntry, False, False, 0)
 
         # Search in...
         filterSearchLabel = Label()
         filterSearchLabel.set_markup(HeaderMarkup % (_("Search in...")))
         filterSearchLabel.connect("style-set", self.HeaderStyleSet)
-        self.LeftWidget.pack_start(filterSearchLabel, False, False)
+        self.LeftWidget.pack_start(filterSearchLabel, False, False, 0)
 
         # Options
         self.FilterNameCheck = check = gtk.CheckButton(_("Short description and name"))
         check.set_active(True)
         check.connect("toggled", self.LevelChanged, FilterName)
-        self.LeftWidget.pack_start(check, False, False)
+        self.LeftWidget.pack_start(check, False, False, 0)
 
         self.FilterLongDescCheck = check = gtk.CheckButton(_("Long description"))
         check.set_active(True)
         check.connect("toggled", self.LevelChanged, FilterLongDesc)
         self.LeftWidget.pack_start(check, False, False)
-        
+
         self.FilterValueCheck = check = gtk.CheckButton(_("Settings value"))
         check.set_active(False)
         check.connect("toggled", self.LevelChanged, FilterValue)
-        self.LeftWidget.pack_start(check, False, False)
+        self.LeftWidget.pack_start(check, False, False, 0)
 
         # Back Button
         self.BackButton = gtk.Button(gtk.STOCK_GO_BACK)
         self.BackButton.set_use_stock(True)
         self.BackButton.connect('clicked', self.GoBack)
-        self.LeftWidget.pack_end(self.BackButton, False, False)
+        self.LeftWidget.pack_end(self.BackButton, False, False, 0)
 
         self.NotFoundBox = None
 
@@ -326,19 +326,19 @@ class FilterPage(GenericPage):
         scroll.props.hscrollbar_policy = gtk.POLICY_AUTOMATIC
         scroll.props.vscrollbar_policy = gtk.POLICY_AUTOMATIC
         scroll.add(self.PluginBox)
-        self.SelectorBoxes.pack_start(scroll, False, False)
+        self.SelectorBoxes.pack_start(scroll, False, False, 0)
         scroll = gtk.ScrolledWindow()
         scroll.props.hscrollbar_policy = gtk.POLICY_AUTOMATIC
         scroll.props.vscrollbar_policy = gtk.POLICY_AUTOMATIC
         scroll.add(self.GroupBox)
-        self.SelectorBoxes.pack_start(scroll, False, False)
+        self.SelectorBoxes.pack_start(scroll, False, False, 0)
         scroll = gtk.ScrolledWindow()
         scroll.add(self.SubGroupBox)
         scroll.props.hscrollbar_policy = gtk.POLICY_AUTOMATIC
         scroll.props.vscrollbar_policy = gtk.POLICY_AUTOMATIC
         self.SelectorBoxes.pack_start(scroll, False, False)
-        self.RightChild.pack_start(self.SelectorButtons, False, False)
-        self.RightChild.pack_start(self.SelectorBoxes, False, False)
+        self.RightChild.pack_start(self.SelectorButtons, False, False, 0)
+        self.RightChild.pack_start(self.SelectorBoxes, False, False, 0)
         self.SettingsArea = gtk.ScrolledWindow()
         ebox = gtk.EventBox()
         self.SettingsBox = gtk.VBox()
@@ -348,7 +348,7 @@ class FilterPage(GenericPage):
         self.SettingsArea.props.vscrollbar_policy = gtk.POLICY_ALWAYS
         self.SettingsArea.set_border_width(5)
         self.SettingsArea.add_with_viewport(ebox)
-        self.RightChild.pack_start(self.SettingsArea, True, True)
+        self.RightChild.pack_start(self.SettingsArea, True, True, 0)
 
         GlobalUpdater.Block += 1
 
@@ -364,10 +364,10 @@ class FilterPage(GenericPage):
         progress.connect("delete-event", lambda *a: True)
         progress.set_title(_("Loading Advanced Search"))
         bar = gtk.ProgressBar()
-        box.pack_start(bar, False, False)
+        box.pack_start(bar, False, False, 0)
 
         label = gtk.Label()
-        box.pack_start(label, False, False)
+        box.pack_start(label, False, False, 0)
 
         progress.set_size_request(300, -1)
 
@@ -432,7 +432,7 @@ class FilterPage(GenericPage):
         if pos != gtk.ENTRY_ICON_PRIMARY:
             return
         grabber = KeyGrabber(label = _("Grab key combination"))
-        self.LeftWidget.pack_start(grabber, False, False)
+        self.LeftWidget.pack_start(grabber, False, False, 0)
         grabber.hide()
         grabber.set_no_show_all(True)
         grabber.connect('changed', self.GotKey)
@@ -468,7 +468,7 @@ class FilterPage(GenericPage):
 
     def UpdatePluginBox(self):
         self.PluginBox.Filter(self.Results)
-    
+
         self.UpdateGroupBox()
 
     def UpdateGroupBox(self):
@@ -594,17 +594,17 @@ class FilterPage(GenericPage):
             for plugin in plugins:
                 box = gtk.VBox()
                 for (pageName, page) in self.GroupPages[plugin.Name]:
-                    box.pack_start(page.Label, False, False)
-                    box.pack_start(page.Widget, False, False)
+                    box.pack_start(page.Label, False, False, 0)
+                    box.pack_start(page.Widget, False, False, 0)
 
                     self.PackedGroups.append(page)
-                self.SettingsBox.pack_start(box, False, False)
+                self.SettingsBox.pack_start(box, False, False, 0)
                 self.PackedPlugins.append(box)
 
         if groups is not None:
             self.PackedGroups = []
             for page in groups:
-                self.SettingsBox.pack_start(page.Widget, False, False)
+                self.SettingsBox.pack_start(page.Widget, False, False, 0)
                 self.PackedGroups.append(page)
 
         if subgroups is not None:
@@ -612,7 +612,7 @@ class FilterPage(GenericPage):
             for area in subgroups:
                 sga = SubGroupArea('', area.SubGroup)
                 sga.Filter(self.FilterEntry.get_text().lower())
-                self.SettingsBox.pack_start(sga.Widget, False, False)     
+                self.SettingsBox.pack_start(sga.Widget, False, False, 0)
                 self.PackedSubGroups.append(sga)
 
         self.SettingsBox.show_all()
@@ -671,16 +671,16 @@ class ProfileBackendPage(object):
         self.ProfileHandler = self.ProfileComboBox.connect("changed",
             self.ProfileChangedAddTimeout)
         name = self.Context.CurrentProfile.Name
-        if name in self.Context.Profiles: 
+        if name in self.Context.Profiles:
             index = self.Context.Profiles.values().index(self.Context.Profiles[name])
             self.ProfileComboBox.set_active(index+1)
         else:
-            self.ProfileComboBox.set_active(0) 
+            self.ProfileComboBox.set_active(0)
         profileAdd.connect("clicked", self.AddProfile)
         profileRemove.connect("clicked", self.RemoveProfile)
-        profileBox.pack_start(self.ProfileComboBox, True, True)
-        profileBox.pack_start(profileAdd, False, False)
-        profileBox.pack_start(profileRemove, False, False)
+        profileBox.pack_start(self.ProfileComboBox, True, True, 0)
+        profileBox.pack_start(profileAdd, False, False, 0)
+        profileBox.pack_start(profileRemove, False, False, 0)
         profileLabel = Label()
         profileLabel.set_markup(HeaderMarkup % (_("Profile")))
         profileLabel.connect("style-set", self.HeaderStyleSet)
@@ -702,10 +702,10 @@ class ProfileBackendPage(object):
         profileImportAsButton.connect("clicked", self.ImportProfileAs)
         profileExportButton.connect("clicked", self.ExportProfile)
         profileResetButton.connect("clicked", self.ResetProfile)
-        self.ProfileImportExportBox.pack_start(profileImportButton, False, False)
-        self.ProfileImportExportBox.pack_start(profileImportAsButton, False, False)
-        self.ProfileImportExportBox.pack_start(profileExportButton, False, False)
-        self.ProfileImportExportBox.pack_start(profileResetButton, False, False)
+        self.ProfileImportExportBox.pack_start(profileImportButton, False, False, 0)
+        self.ProfileImportExportBox.pack_start(profileImportAsButton, False, False, 0)
+        self.ProfileImportExportBox.pack_start(profileExportButton, False, False, 0)
+        self.ProfileImportExportBox.pack_start(profileResetButton, False, False, 0)
         rightChild.pack_start(profileLabel, False, False, 5)
         rightChild.pack_start(profileBox, False, False, 5)
         rightChild.pack_start(self.ProfileImportExportBox, False, False, 5)
@@ -736,7 +736,7 @@ class ProfileBackendPage(object):
         rightChild.pack_start(self.IntegrationButton, False, False, 5)
 
         self.Widget = rightChild
-    
+
     StyleBlock = 0
 
     def HeaderStyleSet(self, widget, previous):
@@ -803,7 +803,7 @@ class ProfileBackendPage(object):
         chooser.add_filter(filter)
 
     def ResetProfile(self, widget):
-        
+
         for plugin in self.Context.Plugins.values():
             settings = GetSettings(plugin)
             for setting in settings:
@@ -814,7 +814,7 @@ class ProfileBackendPage(object):
             plugin.Enabled = plugin.Name in activePlugins
         self.Context.Write()
         GlobalUpdater.UpdatePlugins()
-    
+
     def ExportProfile(self, widget):
         main = widget.get_toplevel()
         b = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_SAVE, gtk.RESPONSE_OK)
@@ -854,7 +854,7 @@ class ProfileBackendPage(object):
                           gtk.DIALOG_MODAL)
         dlg.add_button (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
         dlg.add_button (gtk.STOCK_ADD, gtk.RESPONSE_OK)
-        
+
         entry = gtk.Entry ()
         label = gtk.Label (_("Please enter a name for the new profile:"))
         dlg.vbox.pack_start (label, False, False, 5)
@@ -894,14 +894,14 @@ class ProfileBackendPage(object):
         if name:
             self.Context.CurrentProfile = ccs.Profile (self.Context, name)
             self.UpdateProfiles (name)
-    
+
     def RemoveProfile(self, widget):
         name = self.ProfileComboBox.get_active_text()
         if name != _("Default"):
             self.Context.ResetProfile()
             self.Context.Profiles[name].Delete()
             self.UpdateProfiles()
-    
+
     def BackendChanged(self, widget):
         shortDesc = widget.get_active_text()
         name = ""
@@ -909,7 +909,7 @@ class ProfileBackendPage(object):
             if backend.ShortDesc == shortDesc:
                 name = backend.Name
                 break
-        
+
         if name != "":
             self.Context.ResetProfile()
             self.Context.CurrentBackend = self.Context.Backends[name]
@@ -933,11 +933,11 @@ class PluginListPage(object):
         self.Block = 0
         rightChild = gtk.VBox()
         rightChild.set_border_width(10)
-        
+
         # Auto sort
         autoSort = gtk.CheckButton(_("Automatic plugin sorting"))
         rightChild.pack_start(autoSort, False, False, 10)
-        
+
         # Lists
         listBox = gtk.HBox()
         listBox.set_spacing(5)
@@ -961,8 +961,8 @@ class PluginListPage(object):
         leftButton.set_image(leftImage)
         leftButton.connect("clicked", self.EnabledPluginsList.delete)
 
-        buttonBox.pack_start(rightButton, False, False)
-        buttonBox.pack_start(leftButton, False, False)
+        buttonBox.pack_start(rightButton, False, False, 0)
+        buttonBox.pack_start(leftButton, False, False, 0)
 
         # Up/Down buttons
         enabledBox = gtk.VBox()
@@ -985,16 +985,16 @@ class PluginListPage(object):
         addButton.set_use_stock(True)
         addButton.connect('clicked', self.AddPlugin)
 
-        enabledButtonBox.pack_start(addButton, False, False)
-        enabledButtonBox.pack_start(upButton, False, False)
-        enabledButtonBox.pack_start(downButton, False, False)
+        enabledButtonBox.pack_start(addButton, False, False, 0)
+        enabledButtonBox.pack_start(upButton, False, False, 0)
+        enabledButtonBox.pack_start(downButton, False, False, 0)
 
-        enabledBox.pack_start(self.EnabledPluginsList, True, True)
-        enabledBox.pack_start(enabledAlignment, False, False)
+        enabledBox.pack_start(self.EnabledPluginsList, True, True, 0)
+        enabledBox.pack_start(enabledAlignment, False, False, 0)
 
-        listBox.pack_start(self.DisabledPluginsList, True, True)
-        listBox.pack_start(boxAlignment, True, False)
-        listBox.pack_start(enabledBox, True, True)
+        listBox.pack_start(self.DisabledPluginsList, True, True, 0)
+        listBox.pack_start(boxAlignment, True, False, 0)
+        listBox.pack_start(enabledBox, True, True, 0)
 
         self.UpdateEnabledPluginsList()
         self.UpdateDisabledPluginsList()
@@ -1004,7 +1004,7 @@ class PluginListPage(object):
         self.EnabledPluginsList.store.connect('row-deleted', self.ListChanged)
         self.EnabledPluginsList.store.connect('rows-reordered', self.ListChanged)
 
-        rightChild.pack_start(listBox, True, True)
+        rightChild.pack_start(listBox, True, True, 0)
 
         # Auto sort
         autoSort.connect('toggled', self.AutoSortChanged)
@@ -1038,7 +1038,7 @@ class PluginListPage(object):
 
     def UpdateEnabledPluginsList(self):
         activePlugins = self.Context.Plugins['core'].Display['active_plugins'].Value
-        
+
         self.EnabledPluginsList.clear()
 
         for name in activePlugins:
@@ -1058,17 +1058,17 @@ class PluginListPage(object):
         dlg.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
         dlg.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK).grab_default()
         dlg.set_default_response(gtk.RESPONSE_OK)
-        
+
         label = gtk.Label(_("Plugin name:"))
         label.set_tooltip_text(_("Insert plugin name"))
-        dlg.vbox.pack_start(label)
-        
+        dlg.vbox.pack_start(label, True, True, 0)
+
         entry = gtk.Entry()
         entry.props.activates_default = True
-        dlg.vbox.pack_start(entry)
+        dlg.vbox.pack_start(entry, True, True, 0)
 
         dlg.vbox.set_spacing(5)
-        
+
         dlg.vbox.show_all()
         ret = dlg.run()
         dlg.destroy()
@@ -1083,7 +1083,7 @@ class PluginListPage(object):
             name = self.DisabledPluginsList.store.get(iter, 0)[0]
             self.EnabledPluginsList.append(name)
         self.DisabledPluginsList.delete(widget)
-    
+
     def ListChanged(self, *args, **kwargs):
         if self.Block > 0:
             return
@@ -1110,13 +1110,13 @@ class PreferencesPage(GenericPage):
         self.DescLabel.set_markup(HeaderMarkup % (_("Preferences")))
         self.DescLabel.connect("style-set", self.HeaderStyleSet)
         self.DescImg = Image("profiles",ImageCategory, 64)
-        self.LeftWidget.pack_start(self.DescImg, False, False)
-        self.LeftWidget.pack_start(self.DescLabel, False, False)
+        self.LeftWidget.pack_start(self.DescImg, False, False, 0)
+        self.LeftWidget.pack_start(self.DescLabel, False, False, 0)
         self.InfoLabelCont = gtk.HBox()
         self.InfoLabelCont.set_border_width(10)
-        self.LeftWidget.pack_start(self.InfoLabelCont, False, False)
+        self.LeftWidget.pack_start(self.InfoLabelCont, False, False, 0)
         self.InfoLabel = Label(_("Configure the backend, profile and other internal settings used by the Compiz Configuration System."), 180)
-        self.InfoLabelCont.pack_start(self.InfoLabel, True, True)
+        self.InfoLabelCont.pack_start(self.InfoLabel, True, True, 0)
 
         # About Button
         aboutLabel = Label()
@@ -1127,22 +1127,22 @@ class PreferencesPage(GenericPage):
         aboutImage = Image(gtk.STOCK_ABOUT, ImageStock, gtk.ICON_SIZE_BUTTON)
         aboutFrame = gtk.HBox()
         aboutFrame.set_spacing(5)
-        aboutFrame.pack_start(aboutImage, False, False)
-        aboutFrame.pack_start(Label(_("About CCSM...")), False, False)
+        aboutFrame.pack_start(aboutImage, False, False, 0)
+        aboutFrame.pack_start(Label(_("About CCSM...")), False, False, 0)
         aboutButton.add(aboutFrame)
         aboutButton.set_tooltip_text(_("About"))
         aboutButton.connect('clicked', self.ShowAboutDialog)
         aboutBin = gtk.HBox()
         aboutBin.set_border_width(10)
-        aboutBin.pack_start(aboutButton, False, False)
-        self.LeftWidget.pack_start(aboutLabel, False, False)
-        self.LeftWidget.pack_start(aboutBin, False, False)
-    
+        aboutBin.pack_start(aboutButton, False, False, 0)
+        self.LeftWidget.pack_start(aboutLabel, False, False, 0)
+        self.LeftWidget.pack_start(aboutBin, False, False, 0)
+
         # Back Button
         backButton = gtk.Button(gtk.STOCK_GO_BACK)
         backButton.set_use_stock(True)
         backButton.connect('clicked', self.GoBack)
-        self.LeftWidget.pack_end(backButton, False, False)
+        self.LeftWidget.pack_end(backButton, False, False, 0)
 
         # Profile & Backend Page
         self.ProfileBackendPage = ProfileBackendPage(context)
@@ -1201,8 +1201,8 @@ class MainPage(object):
             screenLabel.set_markup(HeaderMarkup % (_("Screen")))
             screenLabel.connect("style-set", self.HeaderStyleSet)
 
-            sidebar.pack_start(screenLabel, False, False)
-            sidebar.pack_start(screenBox, False, False)
+            sidebar.pack_start(screenLabel, False, False, 0)
+            sidebar.pack_start(screenBox, False, False, 0)
 
         # Categories
         categoryBox = gtk.VBox()
@@ -1221,12 +1221,12 @@ class MainPage(object):
             align.set_padding (0, 0, 0, 10)
             align.add (categoryToggleIcon)
             categoryToggleBox = gtk.HBox ()
-            categoryToggleBox.pack_start (align, False, False)
-            categoryToggleBox.pack_start (categoryToggleLabel, True, True)
+            categoryToggleBox.pack_start (align, False, False, 0)
+            categoryToggleBox.pack_start (categoryToggleLabel, True, True, 0)
             categoryToggle = PrettyButton ()
             categoryToggle.add(categoryToggleBox)
             categoryToggle.connect("clicked", self.ToggleCategory, category)
-            categoryBox.pack_start(categoryToggle, False, False)
+            categoryBox.pack_start(categoryToggle, False, False, 0)
         categoryLabel = Label()
         categoryLabel.props.xalign = 0.1
         categoryLabel.set_markup(HeaderMarkup % (_("Category")))
@@ -1247,8 +1247,8 @@ class MainPage(object):
         searchButton.connect("clicked", self.ShowAdvancedFilter)
         searchButton.set_relief(gtk.RELIEF_NONE)
         searchFrame = gtk.HBox()
-        searchFrame.pack_start(searchLabel, False, False)
-        searchFrame.pack_end(searchImage, False, False)
+        searchFrame.pack_start(searchLabel, False, False, 0)
+        searchFrame.pack_end(searchImage, False, False, 0)
         searchButton.add(searchFrame)
 
         # Preferences
@@ -1261,18 +1261,18 @@ class MainPage(object):
         prefButton.connect("clicked", self.ShowPreferences)
         prefButton.set_relief(gtk.RELIEF_NONE)
         prefFrame = gtk.HBox()
-        prefFrame.pack_start(prefLabel, False, False)
-        prefFrame.pack_end(prefImage, False, False)
+        prefFrame.pack_start(prefLabel, False, False, 0)
+        prefFrame.pack_end(prefImage, False, False, 0)
         prefButton.add(prefFrame)
 
         # Pack widgets into sidebar
-        sidebar.pack_start(filterLabel, False, False)
-        sidebar.pack_start(filterEntry, False, False)
-        sidebar.pack_start(categoryLabel, False, False)
-        sidebar.pack_start(categoryBox, False, False)
-        sidebar.pack_end(exitButton, False, False)
-        sidebar.pack_end(searchButton, False, False)
-        sidebar.pack_end(prefButton, False, False)
+        sidebar.pack_start(filterLabel, False, False, 0)
+        sidebar.pack_start(filterEntry, False, False, 0)
+        sidebar.pack_start(categoryLabel, False, False, 0)
+        sidebar.pack_start(categoryBox, False, False, 0)
+        sidebar.pack_end(exitButton, False, False, 0)
+        sidebar.pack_end(searchButton, False, False, 0)
+        sidebar.pack_end(prefButton, False, False, 0)
 
         self.LeftWidget = sidebar
         self.RightWidget = pluginWindow
@@ -1357,7 +1357,7 @@ class GroupPage(Page):
         if '' in group:
             sga = SubGroupArea('', group[''][1])
             if not sga.Empty:
-                self.SetContainer.pack_start(sga.Widget, False, False)
+                self.SetContainer.pack_start(sga.Widget, False, False, 0)
                 self.Empty = False
                 self.subGroupAreas.append(sga)
 
@@ -1366,7 +1366,7 @@ class GroupPage(Page):
             if not subGroupName == '':
                 sga = SubGroupArea(subGroupName, subGroup)
                 if not sga.Empty:
-                    self.SetContainer.pack_start(sga.Widget, False, False)
+                    self.SetContainer.pack_start(sga.Widget, False, False, 0)
                     self.Empty = False
                     self.subGroupAreas.append(sga)
 

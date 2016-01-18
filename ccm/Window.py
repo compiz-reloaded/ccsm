@@ -54,8 +54,8 @@ class MainWin(gtk.Window):
         self.LeftPane = gtk.VBox()
         self.RightPane = gtk.VBox()
         self.RightPane.set_border_width(5)
-        self.MainBox.pack_start(self.LeftPane, False, False)
-        self.MainBox.pack_start(self.RightPane, True, True)
+        self.MainBox.pack_start(self.LeftPane, False, False, 0)
+        self.MainBox.pack_start(self.RightPane, True, True, 0)
         self.MainPage = MainPage(self, self.Context)
         self.CurrentPage = None
         self.SetPage(self.MainPage)
@@ -89,8 +89,8 @@ class MainWin(gtk.Window):
                 leftWidget.destroy()
                 rightWidget.destroy()
 
-        self.LeftPane.pack_start(page.LeftWidget,   True, True)
-        self.RightPane.pack_start(page.RightWidget, True, True)
+        self.LeftPane.pack_start(page.LeftWidget, True, True, 0)
+        self.RightPane.pack_start(page.RightWidget, True, True, 0)
         self.CurrentPage = page
         self.show_all()
 

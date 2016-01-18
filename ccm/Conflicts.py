@@ -51,7 +51,7 @@ class Conflict:
 
         if custom_widgets != None:
             for widget in custom_widgets:
-                dialog.vbox.pack_start(widget, False, False)
+                dialog.vbox.pack_start(widget, False, False, 0)
 
         dialog.set_markup(message)
         dialog.show_all()
