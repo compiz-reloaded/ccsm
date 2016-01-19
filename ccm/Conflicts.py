@@ -5,7 +5,7 @@
 # as published by the Free Software Foundation; either version 2
 # of the License, or (at your option) any later version.
 #
-# This program is distributed in the hope that it will be useful, 
+# This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
@@ -231,7 +231,7 @@ class FeatureRequirement(Conflict):
                 self.Found = True
                 if not plugin.Enabled:
                     self.Requirements.append(plugin)
-    
+
     def Resolve(self):
         if len(self.Requirements) == 0 and self.Found:
             return True
@@ -241,7 +241,7 @@ class FeatureRequirement(Conflict):
                 return True
             else:
                 return False
-        
+
         for plugin in self.Requirements:
             answer = self.AskUser(plugin)
             if answer == gtk.RESPONSE_YES:
@@ -429,7 +429,7 @@ class PluginConflict(Conflict):
             msg = _("Plugin <b>%(plugin_conflict)s</b> provides feature " \
 					"<b>%(feature)s</b> which is also provided by " \
 					"<b>%(plugin)s</b>")
-            
+
             msg_dict = {'plugin_conflict': conflict[2][0].ShortDesc,
                         'feature': conflict[1],
                         'plugin': plugin.ShortDesc}
@@ -438,7 +438,7 @@ class PluginConflict(Conflict):
 
             okMsg     = _("Disable %(plugin_conflict)s") % msg_dict
             cancelMsg = _("Don't enable %(plugin)s") % msg_dict
-        
+
         elif conflict[0] == 'ConflictPlugin':
             msg = _("Plugin <b>%(plugin_conflict)s</b> conflicts with " \
 					"<b>%(plugin)s</b>.")
@@ -450,13 +450,13 @@ class PluginConflict(Conflict):
 
             okMsg = _("Disable %(plugin_conflict)s") % msg_dict
             cancelMsg = _("Don't enable %(plugin)s") % msg_dict
-        
+
         elif conflict[0] == 'RequiresFeature':
             pluginList = ', '.join("\"%s\"" % plugin.ShortDesc for plugin in conflict[2])
             msg = _("<b>%(plugin)s</b> requires feature <b>%(feature)s</b> " \
 					"which is provided by the following " \
 					"plugins:\n%(plugin_list)s")
-            
+
             msg_dict = {'plugin': plugin.ShortDesc,
                         'feature': conflict[1],
                         'plugin_list': pluginList}
@@ -482,30 +482,30 @@ class PluginConflict(Conflict):
 
             okMsg = _("Enable %(require)s") % msg_dict
             cancelMsg = _("Don't enable %(plugin)s") % msg_dict
-        
+
         elif conflict[0] == 'FeatureNeeded':
             pluginList = ', '.join("\"%s\"" % plugin.ShortDesc for plugin in conflict[2])
             msg = _("<b>%(plugin)s</b> provides the feature " \
 					"<b>%(feature)s</b> which is required by the plugins " \
 					"<b>%(plugin_list)s</b>.")
-            
+
             msg_dict = {'plugin': plugin.ShortDesc,
                         'feature': conflict[1],
                         'plugin_list': pluginList}
-            
+
             msg = msg % protect_markup_dict (msg_dict)
 
             okMsg = _("Disable these plugins")
             cancelMsg = _("Don't disable %(plugin)s") % msg_dict
-        
+
         elif conflict[0] == 'PluginNeeded':
             pluginList = ', '.join("\"%s\"" % plugin.ShortDesc for plugin in conflict[2])
             msg = _("<b>%(plugin)s</b> is required by the plugins " \
 					"<b>%(plugin_list)s</b>.")
-            
+
             msg_dict = {'plugin': plugin.ShortDesc,
                         'plugin_list': pluginList}
-            
+
             msg = msg % protect_markup_dict (msg_dict)
 
             okMsg = _("Disable these plugins")
@@ -513,11 +513,11 @@ class PluginConflict(Conflict):
 
         okButton     = (okMsg,     gtk.STOCK_OK,     gtk.RESPONSE_YES)
         cancelButton = (cancelMsg, gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
-        
+
         answer = self.Ask(msg, (cancelButton, okButton), widgets)
         if conflict[0] == 'RequiresFeature':
             choice = widgets[0].get_active_text()
             return answer, choice
-        
+
         return answer
         e

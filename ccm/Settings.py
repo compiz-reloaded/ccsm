@@ -5,7 +5,7 @@
 # as published by the Free Software Foundation; either version 2
 # of the License, or (at your option) any later version.
 #
-# This program is distributed in the hope that it will be useful, 
+# This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
@@ -99,7 +99,7 @@ class Setting(object):
 
     def _Init(self):
         self.PureVirtual('_Init')
-    
+
     def DoReset(self, foo):
         self.Setting.Reset()
         self.Setting.Plugin.Context.Write()
@@ -124,7 +124,7 @@ class Setting(object):
 
     def Block(self):
         self.Blocked += 1
-    
+
     def UnBlock(self):
         self.Blocked -= 1
 
@@ -152,7 +152,7 @@ class Setting(object):
                 return self.NoneValue
         else:
             return self.Setting.Value
-    
+
     def GetForRenderer(self):
         return self.Setting.Value
 
@@ -347,7 +347,7 @@ class EnumSetting(StockSetting):
 
     def _Changed(self):
         active = self.Combo.get_active_text()
-        
+
         self.Set(self.Info[active])
 
     def _Filter(self, text, level):
@@ -435,7 +435,7 @@ class RestrictedStringSetting(StockSetting):
 
     def _Changed(self):
         active = self.Combo.get_active_text()
-        
+
         if active == NAItemText:
             activeValue = self.OriginalValue
         else:
@@ -537,7 +537,7 @@ class ColorSetting(StockSetting):
         self.Button.set_use_alpha(True)
         self.Button.connect('color-set', self.Changed)
 
-        self.Widget = gtk.Alignment (1, 0.5)
+        self.Widget = gtk.Alignment (1, 0.5, 0, 0)
         self.Widget.add (self.Button)
         self.Box.pack_start(self.Widget, True, True, 0)
 
@@ -562,7 +562,7 @@ class ColorSetting(StockSetting):
 class BaseListSetting(Setting):
     def _Init(self):
         self.Widget = gtk.VBox()
-        self.EditDialog = None        
+        self.EditDialog = None
         self.EditDialogOpen = False
         self.PageToBeRefreshed = None
 
@@ -601,10 +601,10 @@ class BaseListSetting(Setting):
         buttonBox.set_border_width(5)
         self.Widget.pack_start(buttonBox, False, False, 0)
         buttonTypes = ((gtk.STOCK_NEW, self.Add, None, True),
-                 (gtk.STOCK_DELETE, self.Delete, None, False), 
-                 (gtk.STOCK_EDIT, self.Edit, None, False),
-                 (gtk.STOCK_GO_UP, self.Move, 'up', False), 
-                 (gtk.STOCK_GO_DOWN, self.Move, 'down', False),)
+                       (gtk.STOCK_DELETE, self.Delete, None, False),
+                       (gtk.STOCK_EDIT, self.Edit, None, False),
+                       (gtk.STOCK_GO_UP, self.Move, 'up', False),
+                       (gtk.STOCK_GO_DOWN, self.Move, 'down', False),)
         self.Buttons = {}
         for stock, callback, data, sensitive in buttonTypes:
             b = gtk.Button(stock)
@@ -651,7 +651,7 @@ class BaseListSetting(Setting):
 
     def MakeLabel(self):
         pass
-    
+
     def Add(self, *args):
         for widget, setting in zip(self.Widgets, self.Settings):
             vlist = setting.Value
@@ -667,7 +667,7 @@ class BaseListSetting(Setting):
             vlist = setting.Value
             del vlist[row]
             setting.Value = vlist
-        self.Settings[0].Plugin.Context.Write()        
+        self.Settings[0].Plugin.Context.Write()
 
     def Delete(self, *args):
         model, iter = self.Select.get_selected()
@@ -758,7 +758,7 @@ class BaseListSetting(Setting):
         for widget in (self.Buttons[gtk.STOCK_EDIT], self.Buttons[gtk.STOCK_DELETE],
                        self.PopupItems[gtk.STOCK_EDIT], self.PopupItems[gtk.STOCK_DELETE]):
             widget.set_sensitive(iter is not None)
-            
+
         if iter is not None:
             path = model.get_path(iter)
             if path is not None:
@@ -793,7 +793,7 @@ class BaseListSetting(Setting):
     def ListInfo(self):
         types = []
         cols = []
-        for i, (setting, widget) in enumerate(zip(self.Settings, self.Widgets)):   
+        for i, (setting, widget) in enumerate(zip(self.Settings, self.Widgets)):
             type, col = widget.GetColumn(i)
             types.append(type)
             cols.append(col)
@@ -802,7 +802,7 @@ class BaseListSetting(Setting):
     def Activated(self, object, path, col):
         self._Edit(path[0])
 
-    def _Read(self):        
+    def _Read(self):
         self.Store.clear()
         for values in zip(*[w.GetForRenderer() for w in self.Widgets]):
             self.Store.append(values)
@@ -836,7 +836,7 @@ class EnumFlagsSetting(Setting):
     def _Init(self):
         frame = gtk.Frame(self.Setting.ShortDesc)
         table = gtk.Table()
-        
+
         row = col = 0
         self.Checks = []
         sortedItems = sorted(self.Setting.Info[1][2].items(), key=EnumSettingKeyFunc)
@@ -885,7 +885,7 @@ class RestrictedStringFlagsSetting(Setting):
     def _Init(self):
         frame = gtk.Frame(self.Setting.ShortDesc)
         table = gtk.Table()
-        
+
         row = col = 0
         self.Checks = []
         info = self.Setting.Info[1]
@@ -936,7 +936,7 @@ class EditableActionSetting (StockSetting):
 
     def _Init (self, widget, action):
         StockSetting._Init(self)
-        alignment = gtk.Alignment (0, 0.5)
+        alignment = gtk.Alignment (0, 0.5, 0, 0)
         alignment.add (widget)
 
         self.Label.set_size_request(-1, -1)
@@ -962,7 +962,7 @@ class EditableActionSetting (StockSetting):
         dlg.add_button (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
         dlg.add_button (gtk.STOCK_OK, gtk.RESPONSE_OK).grab_default()
         dlg.set_default_response (gtk.RESPONSE_OK)
-        
+
         entry = gtk.Entry (max = 200)
         entry.set_text (self.GetDialogText ())
         entry.connect ("activate", lambda *a: dlg.response (gtk.RESPONSE_OK))
@@ -972,7 +972,7 @@ class EditableActionSetting (StockSetting):
 
         entry.set_tooltip_text(self.Setting.LongDesc)
         dlg.vbox.pack_start (alignment, True, True, 0)
-        
+
         dlg.vbox.show_all ()
         ret = dlg.run ()
         dlg.destroy ()
@@ -997,7 +997,7 @@ class KeySetting (EditableActionSetting):
         self.Button = SizedButton (minWidth = 100)
         self.Button.connect ("clicked", self.RunKeySelector)
         self.SetButtonLabel ()
-        
+
         EditableActionSetting._Init (self, self.Button, "keyboard")
 
     def DoReset (self, widget):
@@ -1105,7 +1105,7 @@ class KeySetting (EditableActionSetting):
         currentMods.rstrip ("|")
         modifierSelector = ModifierSelector (currentMods)
         modifierSelector.set_tooltip_text (self.Setting.LongDesc)
-        alignment = gtk.Alignment (0.5)
+        alignment = gtk.Alignment (0.5, 0, 0, 0)
         alignment.add (modifierSelector)
         box.pack_start (alignment, True, True, 0)
 
@@ -1117,7 +1117,7 @@ class KeySetting (EditableActionSetting):
 
         label = gtk.Label (self.current)
         label.set_tooltip_text (self.Setting.LongDesc)
-        alignment = gtk.Alignment (0.5, 0.5)
+        alignment = gtk.Alignment (0.5, 0.5, 0, 0)
         alignment.set_padding (15, 0, 0, 0)
         alignment.add (label)
         box.pack_start (alignment, True, True, 0)
@@ -1173,7 +1173,7 @@ class ButtonSetting (EditableActionSetting):
         self.Button.connect ("clicked", self.RunButtonSelector)
         self.Button.set_tooltip_text(self.Setting.LongDesc)
         self.SetButtonLabel ()
-        
+
         EditableActionSetting._Init (self, self.Button, "button")
 
     def DoReset (self, widget):
@@ -1395,7 +1395,7 @@ class EdgeSetting (EditableActionSetting):
         dlg.add_button (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
         dlg.add_button (gtk.STOCK_OK, gtk.RESPONSE_OK).grab_default()
         dlg.set_default_response (gtk.RESPONSE_OK)
-        
+
         selector = SingleEdgeSelector (self.current)
         alignment = gtk.Alignment ()
         alignment.set_padding (10, 10, 10, 10)
@@ -1403,7 +1403,7 @@ class EdgeSetting (EditableActionSetting):
 
         selector.set_tooltip_text (self.Setting.LongDesc)
         dlg.vbox.pack_start (alignment, True, True, 0)
-        
+
         dlg.vbox.show_all ()
         ret = dlg.run ()
         dlg.destroy ()
@@ -1480,7 +1480,7 @@ def MakeListSetting (setting, List=False):
         return RestrictedStringFlagsSetting (setting)
     else:
         return ListSetting (setting)
-      
+
 SettingTypeDict = {
     "Match": MatchSetting,
     "String": MakeStringSetting,
@@ -1538,7 +1538,7 @@ class SubGroupArea(object):
                 self.Expander.set_expanded(True)
 
             return # exit earlier to avoid unneeded logic's
-        
+
         self.Empty = True
         for setting in settings:
             if not (setting.Plugin.Name == 'core' and setting.Name == 'active_plugins'):

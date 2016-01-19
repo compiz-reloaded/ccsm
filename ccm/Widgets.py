@@ -5,7 +5,7 @@
 # as published by the Free Software Foundation; either version 2
 # of the License, or (at your option) any later version.
 #
-# This program is distributed in the hope that it will be useful, 
+# This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
@@ -152,9 +152,9 @@ class PluginView(gtk.TreeView):
         self.Plugins = set(plugins)
 
         for plugin in sorted(plugins.values(), key=PluginKeyFunc):
-            liststore.append([plugin.ShortDesc, Image(plugin.Name, type=ImagePlugin).props.pixbuf, 
+            liststore.append([plugin.ShortDesc, Image(plugin.Name, type=ImagePlugin).props.pixbuf,
                 plugin.Enabled, plugin])
-        
+
         column = self.insert_column_with_attributes(0, _('Plugin'), gtk.CellRendererPixbuf(), pixbuf=1, sensitive=2)
         cell = gtk.CellRendererText()
         cell.props.wrap_width = 200
@@ -174,7 +174,7 @@ class PluginView(gtk.TreeView):
         model, iter = selection.get_selected()
         if iter is None:
             return self.SelectionHandler(None)
-        
+
         return self.SelectionHandler(model[iter][3])
 
 class GroupView(gtk.TreeView):
@@ -185,7 +185,7 @@ class GroupView(gtk.TreeView):
         self.SelectionHandler = None
 
         self.Visible = set()
-        
+
         cell = gtk.CellRendererText()
         cell.props.ypad = 5
         cell.props.wrap_width = 200
@@ -218,7 +218,7 @@ class GroupView(gtk.TreeView):
         model, iter = selection.get_selected()
         if iter is None:
             return None
-        
+
         return self.SelectionHandler(model[iter][1])
 
 # Selector Buttons
@@ -308,12 +308,12 @@ class SelectorBox(gtk.ScrolledWindow):
     def clear_list(self):
         for button in self.box.get_children():
             button.destroy()
-    
+
     def set_item_list(self, list, callback):
         self.clear_list()
         for item in list:
             self.add_item(item)
-            
+
         self.box.show_all()
 
 # Scrolled List
@@ -326,15 +326,15 @@ class ScrolledList(gtk.ScrolledWindow):
         self.props.vscrollbar_policy = gtk.POLICY_AUTOMATIC
 
         self.store = gtk.ListStore(gobject.TYPE_STRING)
-    
+
         self.view = gtk.TreeView(self.store)
         self.view.set_headers_visible(True)
         self.view.insert_column_with_attributes(-1, name, gtk.CellRendererText(), text=0)
-        
+
         self.set_size_request(300, 300)
-        
+
         self.add(self.view)
-        
+
         self.select = self.view.get_selection()
         self.select.set_mode(gtk.SELECTION_SINGLE)
 
@@ -345,12 +345,12 @@ class ScrolledList(gtk.ScrolledWindow):
             value = self.store.get(iter, 0)[0]
             if value != "":
                 values.append(value)
-            iter = self.store.iter_next(iter)    
+            iter = self.store.iter_next(iter)
         return values
 
     def clear(self):
         self.store.clear()
-    
+
     def append(self, value):
         iter = self.store.append()
         self.store.set(iter, 0, value)
@@ -364,7 +364,7 @@ class ScrolledList(gtk.ScrolledWindow):
         for path in selected_rows:
             iter = self.store.get_iter(path)
             self.store.remove(iter)
-    
+
     def move_up(self, b):
         selected_rows = self.select.get_selected_rows()[1]
         if len(selected_rows) == 1:
@@ -458,7 +458,7 @@ class ModifierSelector (gtk.DrawingArea):
         pcr = pangocairo.CairoContext (cr)
         layout = pcr.create_layout ()
         layout.set_markup (markup)
-        pcr.show_layout (layout) 
+        pcr.show_layout (layout)
 
     def redraw (self, queue = False):
         '''Redraw internal surface'''
@@ -491,7 +491,7 @@ class ModifierSelector (gtk.DrawingArea):
 
     def in_rect (self, x, y, x0, y0, x1, y1):
         return x >= x0 and y >= y0 and x <= x1 and y <= y1
-    
+
     def button_press (self, widget, event):
         x, y = event.x, event.y
         mod = ""

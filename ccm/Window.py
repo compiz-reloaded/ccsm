@@ -5,7 +5,7 @@
 # as published by the Free Software Foundation; either version 2
 # of the License, or (at your option) any later version.
 #
-# This program is distributed in the hope that it will be useful, 
+# This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
@@ -47,7 +47,7 @@ class MainWin(gtk.Window):
         self.connect("destroy", self.Quit)
         self.set_default_size(990, 580)
         self.set_title(_("CompizConfig Settings Manager"))
-        
+
         # Build the panes
         self.MainBox = gtk.HBox()
         self.add(self.MainBox)
@@ -77,7 +77,7 @@ class MainWin(gtk.Window):
 
         if page != self.MainPage:
             page.connect('go-back', self.BackToMain)
-        
+
         if self.CurrentPage:
             leftWidget = self.CurrentPage.LeftWidget
             rightWidget = self.CurrentPage.RightWidget

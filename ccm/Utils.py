@@ -5,7 +5,7 @@
 # as published by the Free Software Foundation; either version 2
 # of the License, or (at your option) any later version.
 #
-# This program is distributed in the hope that it will be useful, 
+# This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
@@ -112,7 +112,8 @@ class ActionImage (gtk.Alignment):
           }
 
     def __init__ (self, action):
-        gtk.Alignment.__init__ (self, 0, 0.5)
+        gtk.Alignment.__init__ (self)
+        self.set (0, 0, 0.5, 0)
         self.set_padding (0, 0, 0, 10)
         if action in self.map: action = self.map[action]
         self.add (Image (name = action, type = ImageThemed, size = 22))
@@ -200,7 +201,8 @@ class Label(gtk.Label):
 
 class NotFoundBox(gtk.Alignment):
     def __init__(self, value=""):
-        gtk.Alignment.__init__(self, 0.5, 0.5, 0.0, 0.0)
+        gtk.Alignment.__init__(self)
+        self.set(0.5, 0.5, 0, 0)
 
         box = gtk.HBox()
         self.Warning = gtk.Label()

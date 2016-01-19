@@ -5,7 +5,7 @@
 # as published by the Free Software Foundation; either version 2
 # of the License, or (at your option) any later version.
 #
-# This program is distributed in the hope that it will be useful, 
+# This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
@@ -280,7 +280,7 @@ class FilterPage(GenericPage):
         self.FilterLongDescCheck = check = gtk.CheckButton(_("Long description"))
         check.set_active(True)
         check.connect("toggled", self.LevelChanged, FilterLongDesc)
-        self.LeftWidget.pack_start(check, False, False)
+        self.LeftWidget.pack_start(check, False, False, 0)
 
         self.FilterValueCheck = check = gtk.CheckButton(_("Settings value"))
         check.set_active(False)
@@ -948,7 +948,7 @@ class PluginListPage(object):
         # Left/Right buttons
         self.MiddleButtonBox = buttonBox = gtk.VBox()
         buttonBox.set_spacing(5)
-        boxAlignment = gtk.Alignment(0.0, 0.5, 0.0, 0.0)
+        boxAlignment = gtk.Alignment(0, 0.5, 0, 0)
         boxAlignment.add(buttonBox)
 
         rightButton = gtk.Button()
@@ -968,7 +968,7 @@ class PluginListPage(object):
         enabledBox = gtk.VBox()
         enabledBox.set_spacing(10)
 
-        enabledAlignment = gtk.Alignment(0.5, 0.0, 0.0, 0.0)
+        enabledAlignment = gtk.Alignment(0.5, 0, 0, 0)
         self.EnabledButtonBox = enabledButtonBox = gtk.HBox()
         enabledButtonBox.set_spacing(5)
         enabledAlignment.add(enabledButtonBox)
@@ -1349,7 +1349,7 @@ class GroupPage(Page):
 
         self.Name = name
         self.VisibleAreas = self.subGroupAreas = []
-        self.Label = gtk.Alignment(xalign=0.0, yalign=0.5)
+        self.Label = gtk.Alignment(0, 0.5, 0, 0)
         self.Label.set_padding(4, 4, 4, 4)
         label = gtk.Label("<b>%s</b>" %(protect_pango_markup(name or _('General'))))
         label.set_use_markup(True)
