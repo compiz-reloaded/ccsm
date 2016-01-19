@@ -127,8 +127,6 @@ class PluginPage(GenericPage):
                 self.RightWidget.append_page(groupPage.Scroll, gtk.Label(name))
                 self.Pages.append(groupPage)
 
-        self.RightWidget.connect('size-allocate', self.ResetFocus)
-
         self.Block = 0
 
     StyleBlock = 0
@@ -140,11 +138,6 @@ class PluginPage(GenericPage):
         for state in (gtk.STATE_NORMAL, gtk.STATE_PRELIGHT, gtk.STATE_ACTIVE):
             widget.modify_fg(state, widget.style.bg[gtk.STATE_SELECTED])
         self.StyleBlock -= 1
-
-    def ResetFocus(self, widget, data):
-        pos = self.FilterEntry.get_position()
-        self.FilterEntry.grab_focus()
-        self.FilterEntry.set_position(pos)
 
     def GetPageSpot(self, new):
         vpos = 0 #visible position
