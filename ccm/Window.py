@@ -18,11 +18,10 @@
 #          Patrick Niklaus (marex@opencompositing.org)
 #          Guillaume Seguin (guillaume@segu.in)
 #          Christopher Williams (christopherw@verizon.net)
+#          Sorokin Alexei (sor.alexei@meowr.ru)
 # Copyright (C) 2007 Quinn Storm
 
-import pygtk
-import gtk
-import gtk.gdk
+from gi.repository import Gtk as gtk
 
 from ccm.Pages import *
 from ccm.Utils import *
@@ -45,7 +44,9 @@ class MainWin(gtk.Window):
         self.ShowingPlugin = None
         self.Context = Context
         self.connect("destroy", self.Quit)
-        self.set_default_size(990, 580)
+        if gtk.check_version (3, 0, 0) is None:
+            self.set_size_request(740, 580)
+        self.set_default_size(1000, 580)
         self.set_title(_("CompizConfig Settings Manager"))
 
         # Build the panes
@@ -55,12 +56,17 @@ class MainWin(gtk.Window):
         self.RightPane = gtk.VBox()
         self.RightPane.set_border_width(5)
         self.MainBox.pack_start(self.LeftPane, False, False, 0)
-        self.MainBox.pack_start(self.RightPane, True, True, 0)
+        self.MainBox.pack_end(self.RightPane, True, True, 0)
         self.MainPage = MainPage(self, self.Context)
         self.CurrentPage = None
         self.SetPage(self.MainPage)
 
-        self.LeftPane.set_size_request(self.LeftPane.size_request()[0], -1)
+        try:
+            self.LeftPane.set_size_request(self.LeftPane.size_request().width, -1)
+        except (AttributeError, TypeError):
+            req = gtk.Requisition()
+            self.LeftPane.size_request(req)
+            self.LeftPane.set_size_request(req.width, -1)
         self.show_all()
 
         if pluginPage in self.Context.Plugins:
@@ -81,8 +87,8 @@ class MainWin(gtk.Window):
         if self.CurrentPage:
             leftWidget = self.CurrentPage.LeftWidget
             rightWidget = self.CurrentPage.RightWidget
-            leftWidget.hide_all()
-            rightWidget.hide_all()
+            leftWidget.hide()
+            rightWidget.hide()
             self.LeftPane.remove(leftWidget)
             self.RightPane.remove(rightWidget)
             if self.CurrentPage != self.MainPage:
@@ -109,4 +115,4 @@ class MainWin(gtk.Window):
                         currentPage.RefreshPage(basePlugin, self)
                     break
 
-gtk.window_set_default_icon_name('ccsm')
+gtk.Window.set_default_icon_name('ccsm')

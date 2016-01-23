@@ -18,19 +18,21 @@
 #          Patrick Niklaus (marex@opencompositing.org)
 #          Guillaume Seguin (guillaume@segu.in)
 #          Christopher Williams (christopherw@verizon.net)
+#          Sorokin Alexei (sor.alexei@meowr.ru)
 # Copyright (C) 2007 Quinn Storm
 
-import pygtk
-import gtk
-import gtk.gdk
+from gi.repository import Gtk as gtk, Gdk as gdk
 
 # Current Screen
 #
-CurrentScreenNum = gtk.gdk.display_get_default().get_default_screen().get_number()
+try:
+    CurrentScreenNum = gdk.Display.get_default().get_default_screen().get_number()
+except (AttributeError, TypeError):
+    CurrentScreenNum = gdk.Screen.get_default().get_number()
 
 # Settings Table
 #
-TableDef = gtk.FILL | gtk.EXPAND
+TableDef = gtk.AttachOptions.FILL | gtk.AttachOptions.EXPAND
 TableX   = 4
 TableY   = 2
 

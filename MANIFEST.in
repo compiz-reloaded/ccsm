@@ -1,5 +1,7 @@
 include po/*
 include INSTALL AUTHORS COPYING LICENSE VERSION
+include ccsm.in
+exclude ccsm
 include ccsm.desktop.in
 include ccm/Constants.py.in
 include Makefile MANIFEST.in

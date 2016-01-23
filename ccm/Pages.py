@@ -18,12 +18,10 @@
 #          Patrick Niklaus (marex@opencompositing.org)
 #          Guillaume Seguin (guillaume@segu.in)
 #          Christopher Williams (christopherw@verizon.net)
+#          Sorokin Alexei (sor.alexei@meowr.ru)
 # Copyright (C) 2007 Quinn Storm
 
-import pygtk
-import gtk
-import gobject
-import gtk.gdk
+from gi.repository import GObject as gobject, Gtk as gtk, Gdk as gdk
 
 import compizconfig
 ccs = compizconfig
@@ -46,8 +44,8 @@ CurrentUpdater = None
 # Generic Page
 #
 class GenericPage(gobject.GObject):
-    __gsignals__    = {"go-back" : (gobject.SIGNAL_RUN_FIRST,
-                                    gobject.TYPE_NONE,
+    __gsignals__    = {"go-back" : (gobject.SignalFlags.RUN_FIRST,
+                                    None,
                                     [])}
 
     LeftWidget = None
@@ -71,11 +69,17 @@ class PluginPage(GenericPage):
 
         pluginLabel = Label()
         pluginLabel.set_markup(HeaderMarkup % (plugin.ShortDesc))
-        pluginLabel.connect("style-set", self.HeaderStyleSet)
+        if gtk.check_version(3, 16, 0) is None:
+            pluginLabel.connect("style-updated", self.HeaderStyleUpdate)
+        else:
+            pluginLabel.connect("style-set", self.HeaderStyleUpdate)
         pluginImg = Image(plugin.Name, ImagePlugin, 64)
         filterLabel = Label()
         filterLabel.set_markup(HeaderMarkup % (_("Filter")))
-        filterLabel.connect("style-set", self.HeaderStyleSet)
+        if gtk.check_version(3, 16, 0) is None:
+            filterLabel.connect("style-updated", self.HeaderStyleUpdate)
+        else:
+            filterLabel.connect("style-set", self.HeaderStyleUpdate)
         self.FilterEntry = ClearEntry()
         self.FilterEntry.connect("changed", self.FilterChanged)
 
@@ -83,11 +87,11 @@ class PluginPage(GenericPage):
         self.LeftWidget.pack_start(filterLabel, False, False, 0)
         self.LeftWidget.pack_start(self.FilterEntry, False, False, 0)
         self.LeftWidget.pack_start(pluginLabel, False, False, 0)
+        infoLabel = Label(plugin.LongDesc, 180)
         infoLabelCont = gtk.HBox()
         infoLabelCont.set_border_width(10)
-        self.LeftWidget.pack_start(infoLabelCont, False, False, 0)
-        infoLabel = Label(plugin.LongDesc, 180)
         infoLabelCont.pack_start(infoLabel, True, True, 0)
+        self.LeftWidget.pack_start(infoLabelCont, False, False, 0)
 
         self.NotFoundBox = None
 
@@ -95,7 +99,10 @@ class PluginPage(GenericPage):
             self.FilterEntry.set_tooltip_text(_("Search %s Plugin Options") % plugin.ShortDesc)
             enableLabel = Label()
             enableLabel.set_markup(HeaderMarkup % (_("Use This Plugin")))
-            enableLabel.connect("style-set", self.HeaderStyleSet)
+            if gtk.check_version(3, 16, 0) is None:
+                enableLabel.connect("style-updated", self.HeaderStyleUpdate)
+            else:
+                enableLabel.connect("style-set", self.HeaderStyleUpdate)
             self.LeftWidget.pack_start(enableLabel, False, False, 0)
             enableCheckCont = gtk.HBox()
             enableCheckCont.set_border_width(10)
@@ -124,19 +131,34 @@ class PluginPage(GenericPage):
             groupPage = GroupPage(name, group)
             groupPage.Wrap()
             if not groupPage.Empty:
-                self.RightWidget.append_page(groupPage.Scroll, gtk.Label(name))
+                self.RightWidget.append_page(groupPage.Scroll, gtk.Label.new(name))
                 self.Pages.append(groupPage)
 
         self.Block = 0
 
     StyleBlock = 0
 
-    def HeaderStyleSet(self, widget, previous):
+    def HeaderStyleUpdate(self, widget, previous=None):
         if self.StyleBlock > 0:
             return
         self.StyleBlock += 1
-        for state in (gtk.STATE_NORMAL, gtk.STATE_PRELIGHT, gtk.STATE_ACTIVE):
-            widget.modify_fg(state, widget.style.bg[gtk.STATE_SELECTED])
+        if gtk.check_version(3, 6, 0) is None:
+            context = widget.get_style_context ()
+            context.save()
+            context.add_class(gtk.STYLE_CLASS_BACKGROUND)
+            context.set_state(gtk.StateFlags.SELECTED)
+            for state in (gtk.StateFlags.NORMAL, gtk.StateFlags.PRELIGHT, gtk.StateFlags.ACTIVE):
+                textColor = context.get_background_color(context.get_state())
+                if textColor.alpha != 0:
+                    widget.override_color(state, textColor)
+            context.restore()
+        else:
+            textColor = widget.get_style().lookup_color('selected_bg_color')
+            for state in (gtk.StateType.NORMAL, gtk.StateType.PRELIGHT, gtk.StateType.ACTIVE):
+                if textColor[0] != False:
+                    widget.modify_fg(state, textColor[1])
+                else:
+                    widget.modify_fg(state, None)
         self.StyleBlock -= 1
 
     def GetPageSpot(self, new):
@@ -152,7 +174,7 @@ class PluginPage(GenericPage):
 
         if self.NotFoundBox is None:
             self.NotFoundBox = NotFoundBox(text)
-            self.RightWidget.append_page(self.NotFoundBox, gtk.Label(_("Error")))
+            self.RightWidget.append_page(self.NotFoundBox, gtk.Label.new(_("Error")))
         else:
             self.NotFoundBox.update(text)
 
@@ -178,7 +200,7 @@ class PluginPage(GenericPage):
             if page.Filter(text):
                 empty = False
                 if num < 0:
-                    self.RightWidget.insert_page(page.Scroll, gtk.Label(page.Name), self.GetPageSpot(page))
+                    self.RightWidget.insert_page(page.Scroll, gtk.Label.new(page.Name), self.GetPageSpot(page))
             else:
                 if num >= 0:
                     self.RightWidget.remove_page(num)
@@ -243,15 +265,18 @@ class FilterPage(GenericPage):
         # Image + Label
         filterLabel = Label()
         filterLabel.set_markup(HeaderMarkup % (_("Filter")))
-        filterLabel.connect("style-set", self.HeaderStyleSet)
+        if gtk.check_version(3, 16, 0) is None:
+            filterLabel.connect("style-updated", self.HeaderStyleUpdate)
+        else:
+            filterLabel.connect("style-set", self.HeaderStyleUpdate)
         filterImg = Image("search", ImageCategory, 64)
         self.LeftWidget.pack_start(filterImg, False, False, 0)
         self.LeftWidget.pack_start(filterLabel, False, False, 0)
 
         # Entry FIXME find a solution with std gtk
         self.FilterEntry = ClearEntry()
-        self.FilterEntry.set_icon_from_icon_name(gtk.ENTRY_ICON_PRIMARY, "input-keyboard")
-        self.FilterEntry.set_icon_tooltip_text(gtk.ENTRY_ICON_PRIMARY, _("Grab Keys"))
+        self.FilterEntry.set_icon_from_icon_name(gtk.EntryIconPosition.PRIMARY, "input-keyboard")
+        self.FilterEntry.set_icon_tooltip_text(gtk.EntryIconPosition.PRIMARY, _("Grab Keys"))
         self.FilterEntry.connect('icon-press', self.GrabKey)
 
         self.FilterEntry.set_tooltip_text(_("Enter a filter.\nClick the keyboard image to grab a key for which to search."))
@@ -261,7 +286,10 @@ class FilterPage(GenericPage):
         # Search in...
         filterSearchLabel = Label()
         filterSearchLabel.set_markup(HeaderMarkup % (_("Search in...")))
-        filterSearchLabel.connect("style-set", self.HeaderStyleSet)
+        if gtk.check_version(3, 16, 0) is None:
+            filterSearchLabel.connect("style-updated", self.HeaderStyleUpdate)
+        else:
+            filterSearchLabel.connect("style-set", self.HeaderStyleUpdate)
         self.LeftWidget.pack_start(filterSearchLabel, False, False, 0)
 
         # Options
@@ -305,10 +333,6 @@ class FilterPage(GenericPage):
         self.SubGroupBox = GroupView(_("Subgroup"))
         self.SubGroupBox.SelectionHandler = self.SubGroupChanged
 
-        self.PluginBox.set_size_request(250, 180)
-        self.GroupBox.set_size_request(220, 180)
-        self.SubGroupBox.set_size_request(220, 180)
-
         self.SelectorButtons.set_size_request(-1, 50)
 
         self.SelectorBoxes = gtk.HBox()
@@ -316,29 +340,34 @@ class FilterPage(GenericPage):
         self.SelectorBoxes.set_spacing(5)
 
         scroll = gtk.ScrolledWindow()
-        scroll.props.hscrollbar_policy = gtk.POLICY_AUTOMATIC
-        scroll.props.vscrollbar_policy = gtk.POLICY_AUTOMATIC
+        scroll.set_size_request(250, 180)
+        scroll.props.hscrollbar_policy = gtk.PolicyType.AUTOMATIC
+        scroll.props.vscrollbar_policy = gtk.PolicyType.AUTOMATIC
         scroll.add(self.PluginBox)
         self.SelectorBoxes.pack_start(scroll, False, False, 0)
         scroll = gtk.ScrolledWindow()
-        scroll.props.hscrollbar_policy = gtk.POLICY_AUTOMATIC
-        scroll.props.vscrollbar_policy = gtk.POLICY_AUTOMATIC
+        scroll.set_size_request(220, 180)
+        scroll.props.hscrollbar_policy = gtk.PolicyType.AUTOMATIC
+        scroll.props.vscrollbar_policy = gtk.PolicyType.AUTOMATIC
         scroll.add(self.GroupBox)
         self.SelectorBoxes.pack_start(scroll, False, False, 0)
         scroll = gtk.ScrolledWindow()
         scroll.add(self.SubGroupBox)
-        scroll.props.hscrollbar_policy = gtk.POLICY_AUTOMATIC
-        scroll.props.vscrollbar_policy = gtk.POLICY_AUTOMATIC
-        self.SelectorBoxes.pack_start(scroll, False, False)
+        scroll.set_size_request(220, 180)
+        scroll.props.hscrollbar_policy = gtk.PolicyType.AUTOMATIC
+        scroll.props.vscrollbar_policy = gtk.PolicyType.AUTOMATIC
+        self.SelectorBoxes.pack_start(scroll, False, False, 0)
         self.RightChild.pack_start(self.SelectorButtons, False, False, 0)
         self.RightChild.pack_start(self.SelectorBoxes, False, False, 0)
         self.SettingsArea = gtk.ScrolledWindow()
         ebox = gtk.EventBox()
+        if gtk.check_version (3, 0, 0) is None:
+            ebox.get_style_context().add_class(gtk.STYLE_CLASS_NOTEBOOK)
         self.SettingsBox = gtk.VBox()
         ebox.add(self.SettingsBox)
         self.SettingsBox.set_border_width(5)
-        self.SettingsArea.props.hscrollbar_policy = gtk.POLICY_AUTOMATIC
-        self.SettingsArea.props.vscrollbar_policy = gtk.POLICY_ALWAYS
+        self.SettingsArea.props.hscrollbar_policy = gtk.PolicyType.AUTOMATIC
+        self.SettingsArea.props.vscrollbar_policy = gtk.PolicyType.ALWAYS
         self.SettingsArea.set_border_width(5)
         self.SettingsArea.add_with_viewport(ebox)
         self.RightChild.pack_start(self.SettingsArea, True, True, 0)
@@ -346,8 +375,10 @@ class FilterPage(GenericPage):
         GlobalUpdater.Block += 1
 
         # Notebook
-        self.NotebookLabel = gtk.Label(_("Settings"))
+        self.NotebookLabel = gtk.Label.new(_("Settings"))
         self.NotebookChild = gtk.EventBox()
+        if gtk.check_version (3, 0, 0) is None:
+            self.NotebookChild.get_style_context().add_class(gtk.STYLE_CLASS_NOTEBOOK)
         self.NotebookChild.add(self.RightChild)
         self.RightWidget.append_page(self.NotebookChild, self.NotebookLabel)
 
@@ -360,6 +391,7 @@ class FilterPage(GenericPage):
         box.pack_start(bar, False, False, 0)
 
         label = gtk.Label()
+        label.set_max_width_chars(0)
         box.pack_start(label, False, False, 0)
 
         progress.set_size_request(300, -1)
@@ -394,12 +426,27 @@ class FilterPage(GenericPage):
 
     StyleBlock = 0
 
-    def HeaderStyleSet(self, widget, previous):
+    def HeaderStyleUpdate(self, widget, previous=None):
         if self.StyleBlock > 0:
             return
         self.StyleBlock += 1
-        for state in (gtk.STATE_NORMAL, gtk.STATE_PRELIGHT, gtk.STATE_ACTIVE):
-            widget.modify_fg(state, widget.style.bg[gtk.STATE_SELECTED])
+        if gtk.check_version(3, 6, 0) is None:
+            context = widget.get_style_context ()
+            context.save()
+            context.add_class(gtk.STYLE_CLASS_BACKGROUND)
+            context.set_state(gtk.StateFlags.SELECTED)
+            for state in (gtk.StateFlags.NORMAL, gtk.StateFlags.PRELIGHT, gtk.StateFlags.ACTIVE):
+                textColor = context.get_background_color(context.get_state())
+                if textColor.alpha != 0:
+                    widget.override_color(state, textColor)
+            context.restore()
+        else:
+            textColor = widget.get_style().lookup_color('selected_bg_color')
+            for state in (gtk.StateType.NORMAL, gtk.StateType.PRELIGHT, gtk.StateType.ACTIVE):
+                if textColor[0] != False:
+                    widget.modify_fg(state, textColor[1])
+                else:
+                    widget.modify_fg(state, None)
         self.StyleBlock -= 1
 
     def Filter(self, text, level=FilterAll):
@@ -422,7 +469,7 @@ class FilterPage(GenericPage):
         self.FilterEntry.set_text(new)
 
     def GrabKey(self, widget, pos, event):
-        if pos != gtk.ENTRY_ICON_PRIMARY:
+        if pos != gtk.EntryIconPosition.PRIMARY:
             return
         grabber = KeyGrabber(label = _("Grab key combination"))
         self.LeftWidget.pack_start(grabber, False, False, 0)
@@ -524,7 +571,7 @@ class FilterPage(GenericPage):
         else:
             self.SubGroupBox.get_selection().unselect_all()
 
-        if self.CurrentGroup is not None:
+        if self.CurrentGroup is not None and self.CurrentGroup in self.Results[self.CurrentPlugin.Name]:
             page = self.Results[self.CurrentPlugin.Name][self.CurrentGroup]
             self.PackSettingsBox(groups=[page])
         else:
@@ -543,7 +590,7 @@ class FilterPage(GenericPage):
 
         self.UpdateSelectorButtons()
 
-        if self.CurrentSubGroup is not None:
+        if self.CurrentSubGroup is not None and self.CurrentGroup in self.Results[self.CurrentPlugin.Name]:
             sgas = self.Results[self.CurrentPlugin.Name][self.CurrentGroup].VisibleAreas
             sga = [sga for sga in sgas if sga.Name == self.CurrentSubGroup]
             self.PackSettingsBox(subgroups=sga)
@@ -652,11 +699,12 @@ class ProfileBackendPage(object):
         profileBox.set_spacing(5)
         profileAdd = gtk.Button()
         profileAdd.set_tooltip_text(_("Add a New Profile"))
-        profileAdd.set_image(gtk.image_new_from_stock(gtk.STOCK_ADD, gtk.ICON_SIZE_BUTTON))
+        profileAdd.set_image(gtk.Image.new_from_stock(gtk.STOCK_ADD, gtk.IconSize.BUTTON))
         self.ProfileRemoveButton = profileRemove = gtk.Button()
         profileRemove.set_tooltip_text(_("Remove This Profile"))
-        profileRemove.set_image(gtk.image_new_from_stock(gtk.STOCK_REMOVE, gtk.ICON_SIZE_BUTTON))
-        self.ProfileComboBox = gtk.combo_box_new_text()
+        profileRemove.set_image(gtk.Image.new_from_stock(gtk.STOCK_REMOVE, gtk.IconSize.BUTTON))
+        self.ProfileComboBox = gtk.ComboBoxText()
+        self.ProfileComboBox.set_entry_text_column(0)
         self.ProfileComboBox.set_sensitive(self.Context.CurrentBackend.ProfileSupport)
         self.ProfileComboBox.append_text(_("Default"))
         for profile in self.Context.Profiles.values():
@@ -676,7 +724,10 @@ class ProfileBackendPage(object):
         profileBox.pack_start(profileRemove, False, False, 0)
         profileLabel = Label()
         profileLabel.set_markup(HeaderMarkup % (_("Profile")))
-        profileLabel.connect("style-set", self.HeaderStyleSet)
+        if gtk.check_version(3, 16, 0) is None:
+            profileLabel.connect("style-updated", self.HeaderStyleUpdate)
+        else:
+            profileLabel.connect("style-set", self.HeaderStyleUpdate)
         self.ProfileImportExportBox = gtk.HBox()
         self.ProfileImportExportBox.set_spacing(5)
         profileImportButton = gtk.Button(_("Import"))
@@ -687,10 +738,10 @@ class ProfileBackendPage(object):
         profileExportButton.set_tooltip_text(_("Export your CompizConfig Profile"))
         profileResetButton = gtk.Button(_("Reset to defaults"))
         profileResetButton.set_tooltip_text(_("Reset your CompizConfig Profile to the global defaults"))
-        profileResetButton.set_image(gtk.image_new_from_stock(gtk.STOCK_CLEAR, gtk.ICON_SIZE_BUTTON))
-        profileImportButton.set_image(gtk.image_new_from_stock(gtk.STOCK_OPEN, gtk.ICON_SIZE_BUTTON))
-        profileImportAsButton.set_image(gtk.image_new_from_stock(gtk.STOCK_OPEN, gtk.ICON_SIZE_BUTTON))
-        profileExportButton.set_image(gtk.image_new_from_stock(gtk.STOCK_SAVE, gtk.ICON_SIZE_BUTTON))
+        profileResetButton.set_image(gtk.Image.new_from_stock(gtk.STOCK_CLEAR, gtk.IconSize.BUTTON))
+        profileImportButton.set_image(gtk.Image.new_from_stock(gtk.STOCK_OPEN, gtk.IconSize.BUTTON))
+        profileImportAsButton.set_image(gtk.Image.new_from_stock(gtk.STOCK_OPEN, gtk.IconSize.BUTTON))
+        profileExportButton.set_image(gtk.Image.new_from_stock(gtk.STOCK_SAVE, gtk.IconSize.BUTTON))
         profileImportButton.connect("clicked", self.ImportProfile)
         profileImportAsButton.connect("clicked", self.ImportProfileAs)
         profileExportButton.connect("clicked", self.ExportProfile)
@@ -704,7 +755,7 @@ class ProfileBackendPage(object):
         rightChild.pack_start(self.ProfileImportExportBox, False, False, 5)
 
         # Backends
-        backendBox = gtk.combo_box_new_text()
+        backendBox = gtk.ComboBoxText.new()
         for backend in self.Context.Backends.values():
             backendBox.append_text(backend.ShortDesc)
         name = self.Context.CurrentBackend.Name
@@ -713,14 +764,20 @@ class ProfileBackendPage(object):
         backendBox.connect("changed", self.BackendChangedAddTimeout)
         backendLabel = Label()
         backendLabel.set_markup(HeaderMarkup % (_("Backend")))
-        backendLabel.connect("style-set", self.HeaderStyleSet)
+        if gtk.check_version(3, 16, 0) is None:
+            backendLabel.connect("style-updated", self.HeaderStyleUpdate)
+        else:
+            backendLabel.connect("style-set", self.HeaderStyleUpdate)
         rightChild.pack_start(backendLabel, False, False, 5)
         rightChild.pack_start(backendBox, False, False, 5)
 
         # Integration
         integrationLabel = Label()
         integrationLabel.set_markup(HeaderMarkup % (_("Integration")))
-        integrationLabel.connect("style-set", self.HeaderStyleSet)
+        if gtk.check_version(3, 16, 0) is None:
+            integrationLabel.connect("style-updated", self.HeaderStyleUpdate)
+        else:
+            integrationLabel.connect("style-set", self.HeaderStyleUpdate)
         self.IntegrationButton = gtk.CheckButton(_("Enable integration into the desktop environment"))
         self.IntegrationButton.set_active(self.Context.Integration)
         self.IntegrationButton.set_sensitive(self.Context.CurrentBackend.IntegrationSupport)
@@ -732,12 +789,27 @@ class ProfileBackendPage(object):
 
     StyleBlock = 0
 
-    def HeaderStyleSet(self, widget, previous):
+    def HeaderStyleUpdate(self, widget, previous=None):
         if self.StyleBlock > 0:
             return
         self.StyleBlock += 1
-        for state in (gtk.STATE_NORMAL, gtk.STATE_PRELIGHT, gtk.STATE_ACTIVE):
-            widget.modify_fg(state, widget.style.bg[gtk.STATE_SELECTED])
+        if gtk.check_version(3, 6, 0) is None:
+            context = widget.get_style_context ()
+            context.save()
+            context.add_class(gtk.STYLE_CLASS_BACKGROUND)
+            context.set_state(gtk.StateFlags.SELECTED)
+            for state in (gtk.StateFlags.NORMAL, gtk.StateFlags.PRELIGHT, gtk.StateFlags.ACTIVE):
+                textColor = context.get_background_color(context.get_state())
+                if textColor.alpha != 0:
+                    widget.override_color(state, textColor)
+            context.restore()
+        else:
+            textColor = widget.get_style().lookup_color('selected_bg_color')
+            for state in (gtk.StateType.NORMAL, gtk.StateType.PRELIGHT, gtk.StateType.ACTIVE):
+                if textColor[0] != False:
+                    widget.modify_fg(state, textColor[1])
+                else:
+                    widget.modify_fg(state, None)
         self.StyleBlock -= 1
 
     def UpdateProfiles (self, current=_("Default")):
@@ -765,7 +837,10 @@ class ProfileBackendPage(object):
         self.Context.Integration = value
 
     def ProfileChanged(self, widget):
-        name = widget.get_active_text()
+        try:
+            name = widget.do_get_active_text(widget)
+        except (AttributeError, NameError, TypeError):
+            name = widget.get_active_text()
         if name == _("Default"):
             self.Context.ResetProfile()
         elif name in self.Context.Profiles:
@@ -810,26 +885,26 @@ class ProfileBackendPage(object):
 
     def ExportProfile(self, widget):
         main = widget.get_toplevel()
-        b = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_SAVE, gtk.RESPONSE_OK)
-        chooser = gtk.FileChooserDialog(title=_("Save file.."), parent=main, buttons=b, action=gtk.FILE_CHOOSER_ACTION_SAVE)
+        b = (gtk.STOCK_CANCEL, gtk.ResponseType.CANCEL, gtk.STOCK_SAVE, gtk.ResponseType.OK)
+        chooser = gtk.FileChooserDialog(title=_("Save file.."), parent=main, buttons=b, action=gtk.FileChooserAction.SAVE)
         chooser.set_current_folder(os.environ.get("HOME"))
         self.CreateFilter(chooser)
         ret = chooser.run()
 
         path = chooser.get_filename()
         chooser.destroy()
-        if ret == gtk.RESPONSE_OK:
-            dlg = gtk.MessageDialog(type=gtk.MESSAGE_QUESTION, buttons=gtk.BUTTONS_YES_NO)
+        if ret == gtk.ResponseType.OK:
+            dlg = gtk.MessageDialog(type=gtk.MessageType.QUESTION, buttons=gtk.ButtonsType.YES_NO)
             dlg.set_markup(_("Do you want to skip default option values while exporting your profile?"))
             ret = dlg.run()
             dlg.destroy()
             if not path.endswith(".profile"):
                 path = "%s.profile" % path
-            self.Context.Export(path, ret == gtk.RESPONSE_YES)
+            self.Context.Export(path, ret == gtk.ResponseType.YES)
 
     def ImportProfileDialog (self, main):
-        b = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
-             gtk.STOCK_OPEN, gtk.RESPONSE_OK)
+        b = (gtk.STOCK_CANCEL, gtk.ResponseType.CANCEL,
+             gtk.STOCK_OPEN, gtk.ResponseType.OK)
         chooser = gtk.FileChooserDialog (title = _("Open file.."),
                                          parent = main, buttons = b)
         chooser.set_current_folder (os.environ.get ("HOME"))
@@ -838,18 +913,18 @@ class ProfileBackendPage(object):
 
         path = chooser.get_filename ()
         chooser.destroy ()
-        if ret == gtk.RESPONSE_OK:
+        if ret == gtk.ResponseType.OK:
             return path
         return None
 
     def ProfileNameDialog (self, main):
         dlg = gtk.Dialog (_("Enter a profile name"), main,
-                          gtk.DIALOG_MODAL)
-        dlg.add_button (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
-        dlg.add_button (gtk.STOCK_ADD, gtk.RESPONSE_OK)
+                          gtk.DialogFlags.MODAL)
+        dlg.add_button (gtk.STOCK_CANCEL, gtk.ResponseType.CANCEL)
+        dlg.add_button (gtk.STOCK_ADD, gtk.ResponseType.OK)
 
         entry = gtk.Entry ()
-        label = gtk.Label (_("Please enter a name for the new profile:"))
+        label = gtk.Label.new(_("Please enter a name for the new profile:"))
         dlg.vbox.pack_start (label, False, False, 5)
         dlg.vbox.pack_start (entry, False, False, 5)
 
@@ -858,7 +933,7 @@ class ProfileBackendPage(object):
         ret = dlg.run ()
         text = entry.get_text ()
         dlg.destroy()
-        if ret == gtk.RESPONSE_OK:
+        if ret == gtk.ResponseType.OK:
             return text
         return None
 
@@ -889,14 +964,20 @@ class ProfileBackendPage(object):
             self.UpdateProfiles (name)
 
     def RemoveProfile(self, widget):
-        name = self.ProfileComboBox.get_active_text()
+        try:
+            name = self.ProfileComboBox.do_get_active_text(self.ProfileComboBox)
+        except (AttributeError, NameError, TypeError):
+            name = self.ProfileComboBox.get_active_text()
         if name != _("Default"):
             self.Context.ResetProfile()
             self.Context.Profiles[name].Delete()
             self.UpdateProfiles()
 
     def BackendChanged(self, widget):
-        shortDesc = widget.get_active_text()
+        try:
+            shortDesc = widget.do_get_active_text(widget)
+        except (AttributeError, NameError, TypeError):
+            shortDesc = widget.get_active_text()
         name = ""
         for backend in self.Context.Backends.values():
             if backend.ShortDesc == shortDesc:
@@ -941,16 +1022,16 @@ class PluginListPage(object):
         # Left/Right buttons
         self.MiddleButtonBox = buttonBox = gtk.VBox()
         buttonBox.set_spacing(5)
-        boxAlignment = gtk.Alignment(0, 0.5, 0, 0)
+        boxAlignment = gtk.Alignment.new(0, 0.5, 0, 0)
         boxAlignment.add(buttonBox)
 
         rightButton = gtk.Button()
-        rightImage = Image(gtk.STOCK_GO_FORWARD, ImageStock, gtk.ICON_SIZE_BUTTON)
+        rightImage = Image(gtk.STOCK_GO_FORWARD, ImageStock, gtk.IconSize.BUTTON)
         rightButton.set_image(rightImage)
         rightButton.connect("clicked", self.EnablePlugins)
 
         leftButton = gtk.Button()
-        leftImage = Image(gtk.STOCK_GO_BACK, ImageStock, gtk.ICON_SIZE_BUTTON)
+        leftImage = Image(gtk.STOCK_GO_BACK, ImageStock, gtk.IconSize.BUTTON)
         leftButton.set_image(leftImage)
         leftButton.connect("clicked", self.EnabledPluginsList.delete)
 
@@ -961,7 +1042,7 @@ class PluginListPage(object):
         enabledBox = gtk.VBox()
         enabledBox.set_spacing(10)
 
-        enabledAlignment = gtk.Alignment(0.5, 0, 0, 0)
+        enabledAlignment = gtk.Alignment.new(0.5, 0, 0, 0)
         self.EnabledButtonBox = enabledButtonBox = gtk.HBox()
         enabledButtonBox.set_spacing(5)
         enabledAlignment.add(enabledButtonBox)
@@ -1011,11 +1092,11 @@ class PluginListPage(object):
 
         autoSort = widget.get_active()
         if not autoSort:
-            dlg = gtk.MessageDialog(type=gtk.MESSAGE_WARNING, buttons=gtk.BUTTONS_YES_NO)
+            dlg = gtk.MessageDialog(type=gtk.MessageType.WARNING, buttons=gtk.ButtonsType.YES_NO)
             dlg.set_markup(_("Do you really want to disable automatic plugin sorting? This will also disable conflict handling. You should only do this if you know what you are doing."))
             response = dlg.run()
             dlg.destroy()
-            if response == gtk.RESPONSE_NO:
+            if response == gtk.ResponseType.NO:
                 self.Block += 1
                 widget.set_active(True)
                 self.Block -= 1
@@ -1048,16 +1129,16 @@ class PluginListPage(object):
 
     def AddPlugin(self, widget):
         dlg = gtk.Dialog(_("Add plugin"))
-        dlg.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
-        dlg.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK).grab_default()
-        dlg.set_default_response(gtk.RESPONSE_OK)
+        dlg.add_button(gtk.STOCK_CANCEL, gtk.ResponseType.CANCEL)
+        dlg.add_button(gtk.STOCK_OK, gtk.ResponseType.OK).grab_default()
+        dlg.set_default_response(gtk.ResponseType.OK)
 
-        label = gtk.Label(_("Plugin name:"))
+        label = gtk.Label.new(_("Plugin name:"))
         label.set_tooltip_text(_("Insert plugin name"))
         dlg.vbox.pack_start(label, True, True, 0)
 
         entry = gtk.Entry()
-        entry.props.activates_default = True
+        entry.set_activates_default(True)
         dlg.vbox.pack_start(entry, True, True, 0)
 
         dlg.vbox.set_spacing(5)
@@ -1066,7 +1147,7 @@ class PluginListPage(object):
         ret = dlg.run()
         dlg.destroy()
 
-        if ret == gtk.RESPONSE_OK:
+        if ret == gtk.ResponseType.OK:
             self.EnabledPluginsList.append(entry.get_text())
 
     def EnablePlugins(self, widget):
@@ -1101,7 +1182,10 @@ class PreferencesPage(GenericPage):
         # Left Pane
         self.DescLabel = Label()
         self.DescLabel.set_markup(HeaderMarkup % (_("Preferences")))
-        self.DescLabel.connect("style-set", self.HeaderStyleSet)
+        if gtk.check_version(3, 16, 0) is None:
+            self.DescLabel.connect("style-updated", self.HeaderStyleUpdate)
+        else:
+            self.DescLabel.connect("style-set", self.HeaderStyleUpdate)
         self.DescImg = Image("profiles",ImageCategory, 64)
         self.LeftWidget.pack_start(self.DescImg, False, False, 0)
         self.LeftWidget.pack_start(self.DescLabel, False, False, 0)
@@ -1114,10 +1198,13 @@ class PreferencesPage(GenericPage):
         # About Button
         aboutLabel = Label()
         aboutLabel.set_markup(HeaderMarkup % (_("About")))
-        aboutLabel.connect("style-set", self.HeaderStyleSet)
+        if gtk.check_version(3, 16, 0) is None:
+            aboutLabel.connect("style-updated", self.HeaderStyleUpdate)
+        else:
+            aboutLabel.connect("style-set", self.HeaderStyleUpdate)
         aboutButton = gtk.Button()
-        aboutButton.set_relief(gtk.RELIEF_NONE)
-        aboutImage = Image(gtk.STOCK_ABOUT, ImageStock, gtk.ICON_SIZE_BUTTON)
+        aboutButton.set_relief(gtk.ReliefStyle.NONE)
+        aboutImage = Image(gtk.STOCK_ABOUT, ImageStock, gtk.IconSize.BUTTON)
         aboutFrame = gtk.HBox()
         aboutFrame.set_spacing(5)
         aboutFrame.pack_start(aboutImage, False, False, 0)
@@ -1139,20 +1226,35 @@ class PreferencesPage(GenericPage):
 
         # Profile & Backend Page
         self.ProfileBackendPage = ProfileBackendPage(context)
-        self.RightWidget.append_page(self.ProfileBackendPage.Widget, gtk.Label(_("Profile & Backend")))
+        self.RightWidget.append_page(self.ProfileBackendPage.Widget, gtk.Label.new(_("Profile & Backend")))
 
         # Plugin List
         self.PluginListPage = PluginListPage(context)
-        self.RightWidget.append_page(self.PluginListPage.Widget, gtk.Label(_("Plugin List")))
+        self.RightWidget.append_page(self.PluginListPage.Widget, gtk.Label.new(_("Plugin List")))
 
     StyleBlock = 0
 
-    def HeaderStyleSet(self, widget, previous):
+    def HeaderStyleUpdate(self, widget, previous=None):
         if self.StyleBlock > 0:
             return
         self.StyleBlock += 1
-        for state in (gtk.STATE_NORMAL, gtk.STATE_PRELIGHT, gtk.STATE_ACTIVE):
-            widget.modify_fg(state, widget.style.bg[gtk.STATE_SELECTED])
+        if gtk.check_version(3, 6, 0) is None:
+            context = widget.get_style_context ()
+            context.save()
+            context.add_class(gtk.STYLE_CLASS_BACKGROUND)
+            context.set_state(gtk.StateFlags.SELECTED)
+            for state in (gtk.StateFlags.NORMAL, gtk.StateFlags.PRELIGHT, gtk.StateFlags.ACTIVE):
+                textColor = context.get_background_color(context.get_state())
+                if textColor.alpha != 0:
+                    widget.override_color(state, textColor)
+            context.restore()
+        else:
+            textColor = widget.get_style().lookup_color('selected_bg_color')
+            for state in (gtk.StateType.NORMAL, gtk.StateType.PRELIGHT, gtk.StateType.ACTIVE):
+                if textColor[0] != False:
+                    widget.modify_fg(state, textColor[1])
+                else:
+                    widget.modify_fg(state, None)
         self.StyleBlock -= 1
 
     def ShowAboutDialog(self, widget):
@@ -1169,13 +1271,17 @@ class MainPage(object):
         self.Main    = main
         sidebar = gtk.VBox(False, 10)
         sidebar.set_border_width(10)
+
         pluginWindow = PluginWindow(self.Context)
         pluginWindow.connect('show-plugin', self.ShowPlugin)
 
         # Filter
         filterLabel = Label()
         filterLabel.set_markup(HeaderMarkup % (_("Filter")))
-        filterLabel.connect("style-set", self.HeaderStyleSet)
+        if gtk.check_version(3, 16, 0) is None:
+            filterLabel.connect("style-updated", self.HeaderStyleUpdate)
+        else:
+            filterLabel.connect("style-set", self.HeaderStyleUpdate)
         filterLabel.props.xalign = 0.1
         filterEntry = ClearEntry()
         filterEntry.set_tooltip_text(_("Filter your Plugin list"))
@@ -1184,7 +1290,7 @@ class MainPage(object):
 
         # Screens
         if len(getScreens()) > 1:
-            screenBox = gtk.combo_box_new_text()
+            screenBox = gtk.ComboBoxText.new()
             for screen in getScreens():
                 screenBox.append_text(_("Screen %i") % screen)
             name = self.Context.CurrentBackend.Name
@@ -1192,7 +1298,10 @@ class MainPage(object):
             screenBox.connect("changed", self.ScreenChanged)
             screenLabel = Label()
             screenLabel.set_markup(HeaderMarkup % (_("Screen")))
-            screenLabel.connect("style-set", self.HeaderStyleSet)
+            if gtk.check_version(3, 16, 0) is None:
+                screenLabel.connect("style-updated", self.HeaderStyleUpdate)
+            else:
+                screenLabel.connect("style-set", self.HeaderStyleUpdate)
 
             sidebar.pack_start(screenLabel, False, False, 0)
             sidebar.pack_start(screenBox, False, False, 0)
@@ -1210,7 +1319,7 @@ class MainPage(object):
             categoryToggleIcon = Image (name = iconName, type = ImageCategory,
                                         size = 22)
             categoryToggleLabel = Label (label)
-            align = gtk.Alignment (0, 0.5, 1, 1)
+            align = gtk.Alignment.new (0, 0.5, 1, 1)
             align.set_padding (0, 0, 0, 10)
             align.add (categoryToggleIcon)
             categoryToggleBox = gtk.HBox ()
@@ -1223,7 +1332,10 @@ class MainPage(object):
         categoryLabel = Label()
         categoryLabel.props.xalign = 0.1
         categoryLabel.set_markup(HeaderMarkup % (_("Category")))
-        categoryLabel.connect("style-set", self.HeaderStyleSet)
+        if gtk.check_version(3, 16, 0) is None:
+            categoryLabel.connect("style-updated", self.HeaderStyleUpdate)
+        else:
+            categoryLabel.connect("style-set", self.HeaderStyleUpdate)
 
         # Exit Button
         exitButton = gtk.Button(gtk.STOCK_CLOSE)
@@ -1233,12 +1345,15 @@ class MainPage(object):
         # Advanced Search
         searchLabel = Label()
         searchLabel.set_markup(HeaderMarkup % (_("Advanced Search")))
-        searchLabel.connect("style-set", self.HeaderStyleSet)
+        if gtk.check_version(3, 16, 0) is None:
+            searchLabel.connect("style-updated", self.HeaderStyleUpdate)
+        else:
+            searchLabel.connect("style-set", self.HeaderStyleUpdate)
         searchImage = gtk.Image()
-        searchImage.set_from_stock(gtk.STOCK_GO_FORWARD, gtk.ICON_SIZE_BUTTON)
+        searchImage.set_from_stock(gtk.STOCK_GO_FORWARD, gtk.IconSize.BUTTON)
         searchButton = PrettyButton()
         searchButton.connect("clicked", self.ShowAdvancedFilter)
-        searchButton.set_relief(gtk.RELIEF_NONE)
+        searchButton.set_relief(gtk.ReliefStyle.NONE)
         searchFrame = gtk.HBox()
         searchFrame.pack_start(searchLabel, False, False, 0)
         searchFrame.pack_end(searchImage, False, False, 0)
@@ -1247,12 +1362,15 @@ class MainPage(object):
         # Preferences
         prefLabel = Label()
         prefLabel.set_markup(HeaderMarkup % (_("Preferences")))
-        prefLabel.connect("style-set", self.HeaderStyleSet)
+        if gtk.check_version(3, 16, 0) is None:
+            prefLabel.connect("style-updated", self.HeaderStyleUpdate)
+        else:
+            prefLabel.connect("style-set", self.HeaderStyleUpdate)
         prefImage = gtk.Image()
-        prefImage.set_from_stock(gtk.STOCK_GO_FORWARD, gtk.ICON_SIZE_BUTTON)
+        prefImage.set_from_stock(gtk.STOCK_GO_FORWARD, gtk.IconSize.BUTTON)
         prefButton = PrettyButton()
         prefButton.connect("clicked", self.ShowPreferences)
-        prefButton.set_relief(gtk.RELIEF_NONE)
+        prefButton.set_relief(gtk.ReliefStyle.NONE)
         prefFrame = gtk.HBox()
         prefFrame.pack_start(prefLabel, False, False, 0)
         prefFrame.pack_end(prefImage, False, False, 0)
@@ -1272,12 +1390,27 @@ class MainPage(object):
 
     StyleBlock = 0
 
-    def HeaderStyleSet(self, widget, previous):
+    def HeaderStyleUpdate(self, widget, previous=None):
         if self.StyleBlock > 0:
             return
         self.StyleBlock += 1
-        for state in (gtk.STATE_NORMAL, gtk.STATE_PRELIGHT, gtk.STATE_ACTIVE):
-            widget.modify_fg(state, widget.style.bg[gtk.STATE_SELECTED])
+        if gtk.check_version(3, 6, 0) is None:
+            context = widget.get_style_context ()
+            context.save()
+            context.add_class(gtk.STYLE_CLASS_BACKGROUND)
+            context.set_state(gtk.StateFlags.SELECTED)
+            for state in (gtk.StateFlags.NORMAL, gtk.StateFlags.PRELIGHT, gtk.StateFlags.ACTIVE):
+                textColor = context.get_background_color(context.get_state())
+                if textColor.alpha != 0:
+                    widget.override_color(state, textColor)
+            context.restore()
+        else:
+            textColor = widget.get_style().lookup_color('selected_bg_color')
+            for state in (gtk.StateType.NORMAL, gtk.StateType.PRELIGHT, gtk.StateType.ACTIVE):
+                if textColor[0] != False:
+                    widget.modify_fg(state, textColor[1])
+                else:
+                    widget.modify_fg(state, None)
         self.StyleBlock -= 1
 
     def ShowPlugin(self, widget, plugin):
@@ -1311,28 +1444,33 @@ class MainPage(object):
 # Page
 #
 class Page(object):
+
     def __init__(self):
         self.SetContainer = gtk.VBox()
 
         self.Widget = gtk.EventBox()
         self.Widget.add(self.SetContainer)
 
+        if gtk.check_version (3, 0, 0) is None:
+            self.Widget.get_style_context ().add_class (gtk.STYLE_CLASS_NOTEBOOK)
+
         self.Empty = True
 
     def Wrap(self):
         scroll = gtk.ScrolledWindow()
-        scroll.props.hscrollbar_policy = gtk.POLICY_NEVER
-        scroll.props.vscrollbar_policy = gtk.POLICY_AUTOMATIC
+        scroll.props.hscrollbar_policy = gtk.PolicyType.NEVER
+        scroll.props.vscrollbar_policy = gtk.PolicyType.AUTOMATIC
 
         view = gtk.Viewport()
         view.set_border_width(5)
-        view.set_shadow_type(gtk.SHADOW_NONE)
+        view.set_shadow_type(gtk.ShadowType.NONE)
 
         scroll.add(view)
         view.add(self.Widget)
 
         self.Scroll = scroll
 
+    StyleBlock = 0
 
 # Group Page
 #
@@ -1342,9 +1480,9 @@ class GroupPage(Page):
 
         self.Name = name
         self.VisibleAreas = self.subGroupAreas = []
-        self.Label = gtk.Alignment(0, 0.5, 0, 0)
+        self.Label = gtk.Alignment.new(0, 0.5, 0, 0)
         self.Label.set_padding(4, 4, 4, 4)
-        label = gtk.Label("<b>%s</b>" %(protect_pango_markup(name or _('General'))))
+        label = gtk.Label.new("<b>%s</b>" %(protect_pango_markup(name or _('General'))))
         label.set_use_markup(True)
         self.Label.add(label)
         if '' in group:
@@ -1382,5 +1520,3 @@ class GroupPage(Page):
             self.Label.show()
 
         return not empty
-
-

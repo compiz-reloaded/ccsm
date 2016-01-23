@@ -6,7 +6,7 @@
 # as published by the Free Software Foundation; either version 2
 # of the License, or (at your option) any later version.
 #
-# This program is distributed in the hope that it will be useful,
+# This program is distributed in the hope that it will be useful, 
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
@@ -27,10 +27,14 @@ DBUS_CCSM_INTERFACE = 'org.compiz_fusion.ccsm'
 DBUS_REQUEST_NAME_REPLY_PRIMARY_OWNER = 1
 
 from optparse import OptionParser
-import pygtk
-pygtk.require('2.0')
-import gtk
-import sys
+import gi
+gi.require_version('Gtk', '@gtkver@')
+gi.require_version('Gdk', '@gtkver@')
+from gi.repository import Gtk as gtk, Gdk as gdk
+if gtk.check_version(3, 0, 0) is None:
+    gi.require_version('GdkX11', '@gtkver@')
+    from gi.repository import GdkX11 as gdkX11
+import os, sys
 
 def try_register_dbus ():
     '''Return instance of dbus control object on success, None on failure'''
@@ -75,8 +79,11 @@ def try_register_dbus ():
 
     else:
         try:
-            display = gtk.gdk.display_get_default()
-            startup_id = gtk.gdk.x11_display_get_startup_notification_id(display)
+            display = gdk.Display.get_default()
+            try:
+                startup_id = gdkX11.X11Display.get_startup_notification_id(display)
+            except (NameError, TypeError, AttributeError):
+                startup_id = os.getenv("DESKTOP_AUTOSTART_ID", "")
             obj.present(startup_id or "")
             print("Another CCSM instance already running")
             sys.exit(0)
@@ -85,9 +92,6 @@ def try_register_dbus ():
             return
 
 dbusObj = try_register_dbus()
-
-if gtk.pygtk_version < (2,12,0):
-    raise SystemExit("PyGtk 2.12.0 or later required")
 
 import compizconfig
 import ccm

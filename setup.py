@@ -76,6 +76,7 @@ if len (sys.argv) < 2 or sys.argv[1] not in ops:
     raise SystemExit
 
 prefix = None
+gtkver = "3.0"
 if len (sys.argv) > 2:
     i = 0
     for o in sys.argv:
@@ -87,7 +88,14 @@ if len (sys.argv) > 2:
             elif o.startswith ("--prefix=") and len (o[9:]):
                 prefix = o[9:]
             sys.argv.remove (o)
-            break
+        elif o.startswith ("--with-gtk"):
+            if o == "--with-gtk":
+                if len (sys.argv) >= i:
+                    gtkver = sys.argv[i + 1]
+                sys.argv.remove (gtkver)
+            elif o.startswith ("--with-gtk=") and len (o[11:]):
+                gtkver = o[11:]
+            sys.argv.remove (o)
         i += 1
 if not prefix and "PREFIX" in os.environ:
     prefix = os.environ["PREFIX"]
@@ -108,6 +116,14 @@ f.close ()
 data = data.replace ("@prefix@", prefix)
 data = data.replace ("@version@", version)
 f = open (os.path.join ("ccm/Constants.py"), "wt")
+f.write (data)
+f.close ()
+
+f = open (os.path.join ("ccsm.in"), "rt")
+data = f.read ()
+f.close ()
+data = data.replace ("@gtkver@", gtkver)
+f = open (os.path.join ("ccsm"), "wt")
 f.write (data)
 f.close ()
 
