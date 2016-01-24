@@ -1177,7 +1177,17 @@ class PreferencesPage(GenericPage):
         self.Context = context
         self.LeftWidget = gtk.VBox(False, 10)
         self.LeftWidget.set_border_width(10)
-        self.RightWidget = gtk.Notebook()
+        if gtk.check_version(3, 12, 0) is None:
+            self.RightWidget = gtk.Box.new(gtk.Orientation.VERTICAL, 6)
+            self.RightWidgetStack = gtk.Stack()
+            RightWidgetStackSwitcher = gtk.StackSwitcher()
+            RightWidgetStackSwitcher.set_stack(self.RightWidgetStack)
+            RightWidgetStackSwitcherBox = gtk.Box()
+            RightWidgetStackSwitcherBox.set_center_widget(RightWidgetStackSwitcher)
+            self.RightWidget.pack_start(RightWidgetStackSwitcherBox, False, False, 0)
+            self.RightWidget.pack_end(self.RightWidgetStack, True, True, 0)
+        else:
+            self.RightWidget = gtk.Notebook()
 
         # Left Pane
         self.DescLabel = Label()
@@ -1226,11 +1236,17 @@ class PreferencesPage(GenericPage):
 
         # Profile & Backend Page
         self.ProfileBackendPage = ProfileBackendPage(context)
-        self.RightWidget.append_page(self.ProfileBackendPage.Widget, gtk.Label.new(_("Profile & Backend")))
+        if gtk.check_version(3, 12, 0) is None:
+            self.RightWidgetStack.add_titled(self.ProfileBackendPage.Widget, "ProfileBackend", _("Profile & Backend"))
+        else:
+            self.RightWidget.append_page(self.ProfileBackendPage.Widget, gtk.Label.new(_("Profile & Backend")))
 
         # Plugin List
         self.PluginListPage = PluginListPage(context)
-        self.RightWidget.append_page(self.PluginListPage.Widget, gtk.Label.new(_("Plugin List")))
+        if gtk.check_version(3, 12, 0) is None:
+            self.RightWidgetStack.add_titled(self.PluginListPage.Widget, "PluginList", _("Plugin List"))
+        else:
+            self.RightWidget.append_page(self.PluginListPage.Widget, gtk.Label.new(_("Plugin List")))
 
     StyleBlock = 0
 
