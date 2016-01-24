@@ -15,7 +15,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #
 # Authors: Quinn Storm (quinn@beryl-project.org)
-#          Patrick Niklaus (marex@opencompositing.org)
+#          Patrick Niklaus (patrick.niklaus@student.kit.edu)
 #          Guillaume Seguin (guillaume@segu.in)
 #          Christopher Williams (christopherw@verizon.net)
 #          Sorokin Alexei (sor.alexei@meowr.ru)
@@ -1378,21 +1378,21 @@ class AboutDialog (gtk.AboutDialog):
                           "of the License, or (at your option) any later version.")
         self.set_wrap_license (True)
         try:
-            self.set_authors (["Patrick Niklaus <marex@opencompositing.org>",
+            self.set_authors (["Patrick Niklaus <patrick.niklaus@student.kit.edu>",
                                "Christopher Williams <christopherw@verizon.net>",
                                "Guillaume Seguin <guillaume@segu.in>",
                                "Quinn Storm <quinn@beryl-project.org>",
                                "Sorokin Alexei <sor.alexei@meowr.ru>"])
             self.set_artists (["Andrew Wedderburn <andrew.wedderburn@gmail.com>",
-                               "Patrick Niklaus <marex@opencompositing.org>",
-                               "Gnome Icon Theme Team"])
+                               "Patrick Niklaus <patrick.niklaus@student.kit.edu>",
+                               "GNOME Icon Theme Team"])
             self.set_translator_credits (_("translator-credits"))
         except (AttributeError, TypeError):
             pass
         if IconTheme.lookup_icon("ccsm", 64, 0):
             icon = IconTheme.load_icon("ccsm", 64, 0)
             self.set_logo (icon)
-        self.set_website ("http://www.compiz-fusion.org")
+        self.set_website ("https://github.com/raveit65/ccsm")
 
 # Error dialog
 #
