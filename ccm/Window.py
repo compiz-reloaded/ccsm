@@ -21,7 +21,7 @@
 #          Sorokin Alexei (sor.alexei@meowr.ru)
 # Copyright (C) 2007 Quinn Storm
 
-from gi.repository import Gtk as gtk
+from gi.repository import Gtk
 
 from ccm.Pages import *
 from ccm.Utils import *
@@ -35,25 +35,25 @@ gettext.bindtextdomain("ccsm", DataDir + "/locale")
 gettext.textdomain("ccsm")
 _ = gettext.gettext
 
-class MainWin(gtk.Window):
+class MainWin(Gtk.Window):
 
     currentCategory = None
 
     def __init__(self, Context, pluginPage=None, categoryName=None):
-        gtk.Window.__init__(self)
+        Gtk.Window.__init__(self)
         self.ShowingPlugin = None
         self.Context = Context
         self.connect("destroy", self.Quit)
-        if gtk.check_version (3, 0, 0) is None:
+        if Gtk.check_version (3, 0, 0) is None:
             self.set_size_request(740, 580)
         self.set_default_size(1000, 580)
         self.set_title(_("CompizConfig Settings Manager"))
 
         # Build the panes
-        self.MainBox = gtk.HBox()
+        self.MainBox = Gtk.HBox()
         self.add(self.MainBox)
-        self.LeftPane = gtk.VBox()
-        self.RightPane = gtk.VBox()
+        self.LeftPane = Gtk.VBox()
+        self.RightPane = Gtk.VBox()
         self.RightPane.set_border_width(5)
         self.MainBox.pack_start(self.LeftPane, False, False, 0)
         self.MainBox.pack_end(self.RightPane, True, True, 0)
@@ -64,7 +64,7 @@ class MainWin(gtk.Window):
         try:
             self.LeftPane.set_size_request(self.LeftPane.size_request().width, -1)
         except (AttributeError, TypeError):
-            req = gtk.Requisition()
+            req = Gtk.Requisition()
             self.LeftPane.size_request(req)
             self.LeftPane.set_size_request(req.width, -1)
         self.show_all()
@@ -75,7 +75,7 @@ class MainWin(gtk.Window):
             self.MainPage.ToggleCategory(None, categoryName)
 
     def Quit(self, *args):
-        gtk.main_quit()
+        Gtk.main_quit()
 
     def SetPage(self, page):
         if page == self.CurrentPage:
@@ -115,4 +115,4 @@ class MainWin(gtk.Window):
                         currentPage.RefreshPage(basePlugin, self)
                     break
 
-gtk.Window.set_default_icon_name('ccsm')
+Gtk.Window.set_default_icon_name('ccsm')

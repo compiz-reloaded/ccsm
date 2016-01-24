@@ -23,8 +23,8 @@
 
 import os
 
-from gi.repository import GObject as gobject, Gtk as gtk, Gdk as gdk
-from gi.repository import Pango as pango
+from gi.repository import GObject, Gtk, Gdk
+from gi.repository import Pango
 import weakref
 
 from ccm.Constants import *
@@ -39,7 +39,7 @@ gettext.bindtextdomain("ccsm", DataDir + "/locale")
 gettext.textdomain("ccsm")
 _ = gettext.gettext
 
-IconTheme = gtk.IconTheme.get_default()
+IconTheme = Gtk.IconTheme.get_default()
 try:
     if not IconDir in IconTheme.get_search_path():
         IconTheme.prepend_search_path(IconDir)
@@ -47,12 +47,12 @@ except (AttributeError, NameError, TypeError):
     IconTheme.prepend_search_path(IconDir)
 
 def gtk_process_events ():
-    while gtk.events_pending ():
-        gtk.main_iteration ()
+    while Gtk.events_pending ():
+        Gtk.main_iteration ()
 
 def getScreens():
     screens = []
-    display = gdk.Display.get_default()
+    display = Gdk.Display.get_default()
     nScreens = display.get_n_screens()
     for i in range(nScreens):
         screens.append(i)
@@ -61,18 +61,18 @@ def getScreens():
 def protect_markup_dict (dict_):
     return dict((k, protect_pango_markup (v)) for (k, v) in dict_.iteritems())
 
-class Image (gtk.Image):
+class Image (Gtk.Image):
 
     def __init__ (self, name = None, type = ImageNone, size = 32,
                   useMissingImage = False):
-        gtk.Image.__init__ (self)
+        Gtk.Image.__init__ (self)
 
         if not name:
             return
 
         if useMissingImage:
-            self.set_from_stock (gtk.STOCK_MISSING_IMAGE,
-                                 gtk.IconSize.LARGE_TOOLBAR)
+            self.set_from_stock (Gtk.STOCK_MISSING_IMAGE,
+                                 Gtk.IconSize.LARGE_TOOLBAR)
             return
 
         try:
@@ -83,14 +83,14 @@ class Image (gtk.Image):
                     name = "plugin-" + name
                     try:
                         pixbuf = IconTheme.load_icon (name, size, 0)
-                    except gobject.GError:
+                    except GObject.GError:
                         pixbuf = IconTheme.load_icon ("plugin-unknown", size, 0)
 
                 elif type == ImageCategory:
                     name = "plugins-" + name
                     try:
                         pixbuf = IconTheme.load_icon (name, size, 0)
-                    except gobject.GError:
+                    except GObject.GError:
                         pixbuf = IconTheme.load_icon ("plugins-unknown", size, 0)
 
                 else:
@@ -100,10 +100,10 @@ class Image (gtk.Image):
 
             elif type == ImageStock:
                 self.set_from_stock (name, size)
-        except gobject.GError, e:
-            self.set_from_stock (gtk.STOCK_MISSING_IMAGE, gtk.IconSize.BUTTON)
+        except GObject.GError, e:
+            self.set_from_stock (Gtk.STOCK_MISSING_IMAGE, Gtk.IconSize.BUTTON)
 
-class ActionImage (gtk.Alignment):
+class ActionImage (Gtk.Alignment):
 
     map = {
             "keyboard"  : "input-keyboard",
@@ -113,13 +113,13 @@ class ActionImage (gtk.Alignment):
           }
 
     def __init__ (self, action):
-        gtk.Alignment.__init__ (self)
+        Gtk.Alignment.__init__ (self)
         self.set (0, 0, 0.5, 0)
         self.set_padding (0, 0, 0, 10)
         if action in self.map: action = self.map[action]
         self.add (Image (name = action, type = ImageThemed, size = 22))
 
-class SizedButton (gtk.Button):
+class SizedButton (Gtk.Button):
 
     minWidth = -1
     minHeight = -1
@@ -128,7 +128,7 @@ class SizedButton (gtk.Button):
         super (SizedButton, self).__init__ ()
         self.minWidth = minWidth
         self.minHeight = minHeight
-        if gtk.check_version(3, 0, 0) is None:
+        if Gtk.check_version(3, 0, 0) is None:
             self.set_size_request (self.minWidth, self.minHeight)
         else:
             self.connect ("size-allocate", self.adjust_size)
@@ -139,7 +139,7 @@ class SizedButton (gtk.Button):
         newHeight = max (height, self.minHeight)
         self.set_size_request (newWidth, newHeight)
 
-class PrettyButton (gtk.Button):
+class PrettyButton (Gtk.Button):
 
     _old_toplevel = None
 
@@ -150,7 +150,7 @@ class PrettyButton (gtk.Button):
                         "pointer" : False
                       }
         self.set_size_request (200, -1)
-        self.set_relief (gtk.ReliefStyle.NONE)
+        self.set_relief (Gtk.ReliefStyle.NONE)
         self.connect ("focus-in-event", self.update_state_in, "focus")
         self.connect ("focus-out-event", self.update_state_out, "focus")
         self.connect ("hierarchy-changed", self.hierarchy_changed)
@@ -159,57 +159,57 @@ class PrettyButton (gtk.Button):
         if old_toplevel == self._old_toplevel:
             return
 
-        if gtk.check_version(3, 0, 0) is None:
-            if not old_toplevel and self.get_state() != gtk.StateFlags.NORMAL:
-                self.set_state(gtk.StateFlags.PRELIGHT)
-                self.set_state(gtk.StateFlags.NORMAL)
+        if Gtk.check_version(3, 0, 0) is None:
+            if not old_toplevel and self.get_state() != Gtk.StateFlags.NORMAL:
+                self.set_state(Gtk.StateFlags.PRELIGHT)
+                self.set_state(Gtk.StateFlags.NORMAL)
         else:
-            if not old_toplevel and self.get_state() != gtk.StateType.NORMAL:
-                self.set_state(gtk.StateType.PRELIGHT)
-                self.set_state(gtk.StateType.NORMAL)
+            if not old_toplevel and self.get_state() != Gtk.StateType.NORMAL:
+                self.set_state(Gtk.StateType.PRELIGHT)
+                self.set_state(Gtk.StateType.NORMAL)
 
         self._old_toplevel = old_toplevel
 
 
     def update_state_in (self, *args):
         state = args[-1]
-        if gtk.check_version (3, 0, 0) is None:
-            self.set_state (gtk.StateFlags.PRELIGHT)
+        if Gtk.check_version (3, 0, 0) is None:
+            self.set_state (Gtk.StateFlags.PRELIGHT)
         else:
-            self.set_state (gtk.StateType.PRELIGHT)
+            self.set_state (Gtk.StateType.PRELIGHT)
         self.states[state] = True
 
     def update_state_out (self, *args):
         state = args[-1]
         self.states[state] = False
-        if gtk.check_version (3, 0, 0) is None:
+        if Gtk.check_version (3, 0, 0) is None:
             if True in self.states.values ():
-                self.set_state (gtk.StateFlags.PRELIGHT)
+                self.set_state (Gtk.StateFlags.PRELIGHT)
             else:
-                self.set_state (gtk.StateFlags.NORMAL)
+                self.set_state (Gtk.StateFlags.NORMAL)
         else:
             if True in self.states.values ():
-                self.set_state (gtk.StateType.PRELIGHT)
+                self.set_state (Gtk.StateType.PRELIGHT)
             else:
-                self.set_state (gtk.StateType.NORMAL)
+                self.set_state (Gtk.StateType.NORMAL)
 
-class Label(gtk.Label):
+class Label(Gtk.Label):
     def __init__(self, value = "", wrap = 160):
-        gtk.Label.__init__(self)
+        Gtk.Label.__init__(self)
         self.set_markup(value)
         self.props.xalign = 0
         self.set_line_wrap(True)
-        self.set_line_wrap_mode(pango.WrapMode.WORD)
+        self.set_line_wrap_mode(Pango.WrapMode.WORD)
         self.set_max_width_chars(0)
         self.set_size_request(wrap, -1)
 
-class NotFoundBox(gtk.Alignment):
+class NotFoundBox(Gtk.Alignment):
     def __init__(self, value=""):
-        gtk.Alignment.__init__(self)
+        Gtk.Alignment.__init__(self)
         self.set(0.5, 0.5, 0, 0)
 
-        box = gtk.HBox()
-        self.Warning = gtk.Label()
+        box = Gtk.HBox()
+        self.Warning = Gtk.Label()
         self.Markup = _("<span size=\"large\"><b>No matches found.</b> </span><span>\n\n Your filter \"<b>%s</b>\" does not match any items.</span>")
         value = protect_pango_markup(value)
         self.Warning.set_markup(self.Markup % value)
@@ -235,16 +235,16 @@ class IdleSettingsParser:
         self.CategoryLoadIconsList = range (3, nCategories) # Skip the first 3
         print("Loading icons...")
 
-        gobject.timeout_add (150, self.Wait)
+        GObject.timeout_add (150, self.Wait)
 
     def Wait(self):
         if not self.PluginList:
             return False
 
         if len (self.CategoryLoadIconsList) == 0: # If we're done loading icons
-            gobject.idle_add (self.ParseSettings)
+            GObject.idle_add (self.ParseSettings)
         else:
-            gobject.idle_add (self.LoadCategoryIcons)
+            GObject.idle_add (self.LoadCategoryIcons)
 
         return False
 
@@ -257,7 +257,7 @@ class IdleSettingsParser:
 
         self.PluginList.remove (self.PluginList[0])
 
-        gobject.timeout_add (200, self.Wait)
+        GObject.timeout_add (200, self.Wait)
 
         return False
 
@@ -275,7 +275,7 @@ class IdleSettingsParser:
 
         self.CategoryLoadIconsList.remove (self.CategoryLoadIconsList[0])
 
-        gobject.timeout_add (150, self.Wait)
+        GObject.timeout_add (150, self.Wait)
 
         return False
 
@@ -290,7 +290,7 @@ class Updater:
     def SetContext (self, context):
         self.Context = context
 
-        gobject.timeout_add (2000, self.Update)
+        GObject.timeout_add (2000, self.Update)
 
     def Append (self, widget):
         reference = weakref.ref(widget)
@@ -412,7 +412,7 @@ def GetSettings(group, displayOnly=False, types=None):
 
 def GetAcceleratorName(key, mods):
     # <Primary> is <Control> everywhere except for OS X
-    return gtk.accelerator_name(key, mods).replace('<Primary>', '<Control>')
+    return Gtk.accelerator_name(key, mods).replace('<Primary>', '<Control>')
 
 # Support python 2.4
 try:

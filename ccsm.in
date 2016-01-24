@@ -30,10 +30,10 @@ from optparse import OptionParser
 import gi
 gi.require_version('Gtk', '@gtkver@')
 gi.require_version('Gdk', '@gtkver@')
-from gi.repository import Gtk as gtk, Gdk as gdk
-if gtk.check_version(3, 0, 0) is None:
+from gi.repository import Gtk, Gdk
+if Gtk.check_version(3, 0, 0) is None:
     gi.require_version('GdkX11', '@gtkver@')
-    from gi.repository import GdkX11 as gdkX11
+    from gi.repository import GdkX11
 import os, sys
 
 def try_register_dbus ():
@@ -79,9 +79,9 @@ def try_register_dbus ():
 
     else:
         try:
-            display = gdk.Display.get_default()
+            display = Gdk.Display.get_default()
             try:
-                startup_id = gdkX11.X11Display.get_startup_notification_id(display)
+                startup_id = GdkX11.X11Display.get_startup_notification_id(display)
             except (NameError, TypeError, AttributeError):
                 startup_id = os.getenv("DESKTOP_AUTOSTART_ID", "")
             obj.present(startup_id or "")
@@ -129,4 +129,4 @@ if dbusObj is not None:
 idle = ccm.IdleSettingsParser(context, mainWin)
 mainWin.show_all()
 
-gtk.main()
+Gtk.main()

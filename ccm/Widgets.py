@@ -22,8 +22,8 @@
 #          Wolfgang Ulbrich (chat-to-me@raveit.de)
 # Copyright (C) 2007 Quinn Storm
 
-from gi.repository import GObject as gobject, Gtk as gtk
-from gi.repository import Gdk as gdk, GdkPixbuf as gdkPixbuf, PangoCairo as pangocairo
+from gi.repository import GObject, Gtk
+from gi.repository import Gdk, GdkPixbuf, PangoCairo
 import cairo
 from math import pi, sqrt
 import time
@@ -46,26 +46,26 @@ _ = gettext.gettext
 # Try to use gtk like coding style for consistency
 #
 
-class ClearEntry(gtk.Entry):
+class ClearEntry(Gtk.Entry):
     def __init__(self):
-        gtk.Entry.__init__(self)
-        self.set_icon_from_stock(gtk.EntryIconPosition.SECONDARY, gtk.STOCK_CLEAR)
-        self.set_icon_tooltip_text(gtk.EntryIconPosition.SECONDARY, _("Clear"))
+        Gtk.Entry.__init__(self)
+        self.set_icon_from_stock(Gtk.EntryIconPosition.SECONDARY, Gtk.STOCK_CLEAR)
+        self.set_icon_tooltip_text(Gtk.EntryIconPosition.SECONDARY, _("Clear"))
         self.connect('icon-press', self._clear_pressed)
 
     def _clear_pressed(self, widget, pos, event):
-        if pos == gtk.EntryIconPosition.SECONDARY:
+        if pos == Gtk.EntryIconPosition.SECONDARY:
             self.set_text("")
 
 # Cell Renderer for MultiList
 
-class CellRendererColor(gtk.CellRenderer):
+class CellRendererColor(Gtk.CellRenderer):
     __gproperties__ = {
-        'text': (gobject.TYPE_STRING,
+        'text': (GObject.TYPE_STRING,
                 'color markup text',
                 'The color as markup like this: #rrrrggggbbbbaaaa',
                 '#0000000000000000',
-                gobject.PARAM_READWRITE)
+                GObject.PARAM_READWRITE)
     }
 
     _text  = '#0000000000000000'
@@ -74,10 +74,10 @@ class CellRendererColor(gtk.CellRenderer):
     _surface_size = (-1, -1)
 
     def __init__(self):
-        gtk.CellRenderer.__init__(self)
+        Gtk.CellRenderer.__init__(self)
 
     def _parse_color(self):
-        color = gdk.color_parse(self._text[:-4])
+        color = Gdk.color_parse(self._text[:-4])
         alpha = int("0x%s" % self._text[-4:], base=16)
         self._color = [color.red/65535.0, color.green/65535.0, color.blue/65535.0, alpha/65535.0]
 
@@ -141,11 +141,11 @@ class CellRendererColor(gtk.CellRenderer):
         cr.set_source_rgba(r, g, b, a)
         cr.paint()
 
-class PluginView(gtk.TreeView):
+class PluginView(Gtk.TreeView):
     def __init__(self, plugins):
-        liststore = gtk.ListStore(str, gdkPixbuf.Pixbuf, bool, object)
+        liststore = Gtk.ListStore(str, GdkPixbuf.Pixbuf, bool, object)
         self.model = liststore.filter_new()
-        gtk.TreeView.__init__(self, self.model)
+        Gtk.TreeView.__init__(self, self.model)
 
         self.SelectionHandler = None
 
@@ -155,9 +155,9 @@ class PluginView(gtk.TreeView):
             liststore.append([plugin.ShortDesc, Image(plugin.Name, type=ImagePlugin).props.pixbuf,
                 plugin.Enabled, plugin])
 
-        column = gtk.TreeViewColumn(_('Plugin'), gtk.CellRendererPixbuf(), pixbuf=1, sensitive=2)
+        column = Gtk.TreeViewColumn(_('Plugin'), Gtk.CellRendererPixbuf(), pixbuf=1, sensitive=2)
         self.insert_column(column, 0)
-        cell = gtk.CellRendererText()
+        cell = Gtk.CellRendererText()
         cell.props.wrap_width = 200
         column.pack_start(cell, True)
         column.add_attribute(cell, 'text', 0)
@@ -178,19 +178,19 @@ class PluginView(gtk.TreeView):
 
         return self.SelectionHandler(model[iter][3])
 
-class GroupView(gtk.TreeView):
+class GroupView(Gtk.TreeView):
     def __init__(self, name):
-        self.model = gtk.ListStore(str, str)
-        gtk.TreeView.__init__(self, self.model)
+        self.model = Gtk.ListStore(str, str)
+        Gtk.TreeView.__init__(self, self.model)
 
         self.SelectionHandler = None
 
         self.Visible = set()
 
-        cell = gtk.CellRendererText()
+        cell = Gtk.CellRendererText()
         cell.props.ypad = 5
         cell.props.wrap_width = 200
-        column = gtk.TreeViewColumn(name, cell, text=0)
+        column = Gtk.TreeViewColumn(name, cell, text=0)
         self.append_column(column)
 
         self.get_selection().connect('changed', self.SelectionChanged)
@@ -224,9 +224,9 @@ class GroupView(gtk.TreeView):
 
 # Selector Buttons
 #
-class SelectorButtons(gtk.HBox):
+class SelectorButtons(Gtk.HBox):
     def __init__(self):
-        gtk.HBox.__init__(self)
+        Gtk.HBox.__init__(self)
         self.set_border_width(10)
         self.set_spacing(5)
         self.buttons = []
@@ -241,12 +241,12 @@ class SelectorButtons(gtk.HBox):
 
     def add_button(self, label, callback):
         try:
-            arrow = gtk.Arrow(gtk.ArrowType.RIGHT, gtk.ShadowType.NONE)
+            arrow = Gtk.Arrow(Gtk.ArrowType.RIGHT, Gtk.ShadowType.NONE)
         except (AttributeError, TypeError):
-            arrow = gtk.Arrow()
-            arrow.set(gtk.ArrowType.RIGHT, gtk.ShadowType.NONE)
-        button = gtk.Button(label)
-        button.set_relief(gtk.ReliefStyle.NONE)
+            arrow = Gtk.Arrow()
+            arrow.set(Gtk.ArrowType.RIGHT, Gtk.ShadowType.NONE)
+        button = Gtk.Button(label)
+        button.set_relief(Gtk.ReliefStyle.NONE)
         button.connect('clicked', self.on_button_clicked, callback)
         if self.get_children():
             self.pack_start(arrow, False, False, 0)
@@ -269,17 +269,17 @@ class SelectorButtons(gtk.HBox):
 
 # Selector Box
 #
-class SelectorBox(gtk.ScrolledWindow):
+class SelectorBox(Gtk.ScrolledWindow):
     def __init__(self, backgroundColor):
-        gtk.ScrolledWindow.__init__(self)
-        self.viewport = gtk.Viewport()
-        if gtk.check_version(3, 0, 0) is None:
-            self.viewport.override_background_color(gtk.StateFlags.NORMAL, gdk.rgba_parse(backgroundColor))
+        Gtk.ScrolledWindow.__init__(self)
+        self.viewport = Gtk.Viewport()
+        if Gtk.check_version(3, 0, 0) is None:
+            self.viewport.override_background_color(Gtk.StateFlags.NORMAL, Gdk.rgba_parse(backgroundColor))
         else:
-            self.viewport.modify_bg(gtk.StateType.NORMAL, gdk.color_parse(backgroundColor))
-        self.props.hscrollbar_policy = gtk.PolicyType.NEVER
-        self.props.vscrollbar_policy = gtk.PolicyType.AUTOMATIC
-        self.box = gtk.VBox()
+            self.viewport.modify_bg(Gtk.StateType.NORMAL, Gdk.color_parse(backgroundColor))
+        self.props.hscrollbar_policy = Gtk.PolicyType.NEVER
+        self.props.vscrollbar_policy = Gtk.PolicyType.AUTOMATIC
+        self.box = Gtk.VBox()
         self.box.set_spacing(5)
         self.viewport.add(self.box)
         self.add(self.viewport)
@@ -292,25 +292,25 @@ class SelectorBox(gtk.ScrolledWindow):
         self.box.destroy()
 
     def add_item(self, item, callback, markup="%s", image=None, info=None):
-        button = gtk.Button()
+        button = Gtk.Button()
         label = Label(wrap=170)
         text = protect_pango_markup(item)
         label.set_markup(markup % text or _("General"))
-        labelBox = gtk.VBox()
+        labelBox = Gtk.VBox()
         labelBox.set_spacing(5)
         labelBox.pack_start(label, True, True, 0)
         if info:
             infoLabel = Label()
             infoLabel.set_markup("<span size='small'>%s</span>" % info)
             labelBox.pack_start(infoLabel, True, True, 0)
-        box = gtk.HBox()
+        box = Gtk.HBox()
         box.set_spacing(5)
         if image:
             box.pack_start(image, False, False, 0)
         box.pack_start(labelBox, True, True, 0)
         button.add(box)
         button.connect("clicked", callback, item)
-        button.set_relief(gtk.ReliefStyle.NONE)
+        button.set_relief(Gtk.ReliefStyle.NONE)
         self.box.pack_start(button, False, False, 0)
 
     def clear_list(self):
@@ -326,25 +326,25 @@ class SelectorBox(gtk.ScrolledWindow):
 
 # Scrolled List
 #
-class ScrolledList(gtk.ScrolledWindow):
+class ScrolledList(Gtk.ScrolledWindow):
     def __init__(self, name):
-        gtk.ScrolledWindow.__init__(self)
+        Gtk.ScrolledWindow.__init__(self)
 
-        self.props.hscrollbar_policy = gtk.PolicyType.NEVER
-        self.props.vscrollbar_policy = gtk.PolicyType.AUTOMATIC
+        self.props.hscrollbar_policy = Gtk.PolicyType.NEVER
+        self.props.vscrollbar_policy = Gtk.PolicyType.AUTOMATIC
 
-        self.store = gtk.ListStore(gobject.TYPE_STRING)
+        self.store = Gtk.ListStore(GObject.TYPE_STRING)
 
-        self.view = gtk.TreeView(self.store)
+        self.view = Gtk.TreeView(self.store)
         self.view.set_headers_visible(True)
-        self.view.insert_column(gtk.TreeViewColumn(name, gtk.CellRendererText(), text=0), -1)
+        self.view.insert_column(Gtk.TreeViewColumn(name, Gtk.CellRendererText(), text=0), -1)
 
         self.set_size_request(300, 300)
 
         self.add(self.view)
 
         self.select = self.view.get_selection()
-        self.select.set_mode(gtk.SelectionMode.SINGLE)
+        self.select.set_mode(Gtk.SelectionMode.SINGLE)
 
     def get_list(self):
         values = []
@@ -393,12 +393,12 @@ class ScrolledList(gtk.ScrolledWindow):
 
 # Button modifier selection widget
 #
-class ModifierSelector (gtk.DrawingArea):
+class ModifierSelector (Gtk.DrawingArea):
 
-    __gsignals__    = {"added" : (gobject.SignalFlags.RUN_FIRST,
-                                  None, [gobject.TYPE_STRING]),
-                       "removed" : (gobject.SignalFlags.RUN_FIRST,
-                                    None, [gobject.TYPE_STRING])}
+    __gsignals__    = {"added" : (GObject.SignalFlags.RUN_FIRST,
+                                  None, [GObject.TYPE_STRING]),
+                       "removed" : (GObject.SignalFlags.RUN_FIRST,
+                                    None, [GObject.TYPE_STRING])}
 
     _current = []
 
@@ -418,8 +418,8 @@ class ModifierSelector (gtk.DrawingArea):
         self._current = mods.split ("|")
         modifier = "%s/modifier.png" % PixmapDir
         self._base_surface = cairo.ImageSurface.create_from_png (modifier)
-        self.add_events (gdk.EventMask.BUTTON_PRESS_MASK)
-        if gtk.check_version (3, 0, 0) is None:
+        self.add_events (Gdk.EventMask.BUTTON_PRESS_MASK)
+        if Gtk.check_version (3, 0, 0) is None:
             self.connect ("draw", self.draw_event)
         else:
             self.connect ("expose_event", self.draw_event)
@@ -466,12 +466,12 @@ class ModifierSelector (gtk.DrawingArea):
     def write (self, cr, x, y, text):
         cr.move_to (x, y)
         markup = '''<span font_desc="%s">%s</span>''' % (self._font, text)
-        layout = pangocairo.create_layout (cr)
+        layout = PangoCairo.create_layout (cr)
         try:
             layout.set_markup (markup)
         except (AttributeError, TypeError):
             layout.set_markup (markup, -1)
-        pangocairo.show_layout (cr, layout)
+        PangoCairo.show_layout (cr, layout)
 
     def redraw (self, queue = False):
         '''Redraw internal surface'''
@@ -492,7 +492,7 @@ class ModifierSelector (gtk.DrawingArea):
 
     def draw_event (self, widget, data):
         '''Draw event handler'''
-        if gtk.check_version(3, 0, 0) is None:
+        if Gtk.check_version(3, 0, 0) is None:
             parent_cr = data
         else:
             event = data
@@ -500,7 +500,7 @@ class ModifierSelector (gtk.DrawingArea):
         if not self._surface:
             self.redraw ()
         cr.set_source_surface (self._surface)
-        if gtk.check_version (3, 0, 0) is None:
+        if Gtk.check_version (3, 0, 0) is None:
             cr.rectangle (*parent_cr.copy_clip_rectangle_list ()[0])
         else:
             cr.rectangle (event.area.x, event.area.y,
@@ -535,10 +535,10 @@ class ModifierSelector (gtk.DrawingArea):
 
 # Edge selection widget
 #
-class EdgeSelector (gtk.DrawingArea):
+class EdgeSelector (Gtk.DrawingArea):
 
-    __gsignals__    = {"clicked" : (gobject.SignalFlags.RUN_FIRST,
-                                    None, (gobject.TYPE_STRING, gobject.TYPE_PYOBJECT,))}
+    __gsignals__    = {"clicked" : (GObject.SignalFlags.RUN_FIRST,
+                                    None, (GObject.TYPE_STRING, GObject.TYPE_PYOBJECT,))}
 
     _base_surface   = None
     _surface        = None
@@ -551,8 +551,8 @@ class EdgeSelector (gtk.DrawingArea):
         super (EdgeSelector, self).__init__ ()
         background = "%s/display.png" % PixmapDir
         self._base_surface = cairo.ImageSurface.create_from_png (background)
-        self.add_events (gdk.EventMask.BUTTON_PRESS_MASK)
-        if gtk.check_version (3, 0, 0) is None:
+        self.add_events (Gdk.EventMask.BUTTON_PRESS_MASK)
+        if Gtk.check_version (3, 0, 0) is None:
             self.connect ("draw", self.draw_event)
         else:
             self.connect ("expose_event", self.draw_event)
@@ -698,7 +698,7 @@ class EdgeSelector (gtk.DrawingArea):
 
     def draw_event (self, widget, data):
         '''Draw event handler'''
-        if gtk.check_version (3, 0, 0) is None:
+        if Gtk.check_version (3, 0, 0) is None:
             parent_cr = data
         else:
             event = data
@@ -706,7 +706,7 @@ class EdgeSelector (gtk.DrawingArea):
         if not self._surface:
             self.redraw ()
         cr.set_source_surface (self._surface)
-        if gtk.check_version (3, 0, 0) is None:
+        if Gtk.check_version (3, 0, 0) is None:
             cr.rectangle (*parent_cr.copy_clip_rectangle_list ()[0])
         else:
             cr.rectangle (event.area.x, event.area.y,
@@ -914,7 +914,7 @@ class GlobalEdgeSelector(EdgeSelector):
 
     def show_popup (self, widget, edge, event):
         self._text = {}
-        comboBox = gtk.ComboBoxText.new ()
+        comboBox = Gtk.ComboBoxText.new ()
 
         comboBox.append_text (_("None"))
         comboBox.set_active (0)
@@ -956,12 +956,12 @@ class GlobalEdgeSelector(EdgeSelector):
 
 # Popup
 #
-class Popup (gtk.Window):
+class Popup (Gtk.Window):
 
     def __init__ (self, parent=None, text=None, child=None, decorated=True, mouse=False, modal=True):
-        gtk.Window.__init__ (self, type=gtk.WindowType.TOPLEVEL)
-        self.set_type_hint (gdk.WindowTypeHint.UTILITY)
-        self.set_position (mouse and gtk.WindowPosition.MOUSE or gtk.WindowPosition.CENTER_ALWAYS)
+        Gtk.Window.__init__ (self, type=Gtk.WindowType.TOPLEVEL)
+        self.set_type_hint (Gdk.WindowTypeHint.UTILITY)
+        self.set_position (mouse and Gtk.WindowPosition.MOUSE or Gtk.WindowPosition.CENTER_ALWAYS)
         if parent:
             self.set_transient_for (parent.get_toplevel ())
         self.set_modal (modal)
@@ -969,8 +969,8 @@ class Popup (gtk.Window):
         self.set_property ("skip-taskbar-hint", modal)
         self.set_destroy_with_parent (True)
         if text:
-            label = gtk.Label.new(text)
-            align = gtk.Alignment ()
+            label = Gtk.Label.new(text)
+            align = Gtk.Alignment ()
             align.set_padding (20, 20, 20, 20)
             align.add (label)
             self.add (align)
@@ -979,19 +979,19 @@ class Popup (gtk.Window):
         gtk_process_events ()
 
     def destroy (self):
-        gtk.Window.destroy (self)
+        Gtk.Window.destroy (self)
         gtk_process_events ()
 
 # Key Grabber
 #
-class KeyGrabber (gtk.Button):
+class KeyGrabber (Gtk.Button):
 
-    __gsignals__    = {"changed" : (gobject.SignalFlags.RUN_FIRST,
+    __gsignals__    = {"changed" : (GObject.SignalFlags.RUN_FIRST,
                                     None,
-                                    [gobject.TYPE_INT, gobject.TYPE_INT]),
-                       "current-changed" : (gobject.SignalFlags.RUN_FIRST,
+                                    [GObject.TYPE_INT, GObject.TYPE_INT]),
+                       "current-changed" : (GObject.SignalFlags.RUN_FIRST,
                                     None,
-                                    [gobject.TYPE_INT, gobject.TYPE_INT])}
+                                    [GObject.TYPE_INT, GObject.TYPE_INT])}
 
     key     = 0
     mods    = 0
@@ -1013,45 +1013,45 @@ class KeyGrabber (gtk.Button):
         self.set_label ()
 
     def begin_key_grab (self, widget):
-        self.add_events (gdk.EventMask.KEY_PRESS_MASK)
+        self.add_events (Gdk.EventMask.KEY_PRESS_MASK)
         self.popup = Popup (self, _("Please press the new key combination"))
         self.popup.show_all()
         self.handler = self.popup.connect ("key-press-event",
                                            self.on_key_press_event)
-        while gdk.keyboard_grab (self.popup.get_window(), False, 0) != gdk.GrabStatus.SUCCESS:
+        while Gdk.keyboard_grab (self.popup.get_window(), False, 0) != Gdk.GrabStatus.SUCCESS:
             time.sleep (0.1)
 
     def end_key_grab (self):
-        gdk.keyboard_ungrab (gtk.get_current_event_time ())
+        Gdk.keyboard_ungrab (Gtk.get_current_event_time ())
         self.popup.disconnect (self.handler)
         self.popup.destroy ()
 
     def on_key_press_event (self, widget, event):
-        mods = event.get_state() & gtk.accelerator_get_default_mod_mask ()
+        mods = event.get_state() & Gtk.accelerator_get_default_mod_mask ()
 
-        if event.keyval in (gdk.KEY_Escape, gdk.KEY_Return) \
+        if event.keyval in (Gdk.KEY_Escape, Gdk.KEY_Return) \
             and not mods:
-            if event.keyval == gdk.KEY_Escape:
+            if event.keyval == Gdk.KEY_Escape:
                 self.emit ("changed", self.key, self.mods)
             self.end_key_grab ()
             self.set_label ()
             return
 
-        key = gdk.keyval_to_lower (event.keyval)
-        if (key == gdk.KEY_ISO_Left_Tab):
-            key = gdk.KEY_Tab
+        key = Gdk.keyval_to_lower (event.keyval)
+        if (key == Gdk.KEY_ISO_Left_Tab):
+            key = Gdk.KEY_Tab
 
-        if event.keyval == gdk.KEY_Escape and mods:
+        if event.keyval == Gdk.KEY_Escape and mods:
             self.end_key_grab ()
             self.set_label ()
-            dialog = gtk.MessageDialog(buttons=gtk.ButtonsType.OK)
+            dialog = Gtk.MessageDialog(buttons=Gtk.ButtonsType.OK)
             dialog.set_markup(_("Escape is reserved and cannot be used for keybindings."))
             dialog.run()
             dialog.destroy()
             return
 
-        if gtk.accelerator_valid (key, mods) \
-           or (key == gdk.KEY_Tab and mods):
+        if Gtk.accelerator_valid (key, mods) \
+           or (key == Gdk.KEY_Tab and mods):
             self.set_label (key, mods)
             self.end_key_grab ()
             self.key = key
@@ -1065,7 +1065,7 @@ class KeyGrabber (gtk.Button):
         if self.label:
             if key != None and mods != None:
                 self.emit ("current-changed", key, mods)
-            gtk.Button.set_label (self, self.label)
+            Gtk.Button.set_label (self, self.label)
             return
         if key == None and mods == None:
             key = self.key
@@ -1073,15 +1073,15 @@ class KeyGrabber (gtk.Button):
         label = GetAcceleratorName (key, mods)
         if not len (label):
             label = _("Disabled")
-        gtk.Button.set_label (self, label)
+        Gtk.Button.set_label (self, label)
 
 # Match Button
 #
-class MatchButton(gtk.Button):
+class MatchButton(Gtk.Button):
 
-    __gsignals__    = {"changed" : (gobject.SignalFlags.RUN_FIRST,
+    __gsignals__    = {"changed" : (GObject.SignalFlags.RUN_FIRST,
                                     None,
-                                    [gobject.TYPE_STRING])}
+                                    [GObject.TYPE_STRING])}
 
     prefix = {\
             _("Window Title"): 'title',
@@ -1106,8 +1106,8 @@ class MatchButton(gtk.Button):
         self.entry = entry
         self.match = entry.get_text()
 
-        self.add (Image (name = gtk.STOCK_ADD, type = ImageStock,
-                         size = gtk.IconSize.BUTTON))
+        self.add (Image (name = Gtk.STOCK_ADD, type = ImageStock,
+                         size = Gtk.IconSize.BUTTON))
         self.connect ("clicked", self.run_edit_dialog)
 
     def set_match (self, value):
@@ -1181,28 +1181,28 @@ class MatchButton(gtk.Button):
         value = entry.get_text()
         if value != "":
             is_valid = True
-        dialog.set_response_sensitive(gtk.ResponseType.OK, is_valid)
+        dialog.set_response_sensitive(Gtk.ResponseType.OK, is_valid)
 
     def run_edit_dialog (self, widget):
         '''Run dialog to generate a match'''
 
         self.match = self.entry.get_text ()
 
-        dlg = gtk.Dialog (_("Edit match"))
-        dlg.set_position (gtk.WindowPosition.CENTER_ON_PARENT)
+        dlg = Gtk.Dialog (_("Edit match"))
+        dlg.set_position (Gtk.WindowPosition.CENTER_ON_PARENT)
         dlg.set_transient_for (self.get_parent ().get_toplevel ())
-        dlg.add_button (gtk.STOCK_CANCEL, gtk.ResponseType.CANCEL)
-        dlg.add_button (gtk.STOCK_ADD, gtk.ResponseType.OK).grab_default ()
-        dlg.set_response_sensitive(gtk.ResponseType.OK, False)
-        dlg.set_default_response (gtk.ResponseType.OK)
+        dlg.add_button (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
+        dlg.add_button (Gtk.STOCK_ADD, Gtk.ResponseType.OK).grab_default ()
+        dlg.set_response_sensitive(Gtk.ResponseType.OK, False)
+        dlg.set_default_response (Gtk.ResponseType.OK)
 
-        table = gtk.Table ()
+        table = Gtk.Table ()
 
         rows = []
 
         # Type
         label = Label (_("Type"))
-        type_chooser = gtk.ComboBoxText.new ()
+        type_chooser = Gtk.ComboBoxText.new ()
         for type in self.prefix.keys ():
             type_chooser.append_text (type)
         type_chooser.set_active (0)
@@ -1210,11 +1210,11 @@ class MatchButton(gtk.Button):
 
         # Value
         label = Label (_("Value"))
-        box = gtk.HBox ()
+        box = Gtk.HBox ()
         box.set_spacing (5)
-        entry = gtk.Entry ()
+        entry = Gtk.Entry ()
         entry.connect ('changed', self._check_entry_value, dlg)
-        button = gtk.Button (_("Grab"))
+        button = Gtk.Button (_("Grab"))
         button.connect ('clicked', self.grab_value, entry, type_chooser)
         box.pack_start (entry, True, True, 0)
         box.pack_start (button, False, False, 0)
@@ -1222,7 +1222,7 @@ class MatchButton(gtk.Button):
 
         # Relation
         label = Label (_("Relation"))
-        relation_chooser = gtk.ComboBoxText.new ()
+        relation_chooser = Gtk.ComboBoxText.new ()
         for relation in self.symbols.keys ():
             relation_chooser.append_text (relation)
         relation_chooser.set_active (0)
@@ -1230,7 +1230,7 @@ class MatchButton(gtk.Button):
 
         # Invert
         label = Label (_("Invert"))
-        check = gtk.CheckButton ()
+        check = Gtk.CheckButton ()
         rows.append ((label, check))
 
         row = 0
@@ -1245,7 +1245,7 @@ class MatchButton(gtk.Button):
 
         response = dlg.run ()
         dlg.hide ()
-        if response == gtk.ResponseType.OK:
+        if response == Gtk.ResponseType.OK:
             try:
                 type     = type_chooser.do_get_active_text (type_chooser)
                 relation = relation_chooser.do_get_active_text (relation_chooser)
@@ -1258,17 +1258,17 @@ class MatchButton(gtk.Button):
 
         dlg.destroy ()
 
-class FileButton (gtk.Button):
-    __gsignals__    = {"changed" : (gobject.SignalFlags.RUN_FIRST,
+class FileButton (Gtk.Button):
+    __gsignals__    = {"changed" : (GObject.SignalFlags.RUN_FIRST,
                                     None,
-                                    [gobject.TYPE_STRING])}
+                                    [GObject.TYPE_STRING])}
     _directory = False
     _context   = None
     _image     = False
     _path      = ""
 
     def __init__ (self, context, entry, directory=False, image=False, path=""):
-        gtk.Button.__init__ (self)
+        Gtk.Button.__init__ (self)
 
         self._entry = entry
         self._directory = directory
@@ -1277,8 +1277,8 @@ class FileButton (gtk.Button):
         self._path = path
 
         self.set_tooltip_text(_("Browse..."))
-        self.set_image(gtk.Image.new_from_stock(
-            gtk.STOCK_OPEN, gtk.IconSize.BUTTON))
+        self.set_image(Gtk.Image.new_from_stock(
+            Gtk.STOCK_OPEN, Gtk.IconSize.BUTTON))
         self.connect('clicked', self.open_dialog)
 
     def set_path (self, value):
@@ -1287,7 +1287,7 @@ class FileButton (gtk.Button):
         self._entry.activate ()
 
     def create_filter(self):
-        filter = gtk.FileFilter ()
+        filter = Gtk.FileFilter ()
         if self._image:
             filter.set_name (_("Images"))
             filter.add_mime_type ("image/png")
@@ -1325,21 +1325,21 @@ class FileButton (gtk.Button):
             widget.get_preview_widget ().set_from_file (None)
             return
         try:
-            pixbuf = gdkPixbuf.Pixbuf.new_from_file_at_size (path, 128, 128)
-        except gobject.GError:
+            pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size (path, 128, 128)
+        except GObject.GError:
             return
         widget.get_preview_widget ().set_from_pixbuf (pixbuf)
 
     def open_dialog (self, widget):
-        b = (gtk.STOCK_CANCEL, gtk.ResponseType.CANCEL, gtk.STOCK_OPEN, gtk.ResponseType.OK)
+        b = (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL, Gtk.STOCK_OPEN, Gtk.ResponseType.OK)
         if self._directory:
             title = _("Open directory...")
         else:
             title = _("Open file...")
 
-        chooser = gtk.FileChooserDialog (title = title, buttons = b)
+        chooser = Gtk.FileChooserDialog (title = title, buttons = b)
         if self._directory:
-            chooser.set_action (gtk.FileChooserAction.SELECT_FOLDER)
+            chooser.set_action (Gtk.FileChooserAction.SELECT_FOLDER)
         else:
             chooser.set_filter (self.create_filter ())
 
@@ -1350,22 +1350,22 @@ class FileButton (gtk.Button):
 
         if self._image:
             chooser.set_use_preview_label (False)
-            chooser.set_preview_widget (gtk.Image ())
+            chooser.set_preview_widget (Gtk.Image ())
             chooser.connect ("selection-changed", self.update_preview)
 
         ret = chooser.run ()
 
         filename = chooser.get_filename ()
         chooser.destroy ()
-        if ret == gtk.ResponseType.OK:
+        if ret == Gtk.ResponseType.OK:
             if self._directory or self.check_type (filename):
                 self.set_path (filename)
 
 # About Dialog
 #
-class AboutDialog (gtk.AboutDialog):
+class AboutDialog (Gtk.AboutDialog):
     def __init__ (self, parent):
-        gtk.AboutDialog.__init__ (self)
+        Gtk.AboutDialog.__init__ (self)
         self.set_transient_for (parent)
 
         self.set_name (_("CompizConfig Settings Manager"))
@@ -1396,15 +1396,15 @@ class AboutDialog (gtk.AboutDialog):
 
 # Error dialog
 #
-class ErrorDialog (gtk.MessageDialog):
+class ErrorDialog (Gtk.MessageDialog):
     '''Display an error dialog'''
 
     def __init__ (self, parent, message):
-        gtk.MessageDialog.__init__ (self, parent,
-                                    gtk.DialogFlags.DESTROY_WITH_PARENT,
-                                    gtk.MessageType.ERROR,
-                                    gtk.ButtonsType.CLOSE)
-        self.set_position (gtk.WindowPosition.CENTER)
+        Gtk.MessageDialog.__init__ (self, parent,
+                                    Gtk.DialogFlags.DESTROY_WITH_PARENT,
+                                    Gtk.MessageType.ERROR,
+                                    Gtk.ButtonsType.CLOSE)
+        self.set_position (Gtk.WindowPosition.CENTER)
         self.set_markup (message)
         self.set_title (_("An error has occured"))
         self.set_transient_for (parent)
@@ -1414,15 +1414,15 @@ class ErrorDialog (gtk.MessageDialog):
 
 # Warning dialog
 #
-class WarningDialog (gtk.MessageDialog):
+class WarningDialog (Gtk.MessageDialog):
     '''Display a warning dialog'''
 
     def __init__ (self, parent, message):
-        gtk.MessageDialog.__init__ (self, parent,
-                                    gtk.DialogFlags.DESTROY_WITH_PARENT,
-                                    gtk.MessageType.WARNING,
-                                    gtk.ButtonsType.YES_NO)
-        self.set_position (gtk.WindowPosition.CENTER)
+        Gtk.MessageDialog.__init__ (self, parent,
+                                    Gtk.DialogFlags.DESTROY_WITH_PARENT,
+                                    Gtk.MessageType.WARNING,
+                                    Gtk.ButtonsType.YES_NO)
+        self.set_position (Gtk.WindowPosition.CENTER)
         self.set_markup (message)
         self.set_title (_("Warning"))
         self.set_transient_for (parent)
@@ -1430,24 +1430,24 @@ class WarningDialog (gtk.MessageDialog):
 
 # Plugin Button
 #
-class PluginButton (gtk.HBox):
+class PluginButton (Gtk.HBox):
 
-    __gsignals__    = {"clicked"   : (gobject.SignalFlags.RUN_FIRST,
+    __gsignals__    = {"clicked"   : (GObject.SignalFlags.RUN_FIRST,
                                       None,
                                       []),
-                       "activated" : (gobject.SignalFlags.RUN_FIRST,
+                       "activated" : (GObject.SignalFlags.RUN_FIRST,
                                       None,
                                       [])}
 
     _plugin = None
 
     def __init__ (self, plugin, useMissingImage = False):
-        gtk.HBox.__init__(self)
+        Gtk.HBox.__init__(self)
         self._plugin = plugin
 
         image = Image (plugin.Name, ImagePlugin, 32, useMissingImage)
         label = Label (plugin.ShortDesc, 120)
-        box = gtk.HBox ()
+        box = Gtk.HBox ()
         box.set_spacing (5)
         box.pack_start (image, False, False, 0)
         box.pack_start (label, True, True, 0)
@@ -1458,7 +1458,7 @@ class PluginButton (gtk.HBox):
         button.add (box)
 
         if plugin.Name != 'core':
-            enable = gtk.CheckButton ()
+            enable = Gtk.CheckButton ()
             enable.set_tooltip_text(_("Enable %s") % plugin.ShortDesc)
             enable.set_active (plugin.Enabled)
             enable.set_sensitive (plugin.Context.AutoSort)
@@ -1513,7 +1513,7 @@ class PluginButton (gtk.HBox):
 
 # Category Box
 #
-class CategoryBox(gtk.VBox):
+class CategoryBox(Gtk.VBox):
 
     _plugins = None
     _unfiltered_plugins = None
@@ -1526,7 +1526,7 @@ class CategoryBox(gtk.VBox):
     _current_plugins = 0
 
     def __init__ (self, context, name, plugins=None, categoryIndex=0):
-        gtk.VBox.__init__ (self)
+        Gtk.VBox.__init__ (self)
 
         self.set_spacing (5)
 
@@ -1548,7 +1548,7 @@ class CategoryBox(gtk.VBox):
         # Keep unfiltered list of plugins for correct background icon loading
         self._unfiltered_plugins = self._plugins
 
-        header = gtk.HBox ()
+        header = Gtk.HBox ()
         header.set_border_width (5)
         header.set_spacing (10)
         label = Label ('', -1)
@@ -1559,7 +1559,7 @@ class CategoryBox(gtk.VBox):
         header.pack_start (image, False, False, 0)
         header.pack_start (label, False, False, 0)
 
-        self._table = gtk.Table ()
+        self._table = Gtk.Table ()
         self._table.set_border_width (10)
 
         # load icons now only for the first 3 categories
@@ -1570,9 +1570,9 @@ class CategoryBox(gtk.VBox):
             button = PluginButton(plugin, dontLoadIcons)
             self._buttons.append(button)
 
-        self._alignment = gtk.Alignment.new (0, 0, 1, 1)
+        self._alignment = Gtk.Alignment.new (0, 0, 1, 1)
         self._alignment.set_padding (0, 20, 0, 0)
-        self._alignment.add (gtk.HSeparator ())
+        self._alignment.add (Gtk.HSeparator ())
 
         self.pack_start (header, False, False, 0)
         self.pack_start (self._table, False, False, 0)
@@ -1629,10 +1629,10 @@ class CategoryBox(gtk.VBox):
 
 # Plugin Window
 #
-class PluginWindow(gtk.ScrolledWindow):
-    __gsignals__    = {"show-plugin" : (gobject.SignalFlags.RUN_FIRST,
+class PluginWindow(Gtk.ScrolledWindow):
+    __gsignals__    = {"show-plugin" : (GObject.SignalFlags.RUN_FIRST,
                                         None,
-                                        [gobject.TYPE_PYOBJECT])}
+                                        [GObject.TYPE_PYOBJECT])}
 
     _not_found_box = None
     _style_block   = 0
@@ -1643,7 +1643,7 @@ class PluginWindow(gtk.ScrolledWindow):
     _box           = None
 
     def __init__ (self, context, categories=[], plugins=[]):
-        gtk.ScrolledWindow.__init__ (self)
+        Gtk.ScrolledWindow.__init__ (self)
 
         self._categories = {}
         self._boxes = []
@@ -1663,11 +1663,11 @@ class PluginWindow(gtk.ScrolledWindow):
                     self._categories[category] = []
                 self._categories[category].append(plugin)
 
-        self.props.hscrollbar_policy = gtk.PolicyType.NEVER
-        self.props.vscrollbar_policy = gtk.PolicyType.AUTOMATIC
+        self.props.hscrollbar_policy = Gtk.PolicyType.NEVER
+        self.props.vscrollbar_policy = Gtk.PolicyType.AUTOMATIC
         self.connect ('size-allocate', self.rebuild_boxes)
 
-        self._box = gtk.VBox ()
+        self._box = Gtk.VBox ()
         self._box.set_spacing (5)
 
         self._not_found_box = NotFoundBox ()
@@ -1680,10 +1680,10 @@ class PluginWindow(gtk.ScrolledWindow):
             self._boxes.append (category_box)
             self._box.pack_start (category_box, False, False, 0)
 
-        viewport = gtk.Viewport ()
-        if gtk.check_version (3, 0, 0) is None:
-            viewport.get_style_context ().add_class (gtk.STYLE_CLASS_VIEW)
-        if gtk.check_version (3, 12, 0) is None:
+        viewport = Gtk.Viewport ()
+        if Gtk.check_version (3, 0, 0) is None:
+            viewport.get_style_context ().add_class (Gtk.STYLE_CLASS_VIEW)
+        if Gtk.check_version (3, 12, 0) is None:
             viewport.connect ('style-updated', self.update_viewport_style)
         else:
             viewport.connect ('style-set', self.update_viewport_style)
@@ -1700,12 +1700,12 @@ class PluginWindow(gtk.ScrolledWindow):
         if self._style_block > 0:
             return
         self._style_block += 1
-        if not gtk.check_version (3, 0, 0) is None:
+        if not Gtk.check_version (3, 0, 0) is None:
             bgColor = widget.get_style().lookup_color('base_color')
             if bgColor[0] != False:
-                widget.modify_bg(gtk.StateType.NORMAL, bgColor[1])
+                widget.modify_bg(Gtk.StateType.NORMAL, bgColor[1])
             else:
-                widget.modify_bg(gtk.StateType.NORMAL, None)
+                widget.modify_bg(Gtk.StateType.NORMAL, None)
         self._style_block -= 1
 
     def filter_boxes (self, text, level=FilterAll):
