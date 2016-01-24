@@ -1147,14 +1147,9 @@ class MatchButton(gtk.Button):
             value = self.get_xprop("^WM_CLASS\(STRING\) = \"([^\"]+)\", \"([^\"]+)\"")
         elif prefix == "title":
             value = self.get_xprop("^_NET_WM_NAME\(UTF8_STRING\) = ([^\n]+)")
-            if value:
-                list = value.split(", ")
-                value = ""
-                for hex in list:
-                    value += "%c" % int(hex, 16)
-            else:
+            if not value:
                 value = self.get_xprop("^WM_NAME\(STRING\) = \"([^\"]+)\"")
-        elif prefix == "id":
+        elif prefix == "xid" or prefix == "id":
             value = self.get_xprop("^xwininfo: Window id: ([^\s]+)", "xwininfo")
 
         value_widget.set_text(value)
