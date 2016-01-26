@@ -135,6 +135,7 @@ custom_images = []
 
 data_files = [
                 ("share/applications", ["ccsm.desktop"]),
+                ("share/appdata", ["ccsm.appdata.xml"]),
              ]
 
 global_icon_path = "share/icons/hicolor/"

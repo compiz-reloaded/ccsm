@@ -3,6 +3,7 @@ include INSTALL AUTHORS COPYING LICENSE VERSION
 include ccsm.in
 exclude ccsm
 include ccsm.desktop.in
+include ccsm.appdata.xml
 include ccm/Constants.py.in
 include Makefile MANIFEST.in
 recursive-include images *
