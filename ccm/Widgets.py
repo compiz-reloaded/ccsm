@@ -1457,7 +1457,11 @@ class PluginButton (Gtk.HBox):
         button.set_tooltip_text (plugin.LongDesc)
         button.add (box)
 
-        if plugin.Name != 'core':
+        blacklist_plugins = ['core']
+        if os.getenv('XDG_CURRENT_DESKTOP') == 'Unity':
+            blacklist_plugins.append('unityshell')
+
+        if plugin.Name not in blacklist_plugins:
             enable = Gtk.CheckButton ()
             enable.set_tooltip_text(_("Enable %s") % plugin.ShortDesc)
             enable.set_active (plugin.Enabled)
