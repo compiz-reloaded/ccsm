@@ -88,8 +88,8 @@ class ActionConflict (Conflict):
             for n in self.Setting.Plugin.Context.Plugins:
                 plugin = self.Setting.Plugin.Context.Plugins[n]
                 if plugin.Enabled:
-                    pluginActions = GetSettings(plugin, displayOnly=True,
-                                                types=self.ActionTypes)
+                    pluginActions = GetSettings(plugin, types=self.ActionTypes,
+                                                displayOnly=True)
 
                     if len(setting.Info) and setting.Info[0] and plugin is not setting.Plugin:
                         settings.extend(ExcludeInternal(pluginActions))

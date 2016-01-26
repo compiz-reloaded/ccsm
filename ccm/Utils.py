@@ -388,27 +388,35 @@ PluginKeyFunc = operator.attrgetter('ShortDesc')
 def HasOnlyType (settings, stype):
     return settings and not [s for s in settings if s.Type != stype]
 
-def GetSettings(group, displayOnly=False, types=None):
+def GetSettings(group, types=None, displayOnly=False):
 
     def TypeFilter (settings, types):
          for setting in settings:
             if setting.Type in types:
                 yield setting
+    # Compiz 0.9.x and Compiz 0.8.x compatibility.
+    try:
+        if types:
+            screen = TypeFilter(iter(group.Screen.values()), types)
+        else:
+            screen = iter(group.Screen.values())
 
-    if types:
-        display = TypeFilter(group.Display.itervalues(), types)
-    else:
-        display = group.Display.itervalues()
+        return screen
+    except (AttributeError, TypeError):
+        if types:
+            display = TypeFilter(group.Display.itervalues(), types)
+        else:
+            display = group.Display.itervalues()
 
-    if displayOnly:
-        return display
+        if displayOnly:
+            return display
 
-    if types:
-        screen = TypeFilter(iter(group.Screens[CurrentScreenNum].values()), types)
-    else:
-        screen = iter(group.Screens[CurrentScreenNum].values())
+        if types:
+            screen = TypeFilter(iter(group.Screens[CurrentScreenNum].values()), types)
+        else:
+            screen = iter(group.Screens[CurrentScreenNum].values())
 
-    return itertools.chain(screen, display)
+        return itertools.chain(screen, display)
 
 def GetAcceleratorName(key, mods):
     # <Primary> is <Control> everywhere except for OS X
