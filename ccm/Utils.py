@@ -388,12 +388,13 @@ PluginKeyFunc = operator.attrgetter('ShortDesc')
 def HasOnlyType (settings, stype):
     return settings and not [s for s in settings if s.Type != stype]
 
-def GetSettings(group, types=None, displayOnly=False):
+def GetSettings(group, types=None):
 
     def TypeFilter (settings, types):
          for setting in settings:
             if setting.Type in types:
                 yield setting
+
     # Compiz 0.9.x and Compiz 0.8.x compatibility.
     try:
         if types:
@@ -404,17 +405,11 @@ def GetSettings(group, types=None, displayOnly=False):
         return screen
     except (AttributeError, TypeError):
         if types:
+            screen = TypeFilter(iter(group.Screens[CurrentScreenNum].values()), types)
             display = TypeFilter(group.Display.itervalues(), types)
         else:
-            display = group.Display.itervalues()
-
-        if displayOnly:
-            return display
-
-        if types:
-            screen = TypeFilter(iter(group.Screens[CurrentScreenNum].values()), types)
-        else:
             screen = iter(group.Screens[CurrentScreenNum].values())
+            display = group.Display.itervalues()
 
         return itertools.chain(screen, display)
 
