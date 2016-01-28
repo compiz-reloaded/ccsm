@@ -131,6 +131,7 @@ class SizedButton (Gtk.Button):
         if Gtk.check_version(3, 0, 0) is None:
             self.set_size_request (self.minWidth, self.minHeight)
         else:
+            self.connect ("size-request", self.adjust_size)
             self.connect ("size-allocate", self.adjust_size)
 
     def adjust_size (self, widget, rect):
