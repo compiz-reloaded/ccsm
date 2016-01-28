@@ -1504,8 +1504,6 @@ class Page(object):
 
         self.Scroll = scroll
 
-    StyleBlock = 0
-
 # Group Page
 #
 class GroupPage(Page):

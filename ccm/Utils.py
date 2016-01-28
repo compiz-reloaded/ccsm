@@ -100,7 +100,7 @@ class Image (Gtk.Image):
 
             elif type == ImageStock:
                 self.set_from_stock (name, size)
-        except GObject.GError(e):
+        except GObject.GError:
             self.set_from_stock (Gtk.STOCK_MISSING_IMAGE, Gtk.IconSize.BUTTON)
 
 class ActionImage (Gtk.Alignment):
