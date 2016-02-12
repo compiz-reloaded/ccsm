@@ -1,5 +1,26 @@
-Release 0.8.12
+Release 0.8.12 (2016-02-12 Sorokin Alexei <sor.alexei@meowr.ru>)
 ================================================================
+COMPIZ-RELOADED
+
+Replace PyGObject2, PyGtk2 dependency with PyGObject3.
+New minimal Gtk requirements are: either Gtk 2.24.10+ or Gtk 3.2+.
+
+Add support for specialized font family widget.
+
+Fix window grabbing by title or ID.
+
+Do not allow mods+Escape to be bound.
+
+Add more plugin icons from compiz-plugins-experimental, and add
+plugin-matecompat.
+
+Drop libsexy optional dependency.
+
+Fix vertical alignment of the text on the stylized keys
+(Shift, Super, Ctrl, Alt).
+
+Add an additional Compiz 0.9.x support, no action is required for
+either.
 
 Release 0.8.9 (2015-11-06 Wolfgang Ulbrich <chat-to-me@raveit.de>)
 ==================================================================
