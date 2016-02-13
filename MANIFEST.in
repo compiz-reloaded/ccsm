@@ -1,5 +1,5 @@
 include po/*
-include INSTALL AUTHORS COPYING LICENSE VERSION
+include INSTALL AUTHORS COPYING LICENSE VERSION NEWS
 include ccsm.in
 exclude ccsm
 include ccsm.desktop.in
