@@ -1053,12 +1053,15 @@ class EditableActionSetting (StockSetting):
 
         dlg.vbox.show_all ()
         ret = dlg.run ()
+
+        entryText = entry.get_text ().strip ()
+
         dlg.destroy ()
 
         if ret != Gtk.ResponseType.OK:
             return
 
-        self.HandleDialogText (entry.get_text ().strip ())
+        self.HandleDialogText (entryText)
 
     def GetDialogText (self):
         self.PureVirtual ('GetDialogText')
@@ -1210,16 +1213,18 @@ class KeySetting (EditableActionSetting):
         dlg.vbox.show_all ()
         ShowHideBox (checkButton, box, dlg)
         ret = dlg.run ()
+
+        new = label.get_text ()
+        checkButtonActive = checkButton.get_active ()
+
         dlg.destroy ()
 
         if ret != Gtk.ResponseType.OK:
             return
 
-        if not checkButton.get_active ():
+        if not checkButtonActive:
             self.BindingEdited ("Disabled")
             return
-
-        new = label.get_text ()
 
         new = self.ReorderKeyString (new)
 
@@ -1370,21 +1375,22 @@ class ButtonSetting (EditableActionSetting):
         ShowHideBox (checkButton, box, dlg)
         ret = dlg.run ()
 
-        if ret != Gtk.ResponseType.OK:
-            return
-
-        if not checkButton.get_active ():
-            self.ButtonEdited ("Disabled")
-            return
-
         edges = edgeSelector.current
         modifiers = modifierSelector.current
         try:
             button = buttonCombo.do_get_active_text (buttonCombo)
         except (AttributeError, NameError, TypeError):
             button = buttonCombo.get_active_text ()
+        checkButtonActive = checkButton.get_active ()
 
         dlg.destroy ()
+
+        if ret != Gtk.ResponseType.OK:
+            return
+
+        if not checkButtonActive:
+            self.ButtonEdited ("Disabled")
+            return
 
         edges = edges.split ("|")
         if len (edges):
@@ -1490,12 +1496,13 @@ class EdgeSetting (EditableActionSetting):
 
         dlg.vbox.show_all ()
         ret = dlg.run ()
+        selectorCurrent = selector.current
         dlg.destroy ()
 
         if ret != Gtk.ResponseType.OK:
             return
 
-        self.EdgeEdited (selector.current)
+        self.EdgeEdited (selectorCurrent)
 
     def EdgeEdited (self, edge):
         '''Edge edited callback'''
