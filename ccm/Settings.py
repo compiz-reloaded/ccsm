@@ -1118,8 +1118,8 @@ class KeySetting (EditableActionSetting):
                 box.hide ()
                 dialog.resize (1, 1)
 
-        def HandleGrabberChanged (grabber, key, mods, label, selector):
-            new = Gtk.accelerator_name (key, mods)
+        def HandleGrabberChanged (grabber, label, selector):
+            new = Gtk.accelerator_name (grabber.key, grabber.mods)
             mods = ""
             for mod in KeyModifier:
                 if "%s_L" % mod in new:

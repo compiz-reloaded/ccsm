@@ -988,19 +988,19 @@ class KeyGrabber (Gtk.Button):
 
     __gsignals__    = {"changed" : (GObject.SignalFlags.RUN_FIRST,
                                     None,
-                                    [GObject.TYPE_INT, GObject.TYPE_INT]),
+                                    ()),
                        "current-changed" : (GObject.SignalFlags.RUN_FIRST,
                                     None,
-                                    [GObject.TYPE_INT, GObject.TYPE_INT])}
+                                    ())}
 
     key     = 0
-    mods    = 0
+    mods    = Gdk.ModifierType.SHIFT_MASK
     handler = None
     popup   = None
 
     label   = None
 
-    def __init__ (self, key = 0, mods = 0, label = None):
+    def __init__ (self, key = 0, mods = Gdk.ModifierType.SHIFT_MASK, label = None):
         '''Prepare widget'''
         super (KeyGrabber, self).__init__ ()
 
@@ -1027,12 +1027,12 @@ class KeyGrabber (Gtk.Button):
         self.popup.destroy ()
 
     def on_key_press_event (self, widget, event):
-        mods = event.get_state() & Gtk.accelerator_get_default_mod_mask ()
+        mods = event.get_state() & Gdk.ModifierType(Gtk.accelerator_get_default_mod_mask())
 
         if event.keyval in (Gdk.KEY_Escape, Gdk.KEY_Return) \
             and not mods:
             if event.keyval == Gdk.KEY_Escape:
-                self.emit ("changed", self.key, self.mods)
+                self.emit ("changed")
             self.end_key_grab ()
             self.set_label ()
             return
@@ -1056,7 +1056,7 @@ class KeyGrabber (Gtk.Button):
             self.end_key_grab ()
             self.key = key
             self.mods = mods
-            self.emit ("changed", self.key, self.mods)
+            self.emit ("changed")
             return
 
         self.set_label (key, mods)
@@ -1064,7 +1064,7 @@ class KeyGrabber (Gtk.Button):
     def set_label (self, key = None, mods = None):
         if self.label:
             if key != None and mods != None:
-                self.emit ("current-changed", key, mods)
+                self.emit ("current-changed")
             Gtk.Button.set_label (self, self.label)
             return
         if key == None and mods == None:
