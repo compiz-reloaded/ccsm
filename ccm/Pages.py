@@ -458,7 +458,7 @@ class FilterPage(GenericPage):
                 yield plugin, results
 
     def GotKey(self, widget, key, mods):
-        new = GetAcceleratorName (key, mods)
+        new = Gtk.accelerator_name (key, mods)
         for mod in KeyModifier:
             if "%s_L" % mod in new:
                 new = new.replace ("%s_L" % mod, "<%s>" % mod)

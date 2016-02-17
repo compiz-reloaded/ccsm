@@ -1087,7 +1087,7 @@ class KeySetting (EditableActionSetting):
 
     def ReorderKeyString (self, accel):
         key, mods = Gtk.accelerator_parse (accel)
-        return GetAcceleratorName (key, mods)
+        return Gtk.accelerator_name (key, mods)
 
     def GetDialogText (self):
         return self.current
@@ -1104,7 +1104,7 @@ class KeySetting (EditableActionSetting):
     def GetLabelText (self, text):
         if not len (text) or text.lower() == "disabled":
             text = _("Disabled")
-        return text
+        return text.replace('<Control><Primary>', '<Control>').replace('<Primary>', '<Control>')
 
     def SetButtonLabel (self):
         self.Button.set_label (self.GetLabelText (self.current))
@@ -1119,7 +1119,7 @@ class KeySetting (EditableActionSetting):
                 dialog.resize (1, 1)
 
         def HandleGrabberChanged (grabber, key, mods, label, selector):
-            new = GetAcceleratorName (key, mods)
+            new = Gtk.accelerator_name (key, mods)
             mods = ""
             for mod in KeyModifier:
                 if "%s_L" % mod in new:
@@ -1138,7 +1138,7 @@ class KeySetting (EditableActionSetting):
                 current = "<%s>" % modifier
             else:
                 current = ("<%s>" % modifier) + current
-            label.set_text (self.ReorderKeyString (current))
+            label.set_text (self.GetLabelText (self.ReorderKeyString (current)))
 
         def HandleModifierRemoved (selector, modifier, label):
             current = label.get_text ()
@@ -1193,7 +1193,7 @@ class KeySetting (EditableActionSetting):
         grabber.set_tooltip_text (self.Setting.LongDesc)
         box.pack_start (grabber, True, True, 0)
 
-        label = Gtk.Label.new(self.current)
+        label = Gtk.Label.new(self.GetLabelText(self.current))
         label.set_tooltip_text (self.Setting.LongDesc)
         alignment = Gtk.Alignment.new (0.5, 0.5, 0, 0)
         alignment.set_padding (15, 0, 0, 0)
@@ -1290,11 +1290,13 @@ class ButtonSetting (EditableActionSetting):
             return
         self.ButtonEdited (new)
 
+    def GetLabelText (self, text):
+        if not len (text) or text.lower() == "disabled":
+            text = _("Disabled")
+        return text.replace('<Control><Primary>', '<Control>').replace('<Primary>', '<Control>')
+
     def SetButtonLabel (self):
-        label = self.current
-        if not len (self.current) or self.current.lower() == "disabled":
-            label = _("Disabled")
-        self.Button.set_label (label)
+        self.Button.set_label (self.GetLabelText (self.current))
 
     def RunButtonSelector (self, widget):
         def ShowHideBox (button, box, dialog):
