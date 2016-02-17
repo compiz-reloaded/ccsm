@@ -1369,7 +1369,6 @@ class ButtonSetting (EditableActionSetting):
         dlg.vbox.show_all ()
         ShowHideBox (checkButton, box, dlg)
         ret = dlg.run ()
-        dlg.destroy ()
 
         if ret != Gtk.ResponseType.OK:
             return
@@ -1384,6 +1383,8 @@ class ButtonSetting (EditableActionSetting):
             button = buttonCombo.do_get_active_text (buttonCombo)
         except (AttributeError, NameError, TypeError):
             button = buttonCombo.get_active_text ()
+
+        dlg.destroy ()
 
         edges = edges.split ("|")
         if len (edges):
