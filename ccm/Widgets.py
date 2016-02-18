@@ -1561,7 +1561,7 @@ class CategoryBox(Gtk.VBox):
         icon = text.lower ().replace (" ", "_")
         image = Image (icon, ImageCategory)
         header.pack_start (image, False, False, 0)
-        header.pack_start (label, False, False, 0)
+        header.pack_start (label, True, True, 0)
 
         self._table = Gtk.Table ()
         self._table.set_border_width (10)
