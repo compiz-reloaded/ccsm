@@ -330,8 +330,7 @@ class EnumSetting(StockSetting):
         try:
             self.CurrentRow = path.get_indices()[0]
         except (AttributeError, TypeError):
-            from ctypes import c_int
-            self.CurrentRow = c_int.from_address(path.get_indices()).value
+            self.CurrentRow = path.get_indices_with_depth()[0]
         value = self.Info[new_text]
         self.Store[path][self.Num] = new_text
         self.Set(value)
@@ -404,8 +403,7 @@ class RestrictedStringSetting(StockSetting):
         try:
             self.CurrentRow = path.get_indices()[0]
         except (AttributeError, TypeError):
-            from ctypes import c_int
-            self.CurrentRow = c_int.from_address(path.get_indices()).value
+            self.CurrentRow = path.get_indices_with_depth()[0]
         value = self.ItemsByName[new_text]
         self.Store[path][self.Num] = new_text
         self.Set(value)
@@ -493,8 +491,7 @@ class BoolSetting (StockSetting):
         try:
             self.CurrentRow = path.get_indices()[0]
         except (AttributeError, TypeError):
-            from ctypes import c_int
-            self.CurrentRow = c_int.from_address(path.get_indices()).value
+            self.CurrentRow = path.get_indices_with_depth()[0]
         self.Set(not cell.props.active)
         self.Store[path][self.Num] = self.Get()
         self.Setting.Plugin.Context.Write()
@@ -707,8 +704,7 @@ class BaseListSetting(Setting):
                 try:
                     row = path.get_indices()[0]
                 except (AttributeError, TypeError):
-                    from ctypes import c_int
-                    row = c_int.from_address(path.get_indices()).value
+                    row = path.get_indices_with_depth()[0]
             else:
                 return
 
@@ -739,8 +735,7 @@ class BaseListSetting(Setting):
                 try:
                     row = path.get_indices()[0]
                 except (AttributeError, TypeError):
-                    from ctypes import c_int
-                    row = c_int.from_address(path.get_indices()).value
+                    row = path.get_indices_with_depth()[0]
             else:
                 return
 
@@ -775,8 +770,7 @@ class BaseListSetting(Setting):
                 try:
                     row = path.get_indices()[0]
                 except (AttributeError, TypeError):
-                    from ctypes import c_int
-                    row = c_int.from_address(path.get_indices()).value
+                    row = path.get_indices_with_depth()[0]
             else:
                 return
             if direction == 'up':
@@ -818,8 +812,7 @@ class BaseListSetting(Setting):
                 try:
                     row = path.get_indices()[0]
                 except (AttributeError, TypeError):
-                    from ctypes import c_int
-                    row = c_int.from_address(path.get_indices()).value
+                    row = path.get_indices_with_depth()[0]
                 self.Buttons[Gtk.STOCK_GO_UP].set_sensitive(row > 0)
                 self.Buttons[Gtk.STOCK_GO_DOWN].set_sensitive(row < (len(model) - 1))
         else:
@@ -848,8 +841,7 @@ class BaseListSetting(Setting):
                     try:
                         row = path.get_indices()[0]
                     except (AttributeError, TypeError):
-                        from ctypes import c_int
-                        row = c_int.from_address(path.get_indices()).value
+                        row = path.get_indices_with_depth()[0]
                     model.remove(it)
                     self._Delete(row)
                     return True
@@ -867,8 +859,7 @@ class BaseListSetting(Setting):
         try:
             self._Edit(path.get_indices()[0])
         except (AttributeError, TypeError):
-            from ctypes import c_int
-            self._Edit(c_int.from_address(path.get_indices()).value)
+            self._Edit(path.get_indices_with_depth()[0])
 
     def _Read(self):
         self.Store.clear()
