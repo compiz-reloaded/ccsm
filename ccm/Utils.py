@@ -23,7 +23,7 @@
 
 import os
 
-from gi.repository import GObject, Gtk, Gdk
+from gi.repository import GObject, GLib, Gtk, Gdk
 from gi.repository import Pango
 import weakref
 
@@ -83,14 +83,14 @@ class Image (Gtk.Image):
                     name = "plugin-" + name
                     try:
                         pixbuf = IconTheme.load_icon (name, size, 0)
-                    except GObject.GError:
+                    except GLib.GError:
                         pixbuf = IconTheme.load_icon ("plugin-unknown", size, 0)
 
                 elif type == ImageCategory:
                     name = "plugins-" + name
                     try:
                         pixbuf = IconTheme.load_icon (name, size, 0)
-                    except GObject.GError:
+                    except GLib.GError:
                         pixbuf = IconTheme.load_icon ("plugins-unknown", size, 0)
 
                 else:
@@ -100,7 +100,7 @@ class Image (Gtk.Image):
 
             elif type == ImageStock:
                 self.set_from_stock (name, size)
-        except GObject.GError:
+        except GLib.GError:
             self.set_from_stock (Gtk.STOCK_MISSING_IMAGE, Gtk.IconSize.BUTTON)
 
 class ActionImage (Gtk.Alignment):
@@ -236,16 +236,16 @@ class IdleSettingsParser:
         self.CategoryLoadIconsList = list(range(3, nCategories)) # Skip the first 3
         print("Loading icons...")
 
-        GObject.timeout_add (150, self.Wait)
+        GLib.timeout_add (150, self.Wait)
 
     def Wait(self):
         if not self.PluginList:
             return False
 
         if len (self.CategoryLoadIconsList) == 0: # If we're done loading icons
-            GObject.idle_add (self.ParseSettings)
+            GLib.idle_add (self.ParseSettings)
         else:
-            GObject.idle_add (self.LoadCategoryIcons)
+            GLib.idle_add (self.LoadCategoryIcons)
 
         return False
 
@@ -258,7 +258,7 @@ class IdleSettingsParser:
 
         self.PluginList.remove (self.PluginList[0])
 
-        GObject.timeout_add (200, self.Wait)
+        GLib.timeout_add (200, self.Wait)
 
         return False
 
@@ -276,7 +276,7 @@ class IdleSettingsParser:
 
         self.CategoryLoadIconsList.remove (self.CategoryLoadIconsList[0])
 
-        GObject.timeout_add (150, self.Wait)
+        GLib.timeout_add (150, self.Wait)
 
         return False
 
@@ -291,7 +291,7 @@ class Updater:
     def SetContext (self, context):
         self.Context = context
 
-        GObject.timeout_add (2000, self.Update)
+        GLib.timeout_add (2000, self.Update)
 
     def Append (self, widget):
         reference = weakref.ref(widget)

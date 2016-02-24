@@ -22,7 +22,7 @@
 #          Wolfgang Ulbrich (chat-to-me@raveit.de)
 # Copyright (C) 2007 Quinn Storm
 
-from gi.repository import GObject, Gtk
+from gi.repository import GObject, GLib, Gtk
 from gi.repository import Gdk, GdkPixbuf, PangoCairo
 import cairo
 from math import pi, sqrt
@@ -1326,7 +1326,7 @@ class FileButton (Gtk.Button):
             return
         try:
             pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size (path, 128, 128)
-        except GObject.GError:
+        except GLib.GError:
             return
         widget.get_preview_widget ().set_from_pixbuf (pixbuf)
 
