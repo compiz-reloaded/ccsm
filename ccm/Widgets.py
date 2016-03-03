@@ -145,7 +145,7 @@ class PluginView(Gtk.TreeView):
     def __init__(self, plugins):
         liststore = Gtk.ListStore(str, GdkPixbuf.Pixbuf, bool, object)
         self.model = liststore.filter_new()
-        Gtk.TreeView.__init__(self, self.model)
+        Gtk.TreeView.__init__(self, model=self.model)
 
         self.SelectionHandler = None
 
@@ -181,7 +181,7 @@ class PluginView(Gtk.TreeView):
 class GroupView(Gtk.TreeView):
     def __init__(self, name):
         self.model = Gtk.ListStore(str, str)
-        Gtk.TreeView.__init__(self, self.model)
+        Gtk.TreeView.__init__(self, model=self.model)
 
         self.SelectionHandler = None
 
@@ -241,11 +241,11 @@ class SelectorButtons(Gtk.HBox):
 
     def add_button(self, label, callback):
         try:
-            arrow = Gtk.Arrow(Gtk.ArrowType.RIGHT, Gtk.ShadowType.NONE)
+            arrow = Gtk.Arrow(arrow_type=Gtk.ArrowType.RIGHT, shadow_type=Gtk.ShadowType.NONE)
         except (AttributeError, TypeError):
             arrow = Gtk.Arrow()
             arrow.set(Gtk.ArrowType.RIGHT, Gtk.ShadowType.NONE)
-        button = Gtk.Button(label)
+        button = Gtk.Button(label=label)
         button.set_relief(Gtk.ReliefStyle.NONE)
         button.connect('clicked', self.on_button_clicked, callback)
         if self.get_children():
@@ -335,7 +335,7 @@ class ScrolledList(Gtk.ScrolledWindow):
 
         self.store = Gtk.ListStore(GObject.TYPE_STRING)
 
-        self.view = Gtk.TreeView(self.store)
+        self.view = Gtk.TreeView(model=self.store)
         self.view.set_headers_visible(True)
         self.view.insert_column(Gtk.TreeViewColumn(name, Gtk.CellRendererText(), text=0), -1)
 
@@ -1214,7 +1214,7 @@ class MatchButton(Gtk.Button):
         box.set_spacing (5)
         entry = Gtk.Entry ()
         entry.connect ('changed', self._check_entry_value, dlg)
-        button = Gtk.Button (_("Grab"))
+        button = Gtk.Button (label=_("Grab"))
         button.connect ('clicked', self.grab_value, entry, type_chooser)
         box.pack_start (entry, True, True, 0)
         box.pack_start (button, False, False, 0)

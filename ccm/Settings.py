@@ -518,7 +518,7 @@ class NumberSetting(StockSetting):
             self.Inc = info[2]
         inc = self.Inc
         self.NoneValue = info[0]
-        self.Adj = Gtk.Adjustment(0, info[0], info[1], inc, inc*10)
+        self.Adj = Gtk.Adjustment(value=0, lower=info[0], upper=info[1], step_increment=inc, page_increment=inc*10)
         self.Spin = Gtk.SpinButton.new(self.Adj, 0, 0)
         self.Spin.set_value(self.Get())
         self.Spin.connect("value-changed", self.Changed)
@@ -600,7 +600,7 @@ class BaseListSetting(Setting):
         types, cols = self.ListInfo()
         self.Types = types
         self.Store = Gtk.ListStore(*types)
-        self.View = Gtk.TreeView(self.Store)
+        self.View = Gtk.TreeView(model=self.Store)
         self.View.set_headers_visible(True)
 
         for widget in self.Widgets:
@@ -623,7 +623,7 @@ class BaseListSetting(Setting):
         self.Scroll.add(self.View)
         self.Widget.pack_start(self.Scroll, True, True, 0)
         self.Widget.set_child_packing(self.Scroll, True, True, 0, Gtk.PackType.START)
-        buttonBox = Gtk.HBox(False)
+        buttonBox = Gtk.HBox(homogeneous=False)
         buttonBox.set_spacing(5)
         buttonBox.set_border_width(5)
         self.Widget.pack_start(buttonBox, False, False, 0)
@@ -634,7 +634,7 @@ class BaseListSetting(Setting):
                        (Gtk.STOCK_GO_DOWN, self.Move, 'down', False),)
         self.Buttons = {}
         for stock, callback, data, sensitive in buttonTypes:
-            b = Gtk.Button(stock)
+            b = Gtk.Button(label=stock)
             b.set_use_stock(True)
             buttonBox.pack_start(b, False, False, 0)
             if data is not None:
@@ -910,7 +910,7 @@ class EnumFlagsSetting(Setting):
         sortedItems = sorted(self.Setting.Info[1][2].items(), key=EnumSettingKeyFunc)
         self.minVal = sortedItems[0][1]
         for key, value in sortedItems:
-            box = Gtk.CheckButton(key)
+            box = Gtk.CheckButton(label=key)
             self.Checks.append((key, box))
             table.attach(box, col, col+1, row, row+1, TableDef, TableDef, TableX, TableX)
             box.connect('toggled', self.Changed)
@@ -961,7 +961,7 @@ class RestrictedStringFlagsSetting(Setting):
         self.ItemsByValue = info[1]
         sortedItems = info[2]
         for key, value in sortedItems:
-            box = Gtk.CheckButton(key)
+            box = Gtk.CheckButton(label=key)
             self.Checks.append((key, box))
             table.attach(box, col, col+1, row, row+1, TableDef, TableDef, TableX, TableX)
             box.connect('toggled', self.Changed)
@@ -1159,7 +1159,7 @@ class KeySetting (EditableActionSetting):
         alignment.add (mainBox)
         dlg.vbox.pack_start (alignment, True, True, 0)
 
-        checkButton = Gtk.CheckButton (_("Enabled"))
+        checkButton = Gtk.CheckButton (label=_("Enabled"))
         active = len (self.current) \
                  and self.current.lower () not in ("disabled", "none")
         checkButton.set_active (active)
@@ -1315,7 +1315,7 @@ class ButtonSetting (EditableActionSetting):
         alignment.add (mainBox)
         dlg.vbox.pack_start (alignment, True, True, 0)
 
-        checkButton = Gtk.CheckButton (_("Enabled"))
+        checkButton = Gtk.CheckButton (label=_("Enabled"))
         active = len (self.current) \
                  and self.current.lower () not in ("disabled", "none")
         checkButton.set_active (active)

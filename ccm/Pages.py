@@ -64,7 +64,7 @@ class PluginPage(GenericPage):
     def __init__(self, plugin):
         GenericPage.__init__(self)
         self.Plugin = plugin
-        self.LeftWidget = Gtk.VBox(False, 10)
+        self.LeftWidget = Gtk.VBox(homogeneous=False, spacing=10)
         self.LeftWidget.set_border_width(10)
 
         pluginLabel = Label()
@@ -117,7 +117,7 @@ class PluginPage(GenericPage):
         else:
             self.FilterEntry.set_tooltip_text(_("Search Compiz Core Options"))
 
-        backButton = Gtk.Button(Gtk.STOCK_GO_BACK)
+        backButton = Gtk.Button(label=Gtk.STOCK_GO_BACK)
         backButton.set_use_stock(True)
         self.LeftWidget.pack_end(backButton, False, False, 0)
         backButton.connect('clicked', self.GoBack)
@@ -257,7 +257,7 @@ class FilterPage(GenericPage):
     def __init__(self, context):
         GenericPage.__init__(self)
         self.Context = context
-        self.LeftWidget = Gtk.VBox(False, 10)
+        self.LeftWidget = Gtk.VBox(homogeneous=False, spacing=10)
         self.LeftWidget.set_border_width(10)
         self.RightWidget = Gtk.Notebook()
         self.RightChild = Gtk.VBox()
@@ -293,23 +293,23 @@ class FilterPage(GenericPage):
         self.LeftWidget.pack_start(filterSearchLabel, False, False, 0)
 
         # Options
-        self.FilterNameCheck = check = Gtk.CheckButton(_("Short description and name"))
+        self.FilterNameCheck = check = Gtk.CheckButton(label=_("Short description and name"))
         check.set_active(True)
         check.connect("toggled", self.LevelChanged, FilterName)
         self.LeftWidget.pack_start(check, False, False, 0)
 
-        self.FilterLongDescCheck = check = Gtk.CheckButton(_("Long description"))
+        self.FilterLongDescCheck = check = Gtk.CheckButton(label=_("Long description"))
         check.set_active(True)
         check.connect("toggled", self.LevelChanged, FilterLongDesc)
         self.LeftWidget.pack_start(check, False, False, 0)
 
-        self.FilterValueCheck = check = Gtk.CheckButton(_("Settings value"))
+        self.FilterValueCheck = check = Gtk.CheckButton(label=_("Settings value"))
         check.set_active(False)
         check.connect("toggled", self.LevelChanged, FilterValue)
         self.LeftWidget.pack_start(check, False, False, 0)
 
         # Back Button
-        self.BackButton = Gtk.Button(Gtk.STOCK_GO_BACK)
+        self.BackButton = Gtk.Button(label=Gtk.STOCK_GO_BACK)
         self.BackButton.set_use_stock(True)
         self.BackButton.connect('clicked', self.GoBack)
         self.LeftWidget.pack_end(self.BackButton, False, False, 0)
@@ -730,13 +730,13 @@ class ProfileBackendPage(object):
             profileLabel.connect("style-set", self.HeaderStyleUpdate)
         self.ProfileImportExportBox = Gtk.HBox()
         self.ProfileImportExportBox.set_spacing(5)
-        profileImportButton = Gtk.Button(_("Import"))
+        profileImportButton = Gtk.Button(label=_("Import"))
         profileImportButton.set_tooltip_text(_("Import a CompizConfig Profile"))
-        profileImportAsButton = Gtk.Button(_("Import as..."))
+        profileImportAsButton = Gtk.Button(label=_("Import as..."))
         profileImportAsButton.set_tooltip_text(_("Import a CompizConfig Profile as a new profile"))
-        profileExportButton = Gtk.Button(_("Export"))
+        profileExportButton = Gtk.Button(label=_("Export"))
         profileExportButton.set_tooltip_text(_("Export your CompizConfig Profile"))
-        profileResetButton = Gtk.Button(_("Reset to defaults"))
+        profileResetButton = Gtk.Button(label=_("Reset to defaults"))
         profileResetButton.set_tooltip_text(_("Reset your CompizConfig Profile to the global defaults"))
         profileResetButton.set_image(Gtk.Image.new_from_stock(Gtk.STOCK_CLEAR, Gtk.IconSize.BUTTON))
         profileImportButton.set_image(Gtk.Image.new_from_stock(Gtk.STOCK_OPEN, Gtk.IconSize.BUTTON))
@@ -780,7 +780,7 @@ class ProfileBackendPage(object):
             integrationLabel.connect("style-updated", self.HeaderStyleUpdate)
         else:
             integrationLabel.connect("style-set", self.HeaderStyleUpdate)
-        self.IntegrationButton = Gtk.CheckButton(_("Enable integration into the desktop environment"))
+        self.IntegrationButton = Gtk.CheckButton(label=_("Enable integration into the desktop environment"))
         self.IntegrationButton.set_active(self.Context.Integration)
         self.IntegrationButton.set_sensitive(self.Context.CurrentBackend.IntegrationSupport)
         self.IntegrationButton.connect("toggled", self.IntegrationChanged)
@@ -891,8 +891,9 @@ class ProfileBackendPage(object):
 
     def ExportProfile(self, widget):
         main = widget.get_toplevel()
-        b = (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL, Gtk.STOCK_SAVE, Gtk.ResponseType.OK)
-        chooser = Gtk.FileChooserDialog(title=_("Save file.."), parent=main, buttons=b, action=Gtk.FileChooserAction.SAVE)
+        chooser = Gtk.FileChooserDialog(title=_("Save file.."), transient_for=main, action=Gtk.FileChooserAction.SAVE)
+        chooser.add_button (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
+        chooser.add_button (Gtk.STOCK_SAVE, Gtk.ResponseType.OK)
         chooser.set_current_folder(os.environ.get("HOME"))
         self.CreateFilter(chooser)
         ret = chooser.run()
@@ -909,10 +910,10 @@ class ProfileBackendPage(object):
             self.Context.Export(path, ret == Gtk.ResponseType.YES)
 
     def ImportProfileDialog (self, main):
-        b = (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
-             Gtk.STOCK_OPEN, Gtk.ResponseType.OK)
         chooser = Gtk.FileChooserDialog (title = _("Open file.."),
-                                         parent = main, buttons = b)
+                                         transient_for = main)
+        chooser.add_button (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
+        chooser.add_button (Gtk.STOCK_OPEN, Gtk.ResponseType.OK)
         chooser.set_current_folder (os.environ.get ("HOME"))
         self.CreateFilter (chooser)
         ret = chooser.run ()
@@ -1015,7 +1016,7 @@ class PluginListPage(object):
         rightChild.set_border_width(10)
 
         # Auto sort
-        autoSort = Gtk.CheckButton(_("Automatic plugin sorting"))
+        autoSort = Gtk.CheckButton(label=_("Automatic plugin sorting"))
         rightChild.pack_start(autoSort, False, False, 10)
 
         # Lists
@@ -1053,15 +1054,15 @@ class PluginListPage(object):
         enabledButtonBox.set_spacing(5)
         enabledAlignment.add(enabledButtonBox)
 
-        upButton = Gtk.Button(Gtk.STOCK_GO_UP)
-        downButton = Gtk.Button(Gtk.STOCK_GO_DOWN)
+        upButton = Gtk.Button(label=Gtk.STOCK_GO_UP)
+        downButton = Gtk.Button(label=Gtk.STOCK_GO_DOWN)
         upButton.set_use_stock(True)
         downButton.set_use_stock(True)
         upButton.connect('clicked', self.EnabledPluginsList.move_up)
         downButton.connect('clicked', self.EnabledPluginsList.move_down)
 
         # Add buttons
-        addButton = Gtk.Button(Gtk.STOCK_ADD)
+        addButton = Gtk.Button(label=Gtk.STOCK_ADD)
         addButton.set_use_stock(True)
         addButton.connect('clicked', self.AddPlugin)
 
@@ -1193,7 +1194,7 @@ class PreferencesPage(GenericPage):
     def __init__(self, context):
         GenericPage.__init__(self)
         self.Context = context
-        self.LeftWidget = Gtk.VBox(False, 10)
+        self.LeftWidget = Gtk.VBox(homogeneous=False, spacing=10)
         self.LeftWidget.set_border_width(10)
         if Gtk.check_version(3, 12, 0) is None:
             self.RightWidget = Gtk.Box.new(Gtk.Orientation.VERTICAL, 6)
@@ -1247,7 +1248,7 @@ class PreferencesPage(GenericPage):
         self.LeftWidget.pack_start(aboutBin, False, False, 0)
 
         # Back Button
-        backButton = Gtk.Button(Gtk.STOCK_GO_BACK)
+        backButton = Gtk.Button(label=Gtk.STOCK_GO_BACK)
         backButton.set_use_stock(True)
         backButton.connect('clicked', self.GoBack)
         self.LeftWidget.pack_end(backButton, False, False, 0)
@@ -1303,7 +1304,7 @@ class MainPage(object):
     def __init__(self, main, context):
         self.Context = context
         self.Main    = main
-        sidebar = Gtk.VBox(False, 10)
+        sidebar = Gtk.VBox(homogeneous=False, spacing=10)
         sidebar.set_border_width(10)
 
         pluginWindow = PluginWindow(self.Context)
@@ -1372,7 +1373,7 @@ class MainPage(object):
             categoryLabel.connect("style-set", self.HeaderStyleUpdate)
 
         # Exit Button
-        exitButton = Gtk.Button(Gtk.STOCK_CLOSE)
+        exitButton = Gtk.Button(label=Gtk.STOCK_CLOSE)
         exitButton.set_use_stock(True)
         exitButton.connect('clicked', self.Main.Quit)
 
