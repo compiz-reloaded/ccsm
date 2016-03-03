@@ -46,7 +46,7 @@ class MainWin(Gtk.Window):
         self.connect("destroy", self.Quit)
         if Gtk.check_version(3, 0, 0) is None:
             self.get_style_context().add_class("ccsm-window")
-            self.set_size_request(740, 580)
+            self.set_size_request(750, 580)
         self.set_default_size(1000, 580)
         self.set_title(_("CompizConfig Settings Manager"))
 

@@ -1667,9 +1667,13 @@ class PluginWindow(Gtk.ScrolledWindow):
                     self._categories[category] = []
                 self._categories[category].append(plugin)
 
-        self.props.hscrollbar_policy = Gtk.PolicyType.NEVER
+        if Gtk.check_version (3, 0, 0) is None:
+            self.connect ('draw', self.rebuild_boxes)
+            self.props.hscrollbar_policy = Gtk.PolicyType.AUTOMATIC
+        else:
+            self.connect ('expose-event', self.rebuild_boxes)
+            self.props.hscrollbar_policy = Gtk.PolicyType.NEVER
         self.props.vscrollbar_policy = Gtk.PolicyType.AUTOMATIC
-        self.connect ('size-allocate', self.rebuild_boxes)
 
         self._box = Gtk.VBox ()
         self._box.set_spacing (5)
@@ -1735,10 +1739,11 @@ class PluginWindow(Gtk.ScrolledWindow):
         self.queue_resize()
         self.show_all()
 
-    def rebuild_boxes (self, widget, request):
-        ncols = request.width / 220
+    def rebuild_boxes (self, widget, extra=None):
+        rect = widget.get_allocation ()
+        ncols = rect.width / 220
         width = ncols * (220 + 2 * TableX) + 40
-        if width > request.width:
+        if width > rect.width:
             ncols -= 1
 
         pos = 0
