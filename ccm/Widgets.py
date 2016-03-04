@@ -1667,13 +1667,12 @@ class PluginWindow(Gtk.ScrolledWindow):
                     self._categories[category] = []
                 self._categories[category].append(plugin)
 
+        self.props.hscrollbar_policy = Gtk.PolicyType.AUTOMATIC
+        self.props.vscrollbar_policy = Gtk.PolicyType.AUTOMATIC
         if Gtk.check_version (3, 0, 0) is None:
             self.connect ('draw', self.rebuild_boxes)
-            self.props.hscrollbar_policy = Gtk.PolicyType.AUTOMATIC
         else:
             self.connect ('expose-event', self.rebuild_boxes)
-            self.props.hscrollbar_policy = Gtk.PolicyType.NEVER
-        self.props.vscrollbar_policy = Gtk.PolicyType.AUTOMATIC
 
         self._box = Gtk.VBox ()
         self._box.set_spacing (5)
