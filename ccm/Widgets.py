@@ -1392,7 +1392,7 @@ class AboutDialog (Gtk.AboutDialog):
         if IconTheme.lookup_icon("ccsm", 64, 0):
             icon = IconTheme.load_icon("ccsm", 64, 0)
             self.set_logo (icon)
-        self.set_website ("https://github.com/raveit65/ccsm")
+        self.set_website ("https://github.com/compiz-reloaded/ccsm")
 
 # Error dialog
 #
