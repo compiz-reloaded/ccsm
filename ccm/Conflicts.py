@@ -42,10 +42,10 @@ class Conflict:
         if self.AutoResolve:
             return Gtk.ResponseType.YES
 
-        dialog = Gtk.MessageDialog(flags=Gtk.DialogFlags.MODAL, type=Gtk.MessageType.WARNING)
+        dialog = Gtk.MessageDialog(modal=True, message_type=Gtk.MessageType.WARNING)
 
         for text, icon, response in buttons:
-            button = Gtk.Button(text)
+            button = Gtk.Button(label=text)
             button.set_image(Gtk.Image.new_from_stock(icon, Gtk.IconSize.BUTTON))
             dialog.add_action_widget(button, response)
 
