@@ -88,7 +88,10 @@ if len (sys.argv) > 2:
             elif o.startswith ("--prefix=") and len (o[9:]):
                 prefix = o[9:]
             sys.argv.remove (o)
-        elif o.startswith ("--with-gtk"):
+        i += 1
+    i = 0
+    for o in sys.argv:
+        if o.startswith ("--with-gtk"):
             if o == "--with-gtk":
                 if len (sys.argv) >= i:
                     gtkver = sys.argv[i + 1]
