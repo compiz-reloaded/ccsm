@@ -413,3 +413,7 @@ def GetSettings(group, types=None):
             display = group.Display.itervalues()
 
         return itertools.chain(screen, display)
+
+def GetAcceleratorName(key, mods):
+    # <Primary> is <Control> everywhere except for Mac OS.
+    return Gtk.accelerator_name(key, mods).replace('<Primary>', '<Control>')
