@@ -1745,26 +1745,26 @@ class PluginWindow(Gtk.ScrolledWindow):
         if width > rect.width:
             ncols -= 1
 
-        pos = 0
-        last_box = None
         children = self._box.get_children ()
+        real_len = 0
         for box in self._boxes:
-            plugins = box.get_plugins ()
-            if len (plugins) == 0:
+            if len(box.get_plugins()) != 0:
+                real_len += 1
+        pos = 0
+        for box in self._boxes:
+            if len(box.get_plugins()) == 0:
                 if box in children:
                     self._box.remove(box)
             else:
-                if last_box:
-                    last_box.show_separator (True)
-
                 if box not in children:
                     self._box.pack_start (box, False, False, 0)
                     self._box.reorder_child (box, pos)
                 box.rebuild_table (ncols)
-                box.show_separator (False)
+                if pos + 1 != real_len:
+                    box.show_separator(True)
+                else:
+                    box.show_separator(False)
                 pos += 1
-
-                last_box = box
 
     def get_categories (self):
         return list(self._categories)
