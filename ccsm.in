@@ -36,7 +36,7 @@ from gi.repository import Gtk, Gdk
 if Gtk.check_version(3, 0, 0) is None:
     gi.require_version('GdkX11', '@gtkver@')
     from gi.repository import GdkX11
-import os, sys
+import os, sys, signal
 
 def try_register_dbus ():
     '''Return instance of dbus control object on success, None on failure'''
@@ -92,6 +92,8 @@ def try_register_dbus ():
         except dbus.DBusException:
             # error on present call so pretend it doesn't exist and start up normally
             return
+
+signal.signal(signal.SIGINT, signal.SIG_DFL)
 
 dbusObj = try_register_dbus()
 
