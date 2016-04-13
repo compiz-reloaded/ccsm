@@ -1322,7 +1322,7 @@ class FileButton (Gtk.Button):
     def update_preview (self, widget):
         path = widget.get_preview_filename ()
         if path is None or os.path.isdir (path):
-            widget.get_preview_widget ().set_from_file (None)
+            widget.get_preview_widget ().clear ()
             return
         try:
             pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size (path, 128, 128)
