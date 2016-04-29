@@ -146,10 +146,11 @@ class PluginPage(GenericPage):
             context = widget.get_style_context ()
             context.save()
             context.add_class(Gtk.STYLE_CLASS_BACKGROUND)
+            bgColor = context.get_background_color(context.get_state())
             context.set_state(Gtk.StateFlags.SELECTED)
             for state in (Gtk.StateFlags.NORMAL, Gtk.StateFlags.PRELIGHT, Gtk.StateFlags.ACTIVE):
                 textColor = context.get_background_color(context.get_state())
-                if textColor.alpha != 0:
+                if not textColor.equal(bgColor) and textColor.alpha != 0:
                     widget.override_color(state, textColor)
             context.restore()
         else:
@@ -434,10 +435,11 @@ class FilterPage(GenericPage):
             context = widget.get_style_context ()
             context.save()
             context.add_class(Gtk.STYLE_CLASS_BACKGROUND)
+            bgColor = context.get_background_color(context.get_state())
             context.set_state(Gtk.StateFlags.SELECTED)
             for state in (Gtk.StateFlags.NORMAL, Gtk.StateFlags.PRELIGHT, Gtk.StateFlags.ACTIVE):
                 textColor = context.get_background_color(context.get_state())
-                if textColor.alpha != 0:
+                if not textColor.equal(bgColor) and textColor.alpha != 0:
                     widget.override_color(state, textColor)
             context.restore()
         else:
@@ -799,10 +801,11 @@ class ProfileBackendPage(object):
             context = widget.get_style_context ()
             context.save()
             context.add_class(Gtk.STYLE_CLASS_BACKGROUND)
+            bgColor = context.get_background_color(context.get_state())
             context.set_state(Gtk.StateFlags.SELECTED)
             for state in (Gtk.StateFlags.NORMAL, Gtk.StateFlags.PRELIGHT, Gtk.StateFlags.ACTIVE):
                 textColor = context.get_background_color(context.get_state())
-                if textColor.alpha != 0:
+                if not textColor.equal(bgColor) and textColor.alpha != 0:
                     widget.override_color(state, textColor)
             context.restore()
         else:
@@ -1277,10 +1280,11 @@ class PreferencesPage(GenericPage):
             context = widget.get_style_context ()
             context.save()
             context.add_class(Gtk.STYLE_CLASS_BACKGROUND)
+            bgColor = context.get_background_color(context.get_state())
             context.set_state(Gtk.StateFlags.SELECTED)
             for state in (Gtk.StateFlags.NORMAL, Gtk.StateFlags.PRELIGHT, Gtk.StateFlags.ACTIVE):
                 textColor = context.get_background_color(context.get_state())
-                if textColor.alpha != 0:
+                if not textColor.equal(bgColor) and textColor.alpha != 0:
                     widget.override_color(state, textColor)
             context.restore()
         else:
@@ -1433,10 +1437,11 @@ class MainPage(object):
             context = widget.get_style_context ()
             context.save()
             context.add_class(Gtk.STYLE_CLASS_BACKGROUND)
+            bgColor = context.get_background_color(context.get_state())
             context.set_state(Gtk.StateFlags.SELECTED)
             for state in (Gtk.StateFlags.NORMAL, Gtk.StateFlags.PRELIGHT, Gtk.StateFlags.ACTIVE):
                 textColor = context.get_background_color(context.get_state())
-                if textColor.alpha != 0:
+                if not textColor.equal(bgColor) and textColor.alpha != 0:
                     widget.override_color(state, textColor)
             context.restore()
         else:
