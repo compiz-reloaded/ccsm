@@ -1263,6 +1263,8 @@ class ButtonSetting (EditableActionSetting):
         for s in edges + KeyModifier:
             if "<%s>" % s in old:
                 new += "<%s>" % s
+        if "<ClickOnDesktop" in old:
+            new += "<ClickOnDesktop>"
         for i in range (99, 0, -1):
             if "Button%d" % i in old:
                 new += "Button%d" % i
@@ -1335,6 +1337,12 @@ class ButtonSetting (EditableActionSetting):
         edgeSelector.set_tooltip_text(self.Setting.LongDesc)
         box.pack_start (edgeSelector, True, True, 0)
 
+        clickDesktopButton = Gtk.CheckButton (label=_("Click on desktop"))
+        clickDesktopActive = len (self.current) \
+                 and "<ClickOnDesktop>" in self.current
+        clickDesktopButton.set_active (clickDesktopActive)
+        box.pack_start(clickDesktopButton, True, True, 0)
+
         currentMods = ""
         for mod in KeyModifier:
             if "<%s>" % mod in self.current:
@@ -1393,7 +1401,12 @@ class ButtonSetting (EditableActionSetting):
             modifiers = "<%s>" % "><".join (modifiers)
         else: modifiers = ""
 
-        button = "%s%s%s" % (edges, modifiers, button)
+        clickDesktop = ""
+        clickDesktopButtonActive = clickDesktopButton.get_active ()
+        if clickDesktopButtonActive:
+            clickDesktop = "<ClickOnDesktop>"
+
+        button = "%s%s%s%s" % (edges, modifiers, clickDesktop, button)
         button = self.ReorderButtonString (button)
 
         self.ButtonEdited (button)
