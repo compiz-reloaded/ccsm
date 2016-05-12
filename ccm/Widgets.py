@@ -46,6 +46,47 @@ _ = gettext.gettext
 # Try to use gtk like coding style for consistency
 #
 
+class FallbackStack(Gtk.VBox):
+    def __init__(self):
+        Gtk.VBox.__init__(self)
+        self._named_children = {}
+        self._visible_child = None
+
+    def add_named(self, child, name):
+        if name in self._named_children.items():
+            c = self._named_children[name]
+            if c is not child:
+                self.remove(c)
+        self._named_children[name] = child
+        self.pack_start(child, True, True, 0)
+
+    def _show_chosen_child(self):
+        for n, c in self._named_children.items():
+            if n == self._visible_child:
+                c.show_all()
+            else:
+                c.hide()
+
+    def set_visible_child(self, child):
+        for n, c in self._named_children():
+            if c is child:
+                self._visible_child = n
+                c.show_all()
+            else:
+                c.hide()
+
+    def set_visible_child_name(self, name):
+        if name not in self._named_children:
+            return
+        self._visible_child = name
+        self._show_chosen_child()
+
+    def get_visible_child_name(self):
+        return self._visible_child
+
+    def get_visible_child(self):
+        return self._named_children.get(self._visible_child)
+
 class ClearEntry(Gtk.Entry):
     def __init__(self):
         Gtk.Entry.__init__(self)
@@ -1098,6 +1139,7 @@ class MatchButton(Gtk.Button):
             _("Window Name"): 'name',
             _("Window Class"): 'class',
             _("Window Type"): 'type',
+            _("Window State"): 'state',
             _("Window ID"): 'xid',
     }
 
@@ -1124,6 +1166,18 @@ class MatchButton(Gtk.Button):
         self.entry.set_text(value)
         self.entry.activate()
 
+    def get_xprop_list(self, prefix_regexp, item_regexp, list_type, proc = "xprop"):
+        proc = os.popen (proc)
+        output = proc.readlines ()
+        prex = re.compile(prefix_regexp)
+        irex = re.compile(item_regexp)
+        value = []
+        for line in output:
+            if prex.search(line):
+                value = (s.lower().replace("_", "") for s in irex.findall(line))
+                break
+        return value
+
     def get_xprop (self, regexp, proc = "xprop"):
         proc = os.popen (proc)
         output = proc.readlines ()
@@ -1136,6 +1190,18 @@ class MatchButton(Gtk.Button):
                 break
 
         return value
+
+    def change_active_value_widget(self, widget, value_widget):
+        try:
+            prefix = self.prefix[widget.do_get_active_text(widget)]
+        except (AttributeError, NameError, TypeError):
+            prefix = self.prefix[widget.get_active_text()]
+
+        if prefix == 'state':
+            value_widget.set_visible_child_name('list')
+        else:
+            value_widget.set_visible_child_name('non-list')
+
 
     # Regular Expressions taken from beryl-settings
     def grab_value (self, widget, value_widget, type_widget):
@@ -1160,10 +1226,19 @@ class MatchButton(Gtk.Button):
                 value = self.get_xprop("^WM_NAME\(STRING\) = \"([^\"]+)\"")
         elif prefix == "xid" or prefix == "id":
             value = self.get_xprop("^xwininfo: Window id: ([^\s]+)", "xwininfo")
+        elif prefix == "state":
+            value = self.get_xprop_list("^_NET_WM_STATE\(ATOM\) =","_NET_WM_STATE_(\w+)", 'state')
 
-        value_widget.set_text(value)
+        if value_widget.get_visible_child_name() == 'list':
+            w = value_widget.get_visible_child()
+            model = w.get_model()
+            model.clear()
+            for v in value:
+                model.append([v])
+        else:
+            value_widget.get_visible_child().set_text(value)
 
-    def generate_match (self, t, value, relation, invert):
+    def generate_match (self, t, value, relation, invert, wrap_in_parens=False):
         match = ""
         text = self.match
 
@@ -1179,7 +1254,10 @@ class MatchButton(Gtk.Button):
         if invert:
             match = "%s %s !(%s=%s)" % (match, symbol, prefix, value)
         elif len(match) > 0:
-            match = "%s %s %s=%s" % (match, symbol, prefix, value)
+            if wrap_in_parens:
+                match = "%s %s (%s=%s)" % (match, symbol, prefix, value)
+            else:
+                match = "%s %s %s=%s" % (match, symbol, prefix, value)
         else:
             match = "%s=%s" % (prefix, value)
 
@@ -1189,6 +1267,13 @@ class MatchButton(Gtk.Button):
         is_valid = False
         value = entry.get_text()
         if value != "":
+            is_valid = True
+        dialog.set_response_sensitive(Gtk.ResponseType.OK, is_valid)
+
+    def _check_list_value (self, selection, dialog):
+        is_valid = False
+        value = selection.get_selected_rows()
+        if value is not None:
             is_valid = True
         dialog.set_response_sensitive(Gtk.ResponseType.OK, is_valid)
 
@@ -1223,9 +1308,24 @@ class MatchButton(Gtk.Button):
         box.set_spacing (5)
         entry = Gtk.Entry ()
         entry.connect ('changed', self._check_entry_value, dlg)
+        list_model = Gtk.ListStore(str)
+        list_view = Gtk.TreeView(model=list_model)
+        list_view.set_headers_visible(False)
+        column = Gtk.TreeViewColumn(_('Value'), Gtk.CellRendererText(), text=0)
+        list_view.insert_column(column, 0)
+        selection = list_view.get_selection()
+        selection.set_mode(Gtk.SelectionMode.MULTIPLE)
+        selection.connect('changed', self._check_list_value, dlg)
+
+        value_widget = FallbackStack()
+        value_widget.add_named(entry, 'non-list')
+        value_widget.add_named(list_view, 'list')
+        value_widget.set_visible_child_name('non-list')
+        type_chooser.connect('changed', self.change_active_value_widget, value_widget)
+
         button = Gtk.Button (label=_("Grab"))
-        button.connect ('clicked', self.grab_value, entry, type_chooser)
-        box.pack_start (entry, True, True, 0)
+        button.connect ('clicked', self.grab_value, value_widget, type_chooser)
+        box.pack_start (value_widget, True, True, 0)
         box.pack_start (button, False, False, 0)
         rows.append ((label, box))
 
@@ -1251,6 +1351,7 @@ class MatchButton(Gtk.Button):
         dlg.vbox.pack_start (table, True, True, 0)
         dlg.vbox.set_spacing (5)
         dlg.show_all ()
+        value_widget.set_visible_child_name('non-list')
 
         response = dlg.run ()
         dlg.hide ()
@@ -1261,9 +1362,24 @@ class MatchButton(Gtk.Button):
             except (AttributeError, NameError, TypeError):
                 t        = type_chooser.get_active_text ()
                 relation = relation_chooser.get_active_text ()
-            value    = entry.get_text ()
-            invert   = check.get_active ()
-            self.generate_match (t, value, relation, invert)
+            invert  = check.get_active ()
+
+            if value_widget.get_visible_child_name() == 'list':
+                model, paths   = selection.get_selected_rows()
+                values = []
+                for path in paths:
+                    sel_iter = model.get_iter(path)
+                    v = model.get(sel_iter, 0)[0]
+                    if v != "":
+                        values.append(v)
+
+                value = ' & {0}='.format(self.prefix[t]).join(values)
+                wrap_in_parens = True
+            else:
+                value = entry.get_text ()
+                wrap_in_parens = False
+
+            self.generate_match (t, value, relation, invert, wrap_in_parens=wrap_in_parens)
 
         dlg.destroy ()
 
