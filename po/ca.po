@@ -2,47 +2,48 @@
 # Copyright (C) 2007 compiz.org
 # This file is distributed under the same license as the ccsm package.
 # Gustau L. Castells (Karasu) <gustaucastells@gmail.com>, 2007.
+# Robert Antoni Buj Gelonch <rbuj@fedoraproject.org>, 2016.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Compiz Settings Manager 0.5.2\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://github.com/compiz-reloaded/ccsm/issues\n"
 "POT-Creation-Date: 2009-03-24 08:12+0100\n"
-"PO-Revision-Date: 2008-06-28 16:29+0100\n"
-"Last-Translator: Rafa Ramírez <berylog@gmail.com>\n"
-"Language-Team: Catalan <gustaucastells@gmail.com>\n"
+"PO-Revision-Date: 2016-05-17 10:24+0200\n"
+"Last-Translator: Robert Antoni Buj Gelonch <rbuj@fedoraproject.org>\n"
+"Language-Team: Catalan\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Pootle 1.1.0\n"
-"X-Poedit-Language: Catalan\n"
+"X-Generator: Poedit 1.8.7.1\n"
+"Language: ca\n"
 
 #, python-format
 msgid ""
 "The new value for the %(binding)s binding for the action <b>%(action)s</b> "
-"in plugin <b>%(plugin)s</b> conflicts with the action <b>%(action_conflict)"
-"s</b> of the <b>%(plugin_conflict)s</b> plugin.\n"
-"Do you wish to disable <b>%(action_conflict)s</b> in the <b>%"
-"(plugin_conflict)s</b> plugin?"
+"in plugin <b>%(plugin)s</b> conflicts with the action <b>"
+"%(action_conflict)s</b> of the <b>%(plugin_conflict)s</b> plugin.\n"
+"Do you wish to disable <b>%(action_conflict)s</b> in the <b>"
+"%(plugin_conflict)s</b> plugin?"
 msgstr ""
-"El nou valor per la vinculació %(binding)s per a l'acció <b>%(action)s</b> "
-"en el connector <b>%(plugin)s</b> entra en conflicte amb l'acció <b>%"
-"(action_conflict)s</b> del connector <b>%(plugin_conflict)s</b>.\n"
-"Vols desactivar <b>%(action_conflict)s</b> en el connector <b>%"
-"(plugin_conflict)s</b> ?"
+"El valor nou per a la vinculació %(binding)s per a l'acció <b>%(action)s</b> "
+"al connector <b>%(plugin)s</b> entra en conflicte amb l'acció <b>"
+"%(action_conflict)s</b> del connector <b>%(plugin_conflict)s</b>.\n"
+"Voleu inhabilitar <b>%(action_conflict)s</b> al connector <b>"
+"%(plugin_conflict)s</b> ?"
 
 #, python-format
 msgid "Disable %(action_conflict)s"
-msgstr "Desactiva %(action_conflict)s"
+msgstr "Inhabilita %(action_conflict)s"
 
 #, python-format
 msgid "Don't set %(action)s"
-msgstr "No marquis %(action)s"
+msgstr "No estableixis %(action)s"
 
 #, python-format
 msgid "Set %(action)s anyway"
-msgstr "Marca %(action)s de totes maneres"
+msgstr "Estableix %(action)s de totes maneres"
 
 msgid "key"
 msgstr "clau"
@@ -53,24 +54,23 @@ msgstr "botó"
 msgid "edge"
 msgstr "cantonada"
 
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "You are trying to use the feature <b>%(feature)s</b> which is <b>not</b> "
 "provided by any plugin.\n"
 "Do you wish to use this feature anyway?"
 msgstr ""
-"Estàs intentant usar la característica <b>%(feature)s</b> que és "
-"proporcionada per <b>%(plugin)s</b>.\n"
-"Aquest connector està desactivat.\n"
-"Vols activar <b>%(plugin)s</b> per poder usar la característica ?"
+"Esteu intentat d'utilitzar la característica <b>%(feature)s</b> que <b>no</"
+"b> es proporciona amb cap connector.\n"
+"Voleu utilitzar aquesta característica de totes formes?"
 
 #, python-format
 msgid "Use %(feature)s"
-msgstr "Emprar %(feature)s"
+msgstr "Utilitza %(feature)s"
 
 #, python-format
 msgid "Don't use %(feature)s"
-msgstr "No emprar %(feature)s"
+msgstr "No utilitzis %(feature)s"
 
 #, python-format
 msgid ""
@@ -79,52 +79,55 @@ msgid ""
 "This plugin is currently disabled.\n"
 "Do you wish to enable <b>%(plugin)s</b> so the feature is available?"
 msgstr ""
-"Estàs intentant usar la característica <b>%(feature)s</b> que és "
+"Esteu intentant d'utilitzar la característica <b>%(feature)s</b> que és "
 "proporcionada per <b>%(plugin)s</b>.\n"
-"Aquest connector està desactivat.\n"
-"Vols activar <b>%(plugin)s</b> per poder usar la característica ?"
+"Aquest connector actualment està inhabilitat.\n"
+"Voleu habilitar <b>%(plugin)s</b> perquè aquesta característica estigui "
+"disponible?"
 
 #, python-format
 msgid "Enable %(plugin)s"
-msgstr "Activa %(plugin)s"
+msgstr "Habilita %(plugin)s"
 
 #, python-format
 msgid "Don't enable %(feature)s"
-msgstr "No activar %(feature)s"
+msgstr "No habilitis %(feature)s"
 
 #, python-format
 msgid ""
 "Some %(bindings)s bindings of Plugin <b>%(plugin)s</b> conflict with other "
 "plugins. Do you want to resolve these conflicts?"
 msgstr ""
+"Algunes vinculacions %(bindings)s del connector <b>%(plugin)s</b> entren en "
+"conflicte amb altres connectors. Voleu resoldre aquests conflictes?"
 
 msgid "Resolve conflicts"
-msgstr "Resoldre conflictes"
+msgstr "Resol els conflictes"
 
 msgid "Ignore conflicts"
-msgstr "Ignorar conflictes"
+msgstr "Ignora els conflictes"
 
 #, python-format
 msgid ""
 "Plugin <b>%(plugin_conflict)s</b> provides feature <b>%(feature)s</b> which "
 "is also provided by <b>%(plugin)s</b>"
 msgstr ""
-"El connector <b>%(plugin_conflict)s</b> proporciona la característica <b>%"
-"(feature)s</b> que també és proporcionada per <b>%(plugin)s</b>"
+"El connector <b>%(plugin_conflict)s</b> proporciona la característica <b>"
+"%(feature)s</b> que també és proporcionada per <b>%(plugin)s</b>"
 
 #, python-format
 msgid "Disable %(plugin_conflict)s"
-msgstr "Desactiva %(plugin_conflict)s"
+msgstr "Inhabilita %(plugin_conflict)s"
 
 #, python-format
 msgid "Don't enable %(plugin)s"
-msgstr "No activis %(plugin)s"
+msgstr "No habilitis %(plugin)s"
 
 #, python-format
 msgid "Plugin <b>%(plugin_conflict)s</b> conflicts with <b>%(plugin)s</b>."
 msgstr ""
-"El connector <b>%(plugin_conflict)s</b> entra en conflicte amb <b>%(plugin)"
-"s</b>."
+"El connector <b>%(plugin_conflict)s</b> entra en conflicte amb <b>"
+"%(plugin)s</b>."
 
 #, python-format
 msgid ""
@@ -132,12 +135,12 @@ msgid ""
 "the following plugins:\n"
 "%(plugin_list)s"
 msgstr ""
-"<b>%(plugin)s</b> requereix la característica <b>%(feature)s</b> que es "
-"proporcionada pels següents connectors:\n"
+"<b>%(plugin)s</b> requereix la característica <b>%(feature)s</b> que és "
+"proporcionada amb els següents connectors:\n"
 "%(plugin_list)s"
 
 msgid "Enable these plugins"
-msgstr "Activa aquests connectors"
+msgstr "Habilita aquests connectors"
 
 #, python-format
 msgid "<b>%(plugin)s</b> requires the plugin <b>%(require)s</b>."
@@ -145,7 +148,7 @@ msgstr "<b>%(plugin)s</b> requereix el connector <b>%(require)s</b>."
 
 #, python-format
 msgid "Enable %(require)s"
-msgstr "Activa %(require)s"
+msgstr "Habilita %(require)s"
 
 #, python-format
 msgid ""
@@ -153,18 +156,18 @@ msgid ""
 "by the plugins <b>%(plugin_list)s</b>."
 msgstr ""
 "<b>%(plugin)s</b> proporciona la característica <b>%(feature)s</b> que és "
-"requerida per els connectors <b>%(plugin_list)s</b>."
+"requerida pels connectors <b>%(plugin_list)s</b>."
 
 msgid "Disable these plugins"
-msgstr "Desactiva aquests connectors"
+msgstr "Inhabilita aquests connectors"
 
 #, python-format
 msgid "Don't disable %(plugin)s"
-msgstr "No desactivis %(plugin)s"
+msgstr "No inhabilitis %(plugin)s"
 
 #, python-format
 msgid "<b>%(plugin)s</b> is required by the plugins <b>%(plugin_list)s</b>."
-msgstr "<b>%(plugin)s</b> es requerit pels connectors <b>%(plugin_list)s</b>."
+msgstr "<b>%(plugin)s</b> és requerit pels connectors <b>%(plugin_list)s</b>."
 
 msgid "General"
 msgstr "General"
@@ -179,7 +182,7 @@ msgid "Extras"
 msgstr "Extres"
 
 msgid "Window Management"
-msgstr "Gestió de Finestres"
+msgstr "Gestió de les finestres"
 
 msgid "Effects"
 msgstr "Efectes"
@@ -188,56 +191,57 @@ msgid "Image Loading"
 msgstr "Càrrega d'imatges"
 
 msgid "Utility"
-msgstr "Utilitats"
+msgstr "Utilitat"
 
 msgid "All"
 msgstr "Tot"
 
 msgid "Uncategorized"
-msgstr "Sense classificar"
+msgstr "Sense categoria"
 
 msgid "N/A"
-msgstr ""
+msgstr "N/D"
 
 msgid "Reset setting to the default value"
-msgstr "Reseteja al seu valor per defecte"
+msgstr "Restableix l'ajust al valor predeterminat"
 
 msgid "Edit"
-msgstr "Editar"
+msgstr "Edita"
 
 msgid "Multi-list settings. You can double-click a row to edit the values."
 msgstr ""
-"Paràmetres multillista. Pots fer un doble clic a una fila per editar els "
+"Ajusts de llista múltiple. Podeu fer doble clic a una fila per editar els "
 "valors."
 
 #, python-format
 msgid "Edit %s"
-msgstr "Editar %s"
+msgstr "Edita %s"
 
 #, python-format
 msgid "\"%s\" is not a valid shortcut"
 msgstr "\"%s\" no és una drecera vàlida"
 
 msgid "Disabled"
-msgstr "Desactivat"
+msgstr "Inhabilitat"
 
 msgid "Enabled"
-msgstr "Activat"
+msgstr "Habilitat"
 
 msgid "Grab key combination"
-msgstr "Captura combinació de tecles"
+msgstr "Captura la combinació de tecles"
 
 #, python-format
 msgid "\"%s\" is not a valid button"
-msgstr "\"%s\" no es un botó vàlid"
+msgstr "\"%s\" no és un botó vàlid"
 
 #, python-format
 msgid ""
 "Using Button1 without modifiers can prevent any left click and thus break "
 "your configuration. Do you really want to set \"%s\" button to Button1 ?"
 msgstr ""
-"Usar el Botó1 sense modificadors pot prevenir qualsevol clic esquerre i "
-"trencar la configuració. Estàs segur que vols posar el botó \"%s\" al Botó1 ?"
+"L'ús del Botó1 sense cap modificador pot evitar qualsevol clic esquerre i "
+"trencar la configuració. Esteu segur que voleu establir el botó \"%s\" al "
+"Botó1?"
 
 #, python-format
 msgid "\"%s\" is not a valid edge mask"
@@ -249,12 +253,11 @@ msgstr "Cap"
 msgid "CompizConfig Settings Manager"
 msgstr "Editor de la configuració de Compiz"
 
-#, fuzzy
 msgid "Plugin"
-msgstr "Llista de Connectors"
+msgstr "Connector"
 
 msgid "Please press the new key combination"
-msgstr "Pressiona la nova combinació de tecles"
+msgstr "Premeu la nova combinació de tecles"
 
 msgid "Window Title"
 msgstr "Títol de la finestra"
@@ -272,7 +275,7 @@ msgid "Window Type"
 msgstr "Tipus de finestra"
 
 msgid "Window ID"
-msgstr "ID de la finestra"
+msgstr "Id. de la finestra"
 
 msgid "And"
 msgstr "I"
@@ -281,7 +284,7 @@ msgid "Or"
 msgstr "O"
 
 msgid "Edit match"
-msgstr ""
+msgstr "Edita la coincidència"
 
 #. Type
 msgid "Type"
@@ -292,19 +295,18 @@ msgid "Value"
 msgstr "Valor"
 
 msgid "Grab"
-msgstr ""
+msgstr "Captura"
 
 #. Relation
-#, fuzzy
 msgid "Relation"
-msgstr "Integració"
+msgstr "Relació"
 
 #. Invert
 msgid "Invert"
 msgstr "Inverteix"
 
 msgid "Browse..."
-msgstr "Examinar..."
+msgstr "Navega..."
 
 msgid "Images"
 msgstr "Imatges"
@@ -313,41 +315,42 @@ msgid "File"
 msgstr "Fitxer"
 
 msgid "Open directory..."
-msgstr "Obre directori..."
+msgstr "Obre el directori..."
 
 msgid "Open file..."
-msgstr "Obre fitxer..."
+msgstr "Obre el fitxer..."
 
 msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr ""
-"Això es un gestor dels paràmetres pel sistema de configuració del "
-"CompizConfig"
+"Aquest és un gestor d'ajusts per al sistema de configuració CompizConfig."
 
 msgid "translator-credits"
-msgstr "Karasu <gustaucastells@gmail.com>"
+msgstr ""
+"Karasu <gustaucastells@gmail.com>\n"
+"Robert Antoni Buj Gelonch <rbuj@fedoraproject.org>"
 
 msgid "An error has occured"
-msgstr "S'ha donat un error"
+msgstr "S'ha produït un error"
 
 msgid "Warning"
-msgstr "Alerta"
+msgstr "Advertència"
 
 #, python-format
 msgid "Enable %s"
-msgstr "Activa %s"
+msgstr "Habilita %s"
 
 msgid "Filter"
 msgstr "Filtre"
 
 #, python-format
 msgid "Search %s Plugin Options"
-msgstr "Busca opcions del connector %s"
+msgstr "Cerca les opcions del connector %s"
 
 msgid "Use This Plugin"
-msgstr "Usa aquest connector"
+msgstr "Utilitza aquest connector"
 
 msgid "Search Compiz Core Options"
-msgstr "Cerca opcions del nucli del Compiz"
+msgstr "Cerca opcions del nucli de Compiz"
 
 msgid "Error"
 msgstr "Error"
@@ -356,19 +359,21 @@ msgid ""
 "Enter a filter.\n"
 "Click the keyboard image to grab a key for which to search."
 msgstr ""
+"Introduïu un filtre.\n"
+"Fe clic a la imatge del teclat per a capturar una tecla per a cercar-la."
 
 msgid "Search in..."
 msgstr "Cerca a..."
 
 #. Options
 msgid "Short description and name"
-msgstr "Descripció curta i nom"
+msgstr "Descripció breu i nom"
 
 msgid "Long description"
 msgstr "Descripció llarga"
 
 msgid "Settings value"
-msgstr "Valor del paràmetre"
+msgstr "Valors de l'ajust"
 
 msgid "Group"
 msgstr "Grup"
@@ -378,25 +383,25 @@ msgstr "Subgrup"
 
 #. Notebook
 msgid "Settings"
-msgstr "Paràmetres"
+msgstr "Ajusts"
 
 msgid "Loading Advanced Search"
-msgstr "Carregant cerca avançada"
+msgstr "S'està carregant la cerca avançada"
 
 msgid "Add a New Profile"
 msgstr "Afegeix un perfil nou"
 
 msgid "Remove This Profile"
-msgstr "Esborra aquest perfil"
+msgstr "Suprimeix aquest perfil"
 
 msgid "Default"
-msgstr "Defecte"
+msgstr "predeterminat"
 
 msgid "Profile"
 msgstr "Perfil"
 
 msgid "Import"
-msgstr "Importar"
+msgstr "Importa"
 
 msgid "Import a CompizConfig Profile"
 msgstr "Importa un perfil CompizConfig"
@@ -405,19 +410,19 @@ msgid "Import as..."
 msgstr "Importa com..."
 
 msgid "Import a CompizConfig Profile as a new profile"
-msgstr "Importa un perfil CompizConfig com un nou perfil"
+msgstr "Importa un perfil CompizConfig com a un perfil nou"
 
 msgid "Export"
 msgstr "Exporta"
 
 msgid "Export your CompizConfig Profile"
-msgstr "Exporta el teu perfil CompizConfig"
+msgstr "Exporteu el vostre perfil CompizConfig"
 
 msgid "Reset to defaults"
-msgstr "Reseteja als valors per defecte"
+msgstr "Restableix als valors predeterminats"
 
 msgid "Reset your CompizConfig Profile to the global defaults"
-msgstr "Reseteja el teu perfil CompizConfig als valors per defecte"
+msgstr "Restabliu el vostre perfil CompizConfig als valors globals"
 
 msgid "Backend"
 msgstr "Rerefons"
@@ -426,56 +431,61 @@ msgid "Integration"
 msgstr "Integració"
 
 msgid "Enable integration into the desktop environment"
-msgstr "Activa integració amb l'escriptori"
+msgstr "Habilita la integració amb l'escriptori"
 
 msgid "Profiles (*.profile)"
 msgstr "Perfils (*.profile)"
 
 msgid "All files"
-msgstr "Tots els arxius"
+msgstr "Tots els fitxers"
 
 msgid "Save file.."
-msgstr "Guarda arxiu..."
+msgstr "Desa el fitxer..."
 
 msgid "Do you want to skip default option values while exporting your profile?"
 msgstr ""
+"Voleu ometre els valors predeterminats de l'opció mentre s'exporta el vostre "
+"perfil?"
 
 msgid "Open file.."
-msgstr "Obre arxiu..."
+msgstr "Obre el fitxer..."
 
 msgid "Enter a profile name"
-msgstr "Entra un nom del prefil"
+msgstr "Introduïu un nom de perfil"
 
 msgid "Please enter a name for the new profile:"
-msgstr "Entra el nom del nou perfil:"
+msgstr "Introduïu el nom del perfil nou:"
 
 msgid "Backend not found."
-msgstr "No trobo el rerefons."
+msgstr "No s'ha trobat el rerefons."
 
 #. Auto sort
 msgid "Automatic plugin sorting"
 msgstr "Ordenació automàtica dels connectors"
 
 msgid "Disabled Plugins"
-msgstr "Connectors desactivats"
+msgstr "Connectors inhabilitats"
 
 msgid "Enabled Plugins"
-msgstr "Connectors activats"
+msgstr "Connectors habilitats"
 
 msgid ""
 "Do you really want to disable automatic plugin sorting? This will also "
 "disable conflict handling. You should only do this if you know what you are "
 "doing."
 msgstr ""
+"Esteu segur que voleu inhabilitar l'ordenació automàtica dels connectors? "
+"Això també inhabilitarà el tractament dels conflictes. Només ho hauríeu de "
+"fer si sabeu el que feu."
 
 msgid "Add plugin"
-msgstr "Afegeix connector"
+msgstr "Afegeix un connector"
 
 msgid "Plugin name:"
 msgstr "Nom del connector:"
 
 msgid "Insert plugin name"
-msgstr "Inserta el nom del connector"
+msgstr "Insereix el nom del connector"
 
 msgid "Preferences"
 msgstr "Preferències"
@@ -484,8 +494,8 @@ msgid ""
 "Configure the backend, profile and other internal settings used by the "
 "Compiz Configuration System."
 msgstr ""
-"Configura el rerefons, perfil i d'altres paràmetres interns usats pel "
-"Sistema de Configuració del Compiz"
+"Configura el rerefons, el perfil i altres paràmetres interns que s'utilitzen "
+"amb el sistema de configuració de Compiz."
 
 msgid "About"
 msgstr "Quant a"
@@ -494,13 +504,13 @@ msgid "About CCSM..."
 msgstr "Quant a CCSM..."
 
 msgid "Profile & Backend"
-msgstr "Perfils i Rerefons"
+msgstr "Perfils i rerefons"
 
 msgid "Plugin List"
-msgstr "Llista de Connectors"
+msgstr "Llista dels connectors"
 
 msgid "Filter your Plugin list"
-msgstr "Filtra la llista de connectors"
+msgstr "Filtreu la llista dels vostres connectors"
 
 #, python-format
 msgid "Screen %i"
@@ -521,24 +531,9 @@ msgid ""
 "\n"
 " Your filter \"<b>%s</b>\" does not match any items.</span>"
 msgstr ""
-"<span size=\"large\"><b>No s'han trobat coincidències.</b> </span><span>\n"
+"<span size=\"large\"><b>No s'ha trobat cap coincidència.</b> </span><span>\n"
 "\n"
-" El teu filtre \"<b>%s</b>\" no concorda amb cap element.</span>"
+" El vostre filtre \"<b>%s</b>\" no coincideix amb cap element.</span>"
 
 msgid "Configure Compiz with CompizConfig"
 msgstr "Configura Compiz amb CompizConfig"
-
-#~ msgid "Computing possible conflicts, please wait"
-#~ msgstr "Calculant possibles conflictes, esperi"
-
-#~ msgid "Value (%s)"
-#~ msgstr "Valor (%s)"
-
-#~ msgid "Value (%(value)s) for %(setting)s"
-#~ msgstr "Valor (%(value)s) per %(setting)s"
-
-#~ msgid "Unhandled list type %s for %s"
-#~ msgstr "Tipus de llista %s no suportat per %s"
-
-#~ msgid "Actions"
-#~ msgstr "Accions"
