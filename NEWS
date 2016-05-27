@@ -1,14 +1,19 @@
-Release 0.8.12.3.0 (2016-03-29 Wolfgang Ulbrich <chat-to-me@raveit.de)
-======================================================================
+Release 0.8.12.4 (2016-05-27 Sorokin Alexei <sor.alexei@meowr.ru>)
+==================================================================
 COMPIZ-RELOADED
 
-Maintenance release.
+Gtk3: Remove a warning with some file chooser dialogs.
+
+Gtk3: Verify color set for titles to not be equal to bgcolor.
+
+Update Catalan translation.
 
 Release 0.8.12.3 (2016-03-28 Sorokin Alexei <sor.alexei@meowr.ru>)
 ==================================================================
 COMPIZ-RELOADED
 
 Gtk3: Fix icons not loading properly on Gtk 3.16 and older.
+
 Gtk3: Fix high CPU load.
 
 Release 0.8.12.2 (2016-03-24 Sorokin Alexei <sor.alexei@meowr.ru>)
