@@ -1740,7 +1740,7 @@ class PluginWindow(Gtk.ScrolledWindow):
 
     def rebuild_boxes (self, widget, extra=None):
         rect = widget.get_allocation ()
-        ncols = rect.width / 220
+        ncols = (int) (rect.width / 220)
         width = ncols * (220 + 2 * TableX) + 40
         if width > rect.width:
             ncols -= 1

@@ -407,10 +407,10 @@ def GetSettings(group, types=None):
     except (AttributeError, TypeError):
         if types:
             screen = TypeFilter(iter(group.Screens[CurrentScreenNum].values()), types)
-            display = TypeFilter(group.Display.itervalues(), types)
+            display = TypeFilter(group.Display.values(), types)
         else:
             screen = iter(group.Screens[CurrentScreenNum].values())
-            display = group.Display.itervalues()
+            display = group.Display.values()
 
         return itertools.chain(screen, display)
 
