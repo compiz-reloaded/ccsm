@@ -12,10 +12,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: md-ccsm\n"
 "Report-Msgid-Bugs-To: https://github.com/compiz-reloaded/ccsm/issues\n"
-"POT-Creation-Date: 2009-03-24 12:33+0530\n"
+"POT-Creation-Date: 2016-05-31 20:57+0200\n"
 "PO-Revision-Date: 2007-09-24 23:00-0300\n"
 "Last-Translator: Werner Landgraf <werner@copaya.yi.org>\n"
 "Language-Team: Mandingo\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -24,15 +25,15 @@ msgstr ""
 #, python-format
 msgid ""
 "The new value for the %(binding)s binding for the action <b>%(action)s</b> "
-"in plugin <b>%(plugin)s</b> conflicts with the action <b>%(action_conflict)"
-"s</b> of the <b>%(plugin_conflict)s</b> plugin.\n"
-"Do you wish to disable <b>%(action_conflict)s</b> in the <b>%"
-"(plugin_conflict)s</b> plugin?"
+"in plugin <b>%(plugin)s</b> conflicts with the action <b>"
+"%(action_conflict)s</b> of the <b>%(plugin_conflict)s</b> plugin.\n"
+"Do you wish to disable <b>%(action_conflict)s</b> in the <b>"
+"%(plugin_conflict)s</b> plugin?"
 msgstr ""
 "Dorão <b>%(plugin)s</b> -la kêebaarão <b>%(action)s</b> -la da %(binding)s a-"
 "ualita dorão <b>%(plugin_conflict)s</b> -la kêbarão <b>%(action_conflict)s</"
-"b> le ti.Fa i lafita dorão <b>%(plugin_conflict)s</b> -la kêbarão <b>%"
-"(action_conflict)s</b> dubẽna ?"
+"b> le ti.Fa i lafita dorão <b>%(plugin_conflict)s</b> -la kêbarão <b>"
+"%(action_conflict)s</b> dubẽna ?"
 
 #, python-format
 msgid "Disable %(action_conflict)s"
@@ -251,12 +252,18 @@ msgstr "Hanni fẽ"
 msgid "CompizConfig Settings Manager"
 msgstr "CompizConfig compiz -la tillĩdirão leti"
 
+msgid "Clear"
+msgstr ""
+
 #, fuzzy
 msgid "Plugin"
 msgstr "dorãolu"
 
 msgid "Please press the new key combination"
 msgstr "teclado -la butão-lu la kafo mim a-tõbõta,  diki bã !"
+
+msgid "Escape is reserved and cannot be used for keybindings."
+msgstr ""
 
 msgid "Window Title"
 msgstr ""
@@ -354,6 +361,9 @@ msgstr "CompizCore -la tõbõdãolu ñinnĩla ... "
 
 msgid "Error"
 msgstr "tano !"
+
+msgid "Grab Keys"
+msgstr ""
 
 msgid ""
 "Enter a filter.\n"

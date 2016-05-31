@@ -7,21 +7,22 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Compiz Settings Manager 0.5.2\n"
 "Report-Msgid-Bugs-To: https://github.com/compiz-reloaded/ccsm/issues\n"
-"POT-Creation-Date: 2009-03-24 08:12+0100\n"
+"POT-Creation-Date: 2016-05-31 20:57+0200\n"
 "PO-Revision-Date: 2009-03-31 06:10+0700\n"
 "Last-Translator: Mahyuddin Susanto <udienz@unej.ac.id>\n"
 "Language-Team: Indonesian Translator <id@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit"
+"Content-Transfer-Encoding: 8bit\n"
 
 #, python-format
 msgid ""
 "The new value for the %(binding)s binding for the action <b>%(action)s</b> "
-"in plugin <b>%(plugin)s</b> conflicts with the action <b>%(action_conflict)"
-"s</b> of the <b>%(plugin_conflict)s</b> plugin.\n"
-"Do you wish to disable <b>%(action_conflict)s</b> in the <b>%"
-"(plugin_conflict)s</b> plugin?"
+"in plugin <b>%(plugin)s</b> conflicts with the action <b>"
+"%(action_conflict)s</b> of the <b>%(plugin_conflict)s</b> plugin.\n"
+"Do you wish to disable <b>%(action_conflict)s</b> in the <b>"
+"%(plugin_conflict)s</b> plugin?"
 msgstr ""
 
 #, python-format
@@ -100,7 +101,9 @@ msgstr "Abaikan konflik"
 msgid ""
 "Plugin <b>%(plugin_conflict)s</b> provides feature <b>%(feature)s</b> which "
 "is also provided by <b>%(plugin)s</b>"
-msgstr "Plugin <b>%(plugin_conflict)s</b> menyediakan fasilitas <b>%(feature)s</b> yang juga disediakan oleh <b>%(plugin)s</b>"
+msgstr ""
+"Plugin <b>%(plugin_conflict)s</b> menyediakan fasilitas <b>%(feature)s</b> "
+"yang juga disediakan oleh <b>%(plugin)s</b>"
 
 #, python-format
 msgid "Disable %(plugin_conflict)s"
@@ -228,11 +231,17 @@ msgstr "Tidak Ada"
 msgid "CompizConfig Settings Manager"
 msgstr "CompizConfig Settings Manager"
 
+msgid "Clear"
+msgstr ""
+
 msgid "Plugin"
 msgstr "Plugin"
 
 msgid "Please press the new key combination"
 msgstr "Silahkan tekan kombinasi tombol yang baru"
+
+msgid "Escape is reserved and cannot be used for keybindings."
+msgstr ""
 
 msgid "Window Title"
 msgstr "Judul Window"
@@ -326,6 +335,10 @@ msgstr "Cari Opsi Compiz Core"
 
 msgid "Error"
 msgstr "Kesalahan"
+
+#, fuzzy
+msgid "Grab Keys"
+msgstr "Grab"
 
 msgid ""
 "Enter a filter.\n"

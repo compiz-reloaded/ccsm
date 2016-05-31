@@ -7,10 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm\n"
 "Report-Msgid-Bugs-To: https://github.com/compiz-reloaded/ccsm/issues\n"
-"POT-Creation-Date: 2009-03-24 08:12+0100\n"
+"POT-Creation-Date: 2016-05-31 20:57+0200\n"
 "PO-Revision-Date: 2008-01-03 02:28+0100\n"
 "Last-Translator: Mahdee Jameel <mahdee.jameel@gmail.com>\n"
 "Language-Team: gist bengali team <info.gist@cdac.in>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -19,10 +20,10 @@ msgstr ""
 #, python-format
 msgid ""
 "The new value for the %(binding)s binding for the action <b>%(action)s</b> "
-"in plugin <b>%(plugin)s</b> conflicts with the action <b>%(action_conflict)"
-"s</b> of the <b>%(plugin_conflict)s</b> plugin.\n"
-"Do you wish to disable <b>%(action_conflict)s</b> in the <b>%"
-"(plugin_conflict)s</b> plugin?"
+"in plugin <b>%(plugin)s</b> conflicts with the action <b>"
+"%(action_conflict)s</b> of the <b>%(plugin_conflict)s</b> plugin.\n"
+"Do you wish to disable <b>%(action_conflict)s</b> in the <b>"
+"%(plugin_conflict)s</b> plugin?"
 msgstr ""
 "<b>%(plugin)s</b> প্লাগইন এর <b>%(action)s</b> কাজের জন্য নতুন মান %(binding)s "
 "ব্যবহৃত হবে,\n"
@@ -149,8 +150,8 @@ msgid ""
 "<b>%(plugin)s</b> provides the feature <b>%(feature)s</b> which is required "
 "by the plugins <b>%(plugin_list)s</b>."
 msgstr ""
-"<b>%(plugin_list)s</b> প্লাগইন এর জন্য <b>%(feature)s</b> লাগবে, যা <b>%"
-"(plugin)s</b> দিয়ে  করা হয়"
+"<b>%(plugin_list)s</b> প্লাগইন এর জন্য <b>%(feature)s</b> লাগবে, যা <b>"
+"%(plugin)s</b> দিয়ে  করা হয়"
 
 msgid "Disable these plugins"
 msgstr "এই প্লাগইন গুলো নিষ্ক্রীয় করো"
@@ -244,12 +245,18 @@ msgstr "কোনটাই না"
 msgid "CompizConfig Settings Manager"
 msgstr "কমপিজ কনফিগ ব্যবস্থাপক"
 
+msgid "Clear"
+msgstr ""
+
 #, fuzzy
 msgid "Plugin"
 msgstr "প্লাগইন এর তালিকা"
 
 msgid "Please press the new key combination"
 msgstr "নতুন কীগুলো চাপুন"
+
+msgid "Escape is reserved and cannot be used for keybindings."
+msgstr ""
 
 msgid "Window Title"
 msgstr "উইন্ডো শীর্ষ"
@@ -344,6 +351,10 @@ msgstr "কমপিজ কোর এর পছন্দ এর মধ্যে 
 
 msgid "Error"
 msgstr "সমস্যা"
+
+#, fuzzy
+msgid "Grab Keys"
+msgstr "ধরা"
 
 msgid ""
 "Enter a filter.\n"
