@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://github.com/compiz-reloaded/ccsm/issues\n"
 "POT-Creation-Date: 2009-03-24 08:12+0100\n"
-"PO-Revision-Date: 2016-05-17 10:24+0200\n"
+"PO-Revision-Date: 2016-05-31 14:14+0200\n"
 "Last-Translator: Robert Antoni Buj Gelonch <rbuj@fedoraproject.org>\n"
 "Language-Team: Catalan\n"
 "MIME-Version: 1.0\n"
@@ -52,7 +52,7 @@ msgid "button"
 msgstr "botó"
 
 msgid "edge"
-msgstr "cantonada"
+msgstr "vora"
 
 #, python-format
 msgid ""
@@ -219,7 +219,7 @@ msgstr "Edita %s"
 
 #, python-format
 msgid "\"%s\" is not a valid shortcut"
-msgstr "\"%s\" no és una drecera vàlida"
+msgstr "«%s» no és una drecera vàlida"
 
 msgid "Disabled"
 msgstr "Inhabilitat"
@@ -232,7 +232,7 @@ msgstr "Captura la combinació de tecles"
 
 #, python-format
 msgid "\"%s\" is not a valid button"
-msgstr "\"%s\" no és un botó vàlid"
+msgstr "«%s» no és un botó vàlid"
 
 #, python-format
 msgid ""
@@ -240,12 +240,12 @@ msgid ""
 "your configuration. Do you really want to set \"%s\" button to Button1 ?"
 msgstr ""
 "L'ús del Botó1 sense cap modificador pot evitar qualsevol clic esquerre i "
-"trencar la configuració. Esteu segur que voleu establir el botó \"%s\" al "
+"trencar la configuració. Esteu segur que voleu establir el botó «%s» al "
 "Botó1?"
 
 #, python-format
 msgid "\"%s\" is not a valid edge mask"
-msgstr "\"%s\" no és una màscara de vora vàlida"
+msgstr "«%s» no és una màscara de vora vàlida"
 
 msgid "None"
 msgstr "Cap"
@@ -360,7 +360,7 @@ msgid ""
 "Click the keyboard image to grab a key for which to search."
 msgstr ""
 "Introduïu un filtre.\n"
-"Fe clic a la imatge del teclat per a capturar una tecla per a cercar-la."
+"Feu clic a la imatge del teclat per a capturar una tecla per a cercar-la."
 
 msgid "Search in..."
 msgstr "Cerca a..."
