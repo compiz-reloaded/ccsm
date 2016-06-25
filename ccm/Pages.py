@@ -145,7 +145,7 @@ class PluginPage(GenericPage):
         if Gtk.check_version(3, 6, 0) is None:
             context = widget.get_style_context ()
             context.save()
-            context.add_class(Gtk.STYLE_CLASS_BACKGROUND)
+            context.add_class(Gtk.STYLE_CLASS_VIEW)
             bgColor = context.get_background_color(context.get_state())
             context.set_state(Gtk.StateFlags.SELECTED)
             for state in (Gtk.StateFlags.NORMAL, Gtk.StateFlags.PRELIGHT, Gtk.StateFlags.ACTIVE):
@@ -434,7 +434,7 @@ class FilterPage(GenericPage):
         if Gtk.check_version(3, 6, 0) is None:
             context = widget.get_style_context ()
             context.save()
-            context.add_class(Gtk.STYLE_CLASS_BACKGROUND)
+            context.add_class(Gtk.STYLE_CLASS_VIEW)
             bgColor = context.get_background_color(context.get_state())
             context.set_state(Gtk.StateFlags.SELECTED)
             for state in (Gtk.StateFlags.NORMAL, Gtk.StateFlags.PRELIGHT, Gtk.StateFlags.ACTIVE):
@@ -800,7 +800,7 @@ class ProfileBackendPage(object):
         if Gtk.check_version(3, 6, 0) is None:
             context = widget.get_style_context ()
             context.save()
-            context.add_class(Gtk.STYLE_CLASS_BACKGROUND)
+            context.add_class(Gtk.STYLE_CLASS_VIEW)
             bgColor = context.get_background_color(context.get_state())
             context.set_state(Gtk.StateFlags.SELECTED)
             for state in (Gtk.StateFlags.NORMAL, Gtk.StateFlags.PRELIGHT, Gtk.StateFlags.ACTIVE):
@@ -1279,7 +1279,7 @@ class PreferencesPage(GenericPage):
         if Gtk.check_version(3, 6, 0) is None:
             context = widget.get_style_context ()
             context.save()
-            context.add_class(Gtk.STYLE_CLASS_BACKGROUND)
+            context.add_class(Gtk.STYLE_CLASS_VIEW)
             bgColor = context.get_background_color(context.get_state())
             context.set_state(Gtk.StateFlags.SELECTED)
             for state in (Gtk.StateFlags.NORMAL, Gtk.StateFlags.PRELIGHT, Gtk.StateFlags.ACTIVE):
@@ -1436,7 +1436,7 @@ class MainPage(object):
         if Gtk.check_version(3, 6, 0) is None:
             context = widget.get_style_context ()
             context.save()
-            context.add_class(Gtk.STYLE_CLASS_BACKGROUND)
+            context.add_class(Gtk.STYLE_CLASS_VIEW)
             bgColor = context.get_background_color(context.get_state())
             context.set_state(Gtk.StateFlags.SELECTED)
             for state in (Gtk.StateFlags.NORMAL, Gtk.StateFlags.PRELIGHT, Gtk.StateFlags.ACTIVE):
