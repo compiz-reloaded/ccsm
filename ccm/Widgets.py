@@ -1125,6 +1125,157 @@ class KeyGrabber (Gtk.Button):
             label = _("Disabled")
         Gtk.Button.set_label (self, label)
 
+class WindowStateSelector (Gtk.DrawingArea):
+
+    __gsignals__    = {"added" : (GObject.SignalFlags.RUN_FIRST,
+                                  None, [GObject.TYPE_STRING]),
+                       "removed" : (GObject.SignalFlags.RUN_FIRST,
+                                    None, [GObject.TYPE_STRING])}
+
+    _current = []
+
+    _base_surface   = None
+    _surface        = None
+
+    _x0     = 0
+    _y0     = 12
+    _width  = 100
+    _height = 50
+
+    _font   = "Sans 12 Bold"
+
+    def __init__ (self, states):
+        '''Prepare widget'''
+        super (WindowStateSelector, self).__init__ ()
+        modifier = "%s/modifier.png" % PixmapDir
+        self._base_surface = cairo.ImageSurface.create_from_png(modifier)
+
+        self.add_events (Gdk.EventMask.BUTTON_PRESS_MASK)
+        if Gtk.check_version (3, 0, 0) is None:
+            self.connect ("draw", self.draw_event)
+        else:
+            self.connect ("expose_event", self.draw_event)
+        self.connect ("button_press_event", self.button_press)
+
+        self.set_size_request (400, 220)
+        x0, y0, width, height = self._x0, self._y0, self._width, self._height
+
+        self._states = {
+            "modal"            : (x0            , y0),
+            "sticky"           : (x0 + width    , y0),
+            "maxvert"          : (x0 + width * 2, y0),
+            "maxhorz"          : (x0 + width * 3, y0),
+
+            "shaded"           : (x0            , y0 + height),
+            "skiptaskbar"      : (x0 + width    , y0 + height),
+            "skippager"        : (x0 + width * 2, y0 + height),
+            "hidden"           : (x0 + width * 3, y0 + height),
+
+            "fullscreen"       : (x0            , y0 + height * 2),
+            "above"            : (x0 + width    , y0 + height * 2),
+            "below"            : (x0 + width * 2, y0 + height * 2),
+            "demandsattention" : (x0 + width * 3, y0 + height * 2),
+        }
+
+        self._names = {
+            "demandsattention" : "urgent",
+        }
+
+    def set_current(self, value):
+        self._current = value
+        self.redraw (queue = True)
+
+    def get_current (self):
+        return self._current
+    current = property (get_current, set_current)
+
+    def draw (self, cr, width, height):
+        '''The actual drawing function'''
+        for mod in self._states:
+            x, y = self._states[mod]
+            if mod in self._names: text = self._names[mod]
+            else: text = mod
+            cr.set_source_surface (self._base_surface, x, y)
+            cr.rectangle (x, y, self._width, self._height)
+            cr.fill_preserve ()
+            if mod in self._current:
+                cr.set_source_rgb (0.3, 0.3, 0.3)
+                self.write (cr, x + 23, y + 15, text)
+                cr.set_source_rgb (0.5, 1, 0)
+            else:
+                cr.set_source_rgb (0, 0, 0)
+            self.write (cr, x + 22, y + 14, text)
+
+    def write (self, cr, x, y, text):
+        cr.move_to (x, y)
+        markup = '''<span font_desc="%s">%s</span>''' % (self._font, text)
+        layout = PangoCairo.create_layout (cr)
+        try:
+            layout.set_markup (markup)
+        except (AttributeError, TypeError):
+            layout.set_markup (markup, -1)
+        PangoCairo.show_layout (cr, layout)
+
+    def redraw (self, queue = False):
+        '''Redraw internal surface'''
+        alloc = self.get_allocation ()
+        # Prepare drawing surface
+        width, height = alloc.width, alloc.height
+        self._surface = cairo.ImageSurface (cairo.FORMAT_ARGB32, width, height)
+        cr = cairo.Context (self._surface)
+        # Clear
+        cr.set_operator (cairo.OPERATOR_CLEAR)
+        cr.paint ()
+        cr.set_operator (cairo.OPERATOR_OVER)
+        # Draw
+        self.draw (cr, alloc.width, alloc.height)
+        # Queue expose event if required
+        if queue:
+            self.queue_draw ()
+
+    def draw_event (self, widget, data):
+        '''Draw event handler'''
+        if Gtk.check_version(3, 0, 0) is None:
+            parent_cr = data
+        else:
+            event = data
+        cr = self.get_window().cairo_create ()
+        if not self._surface:
+            self.redraw ()
+        cr.set_source_surface (self._surface)
+        if Gtk.check_version (3, 0, 0) is None:
+            cr.rectangle (*parent_cr.copy_clip_rectangle_list ()[0])
+        else:
+            cr.rectangle (event.area.x, event.area.y,
+                          event.area.width, event.area.height)
+        cr.clip ()
+        cr.paint ()
+        return False
+
+    def in_rect (self, x, y, x0, y0, x1, y1):
+        return x >= x0 and y >= y0 and x <= x1 and y <= y1
+
+    def button_press (self, widget, event):
+        x, y = event.x, event.y
+        stt = ""
+
+        for state in self._states:
+            x0, y0 = self._states[state]
+            if self.in_rect (x, y, x0, y0,
+                             x0 + self._width, y0 + self._height):
+                stt = state
+                break
+
+        if not len (stt):
+            return
+        if stt in self._current:
+            self._current.remove (stt)
+            self.emit ("removed", stt)
+        else:
+            self._current.append (stt)
+            self.emit ("added", stt)
+        self.redraw (queue = True)
+
 # Match Button
 #
 class MatchButton(Gtk.Button):
@@ -1231,10 +1382,7 @@ class MatchButton(Gtk.Button):
 
         if value_widget.get_visible_child_name() == 'list':
             w = value_widget.get_visible_child()
-            model = w.get_model()
-            model.clear()
-            for v in value:
-                model.append([v])
+            w.set_current(list(value))
         else:
             value_widget.get_visible_child().set_text(value)
 
@@ -1270,10 +1418,10 @@ class MatchButton(Gtk.Button):
             is_valid = True
         dialog.set_response_sensitive(Gtk.ResponseType.OK, is_valid)
 
-    def _check_list_value (self, selection, dialog):
+    def _check_list_value (self, widget, item, dialog):
         is_valid = False
-        value = selection.get_selected_rows()
-        if value is not None:
+        value = widget.current
+        if value:
             is_valid = True
         dialog.set_response_sensitive(Gtk.ResponseType.OK, is_valid)
 
@@ -1308,14 +1456,9 @@ class MatchButton(Gtk.Button):
         box.set_spacing (5)
         entry = Gtk.Entry ()
         entry.connect ('changed', self._check_entry_value, dlg)
-        list_model = Gtk.ListStore(str)
-        list_view = Gtk.TreeView(model=list_model)
-        list_view.set_headers_visible(False)
-        column = Gtk.TreeViewColumn(_('Value'), Gtk.CellRendererText(), text=0)
-        list_view.insert_column(column, 0)
-        selection = list_view.get_selection()
-        selection.set_mode(Gtk.SelectionMode.MULTIPLE)
-        selection.connect('changed', self._check_list_value, dlg)
+        list_view = WindowStateSelector([])
+        list_view.connect('added', self._check_list_value, dlg)
+        list_view.connect('removed', self._check_list_value, dlg)
 
         value_widget = FallbackStack()
         value_widget.add_named(entry, 'non-list')
@@ -1365,14 +1508,7 @@ class MatchButton(Gtk.Button):
             invert  = check.get_active ()
 
             if value_widget.get_visible_child_name() == 'list':
-                model, paths   = selection.get_selected_rows()
-                values = []
-                for path in paths:
-                    sel_iter = model.get_iter(path)
-                    v = model.get(sel_iter, 0)[0]
-                    if v != "":
-                        values.append(v)
-
+                values = value_widget.get_visible_child().current
                 value = ' & {0}='.format(self.prefix[t]).join(values)
                 wrap_in_parens = True
             else:
