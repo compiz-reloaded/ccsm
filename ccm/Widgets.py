@@ -23,7 +23,7 @@
 # Copyright (C) 2007 Quinn Storm
 
 from gi.repository import GObject, GLib, Gtk
-from gi.repository import Gdk, GdkPixbuf, PangoCairo
+from gi.repository import Gdk, GdkPixbuf, PangoCairo, Rsvg
 import cairo
 from math import pi, sqrt
 import time
@@ -1139,25 +1139,26 @@ class WindowStateSelector (Gtk.DrawingArea):
 
     _x0     = 0
     _y0     = 12
-    _width  = 100
-    _height = 50
+    _width  = 36
+    _height = 36
 
     _font   = "Sans 12 Bold"
 
     def __init__ (self, states):
         '''Prepare widget'''
         super (WindowStateSelector, self).__init__ ()
-        modifier = "%s/modifier.png" % PixmapDir
-        self._base_surface = cairo.ImageSurface.create_from_png(modifier)
 
         self.add_events (Gdk.EventMask.BUTTON_PRESS_MASK)
+        self.add_events (Gdk.EventMask.POINTER_MOTION_MASK)
+
         if Gtk.check_version (3, 0, 0) is None:
             self.connect ("draw", self.draw_event)
         else:
             self.connect ("expose_event", self.draw_event)
         self.connect ("button_press_event", self.button_press)
+        self.connect ("motion_notify_event", self.region_tooltip)
 
-        self.set_size_request (400, 220)
+        self.set_size_request (self._width*4, self._height*3+20)
         x0, y0, width, height = self._x0, self._y0, self._width, self._height
 
         self._states = {
@@ -1178,8 +1179,13 @@ class WindowStateSelector (Gtk.DrawingArea):
         }
 
         self._names = {
-            "demandsattention" : "urgent",
+            "demandsattention": _("urgent"),
+            "hidden": _("minimized"),
         }
+
+        self._src_pixbufs = {}
+        for state in self._states:
+            self._src_pixbufs[state] = Rsvg.Handle.new_from_file("%s/ccsm-%s.svg" % (PixmapDir, state))
 
     def set_current(self, value):
         self._current = value
@@ -1191,30 +1197,31 @@ class WindowStateSelector (Gtk.DrawingArea):
 
     def draw (self, cr, width, height):
         '''The actual drawing function'''
-        for mod in self._states:
-            x, y = self._states[mod]
-            if mod in self._names: text = self._names[mod]
-            else: text = mod
-            cr.set_source_surface (self._base_surface, x, y)
-            cr.rectangle (x, y, self._width, self._height)
-            cr.fill_preserve ()
-            if mod in self._current:
-                cr.set_source_rgb (0.3, 0.3, 0.3)
-                self.write (cr, x + 23, y + 15, text)
-                cr.set_source_rgb (0.5, 1, 0)
-            else:
-                cr.set_source_rgb (0, 0, 0)
-            self.write (cr, x + 22, y + 14, text)
+        for stt in self._states:
+            x, y = self._states[stt]
+            icon = self._src_pixbufs[stt]
 
-    def write (self, cr, x, y, text):
-        cr.move_to (x, y)
-        markup = '''<span font_desc="%s">%s</span>''' % (self._font, text)
-        layout = PangoCairo.create_layout (cr)
-        try:
-            layout.set_markup (markup)
-        except (AttributeError, TypeError):
-            layout.set_markup (markup, -1)
-        PangoCairo.show_layout (cr, layout)
+            if stt in self._names: text = self._names[stt]
+            else: text = stt
+
+            cr.push_group()
+            cr.translate(x, y)
+            cr.scale((self._width + .0)/icon.get_property('width'), (self._height + .0)/icon.get_property('height'))
+            icon.render_cairo(cr)
+            src = cr.pop_group()
+
+            current_state = stt in self._current
+
+            if current_state:
+                cr.set_source_rgb(0, 0.5, 0.5)
+                cr.rectangle(x, y, self._width, self._height)
+                cr.fill()
+
+            if current_state:
+                cr.set_source_rgb(0.5, 1, 0)
+            else:
+                cr.set_source_rgb(1, 1, 0)
+            cr.mask(src)
 
     def redraw (self, queue = False):
         '''Redraw internal surface'''
@@ -1275,6 +1282,19 @@ class WindowStateSelector (Gtk.DrawingArea):
             self._current.append (stt)
             self.emit ("added", stt)
         self.redraw (queue = True)
+
+    def region_tooltip (self, widget, event):
+        x, y = event.x, event.y
+        stt = ""
+
+        for state in self._states:
+            x0, y0 = self._states[state]
+            if self.in_rect (x, y, x0, y0,
+                             x0 + self._width, y0 + self._height):
+                stt = state
+                break
+
+        self.set_tooltip_markup(_(stt))
 
 # Match Button
 #
