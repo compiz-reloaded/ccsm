@@ -60,13 +60,22 @@ class ClearEntry(Gtk.Entry):
 # Cell Renderer for MultiList
 
 class CellRendererColor(Gtk.CellRenderer):
-    __gproperties__ = {
-        'text': (GObject.TYPE_STRING,
-                'color markup text',
-                'The color as markup like this: #rrrrggggbbbbaaaa',
-                '#0000000000000000',
-                GObject.PARAM_READWRITE)
-    }
+    if GLib.check_version(2, 42, 0) is None:
+        __gproperties__ = {
+            'text': (GObject.TYPE_STRING,
+                    'color markup text',
+                    'The color as markup like this: #rrrrggggbbbbaaaa',
+                    '#0000000000000000',
+                    GObject.ParamFlags.READWRITE)
+        }
+    else:
+        __gproperties__ = {
+            'text': (GObject.TYPE_STRING,
+                    'color markup text',
+                    'The color as markup like this: #rrrrggggbbbbaaaa',
+                    '#0000000000000000',
+                    GObject.PARAM_READWRITE)
+       }
 
     _text  = '#0000000000000000'
     _color = [0, 0, 0, 0]
