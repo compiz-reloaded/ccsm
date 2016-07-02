@@ -1223,9 +1223,6 @@ class WindowStateSelector (Gtk.DrawingArea):
             selBgColor = (selBgColor.red/65535.0, selBgColor.green/65535.0, selBgColor.blue/65535.0, 1)
             selFgColor = (selFgColor.red/65535.0, selFgColor.green/65535.0, selFgColor.blue/65535.0, 1)
 
-        print("def colors:", bgColor, fgColor)
-        print("sel colors:", selBgColor, selFgColor)
-
         for stt in self._states:
             x, y = self._states[stt]
             icon = self._src_pixbufs[stt]
