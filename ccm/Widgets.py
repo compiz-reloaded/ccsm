@@ -1197,6 +1197,34 @@ class WindowStateSelector (Gtk.DrawingArea):
 
     def draw (self, cr, width, height):
         '''The actual drawing function'''
+
+        if Gtk.check_version(3, 6, 0) is None:
+            context = self.get_style_context ()
+            context.save()
+            context.add_class(Gtk.STYLE_CLASS_VIEW)
+
+            bgColor = context.get_background_color(context.get_state())
+            fgColor = context.get_color(context.get_state())
+
+            context.set_state(Gtk.StateFlags.SELECTED)
+            selBgColor = context.get_background_color(context.get_state())
+            selFgColor = context.get_color(context.get_state())
+
+            context.restore()
+        else:
+            bgColor = self.get_style().lookup_color('bg_color')[1]
+            fgColor = self.get_style().lookup_color('fg_color')[1]
+            selBgColor = self.get_style().lookup_color('selected_bg_color')[1]
+            selFgColor = self.get_style().lookup_color('selected_fg_color')[1]
+
+            bgColor = (bgColor.red/65535.0, bgColor.green/65535.0, bgColor.blue/65535.0, 1)
+            fgColor = (fgColor.red/65535.0, fgColor.green/65535.0, fgColor.blue/65535.0, 1)
+            selBgColor = (selBgColor.red/65535.0, selBgColor.green/65535.0, selBgColor.blue/65535.0, 1)
+            selFgColor = (selFgColor.red/65535.0, selFgColor.green/65535.0, selFgColor.blue/65535.0, 1)
+
+        print("def colors:", bgColor, fgColor)
+        print("sel colors:", selBgColor, selFgColor)
+
         for stt in self._states:
             x, y = self._states[stt]
             icon = self._src_pixbufs[stt]
@@ -1213,14 +1241,14 @@ class WindowStateSelector (Gtk.DrawingArea):
             current_state = stt in self._current
 
             if current_state:
-                cr.set_source_rgb(0, 0.5, 0.5)
+                cr.set_source_rgba(*selBgColor)
                 cr.rectangle(x, y, self._width, self._height)
                 cr.fill()
 
             if current_state:
-                cr.set_source_rgb(0.5, 1, 0)
+                cr.set_source_rgba(*selFgColor)
             else:
-                cr.set_source_rgb(1, 1, 0)
+                cr.set_source_rgba(*fgColor)
             cr.mask(src)
 
     def redraw (self, queue = False):
