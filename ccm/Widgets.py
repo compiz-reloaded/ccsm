@@ -25,6 +25,7 @@
 from gi.repository import GObject, GLib, Gtk
 from gi.repository import Gdk, GdkPixbuf, PangoCairo, Rsvg
 import cairo
+from collections import OrderedDict
 from math import pi, sqrt
 import time
 import re
@@ -1332,20 +1333,20 @@ class MatchButton(Gtk.Button):
                                     None,
                                     [GObject.TYPE_STRING])}
 
-    prefix = {\
-            _("Window Title"): 'title',
-            _("Window Role"): 'role',
-            _("Window Name"): 'name',
-            _("Window Class"): 'class',
-            _("Window Type"): 'type',
-            _("Window State"): 'state',
-            _("Window ID"): 'xid',
-    }
+    prefix = OrderedDict([
+            (_("Window Title"), 'title'),
+            (_("Window Role"), 'role'),
+            (_("Window Name"), 'name'),
+            (_("Window Class"), 'class'),
+            (_("Window Type"), 'type'),
+            (_("Window State"), 'state'),
+            (_("Window ID"), 'xid'),
+    ])
 
-    symbols = {\
-            _("And"): '&',
-            _("Or"): '|'
-    }
+    symbols = OrderedDict([
+            (_("And"), '&'),
+            (_("Or"), '|'),
+    ])
 
     match   = None
 
