@@ -1325,7 +1325,7 @@ class MatchButton(Gtk.Button):
         value = []
         for line in output:
             if prex.search(line):
-                value = (s.lower().replace("_", "") for s in irex.findall(line))
+                value = (s.lower().replace("_", "").replace("maximized", "max") for s in irex.findall(line))
                 break
         return value
 
