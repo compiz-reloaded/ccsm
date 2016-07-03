@@ -1163,25 +1163,20 @@ class WindowStateSelector (Gtk.DrawingArea):
         x0, y0, width, height = self._x0, self._y0, self._width, self._height
 
         self._states = {
-            "modal"            : (x0            , y0),
-            "sticky"           : (x0 + width    , y0),
-            "maxvert"          : (x0 + width * 2, y0),
-            "maxhorz"          : (x0 + width * 3, y0),
+            "modal"            : (x0            , y0, _("modal")),
+            "sticky"           : (x0 + width    , y0, _("sticky")),
+            "maxvert"          : (x0 + width * 2, y0, _("max vert")),
+            "maxhorz"          : (x0 + width * 3, y0, _("max horz")),
 
-            "shaded"           : (x0            , y0 + height),
-            "skiptaskbar"      : (x0 + width    , y0 + height),
-            "skippager"        : (x0 + width * 2, y0 + height),
-            "hidden"           : (x0 + width * 3, y0 + height),
+            "shaded"           : (x0            , y0 + height, _("shaded")),
+            "skiptaskbar"      : (x0 + width    , y0 + height, _("skip taskbar")),
+            "skippager"        : (x0 + width * 2, y0 + height, _("skip pager")),
+            "hidden"           : (x0 + width * 3, y0 + height, _("hidden")),
 
-            "fullscreen"       : (x0            , y0 + height * 2),
-            "above"            : (x0 + width    , y0 + height * 2),
-            "below"            : (x0 + width * 2, y0 + height * 2),
-            "demandsattention" : (x0 + width * 3, y0 + height * 2),
-        }
-
-        self._names = {
-            "demandsattention": _("urgent"),
-            "hidden": _("minimized"),
+            "fullscreen"       : (x0            , y0 + height * 2, _("fullscreen")),
+            "above"            : (x0 + width    , y0 + height * 2, _("above")),
+            "below"            : (x0 + width * 2, y0 + height * 2, _("below")),
+            "demandsattention" : (x0 + width * 3, y0 + height * 2, _("urgent")),
         }
 
         self._src_pixbufs = {}
@@ -1224,11 +1219,8 @@ class WindowStateSelector (Gtk.DrawingArea):
             selFgColor = (selFgColor.red/65535.0, selFgColor.green/65535.0, selFgColor.blue/65535.0, 1)
 
         for stt in self._states:
-            x, y = self._states[stt]
+            x, y, _ = self._states[stt]
             icon = self._src_pixbufs[stt]
-
-            if stt in self._names: text = self._names[stt]
-            else: text = stt
 
             cr.push_group()
             cr.translate(x, y)
@@ -1293,7 +1285,7 @@ class WindowStateSelector (Gtk.DrawingArea):
         stt = ""
 
         for state in self._states:
-            x0, y0 = self._states[state]
+            x0, y0, _ = self._states[state]
             if self.in_rect (x, y, x0, y0,
                              x0 + self._width, y0 + self._height):
                 stt = state
@@ -1311,16 +1303,16 @@ class WindowStateSelector (Gtk.DrawingArea):
 
     def region_tooltip (self, widget, event):
         x, y = event.x, event.y
-        stt = ""
+        stt_tip = ""
 
         for state in self._states:
-            x0, y0 = self._states[state]
+            x0, y0, tt = self._states[state]
             if self.in_rect (x, y, x0, y0,
                              x0 + self._width, y0 + self._height):
-                stt = state
+                stt_tip = tt
                 break
 
-        self.set_tooltip_markup(_(stt))
+        self.set_tooltip_markup(stt_tip)
 
 # Match Button
 #
