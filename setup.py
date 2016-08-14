@@ -134,6 +134,10 @@ cmd = "intltool-merge -d -u po/ ccsm.desktop.in ccsm.desktop".split(" ")
 proc = subprocess.Popen(cmd)
 proc.wait()
 
+cmd = "intltool-merge -x -u po/ ccsm.appdata.xml.in ccsm.appdata.xml".split(" ")
+proc = subprocess.Popen(cmd)
+proc.wait()
+
 custom_images = []
 
 data_files = [
