@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://github.com/compiz-reloaded/ccsm/issues\n"
-"POT-Creation-Date: 2016-05-31 20:57+0200\n"
-"PO-Revision-Date: 2016-05-31 21:04+0200\n"
+"POT-Creation-Date: 2016-08-20 12:13+0200\n"
+"PO-Revision-Date: 2016-08-20 14:43+0200\n"
 "Last-Translator: Robert Antoni Buj Gelonch <rbuj@fedoraproject.org>\n"
 "Language-Team: Catalan\n"
 "Language: ca\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 1.8.8\n"
 
 #, python-format
 msgid ""
@@ -254,7 +254,7 @@ msgid "CompizConfig Settings Manager"
 msgstr "Editor de la configuració de Compiz"
 
 msgid "Clear"
-msgstr ""
+msgstr "Neteja"
 
 msgid "Plugin"
 msgstr "Connector"
@@ -266,6 +266,42 @@ msgid "Escape is reserved and cannot be used for keybindings."
 msgstr ""
 "La tecla Esc està reservada i no es pot utilitzar per a les vinculacions de "
 "tecles."
+
+msgid "modal"
+msgstr "modal"
+
+msgid "sticky"
+msgstr "apegalós"
+
+msgid "max vert"
+msgstr "màx vert"
+
+msgid "max horz"
+msgstr "màx horit"
+
+msgid "shaded"
+msgstr "ombrejat"
+
+msgid "skip taskbar"
+msgstr "omet la barra de tasques"
+
+msgid "skip pager"
+msgstr "omet el paginador"
+
+msgid "hidden"
+msgstr "ocult"
+
+msgid "fullscreen"
+msgstr "Pantalla completa"
+
+msgid "above"
+msgstr "per sobre"
+
+msgid "below"
+msgstr "per sota"
+
+msgid "urgent"
+msgstr "urgent"
 
 msgid "Window Title"
 msgstr "Títol de la finestra"
@@ -281,6 +317,9 @@ msgstr "Classe de la finestra"
 
 msgid "Window Type"
 msgstr "Tipus de finestra"
+
+msgid "Window State"
+msgstr "Estat de la finestra"
 
 msgid "Window ID"
 msgstr "Id. de la finestra"
@@ -397,7 +436,7 @@ msgid "Settings"
 msgstr "Ajusts"
 
 msgid "Loading Advanced Search"
-msgstr "S'està carregant la cerca avançada"
+msgstr "Càrrega de la cerca avançada"
 
 msgid "Add a New Profile"
 msgstr "Afegeix un perfil nou"
