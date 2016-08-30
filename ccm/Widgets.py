@@ -1199,36 +1199,40 @@ class WindowStateSelector (Gtk.DrawingArea):
             context.save()
             context.add_class(Gtk.STYLE_CLASS_VIEW)
 
-            bgColor = context.get_background_color(context.get_state())
-            fgColor = context.get_color(context.get_state())
+            bgColor = tuple(context.get_background_color(context.get_state()))
+            fgColor = tuple(context.get_color(context.get_state()))
 
             context.set_state(Gtk.StateFlags.SELECTED)
-            selBgColor = context.get_background_color(context.get_state())
-            selFgColor = context.get_color(context.get_state())
-            if selFgColor.alpha == 0.0:
-                selFgColor = (fgColor.red * 1.2, fgColor.green * 1.2, fgColor.blue * 1.2, 1/65535.0)
-            if selBgColor.alpha == 0.0:
-                selBgColor = (bgColor.red * 1.2, bgColor.green * 1.2, bgColor.blue * 1.2, 1)
+            selBgColor = tuple(context.get_background_color(context.get_state()))
+            selFgColor = tuple(context.get_color(context.get_state()))
+            if selFgColor[3] == 0.0:
+                selFgColor = (fgColor[0] * 1.2, fgColor[1] * 1.2, fgColor[2] * 1.2, 1.0)
+            if selBgColor[3] == 0.0:
+                selBgColor = (bgColor[0] * 1.2, bgColor[1] * 1.2, bgColor[2] * 1.2, 1.0)
 
             context.restore()
         else:
-            bgColor = self.get_style().lookup_color('bg_color')[1]
-            fgColor = self.get_style().lookup_color('fg_color')[1]
-            validBg, selBgColor = self.get_style().lookup_color('selected_bg_color')
-            validFg, selFgColor = self.get_style().lookup_color('selected_fg_color')
+            validBg, bgGdkColor = self.get_style().lookup_color('bg_color')
+            validFg, fgGdkColor = self.get_style().lookup_color('fg_color')
+            validSelBg, selBgGdkColor = self.get_style().lookup_color('selected_bg_color')
+            validSelFg, selFgGdkColor = self.get_style().lookup_color('selected_fg_color')
 
-            bgRGBA = (bgColor.red / 65535.0, bgColor.green / 65535.0, bgColor.blue / 65535.0, 1)
-            fgRGBA = (fgColor.red / 65535.0, fgColor.green / 65535.0, fgColor.blue / 65535.0, 1)
+            bgColor = (bgGdkColor.red / 65535.0, bgGdkColor.green / 65535.0, bgGdkColor.blue / 65535.0, 1.0)
+            fgColor = (fgGdkColor.red / 65535.0, fgGdkColor.green / 65535.0, fgGdkColor.blue / 65535.0, 1.0)
 
-            if validBg:
-                selBgRGBA = (selBgColor.red / 65535.0, selBgColor.green / 65535.0, selBgColor.blue / 65535.0, 1)
+            if validSelBg:
+                selBgColor = (selBgColor.red / 65535.0, selBgGdkColor.green / 65535.0, selBgGdkColor.blue / 65535.0, 1.0)
+            elif validBg:
+                selBgColor = (bgColor[0] * 1.2, bgColor[1] * 1.2, bgColor[2] * 1.2, bgColor[3])
             else:
-                selBgRGBA = (bgColor.red * 1.2 / 65535.0, bgColor.green * 1.2 / 65535.0, bgColor.blue * 1.2 / 65535.0, 1)
+                selBgColor = (0.65, 0.65, 0.65, 1.0)
 
-            if validFg:
-                selFgRGBA = (selFgColor.red / 65535.0, selFgColor.green / 65535.0, selFgColor.blue / 65535.0, 1)
+            if validSelFg:
+                selFgColor = (selFgGdkColor.red / 65535.0, selFgGdkColor.green / 65535.0, selFgGdkColor.blue / 65535.0, 1.0)
+            elif validFg:
+                selBgColor = (fgColor[0] * 1.2, fgColor[1] * 1.2, fgColor[2] * 1.2, fgColor[3])
             else:
-                selFgRGBA = (fgColor.red * 1.2 / 65535.0, fgColor.green * 1.2 / 65535.0, fgColor.blue * 1.2 / 65535.0, 1)
+                selFgColor = (0.0, 0.0, 0.0, 1.0)
 
         for stt in self._states:
             x, y, _ = self._states[stt]
@@ -1243,14 +1247,14 @@ class WindowStateSelector (Gtk.DrawingArea):
             current_state = stt in self._current
 
             if current_state:
-                cr.set_source_rgba(*selBgRGBA)
+                cr.set_source_rgba(*selBgColor)
                 cr.rectangle(x, y, self._width, self._height)
                 cr.fill()
 
             if current_state:
-                cr.set_source_rgba(*selFgRGBA)
+                cr.set_source_rgba(*selFgColor)
             else:
-                cr.set_source_rgba(*fgRGBA)
+                cr.set_source_rgba(*fgColor)
             cr.mask(src)
 
     def redraw (self, queue = False):
