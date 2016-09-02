@@ -475,14 +475,16 @@ class ModifierSelector (Gtk.DrawingArea):
         else:
             self.connect ("expose_event", self.draw_event)
         self.connect ("button_press_event", self.button_press)
-        self.set_size_request (200, 120)
+        self.set_size_request (200, 3 * (self._height + 10))
 
         x0, y0, width, height = self._x0, self._y0, self._width, self._height
         self._modifiers = {
             "Shift"     : (x0, y0),
             "Control"   : (x0, y0 + height),
             "Super"     : (x0 + width, y0),
-            "Alt"       : (x0 + width, y0 + height)
+            "Alt"       : (x0 + width, y0 + height),
+            "Meta"      : (x0, y0 + 2 * height),
+            "Hyper"     : (x0 + width, y0 + 2 * height)
         }
 
         self._names = {
