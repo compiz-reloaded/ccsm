@@ -76,7 +76,10 @@ class MainWin(Gtk.Window):
             self.MainPage.ToggleCategory(None, categoryName)
 
     def Quit(self, *args):
-        Gtk.main_quit()
+        if Gtk.check_version(3, 6, 0) is None:
+            self.get_application().quit()
+        else:
+            Gtk.main_quit()
 
     def SetPage(self, page):
         if page == self.CurrentPage:
