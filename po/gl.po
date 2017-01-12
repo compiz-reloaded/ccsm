@@ -1,19 +1,18 @@
-# translation of ccsm.po to Galician
-# Translation of CCSM to gl_ES
-# Copyright (C) 2007 compiz.org
+# Galician translation for ccsm
+# Copyright (C) 2007 launchpad.net/compiz
 # This file is distributed under the same license as the ccsm package.
-#
 # Festor Wailon Dacoba <festor90@gmail.com>, 2007.
 # Fran Diéguez (GLUG) <fran.dieguez@glug.es>, 2007.
-# Fran Diéguez  <fran dot dieguez at glug dot es>, 2007.
+# Fran Diéguez <fran dot dieguez at glug dot es>, 2007.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: ccsm\n"
 "Report-Msgid-Bugs-To: https://github.com/compiz-reloaded/ccsm/issues\n"
-"POT-Creation-Date: 2016-05-31 20:57+0200\n"
+"POT-Creation-Date: 2017-01-12 18:19+0300\n"
 "PO-Revision-Date: 2009-05-24 18:40+0200\n"
 "Last-Translator: Fran Diéguez Souto <fran.dieguez@glug.es>\n"
-"Language-Team: Galician <en@li.org>\n"
+"Language-Team: Galician <gl@li.org>\n"
 "Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -268,6 +267,43 @@ msgstr "Prema unha nova combinación de teclas"
 msgid "Escape is reserved and cannot be used for keybindings."
 msgstr ""
 
+msgid "modal"
+msgstr ""
+
+msgid "sticky"
+msgstr ""
+
+msgid "max vert"
+msgstr ""
+
+msgid "max horz"
+msgstr ""
+
+msgid "shaded"
+msgstr ""
+
+msgid "skip taskbar"
+msgstr ""
+
+msgid "skip pager"
+msgstr ""
+
+msgid "hidden"
+msgstr ""
+
+#, fuzzy
+msgid "fullscreen"
+msgstr "Pantallla"
+
+msgid "above"
+msgstr ""
+
+msgid "below"
+msgstr ""
+
+msgid "urgent"
+msgstr ""
+
 msgid "Window Title"
 msgstr "Título da xanela"
 
@@ -282,6 +318,10 @@ msgstr "Clase da xanela"
 
 msgid "Window Type"
 msgstr "Tipo de xanela"
+
+#, fuzzy
+msgid "Window State"
+msgstr "Nome da xanela"
 
 msgid "Window ID"
 msgstr "ID da xanela"

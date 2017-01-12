@@ -1,4 +1,4 @@
-# Swedish translation for ccsm.
+# Swedish translation for ccsm
 # Copyright (C) 2007 Free Software Foundation, Inc.
 # This file is distributed under the same license as the ccsm package.
 # Daniel Nylander <po@danielnylander.se>, 2007.
@@ -8,17 +8,16 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: compiz-fusion-plugins 0.0.1\n"
+"Project-Id-Version: compiz\n"
 "Report-Msgid-Bugs-To: https://github.com/compiz-reloaded/ccsm/issues\n"
-"POT-Creation-Date: 2016-05-31 20:57+0200\n"
+"POT-Creation-Date: 2017-01-12 18:19+0300\n"
 "PO-Revision-Date: 2008-12-07 18:22+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
-"Language-Team: Compiz Fusion Translators <i18n@lists.compiz-fusion.org>\n"
-"Language: \n"
+"Language-Team: Swedish <sv@li.org>\n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Pootle 1.1.0\n"
 
 #, python-format
 msgid ""
@@ -266,6 +265,43 @@ msgstr "Tryck den nya tangentkombinationen"
 msgid "Escape is reserved and cannot be used for keybindings."
 msgstr ""
 
+msgid "modal"
+msgstr ""
+
+msgid "sticky"
+msgstr ""
+
+msgid "max vert"
+msgstr ""
+
+msgid "max horz"
+msgstr ""
+
+msgid "shaded"
+msgstr ""
+
+msgid "skip taskbar"
+msgstr ""
+
+msgid "skip pager"
+msgstr ""
+
+msgid "hidden"
+msgstr ""
+
+#, fuzzy
+msgid "fullscreen"
+msgstr "Skärm"
+
+msgid "above"
+msgstr ""
+
+msgid "below"
+msgstr ""
+
+msgid "urgent"
+msgstr ""
+
 msgid "Window Title"
 msgstr "Fönstertitel"
 
@@ -282,6 +318,11 @@ msgstr "Fönsterklass"
 
 msgid "Window Type"
 msgstr "Fönstertyp"
+
+# Ersatte "Fönsterhantering" med "Fönsternamn"
+#, fuzzy
+msgid "Window State"
+msgstr "Fönsternamn"
 
 msgid "Window ID"
 msgstr "Fönster-ID"

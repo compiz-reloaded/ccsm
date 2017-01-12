@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/compiz-reloaded/ccsm/issues\n"
-"POT-Creation-Date: 2016-05-31 20:57+0200\n"
+"POT-Creation-Date: 2017-01-12 18:19+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -234,6 +233,42 @@ msgstr ""
 msgid "Escape is reserved and cannot be used for keybindings."
 msgstr ""
 
+msgid "modal"
+msgstr ""
+
+msgid "sticky"
+msgstr ""
+
+msgid "max vert"
+msgstr ""
+
+msgid "max horz"
+msgstr ""
+
+msgid "shaded"
+msgstr ""
+
+msgid "skip taskbar"
+msgstr ""
+
+msgid "skip pager"
+msgstr ""
+
+msgid "hidden"
+msgstr ""
+
+msgid "fullscreen"
+msgstr ""
+
+msgid "above"
+msgstr ""
+
+msgid "below"
+msgstr ""
+
+msgid "urgent"
+msgstr ""
+
 msgid "Window Title"
 msgstr ""
 
@@ -247,6 +282,9 @@ msgid "Window Class"
 msgstr ""
 
 msgid "Window Type"
+msgstr ""
+
+msgid "Window State"
 msgstr ""
 
 msgid "Window ID"

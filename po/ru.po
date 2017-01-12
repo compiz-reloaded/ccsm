@@ -1,14 +1,14 @@
-# translation of ccsm_new.po to Russian
+# Russian translation for ccsm
+# Copyright (C) 2007 launchpad.net/compiz
+# This file is distributed under the same license as the ccsm package.
 # Denis Rakhmangulov <danfocus@gmail.com>, 2007.
 # Dimitriy Ryazantcev <DJm00n@mail.ru>, 2008.
-# Translation of CCSM to ru
-# Copyright (C) 2007 compiz.org
-# This file is distributed under the same license as the ccsm package.
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: ccsm_new\n"
+"Project-Id-Version: ccsm\n"
 "Report-Msgid-Bugs-To: https://github.com/compiz-reloaded/ccsm/issues\n"
-"POT-Creation-Date: 2016-05-31 20:57+0200\n"
+"POT-Creation-Date: 2017-01-12 18:19+0300\n"
 "PO-Revision-Date: 2009-03-10 21:37+0100\n"
 "Last-Translator: Denis Rakhmangulov <danfocus@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
@@ -18,9 +18,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Pootle 1.1.0\n"
-"X-Poedit-Language: Russian\n"
-"X-Poedit-Country: RUSSIAN FEDERATION\n"
 
 #, python-format
 msgid ""
@@ -254,7 +251,7 @@ msgid "CompizConfig Settings Manager"
 msgstr "Менеджер настройки CompizConfig"
 
 msgid "Clear"
-msgstr ""
+msgstr "Очистить"
 
 msgid "Plugin"
 msgstr "Модуль"
@@ -263,6 +260,42 @@ msgid "Please press the new key combination"
 msgstr "Пожалуйста, нажмите новую комбинацию клавиш"
 
 msgid "Escape is reserved and cannot be used for keybindings."
+msgstr "Escape зарезервирован, его нельзя использовать для комбинаций клавиш"
+
+msgid "modal"
+msgstr ""
+
+msgid "sticky"
+msgstr ""
+
+msgid "max vert"
+msgstr ""
+
+msgid "max horz"
+msgstr ""
+
+msgid "shaded"
+msgstr ""
+
+msgid "skip taskbar"
+msgstr ""
+
+msgid "skip pager"
+msgstr ""
+
+msgid "hidden"
+msgstr ""
+
+msgid "fullscreen"
+msgstr ""
+
+msgid "above"
+msgstr ""
+
+msgid "below"
+msgstr ""
+
+msgid "urgent"
 msgstr ""
 
 msgid "Window Title"
@@ -279,6 +312,9 @@ msgstr "Класс окна"
 
 msgid "Window Type"
 msgstr "Тип окна"
+
+msgid "Window State"
+msgstr "Состояние окна"
 
 msgid "Window ID"
 msgstr "ID окна"
@@ -361,9 +397,8 @@ msgstr "Искать опции Compiz Core"
 msgid "Error"
 msgstr "Ошибка"
 
-#, fuzzy
 msgid "Grab Keys"
-msgstr "Считать"
+msgstr "Захват клавиш"
 
 msgid ""
 "Enter a filter.\n"

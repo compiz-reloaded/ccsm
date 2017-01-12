@@ -1,33 +1,32 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Malayalam (India) translation for ccsm
+# Copyright (C) 2009 The Free Software Foundation, Inc.
+# This file is distributed under the same license as the ccsm package.
+# Jesse P Francis <atjesse2@gmail.com>, 2009.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: ccsm\n"
 "Report-Msgid-Bugs-To: https://github.com/compiz-reloaded/ccsm/issues\n"
-"POT-Creation-Date: 2009-03-24 08:12+0100\n"
+"POT-Creation-Date: 2017-01-12 18:19+0300\n"
 "PO-Revision-Date: 2009-04-10 13:32+0200\n"
 "Last-Translator: Jesse P Francis <atjesse2@gmail.com>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language-Team: Malayalam (India) <ml_IN@li.org>\n"
+"Language: ml_IN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Pootle 1.1.0\n"
 
 #, python-format
 msgid ""
 "The new value for the %(binding)s binding for the action <b>%(action)s</b> "
-"in plugin <b>%(plugin)s</b> conflicts with the action <b>%(action_conflict)"
-"s</b> of the <b>%(plugin_conflict)s</b> plugin.\n"
-"Do you wish to disable <b>%(action_conflict)s</b> in the <b>%"
-"(plugin_conflict)s</b> plugin?"
+"in plugin <b>%(plugin)s</b> conflicts with the action <b>"
+"%(action_conflict)s</b> of the <b>%(plugin_conflict)s</b> plugin.\n"
+"Do you wish to disable <b>%(action_conflict)s</b> in the <b>"
+"%(plugin_conflict)s</b> plugin?"
 msgstr ""
-"<b>%(plugin)s</b> എന്ന പ്ലഗിനിലെ <b>%(action)s</b> എന്ന നടപടിയുടെ "
-"%(binding)s എന്ന ബൈന്‍ഡിങ്ങിന്റെ പുതിയ മൂല്യം <b>%(plugin_conflict)s</b> "
-"എന്ന പ്ലഗിനിലെ <b>%(action_conflict)s</b> എന്ന നടപടിയുമായി "
-"പൊരുത്തപ്പെടുന്നില്ല.\n"
+"<b>%(plugin)s</b> എന്ന പ്ലഗിനിലെ <b>%(action)s</b> എന്ന നടപടിയുടെ %(binding)s "
+"എന്ന ബൈന്‍ഡിങ്ങിന്റെ പുതിയ മൂല്യം <b>%(plugin_conflict)s</b> എന്ന പ്ലഗിനിലെ <b>"
+"%(action_conflict)s</b> എന്ന നടപടിയുമായി പൊരുത്തപ്പെടുന്നില്ല.\n"
 " <b>%(plugin_conflict)s</b> എന്ന പ്ലഗിനിലെ <b>%(action_conflict)s</b> എന്ന "
 "നടപടി അപ്രാവര്‍ത്തികമാക്കണോ?"
 
@@ -58,8 +57,8 @@ msgid ""
 "provided by any plugin.\n"
 "Do you wish to use this feature anyway?"
 msgstr ""
-"ഒരു പ്ലഗിനും <b>നല്‍കാത്ത</b> <b>%(feature)s</b> എന്ന വിശേഷത നിങ്ങള്‍ "
-"ഉപയോഗിക്കാന്‍ ശ്രമിക്കുന്നു.\n"
+"ഒരു പ്ലഗിനും <b>നല്‍കാത്ത</b> <b>%(feature)s</b> എന്ന വിശേഷത നിങ്ങള്‍ ഉപയോഗിക്കാന്‍ "
+"ശ്രമിക്കുന്നു.\n"
 "ഈ വിശേഷത എന്താണെങ്കിലും ഉപയോഗിക്കണോ?"
 
 #, python-format
@@ -77,11 +76,10 @@ msgid ""
 "This plugin is currently disabled.\n"
 "Do you wish to enable <b>%(plugin)s</b> so the feature is available?"
 msgstr ""
-"<b>%(plugin)s</b> എന്ന പ്ലഗിന്‍ നല്‍കുന്ന <b>%(feature)s</b> എന്ന വിശേഷത "
-"നിങ്ങള്‍ ഉപയോഗിക്കാന്‍ ശ്രമിക്കുന്നു.\n"
+"<b>%(plugin)s</b> എന്ന പ്ലഗിന്‍ നല്‍കുന്ന <b>%(feature)s</b> എന്ന വിശേഷത നിങ്ങള്‍ "
+"ഉപയോഗിക്കാന്‍ ശ്രമിക്കുന്നു.\n"
 "ഈ പ്ലഗിന്‍ ഇപ്പോള്‍ അപ്രാവര്‍ത്തികമാണു്.\n"
-"ഈ വിശേഷത ലഭ്യമാക്കാനായി <b>%(plugin)s</b> എന്ന പ്ലഗിന്‍ "
-"പ്രാവര്‍ത്തികമാക്കണോ?"
+"ഈ വിശേഷത ലഭ്യമാക്കാനായി <b>%(plugin)s</b> എന്ന പ്ലഗിന്‍ പ്രാവര്‍ത്തികമാക്കണോ?"
 
 #, python-format
 msgid "Enable %(plugin)s"
@@ -96,8 +94,8 @@ msgid ""
 "Some %(bindings)s bindings of Plugin <b>%(plugin)s</b> conflict with other "
 "plugins. Do you want to resolve these conflicts?"
 msgstr ""
-"<b>%(plugin)s</b> എന്ന പ്ലഗിനിന്റെ ചില %(bindings)s ബൈന്‍ഡിങ്ങുകള്‍ വേറെ "
-"പ്ലഗിനുകളുമായി പൊരുത്തപ്പെടുന്നില്ല. ഈ പൊരുത്തക്കേടുകള്‍ പരിഹരിക്കണോ?"
+"<b>%(plugin)s</b> എന്ന പ്ലഗിനിന്റെ ചില %(bindings)s ബൈന്‍ഡിങ്ങുകള്‍ വേറെ പ്ലഗിനുകളുമായി "
+"പൊരുത്തപ്പെടുന്നില്ല. ഈ പൊരുത്തക്കേടുകള്‍ പരിഹരിക്കണോ?"
 
 msgid "Resolve conflicts"
 msgstr "പൊരുത്തക്കേടുകള്‍ പരിഹരിക്കുക"
@@ -110,8 +108,8 @@ msgid ""
 "Plugin <b>%(plugin_conflict)s</b> provides feature <b>%(feature)s</b> which "
 "is also provided by <b>%(plugin)s</b>"
 msgstr ""
-"<b>%(plugin_conflict)s</b> എന്ന പ്ലഗിന്‍ നല്‍കുന്ന <b>%(feature)s</b> എന്ന "
-"വിശേഷത <b>%(plugin)s</b> -ഉം നല്‍കുന്നു."
+"<b>%(plugin_conflict)s</b> എന്ന പ്ലഗിന്‍ നല്‍കുന്ന <b>%(feature)s</b> എന്ന വിശേഷത <b>"
+"%(plugin)s</b> -ഉം നല്‍കുന്നു."
 
 #, python-format
 msgid "Disable %(plugin_conflict)s"
@@ -133,8 +131,8 @@ msgid ""
 "the following plugins:\n"
 "%(plugin_list)s"
 msgstr ""
-"<b>%(plugin)s</b> എന്നതിനു് <b>%(feature)s</b> എന്ന വിശേഷത(കള്‍) "
-"ആവശ്യമുണ്ടു്, ഇനിപ്പറയുന്ന പ്ലഗിനുകള്‍ അവ നല്‍കുന്നു:\n"
+"<b>%(plugin)s</b> എന്നതിനു് <b>%(feature)s</b> എന്ന വിശേഷത(കള്‍) ആവശ്യമുണ്ടു്, "
+"ഇനിപ്പറയുന്ന പ്ലഗിനുകള്‍ അവ നല്‍കുന്നു:\n"
 "%(plugin_list)s"
 
 msgid "Enable these plugins"
@@ -142,8 +140,7 @@ msgstr "ഈ പ്ലഗിനുകള്‍ പ്രാവര്‍ത്ത�
 
 #, python-format
 msgid "<b>%(plugin)s</b> requires the plugin <b>%(require)s</b>."
-msgstr ""
-"<b>%(plugin)s</b> എന്നതിനു് <b>%(require)s</b> എന്ന പ്ലഗിന്‍ ആവശ്യമുണ്ടു്."
+msgstr "<b>%(plugin)s</b> എന്നതിനു് <b>%(require)s</b> എന്ന പ്ലഗിന്‍ ആവശ്യമുണ്ടു്."
 
 #, python-format
 msgid "Enable %(require)s"
@@ -154,8 +151,8 @@ msgid ""
 "<b>%(plugin)s</b> provides the feature <b>%(feature)s</b> which is required "
 "by the plugins <b>%(plugin_list)s</b>."
 msgstr ""
-"<b>%(plugin)s</b> എന്നതു്‌ <b>%(feature)s</b> എന്ന വിശേഷത നല്‍കുന്നു, അതു് "
-"<b>%(plugin_list)s</b> എന്നീ പ്ലഗിനുകള്‍ക്കാവശ്യമുണ്ടു്."
+"<b>%(plugin)s</b> എന്നതു്‌ <b>%(feature)s</b> എന്ന വിശേഷത നല്‍കുന്നു, അതു് <b>"
+"%(plugin_list)s</b> എന്നീ പ്ലഗിനുകള്‍ക്കാവശ്യമുണ്ടു്."
 
 msgid "Disable these plugins"
 msgstr "ഈ പ്ലഗിനുകള്‍ അപ്രാവര്‍ത്തികമാക്കുക"
@@ -166,9 +163,7 @@ msgstr "%(plugin)s എന്നതു് അപ്രാവര്‍ത്തി
 
 #, python-format
 msgid "<b>%(plugin)s</b> is required by the plugins <b>%(plugin_list)s</b>."
-msgstr ""
-"<b>%(plugin)s</b> എന്നതു് <b>%(plugin_list)s</b> എന്നീ "
-"പ്ലഗിനുകള്‍ക്കാവശ്യമുണ്ടു്."
+msgstr "<b>%(plugin)s</b> എന്നതു് <b>%(plugin_list)s</b> എന്നീ പ്ലഗിനുകള്‍ക്കാവശ്യമുണ്ടു്."
 
 msgid "General"
 msgstr "പൊതുവായതു്"
@@ -249,11 +244,53 @@ msgstr "ഒന്നുമില്ല"
 msgid "CompizConfig Settings Manager"
 msgstr ""
 
+msgid "Clear"
+msgstr ""
+
 msgid "Plugin"
 msgstr "പ്ലഗ്ഗിന്‍"
 
 msgid "Please press the new key combination"
 msgstr "പുതിയ കീ കോമ്പിനേഷന്‍ അമര്‍ത്തുക"
+
+msgid "Escape is reserved and cannot be used for keybindings."
+msgstr ""
+
+msgid "modal"
+msgstr ""
+
+msgid "sticky"
+msgstr ""
+
+msgid "max vert"
+msgstr ""
+
+msgid "max horz"
+msgstr ""
+
+msgid "shaded"
+msgstr ""
+
+msgid "skip taskbar"
+msgstr ""
+
+msgid "skip pager"
+msgstr ""
+
+msgid "hidden"
+msgstr ""
+
+msgid "fullscreen"
+msgstr ""
+
+msgid "above"
+msgstr ""
+
+msgid "below"
+msgstr ""
+
+msgid "urgent"
+msgstr ""
 
 msgid "Window Title"
 msgstr "വിന്‍ഡോ തലക്കെട്ട്"
@@ -269,6 +306,10 @@ msgstr ""
 
 msgid "Window Type"
 msgstr ""
+
+#, fuzzy
+msgid "Window State"
+msgstr "വിന്‍ഡോ തലക്കെട്ട്"
 
 msgid "Window ID"
 msgstr ""
@@ -348,6 +389,9 @@ msgstr ""
 #, fuzzy
 msgid "Error"
 msgstr "പിഴവ്"
+
+msgid "Grab Keys"
+msgstr ""
 
 msgid ""
 "Enter a filter.\n"

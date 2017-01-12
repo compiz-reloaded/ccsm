@@ -1,22 +1,21 @@
-# translation of ccsm.po to Arabic
-# OsamaKhalid <osamak.wfm@gmail.com>, 2009.
-# ccsm ar translation.
-# Copyright (C) 2007 compiz.org
+# Arabic translation for ccsm
+# Copyright (C) 2007 launchpad.net/compiz
 # This file is distributed under the same license as the ccsm package.
-# 2007, Banxoo <banxoo+ar@gmail.com>
+# Banxoo <banxoo+ar@gmail.com>, 2007.
+# OsamaKhalid <osamak.wfm@gmail.com>, 2009.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: ccsm\n"
 "Report-Msgid-Bugs-To: https://github.com/compiz-reloaded/ccsm/issues\n"
-"POT-Creation-Date: 2016-05-31 20:57+0200\n"
+"POT-Creation-Date: 2017-01-12 18:19+0300\n"
 "PO-Revision-Date: 2009-02-06 20:36+0300\n"
 "Last-Translator: OsamaKhalid <osamak.wfm@gmail.com>\n"
-"Language-Team: Arabic\n"
-"Language: \n"
+"Language-Team: Arabic <ar@li.org>\n"
+"Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.4\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
@@ -257,6 +256,43 @@ msgstr "من فضلك أدخل تجميعة المفاتيح الجديدة"
 msgid "Escape is reserved and cannot be used for keybindings."
 msgstr ""
 
+msgid "modal"
+msgstr ""
+
+msgid "sticky"
+msgstr ""
+
+msgid "max vert"
+msgstr ""
+
+msgid "max horz"
+msgstr ""
+
+msgid "shaded"
+msgstr ""
+
+msgid "skip taskbar"
+msgstr ""
+
+msgid "skip pager"
+msgstr ""
+
+msgid "hidden"
+msgstr ""
+
+#, fuzzy
+msgid "fullscreen"
+msgstr "شاشة"
+
+msgid "above"
+msgstr ""
+
+msgid "below"
+msgstr ""
+
+msgid "urgent"
+msgstr ""
+
 msgid "Window Title"
 msgstr "عنوان النافذة"
 
@@ -271,6 +307,10 @@ msgstr "فئة النافذة"
 
 msgid "Window Type"
 msgstr "نوع النافذة"
+
+#, fuzzy
+msgid "Window State"
+msgstr "اسم النافذة"
 
 msgid "Window ID"
 msgstr "هوية النافذة"

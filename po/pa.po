@@ -1,23 +1,22 @@
-# translation of ccsm.po to Punjabi
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-#
+# Punjabi translation for ccsm
+# Copyright (C) 2007 The Free Software Foundation, Inc.
+# This file is distributed under the same license as the ccsm package.
 # A S Alam <apbrar@gmail.com>, 2007.
 # Amanpreet Singh Alam <aalam@users.sf.net>, 2007.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: ccsm\n"
 "Report-Msgid-Bugs-To: https://github.com/compiz-reloaded/ccsm/issues\n"
-"POT-Creation-Date: 2016-05-31 20:57+0200\n"
+"POT-Creation-Date: 2017-01-12 18:19+0300\n"
 "PO-Revision-Date: 2008-11-11 19:50+0100\n"
 "Last-Translator: amandeep singh <singh.amandeep87@gmail.com>\n"
 "Language-Team: Punjabi/Panjabi <punjabi-users@llist.sf.net>\n"
-"Language: \n"
+"Language: pa\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Pootle 1.1.0\n"
 
 #, python-format
 msgid ""
@@ -257,6 +256,43 @@ msgstr "ਨਵੇਂ ਸਵਿੱਚ ਸੰਯੋਗ ਲਈ ਦੱਬੋ ਜੀ"
 msgid "Escape is reserved and cannot be used for keybindings."
 msgstr ""
 
+msgid "modal"
+msgstr ""
+
+msgid "sticky"
+msgstr ""
+
+msgid "max vert"
+msgstr ""
+
+msgid "max horz"
+msgstr ""
+
+msgid "shaded"
+msgstr ""
+
+msgid "skip taskbar"
+msgstr ""
+
+msgid "skip pager"
+msgstr ""
+
+msgid "hidden"
+msgstr ""
+
+#, fuzzy
+msgid "fullscreen"
+msgstr "ਸਕਰੀਨ"
+
+msgid "above"
+msgstr ""
+
+msgid "below"
+msgstr ""
+
+msgid "urgent"
+msgstr ""
+
 msgid "Window Title"
 msgstr "ਵਿੰਡੋ ਟਾਇਟਲ"
 
@@ -271,6 +307,10 @@ msgstr "ਵਿੰਡੋ ਕਲਾਸ"
 
 msgid "Window Type"
 msgstr "ਵਿੰਡੋ ਟਾਇਪ"
+
+#, fuzzy
+msgid "Window State"
+msgstr "ਵਿੰਡੋ ਨਾਂ"
 
 msgid "Window ID"
 msgstr "ਵਿੰਡੋ ID"
