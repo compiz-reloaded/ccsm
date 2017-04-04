@@ -1221,9 +1221,11 @@ class WindowStateSelector (Gtk.DrawingArea):
 
             bgColor = (bgGdkColor.red / 65535.0, bgGdkColor.green / 65535.0, bgGdkColor.blue / 65535.0, 1.0)
             fgColor = (fgGdkColor.red / 65535.0, fgGdkColor.green / 65535.0, fgGdkColor.blue / 65535.0, 1.0)
+            selBgColor = (selBgGdkColor.red / 65535.0, selBgGdkColor.green / 65535.0, selBgGdkColor.blue / 65535.0, 1.0)
+            selFgColor = (selFgGdkColor.red / 65535.0, selFgGdkColor.green / 65535.0, selFgGdkColor.blue / 65535.0, 1.0)
 
             if validSelBg:
-                selBgColor = (selBgColor.red / 65535.0, selBgGdkColor.green / 65535.0, selBgGdkColor.blue / 65535.0, 1.0)
+                selBgColor = (selBgGdkColor.red / 65535.0, selBgGdkColor.green / 65535.0, selBgGdkColor.blue / 65535.0, 1.0)
             elif validBg:
                 selBgColor = (bgColor[0] * 1.2, bgColor[1] * 1.2, bgColor[2] * 1.2, bgColor[3])
             else:
