@@ -50,12 +50,30 @@ def gtk_process_events ():
     while Gtk.events_pending ():
         Gtk.main_iteration ()
 
-def getScreens():
+# Current Screen
+#
+try:
+    CurrentScreenNum = Gdk.Display.get_default().get_default_screen().get_screen_number()
+except (AttributeError, TypeError):
+    CurrentScreenNum = Gdk.Screen.get_default().get_number()
+
+def get_screens():
     screens = []
+    nScreens = CurrentScreenNum + 1
     display = Gdk.Display.get_default()
-    nScreens = display.get_n_screens()
-    for i in range(nScreens):
-        screens.append(i)
+    if Gtk.check_version(3, 10, 0) is None:
+        try:
+            import Xlib.display
+            Gdk.error_trap_push()
+            xdisplay = Xlib.display.Display(display.get_name())
+            nScreens = xdisplay.screen_count()
+            Gdk.error_trap_pop_ignored()
+        except ImportError:
+            pass
+    else:
+        nScreens = display.get_n_screens()
+    for s in range(nScreens):
+        screens.append(s)
     return screens
 
 def protect_markup_dict (dict_):

@@ -23,13 +23,6 @@
 
 from gi.repository import Gtk, Gdk
 
-# Current Screen
-#
-try:
-    CurrentScreenNum = Gdk.Display.get_default().get_default_screen().get_number()
-except (AttributeError, TypeError):
-    CurrentScreenNum = Gdk.Screen.get_default().get_number()
-
 # Settings Table
 #
 TableDef = Gtk.AttachOptions.FILL | Gtk.AttachOptions.EXPAND

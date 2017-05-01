@@ -1328,14 +1328,15 @@ class MainPage(object):
         self.filterEntry = filterEntry
 
         # Screens
-        if len(getScreens()) > 1:
+        if len(get_screens()) > 1:
             screenBox = Gtk.ComboBoxText.new()
-            for screen in getScreens():
+            for screen in get_screens():
                 screenBox.append_text(_("Screen %i") % screen)
             name = self.Context.CurrentBackend.Name
             screenBox.set_active(CurrentScreenNum)
             screenBox.connect("changed", self.ScreenChanged)
             screenLabel = Label()
+            screenLabel.props.xalign = 0.1
             screenLabel.set_markup(HeaderMarkup % (_("Screen")))
             if Gtk.check_version(3, 16, 0) is None:
                 screenLabel.connect("style-updated", self.HeaderStyleUpdate)
