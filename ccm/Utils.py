@@ -150,13 +150,11 @@ class SizedButton (Gtk.Button):
             self.set_size_request (self.minWidth, self.minHeight)
         else:
             self.connect ("size-request", self.adjust_size)
-            self.connect ("size-allocate", self.adjust_size)
 
-    def adjust_size (self, widget, rect):
-        width, height = rect.width, rect.height
-        newWidth = max (width, self.minWidth)
-        newHeight = max (height, self.minHeight)
-        self.set_size_request (newWidth, newHeight)
+    if Gtk.check_version(3, 0, 0) is not None:
+        def adjust_size (self, widget, rect):
+            rect.width = max (rect.width, self.minWidth)
+            rect.height = max (rect.height, self.minHeight)
 
 class PrettyButton (Gtk.Button):
 

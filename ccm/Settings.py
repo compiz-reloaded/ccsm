@@ -1006,9 +1006,6 @@ class EditableActionSetting (StockSetting):
 
     def _Init (self, widget, action):
         StockSetting._Init(self)
-        alignment = Gtk.Alignment.new (0, 0.5, 0, 0)
-        alignment.add (widget)
-
         self.Label.set_size_request(-1, -1)
 
         editButton = Gtk.Button ()
@@ -1021,7 +1018,7 @@ class EditableActionSetting (StockSetting):
         self.Box.pack_start (action, False, False, 0)
         self.Box.reorder_child (action, 0)
         self.Box.pack_end (editButton, False, False, 0)
-        self.Box.pack_end(alignment, False, False, 0)
+        self.Box.pack_end (widget, False, False, 0)
         self.Widget = widget
 
 
