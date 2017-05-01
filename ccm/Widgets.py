@@ -174,24 +174,6 @@ class CellRendererColor(Gtk.CellRenderer):
             x = 0
             y += CHECK_SIZE
 
-    def on_render(self, window, widget, background_area, cell_area, expose_area, flags):
-        cr = window.cairo_create()
-
-        height, width = (cell_area.height, cell_area.width)
-        sheight, swidth = self._surface_size
-        if height > sheight or width > swidth:
-            self.redraw(width, height)
-
-        cr.rectangle(cell_area.x, cell_area.y, width, height)
-        cr.clip()
-
-        cr.set_source_surface(self._surface, cell_area.x, cell_area.y)
-        cr.paint()
-
-        r, g, b, a = self._color
-        cr.set_source_rgba(r, g, b, a)
-        cr.paint()
-
 class PluginView(Gtk.TreeView):
     def __init__(self, plugins):
         liststore = Gtk.ListStore(str, GdkPixbuf.Pixbuf, bool, object)
@@ -317,63 +299,6 @@ class SelectorButtons(Gtk.HBox):
 
     def on_button_clicked(self, widget, callback):
         callback(selector=True)
-
-# Selector Box
-#
-class SelectorBox(Gtk.ScrolledWindow):
-    def __init__(self, backgroundColor):
-        Gtk.ScrolledWindow.__init__(self)
-        self.viewport = Gtk.Viewport()
-        if Gtk.check_version(3, 0, 0) is None:
-            self.viewport.override_background_color(Gtk.StateFlags.NORMAL, Gdk.rgba_parse(backgroundColor))
-        else:
-            self.viewport.modify_bg(Gtk.StateType.NORMAL, Gdk.color_parse(backgroundColor))
-        self.props.hscrollbar_policy = Gtk.PolicyType.NEVER
-        self.props.vscrollbar_policy = Gtk.PolicyType.AUTOMATIC
-        self.box = Gtk.VBox()
-        self.box.set_spacing(5)
-        self.viewport.add(self.box)
-        self.add(self.viewport)
-
-    def close(self):
-        self.destroy()
-        self.viewport.destroy()
-        for button in self.box.get_children():
-            button.destroy()
-        self.box.destroy()
-
-    def add_item(self, item, callback, markup="%s", image=None, info=None):
-        button = Gtk.Button()
-        label = Label(wrap=170)
-        text = protect_pango_markup(item)
-        label.set_markup(markup % text or _("General"))
-        labelBox = Gtk.VBox()
-        labelBox.set_spacing(5)
-        labelBox.pack_start(label, True, True, 0)
-        if info:
-            infoLabel = Label()
-            infoLabel.set_markup("<span size='small'>%s</span>" % info)
-            labelBox.pack_start(infoLabel, True, True, 0)
-        box = Gtk.HBox()
-        box.set_spacing(5)
-        if image:
-            box.pack_start(image, False, False, 0)
-        box.pack_start(labelBox, True, True, 0)
-        button.add(box)
-        button.connect("clicked", callback, item)
-        button.set_relief(Gtk.ReliefStyle.NONE)
-        self.box.pack_start(button, False, False, 0)
-
-    def clear_list(self):
-        for button in self.box.get_children():
-            button.destroy()
-
-    def set_item_list(self, list, callback):
-        self.clear_list()
-        for item in list:
-            self.add_item(item)
-
-        self.box.show_all()
 
 # Scrolled List
 #
