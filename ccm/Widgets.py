@@ -398,8 +398,8 @@ class ModifierSelector (Gtk.DrawingArea):
         if Gtk.check_version (3, 0, 0) is None:
             self.connect ("draw", self.draw_event)
         else:
-            self.connect ("expose_event", self.draw_event)
-        self.connect ("button_press_event", self.button_press)
+            self.connect ("expose-event", self.draw_event)
+        self.connect ("button-press-event", self.button_press)
         self.set_size_request (200, 3 * (self._height + 10))
 
         x0, y0, width, height = self._x0, self._y0, self._width, self._height
@@ -533,8 +533,8 @@ class EdgeSelector (Gtk.DrawingArea):
         if Gtk.check_version (3, 0, 0) is None:
             self.connect ("draw", self.draw_event)
         else:
-            self.connect ("expose_event", self.draw_event)
-        self.connect ("button_press_event", self.button_press)
+            self.connect ("expose-event", self.draw_event)
+        self.connect ("button-press-event", self.button_press)
         self.set_size_request (196, 196)
 
         # Useful vars
@@ -1082,9 +1082,9 @@ class WindowStateSelector (Gtk.DrawingArea):
         if Gtk.check_version (3, 0, 0) is None:
             self.connect ("draw", self.draw_event)
         else:
-            self.connect ("expose_event", self.draw_event)
-        self.connect ("button_press_event", self.button_press)
-        self.connect ("motion_notify_event", self.region_tooltip)
+            self.connect ("expose-event", self.draw_event)
+        self.connect ("button-press-event", self.button_press)
+        self.connect ("motion-notify-event", self.region_tooltip)
 
         self.set_size_request (self._width*4, self._height*3+20)
         x0, y0, width, height = self._x0, self._y0, self._width, self._height
@@ -1916,7 +1916,7 @@ class PluginWindow(Gtk.ScrolledWindow):
         if Gtk.check_version (3, 0, 0) is None:
             self.connect ('draw', self.rebuild_boxes)
         else:
-            self.connect ('expose-event', self.rebuild_boxes)
+            self.connect ('size-allocate', self.rebuild_boxes)
 
         self._box = Gtk.VBox ()
         self._box.set_spacing (5)
