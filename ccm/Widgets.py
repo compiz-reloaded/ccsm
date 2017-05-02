@@ -47,9 +47,10 @@ _ = gettext.gettext
 # Try to use gtk like coding style for consistency
 #
 
-class FallbackStack(Gtk.VBox):
+class FallbackStack(Gtk.Box):
     def __init__(self):
-        Gtk.VBox.__init__(self)
+        Gtk.Box.__init__(self)
+        self.set_orientation(Gtk.Orientation.VERTICAL)
         self._named_children = {}
         self._visible_child = None
 
@@ -257,9 +258,10 @@ class GroupView(Gtk.TreeView):
 
 # Selector Buttons
 #
-class SelectorButtons(Gtk.HBox):
+class SelectorButtons(Gtk.Box):
     def __init__(self):
-        Gtk.HBox.__init__(self)
+        Gtk.Box.__init__(self)
+        self.set_orientation(Gtk.Orientation.HORIZONTAL)
         self.set_border_width(10)
         self.set_spacing(5)
         self.buttons = []
@@ -1479,7 +1481,7 @@ class MatchButton(Gtk.Button):
 
         # Value
         label = Label (_("Value"))
-        box = Gtk.HBox ()
+        box = Gtk.Box (orientation=Gtk.Orientation.HORIZONTAL)
         box.set_spacing (5)
         entry = Gtk.Entry ()
         entry.connect ('changed', self._check_entry_value, dlg)
@@ -1724,7 +1726,7 @@ class WarningDialog (Gtk.MessageDialog):
 
 # Plugin Button
 #
-class PluginButton (Gtk.HBox):
+class PluginButton (Gtk.Box):
 
     __gsignals__    = {"clicked"   : (GObject.SignalFlags.RUN_FIRST,
                                       None,
@@ -1736,12 +1738,13 @@ class PluginButton (Gtk.HBox):
     _plugin = None
 
     def __init__ (self, plugin, useMissingImage = False):
-        Gtk.HBox.__init__(self)
+        Gtk.Box.__init__(self)
+        self.set_orientation(Gtk.Orientation.HORIZONTAL)
         self._plugin = plugin
 
         image = Image (plugin.Name, ImagePlugin, 32, useMissingImage)
         label = Label (plugin.ShortDesc, 120)
-        box = Gtk.HBox ()
+        box = Gtk.Box (orientation=Gtk.Orientation.HORIZONTAL)
         box.set_spacing (5)
         box.pack_start (image, False, False, 0)
         box.pack_start (label, True, True, 0)
@@ -1811,7 +1814,7 @@ class PluginButton (Gtk.HBox):
 
 # Category Box
 #
-class CategoryBox(Gtk.VBox):
+class CategoryBox(Gtk.Box):
 
     _plugins = None
     _unfiltered_plugins = None
@@ -1824,8 +1827,8 @@ class CategoryBox(Gtk.VBox):
     _current_plugins = 0
 
     def __init__ (self, context, name, plugins=None, categoryIndex=0):
-        Gtk.VBox.__init__ (self)
-
+        Gtk.Box.__init__ (self)
+        self.set_orientation(Gtk.Orientation.VERTICAL)
         self.set_spacing (5)
 
         self._context = context
@@ -1846,7 +1849,7 @@ class CategoryBox(Gtk.VBox):
         # Keep unfiltered list of plugins for correct background icon loading
         self._unfiltered_plugins = self._plugins
 
-        header = Gtk.HBox ()
+        header = Gtk.Box (orientation=Gtk.Orientation.HORIZONTAL)
         header.set_border_width (5)
         header.set_spacing (10)
         label = Label ('', -1)
@@ -1980,7 +1983,7 @@ class PluginWindow(Gtk.ScrolledWindow):
         else:
             self.connect ('size-allocate', self.rebuild_boxes)
 
-        self._box = Gtk.VBox ()
+        self._box = Gtk.Box (orientation=Gtk.Orientation.VERTICAL)
         self._box.set_spacing (5)
 
         self._not_found_box = NotFoundBox ()

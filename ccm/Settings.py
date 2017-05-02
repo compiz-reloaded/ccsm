@@ -53,7 +53,7 @@ class Setting(object):
 
         self.Blocked = 0
         self.EBox = Gtk.EventBox()
-        self.Box = Gtk.HBox()
+        self.Box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
         self.EBox.set_visible_window(False)
         if Setting:
             self.EBox.set_sensitive(not Setting.ReadOnly)
@@ -590,7 +590,7 @@ class ColorSetting(StockSetting):
 
 class BaseListSetting(Setting):
     def _Init(self):
-        self.Widget = Gtk.VBox()
+        self.Widget = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         self.EditDialog = None
         self.EditDialogOpen = False
         self.PageToBeRefreshed = None
@@ -625,7 +625,8 @@ class BaseListSetting(Setting):
         self.Scroll.add(self.View)
         self.Widget.pack_start(self.Scroll, True, True, 0)
         self.Widget.set_child_packing(self.Scroll, True, True, 0, Gtk.PackType.START)
-        buttonBox = Gtk.HBox(homogeneous=False)
+        buttonBox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,
+                            homogeneous=False)
         buttonBox.set_spacing(5)
         buttonBox.set_border_width(5)
         self.Widget.pack_start(buttonBox, False, False, 0)
@@ -716,7 +717,7 @@ class BaseListSetting(Setting):
 
     def _MakeEditDialog(self):
         dlg = Gtk.Dialog(_("Edit"))
-        vbox = Gtk.VBox(spacing=GridRow)
+        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=GridRow)
         vbox.props.border_width = 6
         dlg.vbox.pack_start(vbox, True, True, 0)
         dlg.set_default_size(500, -1)
@@ -932,10 +933,10 @@ class EnumFlagsSetting(Setting):
                 col = 0
                 row += 1
 
-        vbox = Gtk.VBox()
+        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         vbox.pack_start(self.Reset, False, False, 0)
 
-        hbox = Gtk.HBox()
+        hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
         hbox.pack_start(grid, True, True, 0)
         hbox.pack_start(vbox, False, False, 0)
 
@@ -994,10 +995,10 @@ class RestrictedStringFlagsSetting(Setting):
                 col = 0
                 row += 1
 
-        vbox = Gtk.VBox()
+        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         vbox.pack_start(self.Reset, False, False, 0)
 
-        hbox = Gtk.HBox()
+        hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
         hbox.pack_start(grid, True, True, 0)
         hbox.pack_start(vbox, False, False, 0)
 
@@ -1174,7 +1175,7 @@ class KeySetting (EditableActionSetting):
         dlg.add_button (Gtk.STOCK_OK, Gtk.ResponseType.OK).grab_default ()
         dlg.set_default_response (Gtk.ResponseType.OK)
 
-        mainBox = Gtk.VBox ()
+        mainBox = Gtk.Box (orientation=Gtk.Orientation.VERTICAL)
         alignment = Gtk.Alignment ()
         alignment.set_padding (10, 10, 10, 10)
         alignment.add (mainBox)
@@ -1187,7 +1188,7 @@ class KeySetting (EditableActionSetting):
         checkButton.set_tooltip_text(self.Setting.LongDesc)
         mainBox.pack_start (checkButton, True, True, 0)
 
-        box = Gtk.VBox ()
+        box = Gtk.Box (orientation=Gtk.Orientation.VERTICAL)
         checkButton.connect ("toggled", ShowHideBox, box, dlg)
         mainBox.pack_start (box, True, True, 0)
 
@@ -1330,7 +1331,7 @@ class ButtonSetting (EditableActionSetting):
         dlg.add_button (Gtk.STOCK_OK, Gtk.ResponseType.OK).grab_default ()
         dlg.set_default_response (Gtk.ResponseType.OK)
 
-        mainBox = Gtk.VBox ()
+        mainBox = Gtk.Box (orientation=Gtk.Orientation.VERTICAL)
         alignment = Gtk.Alignment ()
         alignment.set_padding (10, 10, 10, 10)
         alignment.add (mainBox)
@@ -1343,7 +1344,7 @@ class ButtonSetting (EditableActionSetting):
         checkButton.set_tooltip_text (self.Setting.LongDesc)
         mainBox.pack_start (checkButton, True, True, 0)
 
-        box = Gtk.VBox ()
+        box = Gtk.Box (orientation=Gtk.Orientation.VERTICAL)
         checkButton.connect ("toggled", ShowHideBox, box, dlg)
         mainBox.pack_start (box, True, True, 0)
 
@@ -1618,13 +1619,14 @@ class SubGroupArea(object):
         self.Name = name
         settings = sorted(GetSettings(subGroup), key=SettingKeyFunc)
         if not name:
-            self.Child = self.Widget = Gtk.VBox()
+            self.Widget = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+            self.Child = self.Widget
         else:
             self.Widget = Gtk.Frame()
             self.Expander = Gtk.Expander.new(name)
             self.Widget.add(self.Expander)
             self.Expander.set_expanded(False)
-            self.Child = Gtk.VBox()
+            self.Child = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
             self.Expander.add(self.Child)
 
         self.Child.set_spacing(GridRow)

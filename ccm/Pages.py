@@ -64,7 +64,8 @@ class PluginPage(GenericPage):
     def __init__(self, plugin):
         GenericPage.__init__(self)
         self.Plugin = plugin
-        self.LeftWidget = Gtk.VBox(homogeneous=False, spacing=10)
+        self.LeftWidget = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,
+                                  homogeneous=False, spacing=10)
         self.LeftWidget.set_border_width(10)
 
         pluginLabel = Label()
@@ -88,7 +89,7 @@ class PluginPage(GenericPage):
         self.LeftWidget.pack_start(self.FilterEntry, False, False, 0)
         self.LeftWidget.pack_start(pluginLabel, False, False, 0)
         infoLabel = Label(plugin.LongDesc, 180)
-        infoLabelCont = Gtk.HBox()
+        infoLabelCont = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
         infoLabelCont.set_border_width(10)
         infoLabelCont.pack_start(infoLabel, True, True, 0)
         self.LeftWidget.pack_start(infoLabelCont, False, False, 0)
@@ -104,7 +105,7 @@ class PluginPage(GenericPage):
             else:
                 enableLabel.connect("style-set", self.HeaderStyleUpdate)
             self.LeftWidget.pack_start(enableLabel, False, False, 0)
-            enableCheckCont = Gtk.HBox()
+            enableCheckCont = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
             enableCheckCont.set_border_width(10)
             self.LeftWidget.pack_start(enableCheckCont, False, False, 0)
             enableCheck = Gtk.CheckButton()
@@ -258,10 +259,11 @@ class FilterPage(GenericPage):
     def __init__(self, context):
         GenericPage.__init__(self)
         self.Context = context
-        self.LeftWidget = Gtk.VBox(homogeneous=False, spacing=10)
+        self.LeftWidget = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,
+                                  homogeneous=False, spacing=10)
         self.LeftWidget.set_border_width(10)
         self.RightWidget = Gtk.Notebook()
-        self.RightChild = Gtk.VBox()
+        self.RightChild = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
 
         # Image + Label
         filterLabel = Label()
@@ -336,7 +338,7 @@ class FilterPage(GenericPage):
 
         self.SelectorButtons.set_size_request(-1, 50)
 
-        self.SelectorBoxes = Gtk.HBox()
+        self.SelectorBoxes = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
         self.SelectorBoxes.set_border_width(5)
         self.SelectorBoxes.set_spacing(5)
 
@@ -364,7 +366,7 @@ class FilterPage(GenericPage):
         ebox = Gtk.EventBox()
         if Gtk.check_version (3, 0, 0) is None:
             ebox.get_style_context().add_class(Gtk.STYLE_CLASS_NOTEBOOK)
-        self.SettingsBox = Gtk.VBox()
+        self.SettingsBox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         ebox.add(self.SettingsBox)
         self.SettingsBox.set_border_width(5)
         self.SettingsArea.props.hscrollbar_policy = Gtk.PolicyType.AUTOMATIC
@@ -383,7 +385,7 @@ class FilterPage(GenericPage):
         self.NotebookChild.add(self.RightChild)
         self.RightWidget.append_page(self.NotebookChild, self.NotebookLabel)
 
-        box = Gtk.VBox()
+        box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         box.set_border_width(5)
         progress = Popup(child=box)
         progress.connect("delete-event", lambda *a: True)
@@ -638,7 +640,7 @@ class FilterPage(GenericPage):
             self.PackedPlugins = []
             self.PackedGroups = []
             for plugin in plugins:
-                box = Gtk.VBox()
+                box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
                 for (pageName, page) in self.GroupPages[plugin.Name]:
                     box.pack_start(page.Label, False, False, 0)
                     box.pack_start(page.Widget, False, False, 0)
@@ -697,11 +699,11 @@ class FilterPage(GenericPage):
 class ProfileBackendPage(object):
     def __init__(self, context):
         self.Context = context
-        rightChild = Gtk.VBox()
+        rightChild = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         rightChild.set_border_width(10)
 
         # Profiles
-        profileBox = Gtk.HBox()
+        profileBox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
         profileBox.set_spacing(5)
         profileAdd = Gtk.Button()
         profileAdd.set_tooltip_text(_("Add a New Profile"))
@@ -733,7 +735,7 @@ class ProfileBackendPage(object):
             profileLabel.connect("style-updated", self.HeaderStyleUpdate)
         else:
             profileLabel.connect("style-set", self.HeaderStyleUpdate)
-        self.ProfileImportExportBox = Gtk.HBox()
+        self.ProfileImportExportBox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
         self.ProfileImportExportBox.set_spacing(5)
         profileImportButton = Gtk.Button(label=_("Import"))
         profileImportButton.set_tooltip_text(_("Import a CompizConfig Profile"))
@@ -1018,7 +1020,7 @@ class PluginListPage(object):
     def __init__(self, context):
         self.Context = context
         self.Block = 0
-        rightChild = Gtk.VBox()
+        rightChild = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         rightChild.set_border_width(10)
 
         # Auto sort
@@ -1026,17 +1028,18 @@ class PluginListPage(object):
         rightChild.pack_start(autoSort, False, False, 10)
 
         # Lists
-        listBox = Gtk.HBox()
+        listBox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
         listBox.set_spacing(5)
 
         self.DisabledPluginsList = ScrolledList(_("Disabled Plugins"))
         self.EnabledPluginsList = ScrolledList(_("Enabled Plugins"))
 
         # Left/Right buttons
-        self.MiddleButtonBox = buttonBox = Gtk.VBox()
+        buttonBox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         buttonBox.set_spacing(5)
         boxAlignment = Gtk.Alignment.new(0, 0.5, 0, 0)
         boxAlignment.add(buttonBox)
+        self.MiddleButtonBox = buttonBox
 
         rightButton = Gtk.Button()
         rightImage = Image(Gtk.STOCK_GO_FORWARD, ImageStock, Gtk.IconSize.BUTTON)
@@ -1052,13 +1055,14 @@ class PluginListPage(object):
         buttonBox.pack_start(leftButton, False, False, 0)
 
         # Up/Down buttons
-        enabledBox = Gtk.VBox()
+        enabledBox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         enabledBox.set_spacing(10)
 
         enabledAlignment = Gtk.Alignment.new(0.5, 0, 0, 0)
-        self.EnabledButtonBox = enabledButtonBox = Gtk.HBox()
+        enabledButtonBox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
         enabledButtonBox.set_spacing(5)
         enabledAlignment.add(enabledButtonBox)
+        self.EnabledButtonBox = enabledButtonBox
 
         upButton = Gtk.Button(label=Gtk.STOCK_GO_UP)
         downButton = Gtk.Button(label=Gtk.STOCK_GO_DOWN)
@@ -1200,7 +1204,8 @@ class PreferencesPage(GenericPage):
     def __init__(self, context):
         GenericPage.__init__(self)
         self.Context = context
-        self.LeftWidget = Gtk.VBox(homogeneous=False, spacing=10)
+        self.LeftWidget = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,
+                                  homogeneous=False, spacing=10)
         self.LeftWidget.set_border_width(10)
         if Gtk.check_version(3, 12, 0) is None:
             self.RightWidget = Gtk.Box.new(Gtk.Orientation.VERTICAL, 6)
@@ -1224,7 +1229,7 @@ class PreferencesPage(GenericPage):
         self.DescImg = Image("profiles",ImageCategory, 64)
         self.LeftWidget.pack_start(self.DescImg, False, False, 0)
         self.LeftWidget.pack_start(self.DescLabel, False, False, 0)
-        self.InfoLabelCont = Gtk.HBox()
+        self.InfoLabelCont = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
         self.InfoLabelCont.set_border_width(10)
         self.LeftWidget.pack_start(self.InfoLabelCont, False, False, 0)
         self.InfoLabel = Label(_("Configure the backend, profile and other internal settings used by the Compiz Configuration System."), 180)
@@ -1240,14 +1245,14 @@ class PreferencesPage(GenericPage):
         aboutButton = Gtk.Button()
         aboutButton.set_relief(Gtk.ReliefStyle.NONE)
         aboutImage = Image(Gtk.STOCK_ABOUT, ImageStock, Gtk.IconSize.BUTTON)
-        aboutFrame = Gtk.HBox()
+        aboutFrame = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
         aboutFrame.set_spacing(5)
         aboutFrame.pack_start(aboutImage, False, False, 0)
         aboutFrame.pack_start(Label(_("About CCSM...")), False, False, 0)
         aboutButton.add(aboutFrame)
         aboutButton.set_tooltip_text(_("About"))
         aboutButton.connect('clicked', self.ShowAboutDialog)
-        aboutBin = Gtk.HBox()
+        aboutBin = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
         aboutBin.set_border_width(10)
         aboutBin.pack_start(aboutButton, False, False, 0)
         self.LeftWidget.pack_start(aboutLabel, False, False, 0)
@@ -1311,7 +1316,8 @@ class MainPage(object):
     def __init__(self, main, context):
         self.Context = context
         self.Main    = main
-        sidebar = Gtk.VBox(homogeneous=False, spacing=10)
+        sidebar = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,
+                          homogeneous=False, spacing=10)
         sidebar.set_border_width(10)
 
         pluginWindow = PluginWindow(self.Context)
@@ -1350,7 +1356,7 @@ class MainPage(object):
             sidebar.pack_start(screenBox, False, False, 0)
 
         # Categories
-        categoryBox = Gtk.VBox()
+        categoryBox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         categoryBox.set_border_width(5)
         categories = ['All'] + sorted(pluginWindow.get_categories(), key=CategoryKeyFunc)
         for category in categories:
@@ -1365,7 +1371,7 @@ class MainPage(object):
             align = Gtk.Alignment.new (0, 0.5, 1, 1)
             align.set_padding (0, 0, 0, 10)
             align.add (categoryToggleIcon)
-            categoryToggleBox = Gtk.HBox ()
+            categoryToggleBox = Gtk.Box (orientation=Gtk.Orientation.HORIZONTAL)
             categoryToggleBox.pack_start (align, False, False, 0)
             categoryToggleBox.pack_start (categoryToggleLabel, True, True, 0)
             categoryToggle = PrettyButton ()
@@ -1397,7 +1403,7 @@ class MainPage(object):
         searchButton = PrettyButton()
         searchButton.connect("clicked", self.ShowAdvancedFilter)
         searchButton.set_relief(Gtk.ReliefStyle.NONE)
-        searchFrame = Gtk.HBox()
+        searchFrame = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
         searchFrame.pack_start(searchLabel, False, False, 0)
         searchFrame.pack_end(searchImage, False, False, 0)
         searchButton.add(searchFrame)
@@ -1414,7 +1420,7 @@ class MainPage(object):
         prefButton = PrettyButton()
         prefButton.connect("clicked", self.ShowPreferences)
         prefButton.set_relief(Gtk.ReliefStyle.NONE)
-        prefFrame = Gtk.HBox()
+        prefFrame = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
         prefFrame.pack_start(prefLabel, False, False, 0)
         prefFrame.pack_end(prefImage, False, False, 0)
         prefButton.add(prefFrame)
@@ -1490,7 +1496,7 @@ class MainPage(object):
 class Page(object):
 
     def __init__(self):
-        self.SetContainer = Gtk.VBox()
+        self.SetContainer = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
 
         self.Widget = Gtk.EventBox()
         self.Widget.add(self.SetContainer)

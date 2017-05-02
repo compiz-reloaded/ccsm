@@ -51,10 +51,10 @@ class MainWin(Gtk.Window):
         self.set_title(_("CompizConfig Settings Manager"))
 
         # Build the panes
-        self.MainBox = Gtk.HBox()
+        self.MainBox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
         self.add(self.MainBox)
-        self.LeftPane = Gtk.VBox()
-        self.RightPane = Gtk.VBox()
+        self.LeftPane = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        self.RightPane = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         self.RightPane.set_border_width(5)
         self.MainBox.pack_start(self.LeftPane, False, False, 0)
         self.MainBox.pack_end(self.RightPane, True, True, 0)

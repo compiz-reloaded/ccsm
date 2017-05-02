@@ -46,6 +46,19 @@ try:
 except (AttributeError, NameError, TypeError):
     IconTheme.prepend_search_path(IconDir)
 
+# Create GtkBox's in Gtk2 in the same manner.
+if Gtk.check_version (3, 0, 0) is not None:
+    gtk_box_real = Gtk.Box
+    class gtk_box (gtk_box_real):
+        def __init__ (self, orientation=None, *args, **kwargs):
+            gtk_box_real.__init__ (self, *args, **kwargs)
+            if orientation:
+                gtk_box_real.set_orientation(self, orientation)
+
+        def new(*args, **kwargs):
+            return Gtk.Box(*args, **kwargs)
+    Gtk.Box = gtk_box
+
 def gtk_process_events ():
     while Gtk.events_pending ():
         Gtk.main_iteration ()
@@ -225,7 +238,7 @@ class NotFoundBox(Gtk.Alignment):
         Gtk.Alignment.__init__(self)
         self.set(0.5, 0.5, 0, 0)
 
-        box = Gtk.HBox()
+        box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
         self.Warning = Gtk.Label()
         self.Markup = _("<span size=\"large\"><b>No matches found.</b> </span><span>\n\n Your filter \"<b>%s</b>\" does not match any items.</span>")
         value = protect_pango_markup(value)
