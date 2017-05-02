@@ -105,37 +105,34 @@ class Image (Gtk.Image):
             return
 
         if useMissingImage:
-            self.set_from_stock (Gtk.STOCK_MISSING_IMAGE,
-                                 Gtk.IconSize.LARGE_TOOLBAR)
+            self.set_from_icon_name ("image-missing",
+                                     Gtk.IconSize.LARGE_TOOLBAR)
             return
 
         try:
-            if type in  (ImagePlugin, ImageCategory, ImageThemed):
-                pixbuf = None
+            pixbuf = None
 
-                if type == ImagePlugin:
-                    name = "plugin-" + name
-                    try:
-                        pixbuf = IconTheme.load_icon (name, size, 0)
-                    except GLib.GError:
-                        pixbuf = IconTheme.load_icon ("plugin-unknown", size, 0)
-
-                elif type == ImageCategory:
-                    name = "plugins-" + name
-                    try:
-                        pixbuf = IconTheme.load_icon (name, size, 0)
-                    except GLib.GError:
-                        pixbuf = IconTheme.load_icon ("plugins-unknown", size, 0)
-
-                else:
+            if type == ImagePlugin:
+                name = "plugin-" + name
+                try:
                     pixbuf = IconTheme.load_icon (name, size, 0)
+                except GLib.GError:
+                    pixbuf = IconTheme.load_icon ("plugin-unknown", size, 0)
 
-                self.set_from_pixbuf (pixbuf)
+            elif type == ImageCategory:
+                name = "plugins-" + name
+                try:
+                    pixbuf = IconTheme.load_icon (name, size, 0)
+                except GLib.GError:
+                    pixbuf = IconTheme.load_icon ("plugins-unknown", size, 0)
 
-            elif type == ImageStock:
-                self.set_from_stock (name, size)
+            elif type == ImageThemed:
+                pixbuf = IconTheme.load_icon (name, size,
+                                              Gtk.IconLookupFlags.USE_BUILTIN)
+
+            self.set_from_pixbuf (pixbuf)
         except GLib.GError:
-            self.set_from_stock (Gtk.STOCK_MISSING_IMAGE, Gtk.IconSize.BUTTON)
+            self.set_from_icon_name ("image-missing", Gtk.IconSize.BUTTON)
 
 class ActionImage (Gtk.Box):
 
@@ -249,7 +246,7 @@ class NotFoundBox(Gtk.Box):
         self.Markup = _("<span size=\"large\"><b>No matches found.</b> </span><span>\n\n Your filter \"<b>%s</b>\" does not match any items.</span>")
         value = protect_pango_markup(value)
         self.Warning.set_markup(self.Markup % value)
-        image = Image("face-surprise", ImageThemed, 48)
+        image = Image(name="face-surprise", type=ImageThemed, size=48)
 
         box.pack_start(image, False, False, 0)
         box.pack_start(self.Warning, True, True, 15)

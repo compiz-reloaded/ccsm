@@ -46,7 +46,8 @@ class Conflict:
 
         for text, icon, response in buttons:
             button = Gtk.Button(label=text)
-            button.set_image(Gtk.Image.new_from_stock(icon, Gtk.IconSize.BUTTON))
+            button.set_image(Gtk.Image.new_from_icon_name(icon,
+                                                          Gtk.IconSize.BUTTON))
             dialog.add_action_widget(button, response)
 
         if custom_widgets != None:
@@ -121,9 +122,12 @@ class ActionConflict (Conflict):
 
         msg = msg % protect_markup_dict (msg_dict)
 
-        yesButton    = (_("Disable %(action_conflict)s") % msg_dict,  Gtk.STOCK_YES,  Gtk.ResponseType.YES)
-        noButton     = (_("Don't set %(action)s") %  msg_dict,    Gtk.STOCK_NO,   Gtk.ResponseType.NO)
-        ignoreButton = (_("Set %(action)s anyway") % msg_dict,    Gtk.STOCK_STOP, Gtk.ResponseType.REJECT)
+        yesButton = (_("Disable %(action_conflict)s") % msg_dict,
+                     "gtk-yes", Gtk.ResponseType.YES)
+        noButton = (_("Don't set %(action)s") %  msg_dict,
+                    "gtk-no", Gtk.ResponseType.NO)
+        ignoreButton = (_("Set %(action)s anyway") % msg_dict,
+                        "gtk-cancel", Gtk.ResponseType.REJECT)
 
         return self.Ask (msg, (ignoreButton, noButton, yesButton))
 
@@ -257,8 +261,10 @@ class FeatureRequirement(Conflict):
 
         msg = msg % protect_markup_dict (msg_dict)
 
-        yesButton = (_("Use %(feature)s") % msg_dict,       Gtk.STOCK_YES, Gtk.ResponseType.YES)
-        noButton  = (_("Don't use %(feature)s") % msg_dict, Gtk.STOCK_NO,  Gtk.ResponseType.NO)
+        yesButton = (_("Use %(feature)s") % msg_dict,
+                     "gtk-yes", Gtk.ResponseType.YES)
+        noButton = (_("Don't use %(feature)s") % msg_dict,
+                    "gtk-no", Gtk.ResponseType.NO)
 
         answer = self.Ask(msg, (noButton, yesButton))
 
@@ -274,8 +280,10 @@ class FeatureRequirement(Conflict):
 
         msg = msg % protect_markup_dict (msg_dict)
 
-        yesButton = (_("Enable %(plugin)s") % msg_dict,       Gtk.STOCK_YES, Gtk.ResponseType.YES)
-        noButton  = (_("Don't enable %(feature)s") % msg_dict, Gtk.STOCK_NO,  Gtk.ResponseType.NO)
+        yesButton = (_("Enable %(plugin)s") % msg_dict,
+                     "gtk-yes", Gtk.ResponseType.YES)
+        noButton = (_("Don't enable %(feature)s") % msg_dict,
+                    "gtk-no", Gtk.ResponseType.NO)
 
         answer = self.Ask(msg, (noButton, yesButton))
 
@@ -511,8 +519,8 @@ class PluginConflict(Conflict):
             okMsg = _("Disable these plugins")
             cancelMsg = _("Don't disable %(plugin)s") % msg_dict
 
-        okButton     = (okMsg,     Gtk.STOCK_OK,     Gtk.ResponseType.YES)
-        cancelButton = (cancelMsg, Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
+        okButton = (okMsg, "gtk-ok", Gtk.ResponseType.YES)
+        cancelButton = (cancelMsg, "gtk-cancel", Gtk.ResponseType.CANCEL)
 
         answer = self.Ask(msg, (cancelButton, okButton), widgets)
         if conflict[0] == 'RequiresFeature':

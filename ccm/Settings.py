@@ -67,8 +67,8 @@ class Setting(object):
                       protect_pango_markup(self.Setting.Name))
             self.EBox.set_tooltip_markup(markup)
             self.Reset.set_tooltip_text(_("Reset setting to the default value"))
-        self.Reset.set_image (Image (name = Gtk.STOCK_CLEAR, type = ImageStock,
-                                     size = Gtk.IconSize.BUTTON))
+        self.Reset.set_image(Gtk.Image.new_from_icon_name("edit-clear",
+                                                          Gtk.IconSize.BUTTON))
         self.Reset.connect('clicked', self.DoReset)
         self._Init()
 
@@ -651,35 +651,40 @@ class BaseListSetting(Setting):
         else:
             buttonBox.set_border_width(5)
         self.Widget.pack_start(buttonBox, False, False, 0)
-        buttonTypes = ((Gtk.STOCK_NEW, self.Add, None, True),
-                       (Gtk.STOCK_DELETE, self.Delete, None, False),
-                       (Gtk.STOCK_EDIT, self.Edit, None, False),
-                       (Gtk.STOCK_GO_UP, self.Move, 'up', False),
-                       (Gtk.STOCK_GO_DOWN, self.Move, 'down', False),)
+        buttonTypes = ((_("_New"), "document-new", self.Add, None, True),
+                       (_("_Delete"), "edit-delete", self.Delete, None, False),
+                       (_("_Edit"), "gtk-edit", self.Edit, None, False),
+                       (_("_Up"), "go-up", self.Move, "up", False),
+                       (_("_Down"), "go-down", self.Move, "down", False),)
         self.Buttons = {}
-        for stock, callback, data, sensitive in buttonTypes:
-            b = Gtk.Button(label=stock)
-            b.set_use_stock(True)
+        for label, icon_name, callback, data, sensitive in buttonTypes:
+            b = Gtk.Button.new_with_mnemonic(label)
+            b.set_image(Gtk.Image.new_from_icon_name(icon_name,
+                                                     Gtk.IconSize.BUTTON))
             buttonBox.pack_start(b, False, False, 0)
             if data is not None:
                 b.connect('clicked', callback, data)
             else:
                 b.connect('clicked', callback)
             b.set_sensitive(sensitive)
-            self.Buttons[stock] = b
+            self.Buttons[icon_name] = b
 
         self.Popup = Gtk.Menu()
         self.PopupItems = {}
-        edit = Gtk.ImageMenuItem.new_from_stock(Gtk.STOCK_EDIT, None)
-        edit.connect('activate', self.Edit)
+        edit = Gtk.ImageMenuItem.new_with_mnemonic(_("Edit"))
+        edit.set_image(Gtk.Image.new_from_icon_name("gtk-edit",
+                                                    Gtk.IconSize.MENU))
         edit.set_sensitive(False)
+        edit.connect("activate", self.Edit)
         self.Popup.append(edit)
-        self.PopupItems[Gtk.STOCK_EDIT] = edit
-        delete = Gtk.ImageMenuItem.new_from_stock(Gtk.STOCK_DELETE, None)
-        delete.connect('activate', self.Delete)
+        self.PopupItems["gtk-edit"] = edit
+        delete = Gtk.ImageMenuItem.new_with_mnemonic(_("_Delete"))
+        delete.set_image(Gtk.Image.new_from_icon_name("edit-delete",
+                                                      Gtk.IconSize.MENU))
         delete.set_sensitive(False)
+        delete.connect("activate", self.Delete)
         self.Popup.append(delete)
-        self.PopupItems[Gtk.STOCK_DELETE] = delete
+        self.PopupItems["edit-delete"] = delete
         self.Popup.show_all()
 
         buttonBox.pack_end(self.Reset, False, False, 0)
@@ -742,8 +747,11 @@ class BaseListSetting(Setting):
         vbox.props.border_width = 6
         dlg.vbox.pack_start(vbox, True, True, 0)
         dlg.set_default_size(500, -1)
-        dlg.add_button(Gtk.STOCK_CLOSE, Gtk.ResponseType.CLOSE)
-        dlg.set_default_response(Gtk.ResponseType.CLOSE)
+
+        button = dlg.add_button(_("_Close"), Gtk.ResponseType.CLOSE)
+        button.set_image (Gtk.Image.new_from_icon_name("window-close",
+                                                       Gtk.IconSize.BUTTON))
+        button.grab_default ()
 
         group = Gtk.SizeGroup(mode=Gtk.SizeGroupMode.HORIZONTAL)
         for widget in self.Widgets:
@@ -826,8 +834,8 @@ class BaseListSetting(Setting):
     def SelectionChanged(self, selection):
 
         model, it = selection.get_selected()
-        for widget in (self.Buttons[Gtk.STOCK_EDIT], self.Buttons[Gtk.STOCK_DELETE],
-                       self.PopupItems[Gtk.STOCK_EDIT], self.PopupItems[Gtk.STOCK_DELETE]):
+        for widget in (self.Buttons["gtk-edit"], self.Buttons["edit-delete"],
+                       self.PopupItems["gtk-edit"], self.PopupItems["edit-delete"]):
             widget.set_sensitive(it is not None)
 
         if it is not None:
@@ -837,11 +845,11 @@ class BaseListSetting(Setting):
                     row = path.get_indices()[0]
                 except (AttributeError, TypeError):
                     row = path.get_indices_with_depth()[0]
-                self.Buttons[Gtk.STOCK_GO_UP].set_sensitive(row > 0)
-                self.Buttons[Gtk.STOCK_GO_DOWN].set_sensitive(row < (len(model) - 1))
+                self.Buttons["go-up"].set_sensitive(row > 0)
+                self.Buttons["go-down"].set_sensitive(row < (len(model) - 1))
         else:
-            self.Buttons[Gtk.STOCK_GO_UP].set_sensitive(False)
-            self.Buttons[Gtk.STOCK_GO_DOWN].set_sensitive(False)
+            self.Buttons["go-up"].set_sensitive(False)
+            self.Buttons["go-down"].set_sensitive(False)
 
     def ButtonPressEvent(self, treeview, event):
         if event.button == 3:
@@ -1057,8 +1065,8 @@ class EditableActionSetting (StockSetting):
         self.Label.set_size_request(-1, -1)
 
         editButton = Gtk.Button ()
-        editButton.add (Image (name = Gtk.STOCK_EDIT, type = ImageStock,
-                               size = Gtk.IconSize.BUTTON))
+        editButton.add (Gtk.Image.new_from_icon_name ("gtk-edit",
+                                                      Gtk.IconSize.BUTTON))
         editButton.set_tooltip_text(_("Edit %s" % self.Setting.ShortDesc))
         editButton.connect ("clicked", self.RunEditDialog)
 
@@ -1074,8 +1082,14 @@ class EditableActionSetting (StockSetting):
         dlg = Gtk.Dialog (title=_("Edit %s") % self.Setting.ShortDesc)
         dlg.set_position (Gtk.WindowPosition.CENTER_ON_PARENT)
         dlg.set_transient_for (self.Widget.get_toplevel ())
-        dlg.add_button (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
-        dlg.add_button (Gtk.STOCK_OK, Gtk.ResponseType.OK).grab_default()
+
+        button = dlg.add_button (_("_Cancel"), Gtk.ResponseType.CANCEL)
+        button.set_image (Gtk.Image.new_from_icon_name ("gtk-cancel",
+                                                        Gtk.IconSize.BUTTON))
+        button = dlg.add_button (_("_OK"), Gtk.ResponseType.OK)
+        button.set_image (Gtk.Image.new_from_icon_name ("gtk-ok",
+                                                        Gtk.IconSize.BUTTON))
+        button.grab_default ()
         dlg.set_default_response (Gtk.ResponseType.OK)
 
         entry = Gtk.Entry ()
@@ -1200,8 +1214,14 @@ class KeySetting (EditableActionSetting):
         dlg.set_transient_for (self.Widget.get_toplevel ())
         dlg.set_icon (self.Widget.get_toplevel ().get_icon ())
         dlg.set_modal (True)
-        dlg.add_button (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
-        dlg.add_button (Gtk.STOCK_OK, Gtk.ResponseType.OK).grab_default ()
+
+        button = dlg.add_button (_("_Cancel"), Gtk.ResponseType.CANCEL)
+        button.set_image (Gtk.Image.new_from_icon_name ("gtk-cancel",
+                                                        Gtk.IconSize.BUTTON))
+        button = dlg.add_button (_("_OK"), Gtk.ResponseType.OK)
+        button.set_image (Gtk.Image.new_from_icon_name ("gtk-ok",
+                                                        Gtk.IconSize.BUTTON))
+        button.grab_default ()
         dlg.set_default_response (Gtk.ResponseType.OK)
 
         mainBox = Gtk.Box (orientation=Gtk.Orientation.VERTICAL)
@@ -1368,8 +1388,14 @@ class ButtonSetting (EditableActionSetting):
         dlg.set_position (Gtk.WindowPosition.CENTER_ALWAYS)
         dlg.set_transient_for (self.Widget.get_toplevel ())
         dlg.set_modal (True)
-        dlg.add_button (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
-        dlg.add_button (Gtk.STOCK_OK, Gtk.ResponseType.OK).grab_default ()
+
+        button = dlg.add_button (_("_Cancel"), Gtk.ResponseType.CANCEL)
+        button.set_image (Gtk.Image.new_from_icon_name ("gtk-cancel",
+                                                        Gtk.IconSize.BUTTON))
+        button = dlg.add_button (_("_OK"), Gtk.ResponseType.OK)
+        button.set_image (Gtk.Image.new_from_icon_name ("gtk-ok",
+                                                        Gtk.IconSize.BUTTON))
+        button.grab_default ()
         dlg.set_default_response (Gtk.ResponseType.OK)
 
         mainBox = Gtk.Box (orientation=Gtk.Orientation.VERTICAL)
@@ -1540,8 +1566,14 @@ class EdgeSetting (EditableActionSetting):
         dlg.set_position (Gtk.WindowPosition.CENTER_ON_PARENT)
         dlg.set_transient_for (self.Widget.get_toplevel ())
         dlg.set_modal (True)
-        dlg.add_button (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
-        dlg.add_button (Gtk.STOCK_OK, Gtk.ResponseType.OK).grab_default()
+
+        button = dlg.add_button (_("_Cancel"), Gtk.ResponseType.CANCEL)
+        button.set_image (Gtk.Image.new_from_icon_name ("gtk-cancel",
+                                                        Gtk.IconSize.BUTTON))
+        button = dlg.add_button (_("_OK"), Gtk.ResponseType.OK)
+        button.set_image (Gtk.Image.new_from_icon_name ("gtk-ok",
+                                                        Gtk.IconSize.BUTTON))
+        button.grab_default ()
         dlg.set_default_response (Gtk.ResponseType.OK)
 
         selector = SingleEdgeSelector (self.current)

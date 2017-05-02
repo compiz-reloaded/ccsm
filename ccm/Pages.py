@@ -127,8 +127,9 @@ class PluginPage(GenericPage):
         else:
             self.FilterEntry.set_tooltip_text(_("Search Compiz Core Options"))
 
-        backButton = Gtk.Button(label=Gtk.STOCK_GO_BACK)
-        backButton.set_use_stock(True)
+        backButton = Gtk.Button.new_with_mnemonic(_("_Back"))
+        backButton.set_image(Gtk.Image.new_from_icon_name("go-previous",
+                                                          Gtk.IconSize.BUTTON))
         self.LeftWidget.pack_end(backButton, False, False, 0)
         backButton.connect('clicked', self.GoBack)
         self.RightWidget = Gtk.Notebook()
@@ -328,8 +329,9 @@ class FilterPage(GenericPage):
         self.LeftWidget.pack_start(check, False, False, 0)
 
         # Back Button
-        self.BackButton = Gtk.Button(label=Gtk.STOCK_GO_BACK)
-        self.BackButton.set_use_stock(True)
+        self.BackButton = Gtk.Button.new_with_mnemonic(_("_Back"))
+        self.BackButton.set_image(Gtk.Image.new_from_icon_name("go-previous",
+                                                               Gtk.IconSize.BUTTON))
         self.BackButton.connect('clicked', self.GoBack)
         self.LeftWidget.pack_end(self.BackButton, False, False, 0)
 
@@ -737,10 +739,12 @@ class ProfileBackendPage(object):
         profileBox.set_spacing(5)
         profileAdd = Gtk.Button()
         profileAdd.set_tooltip_text(_("Add a New Profile"))
-        profileAdd.set_image(Gtk.Image.new_from_stock(Gtk.STOCK_ADD, Gtk.IconSize.BUTTON))
+        profileAdd.set_image(Gtk.Image.new_from_icon_name("list-add",
+                                                          Gtk.IconSize.BUTTON))
         self.ProfileRemoveButton = profileRemove = Gtk.Button()
         profileRemove.set_tooltip_text(_("Remove This Profile"))
-        profileRemove.set_image(Gtk.Image.new_from_stock(Gtk.STOCK_REMOVE, Gtk.IconSize.BUTTON))
+        profileRemove.set_image(Gtk.Image.new_from_icon_name("list-remove",
+                                                             Gtk.IconSize.BUTTON))
         self.ProfileComboBox = Gtk.ComboBoxText.new()
         self.ProfileComboBox.set_sensitive(self.Context.CurrentBackend.ProfileSupport)
         self.ProfileComboBox.append_text(_("Default"))
@@ -774,10 +778,14 @@ class ProfileBackendPage(object):
         profileExportButton.set_tooltip_text(_("Export your CompizConfig Profile"))
         profileResetButton = Gtk.Button(label=_("Reset to defaults"))
         profileResetButton.set_tooltip_text(_("Reset your CompizConfig Profile to the global defaults"))
-        profileResetButton.set_image(Gtk.Image.new_from_stock(Gtk.STOCK_CLEAR, Gtk.IconSize.BUTTON))
-        profileImportButton.set_image(Gtk.Image.new_from_stock(Gtk.STOCK_OPEN, Gtk.IconSize.BUTTON))
-        profileImportAsButton.set_image(Gtk.Image.new_from_stock(Gtk.STOCK_OPEN, Gtk.IconSize.BUTTON))
-        profileExportButton.set_image(Gtk.Image.new_from_stock(Gtk.STOCK_SAVE, Gtk.IconSize.BUTTON))
+        profileResetButton.set_image(Gtk.Image.new_from_icon_name("edit-clear",
+                                                                  Gtk.IconSize.BUTTON))
+        profileImportButton.set_image(Gtk.Image.new_from_icon_name("document-open",
+                                                                   Gtk.IconSize.BUTTON))
+        profileImportAsButton.set_image(Gtk.Image.new_from_icon_name("document-open",
+                                                                     Gtk.IconSize.BUTTON))
+        profileExportButton.set_image(Gtk.Image.new_from_icon_name("document-save",
+                                                                   Gtk.IconSize.BUTTON))
         profileImportButton.connect("clicked", self.ImportProfile)
         profileImportAsButton.connect("clicked", self.ImportProfileAs)
         profileExportButton.connect("clicked", self.ExportProfile)
@@ -928,9 +936,19 @@ class ProfileBackendPage(object):
 
     def ExportProfile(self, widget):
         main = widget.get_toplevel()
-        chooser = Gtk.FileChooserDialog(title=_("Save file.."), transient_for=main, action=Gtk.FileChooserAction.SAVE)
-        chooser.add_button (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
-        chooser.add_button (Gtk.STOCK_SAVE, Gtk.ResponseType.OK)
+        chooser = Gtk.FileChooserDialog(title=_("Save file.."),
+                                        transient_for=main,
+                                        action=Gtk.FileChooserAction.SAVE)
+
+        button = chooser.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
+        button.set_image(Gtk.Image.new_from_icon_name("gtk-cancel",
+                                                      Gtk.IconSize.BUTTON))
+        button = chooser.add_button(_("_Save"), Gtk.ResponseType.OK)
+        button.set_image(Gtk.Image.new_from_icon_name("document-save",
+                                                      Gtk.IconSize.BUTTON))
+        button.grab_default()
+        chooser.set_default_response(Gtk.ResponseType.OK)
+
         chooser.set_current_folder(os.environ.get("HOME"))
         self.CreateFilter(chooser)
         ret = chooser.run()
@@ -950,8 +968,16 @@ class ProfileBackendPage(object):
     def ImportProfileDialog (self, main):
         chooser = Gtk.FileChooserDialog (title = _("Open file.."),
                                          transient_for = main)
-        chooser.add_button (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
-        chooser.add_button (Gtk.STOCK_OPEN, Gtk.ResponseType.OK)
+
+        button = chooser.add_button (_("_Cancel"), Gtk.ResponseType.CANCEL)
+        button.set_image (Gtk.Image.new_from_icon_name ("gtk-cancel",
+                                                        Gtk.IconSize.BUTTON))
+        button = chooser.add_button (_("_Open"), Gtk.ResponseType.OK)
+        button.set_image (Gtk.Image.new_from_icon_name ("document-open",
+                                                        Gtk.IconSize.BUTTON))
+        button.grab_default ()
+        chooser.set_default_response (Gtk.ResponseType.OK)
+
         chooser.set_current_folder (os.environ.get ("HOME"))
         self.CreateFilter (chooser)
         ret = chooser.run ()
@@ -965,8 +991,15 @@ class ProfileBackendPage(object):
     def ProfileNameDialog (self, main):
         dlg = Gtk.Dialog (title=_("Enter a profile name"),
                           transient_for=main, modal=True)
-        dlg.add_button (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
-        dlg.add_button (Gtk.STOCK_ADD, Gtk.ResponseType.OK)
+
+        button = dlg.add_button (_("_Cancel"), Gtk.ResponseType.CANCEL)
+        button.set_image (Gtk.Image.new_from_icon_name ("gtk-cancel",
+                                                        Gtk.IconSize.BUTTON))
+        button = dlg.add_button (_("_Add"), Gtk.ResponseType.OK)
+        button.set_image (Gtk.Image.new_from_icon_name ("list-add",
+                                                        Gtk.IconSize.BUTTON))
+        button.grab_default ()
+        dlg.set_default_response (Gtk.ResponseType.OK)
 
         entry = Gtk.Entry ()
         label = Gtk.Label (label=_("Please enter a name for the new profile:"))
@@ -1078,12 +1111,14 @@ class PluginListPage(object):
         self.MiddleButtonBox = buttonBox
 
         rightButton = Gtk.Button()
-        rightImage = Image(Gtk.STOCK_GO_FORWARD, ImageStock, Gtk.IconSize.BUTTON)
+        rightImage = Gtk.Image.new_from_icon_name("go-next",
+                                                  Gtk.IconSize.BUTTON)
         rightButton.set_image(rightImage)
         rightButton.connect("clicked", self.EnablePlugins)
 
         leftButton = Gtk.Button()
-        leftImage = Image(Gtk.STOCK_GO_BACK, ImageStock, Gtk.IconSize.BUTTON)
+        leftImage = Gtk.Image.new_from_icon_name("go-previous",
+                                                 Gtk.IconSize.BUTTON)
         leftButton.set_image(leftImage)
         leftButton.connect("clicked", self.EnabledPluginsList.delete)
 
@@ -1103,16 +1138,19 @@ class PluginListPage(object):
             enabledAlignment.add(enabledButtonBox)
         self.EnabledButtonBox = enabledButtonBox
 
-        upButton = Gtk.Button(label=Gtk.STOCK_GO_UP)
-        downButton = Gtk.Button(label=Gtk.STOCK_GO_DOWN)
-        upButton.set_use_stock(True)
-        downButton.set_use_stock(True)
+        upButton = Gtk.Button.new_with_mnemonic(_("_Up"))
+        downButton = Gtk.Button.new_with_mnemonic(_("_Down"))
+        upButton.set_image(Gtk.Image.new_from_icon_name("go-up",
+                                                        Gtk.IconSize.BUTTON))
+        downButton.set_image(Gtk.Image.new_from_icon_name("go-down",
+                                                          Gtk.IconSize.BUTTON))
         upButton.connect('clicked', self.EnabledPluginsList.move_up)
         downButton.connect('clicked', self.EnabledPluginsList.move_down)
 
         # Add buttons
-        addButton = Gtk.Button(label=Gtk.STOCK_ADD)
-        addButton.set_use_stock(True)
+        addButton = Gtk.Button.new_with_mnemonic(_("_Add"))
+        addButton.set_image(Gtk.Image.new_from_icon_name("list-add",
+                                                         Gtk.IconSize.BUTTON))
         addButton.connect('clicked', self.AddPlugin)
 
         enabledButtonBox.pack_start(addButton, False, False, 0)
@@ -1200,8 +1238,14 @@ class PluginListPage(object):
 
     def AddPlugin(self, widget):
         dlg = Gtk.Dialog(title=_("Add plugin"))
-        dlg.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
-        dlg.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK).grab_default()
+
+        button = dlg.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
+        button.set_image(Gtk.Image.new_from_icon_name("gtk-cancel",
+                                                      Gtk.IconSize.BUTTON))
+        button = dlg.add_button(_("_OK"), Gtk.ResponseType.OK)
+        button.set_image(Gtk.Image.new_from_icon_name("gtk-ok",
+                                                      Gtk.IconSize.BUTTON))
+        button.grab_default()
         dlg.set_default_response(Gtk.ResponseType.OK)
 
         label = Gtk.Label(label=_("Plugin name:"))
@@ -1297,7 +1341,8 @@ class PreferencesPage(GenericPage):
             aboutLabel.connect("style-set", self.HeaderStyleUpdate)
         aboutButton = Gtk.Button()
         aboutButton.set_relief(Gtk.ReliefStyle.NONE)
-        aboutImage = Image(Gtk.STOCK_ABOUT, ImageStock, Gtk.IconSize.BUTTON)
+        aboutImage = Gtk.Image.new_from_icon_name("help-about",
+                                                  Gtk.IconSize.BUTTON)
         aboutFrame = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
         aboutFrame.set_spacing(5)
         aboutFrame.pack_start(aboutImage, False, False, 0)
@@ -1315,8 +1360,9 @@ class PreferencesPage(GenericPage):
         self.LeftWidget.pack_start(aboutBin, False, False, 0)
 
         # Back Button
-        backButton = Gtk.Button(label=Gtk.STOCK_GO_BACK)
-        backButton.set_use_stock(True)
+        backButton = Gtk.Button.new_with_mnemonic(_("_Back"))
+        backButton.set_image(Gtk.Image.new_from_icon_name("go-previous",
+                                                          Gtk.IconSize.BUTTON))
         backButton.connect('clicked', self.GoBack)
         self.LeftWidget.pack_end(backButton, False, False, 0)
 
@@ -1456,8 +1502,9 @@ class MainPage(object):
             categoryLabel.connect("style-set", self.HeaderStyleUpdate)
 
         # Exit Button
-        exitButton = Gtk.Button(label=Gtk.STOCK_CLOSE)
-        exitButton.set_use_stock(True)
+        exitButton = Gtk.Button.new_with_mnemonic(_("_Close"))
+        exitButton.set_image(Gtk.Image.new_from_icon_name("window-close",
+                                                          Gtk.IconSize.BUTTON))
         exitButton.connect('clicked', self.Main.Quit)
 
         # Advanced Search
@@ -1467,8 +1514,8 @@ class MainPage(object):
             searchLabel.connect("style-updated", self.HeaderStyleUpdate)
         else:
             searchLabel.connect("style-set", self.HeaderStyleUpdate)
-        searchImage = Gtk.Image()
-        searchImage.set_from_stock(Gtk.STOCK_GO_FORWARD, Gtk.IconSize.BUTTON)
+        searchImage = Gtk.Image.new_from_icon_name("go-next",
+                                                   Gtk.IconSize.BUTTON)
         searchButton = PrettyButton()
         searchButton.connect("clicked", self.ShowAdvancedFilter)
         searchButton.set_relief(Gtk.ReliefStyle.NONE)
@@ -1484,8 +1531,8 @@ class MainPage(object):
             prefLabel.connect("style-updated", self.HeaderStyleUpdate)
         else:
             prefLabel.connect("style-set", self.HeaderStyleUpdate)
-        prefImage = Gtk.Image()
-        prefImage.set_from_stock(Gtk.STOCK_GO_FORWARD, Gtk.IconSize.BUTTON)
+        prefImage = Gtk.Image.new_from_icon_name("go-next",
+                                                 Gtk.IconSize.BUTTON)
         prefButton = PrettyButton()
         prefButton.connect("clicked", self.ShowPreferences)
         prefButton.set_relief(Gtk.ReliefStyle.NONE)

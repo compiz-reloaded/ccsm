@@ -92,7 +92,8 @@ class FallbackStack(Gtk.Box):
 class ClearEntry(Gtk.Entry):
     def __init__(self):
         Gtk.Entry.__init__(self)
-        self.set_icon_from_stock(Gtk.EntryIconPosition.SECONDARY, Gtk.STOCK_CLEAR)
+        self.set_icon_from_icon_name(Gtk.EntryIconPosition.SECONDARY,
+                                     "edit-clear")
         self.set_icon_tooltip_text(Gtk.EntryIconPosition.SECONDARY, _("Clear"))
         self.connect('icon-press', self._clear_pressed)
 
@@ -1331,8 +1332,8 @@ class MatchButton(Gtk.Button):
         self.entry = entry
         self.match = entry.get_text()
 
-        self.add (Image (name = Gtk.STOCK_ADD, type = ImageStock,
-                         size = Gtk.IconSize.BUTTON))
+        self.add (Gtk.Image.new_from_icon_name ("list-add",
+                                                Gtk.IconSize.BUTTON))
         self.connect ("clicked", self.run_edit_dialog)
 
     def set_match (self, value):
@@ -1457,9 +1458,15 @@ class MatchButton(Gtk.Button):
         dlg = Gtk.Dialog (title=_("Edit match"))
         dlg.set_position (Gtk.WindowPosition.CENTER_ON_PARENT)
         dlg.set_transient_for (self.get_parent ().get_toplevel ())
-        dlg.add_button (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
-        dlg.add_button (Gtk.STOCK_ADD, Gtk.ResponseType.OK).grab_default ()
         dlg.set_response_sensitive(Gtk.ResponseType.OK, False)
+
+        button = dlg.add_button (_("_Cancel"), Gtk.ResponseType.CANCEL)
+        button.set_image (Gtk.Image.new_from_icon_name ("gtk-cancel",
+                                                        Gtk.IconSize.BUTTON))
+        button = dlg.add_button (_("_Add"), Gtk.ResponseType.OK)
+        button.set_image (Gtk.Image.new_from_icon_name ("list-add",
+                                                        Gtk.IconSize.BUTTON))
+        button.grab_default ()
         dlg.set_default_response (Gtk.ResponseType.OK)
 
         if Gtk.check_version(3, 12, 0) is None:
@@ -1575,8 +1582,8 @@ class FileButton (Gtk.Button):
         self._path = path
 
         self.set_tooltip_text(_("Browse..."))
-        self.set_image(Gtk.Image.new_from_stock(
-            Gtk.STOCK_OPEN, Gtk.IconSize.BUTTON))
+        self.set_image(Gtk.Image.new_from_icon_name("document-open",
+                                                    Gtk.IconSize.BUTTON))
         self.connect('clicked', self.open_dialog)
 
     def set_path (self, value):
@@ -1629,13 +1636,12 @@ class FileButton (Gtk.Button):
         widget.get_preview_widget ().set_from_pixbuf (pixbuf)
 
     def open_dialog (self, widget):
-        b = (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL, Gtk.STOCK_OPEN, Gtk.ResponseType.OK)
         if self._directory:
             title = _("Open directory...")
         else:
             title = _("Open file...")
 
-        chooser = Gtk.FileChooserDialog (title = title, buttons = b)
+        chooser = Gtk.FileChooserDialog (title = title)
         if self._directory:
             chooser.set_action (Gtk.FileChooserAction.SELECT_FOLDER)
         else:
@@ -1650,6 +1656,15 @@ class FileButton (Gtk.Button):
             chooser.set_use_preview_label (False)
             chooser.set_preview_widget (Gtk.Image ())
             chooser.connect ("selection-changed", self.update_preview)
+
+        button = chooser.add_button (_("_Cancel"), Gtk.ResponseType.CANCEL)
+        button.set_image (Gtk.Image.new_from_icon_name ("gtk-cancel",
+                                                        Gtk.IconSize.BUTTON))
+        button = chooser.add_button (_("_Open"), Gtk.ResponseType.OK)
+        button.set_image (Gtk.Image.new_from_icon_name ("document-open",
+                                                        Gtk.IconSize.BUTTON))
+        button.grab_default ()
+        dlg.set_default_response (Gtk.ResponseType.OK)
 
         ret = chooser.run ()
 
