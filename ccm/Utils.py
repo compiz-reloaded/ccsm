@@ -137,7 +137,7 @@ class Image (Gtk.Image):
         except GLib.GError:
             self.set_from_stock (Gtk.STOCK_MISSING_IMAGE, Gtk.IconSize.BUTTON)
 
-class ActionImage (Gtk.Alignment):
+class ActionImage (Gtk.Box):
 
     map = {
             "keyboard"  : "input-keyboard",
@@ -147,11 +147,17 @@ class ActionImage (Gtk.Alignment):
           }
 
     def __init__ (self, action):
-        Gtk.Alignment.__init__ (self)
-        self.set (0, 0, 0.5, 0)
-        self.set_padding (0, 0, 0, 10)
+        Gtk.Box.__init__ (self)
         if action in self.map: action = self.map[action]
-        self.add (Image (name = action, type = ImageThemed, size = 22))
+        image = Image (name = action, type = ImageThemed, size = 22)
+        if Gtk.check_version(3, 12, 0) is None:
+            image.set_margin_end(10)
+            self.add (image)
+        else:
+            alignment = Gtk.Alignment()
+            alignment.set_padding (0, 0, 0, 10)
+            alignment.add (image)
+            self.add (alignment)
 
 class SizedButton (Gtk.Button):
 
@@ -234,10 +240,9 @@ class Label(Gtk.Label):
         self.set_max_width_chars(0)
         self.set_size_request(wrap, -1)
 
-class NotFoundBox(Gtk.Alignment):
+class NotFoundBox(Gtk.Box):
     def __init__(self, value=""):
-        Gtk.Alignment.__init__(self)
-        self.set(0.5, 0.5, 0, 0)
+        Gtk.Box.__init__(self)
 
         box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
         self.Warning = Gtk.Label()
@@ -248,7 +253,7 @@ class NotFoundBox(Gtk.Alignment):
 
         box.pack_start(image, False, False, 0)
         box.pack_start(self.Warning, True, True, 15)
-        self.add(box)
+        self.pack_start(box, True, False, 0)
 
     def update(self, value):
         value = protect_pango_markup(value)

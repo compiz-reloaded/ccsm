@@ -66,7 +66,10 @@ class PluginPage(GenericPage):
         self.Plugin = plugin
         self.LeftWidget = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,
                                   homogeneous=False, spacing=10)
-        self.LeftWidget.set_border_width(10)
+        if Gtk.check_version(3, 0, 0) is None:
+            self.LeftWidget.props.margin = 10
+        else:
+            self.LeftWidget.set_border_width(10)
 
         pluginLabel = Label()
         pluginLabel.set_markup(HeaderMarkup % (plugin.ShortDesc))
@@ -90,7 +93,10 @@ class PluginPage(GenericPage):
         self.LeftWidget.pack_start(pluginLabel, False, False, 0)
         infoLabel = Label(plugin.LongDesc, 180)
         infoLabelCont = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
-        infoLabelCont.set_border_width(10)
+        if Gtk.check_version(3, 0, 0) is None:
+            infoLabelCont.props.margin = 10
+        else:
+            infoLabelCont.set_border_width(10)
         infoLabelCont.pack_start(infoLabel, True, True, 0)
         self.LeftWidget.pack_start(infoLabelCont, False, False, 0)
 
@@ -106,7 +112,10 @@ class PluginPage(GenericPage):
                 enableLabel.connect("style-set", self.HeaderStyleUpdate)
             self.LeftWidget.pack_start(enableLabel, False, False, 0)
             enableCheckCont = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
-            enableCheckCont.set_border_width(10)
+            if Gtk.check_version(3, 0, 0) is None:
+                enableCheckCont.props.margin = 10
+            else:
+                enableCheckCont.set_border_width(10)
             self.LeftWidget.pack_start(enableCheckCont, False, False, 0)
             enableCheck = Gtk.CheckButton()
             enableCheck.add(Label(_("Enable %s") % plugin.ShortDesc, 120))
@@ -265,7 +274,10 @@ class FilterPage(GenericPage):
         self.Context = context
         self.LeftWidget = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,
                                   homogeneous=False, spacing=10)
-        self.LeftWidget.set_border_width(10)
+        if Gtk.check_version(3, 0, 0) is None:
+            self.LeftWidget.props.margin = 10
+        else:
+            self.LeftWidget.set_border_width(10)
         self.RightWidget = Gtk.Notebook()
         self.RightChild = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
 
@@ -343,7 +355,10 @@ class FilterPage(GenericPage):
         self.SelectorButtons.set_size_request(-1, 50)
 
         self.SelectorBoxes = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
-        self.SelectorBoxes.set_border_width(5)
+        if Gtk.check_version(3, 0, 0) is None:
+            self.SelectorBoxes.props.margin = 5
+        else:
+            self.SelectorBoxes.set_border_width(5)
         self.SelectorBoxes.set_spacing(5)
 
         scroll = Gtk.ScrolledWindow()
@@ -372,11 +387,16 @@ class FilterPage(GenericPage):
             ebox.get_style_context().add_class(Gtk.STYLE_CLASS_NOTEBOOK)
         self.SettingsBox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         ebox.add(self.SettingsBox)
-        self.SettingsBox.set_border_width(5)
         self.SettingsArea.props.hscrollbar_policy = Gtk.PolicyType.AUTOMATIC
         self.SettingsArea.props.vscrollbar_policy = Gtk.PolicyType.ALWAYS
-        self.SettingsArea.set_border_width(5)
-        self.SettingsArea.add_with_viewport(ebox)
+        if Gtk.check_version (3, 8, 0) is None:
+            self.SettingsBox.props.margin = 5
+            self.SettingsArea.props.margin = 5
+            self.SettingsArea.add(ebox)
+        else:
+            self.SettingsBox.set_border_width(5)
+            self.SettingsArea.set_border_width(5)
+            self.SettingsArea.add_with_viewport(ebox)
         self.RightChild.pack_start(self.SettingsArea, True, True, 0)
 
         GlobalUpdater.Block += 1
@@ -390,7 +410,10 @@ class FilterPage(GenericPage):
         self.RightWidget.append_page(self.NotebookChild, self.NotebookLabel)
 
         box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-        box.set_border_width(5)
+        if Gtk.check_version(3, 0, 0) is None:
+            box.props.margin = 5
+        else:
+            box.set_border_width(5)
         progress = Popup(child=box)
         progress.connect("delete-event", lambda *a: True)
         progress.set_title(_("Loading Advanced Search"))
@@ -704,7 +727,10 @@ class ProfileBackendPage(object):
     def __init__(self, context):
         self.Context = context
         rightChild = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-        rightChild.set_border_width(10)
+        if Gtk.check_version(3, 0, 0) is None:
+            rightChild.props.margin = 10
+        else:
+            rightChild.set_border_width(10)
 
         # Profiles
         profileBox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
@@ -912,7 +938,8 @@ class ProfileBackendPage(object):
         path = chooser.get_filename()
         chooser.destroy()
         if ret == Gtk.ResponseType.OK:
-            dlg = Gtk.MessageDialog(type=Gtk.MessageType.QUESTION, buttons=Gtk.ButtonsType.YES_NO)
+            dlg = Gtk.MessageDialog(message_type=Gtk.MessageType.QUESTION,
+                                    buttons=Gtk.ButtonsType.YES_NO)
             dlg.set_markup(_("Do you want to skip default option values while exporting your profile?"))
             ret = dlg.run()
             dlg.destroy()
@@ -936,8 +963,8 @@ class ProfileBackendPage(object):
         return None
 
     def ProfileNameDialog (self, main):
-        dlg = Gtk.Dialog (_("Enter a profile name"), main,
-                          Gtk.DialogFlags.MODAL)
+        dlg = Gtk.Dialog (title=_("Enter a profile name"),
+                          transient_for=main, modal=True)
         dlg.add_button (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
         dlg.add_button (Gtk.STOCK_ADD, Gtk.ResponseType.OK)
 
@@ -1024,7 +1051,10 @@ class PluginListPage(object):
         self.Context = context
         self.Block = 0
         rightChild = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-        rightChild.set_border_width(10)
+        if Gtk.check_version(3, 0, 0) is None:
+            rightChild.props.margin = 10
+        else:
+            rightChild.set_border_width(10)
 
         # Auto sort
         autoSort = Gtk.CheckButton(label=_("Automatic plugin sorting"))
@@ -1040,8 +1070,11 @@ class PluginListPage(object):
         # Left/Right buttons
         buttonBox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         buttonBox.set_spacing(5)
-        boxAlignment = Gtk.Alignment(yalign=0.5, xscale=0.0, yscale=0.0)
-        boxAlignment.add(buttonBox)
+        if Gtk.check_version(3, 0, 0) is None:
+            buttonBox.set_valign(Gtk.Align.CENTER)
+        else:
+            boxAlignment = Gtk.Alignment(yalign=0.5, xscale=0.0, yscale=0.0)
+            boxAlignment.add(buttonBox)
         self.MiddleButtonBox = buttonBox
 
         rightButton = Gtk.Button()
@@ -1061,10 +1094,13 @@ class PluginListPage(object):
         enabledBox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         enabledBox.set_spacing(10)
 
-        enabledAlignment = Gtk.Alignment(xalign=0.5, xscale=0.0, yscale=0.0)
         enabledButtonBox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
         enabledButtonBox.set_spacing(5)
-        enabledAlignment.add(enabledButtonBox)
+        if Gtk.check_version(3, 0, 0) is None:
+            enabledButtonBox.set_halign(Gtk.Align.CENTER)
+        else:
+            enabledAlignment = Gtk.Alignment(xalign=0.5, xscale=0.0, yscale=0.0)
+            enabledAlignment.add(enabledButtonBox)
         self.EnabledButtonBox = enabledButtonBox
 
         upButton = Gtk.Button(label=Gtk.STOCK_GO_UP)
@@ -1084,10 +1120,16 @@ class PluginListPage(object):
         enabledButtonBox.pack_start(downButton, False, False, 0)
 
         enabledBox.pack_start(self.EnabledPluginsList, True, True, 0)
-        enabledBox.pack_start(enabledAlignment, False, False, 0)
+        if Gtk.check_version(3, 0, 0) is None:
+            enabledBox.pack_start(enabledButtonBox, False, False, 0)
+        else:
+            enabledBox.pack_start(enabledAlignment, False, False, 0)
 
         listBox.pack_start(self.DisabledPluginsList, True, True, 0)
-        listBox.pack_start(boxAlignment, True, False, 0)
+        if Gtk.check_version(3, 0, 0) is None:
+            listBox.pack_start(buttonBox, True, False, 0)
+        else:
+            listBox.pack_start(boxAlignment, True, False, 0)
         listBox.pack_start(enabledBox, True, True, 0)
 
         self.UpdateEnabledPluginsList()
@@ -1112,7 +1154,8 @@ class PluginListPage(object):
 
         autoSort = widget.get_active()
         if not autoSort:
-            dlg = Gtk.MessageDialog(type=Gtk.MessageType.WARNING, buttons=Gtk.ButtonsType.YES_NO)
+            dlg = Gtk.MessageDialog(message_type=Gtk.MessageType.WARNING,
+                                    buttons=Gtk.ButtonsType.YES_NO)
             dlg.set_markup(_("Do you really want to disable automatic plugin sorting? This will also disable conflict handling. You should only do this if you know what you are doing."))
             response = dlg.run()
             dlg.destroy()
@@ -1156,7 +1199,7 @@ class PluginListPage(object):
                 self.DisabledPluginsList.append(plugin.Name)
 
     def AddPlugin(self, widget):
-        dlg = Gtk.Dialog(_("Add plugin"))
+        dlg = Gtk.Dialog(title=_("Add plugin"))
         dlg.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
         dlg.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK).grab_default()
         dlg.set_default_response(Gtk.ResponseType.OK)
@@ -1209,7 +1252,10 @@ class PreferencesPage(GenericPage):
         self.Context = context
         self.LeftWidget = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,
                                   homogeneous=False, spacing=10)
-        self.LeftWidget.set_border_width(10)
+        if Gtk.check_version(3, 0, 0) is None:
+            self.LeftWidget.props.margin = 10
+        else:
+            self.LeftWidget.set_border_width(10)
         if Gtk.check_version(3, 12, 0) is None:
             self.RightWidget = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,
                                        spacing=6)
@@ -1234,7 +1280,10 @@ class PreferencesPage(GenericPage):
         self.LeftWidget.pack_start(self.DescImg, False, False, 0)
         self.LeftWidget.pack_start(self.DescLabel, False, False, 0)
         self.InfoLabelCont = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
-        self.InfoLabelCont.set_border_width(10)
+        if Gtk.check_version(3, 0, 0) is None:
+            self.InfoLabelCont.props.margin = 10
+        else:
+            self.InfoLabelCont.set_border_width(10)
         self.LeftWidget.pack_start(self.InfoLabelCont, False, False, 0)
         self.InfoLabel = Label(_("Configure the backend, profile and other internal settings used by the Compiz Configuration System."), 180)
         self.InfoLabelCont.pack_start(self.InfoLabel, True, True, 0)
@@ -1257,7 +1306,10 @@ class PreferencesPage(GenericPage):
         aboutButton.set_tooltip_text(_("About"))
         aboutButton.connect('clicked', self.ShowAboutDialog)
         aboutBin = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
-        aboutBin.set_border_width(10)
+        if Gtk.check_version(3, 0, 0) is None:
+            aboutBin.props.margin = 10
+        else:
+            aboutBin.set_border_width(10)
         aboutBin.pack_start(aboutButton, False, False, 0)
         self.LeftWidget.pack_start(aboutLabel, False, False, 0)
         self.LeftWidget.pack_start(aboutBin, False, False, 0)
@@ -1324,7 +1376,10 @@ class MainPage(object):
         self.Main    = main
         sidebar = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,
                           homogeneous=False, spacing=10)
-        sidebar.set_border_width(10)
+        if Gtk.check_version(3, 0, 0) is None:
+            sidebar.props.margin = 10
+        else:
+            sidebar.set_border_width(10)
 
         pluginWindow = PluginWindow(self.Context)
         pluginWindow.connect('show-plugin', self.ShowPlugin)
@@ -1363,7 +1418,10 @@ class MainPage(object):
 
         # Categories
         categoryBox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-        categoryBox.set_border_width(5)
+        if Gtk.check_version(3, 0, 0) is None:
+            categoryBox.props.margin = 5
+        else:
+            categoryBox.set_border_width(5)
         categories = ['All'] + sorted(pluginWindow.get_categories(), key=CategoryKeyFunc)
         for category in categories:
             # name: untranslated name/interal identifier
@@ -1375,10 +1433,15 @@ class MainPage(object):
                                         size = 22)
             categoryToggleLabel = Label (label)
             categoryToggleBox = Gtk.Box (orientation=Gtk.Orientation.HORIZONTAL)
-            alignment = Gtk.Alignment (xalign=0.0)
-            alignment.set_padding (0, 0, 0, 10)
-            alignment.add (categoryToggleIcon)
-            categoryToggleBox.pack_start (alignment, False, False, 0)
+            if Gtk.check_version (3, 12, 0) is None:
+                categoryToggleIcon.set_margin_end(10)
+                categoryToggleBox.pack_start (categoryToggleIcon,
+                                              False, False, 0)
+            else:
+                alignment = Gtk.Alignment (xalign=0.0)
+                alignment.set_padding (0, 0, 0, 10)
+                alignment.add (categoryToggleIcon)
+                categoryToggleBox.pack_start (alignment, False, False, 0)
             categoryToggleBox.pack_start (categoryToggleLabel, True, True, 0)
             categoryToggle = PrettyButton ()
             categoryToggle.add(categoryToggleBox)
@@ -1518,7 +1581,10 @@ class Page(object):
         scroll.props.vscrollbar_policy = Gtk.PolicyType.AUTOMATIC
 
         view = Gtk.Viewport()
-        view.set_border_width(5)
+        if Gtk.check_version(3, 0, 0) is None:
+            view.props.margin = 5
+        else:
+            view.set_border_width(5)
         view.set_shadow_type(Gtk.ShadowType.NONE)
 
         scroll.add(view)
@@ -1534,12 +1600,17 @@ class GroupPage(Page):
 
         self.Name = name
         self.VisibleAreas = self.subGroupAreas = []
-        label = Gtk.Label(label="<b>%s</b>" %
-                          (protect_pango_markup(name or _('General'))))
-        label.set_use_markup(True)
-        self.Label = Gtk.Alignment(xalign=0.0, xscale=0.0, yscale=0.0)
-        self.Label.set_padding(4, 4, 4, 4)
-        self.Label.add(label)
+        self.Label = Gtk.Label(label="<b>%s</b>" %
+                               (protect_pango_markup(name or _("General"))))
+        self.Label.set_use_markup(True)
+        if Gtk.check_version(3, 0, 0) is None:
+            self.Label.set_halign(Gtk.Align.START)
+            self.Label.props.margin = 4
+        else:
+            label = self.Label
+            self.Label = Gtk.Alignment(xalign=0.0, xscale=0.0, yscale=0.0)
+            self.Label.set_padding(4, 4, 4, 4)
+            self.Label.add(label)
         if '' in group:
             sga = SubGroupArea('', group[''][1])
             if not sga.Empty:
@@ -1568,7 +1639,7 @@ class GroupPage(Page):
 
         self.Visible = not empty
 
-        self.Label.props.no_show_all = empty
+        self.Label.set_no_show_all(empty)
         if empty:
             self.Label.hide()
         else:

@@ -174,7 +174,7 @@ class Setting(object):
 
     def _SetHidden(self, visible):
 
-        self.EBox.props.no_show_all = not visible
+        self.EBox.set_no_show_all(not visible)
 
         if visible:
             self.EBox.show()
@@ -480,9 +480,7 @@ class BoolSetting (StockSetting):
         StockSetting._Init(self)
         self.Label.set_size_request(-1, -1)
         self.CheckButton = Gtk.CheckButton ()
-        align = Gtk.Alignment (xalign=0.0, xscale=0.0, yscale=0.0)
-        align.add(self.CheckButton)
-        self.Box.pack_end(align, False, False, 0)
+        self.Box.pack_end(self.CheckButton, False, False, 0)
         self.CheckButton.connect ('toggled', self.Changed)
 
     def _Read (self):
@@ -564,9 +562,13 @@ class ColorSetting(StockSetting):
         self.Button.set_use_alpha(True)
         self.Button.connect('color-set', self.Changed)
 
-        self.Widget = Gtk.Alignment (xalign=1.0, xscale=0.0, yscale=0.0)
-        self.Widget.add (self.Button)
-        self.Box.pack_start(self.Widget, True, True, 0)
+        if Gtk.check_version(3, 0, 0) is None:
+            self.Button.set_halign(Gtk.Align.END)
+            self.Box.pack_start(self.Button, True, True, 0)
+        else:
+            alignment = Gtk.Alignment(xalign=1.0, xscale=0.0, yscale=0.0)
+            alignment.add(self.Button)
+            self.Box.pack_start(alignment, True, True, 0)
 
     def GetForRenderer(self):
         return ["#%.4x%.4x%.4x%.4x" %tuple(seq) for seq in self.Setting.Value]
@@ -644,7 +646,10 @@ class BaseListSetting(Setting):
         buttonBox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,
                             homogeneous=False)
         buttonBox.set_spacing(5)
-        buttonBox.set_border_width(5)
+        if Gtk.check_version(3, 0, 0) is None:
+            buttonBox.props.margin = 5
+        else:
+            buttonBox.set_border_width(5)
         self.Widget.pack_start(buttonBox, False, False, 0)
         buttonTypes = ((Gtk.STOCK_NEW, self.Add, None, True),
                        (Gtk.STOCK_DELETE, self.Delete, None, False),
@@ -732,7 +737,7 @@ class BaseListSetting(Setting):
             self._Delete(row)
 
     def _MakeEditDialog(self):
-        dlg = Gtk.Dialog(_("Edit"))
+        dlg = Gtk.Dialog(title=_("Edit"))
         vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=GridRow)
         vbox.props.border_width = 6
         dlg.vbox.pack_start(vbox, True, True, 0)
@@ -740,7 +745,7 @@ class BaseListSetting(Setting):
         dlg.add_button(Gtk.STOCK_CLOSE, Gtk.ResponseType.CLOSE)
         dlg.set_default_response(Gtk.ResponseType.CLOSE)
 
-        group = Gtk.SizeGroup(Gtk.SizeGroupMode.HORIZONTAL)
+        group = Gtk.SizeGroup(mode=Gtk.SizeGroupMode.HORIZONTAL)
         for widget in self.Widgets:
             vbox.pack_start(widget.EBox, False, False, 0)
             group.add_widget(widget.Label)
@@ -845,10 +850,14 @@ class BaseListSetting(Setting):
                 path, col, cellx, celly = pthinfo
                 treeview.grab_focus()
                 treeview.set_cursor(path, col, 0)
-                try:
-                    self.Popup.popup(None, None, None, None, event.button, event.time)
-                except (AttributeError, NameError, TypeError):
-                    pass
+                if Gtk.check_version(3, 22, 0) is None:
+                    self.Popup.popup_at_pointer(event)
+                else:
+                    try:
+                        self.Popup.popup(None, None, None, None,
+                                         event.button, event.time)
+                    except (AttributeError, NameError, TypeError):
+                        pass
             return True
 
     def KeyPressEvent(self, treeview, event):
@@ -1062,7 +1071,7 @@ class EditableActionSetting (StockSetting):
 
 
     def RunEditDialog (self, widget):
-        dlg = Gtk.Dialog (_("Edit %s") % self.Setting.ShortDesc)
+        dlg = Gtk.Dialog (title=_("Edit %s") % self.Setting.ShortDesc)
         dlg.set_position (Gtk.WindowPosition.CENTER_ON_PARENT)
         dlg.set_transient_for (self.Widget.get_toplevel ())
         dlg.add_button (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
@@ -1074,10 +1083,15 @@ class EditableActionSetting (StockSetting):
         entry.set_text (self.GetDialogText ())
         entry.set_tooltip_text(self.Setting.LongDesc)
         entry.connect ("activate", lambda *a: dlg.response (Gtk.ResponseType.OK))
-        alignment = Gtk.Alignment ()
-        alignment.set_padding (10, 10, 10, 10)
-        alignment.add (entry)
-        dlg.vbox.pack_start (alignment, True, True, 0)
+
+        if Gtk.check_version(3, 0, 0) is None:
+            entry.props.margin = 10
+            dlg.vbox.pack_start (entry, True, True, 0)
+        else:
+            alignment = Gtk.Alignment ()
+            alignment.set_padding (10, 10, 10, 10)
+            alignment.add (entry)
+            dlg.vbox.pack_start (alignment, True, True, 0)
 
         dlg.vbox.show_all ()
         ret = dlg.run ()
@@ -1181,7 +1195,7 @@ class KeySetting (EditableActionSetting):
                 new = current.replace ("%s_R" % modifier, "")
             label.set_text (self.GetLabelText (new))
 
-        dlg = Gtk.Dialog (_("Edit %s") % self.Setting.ShortDesc)
+        dlg = Gtk.Dialog (title=_("Edit %s") % self.Setting.ShortDesc)
         dlg.set_position (Gtk.WindowPosition.CENTER_ALWAYS)
         dlg.set_transient_for (self.Widget.get_toplevel ())
         dlg.set_icon (self.Widget.get_toplevel ().get_icon ())
@@ -1191,10 +1205,14 @@ class KeySetting (EditableActionSetting):
         dlg.set_default_response (Gtk.ResponseType.OK)
 
         mainBox = Gtk.Box (orientation=Gtk.Orientation.VERTICAL)
-        alignment = Gtk.Alignment ()
-        alignment.set_padding (10, 10, 10, 10)
-        alignment.add (mainBox)
-        dlg.vbox.pack_start (alignment, True, True, 0)
+        if Gtk.check_version (3, 0, 0) is None:
+            mainBox.props.margin = 10
+            dlg.vbox.pack_start (mainBox, True, True, 0)
+        else:
+            alignment = Gtk.Alignment ()
+            alignment.set_padding (10, 10, 10, 10)
+            alignment.add (mainBox)
+            dlg.vbox.pack_start (alignment, True, True, 0)
 
         checkButton = Gtk.CheckButton (label=_("Enabled"))
         active = len (self.current) \
@@ -1214,9 +1232,13 @@ class KeySetting (EditableActionSetting):
         currentMods.rstrip ("|")
         modifierSelector = ModifierSelector (currentMods)
         modifierSelector.set_tooltip_text (self.Setting.LongDesc)
-        alignment = Gtk.Alignment (yalign=0.0, xscale=0.0, yscale=0.0)
-        alignment.add (modifierSelector)
-        box.pack_start (alignment, True, True, 0)
+        if Gtk.check_version (3, 0, 0) is None:
+            modifierSelector.set_halign (Gtk.Align.CENTER)
+            box.pack_start (modifierSelector, True, True, 0)
+        else:
+            alignment = Gtk.Alignment (yalign=0.0, xscale=0.0, yscale=0.0)
+            alignment.add (modifierSelector)
+            box.pack_start (alignment, True, True, 0)
 
         key, mods = Gtk.accelerator_parse (self.current)
         grabber = KeyGrabber (key = key, mods = mods,
@@ -1226,10 +1248,14 @@ class KeySetting (EditableActionSetting):
 
         label = Gtk.Label (label=self.GetLabelText(self.current))
         label.set_tooltip_text (self.Setting.LongDesc)
-        alignment = Gtk.Alignment (xscale=0.0, yscale=0.0)
-        alignment.set_padding (15, 0, 0, 0)
-        alignment.add (label)
-        box.pack_start (alignment, True, True, 0)
+        if Gtk.check_version (3, 0, 0) is None:
+            label.set_margin_top (15)
+            box.pack_start (label, True, True, 0)
+        else:
+            alignment = Gtk.Alignment (xscale=0.0, yscale=0.0)
+            alignment.set_padding (15, 0, 0, 0)
+            alignment.add (label)
+            box.pack_start (alignment, True, True, 0)
 
         modifierSelector.connect ("added", HandleModifierAdded, label)
         modifierSelector.connect ("removed", HandleModifierRemoved, label)
@@ -1338,7 +1364,7 @@ class ButtonSetting (EditableActionSetting):
             else:
                 box.hide ()
                 dialog.resize (1, 1)
-        dlg = Gtk.Dialog (_("Edit %s") % self.Setting.ShortDesc)
+        dlg = Gtk.Dialog (title=_("Edit %s") % self.Setting.ShortDesc)
         dlg.set_position (Gtk.WindowPosition.CENTER_ALWAYS)
         dlg.set_transient_for (self.Widget.get_toplevel ())
         dlg.set_modal (True)
@@ -1347,10 +1373,14 @@ class ButtonSetting (EditableActionSetting):
         dlg.set_default_response (Gtk.ResponseType.OK)
 
         mainBox = Gtk.Box (orientation=Gtk.Orientation.VERTICAL)
-        alignment = Gtk.Alignment ()
-        alignment.set_padding (10, 10, 10, 10)
-        alignment.add (mainBox)
-        dlg.vbox.pack_start (alignment, True, True, 0)
+        if Gtk.check_version (3, 0, 0) is None:
+            mainBox.props.margin = 10
+            dlg.vbox.pack_start (mainBox, True, True, 0)
+        else:
+            alignment = Gtk.Alignment ()
+            alignment.set_padding (10, 10, 10, 10)
+            alignment.add (mainBox)
+            dlg.vbox.pack_start (alignment, True, True, 0)
 
         checkButton = Gtk.CheckButton (label=_("Enabled"))
         active = len (self.current) \
@@ -1506,7 +1536,7 @@ class EdgeSetting (EditableActionSetting):
         self.Button.set_label (label)
 
     def RunEdgeSelector (self, widget):
-        dlg = Gtk.Dialog (_("Edit %s") % self.Setting.ShortDesc)
+        dlg = Gtk.Dialog (title=_("Edit %s") % self.Setting.ShortDesc)
         dlg.set_position (Gtk.WindowPosition.CENTER_ON_PARENT)
         dlg.set_transient_for (self.Widget.get_toplevel ())
         dlg.set_modal (True)
@@ -1515,12 +1545,15 @@ class EdgeSetting (EditableActionSetting):
         dlg.set_default_response (Gtk.ResponseType.OK)
 
         selector = SingleEdgeSelector (self.current)
-        alignment = Gtk.Alignment ()
-        alignment.set_padding (10, 10, 10, 10)
-        alignment.add (selector)
-
         selector.set_tooltip_text (self.Setting.LongDesc)
-        dlg.vbox.pack_start (alignment, True, True, 0)
+        if Gtk.check_version (3, 0, 0) is None:
+            selector.props.margin = 10
+            dlg.vbox.pack_start (selector, True, True, 0)
+        else:
+            alignment = Gtk.Alignment ()
+            alignment.set_padding (10, 10, 10, 10)
+            alignment.add (selector)
+            dlg.vbox.pack_start (alignment, True, True, 0)
 
         dlg.vbox.show_all ()
         ret = dlg.run ()
@@ -1645,7 +1678,10 @@ class SubGroupArea(object):
             self.Expander.add(self.Child)
 
         self.Child.set_spacing(GridRow)
-        self.Child.set_border_width(GridRow)
+        if Gtk.check_version(3, 0, 0) is None:
+            self.Child.props.margin = GridRow
+        else:
+            self.Child.set_border_width(GridRow)
 
         # create a special widget for list subGroups
         if len(settings) > 1 and HasOnlyType(settings, 'List'):
@@ -1683,7 +1719,7 @@ class SubGroupArea(object):
         if self.Name:
             self.Expander.set_expanded(count < 4)
 
-        self.Widget.props.no_show_all = empty
+        self.Widget.set_no_show_all(empty)
 
         if empty:
             self.Widget.hide()

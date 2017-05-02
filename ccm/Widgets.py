@@ -229,7 +229,7 @@ class GroupView(Gtk.TreeView):
 
         self.get_selection().connect('changed', self.SelectionChanged)
         self.hide()
-        self.props.no_show_all = True
+        self.set_no_show_all(True)
 
     def Update(self, items):
         self.model.clear()
@@ -244,10 +244,10 @@ class GroupView(Gtk.TreeView):
 
         if length:
             self.show_all()
-            self.props.no_show_all = False
+            self.set_no_show_all(False)
         else:
             self.hide()
-            self.props.no_show_all = True
+            self.set_no_show_all(True)
 
     def SelectionChanged(self, selection):
         model, iter = selection.get_selected()
@@ -262,7 +262,10 @@ class SelectorButtons(Gtk.Box):
     def __init__(self):
         Gtk.Box.__init__(self)
         self.set_orientation(Gtk.Orientation.HORIZONTAL)
-        self.set_border_width(10)
+        if Gtk.check_version(3, 0, 0) is None:
+            self.props.margin = 10
+        else:
+            self.set_border_width(10)
         self.set_spacing(5)
         self.buttons = []
         self.arrows = []
@@ -947,12 +950,17 @@ class Popup (Gtk.Window):
         self.set_destroy_with_parent (True)
         if text:
             label = Gtk.Label (label=text)
-            align = Gtk.Alignment ()
-            align.set_padding (20, 20, 20, 20)
-            align.add (label)
-            label.show ()
-            self.add (align)
-            align.show ()
+            if Gtk.check_version (3, 0, 0) is None:
+                label.props.margin = 20
+                self.add (label)
+                label.show ()
+            else:
+                alignment = Gtk.Alignment ()
+                alignment.set_padding (20, 20, 20, 20)
+                alignment.add (label)
+                label.show ()
+                self.add (alignment)
+                alignment.show ()
         elif child:
             self.add (child)
         gtk_process_events ()
@@ -1446,7 +1454,7 @@ class MatchButton(Gtk.Button):
 
         self.match = self.entry.get_text ()
 
-        dlg = Gtk.Dialog (_("Edit match"))
+        dlg = Gtk.Dialog (title=_("Edit match"))
         dlg.set_position (Gtk.WindowPosition.CENTER_ON_PARENT)
         dlg.set_transient_for (self.get_parent ().get_toplevel ())
         dlg.add_button (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
@@ -1690,10 +1698,10 @@ class ErrorDialog (Gtk.MessageDialog):
     '''Display an error dialog'''
 
     def __init__ (self, parent, message):
-        Gtk.MessageDialog.__init__ (self, parent,
-                                    Gtk.DialogFlags.DESTROY_WITH_PARENT,
-                                    Gtk.MessageType.ERROR,
-                                    Gtk.ButtonsType.CLOSE)
+        Gtk.MessageDialog.__init__ (self, transient_for=parent,
+                                    destroy_with_parent=True,
+                                    message_type=Gtk.MessageType.ERROR,
+                                    buttons=Gtk.ButtonsType.CLOSE)
         self.set_position (Gtk.WindowPosition.CENTER)
         self.set_markup (message)
         self.set_title (_("An error has occured"))
@@ -1708,10 +1716,10 @@ class WarningDialog (Gtk.MessageDialog):
     '''Display a warning dialog'''
 
     def __init__ (self, parent, message):
-        Gtk.MessageDialog.__init__ (self, parent,
-                                    Gtk.DialogFlags.DESTROY_WITH_PARENT,
-                                    Gtk.MessageType.WARNING,
-                                    Gtk.ButtonsType.YES_NO)
+        Gtk.MessageDialog.__init__ (self, transient_for=parent,
+                                    destroy_with_parent=True,
+                                    message_type=Gtk.MessageType.WARNING,
+                                    buttons=Gtk.ButtonsType.YES_NO)
         self.set_position (Gtk.WindowPosition.CENTER)
         self.set_markup (message)
         self.set_title (_("Warning"))
@@ -1816,7 +1824,7 @@ class CategoryBox(Gtk.Box):
     _context = None
     _name    = ""
     _grid    = None
-    _alignment = None
+    _separator = None
     _current_cols = 0
     _current_plugins = 0
 
@@ -1844,7 +1852,10 @@ class CategoryBox(Gtk.Box):
         self._unfiltered_plugins = self._plugins
 
         header = Gtk.Box (orientation=Gtk.Orientation.HORIZONTAL)
-        header.set_border_width (5)
+        if Gtk.check_version (3, 0, 0) is None:
+            header.props.margin = 5
+        else:
+            header.set_border_width (5)
         header.set_spacing (10)
         label = Label ('', -1)
         label.set_markup ("<span color='#aaa' size='x-large' weight='800'>%s</span>" % _(text))
@@ -1873,22 +1884,26 @@ class CategoryBox(Gtk.Box):
             button = PluginButton(plugin, dontLoadIcons)
             self._buttons.append(button)
 
-        self._alignment = Gtk.Alignment (xalign=0.0, yscale=0.0)
-        self._alignment.set_padding (0, 20, 0, 0)
-        self._alignment.add (Gtk.HSeparator ())
+        if Gtk.check_version (3, 0, 0) is None:
+            self._separator = Gtk.Separator (orientation=Gtk.Orientation.HORIZONTAL)
+            self._separator.set_margin_bottom (20)
+        else:
+            self._separator = Gtk.Alignment ()
+            self._separator.set_padding (0, 20, 0, 0)
+            self._separator.add (Gtk.HSeparator ())
 
         self.pack_start (header, False, False, 0)
         self.pack_start (self._grid, False, False, 0)
-        self.pack_start (self._alignment, True, True, 0)
+        self.pack_start (self._separator, True, True, 0)
 
     def show_separator (self, show):
         children = self.get_children ()
         if show:
-            if self._alignment not in children:
-                self.pack_start (self._alignment, True, True, 0)
+            if self._separator not in children:
+                self.pack_start (self._separator, True, True, 0)
         else:
-            if self._alignment in children:
-                self.remove(self._alignment)
+            if self._separator in children:
+                self.remove(self._separator)
 
     def filter_buttons (self, text, level=FilterAll):
         self._plugins = []

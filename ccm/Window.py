@@ -55,19 +55,25 @@ class MainWin(Gtk.Window):
         self.add(self.MainBox)
         self.LeftPane = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         self.RightPane = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-        self.RightPane.set_border_width(5)
+        if Gtk.check_version(3, 0, 0) is None:
+            self.RightPane.props.margin = 5
+        else:
+            self.RightPane.set_border_width(5)
         self.MainBox.pack_start(self.LeftPane, False, False, 0)
         self.MainBox.pack_end(self.RightPane, True, True, 0)
         self.MainPage = MainPage(self, self.Context)
         self.CurrentPage = None
         self.SetPage(self.MainPage)
 
-        try:
-            self.LeftPane.set_size_request(self.LeftPane.size_request().width, -1)
-        except (AttributeError, TypeError):
-            req = Gtk.Requisition()
-            self.LeftPane.size_request(req)
-            self.LeftPane.set_size_request(req.width, -1)
+        if Gtk.check_version(3, 0, 0) is None:
+            self.LeftPane.set_size_request(self.LeftPane.get_preferred_width()[0], -1)
+        else:
+            try:
+                self.LeftPane.set_size_request(self.LeftPane.size_request().width, -1)
+            except (AttributeError, TypeError):
+                req = Gtk.Requisition()
+                self.LeftPane.size_request(req)
+                self.LeftPane.set_size_request(req.width, -1)
         self.show_all()
 
         if pluginPage in self.Context.Plugins:
