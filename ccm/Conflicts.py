@@ -463,7 +463,7 @@ class PluginConflict(Conflict):
 
             msg = msg % protect_markup_dict (msg_dict)
 
-            cmb = Gtk.ComboBoxText()
+            cmb = Gtk.ComboBoxText.new()
             for plugin in conflict[2]:
                 cmb.append_text(plugin.ShortDesc)
             cmb.set_active(0)

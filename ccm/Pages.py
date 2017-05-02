@@ -132,7 +132,8 @@ class PluginPage(GenericPage):
             groupPage = GroupPage(name, group)
             groupPage.Wrap()
             if not groupPage.Empty:
-                self.RightWidget.append_page(groupPage.Scroll, Gtk.Label.new(name))
+                self.RightWidget.append_page(groupPage.Scroll,
+                                             Gtk.Label(label=name))
                 self.Pages.append(groupPage)
 
         self.Block = 0
@@ -176,7 +177,8 @@ class PluginPage(GenericPage):
 
         if self.NotFoundBox is None:
             self.NotFoundBox = NotFoundBox(text)
-            self.RightWidget.append_page(self.NotFoundBox, Gtk.Label.new(_("Error")))
+            self.RightWidget.append_page(self.NotFoundBox,
+                                         Gtk.Label(label=_("Error")))
         else:
             self.NotFoundBox.update(text)
 
@@ -202,7 +204,9 @@ class PluginPage(GenericPage):
             if page.Filter(text):
                 empty = False
                 if num < 0:
-                    self.RightWidget.insert_page(page.Scroll, Gtk.Label.new(page.Name), self.GetPageSpot(page))
+                    self.RightWidget.insert_page(page.Scroll,
+                                                 Gtk.Label(label=page.Name),
+                                                 self.GetPageSpot(page))
             else:
                 if num >= 0:
                     self.RightWidget.remove_page(num)
@@ -378,7 +382,7 @@ class FilterPage(GenericPage):
         GlobalUpdater.Block += 1
 
         # Notebook
-        self.NotebookLabel = Gtk.Label.new(_("Settings"))
+        self.NotebookLabel = Gtk.Label(label=_("Settings"))
         self.NotebookChild = Gtk.EventBox()
         if Gtk.check_version (3, 0, 0) is None:
             self.NotebookChild.get_style_context().add_class(Gtk.STYLE_CLASS_NOTEBOOK)
@@ -711,8 +715,7 @@ class ProfileBackendPage(object):
         self.ProfileRemoveButton = profileRemove = Gtk.Button()
         profileRemove.set_tooltip_text(_("Remove This Profile"))
         profileRemove.set_image(Gtk.Image.new_from_stock(Gtk.STOCK_REMOVE, Gtk.IconSize.BUTTON))
-        self.ProfileComboBox = Gtk.ComboBoxText()
-        self.ProfileComboBox.set_entry_text_column(0)
+        self.ProfileComboBox = Gtk.ComboBoxText.new()
         self.ProfileComboBox.set_sensitive(self.Context.CurrentBackend.ProfileSupport)
         self.ProfileComboBox.append_text(_("Default"))
         active = -1
@@ -939,7 +942,7 @@ class ProfileBackendPage(object):
         dlg.add_button (Gtk.STOCK_ADD, Gtk.ResponseType.OK)
 
         entry = Gtk.Entry ()
-        label = Gtk.Label.new(_("Please enter a name for the new profile:"))
+        label = Gtk.Label (label=_("Please enter a name for the new profile:"))
         dlg.vbox.pack_start (label, False, False, 5)
         dlg.vbox.pack_start (entry, False, False, 5)
 
@@ -1037,7 +1040,7 @@ class PluginListPage(object):
         # Left/Right buttons
         buttonBox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         buttonBox.set_spacing(5)
-        boxAlignment = Gtk.Alignment.new(0, 0.5, 0, 0)
+        boxAlignment = Gtk.Alignment(yalign=0.5, xscale=0.0, yscale=0.0)
         boxAlignment.add(buttonBox)
         self.MiddleButtonBox = buttonBox
 
@@ -1058,7 +1061,7 @@ class PluginListPage(object):
         enabledBox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         enabledBox.set_spacing(10)
 
-        enabledAlignment = Gtk.Alignment.new(0.5, 0, 0, 0)
+        enabledAlignment = Gtk.Alignment(xalign=0.5, xscale=0.0, yscale=0.0)
         enabledButtonBox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
         enabledButtonBox.set_spacing(5)
         enabledAlignment.add(enabledButtonBox)
@@ -1158,7 +1161,7 @@ class PluginListPage(object):
         dlg.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK).grab_default()
         dlg.set_default_response(Gtk.ResponseType.OK)
 
-        label = Gtk.Label.new(_("Plugin name:"))
+        label = Gtk.Label(label=_("Plugin name:"))
         label.set_tooltip_text(_("Insert plugin name"))
         dlg.vbox.pack_start(label, True, True, 0)
 
@@ -1208,7 +1211,8 @@ class PreferencesPage(GenericPage):
                                   homogeneous=False, spacing=10)
         self.LeftWidget.set_border_width(10)
         if Gtk.check_version(3, 12, 0) is None:
-            self.RightWidget = Gtk.Box.new(Gtk.Orientation.VERTICAL, 6)
+            self.RightWidget = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,
+                                       spacing=6)
             self.RightWidgetStack = Gtk.Stack()
             RightWidgetStackSwitcher = Gtk.StackSwitcher()
             RightWidgetStackSwitcher.set_stack(self.RightWidgetStack)
@@ -1269,14 +1273,16 @@ class PreferencesPage(GenericPage):
         if Gtk.check_version(3, 12, 0) is None:
             self.RightWidgetStack.add_titled(self.ProfileBackendPage.Widget, "ProfileBackend", _("Profile & Backend"))
         else:
-            self.RightWidget.append_page(self.ProfileBackendPage.Widget, Gtk.Label.new(_("Profile & Backend")))
+            self.RightWidget.append_page(self.ProfileBackendPage.Widget,
+                                         Gtk.Label(label=_("Profile & Backend")))
 
         # Plugin List
         self.PluginListPage = PluginListPage(context)
         if Gtk.check_version(3, 12, 0) is None:
             self.RightWidgetStack.add_titled(self.PluginListPage.Widget, "PluginList", _("Plugin List"))
         else:
-            self.RightWidget.append_page(self.PluginListPage.Widget, Gtk.Label.new(_("Plugin List")))
+            self.RightWidget.append_page(self.PluginListPage.Widget,
+                                         Gtk.Label(label=_("Plugin List")))
 
     StyleBlock = 0
 
@@ -1368,11 +1374,11 @@ class MainPage(object):
             categoryToggleIcon = Image (name = iconName, type = ImageCategory,
                                         size = 22)
             categoryToggleLabel = Label (label)
-            align = Gtk.Alignment.new (0, 0.5, 1, 1)
-            align.set_padding (0, 0, 0, 10)
-            align.add (categoryToggleIcon)
             categoryToggleBox = Gtk.Box (orientation=Gtk.Orientation.HORIZONTAL)
-            categoryToggleBox.pack_start (align, False, False, 0)
+            alignment = Gtk.Alignment (xalign=0.0)
+            alignment.set_padding (0, 0, 0, 10)
+            alignment.add (categoryToggleIcon)
+            categoryToggleBox.pack_start (alignment, False, False, 0)
             categoryToggleBox.pack_start (categoryToggleLabel, True, True, 0)
             categoryToggle = PrettyButton ()
             categoryToggle.add(categoryToggleBox)
@@ -1528,10 +1534,11 @@ class GroupPage(Page):
 
         self.Name = name
         self.VisibleAreas = self.subGroupAreas = []
-        self.Label = Gtk.Alignment.new(0, 0.5, 0, 0)
-        self.Label.set_padding(4, 4, 4, 4)
-        label = Gtk.Label.new("<b>%s</b>" %(protect_pango_markup(name or _('General'))))
+        label = Gtk.Label(label="<b>%s</b>" %
+                          (protect_pango_markup(name or _('General'))))
         label.set_use_markup(True)
+        self.Label = Gtk.Alignment(xalign=0.0, xscale=0.0, yscale=0.0)
+        self.Label.set_padding(4, 4, 4, 4)
         self.Label.add(label)
         if '' in group:
             sga = SubGroupArea('', group[''][1])

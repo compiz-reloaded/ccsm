@@ -946,7 +946,7 @@ class Popup (Gtk.Window):
         self.set_property ("skip-taskbar-hint", modal)
         self.set_destroy_with_parent (True)
         if text:
-            label = Gtk.Label.new(text)
+            label = Gtk.Label (label=text)
             align = Gtk.Alignment ()
             align.set_padding (20, 20, 20, 20)
             align.add (label)
@@ -1873,7 +1873,7 @@ class CategoryBox(Gtk.Box):
             button = PluginButton(plugin, dontLoadIcons)
             self._buttons.append(button)
 
-        self._alignment = Gtk.Alignment.new (0, 0, 1, 1)
+        self._alignment = Gtk.Alignment (xalign=0.0, yscale=0.0)
         self._alignment.set_padding (0, 20, 0, 0)
         self._alignment.add (Gtk.HSeparator ())
 

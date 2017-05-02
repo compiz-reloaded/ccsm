@@ -254,7 +254,7 @@ class FamilyStringSetting(StockSetting):
         self.FontModel = FamilyStringSetting.FontModel
         self.ComboFonts = Gtk.ComboBox.new_with_model_and_entry(FamilyStringSetting.FontModel)
         self.ComboFonts.set_entry_text_column(0)
-        self.FontCompletion = Gtk.EntryCompletion.new()
+        self.FontCompletion = Gtk.EntryCompletion()
         self.FontCompletion.set_model(model=FamilyStringSetting.FontModel)
         try:
             self.FontCompletion.set_text_column(0)
@@ -480,7 +480,7 @@ class BoolSetting (StockSetting):
         StockSetting._Init(self)
         self.Label.set_size_request(-1, -1)
         self.CheckButton = Gtk.CheckButton ()
-        align = Gtk.Alignment.new(0, 0.5, 0, 0)
+        align = Gtk.Alignment (xalign=0.0, xscale=0.0, yscale=0.0)
         align.add(self.CheckButton)
         self.Box.pack_end(align, False, False, 0)
         self.CheckButton.connect ('toggled', self.Changed)
@@ -523,7 +523,7 @@ class NumberSetting(StockSetting):
         inc = self.Inc
         self.NoneValue = info[0]
         self.Adj = Gtk.Adjustment(value=0, lower=info[0], upper=info[1], step_increment=inc, page_increment=inc*10)
-        self.Spin = Gtk.SpinButton.new(self.Adj, 0, 0)
+        self.Spin = Gtk.SpinButton(adjustment=self.Adj)
         self.Spin.set_value(self.Get())
         self.Spin.connect("value-changed", self.Changed)
         self.Widget = self.Spin
@@ -564,7 +564,7 @@ class ColorSetting(StockSetting):
         self.Button.set_use_alpha(True)
         self.Button.connect('color-set', self.Changed)
 
-        self.Widget = Gtk.Alignment.new (1, 0.5, 0, 0)
+        self.Widget = Gtk.Alignment (xalign=1.0, xscale=0.0, yscale=0.0)
         self.Widget.add (self.Button)
         self.Box.pack_start(self.Widget, True, True, 0)
 
@@ -1072,12 +1072,11 @@ class EditableActionSetting (StockSetting):
         entry = Gtk.Entry ()
         entry.set_max_length (200)
         entry.set_text (self.GetDialogText ())
+        entry.set_tooltip_text(self.Setting.LongDesc)
         entry.connect ("activate", lambda *a: dlg.response (Gtk.ResponseType.OK))
-        alignment = Gtk.Alignment.new (0.5, 0.5, 1, 1)
+        alignment = Gtk.Alignment ()
         alignment.set_padding (10, 10, 10, 10)
         alignment.add (entry)
-
-        entry.set_tooltip_text(self.Setting.LongDesc)
         dlg.vbox.pack_start (alignment, True, True, 0)
 
         dlg.vbox.show_all ()
@@ -1215,7 +1214,7 @@ class KeySetting (EditableActionSetting):
         currentMods.rstrip ("|")
         modifierSelector = ModifierSelector (currentMods)
         modifierSelector.set_tooltip_text (self.Setting.LongDesc)
-        alignment = Gtk.Alignment.new (0.5, 0, 0, 0)
+        alignment = Gtk.Alignment (yalign=0.0, xscale=0.0, yscale=0.0)
         alignment.add (modifierSelector)
         box.pack_start (alignment, True, True, 0)
 
@@ -1225,9 +1224,9 @@ class KeySetting (EditableActionSetting):
         grabber.set_tooltip_text (self.Setting.LongDesc)
         box.pack_start (grabber, True, True, 0)
 
-        label = Gtk.Label.new(self.GetLabelText(self.current))
+        label = Gtk.Label (label=self.GetLabelText(self.current))
         label.set_tooltip_text (self.Setting.LongDesc)
-        alignment = Gtk.Alignment.new (0.5, 0.5, 0, 0)
+        alignment = Gtk.Alignment (xscale=0.0, yscale=0.0)
         alignment.set_padding (15, 0, 0, 0)
         alignment.add (label)
         box.pack_start (alignment, True, True, 0)
@@ -1639,7 +1638,7 @@ class SubGroupArea(object):
             self.Child = self.Widget
         else:
             self.Widget = Gtk.Frame()
-            self.Expander = Gtk.Expander.new(name)
+            self.Expander = Gtk.Expander(label=name)
             self.Widget.add(self.Expander)
             self.Expander.set_expanded(False)
             self.Child = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
