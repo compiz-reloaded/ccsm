@@ -1382,22 +1382,23 @@ class MatchButton(Gtk.Button):
             prefix = self.prefix[type_widget.get_active_text()]
 
         if prefix == "type":
-            value = self.get_xprop("^_NET_WM_WINDOW_TYPE\(ATOM\) = _NET_WM_WINDOW_TYPE_(\w+)")
+            value = self.get_xprop(r"^_NET_WM_WINDOW_TYPE\(ATOM\) = _NET_WM_WINDOW_TYPE_(\w+)")
             value = value.lower().capitalize()
         elif prefix == "role":
-            value = self.get_xprop("^WM_WINDOW_ROLE\(STRING\) = \"([^\"]+)\"")
+            value = self.get_xprop(r"^WM_WINDOW_ROLE\(STRING\) = \"([^\"]+)\"")
         elif prefix == "name":
-            value = self.get_xprop("^WM_CLASS\(STRING\) = \"([^\"]+)\"")
+            value = self.get_xprop(r"^WM_CLASS\(STRING\) = \"([^\"]+)\"")
         elif prefix == "class":
-            value = self.get_xprop("^WM_CLASS\(STRING\) = \"([^\"]+)\", \"([^\"]+)\"")
+            value = self.get_xprop(r"^WM_CLASS\(STRING\) = \"([^\"]+)\", \"([^\"]+)\"")
         elif prefix == "title":
-            value = self.get_xprop("^_NET_WM_NAME\(UTF8_STRING\) = \"([^\n]+)\"")
+            value = self.get_xprop(r"^_NET_WM_NAME\(UTF8_STRING\) = \"([^\n]+)\"")
             if not value:
-                value = self.get_xprop("^WM_NAME\(STRING\) = \"([^\"]+)\"")
+                value = self.get_xprop(r"^WM_NAME\(STRING\) = \"([^\"]+)\"")
         elif prefix == "xid" or prefix == "id":
-            value = self.get_xprop("^xwininfo: Window id: ([^\s]+)", "xwininfo")
+            value = self.get_xprop(r"^xwininfo: Window id: ([^\s]+)", "xwininfo")
         elif prefix == "state":
-            value = self.get_xprop_list("^_NET_WM_STATE\(ATOM\) =","_NET_WM_STATE_(\w+)", 'state')
+            value = self.get_xprop_list(r"^_NET_WM_STATE\(ATOM\) =",
+                                        r"_NET_WM_STATE_(\w+)", "state")
 
         if value_widget.get_visible_child_name() == 'list':
             w = value_widget.get_visible_child()
