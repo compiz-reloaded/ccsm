@@ -473,19 +473,17 @@ class ModifierSelector (Gtk.DrawingArea):
     def draw_event (self, widget, data):
         '''Draw event handler'''
         if Gtk.check_version(3, 0, 0) is None:
-            parent_cr = data
+            cr = data
         else:
             event = data
-        cr = self.get_window().cairo_create ()
+            cr = event.window.cairo_create ()
         if not self._surface:
             self.redraw ()
         cr.set_source_surface (self._surface)
-        if Gtk.check_version (3, 0, 0) is None:
-            cr.rectangle (*parent_cr.copy_clip_rectangle_list ()[0])
-        else:
+        if Gtk.check_version (3, 0, 0) is not None:
             cr.rectangle (event.area.x, event.area.y,
                           event.area.width, event.area.height)
-        cr.clip ()
+            cr.clip ()
         cr.paint ()
         return False
 
@@ -679,19 +677,17 @@ class EdgeSelector (Gtk.DrawingArea):
     def draw_event (self, widget, data):
         '''Draw event handler'''
         if Gtk.check_version (3, 0, 0) is None:
-            parent_cr = data
+            cr = data
         else:
             event = data
-        cr = self.get_window ().cairo_create ()
+            cr = event.window.cairo_create ()
         if not self._surface:
             self.redraw ()
         cr.set_source_surface (self._surface)
-        if Gtk.check_version (3, 0, 0) is None:
-            cr.rectangle (*parent_cr.copy_clip_rectangle_list ()[0])
-        else:
+        if Gtk.check_version (3, 0, 0) is not None:
             cr.rectangle (event.area.x, event.area.y,
                           event.area.width, event.area.height)
-        cr.clip ()
+            cr.clip ()
         cr.paint ()
         return False
 
@@ -1244,19 +1240,17 @@ class WindowStateSelector (Gtk.DrawingArea):
     def draw_event (self, widget, data):
         '''Draw event handler'''
         if Gtk.check_version(3, 0, 0) is None:
-            parent_cr = data
+            cr = data
         else:
             event = data
-        cr = self.get_window().cairo_create ()
+            cr = event.window.cairo_create ()
         if not self._surface:
             self.redraw ()
         cr.set_source_surface (self._surface)
-        if Gtk.check_version (3, 0, 0) is None:
-            cr.rectangle (*parent_cr.copy_clip_rectangle_list ()[0])
-        else:
+        if Gtk.check_version (3, 0, 0) is not None:
             cr.rectangle (event.area.x, event.area.y,
                           event.area.width, event.area.height)
-        cr.clip ()
+            cr.clip ()
         cr.paint ()
         return False
 
