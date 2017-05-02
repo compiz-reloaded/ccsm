@@ -283,17 +283,19 @@ class FamilyStringSetting(StockSetting):
 
     def updatePreviewEntry(self, entry, previewWidget):
         if Gtk.check_version(3, 0, 0) is None:
-            tmpStyle = previewWidget.get_style_context()
-            fd = tmpStyle.get_property("font", tmpStyle.get_state()).copy()
+            style = previewWidget.get_style_context()
+            style_provider = Gtk.CssProvider()
+            if Gtk.check_version(3, 20, 0) is None:
+                style_provider.load_from_data(("entry { font-family: \"%s\"; }" %
+                                               entry.get_text()).encode())
+            else:
+                style_provider.load_from_data(("GtkEntry { font-family: \"%s\"; }" %
+                                               entry.get_text()).encode())
+            style.add_provider(style_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
         else:
-            tmpStyle = previewWidget.get_style()
-            fd = tmpStyle.font_desc.copy()
-
-        fd.set_family(entry.get_text())
-
-        if Gtk.check_version(3, 0, 0) is None:
-            previewWidget.override_font(fd)
-        else:
+            style = previewWidget.get_style()
+            fd = style.font_desc.copy()
+            fd.set_family(entry.get_text())
             previewWidget.modify_font(fd)
 
 class FileStringSetting(StringSetting):
