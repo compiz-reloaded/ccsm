@@ -555,7 +555,7 @@ class FloatSetting(NumberSetting):
 
 class ColorSetting(StockSetting):
 
-    NoneValue = (0, 0, 0, 65535) # opaque black
+    NoneValue = (0, 0, 0, 0xFFFF) # opaque black
 
     def _Init(self):
         StockSetting._Init(self)
@@ -575,20 +575,34 @@ class ColorSetting(StockSetting):
         return (str, Gtk.TreeViewColumn(self.Setting.ShortDesc, CellRendererColor(), text=num))
 
     def _Read(self):
-        col = Gdk.Color(0, 0, 0)
-        value = self.Get()
-        col.red, col.green, col.blue = value[:3]
-        self.Button.set_color(col)
-        self.Button.set_alpha(value[3])
+        if Gtk.check_version (3, 0, 0) is None:
+            color = Gdk.RGBA()
+            value = self.Get()
+            color.red = value[0] / 65535.0
+            color.green = value[1] / 65535.0
+            color.blue = value[2] / 65535.0
+            color.alpha = value[3] / 65535.0
+            self.Button.set_rgba(color)
+        else:
+            color = Gdk.Color(red=0, green=0, blue=0)
+            value = self.Get()
+            color.red, color.green, color.blue = value[:3]
+            self.Button.set_color(color)
+            self.Button.set_alpha(value[3])
 
     def _Changed(self):
-        try:
-            col = self.Button.get_color()
-        except TypeError:
-            col = Gdk.Color(0, 0, 0)
-            self.Button.get_color(col)
-        alpha = self.Button.get_alpha()
-        self.Set([col.red, col.green, col.blue, alpha])
+        if Gtk.check_version (3, 0, 0) is None:
+            color = self.Button.get_rgba()
+            self.Set([color.red * 0xFFFF, color.green * 0xFFFF,
+                      color.blue * 0xFFFF, color.alpha * 0xFFFF])
+        else:
+            try:
+                color = self.Button.get_color()
+            except TypeError:
+                color = Gdk.Color(0, 0, 0)
+                self.Button.get_color(color)
+            alpha = self.Button.get_alpha()
+            self.Set([color.red, color.green, color.blue, alpha])
 
 class BaseListSetting(Setting):
     def _Init(self):
