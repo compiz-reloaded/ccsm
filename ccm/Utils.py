@@ -192,14 +192,12 @@ class PrettyButton (Gtk.Button):
         if old_toplevel == self._old_toplevel:
             return
 
-        if Gtk.check_version(3, 0, 0) is None:
-            if not old_toplevel and self.get_state() != Gtk.StateFlags.NORMAL:
-                self.set_state(Gtk.StateFlags.PRELIGHT)
-                self.set_state(Gtk.StateFlags.NORMAL)
+        if Gtk.check_version (3, 0, 0) is None:
+            if not old_toplevel and self.get_state_flags () != Gtk.StateFlags.NORMAL:
+                self.set_state_flags (Gtk.StateFlags.NORMAL, True)
         else:
-            if not old_toplevel and self.get_state() != Gtk.StateType.NORMAL:
-                self.set_state(Gtk.StateType.PRELIGHT)
-                self.set_state(Gtk.StateType.NORMAL)
+            if not old_toplevel and self.get_state () != Gtk.StateType.NORMAL:
+                self.set_state (Gtk.StateType.NORMAL)
 
         self._old_toplevel = old_toplevel
 
@@ -207,7 +205,7 @@ class PrettyButton (Gtk.Button):
     def update_state_in (self, *args):
         state = args[-1]
         if Gtk.check_version (3, 0, 0) is None:
-            self.set_state (Gtk.StateFlags.PRELIGHT)
+            self.set_state_flags (Gtk.StateFlags.PRELIGHT, True)
         else:
             self.set_state (Gtk.StateType.PRELIGHT)
         self.states[state] = True
@@ -217,9 +215,9 @@ class PrettyButton (Gtk.Button):
         self.states[state] = False
         if Gtk.check_version (3, 0, 0) is None:
             if True in self.states.values ():
-                self.set_state (Gtk.StateFlags.PRELIGHT)
+                self.set_state_flags (Gtk.StateFlags.PRELIGHT, True)
             else:
-                self.set_state (Gtk.StateFlags.NORMAL)
+                self.set_state_flags (Gtk.StateFlags.NORMAL, True)
         else:
             if True in self.states.values ():
                 self.set_state (Gtk.StateType.PRELIGHT)
