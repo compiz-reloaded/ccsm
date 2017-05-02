@@ -28,7 +28,10 @@ from gi.repository import Pango
 import weakref
 
 from ccm.Constants import *
-from cgi import escape as protect_pango_markup
+try:
+    from html import escape as protect_pango_markup
+except ImportError:
+    from cgi import escape as protect_pango_markup
 import operator
 import itertools
 
