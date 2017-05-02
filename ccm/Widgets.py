@@ -910,7 +910,8 @@ class GlobalEdgeSelector(EdgeSelector):
         comboBox.connect ('changed', self.combo_changed, edge)
 
         popup = Popup (self, child=comboBox, decorated=False, mouse=True, modal=False)
-        popup.show_all()
+        comboBox.show ()
+        popup.show ()
         popup.connect ('focus-out-event', self.focus_out)
 
     def focus_out (self, widget, event):
@@ -951,7 +952,9 @@ class Popup (Gtk.Window):
             align = Gtk.Alignment ()
             align.set_padding (20, 20, 20, 20)
             align.add (label)
+            label.show ()
             self.add (align)
+            align.show ()
         elif child:
             self.add (child)
         gtk_process_events ()
@@ -977,6 +980,7 @@ class KeyGrabber (Gtk.Button):
     popup   = None
 
     label   = None
+    widget_mapped = False
 
     def __init__ (self, key = 0, mods = Gdk.ModifierType.SHIFT_MASK, label = None):
         '''Prepare widget'''
@@ -991,16 +995,48 @@ class KeyGrabber (Gtk.Button):
         self.set_label ()
 
     def begin_key_grab (self, widget):
-        self.add_events (Gdk.EventMask.KEY_PRESS_MASK)
+        self.popup_mapped = False
+        def on_widget_map_event (widget, event, data=None):
+            self.popup_mapped = True
+            widget.disconnect_by_func (on_widget_map_event)
+
         self.popup = Popup (self, _("Please press the new key combination"))
-        self.popup.show_all()
+        self.popup.add_events (Gdk.EventMask.KEY_PRESS_MASK)
+
+        # Wait until the popup is fully shown.
+        self.handler = self.popup.connect ("map-event", on_widget_map_event)
+        self.popup.show ()
+        while not self.popup_mapped:
+            Gtk.main_iteration ()
+        self.popup_mapped = False
+
         self.handler = self.popup.connect ("key-press-event",
                                            self.on_key_press_event)
-        while Gdk.keyboard_grab (self.popup.get_window(), False, 0) != Gdk.GrabStatus.SUCCESS:
-            time.sleep (0.1)
+
+        self.popup.present ()
+
+        if Gtk.check_version (3, 20, 0) is None:
+            self.seat = self.popup.get_display ().get_default_seat ()
+            while True:
+                ret = self.seat.grab (self.popup.get_window (),
+                                      Gdk.SeatCapabilities.KEYBOARD, False,
+                                      None, None, None, None)
+                if ret == Gdk.GrabStatus.SUCCESS:
+                    break
+                time.sleep (0.1)
+        else:
+            while True:
+                ret = Gdk.keyboard_grab (self.popup.get_window (), False,
+                                         Gdk.CURRENT_TIME)
+                if ret == Gdk.GrabStatus.SUCCESS:
+                    break
+                time.sleep (0.1)
 
     def end_key_grab (self):
-        Gdk.keyboard_ungrab (Gtk.get_current_event_time ())
+        if Gtk.check_version (3, 20, 0) is None:
+            self.seat.ungrab ()
+        else:
+            Gdk.keyboard_ungrab (Gtk.get_current_event_time ())
         self.popup.disconnect (self.handler)
         self.popup.destroy ()
 
