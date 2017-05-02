@@ -1458,7 +1458,14 @@ class MatchButton(Gtk.Button):
         dlg.set_response_sensitive(Gtk.ResponseType.OK, False)
         dlg.set_default_response (Gtk.ResponseType.OK)
 
-        table = Gtk.Table ()
+        if Gtk.check_version(3, 12, 0) is None:
+            grid = Gtk.Grid (row_spacing=GridRow, column_spacing=GridColumn)
+            grid.set_margin_top(GridColumn)
+            grid.set_margin_bottom(GridColumn)
+            grid.set_margin_start(GridRow)
+            grid.set_margin_end(GridRow)
+        else:
+            grid = Gtk.Table ()
 
         rows = []
 
@@ -1507,11 +1514,17 @@ class MatchButton(Gtk.Button):
 
         row = 0
         for label, widget in rows:
-            table.attach(label, 0, 1, row, row+1, yoptions=0, xpadding=TableX, ypadding=TableY)
-            table.attach(widget, 1, 2, row, row+1, yoptions=0, xpadding=TableX, ypadding=TableY)
+            if Gtk.check_version(3, 12, 0) is None:
+                grid.attach(label, 0, row, 1, 1)
+                grid.attach(widget, 1, row, 1, 1)
+            else:
+                grid.attach(label, 0, 1, row, row + 1, yoptions=0,
+                            xpadding=GridRow, ypadding=GridColumn)
+                grid.attach(widget, 1, 2, row, row + 1, yoptions=0,
+                            xpadding=GridRow, ypadding=GridColumn)
             row += 1
 
-        dlg.vbox.pack_start (table, True, True, 0)
+        dlg.vbox.pack_start (grid, True, True, 0)
         dlg.vbox.set_spacing (5)
         dlg.show_all ()
         value_widget.set_visible_child_name('non-list')
@@ -1805,7 +1818,7 @@ class CategoryBox(Gtk.VBox):
     _buttons = None
     _context = None
     _name    = ""
-    _tabel   = None
+    _grid    = None
     _alignment = None
     _current_cols = 0
     _current_plugins = 0
@@ -1844,8 +1857,16 @@ class CategoryBox(Gtk.VBox):
         header.pack_start (image, False, False, 0)
         header.pack_start (label, True, True, 0)
 
-        self._table = Gtk.Table ()
-        self._table.set_border_width (10)
+        if Gtk.check_version (3, 12, 0) is None:
+            self._grid = Gtk.Grid (row_spacing=GridRow,
+                                   column_spacing=GridColumn)
+            self._grid.set_margin_top (GridColumn + 10)
+            self._grid.set_margin_bottom (GridColumn + 10)
+            self._grid.set_margin_start (GridRow + 10)
+            self._grid.set_margin_end (GridRow + 10)
+        else:
+            self._grid = Gtk.Table ()
+            self._grid.set_border_width (10)
 
         # load icons now only for the first 3 categories
         dontLoadIcons = (categoryIndex >= 3);
@@ -1860,7 +1881,7 @@ class CategoryBox(Gtk.VBox):
         self._alignment.add (Gtk.HSeparator ())
 
         self.pack_start (header, False, False, 0)
-        self.pack_start (self._table, False, False, 0)
+        self.pack_start (self._grid, False, False, 0)
         self.pack_start (self._alignment, True, True, 0)
 
     def show_separator (self, show):
@@ -1880,23 +1901,27 @@ class CategoryBox(Gtk.VBox):
 
         return bool(self._plugins)
 
-    def rebuild_table (self, ncols, force = False):
+    def rebuild_grid (self, ncols, force = False):
         if (not force and ncols == self._current_cols
         and len (self._plugins) == self._current_plugins):
             return
         self._current_cols = ncols
         self._current_plugins = len (self._plugins)
 
-        children = self._table.get_children ()
+        children = self._grid.get_children ()
         if children:
             for child in children:
-                self._table.remove(child)
+                self._grid.remove(child)
 
         row = 0
         col = 0
         for button in self._buttons:
             if button.get_plugin () in self._plugins:
-                self._table.attach (button, col, col+1, row, row+1, 0, xpadding=TableX, ypadding=TableY)
+                if Gtk.check_version (3, 12, 0) is None:
+                    self._grid.attach (button, col, row, 1, 1)
+                else:
+                    self._grid.attach (button, col, col+1, row, row + 1, 0,
+                                       xpadding=GridRow, ypadding=GridColumn)
                 col += 1
                 if col == ncols:
                     col = 0
@@ -2022,7 +2047,7 @@ class PluginWindow(Gtk.ScrolledWindow):
     def rebuild_boxes (self, widget, extra=None):
         rect = widget.get_allocation ()
         ncols = (int) (rect.width / 220)
-        width = ncols * (220 + 2 * TableX) + 40
+        width = ncols * (220 + 2 * GridRow) + 40
         if width > rect.width:
             ncols -= 1
 
@@ -2040,7 +2065,7 @@ class PluginWindow(Gtk.ScrolledWindow):
                 if box not in children:
                     self._box.pack_start (box, False, False, 0)
                     self._box.reorder_child (box, pos)
-                box.rebuild_table (ncols)
+                box.rebuild_grid (ncols)
                 if pos + 1 != real_len:
                     box.show_separator(True)
                 else:

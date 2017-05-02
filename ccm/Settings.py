@@ -716,7 +716,7 @@ class BaseListSetting(Setting):
 
     def _MakeEditDialog(self):
         dlg = Gtk.Dialog(_("Edit"))
-        vbox = Gtk.VBox(spacing=TableX)
+        vbox = Gtk.VBox(spacing=GridRow)
         vbox.props.border_width = 6
         dlg.vbox.pack_start(vbox, True, True, 0)
         dlg.set_default_size(500, -1)
@@ -904,8 +904,12 @@ class MultiListSetting(BaseListSetting):
 class EnumFlagsSetting(Setting):
 
     def _Init(self):
-        frame = Gtk.Frame.new(self.Setting.ShortDesc)
-        table = Gtk.Table()
+        frame = Gtk.Frame(label=self.Setting.ShortDesc)
+        if Gtk.check_version(3, 10, 0) is None:
+            grid = Gtk.Grid(row_spacing=GridRow, column_spacing=GridRow)
+            grid.props.margin = GridRow
+        else:
+            grid = Gtk.Table()
 
         row = col = 0
         self.Checks = []
@@ -914,7 +918,14 @@ class EnumFlagsSetting(Setting):
         for key, value in sortedItems:
             box = Gtk.CheckButton(label=key)
             self.Checks.append((key, box))
-            table.attach(box, col, col+1, row, row+1, TableDef, TableDef, TableX, TableX)
+            if Gtk.check_version(3, 10, 0) is None:
+                box.set_hexpand(True)
+                grid.attach(box, col, row, 1, 1)
+            else:
+                grid.attach(box, col, col + 1, row, row + 1,
+                            Gtk.AttachOptions.FILL | Gtk.AttachOptions.EXPAND,
+                            Gtk.AttachOptions.FILL | Gtk.AttachOptions.EXPAND,
+                            GridRow, GridRow)
             box.connect('toggled', self.Changed)
             col = col+1
             if col >= 3:
@@ -925,7 +936,7 @@ class EnumFlagsSetting(Setting):
         vbox.pack_start(self.Reset, False, False, 0)
 
         hbox = Gtk.HBox()
-        hbox.pack_start(table, True, True, 0)
+        hbox.pack_start(grid, True, True, 0)
         hbox.pack_start(vbox, False, False, 0)
 
         frame.add(hbox)
@@ -953,8 +964,12 @@ class EnumFlagsSetting(Setting):
 class RestrictedStringFlagsSetting(Setting):
 
     def _Init(self):
-        frame = Gtk.Frame.new(self.Setting.ShortDesc)
-        table = Gtk.Table()
+        frame = Gtk.Frame(label=self.Setting.ShortDesc)
+        if Gtk.check_version(3, 10, 0) is None:
+            grid = Gtk.Grid(row_spacing=GridRow, column_spacing=GridRow)
+            grid.props.margin = GridRow
+        else:
+            grid = Gtk.Table()
 
         row = col = 0
         self.Checks = []
@@ -965,7 +980,14 @@ class RestrictedStringFlagsSetting(Setting):
         for key, value in sortedItems:
             box = Gtk.CheckButton(label=key)
             self.Checks.append((key, box))
-            table.attach(box, col, col+1, row, row+1, TableDef, TableDef, TableX, TableX)
+            if Gtk.check_version(3, 10, 0) is None:
+                box.set_hexpand(True)
+                grid.attach(box, col, row, 1, 1)
+            else:
+                grid.attach(box, col, col + 1, row, row + 1,
+                            Gtk.AttachOptions.FILL | Gtk.AttachOptions.EXPAND,
+                            Gtk.AttachOptions.FILL | Gtk.AttachOptions.EXPAND,
+                            GridRow, GridRow)
             box.connect('toggled', self.Changed)
             col = col+1
             if col >= 3:
@@ -976,7 +998,7 @@ class RestrictedStringFlagsSetting(Setting):
         vbox.pack_start(self.Reset, False, False, 0)
 
         hbox = Gtk.HBox()
-        hbox.pack_start(table, True, True, 0)
+        hbox.pack_start(grid, True, True, 0)
         hbox.pack_start(vbox, False, False, 0)
 
         frame.add(hbox)
@@ -1605,8 +1627,8 @@ class SubGroupArea(object):
             self.Child = Gtk.VBox()
             self.Expander.add(self.Child)
 
-        self.Child.set_spacing(TableX)
-        self.Child.set_border_width(TableX)
+        self.Child.set_spacing(GridRow)
+        self.Child.set_border_width(GridRow)
 
         # create a special widget for list subGroups
         if len(settings) > 1 and HasOnlyType(settings, 'List'):

@@ -23,11 +23,10 @@
 
 from gi.repository import Gtk, Gdk
 
-# Settings Table
+# Settings Grid
 #
-TableDef = Gtk.AttachOptions.FILL | Gtk.AttachOptions.EXPAND
-TableX   = 4
-TableY   = 2
+GridRow    = 4
+GridColumn = 2
 
 # Action Constants
 #

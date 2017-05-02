@@ -515,14 +515,17 @@ class FilterPage(GenericPage):
         self.UpdateGroupBox()
 
     def UpdateGroupBox(self):
-        if self.CurrentPlugin is None:
-            self.GroupBox.Update(())
-        else:
+        if self.CurrentPlugin is not None and \
+           self.CurrentPlugin.Name in self.Results:
             self.GroupBox.Update(self.Results[self.CurrentPlugin.Name])
+        else:
+            self.GroupBox.Update(())
         self.UpdateSubGroupBox()
 
     def UpdateSubGroupBox(self):
-        if self.CurrentPlugin is not None and self.CurrentGroup in self.Results[self.CurrentPlugin.Name]:
+        if self.CurrentPlugin is not None and \
+           self.CurrentPlugin.Name in self.Results and \
+           self.CurrentGroup in self.Results[self.CurrentPlugin.Name]:
             grouppage = self.Results[self.CurrentPlugin.Name][self.CurrentGroup]
             self.SubGroupBox.Update(sga.Name for sga in grouppage.VisibleAreas)
         else:
