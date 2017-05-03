@@ -57,6 +57,49 @@ class GenericPage(GObject.GObject):
     def GoBack(self, widget):
         self.emit('go-back')
 
+    def HeaderLabelSet(self, widget, label):
+        self.HeaderStyleUpdated(widget, label)
+        if Gtk.check_version(3, 16, 0) is None:
+            widget.connect("style-updated", self.HeaderStyleUpdated, label)
+        else:
+            widget.connect("style-set", self.HeaderStyleSet, label)
+
+    StyleBlock = 0
+    def HeaderStyleUpdated(self, widget, label):
+        if self.StyleBlock > 0:
+            return
+        self.StyleBlock += 1
+        textRGB = None
+        if Gtk.check_version(3, 6, 0) is None:
+            style = widget.get_style_context ()
+            style.save()
+            style.add_class(Gtk.STYLE_CLASS_VIEW)
+            bgColor = style.get_background_color(style.get_state())
+            style.set_state(Gtk.StateFlags.SELECTED)
+            textColor = style.get_background_color(style.get_state())
+            if not textColor.equal(bgColor) and textColor.alpha != 0.0:
+                textRGB = "#%.4X%.4X%.4X" % (int(textColor.red * 0xFFFF),
+                                             int(textColor.green * 0xFFFF),
+                                             int(textColor.blue * 0xFFFF))
+                widget.set_markup(HeaderMarkup % (textRGB, label))
+            else:
+                widget.set_markup(HeaderMarkupDefault % label)
+            style.restore()
+        else:
+            textColor = widget.get_style().lookup_color("selected_bg_color")
+            if textColor[0] != False:
+                textRGB = "#%.4X%.4X%.4X" % (textColor[1].red,
+                                             textColor[1].green,
+                                             textColor[1].blue)
+                widget.set_markup(HeaderMarkup % (textRGB, label))
+            else:
+                widget.set_markup(HeaderMarkupDefault % label)
+        self.StyleBlock -= 1
+
+    if Gtk.check_version(3, 16, 0) is not None:
+        def HeaderStyleSet(self, widget, previous, label):
+            self.HeaderStyleUpdated(widget, label)
+
 # Plugin Page
 #
 class PluginPage(GenericPage):
@@ -72,18 +115,10 @@ class PluginPage(GenericPage):
             self.LeftWidget.set_border_width(10)
 
         pluginLabel = Label()
-        pluginLabel.set_markup(HeaderMarkup % (plugin.ShortDesc))
-        if Gtk.check_version(3, 16, 0) is None:
-            pluginLabel.connect("style-updated", self.HeaderStyleUpdate)
-        else:
-            pluginLabel.connect("style-set", self.HeaderStyleUpdate)
+        self.HeaderLabelSet(pluginLabel, plugin.ShortDesc)
         pluginImg = Image(plugin.Name, ImagePlugin, 64)
         filterLabel = Label()
-        filterLabel.set_markup(HeaderMarkup % (_("Filter")))
-        if Gtk.check_version(3, 16, 0) is None:
-            filterLabel.connect("style-updated", self.HeaderStyleUpdate)
-        else:
-            filterLabel.connect("style-set", self.HeaderStyleUpdate)
+        self.HeaderLabelSet(filterLabel, _("Filter"))
         self.FilterEntry = ClearEntry()
         self.FilterEntry.connect("changed", self.FilterChanged)
 
@@ -105,11 +140,8 @@ class PluginPage(GenericPage):
         if plugin.Name != 'core':
             self.FilterEntry.set_tooltip_text(_("Search %s Plugin Options") % plugin.ShortDesc)
             enableLabel = Label()
-            enableLabel.set_markup(HeaderMarkup % (_("Use This Plugin")))
-            if Gtk.check_version(3, 16, 0) is None:
-                enableLabel.connect("style-updated", self.HeaderStyleUpdate)
-            else:
-                enableLabel.connect("style-set", self.HeaderStyleUpdate)
+            enableLabel.title = _("Use This Plugin")
+            self.HeaderLabelSet(enableLabel, _("Use This Plugin"))
             self.LeftWidget.pack_start(enableLabel, False, False, 0)
             enableCheckCont = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
             if Gtk.check_version(3, 0, 0) is None:
@@ -147,32 +179,6 @@ class PluginPage(GenericPage):
                 self.Pages.append(groupPage)
 
         self.Block = 0
-
-    StyleBlock = 0
-
-    def HeaderStyleUpdate(self, widget, previous=None):
-        if self.StyleBlock > 0:
-            return
-        self.StyleBlock += 1
-        if Gtk.check_version(3, 6, 0) is None:
-            context = widget.get_style_context ()
-            context.save()
-            context.add_class(Gtk.STYLE_CLASS_VIEW)
-            bgColor = context.get_background_color(context.get_state())
-            context.set_state(Gtk.StateFlags.SELECTED)
-            for state in (Gtk.StateFlags.NORMAL, Gtk.StateFlags.PRELIGHT, Gtk.StateFlags.ACTIVE):
-                textColor = context.get_background_color(context.get_state())
-                if not textColor.equal(bgColor) and textColor.alpha != 0:
-                    widget.override_color(state, textColor)
-            context.restore()
-        else:
-            textColor = widget.get_style().lookup_color('selected_bg_color')
-            for state in (Gtk.StateType.NORMAL, Gtk.StateType.PRELIGHT, Gtk.StateType.ACTIVE):
-                if textColor[0] != False:
-                    widget.modify_fg(state, textColor[1])
-                else:
-                    widget.modify_fg(state, None)
-        self.StyleBlock -= 1
 
     def GetPageSpot(self, new):
         vpos = 0 #visible position
@@ -284,11 +290,7 @@ class FilterPage(GenericPage):
 
         # Image + Label
         filterLabel = Label()
-        filterLabel.set_markup(HeaderMarkup % (_("Filter")))
-        if Gtk.check_version(3, 16, 0) is None:
-            filterLabel.connect("style-updated", self.HeaderStyleUpdate)
-        else:
-            filterLabel.connect("style-set", self.HeaderStyleUpdate)
+        self.HeaderLabelSet(filterLabel, _("Filter"))
         filterImg = Image("search", ImageCategory, 64)
         self.LeftWidget.pack_start(filterImg, False, False, 0)
         self.LeftWidget.pack_start(filterLabel, False, False, 0)
@@ -305,11 +307,7 @@ class FilterPage(GenericPage):
 
         # Search in...
         filterSearchLabel = Label()
-        filterSearchLabel.set_markup(HeaderMarkup % (_("Search in...")))
-        if Gtk.check_version(3, 16, 0) is None:
-            filterSearchLabel.connect("style-updated", self.HeaderStyleUpdate)
-        else:
-            filterSearchLabel.connect("style-set", self.HeaderStyleUpdate)
+        self.HeaderLabelSet(filterSearchLabel, _("Search in..."))
         self.LeftWidget.pack_start(filterSearchLabel, False, False, 0)
 
         # Options
@@ -455,32 +453,6 @@ class FilterPage(GenericPage):
         gtk_process_events()
 
         GlobalUpdater.Block -= 1
-
-    StyleBlock = 0
-
-    def HeaderStyleUpdate(self, widget, previous=None):
-        if self.StyleBlock > 0:
-            return
-        self.StyleBlock += 1
-        if Gtk.check_version(3, 6, 0) is None:
-            context = widget.get_style_context ()
-            context.save()
-            context.add_class(Gtk.STYLE_CLASS_VIEW)
-            bgColor = context.get_background_color(context.get_state())
-            context.set_state(Gtk.StateFlags.SELECTED)
-            for state in (Gtk.StateFlags.NORMAL, Gtk.StateFlags.PRELIGHT, Gtk.StateFlags.ACTIVE):
-                textColor = context.get_background_color(context.get_state())
-                if not textColor.equal(bgColor) and textColor.alpha != 0:
-                    widget.override_color(state, textColor)
-            context.restore()
-        else:
-            textColor = widget.get_style().lookup_color('selected_bg_color')
-            for state in (Gtk.StateType.NORMAL, Gtk.StateType.PRELIGHT, Gtk.StateType.ACTIVE):
-                if textColor[0] != False:
-                    widget.modify_fg(state, textColor[1])
-                else:
-                    widget.modify_fg(state, None)
-        self.StyleBlock -= 1
 
     def Filter(self, text, level=FilterAll):
         text = text.lower()
@@ -763,11 +735,7 @@ class ProfileBackendPage(object):
         profileBox.pack_start(profileAdd, False, False, 0)
         profileBox.pack_start(profileRemove, False, False, 0)
         profileLabel = Label()
-        profileLabel.set_markup(HeaderMarkup % (_("Profile")))
-        if Gtk.check_version(3, 16, 0) is None:
-            profileLabel.connect("style-updated", self.HeaderStyleUpdate)
-        else:
-            profileLabel.connect("style-set", self.HeaderStyleUpdate)
+        self.HeaderLabelSet(profileLabel, _("Profile"))
         self.ProfileImportExportBox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
         self.ProfileImportExportBox.set_spacing(5)
         profileImportButton = Gtk.Button(label=_("Import"))
@@ -809,21 +777,13 @@ class ProfileBackendPage(object):
         backendBox.set_active(active)
         backendBox.connect("changed", self.BackendChangedAddTimeout)
         backendLabel = Label()
-        backendLabel.set_markup(HeaderMarkup % (_("Backend")))
-        if Gtk.check_version(3, 16, 0) is None:
-            backendLabel.connect("style-updated", self.HeaderStyleUpdate)
-        else:
-            backendLabel.connect("style-set", self.HeaderStyleUpdate)
+        self.HeaderLabelSet(backendLabel, _("Backend"))
         rightChild.pack_start(backendLabel, False, False, 5)
         rightChild.pack_start(backendBox, False, False, 5)
 
         # Integration
         integrationLabel = Label()
-        integrationLabel.set_markup(HeaderMarkup % (_("Integration")))
-        if Gtk.check_version(3, 16, 0) is None:
-            integrationLabel.connect("style-updated", self.HeaderStyleUpdate)
-        else:
-            integrationLabel.connect("style-set", self.HeaderStyleUpdate)
+        self.HeaderLabelSet(integrationLabel, _("Integration"))
         self.IntegrationButton = Gtk.CheckButton(label=_("Enable integration into the desktop environment"))
         self.IntegrationButton.set_active(self.Context.Integration)
         self.IntegrationButton.set_sensitive(self.Context.CurrentBackend.IntegrationSupport)
@@ -833,31 +793,48 @@ class ProfileBackendPage(object):
 
         self.Widget = rightChild
 
-    StyleBlock = 0
+    def HeaderLabelSet(self, widget, label):
+        self.HeaderStyleUpdated(widget, label)
+        if Gtk.check_version(3, 16, 0) is None:
+            widget.connect("style-updated", self.HeaderStyleUpdated, label)
+        else:
+            widget.connect("style-set", self.HeaderStyleSet, label)
 
-    def HeaderStyleUpdate(self, widget, previous=None):
+    StyleBlock = 0
+    def HeaderStyleUpdated(self, widget, label):
         if self.StyleBlock > 0:
             return
         self.StyleBlock += 1
+        textRGB = None
         if Gtk.check_version(3, 6, 0) is None:
-            context = widget.get_style_context ()
-            context.save()
-            context.add_class(Gtk.STYLE_CLASS_VIEW)
-            bgColor = context.get_background_color(context.get_state())
-            context.set_state(Gtk.StateFlags.SELECTED)
-            for state in (Gtk.StateFlags.NORMAL, Gtk.StateFlags.PRELIGHT, Gtk.StateFlags.ACTIVE):
-                textColor = context.get_background_color(context.get_state())
-                if not textColor.equal(bgColor) and textColor.alpha != 0:
-                    widget.override_color(state, textColor)
-            context.restore()
+            style = widget.get_style_context ()
+            style.save()
+            style.add_class(Gtk.STYLE_CLASS_VIEW)
+            bgColor = style.get_background_color(style.get_state())
+            style.set_state(Gtk.StateFlags.SELECTED)
+            textColor = style.get_background_color(style.get_state())
+            if not textColor.equal(bgColor) and textColor.alpha != 0.0:
+                textRGB = "#%.4X%.4X%.4X" % (int(textColor.red * 0xFFFF),
+                                             int(textColor.green * 0xFFFF),
+                                             int(textColor.blue * 0xFFFF))
+                widget.set_markup(HeaderMarkup % (textRGB, label))
+            else:
+                widget.set_markup(HeaderMarkupDefault % label)
+            style.restore()
         else:
-            textColor = widget.get_style().lookup_color('selected_bg_color')
-            for state in (Gtk.StateType.NORMAL, Gtk.StateType.PRELIGHT, Gtk.StateType.ACTIVE):
-                if textColor[0] != False:
-                    widget.modify_fg(state, textColor[1])
-                else:
-                    widget.modify_fg(state, None)
+            textColor = widget.get_style().lookup_color("selected_bg_color")
+            if textColor[0] != False:
+                textRGB = "#%.4X%.4X%.4X" % (textColor[1].red,
+                                             textColor[1].green,
+                                             textColor[1].blue)
+                widget.set_markup(HeaderMarkup % (textRGB, label))
+            else:
+                widget.set_markup(HeaderMarkupDefault % label)
         self.StyleBlock -= 1
+
+    if Gtk.check_version(3, 16, 0) is not None:
+        def HeaderStyleSet(self, widget, previous, label):
+            self.HeaderStyleUpdated(widget, label)
 
     def UpdateProfiles (self, current=_("Default")):
 
@@ -1315,11 +1292,7 @@ class PreferencesPage(GenericPage):
 
         # Left Pane
         self.DescLabel = Label()
-        self.DescLabel.set_markup(HeaderMarkup % (_("Preferences")))
-        if Gtk.check_version(3, 16, 0) is None:
-            self.DescLabel.connect("style-updated", self.HeaderStyleUpdate)
-        else:
-            self.DescLabel.connect("style-set", self.HeaderStyleUpdate)
+        self.HeaderLabelSet(self.DescLabel, _("Preferences"))
         self.DescImg = Image("profiles",ImageCategory, 64)
         self.LeftWidget.pack_start(self.DescImg, False, False, 0)
         self.LeftWidget.pack_start(self.DescLabel, False, False, 0)
@@ -1334,11 +1307,7 @@ class PreferencesPage(GenericPage):
 
         # About Button
         aboutLabel = Label()
-        aboutLabel.set_markup(HeaderMarkup % (_("About")))
-        if Gtk.check_version(3, 16, 0) is None:
-            aboutLabel.connect("style-updated", self.HeaderStyleUpdate)
-        else:
-            aboutLabel.connect("style-set", self.HeaderStyleUpdate)
+        self.HeaderLabelSet(aboutLabel, _("About"))
         aboutButton = Gtk.Button()
         aboutButton.set_relief(Gtk.ReliefStyle.NONE)
         aboutImage = Gtk.Image.new_from_icon_name("help-about",
@@ -1382,32 +1351,6 @@ class PreferencesPage(GenericPage):
             self.RightWidget.append_page(self.PluginListPage.Widget,
                                          Gtk.Label(label=_("Plugin List")))
 
-    StyleBlock = 0
-
-    def HeaderStyleUpdate(self, widget, previous=None):
-        if self.StyleBlock > 0:
-            return
-        self.StyleBlock += 1
-        if Gtk.check_version(3, 6, 0) is None:
-            context = widget.get_style_context ()
-            context.save()
-            context.add_class(Gtk.STYLE_CLASS_VIEW)
-            bgColor = context.get_background_color(context.get_state())
-            context.set_state(Gtk.StateFlags.SELECTED)
-            for state in (Gtk.StateFlags.NORMAL, Gtk.StateFlags.PRELIGHT, Gtk.StateFlags.ACTIVE):
-                textColor = context.get_background_color(context.get_state())
-                if not textColor.equal(bgColor) and textColor.alpha != 0:
-                    widget.override_color(state, textColor)
-            context.restore()
-        else:
-            textColor = widget.get_style().lookup_color('selected_bg_color')
-            for state in (Gtk.StateType.NORMAL, Gtk.StateType.PRELIGHT, Gtk.StateType.ACTIVE):
-                if textColor[0] != False:
-                    widget.modify_fg(state, textColor[1])
-                else:
-                    widget.modify_fg(state, None)
-        self.StyleBlock -= 1
-
     def ShowAboutDialog(self, widget):
         about = AboutDialog(widget.get_toplevel())
         about.show_all()
@@ -1432,11 +1375,8 @@ class MainPage(object):
 
         # Filter
         filterLabel = Label()
-        filterLabel.set_markup(HeaderMarkup % (_("Filter")))
-        if Gtk.check_version(3, 16, 0) is None:
-            filterLabel.connect("style-updated", self.HeaderStyleUpdate)
-        else:
-            filterLabel.connect("style-set", self.HeaderStyleUpdate)
+        filterLabel.title = _("Filter")
+        self.HeaderLabelSet(filterLabel, _("Filter"))
         filterLabel.props.xalign = 0.1
         filterEntry = ClearEntry()
         filterEntry.set_tooltip_text(_("Filter your Plugin list"))
@@ -1453,11 +1393,7 @@ class MainPage(object):
             screenBox.connect("changed", self.ScreenChanged)
             screenLabel = Label()
             screenLabel.props.xalign = 0.1
-            screenLabel.set_markup(HeaderMarkup % (_("Screen")))
-            if Gtk.check_version(3, 16, 0) is None:
-                screenLabel.connect("style-updated", self.HeaderStyleUpdate)
-            else:
-                screenLabel.connect("style-set", self.HeaderStyleUpdate)
+            self.HeaderLabelSet(screenLabel, _("Screen"))
 
             sidebar.pack_start(screenLabel, False, False, 0)
             sidebar.pack_start(screenBox, False, False, 0)
@@ -1495,11 +1431,7 @@ class MainPage(object):
             categoryBox.pack_start(categoryToggle, False, False, 0)
         categoryLabel = Label()
         categoryLabel.props.xalign = 0.1
-        categoryLabel.set_markup(HeaderMarkup % (_("Category")))
-        if Gtk.check_version(3, 16, 0) is None:
-            categoryLabel.connect("style-updated", self.HeaderStyleUpdate)
-        else:
-            categoryLabel.connect("style-set", self.HeaderStyleUpdate)
+        self.HeaderLabelSet(categoryLabel, _("Category"))
 
         # Exit Button
         exitButton = Gtk.Button.new_with_mnemonic(_("_Close"))
@@ -1509,11 +1441,7 @@ class MainPage(object):
 
         # Advanced Search
         searchLabel = Label()
-        searchLabel.set_markup(HeaderMarkup % (_("Advanced Search")))
-        if Gtk.check_version(3, 16, 0) is None:
-            searchLabel.connect("style-updated", self.HeaderStyleUpdate)
-        else:
-            searchLabel.connect("style-set", self.HeaderStyleUpdate)
+        self.HeaderLabelSet(searchLabel, _("Advanced Search"))
         searchImage = Gtk.Image.new_from_icon_name("go-next",
                                                    Gtk.IconSize.BUTTON)
         searchButton = PrettyButton()
@@ -1526,11 +1454,7 @@ class MainPage(object):
 
         # Preferences
         prefLabel = Label()
-        prefLabel.set_markup(HeaderMarkup % (_("Preferences")))
-        if Gtk.check_version(3, 16, 0) is None:
-            prefLabel.connect("style-updated", self.HeaderStyleUpdate)
-        else:
-            prefLabel.connect("style-set", self.HeaderStyleUpdate)
+        self.HeaderLabelSet(prefLabel, _("Preferences"))
         prefImage = Gtk.Image.new_from_icon_name("go-next",
                                                  Gtk.IconSize.BUTTON)
         prefButton = PrettyButton()
@@ -1553,31 +1477,48 @@ class MainPage(object):
         self.LeftWidget = sidebar
         self.RightWidget = pluginWindow
 
-    StyleBlock = 0
+    def HeaderLabelSet(self, widget, label):
+        self.HeaderStyleUpdated(widget, label)
+        if Gtk.check_version(3, 16, 0) is None:
+            widget.connect("style-updated", self.HeaderStyleUpdated, label)
+        else:
+            widget.connect("style-set", self.HeaderStyleSet, label)
 
-    def HeaderStyleUpdate(self, widget, previous=None):
+    StyleBlock = 0
+    def HeaderStyleUpdated(self, widget, label):
         if self.StyleBlock > 0:
             return
         self.StyleBlock += 1
+        textRGB = None
         if Gtk.check_version(3, 6, 0) is None:
-            context = widget.get_style_context ()
-            context.save()
-            context.add_class(Gtk.STYLE_CLASS_VIEW)
-            bgColor = context.get_background_color(context.get_state())
-            context.set_state(Gtk.StateFlags.SELECTED)
-            for state in (Gtk.StateFlags.NORMAL, Gtk.StateFlags.PRELIGHT, Gtk.StateFlags.ACTIVE):
-                textColor = context.get_background_color(context.get_state())
-                if not textColor.equal(bgColor) and textColor.alpha != 0:
-                    widget.override_color(state, textColor)
-            context.restore()
+            style = widget.get_style_context ()
+            style.save()
+            style.add_class(Gtk.STYLE_CLASS_VIEW)
+            bgColor = style.get_background_color(style.get_state())
+            style.set_state(Gtk.StateFlags.SELECTED)
+            textColor = style.get_background_color(style.get_state())
+            if not textColor.equal(bgColor) and textColor.alpha != 0.0:
+                textRGB = "#%.4X%.4X%.4X" % (int(textColor.red * 0xFFFF),
+                                             int(textColor.green * 0xFFFF),
+                                             int(textColor.blue * 0xFFFF))
+                widget.set_markup(HeaderMarkup % (textRGB, label))
+            else:
+                widget.set_markup(HeaderMarkupDefault % label)
+            style.restore()
         else:
-            textColor = widget.get_style().lookup_color('selected_bg_color')
-            for state in (Gtk.StateType.NORMAL, Gtk.StateType.PRELIGHT, Gtk.StateType.ACTIVE):
-                if textColor[0] != False:
-                    widget.modify_fg(state, textColor[1])
-                else:
-                    widget.modify_fg(state, None)
+            textColor = widget.get_style().lookup_color("selected_bg_color")
+            if textColor[0] != False:
+                textRGB = "#%.4X%.4X%.4X" % (textColor[1].red,
+                                             textColor[1].green,
+                                             textColor[1].blue)
+                widget.set_markup(HeaderMarkup % (textRGB, label))
+            else:
+                widget.set_markup(HeaderMarkupDefault % label)
         self.StyleBlock -= 1
+
+    if Gtk.check_version(3, 16, 0) is not None:
+        def HeaderStyleSet(self, widget, previous, label):
+            self.HeaderStyleUpdated(widget, label)
 
     def ShowPlugin(self, widget, plugin):
         pluginPage = PluginPage(plugin)

@@ -37,7 +37,8 @@ Edges       = ["Left", "Right", "Top", "Bottom",
 
 # Label Styles
 #
-HeaderMarkup = "<span size='large' weight='800'>%s</span>"
+HeaderMarkup = "<span foreground='%s' size='large' weight='800'>%s</span>"
+HeaderMarkupDefault = "<span size='large' weight='800'>%s</span>"
 
 # Image Types
 #
