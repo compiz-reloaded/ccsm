@@ -29,6 +29,9 @@ from collections import OrderedDict
 from math import pi, sqrt
 import time
 import re
+import os
+import subprocess
+import sys
 import mimetypes
 mimetypes.init()
 
@@ -1344,24 +1347,30 @@ class MatchButton(Gtk.Button):
         self.entry.set_text(value)
         self.entry.activate()
 
-    def get_xprop_list(self, prefix_regexp, item_regexp, list_type, proc = "xprop"):
-        proc = os.popen (proc)
-        output = proc.readlines ()
+    def get_xprop_list(self, prefix_regexp, item_regexp, list_type, cmd = "xprop"):
+        if sys.version_info.major >= 3:
+            proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, encoding="utf-8")
+        else:
+            proc = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        output = proc.communicate()[0]
         prex = re.compile(prefix_regexp)
         irex = re.compile(item_regexp)
         value = []
-        for line in output:
+        for line in output.split("\n"):
             if prex.search(line):
                 value = (s.lower().replace("_", "").replace("maximized", "max") for s in irex.findall(line))
                 break
         return value
 
-    def get_xprop (self, regexp, proc = "xprop"):
-        proc = os.popen (proc)
-        output = proc.readlines ()
+    def get_xprop (self, regexp, cmd = "xprop"):
+        if sys.version_info.major >= 3:
+            proc = subprocess.Popen (cmd, stdout=subprocess.PIPE, encoding="utf-8")
+        else:
+            proc = subprocess.Popen (cmd, stdout=subprocess.PIPE)
+        output = proc.communicate ()[0]
         rex = re.compile (regexp)
         value = ""
-        for line in output:
+        for line in output.split ("\n"):
             if rex.search (line):
                 m = rex.match (line)
                 value = m.groups () [-1]
