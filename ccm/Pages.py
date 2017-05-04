@@ -1076,7 +1076,10 @@ class PluginListPage(object):
         listBox.set_spacing(5)
 
         self.DisabledPluginsList = ScrolledList(_("Disabled Plugins"))
+        self.DisabledPluginsList.set_shadow_type(Gtk.ShadowType.IN)
+
         self.EnabledPluginsList = ScrolledList(_("Enabled Plugins"))
+        self.EnabledPluginsList.set_shadow_type(Gtk.ShadowType.IN)
 
         # Left/Right buttons
         buttonBox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
