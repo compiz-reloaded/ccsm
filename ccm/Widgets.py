@@ -1669,7 +1669,7 @@ class FileButton (Gtk.Button):
         button.set_image (Gtk.Image.new_from_icon_name ("document-open",
                                                         Gtk.IconSize.BUTTON))
         button.grab_default ()
-        dlg.set_default_response (Gtk.ResponseType.OK)
+        chooser.set_default_response (Gtk.ResponseType.OK)
 
         ret = chooser.run ()
 
