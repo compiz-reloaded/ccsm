@@ -245,7 +245,7 @@ class PluginPage(GenericPage):
         self.Block += 1
         # attempt to resolve conflicts...
         conflicts = self.Plugin.Enabled and self.Plugin.DisableConflicts or self.Plugin.EnableConflicts
-        conflict = PluginConflict(self.Plugin, conflicts)
+        conflict = PluginConflict(widget.get_toplevel(), self.Plugin, conflicts)
         if conflict.Resolve():
             self.Plugin.Enabled = widget.get_active()
         else:
@@ -934,7 +934,8 @@ class ProfileBackendPage(object):
         chooser.destroy()
         if ret == Gtk.ResponseType.OK:
             dlg = Gtk.MessageDialog(message_type=Gtk.MessageType.QUESTION,
-                                    buttons=Gtk.ButtonsType.YES_NO)
+                                    buttons=Gtk.ButtonsType.YES_NO,
+                                    transient_for=main)
             dlg.set_markup(_("Do you want to skip default option values while exporting your profile?"))
             ret = dlg.run()
             dlg.destroy()
@@ -943,8 +944,8 @@ class ProfileBackendPage(object):
             self.Context.Export(path, ret == Gtk.ResponseType.YES)
 
     def ImportProfileDialog (self, main):
-        chooser = Gtk.FileChooserDialog (title = _("Open file.."),
-                                         transient_for = main)
+        chooser = Gtk.FileChooserDialog (title=_("Open file.."),
+                                         transient_for=main)
 
         button = chooser.add_button (_("_Cancel"), Gtk.ResponseType.CANCEL)
         button.set_image (Gtk.Image.new_from_icon_name ("gtk-cancel",
@@ -1170,7 +1171,8 @@ class PluginListPage(object):
         autoSort = widget.get_active()
         if not autoSort:
             dlg = Gtk.MessageDialog(message_type=Gtk.MessageType.WARNING,
-                                    buttons=Gtk.ButtonsType.YES_NO)
+                                    buttons=Gtk.ButtonsType.YES_NO,
+                                    transient_for=widget.get_toplevel())
             dlg.set_markup(_("Do you really want to disable automatic plugin sorting? This will also disable conflict handling. You should only do this if you know what you are doing."))
             response = dlg.run()
             dlg.destroy()
@@ -1214,7 +1216,8 @@ class PluginListPage(object):
                 self.DisabledPluginsList.append(plugin.Name)
 
     def AddPlugin(self, widget):
-        dlg = Gtk.Dialog(title=_("Add plugin"))
+        dlg = Gtk.Dialog(title=_("Add plugin"),
+                         transient_for=widget.get_toplevel())
 
         button = dlg.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
         button.set_image(Gtk.Image.new_from_icon_name("gtk-cancel",

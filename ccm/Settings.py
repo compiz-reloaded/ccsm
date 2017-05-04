@@ -610,7 +610,6 @@ class BaseListSetting(Setting):
     def _Init(self):
         self.Widget = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         self.EditDialog = None
-        self.EditDialogOpen = False
         self.PageToBeRefreshed = None
 
         self.Widgets = []
@@ -741,8 +740,8 @@ class BaseListSetting(Setting):
 
             self._Delete(row)
 
-    def _MakeEditDialog(self):
-        dlg = Gtk.Dialog(title=_("Edit"))
+    def _MakeEditDialog(self, parent):
+        dlg = Gtk.Dialog(title=_("Edit"), transient_for=parent)
         vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=GridRow)
         vbox.props.border_width = 6
         dlg.vbox.pack_start(vbox, True, True, 0)
@@ -775,17 +774,15 @@ class BaseListSetting(Setting):
 
     def _Edit(self, row):
         if not self.EditDialog:
-            self.EditDialog = self._MakeEditDialog()
+            self.EditDialog = self._MakeEditDialog(self.Widget.get_toplevel())
 
         for widget in self.Widgets:
             widget.CurrentRow = row
             widget.Read()
 
-        self.EditDialogOpen = True
         self.EditDialog.show_all()
         response = self.EditDialog.run()
         self.EditDialog.hide()
-        self.EditDialogOpen = False
 
         if self.PageToBeRefreshed:
             self.PageToBeRefreshed[0].RefreshPage(self.PageToBeRefreshed[1],
@@ -1079,9 +1076,9 @@ class EditableActionSetting (StockSetting):
 
 
     def RunEditDialog (self, widget):
-        dlg = Gtk.Dialog (title=_("Edit %s") % self.Setting.ShortDesc)
+        dlg = Gtk.Dialog (title=_("Edit %s") % self.Setting.ShortDesc,
+                          transient_for=widget.get_toplevel ())
         dlg.set_position (Gtk.WindowPosition.CENTER_ON_PARENT)
-        dlg.set_transient_for (self.Widget.get_toplevel ())
 
         button = dlg.add_button (_("_Cancel"), Gtk.ResponseType.CANCEL)
         button.set_image (Gtk.Image.new_from_icon_name ("gtk-cancel",
@@ -1138,7 +1135,8 @@ class KeySetting (EditableActionSetting):
         EditableActionSetting._Init (self, self.Button, "keyboard")
 
     def DoReset (self, widget):
-        conflict = KeyConflict (self.Setting, self.Setting.DefaultValue)
+        conflict = KeyConflict (widget.get_toplevel (),
+                                self.Setting, self.Setting.DefaultValue)
         if conflict.Resolve (GlobalUpdater):
             self.Setting.Reset ()
             self.Setting.Plugin.Context.Write ()
@@ -1209,9 +1207,9 @@ class KeySetting (EditableActionSetting):
                 new = current.replace ("%s_R" % modifier, "")
             label.set_text (self.GetLabelText (new))
 
-        dlg = Gtk.Dialog (title=_("Edit %s") % self.Setting.ShortDesc)
+        dlg = Gtk.Dialog (title=_("Edit %s") % self.Setting.ShortDesc,
+                          transient_for=widget.get_toplevel ())
         dlg.set_position (Gtk.WindowPosition.CENTER_ALWAYS)
-        dlg.set_transient_for (self.Widget.get_toplevel ())
         dlg.set_icon (self.Widget.get_toplevel ().get_icon ())
         dlg.set_modal (True)
 
@@ -1307,7 +1305,8 @@ class KeySetting (EditableActionSetting):
     def BindingEdited (self, accel):
         '''Binding edited callback'''
         # Update & save binding
-        conflict = KeyConflict (self.Setting, accel)
+        conflict = KeyConflict (self.Button.get_toplevel (),
+                                self.Setting, accel)
         if conflict.Resolve (GlobalUpdater):
             self.current = accel
             self.Changed ()
@@ -1334,7 +1333,8 @@ class ButtonSetting (EditableActionSetting):
         EditableActionSetting._Init (self, self.Button, "button")
 
     def DoReset (self, widget):
-        conflict = ButtonConflict (self.Setting, self.Setting.DefaultValue)
+        conflict = ButtonConflict (widget.get_toplevel (),
+                                   self.Setting, self.Setting.DefaultValue)
         if conflict.Resolve (GlobalUpdater):
             self.Setting.Reset ()
             self.Setting.Plugin.Context.Write ()
@@ -1384,9 +1384,9 @@ class ButtonSetting (EditableActionSetting):
             else:
                 box.hide ()
                 dialog.resize (1, 1)
-        dlg = Gtk.Dialog (title=_("Edit %s") % self.Setting.ShortDesc)
+        dlg = Gtk.Dialog (title=_("Edit %s") % self.Setting.ShortDesc,
+                          transient_for=widget.get_toplevel ())
         dlg.set_position (Gtk.WindowPosition.CENTER_ALWAYS)
-        dlg.set_transient_for (self.Widget.get_toplevel ())
         dlg.set_modal (True)
 
         button = dlg.add_button (_("_Cancel"), Gtk.ResponseType.CANCEL)
@@ -1501,7 +1501,8 @@ to set \"%s\" button to Button1 ?") % self.Setting.ShortDesc)
             response = warning.run ()
             if response != Gtk.ResponseType.YES:
                 return
-        conflict = ButtonConflict (self.Setting, button)
+        conflict = ButtonConflict (self.Button.get_toplevel (),
+                                   self.Setting, button)
         if conflict.Resolve (GlobalUpdater):
             self.current = button
             self.Changed ()
@@ -1528,7 +1529,8 @@ class EdgeSetting (EditableActionSetting):
         EditableActionSetting._Init (self, self.Button, "edges")
 
     def DoReset (self, widget):
-        conflict = EdgeConflict (self.Setting, self.Setting.DefaultValue)
+        conflict = EdgeConflict (widget.get_toplevel (),
+                                 self.Setting, self.Setting.DefaultValue)
         if conflict.Resolve (GlobalUpdater):
             self.Setting.Reset ()
             self.Setting.Plugin.Context.Write ()
@@ -1562,9 +1564,9 @@ class EdgeSetting (EditableActionSetting):
         self.Button.set_label (label)
 
     def RunEdgeSelector (self, widget):
-        dlg = Gtk.Dialog (title=_("Edit %s") % self.Setting.ShortDesc)
+        dlg = Gtk.Dialog (title=_("Edit %s") % self.Setting.ShortDesc,
+                          transient_for=widget.get_toplevel ())
         dlg.set_position (Gtk.WindowPosition.CENTER_ON_PARENT)
-        dlg.set_transient_for (self.Widget.get_toplevel ())
         dlg.set_modal (True)
 
         button = dlg.add_button (_("_Cancel"), Gtk.ResponseType.CANCEL)
@@ -1599,7 +1601,8 @@ class EdgeSetting (EditableActionSetting):
 
     def EdgeEdited (self, edge):
         '''Edge edited callback'''
-        conflict = EdgeConflict (self.Setting, edge)
+        conflict = EdgeConflict (self.Button.get_toplevel (),
+                                 self.Setting, edge)
         if conflict.Resolve (GlobalUpdater):
             self.current = edge
             self.Changed ()

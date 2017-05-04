@@ -884,7 +884,9 @@ class GlobalEdgeSelector(EdgeSelector):
                 value.append (edge)
             value = "|".join ([s for s in value if len (s) > 0])
 
-            conflict = EdgeConflict (setting, value, settings = self._settings, autoResolve = True)
+            conflict = EdgeConflict (self.get_toplevel (), setting, value,
+                                     settings=self._settings,
+                                     autoResolve=True)
             if conflict.Resolve (GlobalUpdater):
                 setting.Value = value
                 self._edges[edge] = setting
@@ -1065,7 +1067,8 @@ class KeyGrabber (Gtk.Button):
         if event.keyval == Gdk.KEY_Escape and mods:
             self.end_key_grab ()
             self.set_label ()
-            dialog = Gtk.MessageDialog(buttons=Gtk.ButtonsType.OK)
+            dialog = Gtk.MessageDialog (buttons=Gtk.ButtonsType.OK,
+                                        transient_for=widget.get_toplevel ())
             dialog.set_markup(_("Escape is reserved and cannot be used for keybindings."))
             dialog.run()
             dialog.destroy()
@@ -1455,9 +1458,9 @@ class MatchButton(Gtk.Button):
 
         self.match = self.entry.get_text ()
 
-        dlg = Gtk.Dialog (title=_("Edit match"))
+        dlg = Gtk.Dialog (title=_("Edit match"),
+                          transient_for=widget.get_toplevel ())
         dlg.set_position (Gtk.WindowPosition.CENTER_ON_PARENT)
-        dlg.set_transient_for (self.get_parent ().get_toplevel ())
         dlg.set_response_sensitive(Gtk.ResponseType.OK, False)
 
         button = dlg.add_button (_("_Cancel"), Gtk.ResponseType.CANCEL)
@@ -1619,7 +1622,8 @@ class FileButton (Gtk.Button):
             return True
 
         if self._image:
-            require = FeatureRequirement (self._context, 'imagemime:' + mime)
+            require = FeatureRequirement (self.get_toplevel (),
+                                          self._context, 'imagemime:' + mime)
             return require.Resolve ()
 
         return True
@@ -1641,7 +1645,8 @@ class FileButton (Gtk.Button):
         else:
             title = _("Open file...")
 
-        chooser = Gtk.FileChooserDialog (title = title)
+        chooser = Gtk.FileChooserDialog (title=title,
+                                         transient_for=widget.get_toplevel ())
         if self._directory:
             chooser.set_action (Gtk.FileChooserAction.SELECT_FOLDER)
         else:
@@ -1792,7 +1797,7 @@ class PluginButton (Gtk.Box):
         plugin = self._plugin
         conflicts = plugin.Enabled and plugin.DisableConflicts or plugin.EnableConflicts
 
-        conflict = PluginConflict (plugin, conflicts)
+        conflict = PluginConflict (widget.get_toplevel (), plugin, conflicts)
 
         if conflict.Resolve ():
             plugin.Enabled = widget.get_active ()

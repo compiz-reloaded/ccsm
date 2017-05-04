@@ -34,21 +34,22 @@ gettext.textdomain("ccsm")
 _ = gettext.gettext
 
 class Conflict:
-    def __init__(self, autoResolve):
+    def __init__(self, parent, autoResolve):
         self.AutoResolve = autoResolve
+        self.Parent = parent
 
     # buttons = (text, type/icon, response_id)
     def Ask(self, message, buttons, custom_widgets=None):
         if self.AutoResolve:
             return Gtk.ResponseType.YES
 
-        dialog = Gtk.MessageDialog(modal=True, message_type=Gtk.MessageType.WARNING)
+        dialog = Gtk.MessageDialog(modal=True, transient_for=self.Parent,
+                                   message_type=Gtk.MessageType.WARNING)
 
         for text, icon, response in buttons:
-            button = Gtk.Button(label=text)
+            button = dialog.add_button(text, response)
             button.set_image(Gtk.Image.new_from_icon_name(icon,
                                                           Gtk.IconSize.BUTTON))
-            dialog.add_action_widget(button, response)
 
         if custom_widgets != None:
             for widget in custom_widgets:
@@ -65,14 +66,14 @@ class ActionConflict (Conflict):
 
     ActionTypes = set(('Bell', 'Button', 'Edge', 'Key'))
 
-    def __init__ (self, setting, settings, autoResolve):
+    def __init__ (self, parent, setting, settings, autoResolve):
 
         def ExcludeInternal (settings):
             for setting in settings:
                 if not setting.Info[0]:
                     yield setting
 
-        Conflict.__init__(self, autoResolve)
+        Conflict.__init__(self, parent, autoResolve)
         self.Conflicts = []
         self.Name = ""
         self.Setting = setting
@@ -132,8 +133,9 @@ class ActionConflict (Conflict):
         return self.Ask (msg, (ignoreButton, noButton, yesButton))
 
 class KeyConflict(ActionConflict):
-    def __init__(self, setting, newValue, settings=None, autoResolve=False, ignoreOld=False):
-        ActionConflict.__init__(self, setting, settings, autoResolve)
+    def __init__(self, parent, setting, newValue, settings=None,
+                 autoResolve=False, ignoreOld=False):
+        ActionConflict.__init__(self, parent, setting, settings, autoResolve)
         self.Name = _("key")
 
         if not newValue:
@@ -155,8 +157,9 @@ class KeyConflict(ActionConflict):
                     self.Conflicts.append (s)
 
 class ButtonConflict(ActionConflict):
-    def __init__(self, setting, newValue, settings=None, autoResolve=False, ignoreOld=False):
-        ActionConflict.__init__(self, setting, settings, autoResolve)
+    def __init__(self, parent, setting, newValue, settings=None,
+                 autoResolve=False, ignoreOld=False):
+        ActionConflict.__init__(self, parent, setting, settings, autoResolve)
         self.Name = _("button")
 
         if not newValue:
@@ -178,8 +181,9 @@ class ButtonConflict(ActionConflict):
                     self.Conflicts.append (s)
 
 class EdgeConflict(ActionConflict):
-    def __init__(self, setting, newValue, settings=None, autoResolve=False, ignoreOld=False):
-        ActionConflict.__init__(self, setting, settings, autoResolve)
+    def __init__(self, parent, setting, newValue, settings=None,
+                 autoResolve=False, ignoreOld=False):
+        ActionConflict.__init__(self, parent, setting, settings, autoResolve)
         self.Name = _("edge")
 
         if not newValue:
@@ -223,8 +227,8 @@ class EdgeConflict(ActionConflict):
 
 # Not used for plugin dependencies (which are handled by ccs) but own feature checking e.g. image support
 class FeatureRequirement(Conflict):
-    def __init__(self, context, feature, autoResolve=False):
-        Conflict.__init__(self, autoResolve)
+    def __init__(self, parent, context, feature, autoResolve=False):
+        Conflict.__init__(self, parent, autoResolve)
         self.Requirements = []
         self.Context = context
         self.Feature = feature
@@ -290,8 +294,8 @@ class FeatureRequirement(Conflict):
         return answer
 
 class PluginConflict(Conflict):
-    def __init__(self, plugin, conflicts, autoResolve=False):
-        Conflict.__init__(self, autoResolve)
+    def __init__(self, parent, plugin, conflicts, autoResolve=False):
+        Conflict.__init__(self, parent, autoResolve)
         self.Conflicts = conflicts
         self.Plugin = plugin
 
@@ -301,8 +305,8 @@ class PluginConflict(Conflict):
                 answer = self.AskUser(self.Plugin, conflict)
                 if answer == Gtk.ResponseType.YES:
                     disableConflicts = conflict[2][0].DisableConflicts
-                    con = PluginConflict(conflict[2][0], disableConflicts,
-                                         self.AutoResolve)
+                    con = PluginConflict(self.Parent, conflict[2][0],
+                                         disableConflicts, self.AutoResolve)
                     if con.Resolve():
                         conflict[2][0].Enabled = False
                     else:
@@ -314,8 +318,8 @@ class PluginConflict(Conflict):
                 answer = self.AskUser(self.Plugin, conflict)
                 if answer == Gtk.ResponseType.YES:
                     disableConflicts = conflict[2][0].DisableConflicts
-                    con = PluginConflict(conflict[2][0], disableConflicts,
-                                         self.AutoResolve)
+                    con = PluginConflict(self.Parent, conflict[2][0],
+                                         disableConflicts, self.AutoResolve)
                     if con.Resolve():
                         conflict[2][0].Enabled = False
                     else:
@@ -329,7 +333,8 @@ class PluginConflict(Conflict):
                     for plg in conflict[2]:
                         if plg.ShortDesc == choice:
                             enableConflicts = plg.EnableConflicts
-                            con = PluginConflict(plg, enableConflicts,
+                            con = PluginConflict(self.Parent, plg,
+                                                 enableConflicts,
                                                  self.AutoResolve)
                             if con.Resolve():
                                 plg.Enabled = True
@@ -343,8 +348,8 @@ class PluginConflict(Conflict):
                 answer = self.AskUser(self.Plugin, conflict)
                 if answer == Gtk.ResponseType.YES:
                     enableConflicts = conflict[2][0].EnableConflicts
-                    con = PluginConflict(conflict[2][0], enableConflicts,
-                                         self.AutoResolve)
+                    con = PluginConflict(self.Parent, conflict[2][0],
+                                         enableConflicts, self.AutoResolve)
                     if con.Resolve():
                         conflict[2][0].Enabled = True
                     else:
@@ -357,7 +362,7 @@ class PluginConflict(Conflict):
                 if answer == Gtk.ResponseType.YES:
                     for plg in conflict[2]:
                         disableConflicts = plg.DisableConflicts
-                        con = PluginConflict(plg, disableConflicts,
+                        con = PluginConflict(self.Parent, plg, disableConflicts,
                                              self.AutoResolve)
                         if con.Resolve():
                             plg.Enabled = False
@@ -371,7 +376,7 @@ class PluginConflict(Conflict):
                 if answer == Gtk.ResponseType.YES:
                     for plg in conflict[2]:
                         disableConflicts = plg.DisableConflicts
-                        con = PluginConflict(plg, disableConflicts,
+                        con = PluginConflict(self.Parent, plg, disableConflicts,
                                              self.AutoResolve)
                         if con.Resolve():
                             plg.Enabled = False
@@ -387,11 +392,14 @@ class PluginConflict(Conflict):
             for setting in GetSettings(self.Plugin):
                 conflict = None
                 if setting.Type == 'Key':
-                    conflict = KeyConflict(setting, setting.Value, ignoreOld=True)
+                    conflict = KeyConflict(self.Parent, setting,
+                                           setting.Value, ignoreOld=True)
                 elif setting.Type == 'Button':
-                    conflict = ButtonConflict(setting, setting.Value, ignoreOld=True)
+                    conflict = ButtonConflict(self.Parent, setting,
+                                              setting.Value, ignoreOld=True)
                 elif setting.Type == 'Edge':
-                    conflict = EdgeConflict(setting, setting.Value, ignoreOld=True)
+                    conflict = EdgeConflict(self.Parent, setting,
+                                            setting.Value, ignoreOld=True)
 
                 # Conflicts were found
                 if conflict and conflict.Conflicts:
