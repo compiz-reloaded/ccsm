@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm\n"
 "Report-Msgid-Bugs-To: https://github.com/compiz-reloaded/ccsm/issues\n"
-"POT-Creation-Date: 2017-01-12 18:19+0300\n"
+"POT-Creation-Date: 2017-05-04 15:17+0300\n"
 "PO-Revision-Date: 2008-02-23 20:32+0530\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Oriya <or@li.org>\n"
@@ -177,8 +177,27 @@ msgstr ""
 msgid "Reset setting to the default value"
 msgstr "ଡିଫଲ୍ଟ ମୂଲ୍ଯକୁ ସେଟିଙ୍ଗକୁ ପୁନଃସ୍ଥିରକର"
 
+msgid "_New"
+msgstr "ନୂତନ (_N)"
+
+msgid "_Delete"
+msgstr "ଲିଭାନ୍ତୁ (_D)"
+
+msgid "_Edit"
+msgstr "Action name"
+
+msgid "_Up"
+msgstr "ଉପର (_U)"
+
+msgid "_Down"
+msgstr "ତଳ (_D)"
+
 msgid "Edit"
 msgstr "ସଂପାଦନକର"
+
+#. Exit Button
+msgid "_Close"
+msgstr "ବନ୍ଦ କରନ୍ତୁ (_C)"
 
 msgid "Multi-list settings. You can double-click a row to edit the values."
 msgstr ""
@@ -187,6 +206,12 @@ msgstr ""
 #, python-format
 msgid "Edit %s"
 msgstr "ସଂପାଦନକର %s"
+
+msgid "_Cancel"
+msgstr "ବାତିଲ କରନ୍ତୁ (_C)"
+
+msgid "_OK"
+msgstr "ଠିକ ଅଛି (_O)"
 
 #, python-format
 msgid "\"%s\" is not a valid shortcut"
@@ -303,6 +328,10 @@ msgstr "କିମ୍ବା"
 msgid "Edit match"
 msgstr "ମିଶୁଥିବାକୁ ସଂପାଦନକର"
 
+#. Add buttons
+msgid "_Add"
+msgstr "ଯୋଗ କରନ୍ତୁ (_A)"
+
 #. Type
 msgid "Type"
 msgstr "ପ୍ରକାର"
@@ -337,6 +366,9 @@ msgstr "ବିବରଣୀପଞ୍ଜିକା ଖୋଲ..."
 msgid "Open file..."
 msgstr "ଫାଇଲ ଖୋଲ..."
 
+msgid "_Open"
+msgstr "ଖୋଲନ୍ତୁ (_O)"
+
 msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr "କମ୍ପିଜକନଫିଗ କନଫିଗରେସନ ସିଷ୍ଟମ ପାଇଁ ଏହା ଗୋଟିଏ ସେଟିଙ୍ଗ ପ୍ରବନ୍ଧକ ଅଟେ ।"
 
@@ -365,6 +397,10 @@ msgstr "ଏହି ପ୍ଲଗଇନକୁ ଉପୟୋଗକର"
 
 msgid "Search Compiz Core Options"
 msgstr "କମ୍ପିଜ କେନ୍ଦ୍ରୀଯ ବିକଳ୍ପଗୁଡିକୁ ତଦନ୍ତକର"
+
+#. Back Button
+msgid "_Back"
+msgstr "ପଛ (_B)"
 
 msgid "Error"
 msgstr "ତ୍ରୁଟି"
@@ -457,6 +493,9 @@ msgstr "ସବୁ ଫାଇଲଗୁଡିକ"
 
 msgid "Save file.."
 msgstr "ଫାଇଲ ସଂଚଯକର"
+
+msgid "_Save"
+msgstr "ସଂରକ୍ଷଣ କରନ୍ତୁ (_S)"
 
 msgid "Do you want to skip default option values while exporting your profile?"
 msgstr "ଆପଣଙ୍କର ପ୍ରୋଫାଇଲକୁ ରପ୍ତାନୀ କରିବା ବେଳେ ଡିଫଲ୍ଟ ବିକଳ୍ପ ମୂଲ୍ଯକୁ ବାଦ ଦେବାକୁ ଚାହାଁନ୍ତି କି ?"

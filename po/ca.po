@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm\n"
 "Report-Msgid-Bugs-To: https://github.com/compiz-reloaded/ccsm/issues\n"
-"POT-Creation-Date: 2017-01-12 18:19+0300\n"
+"POT-Creation-Date: 2017-05-04 15:16+0300\n"
 "PO-Revision-Date: 2016-08-20 14:43+0200\n"
 "Last-Translator: Robert Antoni Buj Gelonch <rbuj@fedoraproject.org>\n"
 "Language-Team: Catalan <ca@li.org>\n"
@@ -204,8 +204,27 @@ msgstr "N/D"
 msgid "Reset setting to the default value"
 msgstr "Restableix l'ajust al valor predeterminat"
 
+msgid "_New"
+msgstr "_Nou"
+
+msgid "_Delete"
+msgstr "_Suprimeix"
+
+msgid "_Edit"
+msgstr "_Edita"
+
+msgid "_Up"
+msgstr "A_munt"
+
+msgid "_Down"
+msgstr "A_vall"
+
 msgid "Edit"
 msgstr "Edita"
+
+#. Exit Button
+msgid "_Close"
+msgstr "_Tanca"
 
 msgid "Multi-list settings. You can double-click a row to edit the values."
 msgstr ""
@@ -215,6 +234,12 @@ msgstr ""
 #, python-format
 msgid "Edit %s"
 msgstr "Edita %s"
+
+msgid "_Cancel"
+msgstr "_Cancel·la"
+
+msgid "_OK"
+msgstr "_D'acord"
 
 #, python-format
 msgid "\"%s\" is not a valid shortcut"
@@ -332,6 +357,10 @@ msgstr "O"
 msgid "Edit match"
 msgstr "Edita la coincidència"
 
+#. Add buttons
+msgid "_Add"
+msgstr "_Afegeix"
+
 #. Type
 msgid "Type"
 msgstr "Tipus"
@@ -366,6 +395,9 @@ msgstr "Obre el directori..."
 msgid "Open file..."
 msgstr "Obre el fitxer..."
 
+msgid "_Open"
+msgstr "_Obre"
+
 msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr ""
 "Aquest és un gestor d'ajusts per al sistema de configuració CompizConfig."
@@ -397,6 +429,10 @@ msgstr "Utilitza aquest connector"
 
 msgid "Search Compiz Core Options"
 msgstr "Cerca opcions del nucli de Compiz"
+
+#. Back Button
+msgid "_Back"
+msgstr "_Enrere"
 
 msgid "Error"
 msgstr "Error"
@@ -490,6 +526,9 @@ msgstr "Tots els fitxers"
 
 msgid "Save file.."
 msgstr "Desa el fitxer..."
+
+msgid "_Save"
+msgstr "_Desa"
 
 msgid "Do you want to skip default option values while exporting your profile?"
 msgstr ""

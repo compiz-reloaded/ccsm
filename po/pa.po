@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm\n"
 "Report-Msgid-Bugs-To: https://github.com/compiz-reloaded/ccsm/issues\n"
-"POT-Creation-Date: 2017-01-12 18:19+0300\n"
+"POT-Creation-Date: 2017-05-04 15:17+0300\n"
 "PO-Revision-Date: 2008-11-11 19:50+0100\n"
 "Last-Translator: amandeep singh <singh.amandeep87@gmail.com>\n"
 "Language-Team: Punjabi/Panjabi <punjabi-users@llist.sf.net>\n"
@@ -198,8 +198,27 @@ msgstr ""
 msgid "Reset setting to the default value"
 msgstr "ਸੈਟਿੰਗ ਨੂੰ ਡਿਫਾਲਟ ਮੁੱਲ ਲਈ ਮੁੜ-ਸੈੱਟ ਕਰੋ"
 
+msgid "_New"
+msgstr "ਨਵਾਂ(_N)"
+
+msgid "_Delete"
+msgstr "ਹਟਾਓ(_D)"
+
+msgid "_Edit"
+msgstr "ਸੋਧ(_E)"
+
+msgid "_Up"
+msgstr "ਉੱਤੇ(_U)"
+
+msgid "_Down"
+msgstr "ਹੇਠਾਂ(_D)"
+
 msgid "Edit"
 msgstr "ਸੋਧ"
+
+#. Exit Button
+msgid "_Close"
+msgstr "ਬੰਦ ਕਰੋ(_C)"
 
 msgid "Multi-list settings. You can double-click a row to edit the values."
 msgstr "ਮਲਟੀ-ਲਿਸਟ ਸੈਟਿੰਗ ਹੈ। ਮੁੱਲ ਸੋਧਣ ਲਈ ਤੁਸੀਂ ਡਬਲ-ਕਲਿੱਕ ਕਰ ਸਕਦੇ ਹੋ।"
@@ -207,6 +226,12 @@ msgstr "ਮਲਟੀ-ਲਿਸਟ ਸੈਟਿੰਗ ਹੈ। ਮੁੱਲ ਸ�
 #, python-format
 msgid "Edit %s"
 msgstr "%s ਸੋਧ"
+
+msgid "_Cancel"
+msgstr "ਰੱਦ ਕਰੋ(_C)"
+
+msgid "_OK"
+msgstr "ਠੀਕ ਹੈ(_O)"
 
 #, python-format
 msgid "\"%s\" is not a valid shortcut"
@@ -324,6 +349,10 @@ msgstr "ਜਾਂ"
 msgid "Edit match"
 msgstr "ਮੇਲ ਸੋਧ"
 
+#. Add buttons
+msgid "_Add"
+msgstr "ਸ਼ਾਮਲ(_A)"
+
 #. Type
 msgid "Type"
 msgstr "ਟਾਇਪ"
@@ -359,6 +388,9 @@ msgstr "ਡਾਇਰੈਕਟਰੀ ਖੋਲ੍ਹੋ..."
 msgid "Open file..."
 msgstr "ਫਾਇਲ ਖੋਲ੍ਹੋ..."
 
+msgid "_Open"
+msgstr "ਖੋਲ੍ਹੋ(_O)"
+
 msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr "ਇਹ CompizConfig ਸੰਰਚਨਾ ਸਿਸਟਮ ਲਈ ਇੱਕ ਸੈਟਿੰਗ ਮੈਨੇਜਰ ਹੈ।"
 
@@ -387,6 +419,10 @@ msgstr "ਇਹ ਪਲੱਗਇਨ ਵਰਤੋਂ"
 
 msgid "Search Compiz Core Options"
 msgstr "ਕੰਪੋਜ਼ ਕੋਰ ਚੋਣ ਖੋਜ"
+
+#. Back Button
+msgid "_Back"
+msgstr "ਪਿੱਛੇ(_B)"
 
 msgid "Error"
 msgstr "ਗਲਤੀ"
@@ -480,6 +516,9 @@ msgstr "ਸਭ ਫਾਇਲਾਂ"
 
 msgid "Save file.."
 msgstr "ਫਾਇਲ ਸੰਭਾਲੋ..."
+
+msgid "_Save"
+msgstr "ਸੰਭਾਲੋ(_S)"
 
 msgid "Do you want to skip default option values while exporting your profile?"
 msgstr "ਕੀ ਤੁਸੀਂ ਆਪਣਾ ਪਰੋਫਾਇਲ ਐਕਸਪੋਰਟ ਕਰਨ ਦੌਰਾਨ ਡਿਫਾਲਟ ਚੋਣ ਮੁੱਲ ਛੱਡਣੇ ਚਾਹੁੰਦੇ ਹੋ?"

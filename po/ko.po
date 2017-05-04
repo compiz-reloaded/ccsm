@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm\n"
 "Report-Msgid-Bugs-To: https://github.com/compiz-reloaded/ccsm/issues\n"
-"POT-Creation-Date: 2017-01-12 18:19+0300\n"
+"POT-Creation-Date: 2017-05-04 15:17+0300\n"
 "PO-Revision-Date: 2008-08-30 18:12+0200\n"
 "Last-Translator: Lee June Hee <bugbear5@gmail.com>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -206,8 +206,27 @@ msgstr "없음"
 msgid "Reset setting to the default value"
 msgstr "설정을 기본값으로 초기화"
 
+msgid "_New"
+msgstr "새로 만들기(_N)"
+
+msgid "_Delete"
+msgstr "삭제(_D)"
+
+msgid "_Edit"
+msgstr ""
+
+msgid "_Up"
+msgstr "위로(_U)"
+
+msgid "_Down"
+msgstr "아래로(_D)"
+
 msgid "Edit"
 msgstr "수정"
+
+#. Exit Button
+msgid "_Close"
+msgstr "닫기(_C)"
 
 msgid "Multi-list settings. You can double-click a row to edit the values."
 msgstr "다중 목록 설정. 행을 더블 클릭하여 값을 바꿀 수 있습니다."
@@ -215,6 +234,12 @@ msgstr "다중 목록 설정. 행을 더블 클릭하여 값을 바꿀 수 있�
 #, python-format
 msgid "Edit %s"
 msgstr "%s 수정"
+
+msgid "_Cancel"
+msgstr ""
+
+msgid "_OK"
+msgstr ""
 
 #, python-format
 msgid "\"%s\" is not a valid shortcut"
@@ -331,6 +356,10 @@ msgstr "또는"
 msgid "Edit match"
 msgstr "편집"
 
+#. Add buttons
+msgid "_Add"
+msgstr "추가(_A)"
+
 #. Type
 msgid "Type"
 msgstr "종류"
@@ -365,6 +394,9 @@ msgstr "디렉토리 열기..."
 msgid "Open file..."
 msgstr "파일 열기..."
 
+msgid "_Open"
+msgstr "열기(_O)"
+
 msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr "컴피즈 환경 설정 시스템의 설정 관리자입니다."
 
@@ -393,6 +425,10 @@ msgstr "이 플러그인을 사용"
 
 msgid "Search Compiz Core Options"
 msgstr "컴피즈 코어 옵션 검색"
+
+#. Back Button
+msgid "_Back"
+msgstr "뒤로(_B)"
 
 msgid "Error"
 msgstr "에러"
@@ -487,6 +523,9 @@ msgstr "모든 파일"
 
 msgid "Save file.."
 msgstr "파일 저장.."
+
+msgid "_Save"
+msgstr "저장(_S)"
 
 msgid "Do you want to skip default option values while exporting your profile?"
 msgstr "프로필을 내보낼 때 기본 설정 값을 생략하시겠습니까?"

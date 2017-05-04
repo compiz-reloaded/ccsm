@@ -3,11 +3,12 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/compiz-reloaded/ccsm/issues\n"
-"POT-Creation-Date: 2017-01-12 18:19+0300\n"
+"POT-Creation-Date: 2017-05-04 15:17+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -178,7 +179,26 @@ msgstr ""
 msgid "Reset setting to the default value"
 msgstr ""
 
+msgid "_New"
+msgstr ""
+
+msgid "_Delete"
+msgstr ""
+
+msgid "_Edit"
+msgstr ""
+
+msgid "_Up"
+msgstr ""
+
+msgid "_Down"
+msgstr ""
+
 msgid "Edit"
+msgstr ""
+
+#. Exit Button
+msgid "_Close"
 msgstr ""
 
 msgid "Multi-list settings. You can double-click a row to edit the values."
@@ -186,6 +206,12 @@ msgstr ""
 
 #, python-format
 msgid "Edit %s"
+msgstr ""
+
+msgid "_Cancel"
+msgstr ""
+
+msgid "_OK"
 msgstr ""
 
 #, python-format
@@ -299,6 +325,10 @@ msgstr ""
 msgid "Edit match"
 msgstr ""
 
+#. Add buttons
+msgid "_Add"
+msgstr ""
+
 #. Type
 msgid "Type"
 msgstr ""
@@ -333,6 +363,9 @@ msgstr ""
 msgid "Open file..."
 msgstr ""
 
+msgid "_Open"
+msgstr ""
+
 msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr ""
 
@@ -360,6 +393,10 @@ msgid "Use This Plugin"
 msgstr ""
 
 msgid "Search Compiz Core Options"
+msgstr ""
+
+#. Back Button
+msgid "_Back"
 msgstr ""
 
 msgid "Error"
@@ -451,6 +488,9 @@ msgid "All files"
 msgstr ""
 
 msgid "Save file.."
+msgstr ""
+
+msgid "_Save"
 msgstr ""
 
 msgid "Do you want to skip default option values while exporting your profile?"

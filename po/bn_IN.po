@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm\n"
 "Report-Msgid-Bugs-To: https://github.com/compiz-reloaded/ccsm/issues\n"
-"POT-Creation-Date: 2017-01-12 18:19+0300\n"
+"POT-Creation-Date: 2017-05-04 15:16+0300\n"
 "PO-Revision-Date: 2008-03-15 16:15+0100\n"
 "Last-Translator: biswajyoti mahanta <biswajyotim@gmail.com>\n"
 "Language-Team: gist bengali team <info.gist@cdac.in>\n"
@@ -198,8 +198,27 @@ msgstr ""
 msgid "Reset setting to the default value"
 msgstr "মূল মানে ফিরে যাও"
 
+msgid "_New"
+msgstr "নতুন (_N)"
+
+msgid "_Delete"
+msgstr "মুছে ফেলুন (_D)"
+
+msgid "_Edit"
+msgstr "সম্পাদনা (_E)"
+
+msgid "_Up"
+msgstr "উপরে (_U)"
+
+msgid "_Down"
+msgstr "নীচে (_D)"
+
 msgid "Edit"
 msgstr "সম্পাদনা"
+
+#. Exit Button
+msgid "_Close"
+msgstr "বন্ধ করুন (_C)"
 
 msgid "Multi-list settings. You can double-click a row to edit the values."
 msgstr "অনেক্গুলো পছন্দ।আপনার কোন পছন্দ সম্পাদন করতে হলে ওই সারিতে ক্লিক করুন"
@@ -207,6 +226,12 @@ msgstr "অনেক্গুলো পছন্দ।আপনার কোন 
 #, python-format
 msgid "Edit %s"
 msgstr "%s কে সম্পাদনা"
+
+msgid "_Cancel"
+msgstr "বাতিল (_C)"
+
+msgid "_OK"
+msgstr "ঠিক আছে (_O)"
 
 #, python-format
 msgid "\"%s\" is not a valid shortcut"
@@ -324,6 +349,10 @@ msgstr "অথবা"
 msgid "Edit match"
 msgstr "মিলগুলি সম্পাদন করা"
 
+#. Add buttons
+msgid "_Add"
+msgstr "যোগ করুন (_A)"
+
 #. Type
 msgid "Type"
 msgstr "প্রকার"
@@ -359,6 +388,9 @@ msgstr "ডিরেক্টরি খুলুন"
 msgid "Open file..."
 msgstr "ফাইল খুলুন"
 
+msgid "_Open"
+msgstr "খুলুন (_O)"
+
 msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr "এটি হলো কমপিজ এর পছন্দ ঠিক করার জায়গা"
 
@@ -387,6 +419,10 @@ msgstr "এই প্লাগইন ব্যবহার করো"
 
 msgid "Search Compiz Core Options"
 msgstr "কমপিজ কোর এর পছন্দ এর মধ্যে খোজো"
+
+#. Back Button
+msgid "_Back"
+msgstr "পূর্ববর্তী (_B)"
 
 msgid "Error"
 msgstr "সমস্যা"
@@ -482,6 +518,9 @@ msgstr "সব ফাইল"
 
 msgid "Save file.."
 msgstr "ফাইল সংরক্ষণ করুন"
+
+msgid "_Save"
+msgstr "সংরক্ষণ করুন (_S)"
 
 msgid "Do you want to skip default option values while exporting your profile?"
 msgstr ""

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm\n"
 "Report-Msgid-Bugs-To: https://github.com/compiz-reloaded/ccsm/issues\n"
-"POT-Creation-Date: 2017-01-12 18:19+0300\n"
+"POT-Creation-Date: 2017-05-04 15:17+0300\n"
 "PO-Revision-Date: 2007-09-24 23:00+0200\n"
 "Last-Translator: Werner Landgraf <werner@copaya.yi.org>\n"
 "Language-Team: Wolof <wo@li.org>\n"
@@ -198,8 +198,27 @@ msgstr ""
 msgid "Reset setting to the default value"
 msgstr "Ñögal ñög gu wees gi"
 
+msgid "_New"
+msgstr ""
+
+msgid "_Delete"
+msgstr ""
+
+msgid "_Edit"
+msgstr ""
+
+msgid "_Up"
+msgstr ""
+
+msgid "_Down"
+msgstr ""
+
 msgid "Edit"
 msgstr "binde ..."
+
+#. Exit Button
+msgid "_Close"
+msgstr ""
 
 msgid "Multi-list settings. You can double-click a row to edit the values."
 msgstr "Fí, mön nga tann dara ci, ngir nga mbinde ko"
@@ -207,6 +226,12 @@ msgstr "Fí, mön nga tann dara ci, ngir nga mbinde ko"
 #, python-format
 msgid "Edit %s"
 msgstr "bindal %s !"
+
+msgid "_Cancel"
+msgstr ""
+
+msgid "_OK"
+msgstr ""
 
 #, python-format
 msgid "\"%s\" is not a valid shortcut"
@@ -327,6 +352,10 @@ msgstr ""
 msgid "Edit match"
 msgstr ""
 
+#. Add buttons
+msgid "_Add"
+msgstr ""
+
 #. Type
 msgid "Type"
 msgstr ""
@@ -364,6 +393,9 @@ msgstr "hubbi ndaal y bindaay ..."
 msgid "Open file..."
 msgstr "Ubbi binday.."
 
+msgid "_Open"
+msgstr ""
+
 msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr "Li dafa programa bu ogosu na CompizConfig bi. "
 
@@ -392,6 +424,10 @@ msgstr "Ñöriñal defëkaay bii !"
 
 msgid "Search Compiz Core Options"
 msgstr "Wuut na ngir Compiz Core  mënnéel yi ..."
+
+#. Back Button
+msgid "_Back"
+msgstr ""
 
 msgid "Error"
 msgstr "njuumte !"
@@ -488,6 +524,9 @@ msgstr "mbinday yöpp"
 
 msgid "Save file.."
 msgstr "denc binday ..."
+
+msgid "_Save"
+msgstr ""
 
 msgid "Do you want to skip default option values while exporting your profile?"
 msgstr ""

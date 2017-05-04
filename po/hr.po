@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm\n"
 "Report-Msgid-Bugs-To: https://github.com/compiz-reloaded/ccsm/issues\n"
-"POT-Creation-Date: 2017-01-12 18:19+0300\n"
+"POT-Creation-Date: 2017-05-04 15:17+0300\n"
 "PO-Revision-Date: 2008-06-16 13:24+0200\n"
 "Last-Translator: Matija Folnovic <matijafolnovic@gmail.com>\n"
 "Language-Team: Croatian <hr@li.org>\n"
@@ -195,8 +195,27 @@ msgstr ""
 msgid "Reset setting to the default value"
 msgstr "Vrati vrijednost na njezinu pocetnu vrijednost"
 
+msgid "_New"
+msgstr "_Novo"
+
+msgid "_Delete"
+msgstr "_Obriši"
+
+msgid "_Edit"
+msgstr "_Uredi"
+
+msgid "_Up"
+msgstr "_Gore"
+
+msgid "_Down"
+msgstr "_Dolje"
+
 msgid "Edit"
 msgstr "Promijeni"
+
+#. Exit Button
+msgid "_Close"
+msgstr "_Zatvori"
 
 msgid "Multi-list settings. You can double-click a row to edit the values."
 msgstr ""
@@ -206,6 +225,12 @@ msgstr ""
 #, python-format
 msgid "Edit %s"
 msgstr "Promijeni %s"
+
+msgid "_Cancel"
+msgstr "_Odustani"
+
+msgid "_OK"
+msgstr "_U redu"
 
 #, python-format
 msgid "\"%s\" is not a valid shortcut"
@@ -322,6 +347,10 @@ msgstr "Ili"
 msgid "Edit match"
 msgstr "Promjeni podudarnost"
 
+#. Add buttons
+msgid "_Add"
+msgstr "_Dodaj"
+
 #. Type
 msgid "Type"
 msgstr "Tip"
@@ -356,6 +385,9 @@ msgstr "Otvori direktorij..."
 msgid "Open file..."
 msgstr "Otvori datoteku..."
 
+msgid "_Open"
+msgstr "_Otvori"
+
 msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr "Ovo je upravitelj konfiguracija za CompizConfig konfiguracijski sustav"
 
@@ -384,6 +416,10 @@ msgstr "Koristi ovaj dodatak"
 
 msgid "Search Compiz Core Options"
 msgstr "Pretrazi Opcije Compizove jezgre"
+
+#. Back Button
+msgid "_Back"
+msgstr "_Natrag"
 
 msgid "Error"
 msgstr "Greska"
@@ -479,6 +515,9 @@ msgstr "Sve datoteke"
 
 msgid "Save file.."
 msgstr "Spremi datoteku"
+
+msgid "_Save"
+msgstr "_Spremi"
 
 msgid "Do you want to skip default option values while exporting your profile?"
 msgstr "Zelite li preskociti pocetne postavke pri eksportiranju profila?"

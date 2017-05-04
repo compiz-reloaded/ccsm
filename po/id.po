@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm\n"
 "Report-Msgid-Bugs-To: https://github.com/compiz-reloaded/ccsm/issues\n"
-"POT-Creation-Date: 2017-01-12 18:19+0300\n"
+"POT-Creation-Date: 2017-05-04 15:17+0300\n"
 "PO-Revision-Date: 2009-03-31 06:10+0700\n"
 "Last-Translator: Mahyuddin Susanto <udienz@unej.ac.id>\n"
 "Language-Team: Indonesian <id@li.org>\n"
@@ -188,8 +188,27 @@ msgstr "N/A"
 msgid "Reset setting to the default value"
 msgstr "Rest nilai pengaturan ke pengaturan default "
 
+msgid "_New"
+msgstr "_Baru"
+
+msgid "_Delete"
+msgstr "_Hapus"
+
+msgid "_Edit"
+msgstr ""
+
+msgid "_Up"
+msgstr "_Naik"
+
+msgid "_Down"
+msgstr "_Turun"
+
 msgid "Edit"
 msgstr "Ubah"
+
+#. Exit Button
+msgid "_Close"
+msgstr "_Tutup"
 
 msgid "Multi-list settings. You can double-click a row to edit the values."
 msgstr ""
@@ -197,6 +216,12 @@ msgstr ""
 #, python-format
 msgid "Edit %s"
 msgstr "Ubah %s"
+
+msgid "_Cancel"
+msgstr ""
+
+msgid "_OK"
+msgstr ""
 
 #, python-format
 msgid "\"%s\" is not a valid shortcut"
@@ -311,6 +336,10 @@ msgstr "Atau"
 msgid "Edit match"
 msgstr ""
 
+#. Add buttons
+msgid "_Add"
+msgstr "T_ambah"
+
 #. Type
 msgid "Type"
 msgstr "Tipe"
@@ -345,6 +374,9 @@ msgstr "Buka direktori..."
 msgid "Open file..."
 msgstr "Buka berkas..."
 
+msgid "_Open"
+msgstr "Buk_a"
+
 msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr ""
 
@@ -373,6 +405,10 @@ msgstr "Gunakan Plugin Ini"
 
 msgid "Search Compiz Core Options"
 msgstr "Cari Opsi Compiz Core"
+
+#. Back Button
+msgid "_Back"
+msgstr "Kem_bali"
 
 msgid "Error"
 msgstr "Kesalahan"
@@ -467,6 +503,9 @@ msgstr "Semua berkas"
 
 msgid "Save file.."
 msgstr "Simpan berkas.."
+
+msgid "_Save"
+msgstr "_Simpan"
 
 msgid "Do you want to skip default option values while exporting your profile?"
 msgstr ""

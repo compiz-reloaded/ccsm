@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm\n"
 "Report-Msgid-Bugs-To: https://github.com/compiz-reloaded/ccsm/issues\n"
-"POT-Creation-Date: 2017-01-12 18:19+0300\n"
+"POT-Creation-Date: 2017-05-04 15:17+0300\n"
 "PO-Revision-Date: 2007-12-16 16:36+0530\n"
 "Last-Translator: Sangeeta Kumari\n"
 "Language-Team: Hindi <hi@li.org>\n"
@@ -197,8 +197,27 @@ msgstr ""
 msgid "Reset setting to the default value"
 msgstr "मूलभूत मान में सेटिंग फिर सेट करें"
 
+msgid "_New"
+msgstr "नया (_N)"
+
+msgid "_Delete"
+msgstr "मिटाएँ (_D)"
+
+msgid "_Edit"
+msgstr "संपादन (_E)"
+
+msgid "_Up"
+msgstr "ऊपर (_U)"
+
+msgid "_Down"
+msgstr "नीचे (_D)"
+
 msgid "Edit"
 msgstr "संपादन"
+
+#. Exit Button
+msgid "_Close"
+msgstr "बंद करें (_C)"
 
 msgid "Multi-list settings. You can double-click a row to edit the values."
 msgstr "मल्टी लिस्ट सेटिंग. आप एक पंक्ति पर मानों के संपादन के लिए दो बार क्लिक कर सकते हैं."
@@ -206,6 +225,12 @@ msgstr "मल्टी लिस्ट सेटिंग. आप एक पं
 #, python-format
 msgid "Edit %s"
 msgstr "%s संपादित करें"
+
+msgid "_Cancel"
+msgstr "रद्द करें (_C)"
+
+msgid "_OK"
+msgstr "ठीक (_O)"
 
 #, python-format
 msgid "\"%s\" is not a valid shortcut"
@@ -323,6 +348,10 @@ msgstr "या"
 msgid "Edit match"
 msgstr "मिलान संपादित करें"
 
+#. Add buttons
+msgid "_Add"
+msgstr "जोड़ें (_A)"
+
 #. Type
 msgid "Type"
 msgstr "प्रकार"
@@ -358,6 +387,9 @@ msgstr "निर्देशिका खोलें..."
 msgid "Open file..."
 msgstr "फाइल खोलें..."
 
+msgid "_Open"
+msgstr "खोलें (_O)"
+
 msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr "यह CompizConfig विन्यास सिस्टम के लिए सेटिंग मैनेजर है."
 
@@ -386,6 +418,10 @@ msgstr "इस प्लगिन का उपयोग करें"
 
 msgid "Search Compiz Core Options"
 msgstr "कोपिंज कोर विकल्प खोजें"
+
+#. Back Button
+msgid "_Back"
+msgstr "पीछे (_B)"
 
 msgid "Error"
 msgstr "त्रुटि"
@@ -479,6 +515,9 @@ msgstr "सभी फ़ाइलें"
 
 msgid "Save file.."
 msgstr "फाइल सहेजें.."
+
+msgid "_Save"
+msgstr "सहेजें (_S)"
 
 msgid "Do you want to skip default option values while exporting your profile?"
 msgstr "क्या आप मूलभूत विकल्प मान को अपने प्रोफाइल के निर्यात के दौरान छोड़ना चाहते हैं?"

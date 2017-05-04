@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: compiz\n"
 "Report-Msgid-Bugs-To: https://github.com/compiz-reloaded/ccsm/issues\n"
-"POT-Creation-Date: 2017-01-12 18:19+0300\n"
+"POT-Creation-Date: 2017-05-04 15:17+0300\n"
 "PO-Revision-Date: 2008-12-07 18:22+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -206,8 +206,27 @@ msgstr "-"
 msgid "Reset setting to the default value"
 msgstr "Återställ inställning till standardvärde"
 
+msgid "_New"
+msgstr "_Ny"
+
+msgid "_Delete"
+msgstr "_Ta bort"
+
+msgid "_Edit"
+msgstr "R_edigera"
+
+msgid "_Up"
+msgstr "_Upp"
+
+msgid "_Down"
+msgstr "_Ned"
+
 msgid "Edit"
 msgstr "Redigera"
+
+#. Exit Button
+msgid "_Close"
+msgstr "S_täng"
 
 msgid "Multi-list settings. You can double-click a row to edit the values."
 msgstr ""
@@ -216,6 +235,12 @@ msgstr ""
 #, python-format
 msgid "Edit %s"
 msgstr "Redigera %s"
+
+msgid "_Cancel"
+msgstr "_Avbryt"
+
+msgid "_OK"
+msgstr "_OK"
 
 #, python-format
 msgid "\"%s\" is not a valid shortcut"
@@ -336,6 +361,10 @@ msgstr "Eller"
 msgid "Edit match"
 msgstr "Redigera träff"
 
+#. Add buttons
+msgid "_Add"
+msgstr "_Lägg till"
+
 #. Type
 msgid "Type"
 msgstr "Typ"
@@ -371,6 +400,9 @@ msgstr "Öppna katalog..."
 msgid "Open file..."
 msgstr "Öppna fil..."
 
+msgid "_Open"
+msgstr "_Öppna"
+
 msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr ""
 "Det här är en inställningshanterare för CompizConfig konfigurationssystem."
@@ -402,6 +434,10 @@ msgstr "Använd denna insticksmodul"
 
 msgid "Search Compiz Core Options"
 msgstr "Sök Compiz Core-alternativ"
+
+#. Back Button
+msgid "_Back"
+msgstr "_Bakåt"
 
 msgid "Error"
 msgstr "Fel"
@@ -496,6 +532,9 @@ msgstr "Alla filer"
 
 msgid "Save file.."
 msgstr "Spara fil.."
+
+msgid "_Save"
+msgstr "_Spara"
 
 # Kanske duger?
 msgid "Do you want to skip default option values while exporting your profile?"

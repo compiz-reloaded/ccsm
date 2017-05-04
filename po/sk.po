@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm\n"
 "Report-Msgid-Bugs-To: https://github.com/compiz-reloaded/ccsm/issues\n"
-"POT-Creation-Date: 2017-01-12 18:19+0300\n"
+"POT-Creation-Date: 2017-05-04 15:17+0300\n"
 "PO-Revision-Date: 2008-12-14 10:57+0100\n"
 "Last-Translator: Brusnica P <pepino@pobox.sk>\n"
 "Language-Team: Slovak <sk.cfteam@gmail.com>\n"
@@ -201,8 +201,27 @@ msgstr "N/D"
 msgid "Reset setting to the default value"
 msgstr "Vrátiť nastavenia na šatndardné hodnoty"
 
+msgid "_New"
+msgstr "_Nový"
+
+msgid "_Delete"
+msgstr "O_dstrániť"
+
+msgid "_Edit"
+msgstr "_Upraviť"
+
+msgid "_Up"
+msgstr ""
+
+msgid "_Down"
+msgstr "_Dole"
+
 msgid "Edit"
 msgstr "Upraviť"
+
+#. Exit Button
+msgid "_Close"
+msgstr "Za_vrieť"
 
 msgid "Multi-list settings. You can double-click a row to edit the values."
 msgstr ""
@@ -212,6 +231,12 @@ msgstr ""
 #, python-format
 msgid "Edit %s"
 msgstr "Upraviť %s"
+
+msgid "_Cancel"
+msgstr "_Zrušiť"
+
+msgid "_OK"
+msgstr "_Ok"
 
 #, python-format
 msgid "\"%s\" is not a valid shortcut"
@@ -329,6 +354,10 @@ msgstr "Alebo"
 msgid "Edit match"
 msgstr "Upraviť zhodu"
 
+#. Add buttons
+msgid "_Add"
+msgstr "P_ridať"
+
 #. Type
 msgid "Type"
 msgstr "Typ"
@@ -363,6 +392,9 @@ msgstr "Otvoriť adresár..."
 msgid "Open file..."
 msgstr "Otvoriť súbor..."
 
+msgid "_Open"
+msgstr "_Otvoriť"
+
 msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr "Toto je správca nastavení konfiguračného systému CompizConfig."
 
@@ -393,6 +425,10 @@ msgstr "Použiť tento zásuvný modul"
 
 msgid "Search Compiz Core Options"
 msgstr "Hľadať Nastavenia Compiz Core"
+
+#. Back Button
+msgid "_Back"
+msgstr "_Späť"
 
 msgid "Error"
 msgstr "Chyba"
@@ -487,6 +523,9 @@ msgstr "Všetky súbory"
 
 msgid "Save file.."
 msgstr "Uložiť súbor.."
+
+msgid "_Save"
+msgstr "_Uložiť"
 
 msgid "Do you want to skip default option values while exporting your profile?"
 msgstr "Prajete si preskočiť štandardné hodnoty volieb pri exporte profilu?"

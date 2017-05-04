@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ccsm\n"
 "Report-Msgid-Bugs-To: https://github.com/compiz-reloaded/ccsm/issues\n"
-"POT-Creation-Date: 2017-01-12 18:19+0300\n"
+"POT-Creation-Date: 2017-05-04 15:17+0300\n"
 "PO-Revision-Date: 2009-02-17 17:52+0100\n"
 "Last-Translator: Milo Casagrande <milo@ubuntu.com>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
@@ -206,8 +206,27 @@ msgstr "N/D"
 msgid "Reset setting to the default value"
 msgstr "Ripristina l'impostazione al valore predefinito"
 
+msgid "_New"
+msgstr "_Nuovo"
+
+msgid "_Delete"
+msgstr "Eli_mina"
+
+msgid "_Edit"
+msgstr "Mo_difica"
+
+msgid "_Up"
+msgstr "_Su"
+
+msgid "_Down"
+msgstr "_Giù"
+
 msgid "Edit"
 msgstr "Modifica"
+
+#. Exit Button
+msgid "_Close"
+msgstr "_Chiudi"
 
 msgid "Multi-list settings. You can double-click a row to edit the values."
 msgstr ""
@@ -217,6 +236,12 @@ msgstr ""
 #, python-format
 msgid "Edit %s"
 msgstr "Modifica %s"
+
+msgid "_Cancel"
+msgstr "A_nnulla"
+
+msgid "_OK"
+msgstr "_OK"
 
 #, python-format
 msgid "\"%s\" is not a valid shortcut"
@@ -337,6 +362,10 @@ msgstr "O"
 msgid "Edit match"
 msgstr "Modifica corrispondenza"
 
+#. Add buttons
+msgid "_Add"
+msgstr "A_ggiungi"
+
 #. Type
 msgid "Type"
 msgstr "Tipo"
@@ -373,6 +402,9 @@ msgstr "Apri directory..."
 msgid "Open file..."
 msgstr "Apri file..."
 
+msgid "_Open"
+msgstr "_Apri"
+
 msgid "This is a settings manager for the CompizConfig configuration system."
 msgstr ""
 "Un gestore delle impostazioni per il sistema di configurazione CompizConfig."
@@ -403,6 +435,10 @@ msgstr "Usa questo plugin"
 
 msgid "Search Compiz Core Options"
 msgstr "Cerca tra le opzioni principali di Compiz"
+
+#. Back Button
+msgid "_Back"
+msgstr "_Indietro"
 
 msgid "Error"
 msgstr "Errore"
@@ -508,6 +544,9 @@ msgstr "Tutti i file"
 
 msgid "Save file.."
 msgstr "Salva file..."
+
+msgid "_Save"
+msgstr "_Salva"
 
 msgid "Do you want to skip default option values while exporting your profile?"
 msgstr ""
