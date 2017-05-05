@@ -29,9 +29,9 @@ import weakref
 
 from ccm.Constants import *
 try:
-    from html import escape as protect_pango_markup
+    from html import escape as html_escape
 except ImportError:
-    from cgi import escape as protect_pango_markup
+    from cgi import escape as html_escape
 import operator
 import itertools
 
@@ -91,6 +91,9 @@ def get_screens():
     for s in range(nScreens):
         screens.append(s)
     return screens
+
+def protect_pango_markup (str_, quote=True):
+    return html_escape(str_, quote) if str_ else ""
 
 def protect_markup_dict (dict_):
     return dict((k, protect_pango_markup (v)) for (k, v) in dict_.items())
