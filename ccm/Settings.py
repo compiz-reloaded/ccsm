@@ -285,12 +285,8 @@ class FamilyStringSetting(StockSetting):
         if Gtk.check_version(3, 0, 0) is None:
             style = previewWidget.get_style_context()
             style_provider = Gtk.CssProvider()
-            if Gtk.check_version(3, 20, 0) is None:
-                style_provider.load_from_data(("entry { font-family: \"%s\"; }" %
-                                               entry.get_text()).encode())
-            else:
-                style_provider.load_from_data(("GtkEntry { font-family: \"%s\"; }" %
-                                               entry.get_text()).encode())
+            style_provider.load_from_data(("* { font-family: \"%s\"; }" %
+                                           entry.get_text()).encode())
             style.add_provider(style_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
         else:
             style = previewWidget.get_style()
