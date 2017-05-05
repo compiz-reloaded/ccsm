@@ -133,21 +133,33 @@ class CellRendererColor(Gtk.CellRenderer):
         Gtk.CellRenderer.__init__(self)
 
     def _parse_color(self):
-        color = Gdk.color_parse(self._text[:-4])
-        alpha = int("0x%s" % self._text[-4:], base=16)
-        self._color = [color.red/65535.0, color.green/65535.0, color.blue/65535.0, alpha/65535.0]
+        if Gtk.check_version(3, 0, 0) is None:
+            color = Gdk.RGBA()
+            color.parse(self._text[:-4])
+            color.alpha = int("0x%s" % self._text[-4:], base=16) / 65535.0
+            self._color = [color.red, color.green, color.blue, color.alpha]
+        else:
+            color = Gdk.color_parse(self._text[:-4])
+            alpha = int("0x%s" % self._text[-4:], base=16)
+            self._color = [color.red / 65535.0, color.green / 65535.0,
+                           color.blue / 65535.0, alpha / 65535.0]
 
     def do_set_property(self, property, value):
         if property.name == 'text':
             self._text = value
             self._parse_color()
+        else:
+            raise AttributeError("unknown property %s" % property.name)
 
     def do_get_property(self, property):
         if property.name == 'text':
             return self._text
+        else:
+            raise AttributeError("unknown property %s" % property.name)
 
-    def on_get_size(self, widget, cell_area):
-        return (0, 0, 0, 0) # FIXME
+    if Gtk.check_version(3, 0, 0) is not None:
+        def do_get_size(self, widget, cell_area):
+            return (0, 0, 0, 0) # FIXME
 
     def redraw(self, width, height):
         # found in gtk-color-button.c
@@ -178,6 +190,31 @@ class CellRendererColor(Gtk.CellRenderer):
             begin_state = state
             x = 0
             y += CHECK_SIZE
+
+    def _render(self, cr, widget, background_area, cell_area, flags):
+        height, width = (cell_area.height, cell_area.width)
+        sheight, swidth = self._surface_size
+        if height > sheight or width > swidth:
+            self.redraw(width, height)
+
+        cr.rectangle(cell_area.x, cell_area.y, width, height)
+        cr.clip()
+
+        cr.set_source_surface(self._surface, cell_area.x, cell_area.y)
+        cr.paint()
+
+        cr.set_source_rgba(*self._color)
+        cr.paint()
+
+    if Gtk.check_version(3, 0, 0) is None:
+        def do_render(self, *args, **kwargs):
+            self._render(*args, **kwargs)
+    else:
+        def do_render(self, window, widget, background_area, cell_area, expose_area, flags):
+            cr = window.cairo_create()
+            Gdk.cairo_rectangle(cr, expose_area)
+            cr.clip()
+            self._render(cr, widget, background_area, cell_area, flags)
 
 class PluginView(Gtk.TreeView):
     def __init__(self, plugins):
