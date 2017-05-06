@@ -44,7 +44,7 @@ class MainWin(Gtk.Window):
         self.ShowingPlugin = None
         self.Context = Context
         self.connect("destroy", self.Quit)
-        if Gtk.check_version(3, 0, 0) is None:
+        if GTK_VERSION >= (3, 0, 0):
             self.get_style_context().add_class("ccsm-window")
         self.set_size_request(750, -1)
         self.set_default_size(1000, 580)
@@ -55,7 +55,7 @@ class MainWin(Gtk.Window):
         self.add(self.MainBox)
         self.LeftPane = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         self.RightPane = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-        if Gtk.check_version(3, 0, 0) is None:
+        if GTK_VERSION >= (3, 0, 0):
             self.RightPane.props.margin = 5
         else:
             self.RightPane.set_border_width(5)
@@ -65,7 +65,7 @@ class MainWin(Gtk.Window):
         self.CurrentPage = None
         self.SetPage(self.MainPage)
 
-        if Gtk.check_version(3, 0, 0) is None:
+        if GTK_VERSION >= (3, 0, 0):
             self.LeftPane.set_size_request(self.LeftPane.get_preferred_width()[0], -1)
         else:
             try:
@@ -82,7 +82,7 @@ class MainWin(Gtk.Window):
             self.MainPage.ToggleCategory(None, categoryName)
 
     def Quit(self, *args):
-        if Gtk.check_version(3, 6, 0) is None:
+        if GTK_VERSION >= (3, 6, 0):
             self.get_application().quit()
         else:
             Gtk.main_quit()

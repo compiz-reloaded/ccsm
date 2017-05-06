@@ -59,7 +59,7 @@ class GenericPage(GObject.GObject):
 
     def HeaderLabelSet(self, widget, label):
         self.HeaderStyleUpdated(widget, label)
-        if Gtk.check_version(3, 16, 0) is None:
+        if GTK_VERSION >= (3, 16, 0):
             widget.connect("style-updated", self.HeaderStyleUpdated, label)
         else:
             widget.connect("style-set", self.HeaderStyleSet, label)
@@ -70,7 +70,7 @@ class GenericPage(GObject.GObject):
             return
         self.StyleBlock += 1
         textRGB = None
-        if Gtk.check_version(3, 6, 0) is None:
+        if GTK_VERSION >= (3, 6, 0):
             style = widget.get_style_context ()
             style.save()
             style.add_class(Gtk.STYLE_CLASS_VIEW)
@@ -96,7 +96,7 @@ class GenericPage(GObject.GObject):
                 widget.set_markup(HeaderMarkupDefault % label)
         self.StyleBlock -= 1
 
-    if Gtk.check_version(3, 16, 0) is not None:
+    if GTK_VERSION < (3, 16, 0):
         def HeaderStyleSet(self, widget, previous, label):
             self.HeaderStyleUpdated(widget, label)
 
@@ -109,7 +109,7 @@ class PluginPage(GenericPage):
         self.Plugin = plugin
         self.LeftWidget = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,
                                   homogeneous=False, spacing=10)
-        if Gtk.check_version(3, 0, 0) is None:
+        if GTK_VERSION >= (3, 0, 0):
             self.LeftWidget.props.margin = 10
         else:
             self.LeftWidget.set_border_width(10)
@@ -128,7 +128,7 @@ class PluginPage(GenericPage):
         self.LeftWidget.pack_start(pluginLabel, False, False, 0)
         infoLabel = Label(plugin.LongDesc, 180)
         infoLabelCont = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
-        if Gtk.check_version(3, 0, 0) is None:
+        if GTK_VERSION >= (3, 0, 0):
             infoLabelCont.props.margin = 10
         else:
             infoLabelCont.set_border_width(10)
@@ -144,7 +144,7 @@ class PluginPage(GenericPage):
             self.HeaderLabelSet(enableLabel, _("Use This Plugin"))
             self.LeftWidget.pack_start(enableLabel, False, False, 0)
             enableCheckCont = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
-            if Gtk.check_version(3, 0, 0) is None:
+            if GTK_VERSION >= (3, 0, 0):
                 enableCheckCont.props.margin = 10
             else:
                 enableCheckCont.set_border_width(10)
@@ -281,7 +281,7 @@ class FilterPage(GenericPage):
         self.Context = context
         self.LeftWidget = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,
                                   homogeneous=False, spacing=10)
-        if Gtk.check_version(3, 0, 0) is None:
+        if GTK_VERSION >= (3, 0, 0):
             self.LeftWidget.props.margin = 10
         else:
             self.LeftWidget.set_border_width(10)
@@ -355,7 +355,7 @@ class FilterPage(GenericPage):
         self.SelectorButtons.set_size_request(-1, 50)
 
         self.SelectorBoxes = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
-        if Gtk.check_version(3, 0, 0) is None:
+        if GTK_VERSION >= (3, 0, 0):
             self.SelectorBoxes.props.margin = 5
         else:
             self.SelectorBoxes.set_border_width(5)
@@ -383,13 +383,13 @@ class FilterPage(GenericPage):
         self.RightChild.pack_start(self.SelectorBoxes, False, False, 0)
         self.SettingsArea = Gtk.ScrolledWindow()
         ebox = Gtk.EventBox()
-        if Gtk.check_version (3, 0, 0) is None:
+        if GTK_VERSION >= (3, 0, 0):
             ebox.get_style_context().add_class(Gtk.STYLE_CLASS_NOTEBOOK)
         self.SettingsBox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         ebox.add(self.SettingsBox)
         self.SettingsArea.props.hscrollbar_policy = Gtk.PolicyType.AUTOMATIC
         self.SettingsArea.props.vscrollbar_policy = Gtk.PolicyType.ALWAYS
-        if Gtk.check_version (3, 8, 0) is None:
+        if GTK_VERSION >= (3, 8, 0):
             self.SettingsBox.props.margin = 5
             self.SettingsArea.props.margin = 5
             self.SettingsArea.add(ebox)
@@ -404,13 +404,13 @@ class FilterPage(GenericPage):
         # Notebook
         self.NotebookLabel = Gtk.Label(label=_("Settings"))
         self.NotebookChild = Gtk.EventBox()
-        if Gtk.check_version (3, 0, 0) is None:
+        if GTK_VERSION >= (3, 0, 0):
             self.NotebookChild.get_style_context().add_class(Gtk.STYLE_CLASS_NOTEBOOK)
         self.NotebookChild.add(self.RightChild)
         self.RightWidget.append_page(self.NotebookChild, self.NotebookLabel)
 
         box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-        if Gtk.check_version(3, 0, 0) is None:
+        if GTK_VERSION >= (3, 0, 0):
             box.props.margin = 5
         else:
             box.set_border_width(5)
@@ -701,7 +701,7 @@ class ProfileBackendPage(object):
     def __init__(self, context):
         self.Context = context
         rightChild = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-        if Gtk.check_version(3, 0, 0) is None:
+        if GTK_VERSION >= (3, 0, 0):
             rightChild.props.margin = 10
         else:
             rightChild.set_border_width(10)
@@ -795,7 +795,7 @@ class ProfileBackendPage(object):
 
     def HeaderLabelSet(self, widget, label):
         self.HeaderStyleUpdated(widget, label)
-        if Gtk.check_version(3, 16, 0) is None:
+        if GTK_VERSION >= (3, 16, 0):
             widget.connect("style-updated", self.HeaderStyleUpdated, label)
         else:
             widget.connect("style-set", self.HeaderStyleSet, label)
@@ -806,7 +806,7 @@ class ProfileBackendPage(object):
             return
         self.StyleBlock += 1
         textRGB = None
-        if Gtk.check_version(3, 6, 0) is None:
+        if GTK_VERSION >= (3, 6, 0):
             style = widget.get_style_context ()
             style.save()
             style.add_class(Gtk.STYLE_CLASS_VIEW)
@@ -832,7 +832,7 @@ class ProfileBackendPage(object):
                 widget.set_markup(HeaderMarkupDefault % label)
         self.StyleBlock -= 1
 
-    if Gtk.check_version(3, 16, 0) is not None:
+    if GTK_VERSION < (3, 16, 0):
         def HeaderStyleSet(self, widget, previous, label):
             self.HeaderStyleUpdated(widget, label)
 
@@ -1062,7 +1062,7 @@ class PluginListPage(object):
         self.Context = context
         self.Block = 0
         rightChild = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-        if Gtk.check_version(3, 0, 0) is None:
+        if GTK_VERSION >= (3, 0, 0):
             rightChild.props.margin = 10
         else:
             rightChild.set_border_width(10)
@@ -1084,7 +1084,7 @@ class PluginListPage(object):
         # Left/Right buttons
         buttonBox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         buttonBox.set_spacing(5)
-        if Gtk.check_version(3, 0, 0) is None:
+        if GTK_VERSION >= (3, 0, 0):
             buttonBox.set_valign(Gtk.Align.CENTER)
         else:
             boxAlignment = Gtk.Alignment(yalign=0.5, xscale=0.0, yscale=0.0)
@@ -1112,7 +1112,7 @@ class PluginListPage(object):
 
         enabledButtonBox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
         enabledButtonBox.set_spacing(5)
-        if Gtk.check_version(3, 0, 0) is None:
+        if GTK_VERSION >= (3, 0, 0):
             enabledButtonBox.set_halign(Gtk.Align.CENTER)
         else:
             enabledAlignment = Gtk.Alignment(xalign=0.5, xscale=0.0, yscale=0.0)
@@ -1139,13 +1139,13 @@ class PluginListPage(object):
         enabledButtonBox.pack_start(downButton, False, False, 0)
 
         enabledBox.pack_start(self.EnabledPluginsList, True, True, 0)
-        if Gtk.check_version(3, 0, 0) is None:
+        if GTK_VERSION >= (3, 0, 0):
             enabledBox.pack_start(enabledButtonBox, False, False, 0)
         else:
             enabledBox.pack_start(enabledAlignment, False, False, 0)
 
         listBox.pack_start(self.DisabledPluginsList, True, True, 0)
-        if Gtk.check_version(3, 0, 0) is None:
+        if GTK_VERSION >= (3, 0, 0):
             listBox.pack_start(buttonBox, True, False, 0)
         else:
             listBox.pack_start(boxAlignment, True, False, 0)
@@ -1279,11 +1279,11 @@ class PreferencesPage(GenericPage):
         self.Context = context
         self.LeftWidget = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,
                                   homogeneous=False, spacing=10)
-        if Gtk.check_version(3, 0, 0) is None:
+        if GTK_VERSION >= (3, 0, 0):
             self.LeftWidget.props.margin = 10
         else:
             self.LeftWidget.set_border_width(10)
-        if Gtk.check_version(3, 12, 0) is None:
+        if GTK_VERSION >= (3, 12, 0):
             self.RightWidget = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,
                                        spacing=6)
             self.RightWidgetStack = Gtk.Stack()
@@ -1303,7 +1303,7 @@ class PreferencesPage(GenericPage):
         self.LeftWidget.pack_start(self.DescImg, False, False, 0)
         self.LeftWidget.pack_start(self.DescLabel, False, False, 0)
         self.InfoLabelCont = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
-        if Gtk.check_version(3, 0, 0) is None:
+        if GTK_VERSION >= (3, 0, 0):
             self.InfoLabelCont.props.margin = 10
         else:
             self.InfoLabelCont.set_border_width(10)
@@ -1326,7 +1326,7 @@ class PreferencesPage(GenericPage):
         aboutButton.set_tooltip_text(_("About"))
         aboutButton.connect('clicked', self.ShowAboutDialog)
         aboutBin = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
-        if Gtk.check_version(3, 0, 0) is None:
+        if GTK_VERSION >= (3, 0, 0):
             aboutBin.props.margin = 10
         else:
             aboutBin.set_border_width(10)
@@ -1343,7 +1343,7 @@ class PreferencesPage(GenericPage):
 
         # Profile & Backend Page
         self.ProfileBackendPage = ProfileBackendPage(context)
-        if Gtk.check_version(3, 12, 0) is None:
+        if GTK_VERSION >= (3, 12, 0):
             self.RightWidgetStack.add_titled(self.ProfileBackendPage.Widget, "ProfileBackend", _("Profile & Backend"))
         else:
             self.RightWidget.append_page(self.ProfileBackendPage.Widget,
@@ -1351,7 +1351,7 @@ class PreferencesPage(GenericPage):
 
         # Plugin List
         self.PluginListPage = PluginListPage(context)
-        if Gtk.check_version(3, 12, 0) is None:
+        if GTK_VERSION >= (3, 12, 0):
             self.RightWidgetStack.add_titled(self.PluginListPage.Widget, "PluginList", _("Plugin List"))
         else:
             self.RightWidget.append_page(self.PluginListPage.Widget,
@@ -1371,7 +1371,7 @@ class MainPage(object):
         self.Main    = main
         sidebar = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,
                           homogeneous=False, spacing=10)
-        if Gtk.check_version(3, 0, 0) is None:
+        if GTK_VERSION >= (3, 0, 0):
             sidebar.props.margin = 10
         else:
             sidebar.set_border_width(10)
@@ -1406,7 +1406,7 @@ class MainPage(object):
 
         # Categories
         categoryBox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-        if Gtk.check_version(3, 0, 0) is None:
+        if GTK_VERSION >= (3, 0, 0):
             categoryBox.props.margin = 5
         else:
             categoryBox.set_border_width(5)
@@ -1421,7 +1421,7 @@ class MainPage(object):
                                         size = 22)
             categoryToggleLabel = Label (label)
             categoryToggleBox = Gtk.Box (orientation=Gtk.Orientation.HORIZONTAL)
-            if Gtk.check_version (3, 12, 0) is None:
+            if GTK_VERSION >= (3, 12, 0):
                 categoryToggleIcon.set_margin_end(10)
                 categoryToggleBox.pack_start (categoryToggleIcon,
                                               False, False, 0)
@@ -1485,7 +1485,7 @@ class MainPage(object):
 
     def HeaderLabelSet(self, widget, label):
         self.HeaderStyleUpdated(widget, label)
-        if Gtk.check_version(3, 16, 0) is None:
+        if GTK_VERSION >= (3, 16, 0):
             widget.connect("style-updated", self.HeaderStyleUpdated, label)
         else:
             widget.connect("style-set", self.HeaderStyleSet, label)
@@ -1496,7 +1496,7 @@ class MainPage(object):
             return
         self.StyleBlock += 1
         textRGB = None
-        if Gtk.check_version(3, 6, 0) is None:
+        if GTK_VERSION >= (3, 6, 0):
             style = widget.get_style_context ()
             style.save()
             style.add_class(Gtk.STYLE_CLASS_VIEW)
@@ -1522,7 +1522,7 @@ class MainPage(object):
                 widget.set_markup(HeaderMarkupDefault % label)
         self.StyleBlock -= 1
 
-    if Gtk.check_version(3, 16, 0) is not None:
+    if GTK_VERSION < (3, 16, 0):
         def HeaderStyleSet(self, widget, previous, label):
             self.HeaderStyleUpdated(widget, label)
 
@@ -1564,7 +1564,7 @@ class Page(object):
         self.Widget = Gtk.EventBox()
         self.Widget.add(self.SetContainer)
 
-        if Gtk.check_version (3, 0, 0) is None:
+        if GTK_VERSION >= (3, 0, 0):
             self.Widget.get_style_context ().add_class (Gtk.STYLE_CLASS_NOTEBOOK)
 
         self.Empty = True
@@ -1575,7 +1575,7 @@ class Page(object):
         scroll.props.vscrollbar_policy = Gtk.PolicyType.AUTOMATIC
 
         view = Gtk.Viewport()
-        if Gtk.check_version(3, 0, 0) is None:
+        if GTK_VERSION >= (3, 0, 0):
             view.props.margin = 5
         else:
             view.set_border_width(5)
@@ -1597,7 +1597,7 @@ class GroupPage(Page):
         self.Label = Gtk.Label(label="<b>%s</b>" %
                                (protect_pango_markup(name or _("General"))))
         self.Label.set_use_markup(True)
-        if Gtk.check_version(3, 0, 0) is None:
+        if GTK_VERSION >= (3, 0, 0):
             self.Label.set_halign(Gtk.Align.START)
             self.Label.props.margin = 4
         else:

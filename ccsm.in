@@ -27,7 +27,7 @@ gi.require_version('Rsvg', '2.0')
 gi.require_version('Gtk', '@gtkver@')
 gi.require_version('Gdk', '@gtkver@')
 from gi.repository import Gio, Gtk, Gdk
-if Gtk.check_version(3, 0, 0) is None:
+if (Gtk.MAJOR_VERSION, Gtk.MINOR_VERSION) >= (3, 0):
     gi.require_version('GdkX11', '@gtkver@')
     from gi.repository import GdkX11
 import os
@@ -37,11 +37,12 @@ import compizconfig
 import ccm
 from ccm.Utils import GlobalUpdater, CurrentScreenNum
 from ccm.Constants import Version
+from ccm.Utils import GTK_VERSION
 
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 
 def activate_event(application, mainWinArgs):
-    if Gtk.check_version(3, 6, 0) is None:
+    if GTK_VERSION >= (3, 6, 0):
         prevWin = application.get_active_window()
     else:
         try:
@@ -54,13 +55,13 @@ def activate_event(application, mainWinArgs):
         return
 
     mainWin = ccm.MainWin(*mainWinArgs)
-    if Gtk.check_version(3, 6, 0) is None:
+    if GTK_VERSION >= (3, 6, 0):
         application.add_window(mainWin)
     else:
         application.__mainWin = mainWin
     idle = ccm.IdleSettingsParser(context, mainWin)
     mainWin.show_all()
-    if Gtk.check_version(3, 6, 0) is not None:
+    if GTK_VERSION < (3, 6, 0):
         Gtk.main()
 
 plugin   = None
@@ -91,7 +92,7 @@ except (AttributeError, TypeError):
     context = compizconfig.Context(ccm.get_screens())
 GlobalUpdater.SetContext(context)
 
-if Gtk.check_version(3, 6, 0) is None:
+if GTK_VERSION >= (3, 6, 0):
     application = Gtk.Application(application_id="org.compiz.ccsm",
                                   flags=Gio.ApplicationFlags.FLAGS_NONE)
 else:

@@ -107,7 +107,7 @@ class ClearEntry(Gtk.Entry):
 # Cell Renderer for MultiList
 
 class CellRendererColor(Gtk.CellRenderer):
-    if GLib.check_version(2, 42, 0) is None:
+    if GLIB_VERSION >= (2, 42, 0):
         __gproperties__ = {
             'text': (GObject.TYPE_STRING,
                     'color markup text',
@@ -133,7 +133,7 @@ class CellRendererColor(Gtk.CellRenderer):
         Gtk.CellRenderer.__init__(self)
 
     def _parse_color(self):
-        if Gtk.check_version(3, 0, 0) is None:
+        if GTK_VERSION >= (3, 0, 0):
             color = Gdk.RGBA()
             color.parse(self._text[:-4])
             color.alpha = int("0x%s" % self._text[-4:], base=16) / 65535.0
@@ -157,7 +157,7 @@ class CellRendererColor(Gtk.CellRenderer):
         else:
             raise AttributeError("unknown property %s" % property.name)
 
-    if Gtk.check_version(3, 0, 0) is not None:
+    if GTK_VERSION < (3, 0, 0):
         def do_get_size(self, widget, cell_area):
             return (0, 0, 0, 0) # FIXME
 
@@ -206,7 +206,7 @@ class CellRendererColor(Gtk.CellRenderer):
         cr.set_source_rgba(*self._color)
         cr.paint()
 
-    if Gtk.check_version(3, 0, 0) is None:
+    if GTK_VERSION >= (3, 0, 0):
         def do_render(self, *args, **kwargs):
             self._render(*args, **kwargs)
     else:
@@ -303,7 +303,7 @@ class SelectorButtons(Gtk.Box):
     def __init__(self):
         Gtk.Box.__init__(self)
         self.set_orientation(Gtk.Orientation.HORIZONTAL)
-        if Gtk.check_version(3, 0, 0) is None:
+        if GTK_VERSION >= (3, 0, 0):
             self.props.margin = 10
         else:
             self.set_border_width(10)
@@ -441,7 +441,7 @@ class ModifierSelector (Gtk.DrawingArea):
         modifier = "%s/modifier.png" % PixmapDir
         self._base_surface = cairo.ImageSurface.create_from_png (modifier)
         self.add_events (Gdk.EventMask.BUTTON_PRESS_MASK)
-        if Gtk.check_version (3, 0, 0) is None:
+        if GTK_VERSION >= (3, 0, 0):
             self.connect ("draw", self.draw_event)
         else:
             self.connect ("expose-event", self.draw_event)
@@ -516,7 +516,7 @@ class ModifierSelector (Gtk.DrawingArea):
 
     def draw_event (self, widget, data):
         '''Draw event handler'''
-        if Gtk.check_version(3, 0, 0) is None:
+        if GTK_VERSION >= (3, 0, 0):
             cr = data
         else:
             event = data
@@ -524,7 +524,7 @@ class ModifierSelector (Gtk.DrawingArea):
         if not self._surface:
             self.redraw ()
         cr.set_source_surface (self._surface)
-        if Gtk.check_version (3, 0, 0) is not None:
+        if GTK_VERSION < (3, 0, 0):
             cr.rectangle (event.area.x, event.area.y,
                           event.area.width, event.area.height)
             cr.clip ()
@@ -574,7 +574,7 @@ class EdgeSelector (Gtk.DrawingArea):
         background = "%s/display.png" % PixmapDir
         self._base_surface = cairo.ImageSurface.create_from_png (background)
         self.add_events (Gdk.EventMask.BUTTON_PRESS_MASK)
-        if Gtk.check_version (3, 0, 0) is None:
+        if GTK_VERSION >= (3, 0, 0):
             self.connect ("draw", self.draw_event)
         else:
             self.connect ("expose-event", self.draw_event)
@@ -720,7 +720,7 @@ class EdgeSelector (Gtk.DrawingArea):
 
     def draw_event (self, widget, data):
         '''Draw event handler'''
-        if Gtk.check_version (3, 0, 0) is None:
+        if GTK_VERSION >= (3, 0, 0):
             cr = data
         else:
             event = data
@@ -728,7 +728,7 @@ class EdgeSelector (Gtk.DrawingArea):
         if not self._surface:
             self.redraw ()
         cr.set_source_surface (self._surface)
-        if Gtk.check_version (3, 0, 0) is not None:
+        if GTK_VERSION < (3, 0, 0):
             cr.rectangle (event.area.x, event.area.y,
                           event.area.width, event.area.height)
             cr.clip ()
@@ -993,7 +993,7 @@ class Popup (Gtk.Window):
         self.set_destroy_with_parent (True)
         if text:
             label = Gtk.Label (label=text)
-            if Gtk.check_version (3, 0, 0) is None:
+            if GTK_VERSION >= (3, 0, 0):
                 label.props.margin = 20
                 self.add (label)
                 label.show ()
@@ -1064,7 +1064,7 @@ class KeyGrabber (Gtk.Button):
 
         self.popup.present ()
 
-        if Gtk.check_version (3, 20, 0) is None:
+        if GTK_VERSION >= (3, 20, 0):
             self.seat = self.popup.get_display ().get_default_seat ()
             while True:
                 ret = self.seat.grab (self.popup.get_window (),
@@ -1082,7 +1082,7 @@ class KeyGrabber (Gtk.Button):
                 time.sleep (0.1)
 
     def end_key_grab (self):
-        if Gtk.check_version (3, 20, 0) is None:
+        if GTK_VERSION >= (3, 20, 0):
             self.seat.ungrab ()
         else:
             Gdk.keyboard_ungrab (Gtk.get_current_event_time ())
@@ -1165,7 +1165,7 @@ class WindowStateSelector (Gtk.DrawingArea):
         self.add_events (Gdk.EventMask.BUTTON_PRESS_MASK)
         self.add_events (Gdk.EventMask.POINTER_MOTION_MASK)
 
-        if Gtk.check_version (3, 0, 0) is None:
+        if GTK_VERSION >= (3, 0, 0):
             self.connect ("draw", self.draw_event)
         else:
             self.connect ("expose-event", self.draw_event)
@@ -1207,7 +1207,7 @@ class WindowStateSelector (Gtk.DrawingArea):
     def draw (self, cr, width, height):
         '''The actual drawing function'''
 
-        if Gtk.check_version(3, 6, 0) is None:
+        if GTK_VERSION >= (3, 6, 0):
             context = self.get_style_context ()
             context.save()
             context.add_class(Gtk.STYLE_CLASS_VIEW)
@@ -1291,7 +1291,7 @@ class WindowStateSelector (Gtk.DrawingArea):
 
     def draw_event (self, widget, data):
         '''Draw event handler'''
-        if Gtk.check_version(3, 0, 0) is None:
+        if GTK_VERSION >= (3, 0, 0):
             cr = data
         else:
             event = data
@@ -1299,7 +1299,7 @@ class WindowStateSelector (Gtk.DrawingArea):
         if not self._surface:
             self.redraw ()
         cr.set_source_surface (self._surface)
-        if Gtk.check_version (3, 0, 0) is not None:
+        if GTK_VERSION < (3, 0, 0):
             cr.rectangle (event.area.x, event.area.y,
                           event.area.width, event.area.height)
             cr.clip ()
@@ -1518,7 +1518,7 @@ class MatchButton(Gtk.Button):
         button.grab_default ()
         dlg.set_default_response (Gtk.ResponseType.OK)
 
-        if Gtk.check_version(3, 12, 0) is None:
+        if GTK_VERSION >= (3, 12, 0):
             grid = Gtk.Grid (row_spacing=GridRow, column_spacing=GridColumn)
             grid.set_margin_top(GridColumn)
             grid.set_margin_bottom(GridColumn)
@@ -1574,7 +1574,7 @@ class MatchButton(Gtk.Button):
 
         row = 0
         for label, widget in rows:
-            if Gtk.check_version(3, 12, 0) is None:
+            if GTK_VERSION >= (3, 12, 0):
                 grid.attach(label, 0, row, 1, 1)
                 grid.attach(widget, 1, row, 1, 1)
             else:
@@ -1918,7 +1918,7 @@ class CategoryBox(Gtk.Box):
         self._unfiltered_plugins = self._plugins
 
         header = Gtk.Box (orientation=Gtk.Orientation.HORIZONTAL)
-        if Gtk.check_version (3, 0, 0) is None:
+        if GTK_VERSION >= (3, 0, 0):
             header.props.margin = 5
         else:
             header.set_border_width (5)
@@ -1931,7 +1931,7 @@ class CategoryBox(Gtk.Box):
         header.pack_start (image, False, False, 0)
         header.pack_start (label, True, True, 0)
 
-        if Gtk.check_version (3, 12, 0) is None:
+        if GTK_VERSION >= (3, 12, 0):
             self._grid = Gtk.Grid (row_spacing=GridRow,
                                    column_spacing=GridColumn)
             self._grid.set_margin_top (GridColumn + 10)
@@ -1950,7 +1950,7 @@ class CategoryBox(Gtk.Box):
             button = PluginButton(plugin, dontLoadIcons)
             self._buttons.append(button)
 
-        if Gtk.check_version (3, 0, 0) is None:
+        if GTK_VERSION >= (3, 0, 0):
             self._separator = Gtk.Separator (orientation=Gtk.Orientation.HORIZONTAL)
             self._separator.set_margin_bottom (20)
         else:
@@ -1995,7 +1995,7 @@ class CategoryBox(Gtk.Box):
         col = 0
         for button in self._buttons:
             if button.get_plugin () in self._plugins:
-                if Gtk.check_version (3, 12, 0) is None:
+                if GTK_VERSION >= (3, 12, 0):
                     self._grid.attach (button, col, row, 1, 1)
                 else:
                     self._grid.attach (button, col, col+1, row, row + 1, 0,
@@ -2053,7 +2053,7 @@ class PluginWindow(Gtk.ScrolledWindow):
 
         self.props.hscrollbar_policy = Gtk.PolicyType.AUTOMATIC
         self.props.vscrollbar_policy = Gtk.PolicyType.AUTOMATIC
-        if Gtk.check_version (3, 0, 0) is None:
+        if GTK_VERSION >= (3, 0, 0):
             self.connect ('draw', self.rebuild_boxes)
         else:
             self.connect ('size-allocate', self.rebuild_boxes)
@@ -2072,9 +2072,9 @@ class PluginWindow(Gtk.ScrolledWindow):
             self._box.pack_start (category_box, False, False, 0)
 
         viewport = Gtk.Viewport ()
-        if Gtk.check_version (3, 0, 0) is None:
+        if GTK_VERSION >= (3, 0, 0):
             viewport.get_style_context ().add_class (Gtk.STYLE_CLASS_VIEW)
-        if Gtk.check_version (3, 12, 0) is None:
+        if GTK_VERSION >= (3, 12, 0):
             viewport.connect ('style-updated', self.update_viewport_style)
         else:
             viewport.connect ('style-set', self.update_viewport_style)
@@ -2091,7 +2091,7 @@ class PluginWindow(Gtk.ScrolledWindow):
         if self._style_block > 0:
             return
         self._style_block += 1
-        if not Gtk.check_version (3, 0, 0) is None:
+        if GTK_VERSION < (3, 0, 0):
             bgColor = widget.get_style().lookup_color('base_color')
             if bgColor[0] != False:
                 widget.modify_bg(Gtk.StateType.NORMAL, bgColor[1])

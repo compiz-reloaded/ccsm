@@ -42,15 +42,11 @@ gettext.bindtextdomain("ccsm", DataDir + "/locale")
 gettext.textdomain("ccsm")
 _ = gettext.gettext
 
-IconTheme = Gtk.IconTheme.get_default()
-try:
-    if not IconDir in IconTheme.get_search_path():
-        IconTheme.prepend_search_path(IconDir)
-except (AttributeError, NameError, TypeError):
-    IconTheme.prepend_search_path(IconDir)
+GLIB_VERSION = (GLib.MAJOR_VERSION, GLib.MINOR_VERSION, GLib.MICRO_VERSION)
+GTK_VERSION = (Gtk.MAJOR_VERSION, Gtk.MINOR_VERSION, Gtk.MICRO_VERSION)
 
 # Create GtkBox's in Gtk2 in the same manner.
-if Gtk.check_version (3, 0, 0) is not None:
+if GTK_VERSION < (3, 0, 0):
     gtk_box_real = Gtk.Box
     class gtk_box (gtk_box_real):
         def __init__ (self, orientation=None, *args, **kwargs):
@@ -66,6 +62,13 @@ def gtk_process_events ():
     while Gtk.events_pending ():
         Gtk.main_iteration ()
 
+IconTheme = Gtk.IconTheme.get_default()
+try:
+    if not IconDir in IconTheme.get_search_path():
+        IconTheme.prepend_search_path(IconDir)
+except (AttributeError, NameError, TypeError):
+    IconTheme.prepend_search_path(IconDir)
+
 # Current Screen
 #
 try:
@@ -77,7 +80,7 @@ def get_screens():
     screens = []
     nScreens = CurrentScreenNum + 1
     display = Gdk.Display.get_default()
-    if Gtk.check_version(3, 10, 0) is None:
+    if GTK_VERSION >= (3, 10, 0):
         try:
             import Xlib.display
             Gdk.error_trap_push()
@@ -150,7 +153,7 @@ class ActionImage (Gtk.Box):
         Gtk.Box.__init__ (self)
         if action in self.map: action = self.map[action]
         image = Image (name = action, type = ImageThemed, size = 22)
-        if Gtk.check_version(3, 12, 0) is None:
+        if GTK_VERSION >= (3, 12, 0):
             image.set_margin_end(10)
             self.add (image)
         else:
@@ -168,12 +171,12 @@ class SizedButton (Gtk.Button):
         super (SizedButton, self).__init__ ()
         self.minWidth = minWidth
         self.minHeight = minHeight
-        if Gtk.check_version(3, 0, 0) is None:
+        if GTK_VERSION >= (3, 0, 0):
             self.set_size_request (self.minWidth, self.minHeight)
         else:
             self.connect ("size-request", self.adjust_size)
 
-    if Gtk.check_version(3, 0, 0) is not None:
+    if GTK_VERSION < (3, 0, 0):
         def adjust_size (self, widget, rect):
             rect.width = max (rect.width, self.minWidth)
             rect.height = max (rect.height, self.minHeight)
@@ -198,7 +201,7 @@ class PrettyButton (Gtk.Button):
         if old_toplevel == self._old_toplevel:
             return
 
-        if Gtk.check_version (3, 0, 0) is None:
+        if GTK_VERSION >= (3, 0, 0):
             if not old_toplevel and self.get_state_flags () != Gtk.StateFlags.NORMAL:
                 self.set_state_flags (Gtk.StateFlags.NORMAL, True)
         else:
@@ -210,7 +213,7 @@ class PrettyButton (Gtk.Button):
 
     def update_state_in (self, *args):
         state = args[-1]
-        if Gtk.check_version (3, 0, 0) is None:
+        if GTK_VERSION >= (3, 0, 0):
             self.set_state_flags (Gtk.StateFlags.PRELIGHT, True)
         else:
             self.set_state (Gtk.StateType.PRELIGHT)
@@ -219,7 +222,7 @@ class PrettyButton (Gtk.Button):
     def update_state_out (self, *args):
         state = args[-1]
         self.states[state] = False
-        if Gtk.check_version (3, 0, 0) is None:
+        if GTK_VERSION >= (3, 0, 0):
             if True in self.states.values ():
                 self.set_state_flags (Gtk.StateFlags.PRELIGHT, True)
             else:

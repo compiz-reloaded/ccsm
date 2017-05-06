@@ -282,7 +282,7 @@ class FamilyStringSetting(StockSetting):
         self.Set(self.ComboFonts.get_child().get_text())
 
     def updatePreviewEntry(self, entry, previewWidget):
-        if Gtk.check_version(3, 0, 0) is None:
+        if GTK_VERSION >= (3, 0, 0):
             style = previewWidget.get_style_context()
             style_provider = Gtk.CssProvider()
             style_provider.load_from_data(("* { font-family: \"%s\"; }" %
@@ -558,7 +558,7 @@ class ColorSetting(StockSetting):
         self.Button.set_use_alpha(True)
         self.Button.connect('color-set', self.Changed)
 
-        if Gtk.check_version(3, 0, 0) is None:
+        if GTK_VERSION >= (3, 0, 0):
             self.Button.set_halign(Gtk.Align.END)
             self.Box.pack_start(self.Button, True, True, 0)
         else:
@@ -573,7 +573,7 @@ class ColorSetting(StockSetting):
         return (str, Gtk.TreeViewColumn(self.Setting.ShortDesc, CellRendererColor(), text=num))
 
     def _Read(self):
-        if Gtk.check_version (3, 0, 0) is None:
+        if GTK_VERSION >= (3, 0, 0):
             color = Gdk.RGBA()
             value = self.Get()
             color.red = value[0] / 65535.0
@@ -589,7 +589,7 @@ class ColorSetting(StockSetting):
             self.Button.set_alpha(value[3])
 
     def _Changed(self):
-        if Gtk.check_version (3, 0, 0) is None:
+        if GTK_VERSION >= (3, 0, 0):
             color = self.Button.get_rgba()
             self.Set([color.red * 0xFFFF, color.green * 0xFFFF,
                       color.blue * 0xFFFF, color.alpha * 0xFFFF])
@@ -641,7 +641,7 @@ class BaseListSetting(Setting):
         buttonBox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,
                             homogeneous=False)
         buttonBox.set_spacing(5)
-        if Gtk.check_version(3, 0, 0) is None:
+        if GTK_VERSION >= (3, 0, 0):
             buttonBox.props.margin = 5
         else:
             buttonBox.set_border_width(5)
@@ -851,7 +851,7 @@ class BaseListSetting(Setting):
                 path, col, cellx, celly = pthinfo
                 treeview.grab_focus()
                 treeview.set_cursor(path, col, 0)
-                if Gtk.check_version(3, 22, 0) is None:
+                if GTK_VERSION >= (3, 22, 0):
                     self.Popup.popup_at_pointer(event)
                 else:
                     try:
@@ -932,7 +932,7 @@ class EnumFlagsSetting(Setting):
 
     def _Init(self):
         frame = Gtk.Frame(label=self.Setting.ShortDesc)
-        if Gtk.check_version(3, 10, 0) is None:
+        if GTK_VERSION >= (3, 10, 0):
             grid = Gtk.Grid(row_spacing=GridRow, column_spacing=GridRow)
             grid.props.margin = GridRow
         else:
@@ -945,7 +945,7 @@ class EnumFlagsSetting(Setting):
         for key, value in sortedItems:
             box = Gtk.CheckButton(label=key)
             self.Checks.append((key, box))
-            if Gtk.check_version(3, 10, 0) is None:
+            if GTK_VERSION >= (3, 10, 0):
                 box.set_hexpand(True)
                 grid.attach(box, col, row, 1, 1)
             else:
@@ -992,7 +992,7 @@ class RestrictedStringFlagsSetting(Setting):
 
     def _Init(self):
         frame = Gtk.Frame(label=self.Setting.ShortDesc)
-        if Gtk.check_version(3, 10, 0) is None:
+        if GTK_VERSION >= (3, 10, 0):
             grid = Gtk.Grid(row_spacing=GridRow, column_spacing=GridRow)
             grid.props.margin = GridRow
         else:
@@ -1007,7 +1007,7 @@ class RestrictedStringFlagsSetting(Setting):
         for key, value in sortedItems:
             box = Gtk.CheckButton(label=key)
             self.Checks.append((key, box))
-            if Gtk.check_version(3, 10, 0) is None:
+            if GTK_VERSION >= (3, 10, 0):
                 box.set_hexpand(True)
                 grid.attach(box, col, row, 1, 1)
             else:
@@ -1091,7 +1091,7 @@ class EditableActionSetting (StockSetting):
         entry.set_tooltip_text(self.Setting.LongDesc)
         entry.connect ("activate", lambda *a: dlg.response (Gtk.ResponseType.OK))
 
-        if Gtk.check_version(3, 0, 0) is None:
+        if GTK_VERSION >= (3, 0, 0):
             entry.props.margin = 10
             dlg.vbox.pack_start (entry, True, True, 0)
         else:
@@ -1219,7 +1219,7 @@ class KeySetting (EditableActionSetting):
         dlg.set_default_response (Gtk.ResponseType.OK)
 
         mainBox = Gtk.Box (orientation=Gtk.Orientation.VERTICAL)
-        if Gtk.check_version (3, 0, 0) is None:
+        if GTK_VERSION >= (3, 0, 0):
             mainBox.props.margin = 10
             dlg.vbox.pack_start (mainBox, True, True, 0)
         else:
@@ -1246,7 +1246,7 @@ class KeySetting (EditableActionSetting):
         currentMods.rstrip ("|")
         modifierSelector = ModifierSelector (currentMods)
         modifierSelector.set_tooltip_text (self.Setting.LongDesc)
-        if Gtk.check_version (3, 0, 0) is None:
+        if GTK_VERSION >= (3, 0, 0):
             modifierSelector.set_halign (Gtk.Align.CENTER)
             box.pack_start (modifierSelector, True, True, 0)
         else:
@@ -1262,7 +1262,7 @@ class KeySetting (EditableActionSetting):
 
         label = Gtk.Label (label=self.GetLabelText(self.current))
         label.set_tooltip_text (self.Setting.LongDesc)
-        if Gtk.check_version (3, 0, 0) is None:
+        if GTK_VERSION >= (3, 0, 0):
             label.set_margin_top (15)
             box.pack_start (label, True, True, 0)
         else:
@@ -1395,7 +1395,7 @@ class ButtonSetting (EditableActionSetting):
         dlg.set_default_response (Gtk.ResponseType.OK)
 
         mainBox = Gtk.Box (orientation=Gtk.Orientation.VERTICAL)
-        if Gtk.check_version (3, 0, 0) is None:
+        if GTK_VERSION >= (3, 0, 0):
             mainBox.props.margin = 10
             dlg.vbox.pack_start (mainBox, True, True, 0)
         else:
@@ -1576,7 +1576,7 @@ class EdgeSetting (EditableActionSetting):
 
         selector = SingleEdgeSelector (self.current)
         selector.set_tooltip_text (self.Setting.LongDesc)
-        if Gtk.check_version (3, 0, 0) is None:
+        if GTK_VERSION >= (3, 0, 0):
             selector.props.margin = 10
             dlg.vbox.pack_start (selector, True, True, 0)
         else:
@@ -1709,7 +1709,7 @@ class SubGroupArea(object):
             self.Expander.add(self.Child)
 
         self.Child.set_spacing(GridRow)
-        if Gtk.check_version(3, 0, 0) is None:
+        if GTK_VERSION >= (3, 0, 0):
             self.Child.props.margin = GridRow
         else:
             self.Child.set_border_width(GridRow)
