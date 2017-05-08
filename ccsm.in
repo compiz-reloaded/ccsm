@@ -27,9 +27,6 @@ gi.require_version('Rsvg', '2.0')
 gi.require_version('Gtk', '@gtkver@')
 gi.require_version('Gdk', '@gtkver@')
 from gi.repository import Gio, Gtk, Gdk
-if (Gtk.MAJOR_VERSION, Gtk.MINOR_VERSION) >= (3, 0):
-    gi.require_version('GdkX11', '@gtkver@')
-    from gi.repository import GdkX11
 import os
 import sys
 import signal
@@ -41,14 +38,13 @@ from ccm.Utils import GTK_VERSION
 
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 
-def activate_event(application, mainWinArgs):
+def activate_event(application, *mainWinArgs):
     if GTK_VERSION >= (3, 6, 0):
         prevWin = application.get_active_window()
     else:
-        try:
-            prevWin = application.__mainWin
-        except AttributeError:
-            prevWin = None
+        prevWin = None
+        if hasattr(application, "activeWindow"):
+            prevWin = application.activeWindow
 
     if prevWin:
         prevWin.present()
@@ -58,11 +54,11 @@ def activate_event(application, mainWinArgs):
     if GTK_VERSION >= (3, 6, 0):
         application.add_window(mainWin)
     else:
-        application.__mainWin = mainWin
+        application.activeWindow = mainWin
+        mainWin.Application = application
+        application.hold()
     idle = ccm.IdleSettingsParser(context, mainWin)
     mainWin.show_all()
-    if GTK_VERSION < (3, 6, 0):
-        Gtk.main()
 
 plugin   = None
 category = None
@@ -98,5 +94,13 @@ if GTK_VERSION >= (3, 6, 0):
 else:
     application = Gio.Application(application_id="org.compiz.ccsm",
                                   flags=Gio.ApplicationFlags.FLAGS_NONE)
-application.connect("activate", activate_event, (context, plugin, category))
+application.connect("activate", activate_event, context, plugin, category)
+try:
+    application.register()
+except TypeError:
+    application.register(None)
+
+if application.get_is_remote():
+    sys.stderr.write("Another CCSM instance is already running...\n")
+    Gdk.notify_startup_complete()
 application.run(sys.argv)

@@ -21,7 +21,7 @@
 #          Sorokin Alexei (sor.alexei@meowr.ru)
 # Copyright (C) 2007 Quinn Storm
 
-from gi.repository import Gtk
+from gi.repository import Gio, Gtk
 
 from ccm.Pages import *
 from ccm.Utils import *
@@ -39,16 +39,17 @@ class MainWin(Gtk.Window):
 
     currentCategory = None
 
-    def __init__(self, Context, pluginPage=None, categoryName=None):
+    def __init__(self, context, pluginPage=None, categoryName=None):
         Gtk.Window.__init__(self)
         self.ShowingPlugin = None
-        self.Context = Context
-        self.connect("destroy", self.Quit)
+        self.Context = context
         if GTK_VERSION >= (3, 0, 0):
             self.get_style_context().add_class("ccsm-window")
         self.set_size_request(750, -1)
         self.set_default_size(1000, 580)
         self.set_title(_("CompizConfig Settings Manager"))
+        if GTK_VERSION < (3, 6, 0):
+            self.connect("destroy", self.Quit)
 
         # Build the panes
         self.MainBox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
@@ -81,11 +82,11 @@ class MainWin(Gtk.Window):
         if categoryName in self.Context.Categories:
             self.MainPage.ToggleCategory(None, categoryName)
 
-    def Quit(self, *args):
+    def Quit(self, date=None):
         if GTK_VERSION >= (3, 6, 0):
-            self.get_application().quit()
+            self.destroy()
         else:
-            Gtk.main_quit()
+            self.Application.release()
 
     def SetPage(self, page):
         if page == self.CurrentPage:
