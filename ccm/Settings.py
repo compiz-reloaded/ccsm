@@ -618,6 +618,7 @@ class BaseListSetting(Setting):
         self.View = Gtk.TreeView(model=self.Store)
         self.View.set_headers_visible(True)
 
+        cols[0].set_expand(True)
         for widget in self.Widgets:
             widget.Store = self.Store
             widget.Box.remove(widget.Reset)
@@ -633,11 +634,10 @@ class BaseListSetting(Setting):
         self.Select.connect('changed', self.SelectionChanged)
         self.Widget.set_spacing(5)
         self.Scroll = Gtk.ScrolledWindow()
-        self.Scroll.props.hscrollbar_policy = Gtk.PolicyType.AUTOMATIC
-        self.Scroll.props.vscrollbar_policy = Gtk.PolicyType.NEVER
+        self.Scroll.set_policy(hscrollbar_policy=Gtk.PolicyType.AUTOMATIC,
+                               vscrollbar_policy=Gtk.PolicyType.NEVER)
         self.Scroll.add(self.View)
         self.Widget.pack_start(self.Scroll, True, True, 0)
-        self.Widget.set_child_packing(self.Scroll, True, True, 0, Gtk.PackType.START)
         buttonBox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,
                             homogeneous=False)
         buttonBox.set_spacing(5)
