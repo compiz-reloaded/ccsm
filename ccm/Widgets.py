@@ -197,7 +197,9 @@ class CellRendererColor(Gtk.CellRenderer):
         if height > sheight or width > swidth:
             self.redraw(width, height)
 
-        cr.rectangle(cell_area.x, cell_area.y, width, height)
+        padding = 1
+        cr.rectangle(cell_area.x + padding, cell_area.y + padding,
+                     width - (padding * 2), height - (padding * 2))
         cr.clip()
 
         cr.set_source_surface(self._surface, cell_area.x, cell_area.y)
