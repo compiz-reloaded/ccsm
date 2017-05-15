@@ -1730,13 +1730,34 @@ class FileButton (Gtk.Button):
 # About Dialog
 #
 class AboutDialog (Gtk.AboutDialog):
-    def __init__ (self, parent):
-        Gtk.AboutDialog.__init__ (self, transient_for=parent)
+    NAME = _("CompizConfig Settings Manager")
+    VERSION = Version
+    LOGO = "ccsm"
+    COMMENTS = _("This is a settings manager for the CompizConfig configuration system.")
+    COPYRIGHT = u"Copyright \xA9 2007-2008 Patrick Niklaus/Christopher Williams/Guillaume Seguin/Quinn Storm"
+    AUTHORS = ["Patrick Niklaus <patrick.niklaus@student.kit.edu>",
+               "Christopher Williams <christopherw@verizon.net>",
+               "Guillaume Seguin <guillaume@segu.in>",
+               "Quinn Storm <livinglatexkali@gmail.com>",
+               "Alexei Sorokin <sor.alexei@meowr.ru>"]
+    ARTISTS = ["Andrew Wedderburn <andrew.wedderburn@gmail.com>",
+               "Patrick Niklaus <patrick.niklaus@student.kit.edu>",
+               "GNOME Icon Theme Team"]
+    TRANSLATOR_CREDITS = _("translator-credits")
+    WEBSITE = "https://github.com/compiz-reloaded/ccsm"
 
-        self.set_name (_("CompizConfig Settings Manager"))
-        self.set_version (Version)
-        self.set_comments (_("This is a settings manager for the CompizConfig configuration system."))
-        self.set_copyright (u"Copyright \xA9 2007-2008 Patrick Niklaus/Christopher Williams/Guillaume Seguin/Quinn Storm")
+    def __init__ (self, parent):
+        Gtk.AboutDialog.__init__ (self, transient_for=parent,
+                                  program_name=AboutDialog.NAME,
+                                  version=AboutDialog.VERSION,
+                                  logo_icon_name=AboutDialog.LOGO,
+                                  comments=AboutDialog.COMMENTS,
+                                  copyright=AboutDialog.COPYRIGHT,
+                                  authors=AboutDialog.AUTHORS,
+                                  artists=AboutDialog.ARTISTS,
+                                  translator_credits=AboutDialog.TRANSLATOR_CREDITS,
+                                  website=AboutDialog.WEBSITE)
+
         if GTK_VERSION >= (3, 0, 0):
             self.set_license_type (Gtk.License.GPL_2_0)
         else:
@@ -1747,22 +1768,6 @@ class AboutDialog (Gtk.AboutDialog):
                               "either version 2 of the License, or (at your " +
                               "opinion) any later version.")
             self.set_wrap_license (True)
-        try:
-            self.set_authors (["Patrick Niklaus <patrick.niklaus@student.kit.edu>",
-                               "Christopher Williams <christopherw@verizon.net>",
-                               "Guillaume Seguin <guillaume@segu.in>",
-                               "Quinn Storm <quinn@beryl-project.org>",
-                               "Sorokin Alexei <sor.alexei@meowr.ru>"])
-            self.set_artists (["Andrew Wedderburn <andrew.wedderburn@gmail.com>",
-                               "Patrick Niklaus <patrick.niklaus@student.kit.edu>",
-                               "GNOME Icon Theme Team"])
-            self.set_translator_credits (_("translator-credits"))
-        except (AttributeError, TypeError):
-            pass
-        if IconTheme.lookup_icon("ccsm", 64, 0):
-            icon = IconTheme.load_icon("ccsm", 64, 0)
-            self.set_logo (icon)
-        self.set_website ("https://github.com/compiz-reloaded/ccsm")
 
 # Error dialog
 #
