@@ -1731,18 +1731,22 @@ class FileButton (Gtk.Button):
 #
 class AboutDialog (Gtk.AboutDialog):
     def __init__ (self, parent):
-        Gtk.AboutDialog.__init__ (self)
-        self.set_transient_for (parent)
+        Gtk.AboutDialog.__init__ (self, transient_for=parent)
 
         self.set_name (_("CompizConfig Settings Manager"))
         self.set_version (Version)
         self.set_comments (_("This is a settings manager for the CompizConfig configuration system."))
-        self.set_copyright ("Copyright \xC2\xA9 2007-2008 Patrick Niklaus/Christopher Williams/Guillaume Seguin/Quinn Storm")
-        self.set_license ("This program is free software; you can redistribute it and/or " +
-                          "modify it under the terms of the GNU General Public License " +
-                          "as published by the Free Software Foundation; either version 2 " +
-                          "of the License, or (at your option) any later version.")
-        self.set_wrap_license (True)
+        self.set_copyright (u"Copyright \xA9 2007-2008 Patrick Niklaus/Christopher Williams/Guillaume Seguin/Quinn Storm")
+        if GTK_VERSION >= (3, 0, 0):
+            self.set_license_type (Gtk.License.GPL_2_0)
+        else:
+            self.set_license ("This program is free software; you can " +
+                              "redistribute it and/or modify it under the " +
+                              "terms of the GNU General Public License as " +
+                              "published by the Free Software Foundation; " +
+                              "either version 2 of the License, or (at your " +
+                              "opinion) any later version.")
+            self.set_wrap_license (True)
         try:
             self.set_authors (["Patrick Niklaus <patrick.niklaus@student.kit.edu>",
                                "Christopher Williams <christopherw@verizon.net>",

@@ -1358,8 +1358,8 @@ class PreferencesPage(GenericPage):
                                          Gtk.Label(label=_("Plugin List")))
 
     def ShowAboutDialog(self, widget):
-        about = AboutDialog(widget.get_toplevel())
-        about.show_all()
+        about = AboutDialog(parent=widget.get_toplevel())
+        about.show()
         about.run()
         about.destroy()
 
