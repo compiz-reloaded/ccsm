@@ -955,7 +955,8 @@ class GlobalEdgeSelector(EdgeSelector):
         comboBox.set_size_request (200, -1)
         comboBox.connect ('changed', self.combo_changed, edge)
 
-        popup = Popup (self, child=comboBox, decorated=False, mouse=True, modal=False)
+        popup = Popup (self, parent=widget, child=comboBox, decorated=False,
+                       mouse=True, modal=False)
         comboBox.show ()
         popup.show ()
         popup.connect ('focus-out-event', self.focus_out)
@@ -987,27 +988,30 @@ class Popup (Gtk.Window):
         Gtk.Window.__init__ (self, type=Gtk.WindowType.TOPLEVEL)
         self.set_type_hint (Gdk.WindowTypeHint.UTILITY)
         self.set_position (mouse and Gtk.WindowPosition.MOUSE or Gtk.WindowPosition.CENTER_ALWAYS)
+        self.set_default_size (0, 0)
         if parent:
             self.set_transient_for (parent.get_toplevel ())
         self.set_modal (modal)
         self.set_decorated (decorated)
-        self.set_property ("skip-taskbar-hint", modal)
+        self.set_skip_taskbar_hint (modal)
         self.set_destroy_with_parent (True)
+
         if text:
             label = Gtk.Label (label=text)
             if GTK_VERSION >= (3, 0, 0):
                 label.props.margin = 20
-                self.add (label)
-                label.show ()
+                child = label
             else:
                 alignment = Gtk.Alignment ()
                 alignment.set_padding (20, 20, 20, 20)
                 alignment.add (label)
                 label.show ()
-                self.add (alignment)
-                alignment.show ()
-        elif child:
+                child = alignment
+
+        if child:
             self.add (child)
+            child.show ()
+
         gtk_process_events ()
 
     def destroy (self):
@@ -1051,7 +1055,8 @@ class KeyGrabber (Gtk.Button):
             self.popup_mapped = True
             widget.disconnect_by_func (on_widget_map_event)
 
-        self.popup = Popup (self, _("Please press the new key combination"))
+        self.popup = Popup (parent=widget,
+                            text=_("Please press the new key combination"))
         self.popup.add_events (Gdk.EventMask.KEY_PRESS_MASK)
 
         # Wait until the popup is fully shown.

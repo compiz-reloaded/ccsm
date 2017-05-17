@@ -276,7 +276,7 @@ class PluginPage(GenericPage):
 # Filter Page
 #
 class FilterPage(GenericPage):
-    def __init__(self, context):
+    def __init__(self, parent, context):
         GenericPage.__init__(self)
         self.Context = context
         self.LeftWidget = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,
@@ -414,19 +414,22 @@ class FilterPage(GenericPage):
             box.props.margin = 5
         else:
             box.set_border_width(5)
-        progress = Popup(child=box)
-        progress.connect("delete-event", lambda *a: True)
-        progress.set_title(_("Loading Advanced Search"))
+        box.show()
+
         bar = Gtk.ProgressBar()
         box.pack_start(bar, False, False, 0)
+        bar.show()
 
         label = Gtk.Label()
         label.set_max_width_chars(0)
+        label.show()
         box.pack_start(label, False, False, 0)
 
+        progress = Popup(parent=parent, child=box)
+        progress.connect("delete-event", lambda *a: True)
+        progress.set_title(_("Loading Advanced Search"))
         progress.set_size_request(300, -1)
-
-        progress.show_all()
+        progress.show()
 
         self.GroupPages = {}
 
@@ -434,8 +437,8 @@ class FilterPage(GenericPage):
 
         for index, n in enumerate(context.Plugins):
             plugin = context.Plugins[n]
-            bar.set_fraction((index+1)/float(length))
-            label.set_markup("<i>%s</i>" %protect_pango_markup(plugin.ShortDesc))
+            bar.set_fraction((index+1) / float(length))
+            label.set_markup("<i>%s</i>" % protect_pango_markup(plugin.ShortDesc))
             gtk_process_events()
 
             groups = []
@@ -1531,7 +1534,7 @@ class MainPage(object):
         self.Main.SetPage(pluginPage)
 
     def ShowAdvancedFilter(self, widget):
-        filterPage = FilterPage(self.Context)
+        filterPage = FilterPage(widget, self.Context)
         self.Main.SetPage(filterPage)
 
     def ShowPreferences(self, widget):
