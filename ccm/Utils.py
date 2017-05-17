@@ -81,14 +81,14 @@ def get_screens():
     nScreens = CurrentScreenNum + 1
     display = Gdk.Display.get_default()
     if GTK_VERSION >= (3, 10, 0):
+        Gdk.error_trap_push()
         try:
             import Xlib.display
-            Gdk.error_trap_push()
             xdisplay = Xlib.display.Display(display.get_name())
             nScreens = xdisplay.screen_count()
-            Gdk.error_trap_pop_ignored()
-        except ImportError:
+        except:
             pass
+        Gdk.error_trap_pop_ignored()
     else:
         nScreens = display.get_n_screens()
     for s in range(nScreens):
