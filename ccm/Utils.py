@@ -69,32 +69,6 @@ try:
 except (AttributeError, NameError, TypeError):
     IconTheme.prepend_search_path(IconDir)
 
-# Current Screen
-#
-try:
-    CurrentScreenNum = Gdk.Display.get_default().get_default_screen().get_screen_number()
-except (AttributeError, TypeError):
-    CurrentScreenNum = Gdk.Screen.get_default().get_number()
-
-def get_screens():
-    screens = []
-    nScreens = CurrentScreenNum + 1
-    display = Gdk.Display.get_default()
-    if GTK_VERSION >= (3, 10, 0):
-        Gdk.error_trap_push()
-        try:
-            import Xlib.display
-            xdisplay = Xlib.display.Display(display.get_name())
-            nScreens = xdisplay.screen_count()
-        except:
-            pass
-        Gdk.error_trap_pop_ignored()
-    else:
-        nScreens = display.get_n_screens()
-    for s in range(nScreens):
-        screens.append(s)
-    return screens
-
 def protect_pango_markup (str_, quote=True):
     return html_escape(str_, quote) if str_ else ""
 
@@ -427,6 +401,43 @@ PluginKeyFunc = operator.attrgetter('ShortDesc')
 def HasOnlyType (settings, stype):
     return settings and not [s for s in settings if s.Type != stype]
 
+def GetDefaultScreenNum():
+    screen = Gdk.Screen.get_default()
+    try:
+        number = screen.get_screen_number()
+    except AttributeError:
+        number = screen.get_number()
+    return number
+
+def SetCurrentScreenNum(number):
+    SetCurrentScreenNum.value = number
+SetCurrentScreenNum.value = -1
+
+def GetCurrentScreenNum():
+    number = SetCurrentScreenNum.value
+    if number < 0:
+        number = GetDefaultScreenNum()
+    return number
+
+def GetScreenNums():
+    screens = []
+    nScreens = max(GetDefaultScreenNum(), GetCurrentScreenNum()) + 1
+    display = Gdk.Display.get_default()
+    if GTK_VERSION >= (3, 10, 0):
+        Gdk.error_trap_push()
+        try:
+            import Xlib.display
+            xdisplay = Xlib.display.Display(display.get_name())
+            nScreens = xdisplay.screen_count()
+        except:
+            pass
+        Gdk.error_trap_pop_ignored()
+    else:
+        nScreens = display.get_n_screens()
+    for s in range(nScreens):
+        screens.append(s)
+    return screens
+
 def GetSettings(group, types=None):
 
     def TypeFilter (settings, types):
@@ -436,22 +447,18 @@ def GetSettings(group, types=None):
 
     # Compiz 0.9.x and Compiz 0.8.x compatibility.
     try:
+        screen = iter(group.Screen.values())
         if types:
-            screen = TypeFilter(iter(group.Screen.values()), types)
-        else:
-            screen = iter(group.Screen.values())
-
+            screen = TypeFilter(screen, types)
         return screen
     except (AttributeError, TypeError):
+        screenNum = GetCurrentScreenNum()
+        screen = itertools.chain(iter(group.Screens[screenNum].values()),
+                                 iter(group.Display.values()))
         if types:
-            screen = TypeFilter(iter(group.Screens[CurrentScreenNum].values()), types)
-            display = TypeFilter(group.Display.values(), types)
-        else:
-            screen = iter(group.Screens[CurrentScreenNum].values())
-            display = group.Display.values()
-
-        return itertools.chain(screen, display)
+            screen = TypeFilter(screen, types)
+        return screen
 
 def GetAcceleratorName(key, mods):
-    # <Primary> is <Control> everywhere except for Mac OS.
+    # <Primary> is <Control> everywhere except for macOS.
     return Gtk.accelerator_name(key, mods).replace('<Primary>', '<Control>')

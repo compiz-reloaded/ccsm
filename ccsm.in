@@ -32,7 +32,7 @@ import sys
 import signal
 import compizconfig
 import ccm
-from ccm.Utils import GlobalUpdater, CurrentScreenNum
+from ccm.Utils import GlobalUpdater
 from ccm.Constants import Version
 from ccm.Utils import GTK_VERSION
 
@@ -83,9 +83,9 @@ if options.category:
 
 # Compiz 0.9.x and Compiz 0.8.x compatibility.
 try:
-    context = compizconfig.Context(CurrentScreenNum)
+    context = compizconfig.Context(ccm.GetDefaultScreenNum())
 except (AttributeError, TypeError):
-    context = compizconfig.Context(ccm.get_screens())
+    context = compizconfig.Context(ccm.GetScreenNums())
 GlobalUpdater.SetContext(context)
 
 if GTK_VERSION >= (3, 6, 0):

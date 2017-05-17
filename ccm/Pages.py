@@ -1393,12 +1393,12 @@ class MainPage(object):
         self.filterEntry = filterEntry
 
         # Screens
-        if len(get_screens()) > 1:
+        if len(GetScreenNums()) > 1:
             screenBox = Gtk.ComboBoxText.new()
-            for screen in get_screens():
+            for screen in GetScreenNums():
                 screenBox.append_text(_("Screen %i") % screen)
             name = self.Context.CurrentBackend.Name
-            screenBox.set_active(CurrentScreenNum)
+            screenBox.set_active(GetCurrentScreenNum())
             screenBox.connect("changed", self.ScreenChanged)
             screenLabel = Label()
             screenLabel.props.xalign = 0.1
@@ -1554,7 +1554,7 @@ class MainPage(object):
 
     def ScreenChanged(self, widget):
         self.Context.Write()
-        self.CurrentScreenNum = widget.get_active()
+        SetCurrentScreenNum(widget.get_active())
         self.Context.Read()
 
 # Page
