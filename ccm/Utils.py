@@ -448,17 +448,42 @@ def GetSettings(group, types=None):
     # Compiz 0.9.x and Compiz 0.8.x compatibility.
     try:
         screen = iter(group.Screen.values())
-        if types:
-            screen = TypeFilter(screen, types)
-        return screen
     except (AttributeError, TypeError):
         screenNum = GetCurrentScreenNum()
         screen = itertools.chain(iter(group.Screens[screenNum].values()),
                                  iter(group.Display.values()))
-        if types:
-            screen = TypeFilter(screen, types)
-        return screen
+
+    if types:
+        screen = TypeFilter(screen, types)
+    return screen
 
 def GetAcceleratorName(key, mods):
-    # <Primary> is <Control> everywhere except for macOS.
-    return Gtk.accelerator_name(key, mods).replace('<Primary>', '<Control>')
+    accel = Gtk.accelerator_name(key, mods)
+
+    for mod in KeyModifier:
+        if "%s_L" % mod in accel:
+            accel = accel.replace ("%s_L" % mod, "<%s>" % mod)
+        if "%s_R" % mod in accel:
+            accel = accel.replace ("%s_R" % mod, "<%s>" % mod)
+    accel = Gtk.accelerator_name(*Gtk.accelerator_parse(accel))
+
+    for alias in KeyModifierAlias:
+        accel = accel.replace("<%s>" % alias[0], "<%s>" % alias[1])
+    return accel
+
+def UpdateAcceleratorName (accel):
+    if accel.lower ().strip () in ("disabled", "none"):
+        accel = ""
+
+    keys = [key for key in KeyModifier if key in accel]
+    keys.extend([key[1] for key in KeyModifierAlias if key[0] in accel])
+    keys.sort()
+
+    # Get all keys in the order with Gtk::accelerator_name().
+    accel = GetAcceleratorName (*Gtk.accelerator_parse (accel))
+
+    # Prepend all additional keys not recognized by it.
+    for key in set (keys):
+        if key not in accel:
+            accel = "<%s>%s" % (key, accel)
+    return accel

@@ -1121,6 +1121,7 @@ class EditableActionSetting (StockSetting):
 class KeySetting (EditableActionSetting):
 
     current = ""
+    new = ""
 
     def _Init (self):
 
@@ -1138,15 +1139,11 @@ class KeySetting (EditableActionSetting):
             self.Setting.Plugin.Context.Write ()
             self.Read ()
 
-    def ReorderKeyString (self, accel):
-        key, mods = Gtk.accelerator_parse (accel)
-        return GetAcceleratorName (key, mods)
-
     def GetDialogText (self):
         return self.current
 
     def HandleDialogText (self, accel):
-        name = self.ReorderKeyString (accel)
+        name = UpdateAcceleratorName (accel)
         if len (accel) != len (name):
             accel = protect_pango_markup (accel)
             ErrorDialog (self.Widget.get_toplevel (),
@@ -1155,9 +1152,10 @@ class KeySetting (EditableActionSetting):
         self.BindingEdited (accel)
 
     def GetLabelText (self, text):
-        if not len (text) or text.lower() == "disabled":
+        text = UpdateAcceleratorName (text)
+        if not text:
             text = _("Disabled")
-        return text.replace('<Control><Primary>', '<Control>').replace('<Primary>', '<Control>')
+        return text
 
     def SetButtonLabel (self):
         self.Button.set_label (self.GetLabelText (self.current))
@@ -1172,36 +1170,30 @@ class KeySetting (EditableActionSetting):
                 dialog.resize (1, 1)
 
         def HandleGrabberChanged (grabber, label, selector):
-            new = GetAcceleratorName (grabber.key, grabber.mods)
+            self.new = GetAcceleratorName (grabber.key, grabber.mods)
+            label.set_text (self.GetLabelText (self.new))
+
             mods = ""
             for mod in KeyModifier:
-                if "%s_L" % mod in new:
-                    new = new.replace ("%s_L" % mod, "<%s>" % mod)
-                if "%s_R" % mod in new:
-                    new = new.replace ("%s_R" % mod, "<%s>" % mod)
-                if "<%s>" % mod in new:
+                if "<%s>" % mod in self.new:
                     mods += "%s|" % mod
             mods.rstrip ("|")
-            label.set_text (self.GetLabelText (new))
             selector.current = mods
 
         def HandleModifierAdded (selector, modifier, label):
-            current = label.get_text ()
-            if current == _("Disabled"):
-                current = "<%s>" % modifier
+            if self.new:
+                new = "<%s>%s" % (modifier, self.new)
             else:
-                current = ("<%s>" % modifier) + current
-            label.set_text (self.GetLabelText (self.ReorderKeyString (current)))
+                new = "<%s>" % modifier
+            self.new = UpdateAcceleratorName (new)
+            label.set_text (self.GetLabelText (self.new))
 
         def HandleModifierRemoved (selector, modifier, label):
-            current = label.get_text ()
-            if "<%s>" % modifier in current:
-                new = current.replace ("<%s>" % modifier, "")
-            elif "%s_L" % modifier in current:
-                new = current.replace ("%s_L" % modifier, "")
-            elif "%s_R" % modifier in current:
-                new = current.replace ("%s_R" % modifier, "")
-            label.set_text (self.GetLabelText (new))
+            new = UpdateAcceleratorName (self.new)
+            if "<%s>" % modifier in new:
+                new = new.replace ("<%s>" % modifier, "")
+            self.new = new
+            label.set_text (self.GetLabelText (self.new))
 
         dlg = Gtk.Dialog (title=_("Edit %s") % self.Setting.ShortDesc,
                           transient_for=widget.get_toplevel ())
@@ -1228,9 +1220,10 @@ class KeySetting (EditableActionSetting):
             alignment.add (mainBox)
             dlg.vbox.pack_start (alignment, True, True, 0)
 
+        self.new = UpdateAcceleratorName (self.current)
+
         checkButton = Gtk.CheckButton (label=_("Enabled"))
-        active = len (self.current) \
-                 and self.current.lower () not in ("disabled", "none")
+        active = len (self.new) > 0
         checkButton.set_active (active)
         checkButton.set_tooltip_text(self.Setting.LongDesc)
         mainBox.pack_start (checkButton, True, True, 0)
@@ -1241,7 +1234,7 @@ class KeySetting (EditableActionSetting):
 
         currentMods = ""
         for mod in KeyModifier:
-            if "<%s>" % mod in self.current:
+            if "<%s>" % mod in self.new:
                 currentMods += "%s|" % mod
         currentMods.rstrip ("|")
         modifierSelector = ModifierSelector (currentMods)
@@ -1254,13 +1247,13 @@ class KeySetting (EditableActionSetting):
             alignment.add (modifierSelector)
             box.pack_start (alignment, True, True, 0)
 
-        key, mods = Gtk.accelerator_parse (self.current)
+        key, mods = Gtk.accelerator_parse (self.new)
         grabber = KeyGrabber (key = key, mods = mods,
                               label = _("Grab key combination"))
         grabber.set_tooltip_text (self.Setting.LongDesc)
         box.pack_start (grabber, True, True, 0)
 
-        label = Gtk.Label (label=self.GetLabelText(self.current))
+        label = Gtk.Label (label=self.GetLabelText(self.new))
         label.set_tooltip_text (self.Setting.LongDesc)
         if GTK_VERSION >= (3, 0, 0):
             label.set_margin_top (15)
@@ -1282,7 +1275,6 @@ class KeySetting (EditableActionSetting):
         ShowHideBox (checkButton, box, dlg)
         ret = dlg.run ()
 
-        new = label.get_text ()
         checkButtonActive = checkButton.get_active ()
 
         dlg.destroy ()
@@ -1290,13 +1282,10 @@ class KeySetting (EditableActionSetting):
         if ret != Gtk.ResponseType.OK:
             return
 
-        if not checkButtonActive:
+        if self.new and checkButtonActive:
+            self.BindingEdited (self.new)
+        else:
             self.BindingEdited ("Disabled")
-            return
-
-        new = self.ReorderKeyString (new)
-
-        self.BindingEdited (new)
 
     def BindingEdited (self, accel):
         '''Binding edited callback'''
@@ -1336,12 +1325,25 @@ class ButtonSetting (EditableActionSetting):
             self.Setting.Plugin.Context.Write ()
             self.Read ()
 
+    def GetModsString (self, button):
+        accel = ""
+        for mod in KeyModifier:
+            if "<%s>" % mod in button:
+                accel += "<%s>" % mod
+        for alias in KeyModifierAlias:
+            if "<%s>" % alias[0] in button:
+                accel += "<%s>" % alias[1]
+        return UpdateAcceleratorName (accel)
+
     def ReorderButtonString (self, old):
         new = ""
         edges = ["%sEdge" % e for e in Edges]
-        for s in edges + KeyModifier:
+        for s in edges:
             if "<%s>" % s in old:
                 new += "<%s>" % s
+        mods = self.GetModsString (old)
+        if mods:
+            new += mods
         for i in range (99, 0, -1):
             if "Button%d" % i in old:
                 new += "Button%d" % i
@@ -1356,7 +1358,7 @@ class ButtonSetting (EditableActionSetting):
             button = protect_pango_markup (button)
             ErrorDialog (self.Widget.get_toplevel (),
                          _("\"%s\" is not a valid button") % button)
-        if button.lower ().strip () in ("", "disabled", "none"):
+        if not button or button.lower ().strip () in ("disabled", "none"):
             self.ButtonEdited ("Disabled")
             return
         new = self.ReorderButtonString (button)
@@ -1366,9 +1368,10 @@ class ButtonSetting (EditableActionSetting):
         self.ButtonEdited (new)
 
     def GetLabelText (self, text):
-        if not len (text) or text.lower() == "disabled":
+        text = self.ReorderButtonString (text)
+        if not text:
             text = _("Disabled")
-        return text.replace('<Control><Primary>', '<Control>').replace('<Primary>', '<Control>')
+        return text
 
     def SetButtonLabel (self):
         self.Button.set_label (self.GetLabelText (self.current))
@@ -1405,8 +1408,8 @@ class ButtonSetting (EditableActionSetting):
             dlg.vbox.pack_start (alignment, True, True, 0)
 
         checkButton = Gtk.CheckButton (label=_("Enabled"))
-        active = len (self.current) \
-                 and self.current.lower () not in ("disabled", "none")
+        active = self.current and \
+                 self.current.lower ().strip () not in ("disabled", "none")
         checkButton.set_active (active)
         checkButton.set_tooltip_text (self.Setting.LongDesc)
         mainBox.pack_start (checkButton, True, True, 0)
@@ -1426,7 +1429,7 @@ class ButtonSetting (EditableActionSetting):
 
         currentMods = ""
         for mod in KeyModifier:
-            if "<%s>" % mod in self.current:
+            if "<%s>" % mod in self.GetModsString (self.current):
                 currentMods += "%s|" % mod
         currentMods.rstrip ("|")
         modifierSelector = ModifierSelector (currentMods)

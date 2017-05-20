@@ -458,24 +458,36 @@ class FilterPage(GenericPage):
         GlobalUpdater.Block -= 1
 
     def Filter(self, text, level=FilterAll):
-        text = text.lower()
+        # Construct an array of all possible alias combinations,
+        # including none at all.
+        aliasesArray = [(("", ""),)]
+        for r in range(1, len(KeyModifierAlias) + 1):
+            for aliases in itertools.combinations(KeyModifierAlias, r):
+                aliasesArray.append(aliases)
+
         for plugin in self.GroupPages:
             groups = self.GroupPages[plugin]
-            results = dict((n, sg) for (n, sg) in groups if sg.Filter(text, level=level))
+            results = {}
+            for (n, sg) in groups:
+                for aliases in aliasesArray:
+                    query = text.lower()
+                    for alias in aliases:
+                        query = query.replace("<%s>" % alias[1].lower(),
+                                              "<%s>" % alias[0].lower())
+                        if sg.Filter(query, level=level):
+                            results[n] = sg
+                            break
+                    if n in results:
+                        break
             if results:
                 yield plugin, results
 
-    def GotKey(self, widget, key, mods):
-        new = GetAcceleratorName (key, mods)
-        for mod in KeyModifier:
-            if "%s_L" % mod in new:
-                new = new.replace ("%s_L" % mod, "<%s>" % mod)
-            if "%s_R" % mod in new:
-                new = new.replace ("%s_R" % mod, "<%s>" % mod)
+    def GotKey(self, grabber):
+        accel = GetAcceleratorName (grabber.key, grabber.mods)
 
-        widget.destroy()
         self.FilterValueCheck.set_active(True)
-        self.FilterEntry.set_text(new)
+        self.FilterEntry.set_text(accel)
+        grabber.destroy()
 
     def GrabKey(self, widget, pos, event):
         if pos != Gtk.EntryIconPosition.PRIMARY:
