@@ -48,6 +48,7 @@ class MainWin(Gtk.Window):
         self.set_size_request(750, -1)
         self.set_default_size(1000, 580)
         self.set_title(_("CompizConfig Settings Manager"))
+        self.set_position(Gtk.WindowPosition.CENTER)
         if GTK_VERSION < (3, 6, 0):
             self.connect("destroy", self.Quit)
 
