@@ -148,12 +148,16 @@ class SizedButton (Gtk.Button):
         if GTK_VERSION >= (3, 0, 0):
             self.set_size_request (self.minWidth, self.minHeight)
         else:
-            self.connect ("size-request", self.adjust_size)
+            self.connect ("size-request", self.on_size_request)
+            self.connect ("expose-event", self.on_expose_event)
 
     if GTK_VERSION < (3, 0, 0):
-        def adjust_size (self, widget, rect):
+        def on_size_request (self, widget, rect, data=None):
             rect.width = max (rect.width, self.minWidth)
             rect.height = max (rect.height, self.minHeight)
+
+        def on_expose_event (self, widget, event, data=None):
+            widget.queue_resize_no_redraw ()
 
 class PrettyButton (Gtk.Button):
 
