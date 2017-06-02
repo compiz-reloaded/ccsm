@@ -22,6 +22,7 @@
 # Copyright (C) 2007 Quinn Storm
 
 from gi.repository import Gtk, Gdk
+import os
 
 # Settings Grid
 #
@@ -59,8 +60,11 @@ FilterAll = FilterName | FilterLongDesc | FilterValue | FilterCategory
 # Paths
 #
 DataDir = "@prefix@/share"
-IconDir = DataDir+"/ccsm/icons"
+IconDir1 = DataDir+"/ccsm/icons"
+IconDir2 = DataDir+"/compiz/icons"
 PixmapDir = DataDir+"/ccsm/images"
+HomeDir = os.path.expanduser('~')
+IconDir3 = HomeDir+"/.compiz/icons"
 
 # Version
 #
