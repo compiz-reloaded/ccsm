@@ -21,8 +21,7 @@
 #          Sorokin Alexei (sor.alexei@meowr.ru)
 # Copyright (C) 2007 Quinn Storm
 
-from gi.repository import Gtk, Gdk
-import os
+from gi.repository import GLib, Gtk, Gdk
 
 # Settings Grid
 #
@@ -60,11 +59,10 @@ FilterAll = FilterName | FilterLongDesc | FilterValue | FilterCategory
 # Paths
 #
 DataDir = "@prefix@/share"
-IconDir1 = DataDir+"/ccsm/icons"
-IconDir2 = DataDir+"/compiz/icons"
-PixmapDir = DataDir+"/ccsm/images"
-HomeDir = os.path.expanduser('~')
-IconDir3 = HomeDir+"/.compiz/icons"
+IconDir = (DataDir + "/ccsm/icons",
+           DataDir + "/compiz/icons",
+           GLib.get_home_dir() + "/.compiz/icons")
+PixmapDir = DataDir + "/ccsm/images"
 
 # Version
 #

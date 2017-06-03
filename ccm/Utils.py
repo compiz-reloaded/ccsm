@@ -64,20 +64,14 @@ def gtk_process_events ():
 
 IconTheme = Gtk.IconTheme.get_default()
 try:
-    if not IconDir1 in IconTheme.get_search_path():
-        IconTheme.prepend_search_path(IconDir1)
+    for dir in IconDir:
+        if GLib.file_test(dir, GLib.FileTest.IS_DIR) and \
+           dir not in IconTheme.get_search_path():
+            IconTheme.prepend_search_path(dir)
 except (AttributeError, NameError, TypeError):
-    IconTheme.prepend_search_path(IconDir1)
-try:
-    if not IconDir2 in IconTheme.get_search_path():
-        IconTheme.prepend_search_path(IconDir2)
-except (AttributeError, NameError, TypeError):
-    IconTheme.prepend_search_path(IconDir2)
-try:
-    if not IconDir3 in IconTheme.get_search_path():
-        IconTheme.prepend_search_path(IconDir3)
-except (AttributeError, NameError, TypeError):
-    IconTheme.prepend_search_path(IconDir3)
+    for dir in IconDir:
+        if GLib.file_test(dir, GLib.FileTest.IS_DIR):
+            IconTheme.prepend_search_path(dir)
 
 def protect_pango_markup (str_, quote=True):
     return html_escape(str_, quote) if str_ else ""
