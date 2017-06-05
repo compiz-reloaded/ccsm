@@ -1641,21 +1641,21 @@ class BellSetting (BoolSetting):
 def MakeStringSetting (setting, List=False):
 
     if setting.Hints:
-        if "file" in setting.Hints:
+        if "path" in setting.Hints:
+            return FileStringSetting (setting,
+                                      pickMode=FileStringSetting.PATH,
+                                      isImage=("image" in setting.Hints),
+                                      List=List)
+        elif "directory" in setting.Hints:
+            return FileStringSetting (setting,
+                                      pickMode=FileStringSetting.DIRECTORY,
+                                      List=List)
+        elif "file" in setting.Hints:
             return FileStringSetting (setting,
                                       isImage=("image" in setting.Hints),
                                       List=List)
         elif "family" in setting.Hints:
             return FamilyStringSetting (setting)
-        elif "directory" in setting.Hints:
-            return FileStringSetting (setting,
-                                      pickMode=FileStringSetting.DIRECTORY,
-                                      List=List)
-        elif "path" in setting.Hints:
-            return FileStringSetting (setting,
-                                      pickMode=FileStringSetting.PATH,
-                                      isImage=("image" in setting.Hints),
-                                      List=List)
         else:
             return StringSetting (setting, List=List)
     elif (List and setting.Info[1][2]) or \
