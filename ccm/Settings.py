@@ -295,17 +295,32 @@ class FamilyStringSetting(StockSetting):
             previewWidget.modify_font(fd)
 
 class FileStringSetting(StringSetting):
+    FILE = 0
+    DIRECTORY = 1
+    PATH = 2
 
-    def __init__(self, setting, List=False, isImage=False, isDirectory=False):
+    def __init__(self, setting, List=False, isImage=False, pickMode=0):
         self.isImage = isImage
-        self.isDirectory = isDirectory
+        self.pickMode = pickMode
         StringSetting.__init__(self, setting, List=List)
 
     def _Init(self):
         StringSetting._Init(self)
-        self.FileButton = FileButton(self.Setting.Plugin.Context, self.Entry,
-            self.isDirectory, self.isImage)
-        self.Box.pack_start(self.FileButton, False, False, 0)
+        if self.pickMode == FileStringSetting.PATH:
+            self.FileButton = FileButton(self.Setting.Plugin.Context,
+                                         self.Entry,
+                                         False, self.isImage)
+            self.DirButton = FileButton(self.Setting.Plugin.Context,
+                                        self.Entry,
+                                        True, False)
+            self.Box.pack_start(self.FileButton, False, False, 0)
+            self.Box.pack_start(self.DirButton, False, False, 0)
+        else:
+            self.FileButton = FileButton(self.Setting.Plugin.Context,
+                                         self.Entry,
+                                         self.pickMode == FileStringSetting.DIRECTORY,
+                                         self.isImage)
+            self.Box.pack_start(self.FileButton, False, False, 0)
 
 class EnumSetting(StockSetting):
 
@@ -1627,14 +1642,20 @@ def MakeStringSetting (setting, List=False):
 
     if setting.Hints:
         if "file" in setting.Hints:
-            if "image" in setting.Hints:
-                return FileStringSetting (setting, isImage=True, List=List)
-            else:
-                return FileStringSetting (setting, List=List)
+            return FileStringSetting (setting,
+                                      isImage=("image" in setting.Hints),
+                                      List=List)
         elif "family" in setting.Hints:
             return FamilyStringSetting (setting)
         elif "directory" in setting.Hints:
-            return FileStringSetting (setting, isDirectory=True, List=List)
+            return FileStringSetting (setting,
+                                      pickMode=FileStringSetting.DIRECTORY,
+                                      List=List)
+        elif "path" in setting.Hints:
+            return FileStringSetting (setting,
+                                      pickMode=FileStringSetting.PATH,
+                                      isImage=("image" in setting.Hints),
+                                      List=List)
         else:
             return StringSetting (setting, List=List)
     elif (List and setting.Info[1][2]) or \

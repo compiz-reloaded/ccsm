@@ -1638,8 +1638,12 @@ class FileButton (Gtk.Button):
         self._path = path
 
         self.set_tooltip_text(_("Browse..."))
-        self.set_image(Gtk.Image.new_from_icon_name("document-open",
-                                                    Gtk.IconSize.BUTTON))
+        if self._directory:
+            self.set_image(Gtk.Image.new_from_icon_name("document-open",
+                                                        Gtk.IconSize.BUTTON))
+        else:
+            self.set_image(Gtk.Image.new_from_icon_name("text-x-generic",
+                                                        Gtk.IconSize.BUTTON))
         self.connect('clicked', self.open_dialog)
 
     def set_path (self, value):
