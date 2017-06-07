@@ -1639,10 +1639,10 @@ class FileButton (Gtk.Button):
 
         self.set_tooltip_text(_("Browse..."))
         if self._directory:
-            self.set_image(Gtk.Image.new_from_icon_name("document-open",
+            self.set_image(Gtk.Image.new_from_icon_name("folder-open",
                                                         Gtk.IconSize.BUTTON))
         else:
-            self.set_image(Gtk.Image.new_from_icon_name("text-x-generic",
+            self.set_image(Gtk.Image.new_from_icon_name("document-open",
                                                         Gtk.IconSize.BUTTON))
         self.connect('clicked', self.open_dialog)
 
