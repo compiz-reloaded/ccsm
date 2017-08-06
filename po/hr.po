@@ -8,12 +8,12 @@ msgstr ""
 "Project-Id-Version: ccsm 0.8.14\n"
 "Report-Msgid-Bugs-To: https://github.com/compiz-reloaded/ccsm/issues\n"
 "POT-Creation-Date: 2017-05-04 15:17+0300\n"
-"PO-Revision-Date: 2017-08-05 14:37+0200\n"
+"PO-Revision-Date: 2017-08-06 19:50+0100\n"
 "Language-Team: Croatian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.11\n"
+"X-Generator: Poedit 1.6.10\n"
 "Last-Translator: gogo <trebelnik2@gmail.com>\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
@@ -226,7 +226,7 @@ msgstr "_Zatvori"
 
 msgid "Multi-list settings. You can double-click a row to edit the values."
 msgstr ""
-"Više popisne postavke. Možete dvostuko kliknuti na redak za uređivanje "
+"Višestruke popisne postavke. Možete dvostuko kliknuti na redak za uređivanje "
 "vrijednosti."
 
 #, python-format
@@ -262,7 +262,7 @@ msgid ""
 "your configuration. Do you really want to set \"%s\" button to Button1 ?"
 msgstr ""
 "Korištenje Tipka1 bez parametra može spriječiti bilo koji lijevi klik i to "
-"može slomiti vaša podaešavanja. Želite li stvarno postaviti \"%s\"tipku u "
+"može slomiti vaša podešavanja. Želite li stvarno postaviti \"%s\"tipku u "
 "Tipku1?"
 
 #, python-format
@@ -273,7 +273,7 @@ msgid "None"
 msgstr "Nijedan"
 
 msgid "CompizConfig Settings Manager"
-msgstr "CompizConfig upravitelj postavkama"
+msgstr "Compiz upravitelj postavkama"
 
 msgid "Clear"
 msgstr "Obriši"
@@ -306,7 +306,7 @@ msgid "skip taskbar"
 msgstr "preskoči programsku traku"
 
 msgid "skip pager"
-msgstr ""
+msgstr "preskoči straničnik"
 
 msgid "hidden"
 msgstr "skriveno"
@@ -395,12 +395,10 @@ msgid "_Open"
 msgstr "_Otvori"
 
 msgid "This is a settings manager for the CompizConfig configuration system."
-msgstr "Ovo je upravitelj postavkama za CompizConfig sustav podešavanja."
+msgstr "Ovo je upravitelj postavkama za Compiz sustav podešavanja."
 
 msgid "translator-credits"
 msgstr ""
-"O prevoditeljima\n"
-"\n"
 "Launchpad Contributions:\n"
 "  gogo https://launchpad.net/~trebelnik-stefina"
 
@@ -474,7 +472,7 @@ msgid "Add a New Profile"
 msgstr "Dodaj novi profil"
 
 msgid "Remove This Profile"
-msgstr "Pobrisi ovaj profil"
+msgstr "Ukloni ovaj profil"
 
 msgid "Default"
 msgstr "Uobičajeno"
@@ -486,25 +484,25 @@ msgid "Import"
 msgstr "Uvezi"
 
 msgid "Import a CompizConfig Profile"
-msgstr "Uvezi CompizConfig profil"
+msgstr "Uvezite profil Compiz podešavanja"
 
 msgid "Import as..."
 msgstr "Uvezi kao..."
 
 msgid "Import a CompizConfig Profile as a new profile"
-msgstr "Uvezi CompizConfig profil kao novi profil"
+msgstr "Uvezite Compiz profil podešavanja kao novi profil"
 
 msgid "Export"
 msgstr "Izvezi"
 
 msgid "Export your CompizConfig Profile"
-msgstr "Izvezite svoj CompizConfig profil"
+msgstr "Izvezite svoj Compiz profil podešavanja"
 
 msgid "Reset to defaults"
 msgstr "Vrati na zadano"
 
 msgid "Reset your CompizConfig Profile to the global defaults"
-msgstr "Vratite svoj CompizConfig profil na zadane vrijednosti"
+msgstr "Vratite svoj Compiz profil podešavanja na zadane vrijednosti"
 
 msgid "Backend"
 msgstr "Pozadinski program"
@@ -516,7 +514,7 @@ msgid "Enable integration into the desktop environment"
 msgstr "Omogući integraciju u radno okruženje"
 
 msgid "Profiles (*.profile)"
-msgstr "Profil (*.profile)"
+msgstr "Profili (*.profile)"
 
 msgid "All files"
 msgstr "Sve datoteke"
@@ -528,8 +526,7 @@ msgid "_Save"
 msgstr "_Spremi"
 
 msgid "Do you want to skip default option values while exporting your profile?"
-msgstr ""
-"Želite li preskočiti početne vrijednosti mogućnosti pri izvozu profila?"
+msgstr "Želite li preskočiti zadane vrijednosti mogućnosti pri izvozu profila?"
 
 msgid "Open file.."
 msgstr "Otvori datoteku..."
@@ -620,4 +617,4 @@ msgstr ""
 " Vaš upit \"<b>%s</b>\" ne podudara se ni s jednom stavkom.</span>"
 
 msgid "Configure Compiz with CompizConfig"
-msgstr "Podesite Compiz s CompizConfig"
+msgstr "Prilagodite Compiz sa Compiz upraviteljem postavkama"
