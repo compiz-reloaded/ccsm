@@ -19,8 +19,8 @@
 #          Patrick Niklaus (patrick.niklaus@student.kit.edu)
 # Copyright (C) 2007 Quinn Storm
 
-from optparse import OptionParser
 import gi
+import optparse
 gi.require_version('Pango', '1.0')
 gi.require_version('PangoCairo', '1.0')
 gi.require_version('Rsvg', '2.0')
@@ -38,7 +38,24 @@ from ccm.Utils import GTK_VERSION
 
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 
-def activate_event(application, *mainWinArgs):
+def command_line(application, cmdLine, context):
+    plugin   = None
+    category = None
+
+    parser = optparse.OptionParser()
+    parser.add_option("-p", "--plugin", dest = "plugin",
+                      help = "Directly jump to the page of PLUGIN",
+                      metavar = "PLUGIN")
+    parser.add_option("-c", "--category", dest = "category",
+                      help = "Directly jump to CATEGORY", metavar = "CATEGORY")
+    parser.add_option("-v", "--version", dest = "version",
+                      action = "store_true", help = "Version")
+    (options, _) = parser.parse_args(cmdLine.get_arguments())
+
+    if options.version:
+        print("CCSM %s" % Version)
+        return 0
+
     if GTK_VERSION >= (3, 6, 0):
         prevWin = application.get_active_window()
     else:
@@ -48,9 +65,14 @@ def activate_event(application, *mainWinArgs):
 
     if prevWin:
         prevWin.present()
-        return
+        return 0
 
-    mainWin = ccm.MainWin(*mainWinArgs)
+    if options.plugin:
+        plugin = options.plugin
+    if options.category:
+        category = options.category
+
+    mainWin = ccm.MainWin(context, plugin, category)
     if GTK_VERSION >= (3, 6, 0):
         application.add_window(mainWin)
     else:
@@ -59,27 +81,7 @@ def activate_event(application, *mainWinArgs):
         application.hold()
     idle = ccm.IdleSettingsParser(context, mainWin)
     mainWin.show_all()
-
-plugin   = None
-category = None
-parser   = OptionParser()
-parser.add_option("-p", "--plugin", dest = "plugin",
-                  help = "Directly jump to the page of PLUGIN",
-                  metavar = "PLUGIN")
-parser.add_option("-c", "--category", dest = "category",
-                  help = "Directly jump to CATEGORY",
-                  metavar = "CATEGORY")
-parser.add_option("-v", "--version", dest = "version",
-                  action = "store_true",
-                  help = "Version")
-(options, args) = parser.parse_args()
-if options.version:
-    print("CCSM " + Version)
-    sys.exit(0)
-if options.plugin:
-    plugin = options.plugin
-if options.category:
-    category = options.category
+    return 0
 
 # Compiz 0.9.x and Compiz 0.8.x compatibility.
 try:
@@ -90,11 +92,12 @@ GlobalUpdater.SetContext(context)
 
 if GTK_VERSION >= (3, 6, 0):
     application = Gtk.Application(application_id="org.compiz.ccsm",
-                                  flags=Gio.ApplicationFlags.FLAGS_NONE)
+                                  flags=Gio.ApplicationFlags.HANDLES_COMMAND_LINE)
 else:
     application = Gio.Application(application_id="org.compiz.ccsm",
-                                  flags=Gio.ApplicationFlags.FLAGS_NONE)
-application.connect("activate", activate_event, context, plugin, category)
+                                  flags=Gio.ApplicationFlags.HANDLES_COMMAND_LINE)
+application.connect("command-line", command_line, context)
+
 try:
     application.register()
 except TypeError:
