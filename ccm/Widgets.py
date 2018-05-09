@@ -385,11 +385,11 @@ class ScrolledList(Gtk.ScrolledWindow):
 
     def append(self, value):
         iter = self.store.append()
-        self.store.set(iter, 0, value)
+        self.store.set_value(iter, 0, value)
 
     def set(self, pos, value):
         iter = self.store.get_iter(pos)
-        self.store.set(iter, 0, value)
+        self.store.set_value(iter, 0, value)
 
     def delete(self, b):
         selected_rows = self.select.get_selected_rows()[1]
