@@ -146,7 +146,7 @@ data_files = [
              ]
 
 global_icon_path = "share/icons/hicolor/"
-local_icon_path = "share/ccsm/icons/hicolor/"
+compiz_icon_path = "share/compiz/icons/hicolor/"
 
 for dir, subdirs, files in os.walk("images/"):
     if dir == "images/":
@@ -167,12 +167,12 @@ for dir, subdirs, files in os.walk("images/"):
                     images.append(file_path)
         # local
         if len(images) > 0:
-            data_files.append((local_icon_path + dir[7:], images))
+            data_files.append((compiz_icon_path + dir[7:], images))
         # global
         if len(global_images) > 0:
             data_files.append((global_icon_path + dir[7:], global_images))
 
-data_files.append(("share/ccsm/images", custom_images))
+data_files.append(("share/compiz/images", custom_images))
 
 podir = os.path.join (os.path.realpath ("."), "po")
 if os.path.isdir (podir):
@@ -209,8 +209,8 @@ setup (
 os.remove ("ccm/Constants.py")
 
 if sys.argv[1] == "install":
-    gtk_update_icon_cache = '''gtk-update-icon-cache -f -t \
-%s/share/ccsm/icons/hicolor''' % prefix
+    gtk_update_icon_cache = 'gtk-update-icon-cache -f -t {0}/{1}'.	\
+        format(unicode(prefix, 'utf-8'), unicode(compiz_icon_path, 'utf-8'))
     root_specified = len (list (filter (lambda s: s.startswith ("--root"),
                                         sys.argv))) > 0
     if not root_specified:

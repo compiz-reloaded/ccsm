@@ -59,8 +59,7 @@ FilterAll = FilterName | FilterLongDesc | FilterValue | FilterCategory
 # Paths
 #
 DataDir = "@prefix@/share"
-IconDir = (DataDir + "/ccsm/icons",
-           DataDir + "/compiz/icons",
+IconDir = (DataDir + "/compiz/icons",
            GLib.get_home_dir() + "/.compiz/icons")
 PixmapDir = DataDir + "/ccsm/images"
 
