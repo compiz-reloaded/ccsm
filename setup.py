@@ -209,13 +209,13 @@ setup (
 os.remove ("ccm/Constants.py")
 
 if sys.argv[1] == "install":
-    gtk_update_icon_cache = 'gtk-update-icon-cache -f -t {0}/{1}'.	\
-        format(unicode(prefix, 'utf-8'), unicode(compiz_icon_path, 'utf-8'))
+    gtk_update_icon_cache = ['gtk-update-icon-cache', '-f', '-t',
+                             os.path.join(prefix, compiz_icon_path)]
     root_specified = len (list (filter (lambda s: s.startswith ("--root"),
                                         sys.argv))) > 0
     if not root_specified:
-        print("Updating Gtk icon cache.")
-        os.system (gtk_update_icon_cache)
+        print ("Updating GTK+ icon cache.")
+        subprocess.call (gtk_update_icon_cache)
     else:
-        print('''*** Icon cache not updated. After install, run this:
-***     %s''' % gtk_update_icon_cache)
+        print ('*** Icon cache not updated. After install, run this: %s' %
+               " ".join(gtk_update_icon_cache))
