@@ -217,5 +217,5 @@ if sys.argv[1] == "install":
         print ("Updating GTK+ icon cache.")
         subprocess.call (gtk_update_icon_cache)
     else:
-        print ('*** Icon cache not updated. After install, run this: %s' %
-               " ".join(gtk_update_icon_cache))
+        print ('*** Icon cache not updated. After install, run this:\n' +
+               '***     %s' % " ".join(gtk_update_icon_cache))
