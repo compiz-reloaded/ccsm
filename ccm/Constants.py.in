@@ -61,7 +61,7 @@ FilterAll = FilterName | FilterLongDesc | FilterValue | FilterCategory
 DataDir = "@prefix@/share"
 IconDir = (DataDir + "/compiz/icons",
            GLib.get_home_dir() + "/.compiz/icons")
-PixmapDir = DataDir + "/ccsm/images"
+PixmapDir = DataDir + "/compiz/images"
 
 # Version
 #
