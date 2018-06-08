@@ -196,7 +196,7 @@ setup (
         description      = "CompizConfig Settings Manager",
         author           = "Patrick Niklaus",
         author_email     = "patrick.niklaus@student.kit.edu",
-        url              = "http://github.com/compiz-reloaded/ccsm",
+        url              = "http://gitlab.com/compiz/ccsm",
         license          = "GPLv2+",
         data_files       = data_files,
         packages         = ["ccm"],
