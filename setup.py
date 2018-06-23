@@ -73,7 +73,7 @@ ops = ("install", "build", "sdist", "uninstall", "clean")
 
 if len (sys.argv) < 2 or sys.argv[1] not in ops:
     print("Please specify operation : %s" % " | ".join (ops))
-    raise SystemExit
+    raise SystemExit(1)
 
 prefix = None
 gtkver = "3.0"
