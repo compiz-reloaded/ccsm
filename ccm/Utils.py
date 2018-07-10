@@ -64,12 +64,12 @@ def gtk_process_events ():
 
 IconTheme = Gtk.IconTheme.get_default()
 try:
-    for dir in IconDir:
+    for dir in IconDirs:
         if GLib.file_test(dir, GLib.FileTest.IS_DIR) and \
            dir not in IconTheme.get_search_path():
             IconTheme.prepend_search_path(dir)
 except (AttributeError, NameError, TypeError):
-    for dir in IconDir:
+    for dir in IconDirs:
         if GLib.file_test(dir, GLib.FileTest.IS_DIR):
             IconTheme.prepend_search_path(dir)
 

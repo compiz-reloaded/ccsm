@@ -172,7 +172,7 @@ for dir, subdirs, files in os.walk("images/"):
         if len(global_images) > 0:
             data_files.append((global_icon_path + dir[7:], global_images))
 
-data_files.append(("share/compiz/images", custom_images))
+data_files.append(("share/ccsm/images", custom_images))
 
 podir = os.path.join (os.path.realpath ("."), "po")
 if os.path.isdir (podir):
