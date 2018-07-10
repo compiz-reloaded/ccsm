@@ -61,6 +61,7 @@ FilterAll = FilterName | FilterLongDesc | FilterValue | FilterCategory
 #
 DataDir = os.path.join("@prefix@", "share")
 IconDirs = (os.path.join(DataDir, "compiz", "icons"),
+            os.path.join(GLib.get_user_data_dir(), "compiz", "icons"),
             os.path.join(GLib.get_home_dir(), ".compiz", "icons"))
 PixmapDir = os.path.join(DataDir, "ccsm", "images")
 
