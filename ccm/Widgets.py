@@ -23,7 +23,7 @@
 # Copyright (C) 2007 Quinn Storm
 
 from gi.repository import GObject, GLib, Gtk
-from gi.repository import Gdk, GdkPixbuf, PangoCairo, Rsvg
+from gi.repository import Gdk, GdkPixbuf, PangoCairo
 import cairo
 from collections import OrderedDict
 from math import pi, sqrt
@@ -1155,8 +1155,7 @@ class WindowStateSelector (Gtk.DrawingArea):
 
     _current = []
 
-    _base_surface   = None
-    _surface        = None
+    _surface = None
 
     _x0     = 0
     _y0     = 12
@@ -1201,7 +1200,8 @@ class WindowStateSelector (Gtk.DrawingArea):
 
         self._src_pixbufs = {}
         for state in self._states:
-            self._src_pixbufs[state] = Rsvg.Handle.new_from_file("%s/ccsm-%s.svg" % (PixmapDir, state))
+            fn = "%s/ccsm-%s.svg" % (PixmapDir, state)
+            self._src_pixbufs[state] = GdkPixbuf.Pixbuf.new_from_file (fn)
 
     def set_current(self, value):
         self._current = value
@@ -1262,8 +1262,10 @@ class WindowStateSelector (Gtk.DrawingArea):
 
             cr.push_group()
             cr.translate(x, y)
-            cr.scale((self._width + .0)/icon.get_property('width'), (self._height + .0)/icon.get_property('height'))
-            icon.render_cairo(cr)
+            cr.scale((self._width + .0) / icon.get_width(),
+                     (self._height + .0) / icon.get_height())
+            Gdk.cairo_set_source_pixbuf(cr, icon, 0, 0)
+            cr.paint()
             src = cr.pop_group()
 
             current_state = stt in self._current
