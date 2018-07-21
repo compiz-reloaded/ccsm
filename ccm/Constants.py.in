@@ -47,7 +47,8 @@ HeaderMarkupDefault = "<span size='large' weight='800'>%s</span>"
 ImageNone     = 0
 ImagePlugin   = 1
 ImageCategory = 2
-ImageThemed   = 3
+ImageInternal = 3
+ImageThemed   = 4
 
 # Filter Levels
 #

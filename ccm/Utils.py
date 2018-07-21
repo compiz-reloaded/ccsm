@@ -24,7 +24,7 @@
 import os
 
 from gi.repository import GObject, GLib, Gtk, Gdk
-from gi.repository import Pango
+from gi.repository import GdkPixbuf, Pango
 import weakref
 
 from ccm.Constants import *
@@ -62,16 +62,14 @@ def gtk_process_events ():
     while Gtk.events_pending ():
         Gtk.main_iteration ()
 
-IconTheme = Gtk.IconTheme.get_default()
-try:
-    for dir in IconDirs:
-        if GLib.file_test(dir, GLib.FileTest.IS_DIR) and \
-           dir not in IconTheme.get_search_path():
-            IconTheme.prepend_search_path(dir)
-except (AttributeError, NameError, TypeError):
-    for dir in IconDirs:
-        if GLib.file_test(dir, GLib.FileTest.IS_DIR):
-            IconTheme.prepend_search_path(dir)
+IconTheme = Gtk.IconTheme.get_default ()
+for iconDir in IconDirs:
+    try:
+        dirs = IconTheme.get_search_path ()
+    except (AttributeError, NameError, TypeError):
+        dirs = []
+    if os.path.isdir (iconDir) and iconDir not in dirs:
+        IconTheme.prepend_search_path (iconDir)
 
 def protect_pango_markup (str_, quote=True):
     return html_escape(str_, quote) if str_ else ""
@@ -81,42 +79,40 @@ def protect_markup_dict (dict_):
 
 class Image (Gtk.Image):
 
-    def __init__ (self, name = None, type = ImageNone, size = 32,
-                  useMissingImage = False):
+    def __init__ (self, name = None, type = ImageNone, size = 32):
         Gtk.Image.__init__ (self)
 
         if not name:
             return
 
-        if useMissingImage:
-            self.set_from_icon_name ("image-missing",
-                                     Gtk.IconSize.LARGE_TOOLBAR)
-            return
+        pixbuf = None
 
         try:
             pixbuf = None
 
-            if type == ImagePlugin:
-                name = "plugin-" + name
-                try:
-                    pixbuf = IconTheme.load_icon (name, size, 0)
-                except GLib.GError:
-                    pixbuf = IconTheme.load_icon ("plugin-unknown", size, 0)
+            if type in (ImagePlugin, ImageCategory):
+                prefix = "plugin-" if type == ImagePlugin else "plugins-"
+                iconNames = (prefix + name, prefix + "unknown")
+                iconInfo = IconTheme.choose_icon (iconNames, size, 0)
+                pixbuf = iconInfo.load_icon () if iconInfo else None
 
-            elif type == ImageCategory:
-                name = "plugins-" + name
-                try:
-                    pixbuf = IconTheme.load_icon (name, size, 0)
-                except GLib.GError:
-                    pixbuf = IconTheme.load_icon ("plugins-unknown", size, 0)
+            elif type == ImageInternal:
+                for ext in ("svg", "png"):
+                    fn = "%s.%s" % (os.path.join (PixmapDir, name), ext)
+                    if os.path.isfile (fn):
+                        pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size (fn,
+                                                                         size,
+                                                                         size)
+                        break
 
             elif type == ImageThemed:
                 pixbuf = IconTheme.load_icon (name, size,
                                               Gtk.IconLookupFlags.USE_BUILTIN)
 
-            self.set_from_pixbuf (pixbuf)
         except GLib.GError:
             self.set_from_icon_name ("image-missing", Gtk.IconSize.BUTTON)
+
+        self.set_from_pixbuf (pixbuf)
 
 class ActionImage (Gtk.Box):
 

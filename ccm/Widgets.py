@@ -426,8 +426,8 @@ class ModifierSelector (Gtk.DrawingArea):
 
     _current = []
 
-    _base_surface   = None
-    _surface        = None
+    _base_pixbuf = None
+    _surface     = None
 
     _x0     = 0
     _y0     = 12
@@ -440,8 +440,7 @@ class ModifierSelector (Gtk.DrawingArea):
         '''Prepare widget'''
         super (ModifierSelector, self).__init__ ()
         self._current = mods.split ("|")
-        modifier = "%s/modifier.png" % PixmapDir
-        self._base_surface = cairo.ImageSurface.create_from_png (modifier)
+        self._base_pixbuf = Image ("modifier", ImageInternal, -1).get_pixbuf ()
         self.add_events (Gdk.EventMask.BUTTON_PRESS_MASK)
         if GTK_VERSION >= (3, 0, 0):
             self.connect ("draw", self.draw_event)
@@ -478,7 +477,7 @@ class ModifierSelector (Gtk.DrawingArea):
             x, y = self._modifiers[mod]
             if mod in self._names: text = self._names[mod]
             else: text = mod
-            cr.set_source_surface (self._base_surface, x, y)
+            Gdk.cairo_set_source_pixbuf (cr, self._base_pixbuf, x, y)
             cr.rectangle (x, y, self._width, self._height)
             cr.fill_preserve ()
             if mod in self._current:
@@ -564,17 +563,16 @@ class EdgeSelector (Gtk.DrawingArea):
     __gsignals__    = {"clicked" : (GObject.SignalFlags.RUN_FIRST,
                                     None, (GObject.TYPE_STRING, GObject.TYPE_PYOBJECT,))}
 
-    _base_surface   = None
-    _surface        = None
-    _radius         = 13
-    _cradius        = 20
-    _coords         = []
+    _base_pixbuf = None
+    _surface     = None
+    _radius      = 13
+    _cradius     = 20
+    _coords      = []
 
     def __init__ (self):
         '''Prepare widget'''
         super (EdgeSelector, self).__init__ ()
-        background = "%s/display.png" % PixmapDir
-        self._base_surface = cairo.ImageSurface.create_from_png (background)
+        self._base_pixbuf = Image ("display", ImageInternal, -1).get_pixbuf ()
         self.add_events (Gdk.EventMask.BUTTON_PRESS_MASK)
         if GTK_VERSION >= (3, 0, 0):
             self.connect ("draw", self.draw_event)
@@ -712,7 +710,7 @@ class EdgeSelector (Gtk.DrawingArea):
         self._surface = cairo.ImageSurface (cairo.FORMAT_ARGB32, width, height)
         cr = cairo.Context (self._surface)
         # Draw background
-        cr.set_source_surface (self._base_surface)
+        Gdk.cairo_set_source_pixbuf (cr, self._base_pixbuf, 0, 0)
         cr.paint ()
         # Draw
         self.draw (cr, alloc.width, alloc.height)
@@ -1200,8 +1198,8 @@ class WindowStateSelector (Gtk.DrawingArea):
 
         self._src_pixbufs = {}
         for state in self._states:
-            fn = "%s/ccsm-%s.svg" % (PixmapDir, state)
-            self._src_pixbufs[state] = GdkPixbuf.Pixbuf.new_from_file (fn)
+            pixbuf = Image ("ccsm-" + state, ImageInternal, -1).get_pixbuf ()
+            self._src_pixbufs[state] = pixbuf
 
     def set_current(self, value):
         self._current = value
@@ -1832,7 +1830,10 @@ class PluginButton (Gtk.Box):
         self.set_orientation(Gtk.Orientation.HORIZONTAL)
         self._plugin = plugin
 
-        image = Image (plugin.Name, ImagePlugin, 32, useMissingImage)
+        if not useMissingImage:
+            image = Image (plugin.Name, ImagePlugin, 32)
+        else:
+            image = Image ("image-missing", ImageThemed, 32)
         label = Label (plugin.ShortDesc, 120)
         box = Gtk.Box (orientation=Gtk.Orientation.HORIZONTAL)
         box.set_spacing (5)
