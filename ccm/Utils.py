@@ -88,8 +88,6 @@ class Image (Gtk.Image):
         pixbuf = None
 
         try:
-            pixbuf = None
-
             if type in (ImagePlugin, ImageCategory):
                 prefix = "plugin-" if type == ImagePlugin else "plugins-"
                 iconNames = (prefix + name, prefix + "unknown")
@@ -108,10 +106,13 @@ class Image (Gtk.Image):
             elif type == ImageThemed:
                 pixbuf = IconTheme.load_icon (name, size,
                                               Gtk.IconLookupFlags.USE_BUILTIN)
-
-            self.set_from_pixbuf (pixbuf)
         except GLib.GError:
-            self.set_from_icon_name ("image-missing", Gtk.IconSize.BUTTON)
+            try:
+                pixbuf = IconTheme.load_icon ("image-missing", size,
+                                              Gtk.IconLookupFlags.USE_BUILTIN)
+            except GLib.GError: pass
+
+        self.set_from_pixbuf (pixbuf)
 
 class ActionImage (Gtk.Box):
 
