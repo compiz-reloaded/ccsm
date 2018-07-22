@@ -109,10 +109,9 @@ class Image (Gtk.Image):
                 pixbuf = IconTheme.load_icon (name, size,
                                               Gtk.IconLookupFlags.USE_BUILTIN)
 
+            self.set_from_pixbuf (pixbuf)
         except GLib.GError:
             self.set_from_icon_name ("image-missing", Gtk.IconSize.BUTTON)
-
-        self.set_from_pixbuf (pixbuf)
 
 class ActionImage (Gtk.Box):
 
