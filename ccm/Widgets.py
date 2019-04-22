@@ -953,7 +953,7 @@ class GlobalEdgeSelector(EdgeSelector):
         comboBox.set_size_request (200, -1)
         comboBox.connect ('changed', self.combo_changed, edge)
 
-        popup = Popup (self, parent=widget, child=comboBox, decorated=False,
+        popup = Popup (parent=widget, child=comboBox, decorated=False,
                        mouse=True, modal=False)
         comboBox.show ()
         popup.show ()
