@@ -1,0 +1,619 @@
+# Georgian translation for ccsm.
+# Copyright (C) 2023 gitlab.com/compiz
+# This file is distributed under the same license as the ccsm package.
+# Temuri Doghonadze <temuri.doghonadze@gmail.com>, 2023.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ccsm 0.8.14\n"
+"Report-Msgid-Bugs-To: https://gitlab.com/compiz/ccsm/issues\n"
+"POT-Creation-Date: 2017-05-04 15:17+0300\n"
+"PO-Revision-Date: 2023-02-16 11:46+0100\n"
+"Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
+"Language-Team: Georgian <(nothing)>\n"
+"Language: ka\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.2.2\n"
+
+#, python-format
+msgid ""
+"The new value for the %(binding)s binding for the action <b>%(action)s</b> "
+"in plugin <b>%(plugin)s</b> conflicts with the action "
+"<b>%(action_conflict)s</b> of the <b>%(plugin_conflict)s</b> plugin.\n"
+"Do you wish to disable <b>%(action_conflict)s</b> in the "
+"<b>%(plugin_conflict)s</b> plugin?"
+msgstr ""
+"ახალი მნიშვნელობა დამატებაში <b>%(plugin)s</b> ქმედებისთვის <b>%(action)s</"
+"b> მიბმისთვის %(binding)s კონფილიქტშია <b>%(plugin_conflict)s</b> დამატების "
+"<b>%(action_conflict)s</b> ქმედებასთან.\n"
+"გნებავთ, გამორთოთ <b>%(action_conflict)s</b>-ი <b>%(plugin_conflict)s</b> "
+"დამატებაში?"
+
+#, python-format
+msgid "Disable %(action_conflict)s"
+msgstr "%(action_conflict)s-ის გათიშვა"
+
+#, python-format
+msgid "Don't set %(action)s"
+msgstr "%(action)s-ის არ დაყენება"
+
+#, python-format
+msgid "Set %(action)s anyway"
+msgstr "%(action)s-ის მაინც დაყენება"
+
+msgid "key"
+msgstr "გასაღები"
+
+msgid "button"
+msgstr "ღილაკი"
+
+msgid "edge"
+msgstr "კიდე"
+
+#, python-format
+msgid ""
+"You are trying to use the feature <b>%(feature)s</b> which is <b>not</b> "
+"provided by any plugin.\n"
+"Do you wish to use this feature anyway?"
+msgstr ""
+"ცდილობთ, გამოიყენოთ თვისება <b>%(feature)s</b>, რომელიც <br>არც ერთი</br> "
+"დამატება არ შეიცავს.\n"
+"მანც გნებავთ, ეს თვისება გამოიყენოთ?"
+
+#, python-format
+msgid "Use %(feature)s"
+msgstr "%(feature)s-ის გამოყენება"
+
+#, python-format
+msgid "Don't use %(feature)s"
+msgstr "%(feature)s-ის არ გამოყენება"
+
+#, python-format
+msgid ""
+"You are trying to use the feature <b>%(feature)s</b> which is provided by "
+"<b>%(plugin)s</b>.\n"
+"This plugin is currently disabled.\n"
+"Do you wish to enable <b>%(plugin)s</b> so the feature is available?"
+msgstr ""
+"ცდილობთ, გამოიყენოთ თვისება <b>%(feature)s</b>, რომელიც გააჩნია დამატებას "
+"<b>%(plugin)s</b>.\n"
+"ეს დამატება ამჟამად გათისულია.\n"
+"გნებავთ, ჩართოთ <b>%(plugin)s</b>, რათა თვისებები ხელმისაწვდომი გახდეს?"
+
+#, python-format
+msgid "Enable %(plugin)s"
+msgstr "%(plugin)s-ის ჩართვა"
+
+#, python-format
+msgid "Don't enable %(feature)s"
+msgstr "%(feature)s-ის არ ჩართვა"
+
+#, python-format
+msgid ""
+"Some %(bindings)s bindings of Plugin <b>%(plugin)s</b> conflict with other "
+"plugins. Do you want to resolve these conflicts?"
+msgstr ""
+"დამატების <b>%(plugin)s</b> ზოგიერთი მიბმები %(bindings)s სხვა დამატებებთან "
+"კონფლიქტობენ. გნებავთ, გადაწყვიტოთ ეს კონფლიქტები?"
+
+msgid "Resolve conflicts"
+msgstr "კონფლიქტის გადაჭრა"
+
+msgid "Ignore conflicts"
+msgstr "კონფლიქტების იგნორირება"
+
+#, python-format
+msgid ""
+"Plugin <b>%(plugin_conflict)s</b> provides feature <b>%(feature)s</b> which "
+"is also provided by <b>%(plugin)s</b>"
+msgstr ""
+"დამატებას <b>%(plugin_conflict)s</b> აქვს თვისება <b>%(feature)s</b>, "
+"რომელიც ასევე გააჩნია დამატებას <b>%(plugin)s</b>"
+
+#, python-format
+msgid "Disable %(plugin_conflict)s"
+msgstr "%(plugin_conflict)s-ის გამორთვა"
+
+#, python-format
+msgid "Don't enable %(plugin)s"
+msgstr "%(plugin)s-ის არ ჩართვა"
+
+#, python-format
+msgid "Plugin <b>%(plugin_conflict)s</b> conflicts with <b>%(plugin)s</b>."
+msgstr ""
+"დამატება <b>%(plugin_conflict)s</b> კონფლიქტშია <b>%(plugin)s</b>-სთან."
+
+#, python-format
+msgid ""
+"<b>%(plugin)s</b> requires feature <b>%(feature)s</b> which is provided by "
+"the following plugins:\n"
+"%(plugin_list)s"
+msgstr ""
+"<b>%(plugin)s</b>-ს ესაჭიროება თვისება <b>%(feature)s</b>, რომელსაც შემდეგი "
+"დამატებები შეიცავენ:\n"
+"%(plugin_list)s"
+
+msgid "Enable these plugins"
+msgstr "ამ დამატებების ჩართვა"
+
+#, python-format
+msgid "<b>%(plugin)s</b> requires the plugin <b>%(require)s</b>."
+msgstr "<b>%(plugin)s</b>-ს ესაჭიროება დამატება <b>%(require)s</b>."
+
+#, python-format
+msgid "Enable %(require)s"
+msgstr "%(require)s-ის ჩართვა"
+
+#, python-format
+msgid ""
+"<b>%(plugin)s</b> provides the feature <b>%(feature)s</b> which is required "
+"by the plugins <b>%(plugin_list)s</b>."
+msgstr ""
+"<b>%(plugin)s</b>-ს აქვს თვისება <b>%(feature)s</b> რომელიც ესაჭიროება "
+"დამატებებს <b>%(plugin_list)s</b>."
+
+msgid "Disable these plugins"
+msgstr "ამ დამატებების გამორთვა"
+
+#, python-format
+msgid "Don't disable %(plugin)s"
+msgstr "%(plugin)s-ის არ გამორთვა"
+
+#, python-format
+msgid "<b>%(plugin)s</b> is required by the plugins <b>%(plugin_list)s</b>."
+msgstr "<b>%(plugin)s</b> ესაჭიროება დამატებებს <b>%(plugin_list)s</b>."
+
+msgid "General"
+msgstr "ზოგადი"
+
+msgid "Accessibility"
+msgstr "წვდომადობა"
+
+msgid "Desktop"
+msgstr "სამუშაო გარემოები"
+
+msgid "Extras"
+msgstr "დამატებით"
+
+msgid "Window Management"
+msgstr "ფანჯრების მართვა"
+
+msgid "Effects"
+msgstr "ეფექტები"
+
+msgid "Image Loading"
+msgstr "გამოსახულების ჩატვირთვა"
+
+msgid "Utility"
+msgstr "ხელსაწყო"
+
+msgid "All"
+msgstr "ყველა"
+
+msgid "Uncategorized"
+msgstr "დაულაგებელი"
+
+msgid "N/A"
+msgstr "N/A"
+
+msgid "Reset setting to the default value"
+msgstr "პარამეტრის ნაგულისხმებ მნისვნელობაზე დაბრუნება"
+
+msgid "_New"
+msgstr "ახალი"
+
+msgid "_Delete"
+msgstr "_წაშლა"
+
+msgid "_Edit"
+msgstr "_ჩასწორება"
+
+msgid "_Up"
+msgstr "მაღლა"
+
+msgid "_Down"
+msgstr "_დაბლა"
+
+msgid "Edit"
+msgstr "ჩასწორება"
+
+#. Exit Button
+msgid "_Close"
+msgstr "_დახურვა"
+
+msgid "Multi-list settings. You can double-click a row to edit the values."
+msgstr ""
+"მრავალსიიანი პარამეტრები. მნიშვნელობების ჩასასწორებლად შეგიძლიათ მწკრივზე "
+"ორჯერ დააწკაპუნოთ."
+
+#, python-format
+msgid "Edit %s"
+msgstr "%s-ის ჩასწორება"
+
+msgid "_Cancel"
+msgstr "_გაუქმება"
+
+msgid "_OK"
+msgstr "_კარგი"
+
+#, python-format
+msgid "\"%s\" is not a valid shortcut"
+msgstr "\"%s\" სწორი მალსახმობი არაა"
+
+msgid "Disabled"
+msgstr "გამორთულია"
+
+msgid "Enabled"
+msgstr "აქტიური"
+
+msgid "Grab key combination"
+msgstr "ღილაკების კომბინაციის ჩაჭერა"
+
+#, python-format
+msgid "\"%s\" is not a valid button"
+msgstr "\"%s\" სწორი ღილაკი არაა"
+
+#, python-format
+msgid ""
+"Using Button1 without modifiers can prevent any left click and thus break "
+"your configuration. Do you really want to set \"%s\" button to Button1 ?"
+msgstr ""
+"გამოიყენეთ Button1 მოდიფიკატორების გარეშე, რათა მარცხენა წკაპები და ამით "
+"გაფუჭებული კონფიგურაცია თავიდან აიცილოთ. მართლა გნებავთ \"%s\" ღილაკის "
+"Button1-ზე დაყენება?"
+
+#, python-format
+msgid "\"%s\" is not a valid edge mask"
+msgstr "\"%s\" კიდის არასწორი ნიღაბია"
+
+msgid "None"
+msgstr "არაფერი"
+
+msgid "CompizConfig Settings Manager"
+msgstr "CompizConfig-ის პარამეტრების მმართველი"
+
+msgid "Clear"
+msgstr "სუფთა ცა"
+
+msgid "Plugin"
+msgstr "დამატება"
+
+msgid "Please press the new key combination"
+msgstr "დააწექით ახალ ღილაკების კომბინაციას"
+
+msgid "Escape is reserved and cannot be used for keybindings."
+msgstr "ღილაკი Escape დარეზერვებულია და ვერაფერს მიაბამთ."
+
+msgid "modal"
+msgstr "modal"
+
+msgid "sticky"
+msgstr "sticky"
+
+msgid "max vert"
+msgstr "max vert"
+
+msgid "max horz"
+msgstr "max horz"
+
+msgid "shaded"
+msgstr "shaded"
+
+msgid "skip taskbar"
+msgstr "skip taskbar"
+
+msgid "skip pager"
+msgstr "skip pager"
+
+msgid "hidden"
+msgstr "დამალული"
+
+msgid "fullscreen"
+msgstr "მთელ ეკრანზე"
+
+msgid "above"
+msgstr "above"
+
+msgid "below"
+msgstr "ქვემოდან"
+
+msgid "urgent"
+msgstr "urgent"
+
+msgid "Window Title"
+msgstr "ფანჯრის სათაური"
+
+msgid "Window Role"
+msgstr "ფანჯრის როლი"
+
+msgid "Window Name"
+msgstr "ფანჯრის სახელი"
+
+msgid "Window Class"
+msgstr "ფანჯრის კლასი"
+
+msgid "Window Type"
+msgstr "ფანჯრის ტიპი"
+
+msgid "Window State"
+msgstr "ფანჯრის მდგომარეობა"
+
+msgid "Window ID"
+msgstr "ფანჯრის ID"
+
+msgid "And"
+msgstr "და"
+
+msgid "Or"
+msgstr "ან"
+
+msgid "Edit match"
+msgstr "დამთხვევის ჩასწორება"
+
+#. Add buttons
+msgid "_Add"
+msgstr "_დამატება"
+
+#. Type
+msgid "Type"
+msgstr "ტიპი"
+
+#. Value
+msgid "Value"
+msgstr "მნიშვნელობა"
+
+msgid "Grab"
+msgstr "ჩაჭერა"
+
+#. Relation
+msgid "Relation"
+msgstr "ფარდობითობა"
+
+#. Invert
+msgid "Invert"
+msgstr "ინვერსია"
+
+msgid "Browse..."
+msgstr "ამორჩევა..."
+
+msgid "Images"
+msgstr "ასლები"
+
+msgid "File"
+msgstr "ფაილი"
+
+msgid "Open directory..."
+msgstr "საქაღალდის გახსნა..."
+
+msgid "Open file..."
+msgstr "ფაილის გახსნა..."
+
+msgid "_Open"
+msgstr "_გახსნა"
+
+msgid "This is a settings manager for the CompizConfig configuration system."
+msgstr "ეს CompizConfig კონფიგურაციის სისტემის პარამეტრების მმართველია."
+
+msgid "translator-credits"
+msgstr "თარგმანი-შესრულებულია"
+
+msgid "An error has occured"
+msgstr "აღმოჩენილია შეცდომა"
+
+msgid "Warning"
+msgstr "გაფრთხილება"
+
+#, python-format
+msgid "Enable %s"
+msgstr "ჩართვა: %s"
+
+msgid "Filter"
+msgstr "ფილტრი"
+
+#, python-format
+msgid "Search %s Plugin Options"
+msgstr "%s დამატების პარამეტრების ძებნა"
+
+msgid "Use This Plugin"
+msgstr "ამ დამატების გამოყენება"
+
+msgid "Search Compiz Core Options"
+msgstr "Compiz Core-ის პარამეტრების ძებნა"
+
+#. Back Button
+msgid "_Back"
+msgstr "უკან"
+
+msgid "Error"
+msgstr "შეცდომა"
+
+msgid "Grab Keys"
+msgstr "ღილაკების ჩაჭერა"
+
+msgid ""
+"Enter a filter.\n"
+"Click the keyboard image to grab a key for which to search."
+msgstr ""
+"შეიყვანეთ ფილტრი.\n"
+"მოსაძებნი ღილაკის საპოვნელად კლავიატურის სურათზე დააწკაპუნეთ."
+
+msgid "Search in..."
+msgstr "რაში მოვძებნო..."
+
+#. Options
+msgid "Short description and name"
+msgstr "მოკლე აღწერა და სახელი"
+
+msgid "Long description"
+msgstr "გრძელი აღწერა"
+
+msgid "Settings value"
+msgstr "პარამეტრის მნიშვნელობა"
+
+msgid "Group"
+msgstr "ჯგუფი"
+
+msgid "Subgroup"
+msgstr "ქვეჯგუფი"
+
+#. Notebook
+msgid "Settings"
+msgstr "მორგება"
+
+msgid "Loading Advanced Search"
+msgstr "დამატებითი ძებნის ჩატვირთვა"
+
+msgid "Add a New Profile"
+msgstr "ახალი პროფილის დამატება"
+
+msgid "Remove This Profile"
+msgstr "ამ პროფილის წაშლა"
+
+msgid "Default"
+msgstr "ნაგულისხმები"
+
+msgid "Profile"
+msgstr "პროფილი"
+
+msgid "Import"
+msgstr "შემოტანა"
+
+msgid "Import a CompizConfig Profile"
+msgstr "CompizConfig-ის პროფილის შემოტანა"
+
+msgid "Import as..."
+msgstr "შემოტანა, როგორც..."
+
+msgid "Import a CompizConfig Profile as a new profile"
+msgstr "CompizConfig-ის პროფილის ახალ პროფილად შემოტანა"
+
+msgid "Export"
+msgstr "გატანა"
+
+msgid "Export your CompizConfig Profile"
+msgstr "CompizConfig-ის თქვენი პროფილის გატანა"
+
+msgid "Reset to defaults"
+msgstr "ნაგულისხმევზე ჩამოყრა"
+
+msgid "Reset your CompizConfig Profile to the global defaults"
+msgstr "CompizConfig-ის პროფილის გლობალურ ნაგულისხმებ მნიშვნელობებზე დაბრუნება"
+
+msgid "Backend"
+msgstr "უკანბოლო"
+
+msgid "Integration"
+msgstr "ინტეგრაცია"
+
+msgid "Enable integration into the desktop environment"
+msgstr "სამუშაო მაგიდის გარემოში ინტეგრაცია"
+
+msgid "Profiles (*.profile)"
+msgstr "პროფილები (*.profile)"
+
+msgid "All files"
+msgstr "ყველა ფაილი"
+
+msgid "Save file.."
+msgstr "ფაილის შენახვა..."
+
+msgid "_Save"
+msgstr "_შენახვა"
+
+msgid "Do you want to skip default option values while exporting your profile?"
+msgstr ""
+"გნებავთ გამოტოვოთ პარამეტრის ნაგულისხმები მნიშვნელობები პროფილის გატანისას?"
+
+msgid "Open file.."
+msgstr "ფაილის გახსნა.."
+
+msgid "Enter a profile name"
+msgstr "შეიყვანეთ პროფილის სახელი"
+
+msgid "Please enter a name for the new profile:"
+msgstr "შეიყვანეთ ახალი პროფილის სახელი:"
+
+msgid "Backend not found."
+msgstr "უკანაბოლო ვერ ვიპოვე."
+
+#. Auto sort
+msgid "Automatic plugin sorting"
+msgstr "დამატებების ავტომატური დალაგება"
+
+msgid "Disabled Plugins"
+msgstr "გამორთული დამატებები"
+
+msgid "Enabled Plugins"
+msgstr "ჩართული დამატებები"
+
+msgid ""
+"Do you really want to disable automatic plugin sorting? This will also "
+"disable conflict handling. You should only do this if you know what you are "
+"doing."
+msgstr ""
+"მართლა გნებავთ დამატებების ავტომატური დალაგების გამორთვა? ეს კონფლიქტების "
+"გადაწყვეტის ალგორითმსაც გამორთავს. ეს მხოლოდ მაშინ ჩაიდინეთ, თუ მართლა იცით, "
+"რას აკეთებთ."
+
+msgid "Add plugin"
+msgstr "დამატების დამატება"
+
+msgid "Plugin name:"
+msgstr "დამატების სახელი:"
+
+msgid "Insert plugin name"
+msgstr "შეიყვანეთ დამატების სახელი"
+
+msgid "Preferences"
+msgstr "მორგება"
+
+msgid ""
+"Configure the backend, profile and other internal settings used by the "
+"Compiz Configuration System."
+msgstr ""
+"მოირგეთ უკანაბოლო, პროფილი და სხვა შიდა პარამეტრები, რომელსაც Compiz-ის "
+"კონფიგურაციის სისტემა იყენებს."
+
+msgid "About"
+msgstr "შესახებ"
+
+msgid "About CCSM..."
+msgstr "CCSM-ის შესახებ..."
+
+msgid "Profile & Backend"
+msgstr "პროფილი და უკანაბოლო"
+
+msgid "Plugin List"
+msgstr "დამატებების სია"
+
+msgid "Filter your Plugin list"
+msgstr "დამატებების სიის ფილტრი"
+
+#, python-format
+msgid "Screen %i"
+msgstr "ეკრანი %i"
+
+msgid "Screen"
+msgstr "ეკრანი"
+
+msgid "Category"
+msgstr "კატეგორია"
+
+msgid "Advanced Search"
+msgstr "გაფართოებული ძებნა"
+
+#, python-format
+msgid ""
+"<span size=\"large\"><b>No matches found.</b> </span><span>\n"
+"\n"
+" Your filter \"<b>%s</b>\" does not match any items.</span>"
+msgstr ""
+"<span size=\"large\"><b>არავითარი ნაპოვნი დამთხვევა.</b> </span><span>\n"
+"\n"
+" არც ერთი ელემენტი არ შეესაბამება თქვენს ფილტრს. \"<b>%s</b>\"</span>"
+
+msgid "Configure Compiz with CompizConfig"
+msgstr "Compiz-ის მორგება CompizConfig-ით"
